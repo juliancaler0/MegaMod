@@ -1,0 +1,89 @@
+{
+  "name": "Metropolis",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:general/city"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:state",
+      "state": {
+        "path": "citizens",
+        "match": {
+          "type": "count",
+          "level": 200
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 && 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Two... hundred... citizens! I can barely believe it! Our colony has become a METROPOLIS! People travel from across the world just to see what we have built. The farms stretch to the horizon, the mines run deep, and our walls stand unbreakable. You have created something truly legendary!",
+      "options": [
+        {
+          "answer": "This is the dream realized!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "More than a dream, Mayor. This is a legacy that will endure for generations! Every brick, every field, every citizen is proof of what determination and leadership can achieve. The entire metropolis has come together to present you with the rarest gift we could find!",
+            "options": [
+              {
+                "answer": "I could not have done it without all of you!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Two hundred strong!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Two hundred hearts beating as one! The metropolis stands as a monument to your vision. Please accept this gift from every single citizen. You have earned it a hundred times over!",
+            "options": [
+              {
+                "answer": "This means everything to me!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "A metropolis of two hundred! Songs will be sung about this place for ages to come. You have mastered the art of leadership, Mayor. Whatever challenge comes next, I know you will meet it head on!",
+      "options": [
+        {
+          "answer": "This is not the end. It is only the beginning of a new chapter!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:netherite_ingot",
+        "qty": 1
+      }
+    }
+  ]
+}

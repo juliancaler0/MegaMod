@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_game_bigwin"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_game_bigwin",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_game_bigwin",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_game_bigwin",
+      "y": 270
+    }
+  }
+}

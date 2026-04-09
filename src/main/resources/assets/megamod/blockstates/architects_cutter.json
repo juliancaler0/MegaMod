@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/architects_cutter" },
+    "facing=east": { "model": "megamod:block/architects_cutter", "y": 90 },
+    "facing=south": { "model": "megamod:block/architects_cutter", "y": 180 },
+    "facing=west": { "model": "megamod:block/architects_cutter", "y": 270 }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_shop_cart"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_shop_cart",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_shop_cart",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_shop_cart",
+      "y": 270
+    }
+  }
+}

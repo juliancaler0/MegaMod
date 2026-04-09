@@ -1,0 +1,47 @@
+{
+	"credit": "Made with Blockbench",
+	"texture_size": [16, 16],
+	"textures": {
+		"frame": "megamod:block/museum_door_frame",
+		"particle": "megamod:block/museum_door_frame"
+	},
+	"elements": [
+		{
+			"name": "pillar_left",
+			"from": [0, 0, 5],
+			"to": [3, 14, 11],
+			"faces": {
+				"north": {"uv": [13, 2, 16, 16], "texture": "#frame"},
+				"east":  {"uv": [5, 2, 11, 16], "texture": "#frame"},
+				"south": {"uv": [0, 2, 3, 16], "texture": "#frame"},
+				"west":  {"uv": [5, 2, 11, 16], "texture": "#frame"},
+				"down":  {"uv": [0, 5, 3, 11], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "pillar_right",
+			"from": [13, 0, 5],
+			"to": [16, 14, 11],
+			"faces": {
+				"north": {"uv": [0, 2, 3, 16], "texture": "#frame"},
+				"east":  {"uv": [5, 2, 11, 16], "texture": "#frame"},
+				"south": {"uv": [13, 2, 16, 16], "texture": "#frame"},
+				"west":  {"uv": [5, 2, 11, 16], "texture": "#frame"},
+				"down":  {"uv": [13, 5, 16, 11], "texture": "#frame"}
+			}
+		},
+		{
+			"name": "arch_top",
+			"from": [0, 14, 5],
+			"to": [16, 16, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 2], "texture": "#frame"},
+				"east":  {"uv": [5, 0, 11, 2], "texture": "#frame"},
+				"south": {"uv": [0, 0, 16, 2], "texture": "#frame"},
+				"west":  {"uv": [5, 0, 11, 2], "texture": "#frame"},
+				"up":    {"uv": [0, 5, 16, 11], "texture": "#frame"},
+				"down":  {"uv": [0, 5, 16, 11], "texture": "#frame"}
+			}
+		}
+	]
+}

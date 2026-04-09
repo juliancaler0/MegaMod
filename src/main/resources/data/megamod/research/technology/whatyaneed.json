@@ -1,0 +1,32 @@
+{
+  "name": "What Ya Need",
+  "branch": "technology",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:chest",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_courier",
+      "type": "UNLOCK",
+      "stat": "courier",
+      "value": 1,
+      "description": "Unlocks Courier"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

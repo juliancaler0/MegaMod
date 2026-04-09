@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:iron_block",
+    "B": "minecraft:poppy",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:iron_golem_backpack",
+    "count": 1
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Netherite Skin",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/diamondskin"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_ingot",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_netherite_armor",
+      "type": "UNLOCK",
+      "stat": "netherite_armor",
+      "value": 1,
+      "description": "Guards Use Netherite Armor"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

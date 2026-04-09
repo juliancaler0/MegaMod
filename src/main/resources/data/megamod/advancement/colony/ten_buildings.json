@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/five_buildings",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_town_hall"
+    },
+    "title": {
+      "text": "Bustling Town"
+    },
+    "description": {
+      "text": "Have 10 different building types in your colony"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

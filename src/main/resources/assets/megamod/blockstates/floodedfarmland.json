@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=1": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=2": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=3": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=4": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=5": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=6": {
+      "model": "megamod:block/floodedfarmland"
+    },
+    "moisture=7": {
+      "model": "megamod:block/floodedfarmland"
+    }
+  }
+}

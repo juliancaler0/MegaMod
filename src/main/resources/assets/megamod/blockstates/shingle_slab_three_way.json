@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "megamod:block/shingle_slab/shingle_slab_three_way_spec"
+    },
+    "type=top": {
+      "model": "megamod:block/shingle_slab/shingle_slab_three_way_spec",
+      "x": 180,
+      "uvlock": true
+    },
+    "type=double": {
+      "model": "megamod:block/shingle_slab/shingle_slab_three_way_spec"
+    }
+  }
+}

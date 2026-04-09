@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_standing_loom"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_standing_loom",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_standing_loom",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_standing_loom",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/ruby_heavy_crossbow",
+  "textures": {
+    "layer0": "megamod:item/ruby_heavy_crossbow_firework"
+  }
+}

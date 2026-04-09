@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:sugar",
+    "B": "minecraft:wheat",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:cake_backpack",
+    "count": 1
+  }
+}

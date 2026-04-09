@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:porkchop",
+    "B": "minecraft:leather",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:pig_backpack",
+    "count": 1
+  }
+}

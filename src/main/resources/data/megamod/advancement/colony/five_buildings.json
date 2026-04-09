@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/first_worker",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_residence"
+    },
+    "title": {
+      "text": "Growing Settlement"
+    },
+    "description": {
+      "text": "Have 5 different building types in your colony"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

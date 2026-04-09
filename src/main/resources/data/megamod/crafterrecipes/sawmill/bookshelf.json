@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "sawmill",
+  "inputs": [
+    { "item": "minecraft:oak_planks", "count": 6 },
+    { "item": "minecraft:book", "count": 3 }
+  ],
+  "result": { "item": "minecraft:bookshelf", "count": 1 }
+}

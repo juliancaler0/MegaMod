@@ -1,0 +1,52 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:wizard_robe_chest"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.obtain_wizard_robes.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.obtain_wizard_robes.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "megamod:misc_items",
+  "criteria": {
+    "wizard_robes": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "megamod:wizard_robe_head"
+            ]
+          },
+          {
+            "items": [
+              "megamod:wizard_robe_chest"
+            ]
+          },
+          {
+            "items": [
+              "megamod:wizard_robe_legs"
+            ]
+          },
+          {
+            "items": [
+              "megamod:wizard_robe_feet"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wizard_robes"
+    ]
+  ]
+}

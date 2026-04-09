@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_log_pile_small_3"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_log_pile_small_3",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_log_pile_small_3",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_log_pile_small_3",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/crafting_altar"},
+    "facing=south": {"model": "megamod:block/crafting_altar", "y": 180},
+    "facing=east": {"model": "megamod:block/crafting_altar", "y": 90},
+    "facing=west": {"model": "megamod:block/crafting_altar", "y": 270}
+  }
+}

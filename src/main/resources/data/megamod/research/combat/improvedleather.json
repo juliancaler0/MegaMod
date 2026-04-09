@@ -1,0 +1,32 @@
+{
+  "name": "Improved Leather",
+  "branch": "combat",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:leather",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_leather_armor",
+      "type": "UNLOCK",
+      "stat": "leather_armor",
+      "value": 1,
+      "description": "Guards Use Leather Armor"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

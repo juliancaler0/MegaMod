@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/root",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_residence"
+    },
+    "title": {
+      "text": "A Dozen Neighbors"
+    },
+    "description": {
+      "text": "Have 10 citizens in your colony"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

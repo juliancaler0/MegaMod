@@ -1,0 +1,4 @@
+{
+  "parent": "megamod:block/blocktagsubstitutionoverlay",
+  "loader": "megamod:overlaid"
+}

@@ -1,0 +1,94 @@
+name: Publish on Modrinth & CurseForge
+
+on:
+  workflow_dispatch:
+    secrets:
+      CURSEFORGE_TOKEN:
+        required: true
+      MODRINTH_TOKEN:
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Branch
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'adopt'
+          java-version: 25
+
+      - name: Grant Execute Permission
+        run: chmod +x gradlew
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Load Gradle Properties
+        uses: christian-draeger/read-properties@1.1.1
+        id: gradle_properties
+        with:
+          path: './gradle.properties'
+          properties: 'minecraft_version mod_version'
+
+      - name: Run Publish
+        id: publish_merged
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: ha1mEyJS
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: true
+          modrinth-unfeature-mode: any
+
+          github-tag: v${{ steps.gradle_properties.outputs.mod_version }}+${{ steps.gradle_properties.outputs.minecraft_version }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          curseforge-id: 1283899
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          name: ${{ steps.gradle_properties.outputs.mod_version }}+${{ steps.gradle_properties.outputs.minecraft_version }}
+          version: ${{ steps.gradle_properties.outputs.mod_version }}
+
+          files: |
+            ./minecraft/build/libs/PlayerAnimationLibMerged-*.jar
+          version-type: alpha
+
+          loaders: |
+            fabric
+            neoforge
+          game-versions: |
+            ${{ steps.gradle_properties.outputs.minecraft_version }}
+
+          changelog-file: CHANGELOG.md
+
+          java: 25
+          retry-attempts: 5
+          retry-delay: 60000
+          fail-mode: skip
+
+      - name: Build P2D_LINKS
+        shell: bash
+        run: |
+          {
+            echo 'P2D_LINKS<<EOF'
+
+            if [ -n "${{ steps.publish_merged.outputs.modrinth-url }}" ]; then
+              echo "Modrinth|${{ steps.publish_merged.outputs.modrinth-url }}|MODRINTH"
+            fi
+            if [ -n "${{ steps.publish_merged.outputs.curseforge-url }}" ]; then
+              echo "CurseForge|${{ steps.publish_merged.outputs.curseforge-url }}|CURSEFORGE"
+            fi
+
+            echo 'EOF'
+          } >> "$GITHUB_ENV"
+
+      - name: Discord notify
+        run: ./gradlew publishToDiscord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}

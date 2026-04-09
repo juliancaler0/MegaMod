@@ -1,0 +1,34 @@
+{
+  "name": "Rails",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/keen"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "courier_hut",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:rail",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_citizen_rails",
+      "type": "UNLOCK",
+      "stat": "citizens_use_rails",
+      "value": 1,
+      "description": "Citizens Use Rails"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

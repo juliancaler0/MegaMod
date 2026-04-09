@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GPG",
+    "PMP",
+    "GPG"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "P": "minecraft:phantom_membrane",
+    "M": "megamod:medium_rune_pouch"
+  },
+  "result": { "id": "megamod:large_rune_pouch", "count": 1 }
+}

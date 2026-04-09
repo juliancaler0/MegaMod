@@ -1,0 +1,34 @@
+{
+  "name": "City",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/hamlet"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:emerald",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "max_citizens_100",
+      "type": "MODIFIER",
+      "stat": "max_citizens",
+      "value": 25,
+      "description": "Max Citizens +25 (100)"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

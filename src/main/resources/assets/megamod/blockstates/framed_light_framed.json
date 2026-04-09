@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/framed_light/framed_light_spec"
+    }
+  }
+}

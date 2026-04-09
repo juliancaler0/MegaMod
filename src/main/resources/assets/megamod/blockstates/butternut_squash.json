@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "megamod:block/crops/butternut_squash/stage0"
+    },
+    "age=1": {
+      "model": "megamod:block/crops/butternut_squash/stage1"
+    },
+    "age=2": {
+      "model": "megamod:block/crops/butternut_squash/stage2"
+    },
+    "age=3": {
+      "model": "megamod:block/crops/butternut_squash/stage3"
+    },
+    "age=4": {
+      "model": "megamod:block/crops/butternut_squash/stage4"
+    },
+    "age=5": {
+      "model": "megamod:block/crops/butternut_squash/stage5"
+    },
+    "age=6": {
+      "model": "megamod:block/crops/butternut_squash/stage6"
+    }
+  }
+}

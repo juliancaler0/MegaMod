@@ -1,0 +1,32 @@
+{
+  "name": "Building Permissions",
+  "branch": "unlockables",
+  "tier": 1,
+  "researchTime": 2400,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:oak_planks",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_building_perms",
+      "type": "UNLOCK",
+      "stat": "building_permissions",
+      "value": 1,
+      "description": "Colony Members Can Build"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

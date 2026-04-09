@@ -1,0 +1,82 @@
+plugins {
+    id 'multiloader-loader'
+    id 'net.neoforged.moddev' version "${neo_moddev}"
+    id 'me.modmuss50.mod-publish-plugin' version "${modmuss50_mod_publish_version}"
+    id 'com.diffplug.spotless' version "7.0.0.BETA3"
+}
+
+neoForge {
+    version = "${neo_version}"
+    accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
+
+    parchment {
+        // Get versions from https://parchmentmc.org/docs/getting-started
+        // Omit the "v"-prefix in mappingsVersion
+        minecraftVersion = "1.20.6"
+        mappingsVersion = "2024.05.01"
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        configureEach {
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+dependencies {
+    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.1-4.14.3+neoforge"
+}
+
+def keyPropsFile = new File(rootProject.projectDir, "key.properties")
+if (keyPropsFile.exists()) {
+    publishMods {
+        def releaseProp = new Properties()
+        releaseProp.load(new FileInputStream(keyPropsFile))
+        file = jar.archiveFile
+        changelog = rootProject.file("changelog.md").text
+        type = STABLE
+        modLoaders.add("neoforge")
+        displayName = "${mod_id} neoforge ${minecraft_version}"
+
+        discord {
+            webhookUrl = releaseProp.getProperty("discordKey")
+            dryRunWebhookUrl = releaseProp.getProperty("discordKey")
+            username = "AzureBot"
+            avatarUrl = "https://cdn.modrinth.com/data/7zlUOZvb/8b2cb16452c1d3bb33574519a6f5cf4ce86f13a3_96.webp"
+            content = changelog.map { "# A new version of AzureLib Armor for NeoForge has been released for 1.21.1 \n" + it}
+            setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
+            style {
+                look = "MODERN"
+                thumbnailUrl = "https://cdn.modrinth.com/data/7zlUOZvb/8b2cb16452c1d3bb33574519a6f5cf4ce86f13a3_96.webp"
+            }
+        }
+        curseforge {
+            projectId = project.curseforge_id
+            projectSlug = "azurelib-armor"
+            accessToken = releaseProp.getProperty("curseKey")
+            minecraftVersions.add(project.minecraft_version)
+        }
+        modrinth {
+            projectId = project.modrinth_id
+            accessToken = releaseProp.getProperty('modrinthKey')
+            minecraftVersions.add(project.minecraft_version)
+        }
+    }
+}

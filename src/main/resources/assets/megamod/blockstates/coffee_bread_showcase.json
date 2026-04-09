@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/coffee_bread_showcase"},
+    "facing=south": {"model": "megamod:block/coffee_bread_showcase", "y": 180},
+    "facing=east": {"model": "megamod:block/coffee_bread_showcase", "y": 90},
+    "facing=west": {"model": "megamod:block/coffee_bread_showcase", "y": 270}
+  }
+}

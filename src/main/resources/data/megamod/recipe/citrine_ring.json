@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GcG",
+    " G "
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "c": "megamod:citrine"
+  },
+  "result": { "id": "megamod:citrine_ring", "count": 1 }
+}

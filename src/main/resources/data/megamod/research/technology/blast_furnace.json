@@ -1,0 +1,34 @@
+{
+  "name": "Blast Furnace",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/crucible"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "smeltery",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:blast_furnace",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "smelting_output_3",
+      "type": "MULTIPLIER",
+      "stat": "smelting_output",
+      "value": 2.0,
+      "description": "Smelting Output x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

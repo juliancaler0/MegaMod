@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "connected=false": {
+      "model": "megamod:block/colonysign"
+    },
+    "connected=true": {
+      "model": "megamod:block/colonysign2"
+    }
+  }
+}

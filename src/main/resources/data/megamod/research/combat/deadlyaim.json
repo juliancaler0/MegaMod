@@ -1,0 +1,34 @@
+{
+  "name": "Deadly Aim",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/accuracy"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "archery",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:crossbow",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "ranged_accuracy_2",
+      "type": "MULTIPLIER",
+      "stat": "ranged_accuracy",
+      "value": 1.25,
+      "description": "Ranged Accuracy +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

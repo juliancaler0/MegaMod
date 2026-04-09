@@ -1,0 +1,34 @@
+{
+  "name": "Supreme Delivery",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/teleport"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "delivery_speed_max",
+      "type": "MULTIPLIER",
+      "stat": "delivery_speed",
+      "value": 2.0,
+      "description": "Delivery Speed x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

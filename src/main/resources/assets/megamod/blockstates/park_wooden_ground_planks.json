@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_wooden_ground_planks"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_wooden_ground_planks",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_wooden_ground_planks",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_wooden_ground_planks",
+      "y": 270
+    }
+  }
+}

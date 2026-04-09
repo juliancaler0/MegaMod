@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" I ", "IDI", " I "],
+  "key": {
+    "I": "minecraft:iron_nugget",
+    "D": "minecraft:diamond"
+  },
+  "result": { "id": "megamod:resource_dimension_key", "count": 1 }
+}

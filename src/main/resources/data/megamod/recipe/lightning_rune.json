@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "CXC",
+    " C "
+  ],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "X": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:lightning_rune", "count": 2 }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "smelter",
+  "inputs": [
+    { "item": "minecraft:clay_ball", "count": 1 }
+  ],
+  "result": { "item": "minecraft:brick", "count": 1 }
+}

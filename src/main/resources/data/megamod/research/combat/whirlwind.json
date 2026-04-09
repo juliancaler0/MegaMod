@@ -1,0 +1,34 @@
+{
+  "name": "Whirlwind",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/cleave"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_axe",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_whirlwind",
+      "type": "UNLOCK",
+      "stat": "guard_whirlwind",
+      "value": 1,
+      "description": "Guards Use Whirlwind Attack"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

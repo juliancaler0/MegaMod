@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:gunpowder",
+    "B": "minecraft:green_dye",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:creeper_backpack",
+    "count": 1
+  }
+}

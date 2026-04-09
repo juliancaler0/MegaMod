@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "enchanter",
+  "inputs": [
+    { "item": "minecraft:paper", "count": 3 },
+    { "item": "minecraft:glowstone_dust", "count": 2 }
+  ],
+  "result": { "item": "megamod:scroll_highlight", "count": 3 }
+}

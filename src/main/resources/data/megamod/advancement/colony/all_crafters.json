@@ -1,0 +1,91 @@
+{
+  "parent": "megamod:colony/ten_buildings",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_blacksmith"
+    },
+    "title": {
+      "text": "Master Craftsmen"
+    },
+    "description": {
+      "text": "Have all crafter buildings: baker, blacksmith, sawmill, stonemason, fletcher, dyer, glassblower, mechanic, smeltery, stone smeltery, crusher, and concrete mixer"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "baker": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_baker"
+      }
+    },
+    "blacksmith": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_blacksmith"
+      }
+    },
+    "sawmill": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_sawmill"
+      }
+    },
+    "stonemason": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_stonemason"
+      }
+    },
+    "fletcher": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_fletcher"
+      }
+    },
+    "dyer": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_dyer"
+      }
+    },
+    "glassblower": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_glassblower"
+      }
+    },
+    "mechanic": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_mechanic"
+      }
+    },
+    "smeltery": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_smeltery"
+      }
+    },
+    "stone_smeltery": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_stone_smeltery"
+      }
+    },
+    "crusher": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_crusher"
+      }
+    },
+    "concrete_mixer": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_concrete_mixer"
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Gourmet",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/full_stock"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "dining_hall",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:golden_apple",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_saturation_4",
+      "type": "MULTIPLIER",
+      "stat": "citizen_saturation",
+      "value": 2.0,
+      "description": "Citizen Saturation x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

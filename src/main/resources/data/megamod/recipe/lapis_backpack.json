@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:lapis_lazuli",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:lapis_backpack",
+    "count": 1
+  }
+}

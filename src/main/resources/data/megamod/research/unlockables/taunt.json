@@ -1,0 +1,32 @@
+{
+  "name": "Taunt",
+  "branch": "unlockables",
+  "tier": 1,
+  "researchTime": 2400,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:rotten_flesh",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_taunt",
+      "type": "UNLOCK",
+      "stat": "guard_taunt",
+      "value": 1,
+      "description": "Guards Can Taunt Enemies"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

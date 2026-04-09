@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "megamod:block/multi_piston_head",
+    "front": "megamod:block/multi_piston_head",
+    "side": "megamod:block/multi_piston_side",
+    "particle": "megamod:block/multi_piston_side"
+  }
+}

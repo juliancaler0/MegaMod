@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/coffee_glass_hanger"},
+    "facing=south": {"model": "megamod:block/coffee_glass_hanger", "y": 180},
+    "facing=east": {"model": "megamod:block/coffee_glass_hanger", "y": 90},
+    "facing=west": {"model": "megamod:block/coffee_glass_hanger", "y": 270}
+  }
+}

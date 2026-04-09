@@ -1,0 +1,7 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/segment_fallbacks",
+  "elements": [
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/fallbacks/corridor_end", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 100, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/fallbacks/corridor_reward", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } }
+  ]
+}

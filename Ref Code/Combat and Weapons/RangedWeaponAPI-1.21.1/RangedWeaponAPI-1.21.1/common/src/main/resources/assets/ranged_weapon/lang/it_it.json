@@ -1,0 +1,9 @@
+{
+  "attribute.name.ranged_weapon.damage" : "Danno a distanza",
+  "attribute.name.ranged_weapon.haste" : "Velocità di scoccata",
+  "attribute.name.ranged_weapon.pull_time" : "sec tempo di tiro",
+  "item.modifiers.both_hands": "Quando in mano:",
+  "effect.ranged_weapon.damage": "Impatto",
+  "effect.ranged_weapon.haste": "Fuoco rapido",
+  "item.ranged_weapon.pull_time": "%1$s sec tempo di tiro"
+}

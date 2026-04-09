@@ -1,0 +1,6 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/armor_stand", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } }
+  ]
+}

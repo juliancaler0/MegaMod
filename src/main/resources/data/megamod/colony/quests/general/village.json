@@ -1,0 +1,89 @@
+{
+  "name": "Village",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:general/hamlet"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:state",
+      "state": {
+        "path": "citizens",
+        "match": {
+          "type": "count",
+          "level": 100
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 && 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "One hundred citizens, Mayor! ONE HUNDRED! What was once a lonely camp in the wilderness is now a thriving village! We have farms, mines, shops, guard towers, schools... We have it all! The citizens are celebrating in the streets!",
+      "options": [
+        {
+          "answer": "This calls for a celebration!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "The people have already started celebrating! They organized a festival in your honor. Market stalls, games, music! And they pooled together a generous reward for the greatest mayor this land has ever seen!",
+            "options": [
+              {
+                "answer": "I am truly humbled!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Every one of those citizens matters!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "And that is exactly why they love you! Here, the village council insisted you take this as thanks for your dedication!",
+            "options": [
+              {
+                "answer": "I will continue to serve!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "A hundred souls, all thriving under your leadership. But do not rest on your laurels, Mayor. I have heard whispers of even greater achievements ahead!",
+      "options": [
+        {
+          "answer": "The journey continues!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:emerald",
+        "qty": 50
+      }
+    }
+  ]
+}

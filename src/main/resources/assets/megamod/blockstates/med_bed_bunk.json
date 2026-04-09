@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_bed_bunk"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_bed_bunk",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_bed_bunk",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_bed_bunk",
+      "y": 270
+    }
+  }
+}

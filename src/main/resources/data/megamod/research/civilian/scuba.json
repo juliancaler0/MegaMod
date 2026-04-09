@@ -1,0 +1,28 @@
+{
+  "name": "Scuba",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/ambition"
+  ],
+  "requirements": [],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:heart_of_the_sea",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_underwater",
+      "type": "UNLOCK",
+      "stat": "citizens_underwater",
+      "value": 1,
+      "description": "Citizens Stay Underwater Longer"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

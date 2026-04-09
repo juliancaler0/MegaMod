@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/unique_longbow_3",
+  "textures": {
+    "layer0": "megamod:item/unique_longbow_3"
+  }
+}

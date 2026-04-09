@@ -1,0 +1,11 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:oak_planks", "count": 3 },
+    { "item": "minecraft:cobblestone", "count": 4 },
+    { "item": "minecraft:iron_ingot", "count": 1 },
+    { "item": "minecraft:redstone", "count": 1 }
+  ],
+  "result": { "item": "minecraft:piston", "count": 1 }
+}

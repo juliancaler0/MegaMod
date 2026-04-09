@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_chalk_sign"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_chalk_sign",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_chalk_sign",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_chalk_sign",
+      "y": 270
+    }
+  }
+}

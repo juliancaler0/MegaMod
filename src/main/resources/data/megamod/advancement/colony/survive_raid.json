@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/guard_tower",
+  "display": {
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "text": "Raid Survivor"
+    },
+    "description": {
+      "text": "Survive your first colony raid"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

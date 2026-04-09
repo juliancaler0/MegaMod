@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "stonemason",
+  "inputs": [
+    { "item": "minecraft:stone", "count": 4 },
+    { "item": "minecraft:redstone", "count": 2 }
+  ],
+  "result": { "item": "megamod:decoration_controller", "count": 1 }
+}

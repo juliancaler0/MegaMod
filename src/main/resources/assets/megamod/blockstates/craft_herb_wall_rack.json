@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_herb_wall_rack"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_herb_wall_rack",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_herb_wall_rack",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_herb_wall_rack",
+      "y": 270
+    }
+  }
+}

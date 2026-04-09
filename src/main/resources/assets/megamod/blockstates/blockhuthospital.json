@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "megamod:block/blockhuthospital",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "megamod:block/blockhuthospital",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/blockhuthospital",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "megamod:block/blockhuthospital",
+      "y": 270
+    }
+  }
+}

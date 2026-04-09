@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "megamod:rune_crafting/base/stone"
+    },
+    {
+      "tag": "megamod:rune_crafting/reagent/frost_small"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "megamod:frost_stone"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/classic_harp"
+    },
+    "facing=south": {
+      "model": "megamod:block/classic_harp",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/classic_harp",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/classic_harp",
+      "y": 270
+    }
+  }
+}

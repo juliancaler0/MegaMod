@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:netherite_arcane_robe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:netherite_arcane_robe"
+      }
+    ]
+  }
+}

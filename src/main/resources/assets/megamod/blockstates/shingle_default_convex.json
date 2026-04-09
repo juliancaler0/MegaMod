@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/shingle/convex_spec"
+    }
+  }
+}

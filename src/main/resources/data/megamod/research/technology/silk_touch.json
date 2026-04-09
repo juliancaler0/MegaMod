@@ -1,0 +1,34 @@
+{
+  "name": "Silk Touch",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/efficiency"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_silk_touch",
+      "type": "UNLOCK",
+      "stat": "miner_silk_touch",
+      "value": 1,
+      "description": "Miners Can Silk Touch"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,1280 @@
+{
+  "shopintro": {
+    "sounds": [
+      "megamod:shopintro"
+    ]
+  },
+  "shopmusic": {
+    "sounds": [
+      "megamod:shopmusic"
+    ]
+  },
+  "shopoutro": {
+    "sounds": [
+      "megamod:shopoutro"
+    ]
+  },
+  "boss_fight_music": {
+    "subtitle": "subtitles.megamod.boss_fight_music",
+    "sounds": [
+      {
+        "name": "megamod:boss_fight_music",
+        "stream": true
+      }
+    ]
+  },
+  "boss_dash": {
+    "subtitle": "subtitles.megamod.boss_dash",
+    "sounds": [
+      {
+        "name": "megamod:boss_dash",
+        "stream": false
+      }
+    ]
+  },
+  "music_disc.house_money": {
+    "sounds": [
+      {
+        "name": "megamod:house_money",
+        "stream": true
+      }
+    ]
+  },
+  "colony_bell": {
+    "subtitle": "subtitles.megamod.colony_bell",
+    "sounds": [
+      {
+        "name": "megamod:colony_bell",
+        "stream": false
+      }
+    ]
+  },
+  "colony_build_complete": {
+    "subtitle": "subtitles.megamod.colony_build_complete",
+    "sounds": [
+      {
+        "name": "megamod:colony_build_complete",
+        "stream": false
+      }
+    ]
+  },
+  "colony_research_complete": {
+    "subtitle": "subtitles.megamod.colony_research_complete",
+    "sounds": [
+      {
+        "name": "megamod:colony_research_complete",
+        "stream": false
+      }
+    ]
+  },
+  "colony_quest_complete": {
+    "subtitle": "subtitles.megamod.colony_quest_complete",
+    "sounds": [
+      {
+        "name": "megamod:colony_quest_complete",
+        "stream": false
+      }
+    ]
+  },
+  "colony_raid_alert": {
+    "subtitle": "subtitles.megamod.colony_raid_alert",
+    "sounds": [
+      {
+        "name": "megamod:colony_raid_alert",
+        "stream": false
+      }
+    ]
+  },
+  "colony_citizen_death": {
+    "subtitle": "subtitles.megamod.colony_citizen_death",
+    "sounds": [
+      {
+        "name": "megamod:colony_citizen_death",
+        "stream": false
+      }
+    ]
+  },
+  "colony_citizen_born": {
+    "subtitle": "subtitles.megamod.colony_citizen_born",
+    "sounds": [
+      {
+        "name": "megamod:colony_citizen_born",
+        "stream": false
+      }
+    ]
+  },
+  "colony_trade_complete": {
+    "subtitle": "subtitles.megamod.colony_trade_complete",
+    "sounds": [
+      {
+        "name": "megamod:colony_trade_complete",
+        "stream": false
+      }
+    ]
+  },
+  "colony_upgrade": {
+    "subtitle": "subtitles.megamod.colony_upgrade",
+    "sounds": [
+      {
+        "name": "megamod:colony_upgrade",
+        "stream": false
+      }
+    ]
+  },
+  "colony_visitor_arrive": {
+    "subtitle": "subtitles.megamod.colony_visitor_arrive",
+    "sounds": [
+      {
+        "name": "megamod:colony_visitor_arrive",
+        "stream": false
+      }
+    ]
+  },
+  "colony_mourning": {
+    "subtitle": "subtitles.megamod.colony_mourning",
+    "sounds": [
+      {
+        "name": "megamod:colony_mourning",
+        "stream": false
+      }
+    ]
+  },
+  "colony_citizen_happy": {
+    "subtitle": "subtitles.megamod.colony_citizen_happy",
+    "sounds": [
+      {
+        "name": "megamod:colony_citizen_happy",
+        "stream": false
+      }
+    ]
+  },
+  "citizen_hire": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/yes",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.megamod.citizen_hire"
+  },
+  "citizen_dismiss": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/no",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.megamod.citizen_dismiss"
+  },
+  "citizen_work": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/trading",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.megamod.citizen_work"
+  },
+  "citizen_eat": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/generic/eat",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.megamod.citizen_eat"
+  },
+  "citizen_hurt": {
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/hurt",
+        "type": "event"
+      }
+    ],
+    "subtitle": "subtitles.megamod.citizen_hurt"
+  },
+  "ambient.animals.bird-ambience1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience4": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience4",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience5": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience5",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience6": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience6",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience7": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience7",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience8": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience8",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience9": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience9",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience10": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience10",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience11": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience11",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-huge1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-huge1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-huge2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-huge2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-huge3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-huge3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-jungle": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-jungle",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-jungle2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-jungle2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-jungle-night": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-jungle-night",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-jungle-night2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-jungle-night2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-spooky": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-spooky",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-spooky2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-spooky2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-spooky3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-spooky3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-warm1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-warm1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.bird-ambience-warm2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/bird/bird-ambience-warm2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.crow": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/crow/crow1",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow2",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow3",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow4",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow5",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow6",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow7",
+        "stream": true
+      },
+      {
+        "name": "megamod:ambient/animals/crow/crow8",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cicadas": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cicadas/cicadas",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cicadas-desert1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cicadas/cicadas-desert1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cicadas-desert2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cicadas/cicadas-desert2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cicadas-night": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cicadas/cicadas-night",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cicadas-mushroom-fields": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cicadas/cicadas-mushroom-fields",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-night": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-night",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-night2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-night2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-night3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-night3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-night4": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-night4",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-night5": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-night5",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-warm-night": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-warm-night",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-warm-night2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-warm-night2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-swamp": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-swamp",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-jungle": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-jungle",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.cricket-jungle-night": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/cricket/cricket-jungle-night",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.mouring_dove": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/dove/mouring_dove1"
+      },
+      {
+        "name": "megamod:ambient/animals/dove/mouring_dove2"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.frog1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/frog/frog1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.frog2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/frog/frog2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.frog-cave1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/frog/frog-cave1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.owl": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/owl/owl1"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl2"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl3"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl4"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl5"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl6"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl7"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl8"
+      },
+      {
+        "name": "megamod:ambient/animals/owl/owl9"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.seagull": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/seagull/seagull1"
+      },
+      {
+        "name": "megamod:ambient/animals/seagull/seagull2"
+      },
+      {
+        "name": "megamod:ambient/animals/seagull/seagull3"
+      },
+      {
+        "name": "megamod:ambient/animals/seagull/seagull4"
+      },
+      {
+        "name": "megamod:ambient/animals/seagull/seagull5"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.seagull-long": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/seagull/seagull-long",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.whale": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/whale/whale1"
+      },
+      {
+        "name": "megamod:ambient/animals/whale/whale2"
+      },
+      {
+        "name": "megamod:ambient/animals/whale/whale3"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.wolf": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/wolf/wolf1"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf2"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf3"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf4"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf5"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf6"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf7"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf8"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf9"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/wolf10"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.long-wolf": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/wolf/long-wolf1"
+      },
+      {
+        "name": "megamod:ambient/animals/wolf/long-wolf2"
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.special-mushroom-fields": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/special/special-mushroom-fields",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.animals.warden": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/animals/special/warden",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.suspense.nether": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/suspense/nether",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.suspense.end": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/suspense/end",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.suspense.pale-garden": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/suspense/pale-garden",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-water1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-water1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-water2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-water2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-water3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-water3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-water4": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-water4",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-water5": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-water5",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-deep1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-deep1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-deep2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-deep2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.underworld": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/underworld",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.deep-dark": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/deep-dark",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-large1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-large1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-large2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-large2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.cave.cave-lush": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/cave/cave-lush",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.water.beach": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/water/beach",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.water.ocean": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/water/ocean",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.water.underwater": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/water/underwater",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.water.underwater-deep": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/water/underwater-deep",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.weather.rain1": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/weather/rain1",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.weather.rain2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/weather/rain2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.weather.storm-close": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/weather/storm-close",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.weather.storm-away": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/weather/storm-away",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.howling-wind": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/howling-wind",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.heavy-wind": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/heavy-wind",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.light-wind": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/light-wind",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.light-wind2": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/light-wind2",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.light-wind3": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/light-wind3",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.wind-in-leaves": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/wind-in-leaves",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "ambient.wind.mesa": {
+    "sounds": [
+      {
+        "name": "megamod:ambient/wind/mesa",
+        "stream": true
+      }
+    ],
+    "category": "ambient"
+  },
+  "raid_horn": {
+    "subtitle": "subtitles.megamod.raid_horn",
+    "sounds": [
+      {
+        "name": "minecraft:event/raid/horn",
+        "type": "event"
+      }
+    ]
+  },
+  "building_complete": {
+    "subtitle": "subtitles.megamod.building_complete",
+    "sounds": [
+      {
+        "name": "minecraft:block/note_block/pling",
+        "type": "event"
+      }
+    ]
+  },
+  "research_complete": {
+    "subtitle": "subtitles.megamod.research_complete",
+    "sounds": [
+      {
+        "name": "minecraft:entity/player/levelup",
+        "type": "event"
+      }
+    ]
+  },
+  "citizen_happy": {
+    "subtitle": "subtitles.megamod.citizen_happy",
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/celebrate",
+        "type": "event"
+      }
+    ]
+  },
+  "citizen_sad": {
+    "subtitle": "subtitles.megamod.citizen_sad",
+    "sounds": [
+      {
+        "name": "minecraft:entity/villager/no",
+        "type": "event"
+      }
+    ]
+  }
+  ,"combat.anchor_slam-01": {"sounds": ["megamod:combat/anchor_slam-01"]}
+  ,"combat.arcane_beam_casting": {"sounds": ["megamod:combat/arcane_beam_casting"]}
+  ,"combat.arcane_beam_impact": {"sounds": ["megamod:combat/arcane_beam_impact"]}
+  ,"combat.arcane_beam_release": {"sounds": ["megamod:combat/arcane_beam_release"]}
+  ,"combat.arcane_beam_start": {"sounds": ["megamod:combat/arcane_beam_start"]}
+  ,"combat.arcane_blast_impact": {"sounds": ["megamod:combat/arcane_blast_impact"]}
+  ,"combat.arcane_blast_release": {"sounds": ["megamod:combat/arcane_blast_release"]}
+  ,"combat.arcane_missile_impact": {"sounds": ["megamod:combat/arcane_missile_impact"]}
+  ,"combat.arcane_missile_release": {"sounds": ["megamod:combat/arcane_missile_release"]}
+  ,"combat.arcane_shoot_small": {"sounds": ["megamod:combat/arcane_shoot_small"]}
+  ,"combat.archer_armor": {"sounds": ["megamod:combat/archer_armor"]}
+  ,"combat.archers_workbench": {"sounds": ["megamod:combat/archers_workbench"]}
+  ,"combat.arms_workbench": {"sounds": ["megamod:combat/arms_workbench"]}
+  ,"combat.axe_slash-01": {"sounds": ["megamod:combat/axe_slash-01"]}
+  ,"combat.battle_banner_presence": {"sounds": ["megamod:combat/battle_banner_presence"]}
+  ,"combat.battle_banner_release": {"sounds": ["megamod:combat/battle_banner_release"]}
+  ,"combat.bow_pull": {"sounds": ["megamod:combat/bow_pull"]}
+  ,"combat.charge_activate": {"sounds": ["megamod:combat/charge_activate"]}
+  ,"combat.claymore_slam-01": {"sounds": ["megamod:combat/claymore_slam-01"]}
+  ,"combat.claymore_stab-01": {"sounds": ["megamod:combat/claymore_stab-01"]}
+  ,"combat.claymore_swing-01": {"sounds": ["megamod:combat/claymore_swing-01"]}
+  ,"combat.cloth_equip_1": {"sounds": ["megamod:combat/cloth_equip_1"]}
+  ,"combat.cloth_equip_2": {"sounds": ["megamod:combat/cloth_equip_2"]}
+  ,"combat.cloth_equip_3": {"sounds": ["megamod:combat/cloth_equip_3"]}
+  ,"combat.dagger_slash-01": {"sounds": ["megamod:combat/dagger_slash-01"]}
+  ,"combat.demoralize_impact": {"sounds": ["megamod:combat/demoralize_impact"]}
+  ,"combat.divine_protection_impact": {"sounds": ["megamod:combat/divine_protection_impact"]}
+  ,"combat.divine_protection_release": {"sounds": ["megamod:combat/divine_protection_release"]}
+  ,"combat.double_axe_swing-01": {"sounds": ["megamod:combat/double_axe_swing-01"]}
+  ,"combat.entangling_roots": {"sounds": ["megamod:combat/entangling_roots"]}
+  ,"combat.fire_breath_casting": {"sounds": ["megamod:combat/fire_breath_casting"]}
+  ,"combat.fire_breath_impact": {"sounds": ["megamod:combat/fire_breath_impact"]}
+  ,"combat.fire_breath_release": {"sounds": ["megamod:combat/fire_breath_release"]}
+  ,"combat.fire_breath_start": {"sounds": ["megamod:combat/fire_breath_start"]}
+  ,"combat.fire_meteor_impact": {"sounds": ["megamod:combat/fire_meteor_impact"]}
+  ,"combat.fire_meteor_release": {"sounds": ["megamod:combat/fire_meteor_release"]}
+  ,"combat.fire_scorch_impact": {"sounds": ["megamod:combat/fire_scorch_impact"]}
+  ,"combat.fire_wall_ignite": {"sounds": ["megamod:combat/fire_wall_ignite"]}
+  ,"combat.fireball_impact": {"sounds": ["megamod:combat/fireball_impact"]}
+  ,"combat.fist_punch-01": {"sounds": ["megamod:combat/fist_punch-01"]}
+  ,"combat.frost_blizzard_casting": {"sounds": ["megamod:combat/frost_blizzard_casting"]}
+  ,"combat.frost_nova_damage_impact": {"sounds": ["megamod:combat/frost_nova_damage_impact"]}
+  ,"combat.frost_nova_effect_impact": {"sounds": ["megamod:combat/frost_nova_effect_impact"]}
+  ,"combat.frost_nova_release": {"sounds": ["megamod:combat/frost_nova_release"]}
+  ,"combat.frost_shard_impact": {"sounds": ["megamod:combat/frost_shard_impact"]}
+  ,"combat.frost_shield_impact": {"sounds": ["megamod:combat/frost_shield_impact"]}
+  ,"combat.frost_shield_release": {"sounds": ["megamod:combat/frost_shield_release"]}
+  ,"combat.glaive_slash-01": {"sounds": ["megamod:combat/glaive_slash-01"]}
+  ,"combat.glaive_slash-02": {"sounds": ["megamod:combat/glaive_slash-02"]}
+  ,"combat.hammer_slam-01": {"sounds": ["megamod:combat/hammer_slam-01"]}
+  ,"combat.holy_barrier_activate": {"sounds": ["megamod:combat/holy_barrier_activate"]}
+  ,"combat.holy_barrier_deactivate": {"sounds": ["megamod:combat/holy_barrier_deactivate"]}
+  ,"combat.holy_barrier_idle": {"sounds": ["megamod:combat/holy_barrier_idle"]}
+  ,"combat.holy_barrier_impact": {"sounds": ["megamod:combat/holy_barrier_impact"]}
+  ,"combat.holy_beam_casting": {"sounds": ["megamod:combat/holy_beam_casting"]}
+  ,"combat.holy_beam_damage": {"sounds": ["megamod:combat/holy_beam_damage"]}
+  ,"combat.holy_beam_heal": {"sounds": ["megamod:combat/holy_beam_heal"]}
+  ,"combat.holy_beam_release": {"sounds": ["megamod:combat/holy_beam_release"]}
+  ,"combat.holy_beam_start_casting": {"sounds": ["megamod:combat/holy_beam_start_casting"]}
+  ,"combat.holy_shock_damage": {"sounds": ["megamod:combat/holy_shock_damage"]}
+  ,"combat.holy_shock_heal": {"sounds": ["megamod:combat/holy_shock_heal"]}
+  ,"combat.judgement_impact": {"sounds": ["megamod:combat/judgement_impact"]}
+  ,"combat.katana_slash-01": {"sounds": ["megamod:combat/katana_slash-01"]}
+  ,"combat.mace_slam-01": {"sounds": ["megamod:combat/mace_slam-01"]}
+  ,"combat.mace_slash-01": {"sounds": ["megamod:combat/mace_slash-01"]}
+  ,"combat.magic_arrow_impact": {"sounds": ["megamod:combat/magic_arrow_impact"]}
+  ,"combat.magic_arrow_release": {"sounds": ["megamod:combat/magic_arrow_release"]}
+  ,"combat.magic_arrow_start": {"sounds": ["megamod:combat/magic_arrow_start"]}
+  ,"combat.marker_shot": {"sounds": ["megamod:combat/marker_shot"]}
+  ,"combat.pickaxe_swing-01": {"sounds": ["megamod:combat/pickaxe_swing-01"]}
+  ,"combat.plate_equip_1": {"sounds": ["megamod:combat/plate_equip_1"]}
+  ,"combat.plate_equip_2": {"sounds": ["megamod:combat/plate_equip_2"]}
+  ,"combat.plate_equip_3": {"sounds": ["megamod:combat/plate_equip_3"]}
+  ,"combat.rapier_slash-01": {"sounds": ["megamod:combat/rapier_slash-01"]}
+  ,"combat.rapier_stab-01": {"sounds": ["megamod:combat/rapier_stab-01"]}
+  ,"combat.rogue_armor": {"sounds": ["megamod:combat/rogue_armor"]}
+  ,"combat.rune_crafting": {"sounds": ["megamod:combat/rune_crafting"]}
+  ,"combat.scythe_slash-01": {"sounds": ["megamod:combat/scythe_slash-01"]}
+  ,"combat.shadow_step_arrive": {"sounds": ["megamod:combat/shadow_step_arrive"]}
+  ,"combat.shadow_step_depart": {"sounds": ["megamod:combat/shadow_step_depart"]}
+  ,"combat.shock_powder_impact": {"sounds": ["megamod:combat/shock_powder_impact"]}
+  ,"combat.shock_powder_release": {"sounds": ["megamod:combat/shock_powder_release"]}
+  ,"combat.shout_release": {"sounds": ["megamod:combat/shout_release"]}
+  ,"combat.sickle_slash-01": {"sounds": ["megamod:combat/sickle_slash-01"]}
+  ,"combat.slice_and_dice": {"sounds": ["megamod:combat/slice_and_dice"]}
+  ,"combat.spear_stab-01": {"sounds": ["megamod:combat/spear_stab-01"]}
+  ,"combat.staff_slam-01": {"sounds": ["megamod:combat/staff_slam-01"]}
+  ,"combat.staff_slash-01": {"sounds": ["megamod:combat/staff_slash-01"]}
+  ,"combat.staff_spin-01": {"sounds": ["megamod:combat/staff_spin-01"]}
+  ,"combat.staff_stab-01": {"sounds": ["megamod:combat/staff_stab-01"]}
+  ,"combat.stealth_leave": {"sounds": ["megamod:combat/stealth_leave"]}
+  ,"combat.sword_slash-01": {"sounds": ["megamod:combat/sword_slash-01"]}
+  ,"combat.throw": {"sounds": ["megamod:combat/throw"]}
+  ,"combat.throw_impact": {"sounds": ["megamod:combat/throw_impact"]}
+  ,"combat.vanish_combined": {"sounds": ["megamod:combat/vanish_combined"]}
+  ,"combat.vanish_release": {"sounds": ["megamod:combat/vanish_release"]}
+  ,"combat.wand_swing-01": {"sounds": ["megamod:combat/wand_swing-01"]}
+  ,"combat.warrior_armor": {"sounds": ["megamod:combat/warrior_armor"]}
+  ,"combat.whirlwind": {"sounds": ["megamod:combat/whirlwind"]}
+  ,"combat.wizard_robes_equip_1": {"sounds": ["megamod:combat/wizard_robes_equip_1"]}
+  ,"combat.wizard_robes_equip_2": {"sounds": ["megamod:combat/wizard_robes_equip_2"]}
+  ,"combat.wizard_robes_equip_3": {"sounds": ["megamod:combat/wizard_robes_equip_3"]}
+  ,"combat.bind_spell": {"sounds": ["megamod:combat/bind_spell"]}
+  ,"combat.dodge_1": {"sounds": ["megamod:combat/dodge_1"]}
+  ,"combat.dodge_2": {"sounds": ["megamod:combat/dodge_2"]}
+  ,"combat.generic_arcane_casting": {"sounds": ["megamod:combat/generic_arcane_casting"]}
+  ,"combat.generic_arcane_release": {"sounds": ["megamod:combat/generic_arcane_release"]}
+  ,"combat.generic_dispel_1": {"sounds": ["megamod:combat/generic_dispel_1"]}
+  ,"combat.generic_fire_casting": {"sounds": ["megamod:combat/generic_fire_casting"]}
+  ,"combat.generic_fire_ignite": {"sounds": ["megamod:combat/generic_fire_ignite"]}
+  ,"combat.generic_fire_impact_1": {"sounds": ["megamod:combat/generic_fire_impact_1"]}
+  ,"combat.generic_fire_impact_2": {"sounds": ["megamod:combat/generic_fire_impact_2"]}
+  ,"combat.generic_fire_impact_3": {"sounds": ["megamod:combat/generic_fire_impact_3"]}
+  ,"combat.generic_fire_release": {"sounds": ["megamod:combat/generic_fire_release"]}
+  ,"combat.generic_frost_casting": {"sounds": ["megamod:combat/generic_frost_casting"]}
+  ,"combat.generic_frost_impact": {"sounds": ["megamod:combat/generic_frost_impact"]}
+  ,"combat.generic_frost_release": {"sounds": ["megamod:combat/generic_frost_release"]}
+  ,"combat.generic_healing_casting": {"sounds": ["megamod:combat/generic_healing_casting"]}
+  ,"combat.generic_healing_impact_1": {"sounds": ["megamod:combat/generic_healing_impact_1"]}
+  ,"combat.generic_healing_impact_2": {"sounds": ["megamod:combat/generic_healing_impact_2"]}
+  ,"combat.generic_healing_impact_3": {"sounds": ["megamod:combat/generic_healing_impact_3"]}
+  ,"combat.generic_healing_impact_4": {"sounds": ["megamod:combat/generic_healing_impact_4"]}
+  ,"combat.generic_healing_release": {"sounds": ["megamod:combat/generic_healing_release"]}
+  ,"combat.generic_lightning_casting": {"sounds": ["megamod:combat/generic_lightning_casting"]}
+  ,"combat.generic_lightning_release": {"sounds": ["megamod:combat/generic_lightning_release"]}
+  ,"combat.generic_poison_impact": {"sounds": ["megamod:combat/generic_poison_impact"]}
+  ,"combat.generic_soul_casting": {"sounds": ["megamod:combat/generic_soul_casting"]}
+  ,"combat.generic_soul_release": {"sounds": ["megamod:combat/generic_soul_release"]}
+  ,"combat.generic_wind_charging": {"sounds": ["megamod:combat/generic_wind_charging"]}
+  ,"combat.leeching_impact": {"sounds": ["megamod:combat/leeching_impact"]}
+  ,"combat.poison_cloud_spawn": {"sounds": ["megamod:combat/poison_cloud_spawn"]}
+  ,"combat.poison_cloud_tick": {"sounds": ["megamod:combat/poison_cloud_tick"]}
+  ,"combat.radiance_impact": {"sounds": ["megamod:combat/radiance_impact"]}
+  ,"combat.signal_instant_cast": {"sounds": ["megamod:combat/signal_instant_cast"]}
+  ,"combat.signal_spell_crit": {"sounds": ["megamod:combat/signal_spell_crit"]}
+  ,"combat.speed_boost": {"sounds": ["megamod:combat/speed_boost"]}
+  ,"combat.spell_cooldown_impact": {"sounds": ["megamod:combat/spell_cooldown_impact"]}
+  ,"combat.spellbook_equip": {"sounds": ["megamod:combat/spellbook_equip"]}
+  ,"combat.stun_generic": {"sounds": ["megamod:combat/stun_generic"]}
+  ,"combat.unbind_spell": {"sounds": ["megamod:combat/unbind_spell"]}
+  ,"combat.weapon_claymore_impact": {"sounds": ["megamod:combat/weapon_claymore_impact"]}
+  ,"combat.weapon_claymore_swing": {"sounds": ["megamod:combat/weapon_claymore_swing"]}
+  ,"combat.weapon_cleave": {"sounds": ["megamod:combat/weapon_cleave"]}
+  ,"combat.weapon_dagger_impact": {"sounds": ["megamod:combat/weapon_dagger_impact"]}
+  ,"combat.weapon_dagger_throw": {"sounds": ["megamod:combat/weapon_dagger_throw"]}
+  ,"combat.weapon_dagger_travel": {"sounds": ["megamod:combat/weapon_dagger_travel"]}
+  ,"combat.weapon_ground_slam": {"sounds": ["megamod:combat/weapon_ground_slam"]}
+  ,"combat.weapon_hammer_swing": {"sounds": ["megamod:combat/weapon_hammer_swing"]}
+  ,"combat.weapon_mace_smash_impact": {"sounds": ["megamod:combat/weapon_mace_smash_impact"]}
+  ,"combat.weapon_shing_a": {"sounds": ["megamod:combat/weapon_shing_a"]}
+  ,"combat.weapon_sickle_impact_large": {"sounds": ["megamod:combat/weapon_sickle_impact_large"]}
+  ,"combat.weapon_sickle_impact_small": {"sounds": ["megamod:combat/weapon_sickle_impact_small"]}
+  ,"combat.weapon_spear_stab": {"sounds": ["megamod:combat/weapon_spear_stab"]}
+  ,"combat.weapon_spear_throw": {"sounds": ["megamod:combat/weapon_spear_throw"]}
+  ,"combat.weapon_spear_travel": {"sounds": ["megamod:combat/weapon_spear_travel"]}
+  ,"combat.weapon_swipe_launch": {"sounds": ["megamod:combat/weapon_swipe_launch"]}
+  ,"combat.weapon_sword_swing": {"sounds": ["megamod:combat/weapon_sword_swing"]}
+  ,"combat.weapon_throw": {"sounds": ["megamod:combat/weapon_throw"]}
+  ,"combat.weapon_thrust_launch": {"sounds": ["megamod:combat/weapon_thrust_launch"]}
+}

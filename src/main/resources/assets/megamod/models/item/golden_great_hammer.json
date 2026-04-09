@@ -1,0 +1,7 @@
+{
+  "parent": "megamod:item/base/great_hammer",
+  "textures": {
+    "1": "megamod:item/golden_great_hammer",
+    "particle": "megamod:item/golden_great_hammer"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/fifty_citizens",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_town_hall"
+    },
+    "title": {
+      "text": "Village"
+    },
+    "description": {
+      "text": "Have 100 citizens in your colony"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

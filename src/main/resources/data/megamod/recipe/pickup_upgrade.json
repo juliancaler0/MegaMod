@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BSB",
+    " A "
+  ],
+  "key": {
+    "A": "minecraft:ender_pearl",
+    "B": "minecraft:hopper",
+    "S": "megamod:blank_upgrade"
+  },
+  "result": {
+    "id": "megamod:pickup_upgrade",
+    "count": 1
+  }
+}

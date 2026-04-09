@@ -1,0 +1,34 @@
+{
+  "name": "Cleave",
+  "branch": "combat",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:combat/powerattack"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:diamond_axe",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_cleave",
+      "type": "UNLOCK",
+      "stat": "guard_cleave",
+      "value": 1,
+      "description": "Guards Cleave Multiple Targets"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

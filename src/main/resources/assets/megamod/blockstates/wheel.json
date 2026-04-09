@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/wheel"},
+    "facing=south": {"model": "megamod:block/wheel", "y": 180},
+    "facing=east": {"model": "megamod:block/wheel", "y": 90},
+    "facing=west": {"model": "megamod:block/wheel", "y": 270}
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Lumber Mill",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/sawmill"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "lumberjack",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_axe",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "lumber_output_3",
+      "type": "MULTIPLIER",
+      "stat": "lumber_output",
+      "value": 2.0,
+      "description": "Lumber Output x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

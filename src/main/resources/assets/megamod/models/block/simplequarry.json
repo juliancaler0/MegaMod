@@ -1,0 +1,6 @@
+{
+	"parent": "megamod:block/digsite",
+	"textures": {
+		"4": "block/spruce_planks"
+	}
+}

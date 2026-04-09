@@ -1,0 +1,34 @@
+{
+  "name": "Capacity",
+  "branch": "technology",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:technology/whatyaneed"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:chest",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "warehouse_capacity_1",
+      "type": "MODIFIER",
+      "stat": "warehouse_capacity",
+      "value": 27,
+      "description": "Warehouse +27 Slots"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

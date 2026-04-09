@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  I",
+    " SS",
+    "C N"
+  ],
+  "key": {
+    "I": {
+      "tag": "neoforge:ingots/iron"
+    },
+    "S": {
+      "tag": "neoforge:rods/wooden"
+    },
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "N": {
+      "tag": "neoforge:nuggets/iron"
+    }
+  },
+  "result": {
+    "item": "megamod:caliper",
+    "count": 1
+  }
+}

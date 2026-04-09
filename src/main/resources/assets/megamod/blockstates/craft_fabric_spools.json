@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_fabric_spools"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_fabric_spools",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_fabric_spools",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_fabric_spools",
+      "y": 270
+    }
+  }
+}

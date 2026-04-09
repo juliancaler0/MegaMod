@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GCG",
+    " G "
+  ],
+  "key": {
+    "G": "minecraft:glistering_melon_slice",
+    "C": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:healing_rune", "count": 2 }
+}

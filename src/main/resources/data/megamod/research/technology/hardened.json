@@ -1,0 +1,34 @@
+{
+  "name": "Hardened",
+  "branch": "technology",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:technology/stone_cake"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "stonemason",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:deepslate",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "stonemason_output_1",
+      "type": "MULTIPLIER",
+      "stat": "stonemason_output",
+      "value": 1.25,
+      "description": "Stonemason Output +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

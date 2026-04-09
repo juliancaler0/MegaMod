@@ -1,0 +1,34 @@
+{
+  "name": "Growth",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/hormones"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:golden_apple",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "child_growth_3",
+      "type": "MULTIPLIER",
+      "stat": "child_growth",
+      "value": 1.25,
+      "description": "Child Growth +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

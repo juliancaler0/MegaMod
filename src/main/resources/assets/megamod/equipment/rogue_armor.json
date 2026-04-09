@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:rogue_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:rogue_armor"
+      }
+    ]
+  }
+}

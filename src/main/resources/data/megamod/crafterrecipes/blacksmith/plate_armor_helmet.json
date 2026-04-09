@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "blacksmith",
+  "inputs": [
+    { "item": "minecraft:iron_ingot", "count": 5 },
+    { "item": "minecraft:leather", "count": 2 }
+  ],
+  "result": { "item": "megamod:plate_armor_helmet", "count": 1 }
+}

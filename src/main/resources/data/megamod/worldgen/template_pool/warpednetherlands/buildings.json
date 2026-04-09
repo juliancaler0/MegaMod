@@ -1,0 +1,147 @@
+{
+  "name": "megamod:warpednetherlands/buildings",
+  "fallback": "megamod:warpednetherlands/roads",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:warpednetherlands/builder1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/builder2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:warpednetherlands/deliveryman1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/deliveryman2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "location": "megamod:warpednetherlands/cook1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:warpednetherlands/farmer1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/farmer2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/tavern1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 12,
+      "element": {
+        "location": "megamod:warpednetherlands/guardtower1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/guardtower2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:warpednetherlands/residence1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/residence2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:warpednetherlands/miner1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:warpednetherlands/miner2",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:warpednetherlands/warehouse1",
+        "processors": "megamod:warpednetherlands/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

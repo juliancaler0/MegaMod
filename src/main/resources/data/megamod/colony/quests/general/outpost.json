@@ -1,0 +1,89 @@
+{
+  "name": "Outpost",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/housing2"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:state",
+      "state": {
+        "path": "citizens",
+        "match": {
+          "type": "count",
+          "level": 25
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 && 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, can you believe it? Twenty-five citizens now call this place home! What started as a humble camp in the wilderness has grown into a proper outpost. People are talking about us in the surrounding lands!",
+      "options": [
+        {
+          "answer": "We have come a long way!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Indeed we have! With twenty-five souls working together, we are no longer just surviving. We are thriving! The citizens wanted me to present you with this gift as a token of their gratitude for your leadership.",
+            "options": [
+              {
+                "answer": "I am honored! Onward and upward!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "This is just the beginning!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "That is the spirit! The citizens are proud to live here and they know the best is yet to come. Here, they pooled together some emeralds as a thank you!",
+            "options": [
+              {
+                "answer": "Thank you, everyone!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Keep growing this colony, Mayor. I have a feeling we are destined for greatness!",
+      "options": [
+        {
+          "answer": "You can count on it!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:emerald",
+        "qty": 10
+      }
+    }
+  ]
+}

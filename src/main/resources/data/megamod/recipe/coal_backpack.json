@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:coal",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:coal_backpack",
+    "count": 1
+  }
+}

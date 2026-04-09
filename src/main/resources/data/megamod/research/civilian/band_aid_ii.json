@@ -1,0 +1,34 @@
+{
+  "name": "Band Aid II",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/band_aid"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "library",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:golden_carrot",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_regen_2",
+      "type": "MULTIPLIER",
+      "stat": "citizen_regeneration",
+      "value": 1.25,
+      "description": "Citizen Regeneration +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

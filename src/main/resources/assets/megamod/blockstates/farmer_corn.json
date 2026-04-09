@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_corn"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_corn",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_corn",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_corn",
+      "y": 270
+    }
+  }
+}

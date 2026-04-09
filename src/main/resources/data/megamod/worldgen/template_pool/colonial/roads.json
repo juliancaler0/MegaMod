@@ -1,0 +1,93 @@
+{
+  "name": "megamod:colonial/roads",
+  "fallback": "megamod:colonial/buildings",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:colonial/junctiona1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:colonial/junctionb1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "megamod:colonial/junctionc1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:colonial/straighta1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:colonial/straightb1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:colonial/straightc1",
+        "processors": "megamod:colonial/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:colonial/fountain",
+        "processors": "megamod:colonial/decoration",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:colonial/park",
+        "processors": "megamod:colonial/decoration",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:colonial/parkway",
+        "processors": "megamod:colonial/decoration",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

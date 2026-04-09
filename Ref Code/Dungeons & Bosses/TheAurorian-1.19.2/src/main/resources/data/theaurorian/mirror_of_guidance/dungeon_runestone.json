@@ -1,0 +1,10 @@
+{
+  "icon": "theaurorian:runestone",
+  "x": -120,
+  "y": 40,
+  "border": "BLUE",
+  "children": [
+    "theaurorian:dungeon_darkstone",
+    "theaurorian:aurorianite"
+  ]
+}

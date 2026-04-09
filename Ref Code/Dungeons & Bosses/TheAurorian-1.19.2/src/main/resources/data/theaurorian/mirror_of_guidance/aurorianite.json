@@ -1,0 +1,8 @@
+{
+  "icon": "theaurorian:aurorianite_ingot",
+  "x": -120,
+  "y": 80,
+  "children": [
+    "theaurorian:aurorian_steel"
+  ]
+}

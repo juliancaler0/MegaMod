@@ -1,0 +1,120 @@
+{
+  "name": "Flower Power",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/composter2"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/composter2"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, do not take this the wrong way, but our colony is looking rather... drab. All stone and wood and dirt. Some of the citizens have been complaining that it feels dreary. A few flowers and some greenery would do wonders for morale!",
+      "options": [
+        {
+          "answer": "You know what, you are right. What do you suggest?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build a Flower Shop! The florist will grow and arrange beautiful flowers all around the colony. Happy citizens are productive citizens, and nothing brightens the day quite like a splash of color!",
+            "options": [
+              {
+                "answer": "Let us beautify this place!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already have one blooming!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "Oh! No wonder the colony has been looking so pretty lately! Thank you, Mayor!",
+                  "options": [
+                    {
+                      "answer": "Beauty is important too!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:florist",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0, 1, 2],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The flower shop is blooming! The florist will plant flowers around the colony, boosting citizen happiness and making everything look wonderful. Here are some flowers to help them get started with their arrangements!",
+      "options": [
+        {
+          "answer": "Our colony has never looked better!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:poppy",
+        "qty": 4
+      }
+    },
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:dandelion",
+        "qty": 4
+      }
+    },
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:cornflower",
+        "qty": 4
+      }
+    }
+  ]
+}

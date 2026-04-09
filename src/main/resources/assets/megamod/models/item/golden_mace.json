@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/base/mace",
+  "textures": {
+    "1": "megamod:item/golden_mace"
+  }
+}

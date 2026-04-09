@@ -1,0 +1,34 @@
+{
+  "name": "Master Plan",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/more_books"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:bookshelf",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "study_xp_2",
+      "type": "MULTIPLIER",
+      "stat": "study_xp",
+      "value": 1.1,
+      "description": "Study XP +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Nurture",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/higher_learning"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:cooked_chicken",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "child_growth_1",
+      "type": "MULTIPLIER",
+      "stat": "child_growth",
+      "value": 1.05,
+      "description": "Child Growth +5%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

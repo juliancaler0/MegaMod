@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.wizards.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "effect.LivingEntityFrostShield",
+    "effect.LivingEntityFrozen",
+    "effect.ServerWorldFrostShield"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

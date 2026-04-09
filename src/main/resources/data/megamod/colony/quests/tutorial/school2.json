@@ -1,0 +1,106 @@
+{
+  "name": "The Next Generation",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/library"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/library"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, have you noticed all the children running around the colony? They are full of energy but have nothing productive to do. If we build a school, we can give them a proper education and raise the next generation of skilled workers!",
+      "options": [
+        {
+          "answer": "The children deserve an education!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Exactly! A School will educate the young ones and when they grow up, they will start with higher base skills than untrained adults. It is an investment in the future of our colony. Craft the hut block, place it, and let your builder handle the rest!",
+            "options": [
+              {
+                "answer": "For the future!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already built one!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You are always thinking ahead! The children will be so happy!",
+                  "options": [
+                    {
+                      "answer": "They deserve the best!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:school",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The school bell is ringing! The teacher will keep the children busy learning valuable skills. As they grow up, they will become far more capable workers than those who never attended. Here are some books for the classroom!",
+      "options": [
+        {
+          "answer": "Education changes everything!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:book",
+        "qty": 5
+      }
+    }
+  ]
+}

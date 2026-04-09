@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "megamod:block/wall/wall_post_spec"
+  }
+}

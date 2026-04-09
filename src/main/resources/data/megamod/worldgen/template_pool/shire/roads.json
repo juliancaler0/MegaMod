@@ -1,0 +1,69 @@
+{
+  "name": "megamod:shire/roads",
+  "fallback": "megamod:shire/buildings",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:shire/intersection",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:shire/long",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "megamod:shire/large",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:shire/short",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:shire/small",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:shire/tjunction",
+        "processors": "megamod:shire/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:shire/parkway",
+        "processors": "megamod:shire/decoration",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    }
+  ]
+}

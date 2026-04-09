@@ -1,0 +1,34 @@
+{
+  "name": "Hamlet",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/outpost"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "residence",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:cooked_beef",
+      "count": 128
+    }
+  ],
+  "effects": [
+    {
+      "id": "max_citizens_75",
+      "type": "MODIFIER",
+      "stat": "max_citizens",
+      "value": 25,
+      "description": "Max Citizens +25 (75)"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

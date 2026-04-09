@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:frost_robe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:frost_robe"
+      }
+    ]
+  }
+}

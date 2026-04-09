@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_painting"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_painting",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_painting",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_painting",
+      "y": 270
+    }
+  }
+}

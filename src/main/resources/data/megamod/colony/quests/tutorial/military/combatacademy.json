@@ -1,0 +1,106 @@
+{
+  "name": "Blade Masters",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/military/guards"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/military/guards"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, the archers are getting their training but what about our melee fighters? The knights are brave, but bravery alone will not stop a creeper. They need proper combat training with swords and shields!",
+      "options": [
+        {
+          "answer": "You are right, our knights need training too!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build a Combat Academy! It is a training facility where your knights can spar and learn advanced fighting techniques. A well-trained knight is worth ten untrained soldiers. They will learn to block, parry, and strike with deadly precision!",
+            "options": [
+              {
+                "answer": "Let us forge some warriors!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already have one!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "Excellent foresight, Mayor! Our knights will be unstoppable!",
+                  "options": [
+                    {
+                      "answer": "The best defense is a strong offense!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:combatacademy",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Combat Academy is open! Your knights are already sparring and improving their combat skills. With archers at the archery range and knights at the academy, our colony's military is becoming a true fighting force! Here is a sword for the training grounds!",
+      "options": [
+        {
+          "answer": "Our enemies do not stand a chance!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:iron_sword",
+        "qty": 1
+      }
+    }
+  ]
+}

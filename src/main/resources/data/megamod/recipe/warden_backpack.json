@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:sculk",
+    "B": "minecraft:sculk_catalyst",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:warden_backpack",
+    "count": 1
+  }
+}

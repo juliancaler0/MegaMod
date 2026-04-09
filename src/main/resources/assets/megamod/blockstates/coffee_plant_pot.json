@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/coffee_plant_pot"},
+    "facing=south": {"model": "megamod:block/coffee_plant_pot", "y": 180},
+    "facing=east": {"model": "megamod:block/coffee_plant_pot", "y": 90},
+    "facing=west": {"model": "megamod:block/coffee_plant_pot", "y": 270}
+  }
+}

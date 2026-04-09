@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/caribbean_palm_tree" },
+    "facing=south": { "model": "megamod:block/caribbean_palm_tree", "y": 180 },
+    "facing=east": { "model": "megamod:block/caribbean_palm_tree", "y": 90 },
+    "facing=west": { "model": "megamod:block/caribbean_palm_tree", "y": 270 }
+  }
+}

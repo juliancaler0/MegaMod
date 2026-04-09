@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BSB",
+    " A "
+  ],
+  "key": {
+    "A": "minecraft:golden_apple",
+    "B": "minecraft:golden_carrot",
+    "S": "megamod:blank_upgrade"
+  },
+  "result": {
+    "id": "megamod:feeding_upgrade",
+    "count": 1
+  }
+}

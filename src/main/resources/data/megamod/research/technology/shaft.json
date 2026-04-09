@@ -1,0 +1,34 @@
+{
+  "name": "Shaft",
+  "branch": "technology",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:technology/vein_miner"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:diamond_pickaxe",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "mining_depth_1",
+      "type": "MULTIPLIER",
+      "stat": "mining_depth",
+      "value": 1.25,
+      "description": "Mining Depth +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

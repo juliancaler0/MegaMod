@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "theaurorian:block/silentwood_slab"
+    },
+    "type=double": {
+      "model": "theaurorian:block/silentwood_planks"
+    },
+    "type=top": {
+      "model": "theaurorian:block/silentwood_slab_top"
+    }
+  }
+}

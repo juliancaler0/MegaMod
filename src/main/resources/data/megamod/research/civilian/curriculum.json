@@ -1,0 +1,34 @@
+{
+  "name": "Curriculum",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/master_plan"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "study_xp_3",
+      "type": "MULTIPLIER",
+      "stat": "study_xp",
+      "value": 1.25,
+      "description": "Study XP +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

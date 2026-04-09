@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:ender_pearl",
+    "B": "minecraft:chorus_fruit",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:enderman_backpack",
+    "count": 1
+  }
+}

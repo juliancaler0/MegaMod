@@ -1,0 +1,21 @@
+{
+  "values": [
+    "archers:flint_spear",
+    "archers:iron_spear",
+    "archers:golden_spear",
+    "archers:diamond_spear",
+    "archers:netherite_spear",
+    {
+      "id": "archers:aeternium_spear",
+      "required": false
+    },
+    {
+      "id": "archers:ruby_spear",
+      "required": false
+    },
+    {
+      "id": "archers:aether_spear",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino2_doggie_cash"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino2_doggie_cash",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino2_doggie_cash",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino2_doggie_cash",
+      "y": 270
+    }
+  }
+}

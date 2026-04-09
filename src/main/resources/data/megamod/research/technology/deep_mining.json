@@ -1,0 +1,32 @@
+{
+  "name": "Deep Mining",
+  "branch": "technology",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:cobblestone",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "mining_speed_1",
+      "type": "MULTIPLIER",
+      "stat": "mining_speed",
+      "value": 1.1,
+      "description": "Mining Speed +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

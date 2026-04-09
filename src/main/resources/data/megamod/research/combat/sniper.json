@@ -1,0 +1,34 @@
+{
+  "name": "Sniper",
+  "branch": "combat",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:combat/deadlyaim"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "archery",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "ranged_accuracy_3",
+      "type": "MULTIPLIER",
+      "stat": "ranged_accuracy",
+      "value": 2.0,
+      "description": "Ranged Accuracy x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

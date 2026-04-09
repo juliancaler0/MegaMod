@@ -1,0 +1,34 @@
+{
+  "name": "Eternal Growth",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/hydroponics"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "farm",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "crop_growth_max",
+      "type": "MULTIPLIER",
+      "stat": "crop_growth",
+      "value": 2.0,
+      "description": "Crop Growth x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

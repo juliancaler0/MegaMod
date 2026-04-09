@@ -1,0 +1,49 @@
+{
+  "required": true,
+  "package": "org.dimdev.dimdoors.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "mixins": [
+    "ArgumentTypesMixin",
+    "BlockMixin",
+    "DoorBlockMixin",
+    "DoublePlantBlockMixin",
+    "EntityMixin",
+    "ExplosionMixin",
+    "ExtendedServerPlayNetworkhandlerMixin",
+    "ItemMixin",
+    "ItemMixin$SettingsMixin",
+    "NetherFortressPiecesAccessor",
+    "NetherFortressPiecesMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin",
+    "ServerPlayerInteractionManagerMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "ServerWorldMixin",
+    "ThreadedAnvilChunkStorageMixin",
+    "TrapDoorMixin",
+    "accessor.BlockEntityTypeAccessor",
+    "accessor.ChunkGeneratorAccessor",
+    "accessor.DefaultParticleTypeAccessor",
+    "accessor.DirectionAccessor",
+    "accessor.EntityAccessor",
+    "accessor.GenerationSettingsAccessor",
+    "accessor.ListTagAccessor",
+    "accessor.RedstoneWireBlockAccessor"
+  ],
+  "client": [
+    "client.BackgroundRendererMixin",
+    "client.BuiltinModelItemRendererMixin",
+    "client.ClientPlayerInteractionManagerMixin",
+    "client.ExtendedClientPlayNetworkHandlerMixin",
+    "client.InGameHudMixin",
+    "client.PostProcessShaderMixin",
+    "client.WorldRendererMixin",
+    "client.accessor.DimensionSpecialEffectsMixin",
+    "client.accessor.WorldRendererAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "dimdoors-common-refmap.json"
+}

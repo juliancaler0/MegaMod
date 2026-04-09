@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_wood_box"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_wood_box",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_wood_box",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_wood_box",
+      "y": 270
+    }
+  }
+}

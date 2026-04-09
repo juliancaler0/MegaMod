@@ -1,0 +1,34 @@
+{
+  "name": "Phalanx",
+  "branch": "combat",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:combat/shieldwall"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_block",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "shield_block_2",
+      "type": "MULTIPLIER",
+      "stat": "shield_block_chance",
+      "value": 1.25,
+      "description": "Shield Block +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

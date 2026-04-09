@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:ink_sac",
+    "B": "minecraft:prismarine_shard",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:squid_backpack",
+    "count": 1
+  }
+}

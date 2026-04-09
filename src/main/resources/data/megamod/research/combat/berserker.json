@@ -1,0 +1,34 @@
+{
+  "name": "Berserker",
+  "branch": "combat",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:combat/whirlwind"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "melee_damage_max",
+      "type": "MULTIPLIER",
+      "stat": "melee_damage",
+      "value": 1.5,
+      "description": "Melee Damage +50%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

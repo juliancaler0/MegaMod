@@ -1,0 +1,34 @@
+{
+  "name": "Volley",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/multishot"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "archery",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:crossbow",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_volley_fire",
+      "type": "UNLOCK",
+      "stat": "volley_fire",
+      "value": 1,
+      "description": "Archers Fire in Volleys"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

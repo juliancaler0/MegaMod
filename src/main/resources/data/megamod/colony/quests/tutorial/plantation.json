@@ -1,0 +1,106 @@
+{
+  "name": "Let It Grow",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/farm"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/farm"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, the farmer grows wheat, potatoes, and carrots just fine, but there are crops that need special care. Sugar cane, bamboo, cactus, and cocoa beans all require different growing conditions. We need a dedicated plantation for these!",
+      "options": [
+        {
+          "answer": "A plantation? Tell me more!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "The Plantation is designed specifically for growing tall and exotic crops that the regular farm cannot handle. Sugar cane for paper and sugar, bamboo for scaffolding, and much more! Build the hut, place it, and assign a worker!",
+            "options": [
+              {
+                "answer": "Time to diversify our agriculture!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already growing exotic crops!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "Wonderful! The colony's agricultural diversity is impressive!",
+                  "options": [
+                    {
+                      "answer": "Variety is the spice of life!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:plantation",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The plantation is flourishing! Your new worker is already tending to the exotic crops. Sugar cane, bamboo, and more will be produced in abundance. Here is some sugar cane to get the plantation started!",
+      "options": [
+        {
+          "answer": "Our fields stretch as far as the eye can see!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:sugar_cane",
+        "qty": 8
+      }
+    }
+  ]
+}

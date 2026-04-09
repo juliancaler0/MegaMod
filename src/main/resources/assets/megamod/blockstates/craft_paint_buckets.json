@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_paint_buckets"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_paint_buckets",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_paint_buckets",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_paint_buckets",
+      "y": 270
+    }
+  }
+}

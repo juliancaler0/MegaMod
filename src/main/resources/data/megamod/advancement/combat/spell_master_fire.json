@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:staff_netherite_fire"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_master_fire.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_master_fire.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "megamod:spell_novice_fire",
+  "criteria": {
+    "bind": {
+      "trigger": "megamod:spell_binding",
+      "conditions": {
+        "complete": true,
+        "spell_pool": "megamod:spell_book/fire"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bind"
+    ]
+  ]
+}

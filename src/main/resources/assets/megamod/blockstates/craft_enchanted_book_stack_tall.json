@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_enchanted_book_stack_tall"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_enchanted_book_stack_tall",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_enchanted_book_stack_tall",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_enchanted_book_stack_tall",
+      "y": 270
+    }
+  }
+}

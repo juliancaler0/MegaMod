@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/ghast_backpack" },
+    "facing=south": { "model": "megamod:block/ghast_backpack", "y": 180 },
+    "facing=east": { "model": "megamod:block/ghast_backpack", "y": 90 },
+    "facing=west": { "model": "megamod:block/ghast_backpack", "y": 270 }
+  }
+}

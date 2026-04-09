@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_box"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_box",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_box",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_box",
+      "y": 270
+    }
+  }
+}

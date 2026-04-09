@@ -1,0 +1,34 @@
+{
+  "name": "Circus",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/first_aid"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "dining_hall",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:cake",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_happiness_1",
+      "type": "MULTIPLIER",
+      "stat": "citizen_happiness",
+      "value": 1.05,
+      "description": "Citizen Happiness +5%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,48 @@
+{
+    "name": "cave.lush",
+    "regions": [
+        "cave"
+    ],
+    "biome-type": "underground",
+    "min-height-relative": {
+        "max": -2,
+        "fade": 2
+    },
+    "features": [
+        "lush"
+    ],
+    "sounds": [
+        {
+            "name": "cave-lush",
+            "category": "cave",
+            "files": [
+                "megamod:ambient.cave.cave-lush"
+            ],
+            "length": {
+                "min": 100,
+                "max": 500
+            },
+            "pause": {
+                "min": 250,
+                "max": 500
+            },
+            "volume": 0.4
+        },
+        {
+            "name": "frog",
+            "category": "animal",
+            "files": [
+                "megamod:ambient.animals.frog-cave1"
+            ],
+            "volume": 0.3,
+            "length": {
+                "min": 100,
+                "max": 300
+            },
+            "pause": {
+                "min": 100,
+                "max": 750
+            }
+        }
+    ]
+}

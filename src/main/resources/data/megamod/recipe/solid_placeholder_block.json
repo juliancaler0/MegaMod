@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["LIL", "ILI", "LIL"],
+  "key": {
+    "L": "minecraft:oak_log",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": { "id": "megamod:solid_placeholder_block", "count": 32 }
+}

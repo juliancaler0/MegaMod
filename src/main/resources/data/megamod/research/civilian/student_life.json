@@ -1,0 +1,34 @@
+{
+  "name": "Student Life",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/scholar"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:experience_bottle",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "teaching_effectiveness_2",
+      "type": "MULTIPLIER",
+      "stat": "teaching_effectiveness",
+      "value": 1.25,
+      "description": "Teaching Effectiveness +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

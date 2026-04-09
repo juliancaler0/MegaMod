@@ -1,0 +1,35 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.bettercombat.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DataComponentTypesMixin",
+    "EnchantmentMixin",
+    "ItemStackMixin",
+    "RangedWeaponItemMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "player.LivingEntityAccessor",
+    "player.LivingEntityMixin",
+    "player.PlayerEntityAccessor",
+    "player.PlayerEntityMixin",
+    "player.PlayerEntityRangeMixin",
+    "player.PlayerInventoryAccessor"
+  ],
+  "client": [
+    "client.AbstractClientPlayerEntityMixin",
+    "client.ClientPlayerEntityMixin",
+    "client.ClientPlayerInteractionManagerMixin",
+    "client.ClientPlayNetworkHandlerMixin",
+    "client.EntityHitboxDebugRendererMixin",
+    "client.InGameHudInject",
+    "client.ItemStackTooltipMixin",
+    "client.MinecraftClientAccessor",
+    "client.MinecraftClientInject"
+  ],
+  "server": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

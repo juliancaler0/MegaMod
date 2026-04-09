@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_street_lamp_upper_quadruple"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_street_lamp_upper_quadruple",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_street_lamp_upper_quadruple",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_street_lamp_upper_quadruple",
+      "y": 270
+    }
+  }
+}

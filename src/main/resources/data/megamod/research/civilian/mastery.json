@@ -1,0 +1,34 @@
+{
+  "name": "Mastery",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/doctorate"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "library",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_xp_4",
+      "type": "MULTIPLIER",
+      "stat": "citizen_xp_growth",
+      "value": 2.0,
+      "description": "Citizen XP Growth x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/iron_bars_post",
+  "textures": {
+    "bars": "megamod:block/dungeon_gate",
+    "particle": "megamod:block/dungeon_gate"
+  }
+}

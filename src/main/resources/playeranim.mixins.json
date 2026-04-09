@@ -1,0 +1,24 @@
+{
+  "required": true,
+  "package": "com.ultra.megamod.lib.playeranim.minecraft.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AvatarMixin",
+    "AvatarRendererMixin",
+    "AvatarRenderStateMixin",
+    "CapeModelAccessor",
+    "ElytraLayerMixin",
+    "ItemInHandLayerMixin",
+    "LivingEntityRendererMixin",
+    "PlayerCapeModelMixin",
+    "PlayerModelMixin",
+    "firstPerson.HumanoidArmorLayerMixin",
+    "firstPerson.ItemInHandLayerMixin",
+    "firstPerson.ItemInHandRendererMixin",
+    "firstPerson.LevelRendererMixin",
+    "firstPerson.LivingEntityRendererMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Ancient Lumber",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/lumber_mill"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "lumberjack",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "lumber_output_max",
+      "type": "MULTIPLIER",
+      "stat": "lumber_output",
+      "value": 3.0,
+      "description": "Lumber Output x3"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

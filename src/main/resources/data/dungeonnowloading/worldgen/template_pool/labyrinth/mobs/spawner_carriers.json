@@ -1,0 +1,8 @@
+{
+  "fallback": "dungeonnowloading:labyrinth/mobs/spawner_carriers",
+  "elements": [
+    { "weight": 2, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_zombie", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_skeleton", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_spider", "projection": "rigid" } }
+  ]
+}

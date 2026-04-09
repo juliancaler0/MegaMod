@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/modern_computerchair" },
+    "facing=south": { "model": "megamod:block/modern_computerchair", "y": 180 },
+    "facing=east": { "model": "megamod:block/modern_computerchair", "y": 90 },
+    "facing=west": { "model": "megamod:block/modern_computerchair", "y": 270 }
+  }
+}

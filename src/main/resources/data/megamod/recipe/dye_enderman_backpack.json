@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:magenta_dye"
+  ],
+  "result": {
+    "id": "megamod:enderman_backpack",
+    "count": 1
+  }
+}

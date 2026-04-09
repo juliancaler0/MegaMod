@@ -1,0 +1,32 @@
+{
+  "name": "Improved Bows",
+  "branch": "combat",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "archery",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:bow",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "ranged_damage_1",
+      "type": "MULTIPLIER",
+      "stat": "ranged_damage",
+      "value": 1.1,
+      "description": "Ranged Damage +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:monk",
+    "megamod:arms_merchant",
+    "megamod:archery_artisan",
+    "megamod:wizard_merchant",
+    "megamod:jeweler"
+  ]
+}

@@ -1,0 +1,31 @@
+plugins {
+    id 'fabric-loom' version '1.6+'
+    id 'com.modrinth.minotaur' version '2.+'
+}
+
+group = "team.creative"
+
+repositories {
+    maven {
+        url = "https://api.modrinth.com/maven"
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "maven.modrinth:modmenu:${project.modmenu_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	
+    implementation project(path: ':CreativeCore', configuration: 'namedElements')
+}
+
+modDependencies = [
+    creativecore: ">=" + creativecore_version
+]
+modSides=[ "client" ]
+
+loom.mixin {
+    defaultRefmapName = "ambientsounds.mixins.refmap.json"
+}

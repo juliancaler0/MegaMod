@@ -1,0 +1,34 @@
+{
+  "name": "Metropolis",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/city"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "max_citizens_150",
+      "type": "MODIFIER",
+      "stat": "max_citizens",
+      "value": 50,
+      "description": "Max Citizens +50 (150)"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

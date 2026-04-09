@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "enchanter",
+  "inputs": [
+    { "item": "minecraft:paper", "count": 3 },
+    { "item": "minecraft:ender_pearl", "count": 2 }
+  ],
+  "result": { "item": "megamod:scroll_area_tp", "count": 3 }
+}

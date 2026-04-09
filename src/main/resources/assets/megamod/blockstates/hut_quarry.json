@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/hut_quarry" },
+    "facing=east": { "model": "megamod:block/hut_quarry", "y": 90 },
+    "facing=south": { "model": "megamod:block/hut_quarry", "y": 180 },
+    "facing=west": { "model": "megamod:block/hut_quarry", "y": 270 }
+  }
+}

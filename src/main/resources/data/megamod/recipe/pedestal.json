@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" S ", " S ", "SSS"],
+  "key": {
+    "S": "minecraft:stone_bricks"
+  },
+  "result": { "id": "megamod:pedestal", "count": 1 }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_under_construction"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_under_construction",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_under_construction",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_under_construction",
+      "y": 270
+    }
+  }
+}

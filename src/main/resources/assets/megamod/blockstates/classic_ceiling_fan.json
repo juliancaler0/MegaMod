@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/classic_ceiling_fan"
+    },
+    "facing=south": {
+      "model": "megamod:block/classic_ceiling_fan",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/classic_ceiling_fan",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/classic_ceiling_fan",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_rice_basket"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_rice_basket",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_rice_basket",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_rice_basket",
+      "y": 270
+    }
+  }
+}

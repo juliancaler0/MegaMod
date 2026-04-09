@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:snow_block",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:snow_backpack",
+    "count": 1
+  }
+}

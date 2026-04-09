@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SLS",
+    "L L",
+    "SLS"
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "L": "minecraft:leather"
+  },
+  "result": { "id": "megamod:small_rune_pouch", "count": 1 }
+}

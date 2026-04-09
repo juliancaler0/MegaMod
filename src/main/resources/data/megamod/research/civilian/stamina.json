@@ -1,0 +1,26 @@
+{
+  "name": "Stamina",
+  "branch": "civilian",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:carrot",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_hospital",
+      "type": "UNLOCK",
+      "stat": "hospital",
+      "value": 1,
+      "description": "Unlocks Hospital"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

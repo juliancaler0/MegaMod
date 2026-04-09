@@ -1,0 +1,34 @@
+{
+  "name": "Undertaker Emergency",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/remembrance"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_boots",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_undertaker_run",
+      "type": "UNLOCK",
+      "stat": "undertaker_run",
+      "value": 1,
+      "description": "Undertaker Run Ability"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

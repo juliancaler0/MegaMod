@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:staff_frost"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_novice_frost.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_novice_frost.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "megamod:path_choose_frost",
+  "criteria": {
+    "bind": {
+      "trigger": "megamod:spell_binding",
+      "conditions": {
+        "complete": false,
+        "spell_pool": "megamod:spell_book/frost"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bind"
+    ]
+  ]
+}

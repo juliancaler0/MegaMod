@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "megamod:block/mediumquarry",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "megamod:block/mediumquarry",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "megamod:block/mediumquarry",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "megamod:block/mediumquarry",
+      "y": 0
+    }
+  }
+}

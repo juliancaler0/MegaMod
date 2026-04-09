@@ -1,0 +1,31 @@
+{
+  "parent": "megamod:colony/barracks",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_archery"
+    },
+    "title": {
+      "text": "Training Grounds"
+    },
+    "description": {
+      "text": "Place both an Archery and Combat Academy"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "archery": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_archery"
+      }
+    },
+    "combat_academy": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_combat_academy"
+      }
+    }
+  }
+}

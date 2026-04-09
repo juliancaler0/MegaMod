@@ -1,0 +1,34 @@
+{
+  "name": "Teleport",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/express"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:ender_pearl",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_teleport_delivery",
+      "type": "UNLOCK",
+      "stat": "teleport_delivery",
+      "value": 1,
+      "description": "Instant Delivery"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

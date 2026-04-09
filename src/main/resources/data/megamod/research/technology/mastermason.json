@@ -1,0 +1,34 @@
+{
+  "name": "Master Mason",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/reinforced"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "stonemason",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_bricks",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "stonemason_speed_3",
+      "type": "MULTIPLIER",
+      "stat": "stonemason_speed",
+      "value": 1.5,
+      "description": "Stonemason Speed +50%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Death Strike",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/criticalstrike"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_sword",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "melee_crit_3",
+      "type": "MULTIPLIER",
+      "stat": "melee_crit_chance",
+      "value": 1.25,
+      "description": "Melee Crit +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

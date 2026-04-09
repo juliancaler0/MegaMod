@@ -1,0 +1,34 @@
+{
+  "name": "Unbreaking",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/mending"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_pickaxe",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "tool_durability_3",
+      "type": "MULTIPLIER",
+      "stat": "tool_durability",
+      "value": 2.0,
+      "description": "Tool Durability x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

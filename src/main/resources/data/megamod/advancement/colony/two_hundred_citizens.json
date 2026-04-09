@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/hundred_citizens",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_town_hall"
+    },
+    "title": {
+      "text": "Metropolis"
+    },
+    "description": {
+      "text": "Have 200 citizens in your colony"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

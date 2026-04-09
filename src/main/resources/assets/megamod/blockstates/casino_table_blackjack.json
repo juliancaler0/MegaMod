@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_table_blackjack"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_table_blackjack",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_table_blackjack",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_table_blackjack",
+      "y": 270
+    }
+  }
+}

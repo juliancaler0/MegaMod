@@ -1,0 +1,34 @@
+{
+  "name": "PhD",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/memorization"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "library",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_learning_speed_2",
+      "type": "MULTIPLIER",
+      "stat": "citizen_learning_speed",
+      "value": 1.25,
+      "description": "Citizen Learning Speed +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

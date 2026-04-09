@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "megamod:block/fluid_placeholder_block" }
+  }
+}

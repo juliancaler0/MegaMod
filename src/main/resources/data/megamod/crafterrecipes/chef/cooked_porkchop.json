@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "chef",
+  "inputs": [
+    { "item": "minecraft:porkchop", "count": 1 }
+  ],
+  "result": { "item": "minecraft:cooked_porkchop", "count": 1 }
+}

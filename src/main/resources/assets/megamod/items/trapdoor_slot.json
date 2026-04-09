@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "megamod:block/trapdoor/trapdoor_slot_spec"
+  }
+}

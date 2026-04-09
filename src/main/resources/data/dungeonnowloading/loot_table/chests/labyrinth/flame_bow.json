@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:bow", "weight": 1, "functions": [{ "function": "minecraft:set_name", "name": {"text": "Flame Bow", "color": "gold", "italic": false} }] }
+      ]
+    },
+    {
+      "rolls": { "min": 1, "max": 3 },
+      "entries": [
+        { "type": "minecraft:item", "name": "minecraft:arrow", "weight": 10, "functions": [{ "function": "minecraft:set_count", "count": { "min": 8, "max": 32 } }] }
+      ]
+    }
+  ]
+}

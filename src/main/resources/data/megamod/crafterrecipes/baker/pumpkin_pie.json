@@ -1,0 +1,10 @@
+{
+  "type": "recipe",
+  "crafter": "baker",
+  "inputs": [
+    { "item": "minecraft:pumpkin", "count": 1 },
+    { "item": "minecraft:sugar", "count": 1 },
+    { "item": "minecraft:egg", "count": 1 }
+  ],
+  "result": { "item": "minecraft:pumpkin_pie", "count": 1 }
+}

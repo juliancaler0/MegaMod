@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:light_blue_dye"
+  ],
+  "result": {
+    "id": "megamod:diamond_backpack",
+    "count": 1
+  }
+}

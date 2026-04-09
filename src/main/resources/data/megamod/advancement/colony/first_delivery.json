@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/warehouse_placed",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_deliveryman"
+    },
+    "title": {
+      "text": "Special Delivery"
+    },
+    "description": {
+      "text": "Have a courier deliver an item"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

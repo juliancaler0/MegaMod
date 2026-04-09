@@ -1,0 +1,34 @@
+{
+  "name": "Grave Decay III",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/grave_decay_ii"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:soul_sand",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "grave_decay_3",
+      "type": "MODIFIER",
+      "stat": "grave_decay_time",
+      "value": 1200,
+      "description": "Graves decay 20 min slower"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,101 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "megamod:block/sculptor_trophy",
+		"particle": "megamod:block/sculptor_trophy"
+	},
+	"elements": [
+		{
+			"name": "base_wide",
+			"from": [3, 0, 3],
+			"to": [13, 2, 13],
+			"faces": {
+				"north": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"east": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"west": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"up": {"uv": [3, 4, 13, 14], "texture": "#0"},
+				"down": {"uv": [3, 4, 13, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_mid",
+			"from": [4, 2, 4],
+			"to": [12, 4, 12],
+			"faces": {
+				"north": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"east": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"south": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"west": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_top",
+			"from": [5, 4, 5],
+			"to": [11, 6, 11],
+			"faces": {
+				"north": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"east": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"south": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"west": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#0"}
+			}
+		},
+		{
+			"name": "golem_head",
+			"from": [5, 7, 5],
+			"to": [11, 13, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"up": {"uv": [5, 0, 11, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "pillar_l",
+			"from": [3, 4, 7],
+			"to": [5, 11, 9],
+			"faces": {
+				"north": {"uv": [0, 5, 2, 12], "texture": "#0"},
+				"south": {"uv": [0, 5, 2, 12], "texture": "#0"},
+				"west": {"uv": [0, 5, 2, 12], "texture": "#0"},
+				"up": {"uv": [0, 5, 2, 7], "texture": "#0"}
+			}
+		},
+		{
+			"name": "pillar_r",
+			"from": [11, 4, 7],
+			"to": [13, 11, 9],
+			"faces": {
+				"north": {"uv": [14, 5, 16, 12], "texture": "#0"},
+				"south": {"uv": [14, 5, 16, 12], "texture": "#0"},
+				"east": {"uv": [14, 5, 16, 12], "texture": "#0"},
+				"up": {"uv": [14, 5, 16, 7], "texture": "#0"}
+			}
+		},
+		{
+			"name": "crystal",
+			"from": [7, 13, 7],
+			"to": [9, 15, 9],
+			"faces": {
+				"north": {"uv": [3, 0, 5, 2], "texture": "#0"},
+				"east": {"uv": [3, 0, 5, 2], "texture": "#0"},
+				"south": {"uv": [3, 0, 5, 2], "texture": "#0"},
+				"west": {"uv": [3, 0, 5, 2], "texture": "#0"},
+				"up": {"uv": [3, 0, 5, 2], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"thirdperson_lefthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"firstperson_lefthand": {"rotation": [0, 225, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"ground": {"translation": [0, 3, 0], "scale": [0.25, 0.25, 0.25]},
+		"gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.625, 0.625, 0.625]},
+		"fixed": {"scale": [0.5, 0.5, 0.5]}
+	}
+}

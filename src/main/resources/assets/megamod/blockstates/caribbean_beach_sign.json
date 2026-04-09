@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/caribbean_beach_sign" },
+    "facing=south": { "model": "megamod:block/caribbean_beach_sign", "y": 180 },
+    "facing=east": { "model": "megamod:block/caribbean_beach_sign", "y": 90 },
+    "facing=west": { "model": "megamod:block/caribbean_beach_sign", "y": 270 }
+  }
+}

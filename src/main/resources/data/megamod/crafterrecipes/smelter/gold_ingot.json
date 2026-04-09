@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "smelter",
+  "inputs": [
+    { "item": "minecraft:raw_gold", "count": 1 }
+  ],
+  "result": { "item": "minecraft:gold_ingot", "count": 1 }
+}

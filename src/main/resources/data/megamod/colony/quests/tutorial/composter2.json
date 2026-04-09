@@ -1,0 +1,106 @@
+{
+  "name": "Going Green",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/school2"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/school2"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, I have been talking with the farmer and they are frustrated. The crops just are not growing fast enough to feed everyone. They said if we had some proper fertilizer, the fields would produce twice as much food!",
+      "options": [
+        {
+          "answer": "Fertilizer? Where do we get that?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Simple! Build a Composter's Hut. The composter will turn all our leftover food scraps, seeds, and plant matter into bone meal fertilizer. It is recycling at its finest! Your farmer will love it!",
+            "options": [
+              {
+                "answer": "Reduce, reuse, recycle!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already got one!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You already thought of that? The farmer must be over the moon!",
+                  "options": [
+                    {
+                      "answer": "Green thumbs all around!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:composter",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The composter is hard at work turning waste into wonderful fertilizer! Your farmer will see much better crop yields now. Nothing goes to waste in this colony! Here is some bone meal to get a head start!",
+      "options": [
+        {
+          "answer": "Our colony is going green!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:bone_meal",
+        "qty": 16
+      }
+    }
+  ]
+}

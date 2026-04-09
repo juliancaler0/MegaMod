@@ -1,0 +1,111 @@
+{
+  "school": "spell_power:healing",
+  "range": 16.0,
+  "group": "primary",
+  "tier": 1,
+  "learn": {},
+  "active": {
+    "cast": {
+      "duration": 1.5,
+      "animation": {
+        "id": "spell_engine:one_handed_projectile_charge"
+      },
+      "sound": {
+        "id": "spell_engine:generic_healing_casting",
+        "randomness": 0.0
+      },
+      "particles": [
+        {
+          "particle_id": "spell_engine:magic_spark_float",
+          "origin": "FEET",
+          "shape": "WIDE_PIPE",
+          "count": 1.0,
+          "min_speed": 0.05,
+          "max_speed": 0.1,
+          "color_rgba": 4294954239
+        }
+      ]
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "spell_engine:one_handed_healing_release"
+    },
+    "sound": {
+      "id": "spell_engine:generic_healing_release"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {
+      "sticky": true,
+      "use_caster_as_fallback": true
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "HEAL",
+        "heal": {
+          "spell_power_coefficient": 0.4
+        }
+      },
+      "particles": [
+        {
+          "particle_id": "spell_engine:magic_heal_ascend",
+          "origin": "FEET",
+          "shape": "PILLAR",
+          "count": 15.0,
+          "min_speed": 0.02,
+          "max_speed": 0.15,
+          "color_rgba": 1728014079
+        },
+        {
+          "particle_id": "spell_engine:magic_holy_decelerate",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 15.0,
+          "min_speed": 0.2,
+          "max_speed": 0.25,
+          "color_rgba": 4294954239
+        }
+      ],
+      "sound": {
+        "id": "paladins:holy_shock_heal"
+      }
+    },
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.8,
+          "knockback": 0.5
+        }
+      },
+      "particles": [
+        {
+          "particle_id": "spell_engine:magic_holy_burst",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 30.0,
+          "min_speed": 0.2,
+          "max_speed": 0.7,
+          "color_rgba": 4294954239
+        }
+      ],
+      "sound": {
+        "id": "paladins:holy_shock_damage"
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.2,
+    "cooldown": {
+      "group": "weapon",
+      "duration": 3.0
+    },
+    "item": {
+      "id": "runes:healing_stone"
+    }
+  }
+}

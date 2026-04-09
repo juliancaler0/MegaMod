@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bl_bottle_wine_stack"
+    },
+    "facing=south": {
+      "model": "megamod:block/bl_bottle_wine_stack",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bl_bottle_wine_stack",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bl_bottle_wine_stack",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "megamod:block/backpack_base",
+  "textures": {
+    "0": "megamod:block/backpack/squid",
+    "particle": "megamod:block/backpack/squid"
+  }
+}

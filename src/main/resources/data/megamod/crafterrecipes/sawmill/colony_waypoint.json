@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "sawmill",
+  "inputs": [
+    { "item": "minecraft:stone", "count": 4 },
+    { "item": "minecraft:redstone", "count": 1 }
+  ],
+  "result": { "item": "megamod:colony_waypoint", "count": 1 }
+}

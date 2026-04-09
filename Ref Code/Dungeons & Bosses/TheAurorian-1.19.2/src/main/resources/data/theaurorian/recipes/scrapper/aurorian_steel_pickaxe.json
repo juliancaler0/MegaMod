@@ -1,0 +1,10 @@
+{
+  "type": "theaurorian:scrapper",
+  "input": {
+    "item": "theaurorian:aurorian_steel_pickaxe"
+  },
+  "output": {
+    "item": "theaurorian:aurorian_steel_nugget",
+    "count": 6
+  }
+}

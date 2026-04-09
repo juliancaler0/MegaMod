@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" IG", " SI", "S  "],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:glass_pane",
+    "S": "minecraft:stick"
+  },
+  "result": { "id": "megamod:scan_tool", "count": 1 }
+}

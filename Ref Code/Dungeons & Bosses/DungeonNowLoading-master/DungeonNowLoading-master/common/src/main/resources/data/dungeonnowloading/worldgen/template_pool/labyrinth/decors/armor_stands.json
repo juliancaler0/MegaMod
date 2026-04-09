@@ -1,0 +1,15 @@
+{
+  "name": "dungeonnowloading:labyrinth/decors/armor_stands",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "dungeonnowloading:labyrinth/decors/armor_stand",
+        "processors": "dungeonnowloading:waterlogging_fix"
+      }
+    }
+  ]
+}

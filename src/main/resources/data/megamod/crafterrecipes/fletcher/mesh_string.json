@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "fletcher",
+  "inputs": [
+    { "item": "minecraft:string", "count": 5 }
+  ],
+  "result": { "item": "megamod:mesh_string", "count": 1 }
+}

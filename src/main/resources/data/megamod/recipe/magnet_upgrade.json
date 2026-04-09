@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BSB",
+    " A "
+  ],
+  "key": {
+    "A": "minecraft:iron_ingot",
+    "B": "minecraft:lapis_lazuli",
+    "S": "megamod:blank_upgrade"
+  },
+  "result": {
+    "id": "megamod:magnet_upgrade",
+    "count": 1
+  }
+}

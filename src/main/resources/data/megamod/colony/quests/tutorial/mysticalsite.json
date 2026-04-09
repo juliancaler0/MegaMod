@@ -1,0 +1,106 @@
+{
+  "name": "Mystical Ambitions",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/university"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/university"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, the researchers at the university have made an extraordinary discovery! They have detected strange energy emanations coming from deep underground. They believe if we build a structure to channel this energy, we could unlock powers beyond our understanding!",
+      "options": [
+        {
+          "answer": "That sounds both exciting and dangerous.",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "The researchers assure me the risks are manageable. Build a Mystical Site and we can begin to tap into these mysterious forces. The potential benefits for the colony are enormous. Imagine harnessing magic itself!",
+            "options": [
+              {
+                "answer": "Let us push the boundaries of knowledge!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already constructed one!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You built it already? The researchers are beside themselves with excitement!",
+                  "options": [
+                    {
+                      "answer": "The future is now!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:mysticalsite",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Mystical Site pulses with otherworldly energy! The researchers are already beginning to unravel its secrets. This will open up entirely new avenues of research and power for the colony. Here, they found this diamond crystallized by the energy!",
+      "options": [
+        {
+          "answer": "We are entering a new era!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:diamond",
+        "qty": 1
+      }
+    }
+  ]
+}

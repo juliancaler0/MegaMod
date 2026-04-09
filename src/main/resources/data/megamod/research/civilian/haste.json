@@ -1,0 +1,34 @@
+{
+  "name": "Haste",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/keen"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:rabbit_foot",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "walk_speed_1",
+      "type": "MULTIPLIER",
+      "stat": "citizen_walk_speed",
+      "value": 1.05,
+      "description": "Walk Speed +5%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

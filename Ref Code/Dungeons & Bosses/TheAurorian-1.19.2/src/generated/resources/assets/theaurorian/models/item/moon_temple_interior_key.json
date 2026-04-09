@@ -1,0 +1,6 @@
+{
+  "parent": "theaurorian:item/key",
+  "textures": {
+    "layer0": "theaurorian:item/moon_temple_interior_key"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "composter",
+  "inputs": [
+    { "item": "minecraft:oak_leaves", "count": 5 }
+  ],
+  "result": { "item": "minecraft:bone_meal", "count": 1 }
+}

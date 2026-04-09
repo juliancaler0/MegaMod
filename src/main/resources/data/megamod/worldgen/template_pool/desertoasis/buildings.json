@@ -1,0 +1,192 @@
+{
+  "name": "megamod:desertoasis/buildings",
+  "fallback": "megamod:desertoasis/roads",
+  "elements": [
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/builder1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+		    "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/builder2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/restaurant1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/farm1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:desertoasis/farm2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "megamod:desertoasis/courier1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/forester1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/forester2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/tavern1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 12,
+      "element": {
+        "location": "megamod:desertoasis/guardtower1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/guardtower2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryblue1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryblue2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryred1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryred2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 10,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryblue1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/residenceluxuryblue2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 8,
+      "element": {
+        "location": "megamod:desertoasis/mine1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/mine2",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:desertoasis/warehouse1",
+        "processors": "megamod:desertoasis/placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 20,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+ ]
+}

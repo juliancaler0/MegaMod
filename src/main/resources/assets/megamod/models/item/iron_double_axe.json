@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/base/double_axe_18",
+  "textures": {
+    "layer0": "megamod:item/iron_double_axe"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:assassin_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:assassin_armor"
+      }
+    ]
+  }
+}

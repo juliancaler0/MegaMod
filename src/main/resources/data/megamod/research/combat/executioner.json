@@ -1,0 +1,34 @@
+{
+  "name": "Executioner",
+  "branch": "combat",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:combat/deathstrike"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "melee_crit_max",
+      "type": "MULTIPLIER",
+      "stat": "melee_crit_chance",
+      "value": 1.5,
+      "description": "Melee Crit +50%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,106 @@
+{
+  "name": "Ancient Knowledge",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/smeltery"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/smeltery"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor! Something incredible happened! During the last raid, one of the guards found an ancient tome buried under the rubble. It is covered in strange glowing runes that none of us can read. We need someone who can study this kind of magic!",
+      "options": [
+        {
+          "answer": "Glowing runes? That sounds powerful.",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Indeed! If we build an Enchanter's Tower, we can recruit someone skilled in the arcane arts. They will be able to enchant our tools and weapons, making them far more effective. Imagine never-breaking pickaxes and flame-touched swords!",
+            "options": [
+              {
+                "answer": "Say no more, I am on it!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already taken care of!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You built it already? You must have sensed the magical potential too!",
+                  "options": [
+                    {
+                      "answer": "I could feel it in my bones!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:enchanter",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Enchanter's Tower stands tall and the enchanter is already poring over that ancient tome! They will be able to enchant equipment for all your workers and guards. Provide them with lapis lazuli and books. Here, take this tome we found!",
+      "options": [
+        {
+          "answer": "Time to unlock the secrets of the arcane!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:enchanted_book",
+        "qty": 1
+      }
+    }
+  ]
+}

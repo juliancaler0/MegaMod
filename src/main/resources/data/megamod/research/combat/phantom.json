@@ -1,0 +1,38 @@
+{
+  "name": "Phantom",
+  "branch": "combat",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:combat/shadowstep"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "all_dodge_max",
+      "type": "MULTIPLIER",
+      "stat": "guard_dodge",
+      "value": 3.0,
+      "description": "Guard Dodge x3"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:combat/warlord",
+    "megamod:combat/sharpshooter",
+    "megamod:combat/juggernaut"
+  ]
+}

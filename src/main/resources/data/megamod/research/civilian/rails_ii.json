@@ -1,0 +1,34 @@
+{
+  "name": "Rails II",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/rails"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "courier_hut",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:powered_rail",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_citizen_powered_rails",
+      "type": "UNLOCK",
+      "stat": "citizens_powered_rails",
+      "value": 1,
+      "description": "Citizens Use Powered Rails"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

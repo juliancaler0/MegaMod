@@ -1,0 +1,106 @@
+{
+  "name": "Rock and Roll",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/smeltery"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/smeltery"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, we have a cobblestone crisis! The miners are pulling out mountains of the stuff and the warehouse is overflowing! We need someone who can crush it down into gravel and sand. Those materials are actually useful for building and the concrete mixer!",
+      "options": [
+        {
+          "answer": "Too much cobblestone is actually a problem?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "You would be surprised! Build a Crusher's Hut and the worker there will break down cobblestone into gravel, gravel into sand, and sand into clay. It turns useless rubble into valuable building materials. Everyone wins!",
+            "options": [
+              {
+                "answer": "Let us put that cobblestone to good use!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already crushing stone!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "No wonder the warehouse has been clearing out! Well done!",
+                  "options": [
+                    {
+                      "answer": "Waste not, want not!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:crusher",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The crusher is smashing stone like a champion! No more cobblestone mountains in the warehouse. Now all that rubble gets turned into useful gravel, sand, and clay. Here is some gravel to show what the crusher can produce!",
+      "options": [
+        {
+          "answer": "Problem solved, one rock at a time!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:gravel",
+        "qty": 32
+      }
+    }
+  ]
+}

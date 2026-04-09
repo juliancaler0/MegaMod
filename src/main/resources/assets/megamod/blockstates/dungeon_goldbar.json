@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_goldbar"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_goldbar",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_goldbar",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_goldbar",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "icon": "theaurorian:aurorian_grass",
+  "x": 0,
+  "y": -20,
+  "border": "GOLD",
+  "children": [
+    "theaurorian:dungeons",
+    "theaurorian:ores",
+    "theaurorian:crafting"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "name": "megamod:desertoasis/roads",
+  "fallback": "megamod:desertoasis/buildings",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:desertoasis/corner",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:desertoasis/cross_intersection",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "megamod:desertoasis/section_long",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "megamod:desertoasis/section_medium",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 4,
+      "element": {
+        "location": "megamod:desertoasis/section_short",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/section_long_glowing",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/section_medium_glowing",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/section_short_glowing",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:desertoasis/intersection",
+        "processors": "megamod:desertoasis/street",
+        "projection": "terrain_matching",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/fountain",
+        "processors": "megamod:desertoasis/decoration",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/shrine",
+        "processors": "megamod:desertoasis/decoration",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:desertoasis/seating",
+        "processors": "megamod:desertoasis/decoration",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 3,
+      "element": {
+        "element_type": "minecraft:empty_pool_element"
+      }
+    }
+  ]
+}

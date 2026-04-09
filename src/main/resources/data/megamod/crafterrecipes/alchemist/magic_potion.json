@@ -1,0 +1,10 @@
+{
+  "type": "recipe",
+  "crafter": "alchemist",
+  "inputs": [
+    { "item": "minecraft:glass_bottle", "count": 1 },
+    { "item": "minecraft:nether_wart", "count": 1 },
+    { "item": "megamod:mistletoe", "count": 1 }
+  ],
+  "result": { "item": "megamod:magic_potion", "count": 1 }
+}

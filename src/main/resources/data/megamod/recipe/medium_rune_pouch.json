@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SRS",
+    "RPR",
+    "SRS"
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "R": "minecraft:rabbit_hide",
+    "P": "megamod:small_rune_pouch"
+  },
+  "result": { "id": "megamod:medium_rune_pouch", "count": 1 }
+}

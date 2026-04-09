@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_fireplace"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_fireplace",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_fireplace",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_fireplace",
+      "y": 270
+    }
+  }
+}

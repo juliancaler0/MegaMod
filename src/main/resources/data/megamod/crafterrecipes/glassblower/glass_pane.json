@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "glassblower",
+  "inputs": [
+    { "item": "minecraft:glass", "count": 6 }
+  ],
+  "result": { "item": "minecraft:glass_pane", "count": 16 }
+}

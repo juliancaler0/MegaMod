@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/mechanic_shortbow",
+  "textures": {
+    "layer0": "megamod:item/mechanic_shortbow_pulling_2"
+  }
+}

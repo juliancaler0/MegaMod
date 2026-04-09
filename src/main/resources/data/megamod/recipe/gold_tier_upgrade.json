@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:gold_ingot",
+    "S": "megamod:blank_upgrade"
+  },
+  "result": {
+    "id": "megamod:gold_tier_upgrade",
+    "count": 1
+  }
+}

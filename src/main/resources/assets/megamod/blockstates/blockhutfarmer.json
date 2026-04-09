@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "megamod:block/blockhutfarmer",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "megamod:block/blockhutfarmer",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/blockhutfarmer",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "megamod:block/blockhutfarmer",
+      "y": 270
+    }
+  }
+}

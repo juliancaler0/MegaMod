@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/rapid_crossbow",
+  "textures": {
+    "layer0": "megamod:item/rapid_crossbow_pulling_0"
+  }
+}

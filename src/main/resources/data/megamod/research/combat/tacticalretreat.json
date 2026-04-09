@@ -1,0 +1,34 @@
+{
+  "name": "Tactical Retreat",
+  "branch": "combat",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:combat/retreat"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:ender_pearl",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "retreat_speed",
+      "type": "MULTIPLIER",
+      "stat": "retreat_speed",
+      "value": 1.25,
+      "description": "Retreat Speed +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

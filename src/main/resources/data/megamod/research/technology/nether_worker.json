@@ -1,0 +1,34 @@
+{
+  "name": "Nether Worker",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/deepshaft"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_scrap",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_nether_mining",
+      "type": "UNLOCK",
+      "stat": "nether_mining",
+      "value": 1,
+      "description": "Miners Work in Nether"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_chair_bar_brown"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_chair_bar_brown",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_chair_bar_brown",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_chair_bar_brown",
+      "y": 270
+    }
+  }
+}

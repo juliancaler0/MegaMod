@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:iron_ingot", "count": 5 },
+    { "item": "minecraft:chest", "count": 1 }
+  ],
+  "result": { "item": "minecraft:hopper", "count": 1 }
+}

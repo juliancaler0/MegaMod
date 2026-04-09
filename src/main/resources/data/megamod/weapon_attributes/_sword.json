@@ -1,0 +1,33 @@
+{
+  "attributes": {
+    "range_bonus": 0,
+    "two_handed": false,
+    "category": "sword",
+    "attacks": [
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 120,
+        "upswing": 0.5,
+        "animation": "one_handed_slash_horizontal_right",
+        "swing_direction": "SLASH_RIGHT"
+      },
+      {
+        "hitbox": "HORIZONTAL_PLANE",
+        "damage_multiplier": 1.0,
+        "angle": 120,
+        "upswing": 0.5,
+        "animation": "one_handed_slash_horizontal_left",
+        "swing_direction": "SLASH_LEFT"
+      },
+      {
+        "hitbox": "FORWARD_BOX",
+        "damage_multiplier": 1.0,
+        "angle": 0,
+        "upswing": 0.5,
+        "animation": "one_handed_stab",
+        "swing_direction": "STAB"
+      }
+    ]
+  }
+}

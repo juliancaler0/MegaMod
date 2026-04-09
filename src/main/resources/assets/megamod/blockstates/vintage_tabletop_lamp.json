@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_tabletop_lamp"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_tabletop_lamp",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_tabletop_lamp",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_tabletop_lamp",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": { "predicate_type": "minecraft:block_match", "block": "minecraft:red_wool" },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:stone" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:random_block_match", "block": "minecraft:cobblestone", "probability": 0.5 },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:mossy_cobblestone" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:random_block_match", "block": "minecraft:stone_bricks", "probability": 0.5 },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:mossy_stone_bricks" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:random_block_match", "block": "minecraft:smooth_stone", "probability": 0.1 },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:smooth_stone_slab", "Properties": { "type": "double", "waterlogged": "false" } }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:random_block_match", "block": "minecraft:grass_block", "probability": 0.6 },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:moss_block" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:random_block_match", "block": "minecraft:dirt", "probability": 0.5 },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:packed_mud" }
+        }
+      ]
+    },
+    {
+      "processor_type": "megamod:weighted_list",
+      "input_block": "minecraft:gray_stained_glass",
+      "outputs": [
+        { "block": "minecraft:cobweb", "weight": 1 },
+        { "block": "minecraft:air", "weight": 9 }
+      ]
+    },
+    {
+      "processor_type": "megamod:weighted_list",
+      "input_block": "minecraft:light_gray_stained_glass",
+      "outputs": [
+        { "block": "minecraft:air", "weight": 66 },
+        { "block": "minecraft:decorated_pot", "weight": 5 },
+        { "block": "minecraft:flower_pot", "weight": 8 },
+        { "block": "minecraft:candle", "weight": 8 }
+      ]
+    },
+    {
+      "processor_type": "megamod:weighted_list",
+      "input_block": "minecraft:white_stained_glass",
+      "outputs": [
+        { "block": "minecraft:air", "weight": 78 },
+        { "block": "minecraft:decorated_pot", "weight": 5 },
+        { "block": "minecraft:flower_pot", "weight": 8 },
+        { "block": "minecraft:candle", "weight": 8 },
+        { "block": "minecraft:bookshelf", "weight": 4 }
+      ]
+    },
+    {
+      "processor_type": "megamod:weighted_list",
+      "input_block": "minecraft:red_carpet",
+      "outputs": [
+        { "block": "minecraft:air", "weight": 200 },
+        { "block": "minecraft:cobweb", "weight": 8 },
+        { "block": "minecraft:flower_pot", "weight": 8 },
+        { "block": "minecraft:candle", "weight": 8 },
+        { "block": "minecraft:bookshelf", "weight": 4 }
+      ]
+    },
+    {
+      "processor_type": "megamod:weighted_list",
+      "input_block": "minecraft:light_gray_carpet",
+      "outputs": [
+        { "block": "minecraft:cobweb", "weight": 1 },
+        { "block": "minecraft:air", "weight": 9 }
+      ]
+    },
+    {
+      "processor_type": "megamod:waterlogging_fix"
+    }
+  ]
+}

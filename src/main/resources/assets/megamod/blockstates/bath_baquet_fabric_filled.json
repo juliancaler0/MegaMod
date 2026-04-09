@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/bath_baquet_fabric_filled" },
+    "facing=south": { "model": "megamod:block/bath_baquet_fabric_filled", "y": 180 },
+    "facing=east": { "model": "megamod:block/bath_baquet_fabric_filled", "y": 90 },
+    "facing=west": { "model": "megamod:block/bath_baquet_fabric_filled", "y": 270 }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/medium_quiver",
+  "textures": {
+    "layer0": "megamod:item/medium_quiver_filled"
+  }
+}

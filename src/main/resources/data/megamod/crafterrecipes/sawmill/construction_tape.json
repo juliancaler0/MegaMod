@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "sawmill",
+  "inputs": [
+    { "item": "minecraft:string", "count": 3 },
+    { "item": "minecraft:stick", "count": 2 }
+  ],
+  "result": { "item": "megamod:construction_tape", "count": 8 }
+}

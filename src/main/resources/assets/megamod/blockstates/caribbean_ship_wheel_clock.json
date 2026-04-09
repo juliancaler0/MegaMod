@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/caribbean_ship_wheel_clock" },
+    "facing=south": { "model": "megamod:block/caribbean_ship_wheel_clock", "y": 180 },
+    "facing=east": { "model": "megamod:block/caribbean_ship_wheel_clock", "y": 90 },
+    "facing=west": { "model": "megamod:block/caribbean_ship_wheel_clock", "y": 270 }
+  }
+}

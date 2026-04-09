@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " WS",
+    "WIW",
+    "SW "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:logs"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "tag": "neoforge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "megamod:blocksolidsubstitution",
+    "count": 32
+  }
+}

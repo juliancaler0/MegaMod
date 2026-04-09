@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_cage_with_bone"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_cage_with_bone",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_cage_with_bone",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_cage_with_bone",
+      "y": 270
+    }
+  }
+}

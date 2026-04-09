@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/viking_stone_chair_1" },
+    "facing=south": { "model": "megamod:block/viking_stone_chair_1", "y": 180 },
+    "facing=east": { "model": "megamod:block/viking_stone_chair_1", "y": 90 },
+    "facing=west": { "model": "megamod:block/viking_stone_chair_1", "y": 270 }
+  }
+}

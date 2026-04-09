@@ -1,0 +1,106 @@
+{
+  "name": "Pave the Roads",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/sawmill"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/sawmill"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, have you seen the state of our roads? It is all dirt and mud! When it rains, the couriers slip and slide everywhere. We need proper building materials to pave roads and construct modern buildings. Concrete would be perfect!",
+      "options": [
+        {
+          "answer": "Concrete? How do we make that?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build a Concrete Mixer's Hut! The worker there will mix sand, gravel, and dye to produce concrete powder, then cure it into solid concrete blocks. It is the foundation of modern construction! Your builder will love having access to these materials.",
+            "options": [
+              {
+                "answer": "Let us modernize this colony!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already mixing concrete!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "The roads are looking smooth already! Great thinking, Mayor!",
+                  "options": [
+                    {
+                      "answer": "Progress waits for no one!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:concretemixer",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Concrete Mixer is churning out beautiful concrete blocks! Now your builder can construct proper roads, plazas, and modern buildings. The colony is starting to look like a real city! Here is some concrete to get started!",
+      "options": [
+        {
+          "answer": "From dirt paths to paved roads!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:white_concrete",
+        "qty": 16
+      }
+    }
+  ]
+}

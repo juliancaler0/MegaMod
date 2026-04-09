@@ -1,0 +1,34 @@
+{
+  "name": "Carnival II",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/carnival"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "dining_hall",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:firework_rocket",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_happiness_3",
+      "type": "MULTIPLIER",
+      "stat": "citizen_happiness",
+      "value": 1.15,
+      "description": "Citizen Happiness +15%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

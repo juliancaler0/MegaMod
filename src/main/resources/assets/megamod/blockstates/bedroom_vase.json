@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/bedroom_vase" },
+    "facing=south": { "model": "megamod:block/bedroom_vase", "y": 180 },
+    "facing=east": { "model": "megamod:block/bedroom_vase", "y": 90 },
+    "facing=west": { "model": "megamod:block/bedroom_vase", "y": 270 }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Common Cold",
+  "rarity": 0.3,
+  "symptoms": ["sneezing", "fatigue"],
+  "cure_items": ["minecraft:golden_apple"],
+  "duration": 6000
+}

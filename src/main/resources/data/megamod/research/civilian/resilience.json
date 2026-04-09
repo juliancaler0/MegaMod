@@ -1,0 +1,34 @@
+{
+  "name": "Resilience",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/resistance"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "hospital",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:glistering_melon_slice",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_armor_1",
+      "type": "MODIFIER",
+      "stat": "citizen_armor",
+      "value": 2,
+      "description": "Citizen Armor +2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

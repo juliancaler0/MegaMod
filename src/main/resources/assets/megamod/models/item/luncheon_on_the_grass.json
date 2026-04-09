@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "megamod:item/luncheon_on_the_grass"
+  }
+}

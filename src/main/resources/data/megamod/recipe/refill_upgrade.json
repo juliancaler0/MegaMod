@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    "BSB",
+    " A "
+  ],
+  "key": {
+    "A": "minecraft:hopper",
+    "B": "minecraft:dropper",
+    "S": "megamod:blank_upgrade"
+  },
+  "result": {
+    "id": "megamod:refill_upgrade",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "PCP",
+    " P "
+  ],
+  "key": {
+    "P": "minecraft:packed_ice",
+    "C": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:frost_rune", "count": 2 }
+}

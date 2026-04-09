@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:green_dye"
+  ],
+  "result": {
+    "id": "megamod:cactus_backpack",
+    "count": 1
+  }
+}

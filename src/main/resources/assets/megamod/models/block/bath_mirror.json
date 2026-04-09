@@ -1,0 +1,96 @@
+{
+	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
+	"credit": "Made with Blockbench by ShizuArt",
+	"textures": {
+		"0": "megamod:block/bath_long_miroir",
+		"particle": "megamod:block/bath_long_miroir"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 14],
+			"to": [16, 32, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 4, 8], "texture": "#0"},
+				"east": {"uv": [4.75, 0, 4.25, 8], "texture": "#0"},
+				"south": {"uv": [8.75, 0, 12.75, 8], "texture": "#0"},
+				"west": {"uv": [4.25, 0, 4.75, 8], "texture": "#0"},
+				"up": {"uv": [0, 8.25, 4, 8.75], "texture": "#0"},
+				"down": {"uv": [0, 8.75, 4, 8.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [15, 1, 14],
+			"to": [1, 31, 16],
+			"faces": {
+				"east": {"uv": [4.75, 0.25, 4.25, 7.75], "texture": "#0"},
+				"west": {"uv": [4.25, 0.25, 4.75, 7.75], "texture": "#0"},
+				"up": {"uv": [0, 8.25, 4, 8.75], "texture": "#0"},
+				"down": {"uv": [0, 8.75, 4, 8.25], "texture": "#0"}
+			}
+		},
+		{
+			"from": [1, 1, 15],
+			"to": [15, 31, 15],
+			"faces": {
+				"north": {"uv": [5, 0.25, 8.5, 7.75], "texture": "#0"}
+			}
+		}
+	],
+	"gui_light": "front",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 4, 3.25],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [75, 45, 0],
+			"translation": [0, 4, 3.25],
+			"scale": [0.375, 0.375, 0.375]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 84.5, -180],
+			"translation": [5.25, 2.75, -0.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-180, 84.5, -180],
+			"translation": [5.25, 2.75, -0.5],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"translation": [0, 3, -2.25],
+			"scale": [0.32813, 0.32813, 0.32813]
+		},
+		"gui": {
+			"rotation": [30, 225, 0],
+			"translation": [1.5, -3.75, 0],
+			"scale": [0.40625, 0.40625, 0.40625]
+		},
+		"head": {
+			"translation": [0, -30.25, 0],
+			"scale": [1.59961, 1.59961, 1.59961]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -16],
+			"scale": [2.00195, 2.00195, 2.00195]
+		}
+	},
+	"groups": [
+		{
+			"name": "group",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "group",
+					"origin": [8, 8, 8],
+					"color": 0,
+					"children": [0, 1, 2]
+				}
+			]
+		}
+	]
+}

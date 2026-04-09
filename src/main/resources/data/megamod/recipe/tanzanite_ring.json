@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GtG",
+    " G "
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "t": "megamod:tanzanite"
+  },
+  "result": { "id": "megamod:tanzanite_ring", "count": 1 }
+}

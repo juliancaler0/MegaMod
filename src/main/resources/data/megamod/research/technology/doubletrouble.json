@@ -1,0 +1,34 @@
+{
+  "name": "Double Trouble",
+  "branch": "technology",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:technology/hot_blast"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "smeltery",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_ingot",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "smelting_output_1",
+      "type": "MULTIPLIER",
+      "stat": "smelting_output",
+      "value": 1.25,
+      "description": "Smelting Output +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:prior_robe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:prior_robe"
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_barrier"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_barrier",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_barrier",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_barrier",
+      "y": 270
+    }
+  }
+}

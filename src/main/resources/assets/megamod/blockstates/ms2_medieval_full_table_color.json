@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/ms2_medieval_full_table_color"
+    },
+    "facing=south": {
+      "model": "megamod:block/ms2_medieval_full_table_color",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/ms2_medieval_full_table_color",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/ms2_medieval_full_table_color",
+      "y": 270
+    }
+  }
+}

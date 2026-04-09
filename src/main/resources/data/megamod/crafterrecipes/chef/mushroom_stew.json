@@ -1,0 +1,10 @@
+{
+  "type": "recipe",
+  "crafter": "chef",
+  "inputs": [
+    { "item": "minecraft:red_mushroom", "count": 1 },
+    { "item": "minecraft:brown_mushroom", "count": 1 },
+    { "item": "minecraft:bowl", "count": 1 }
+  ],
+  "result": { "item": "minecraft:mushroom_stew", "count": 1 }
+}

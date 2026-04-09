@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/base/double_axe_20",
+  "textures": {
+    "layer0": "megamod:item/aeternium_double_axe"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_skeleton_head"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_skeleton_head",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_skeleton_head",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_skeleton_head",
+      "y": 270
+    }
+  }
+}

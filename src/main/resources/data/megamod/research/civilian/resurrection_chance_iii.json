@@ -1,0 +1,34 @@
+{
+  "name": "Resurrection Chance III",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/resurrection_chance_ii"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:totem_of_undying",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "resurrection_3",
+      "type": "MODIFIER",
+      "stat": "resurrection_chance",
+      "value": 5,
+      "description": "Resurrection +5%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

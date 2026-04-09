@@ -1,0 +1,34 @@
+{
+  "name": "Distribution",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/warehouse_master"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:ender_chest",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "warehouse_capacity_3",
+      "type": "MODIFIER",
+      "stat": "warehouse_capacity",
+      "value": 108,
+      "description": "Warehouse +108 Slots"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

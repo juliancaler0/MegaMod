@@ -1,0 +1,7 @@
+{
+  "name": "Food Poisoning",
+  "rarity": 0.15,
+  "symptoms": ["nausea", "weakness"],
+  "cure_items": ["minecraft:milk_bucket"],
+  "duration": 3000
+}

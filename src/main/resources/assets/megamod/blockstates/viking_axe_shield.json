@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/viking_axe_shield" },
+    "facing=south": { "model": "megamod:block/viking_axe_shield", "y": 180 },
+    "facing=east": { "model": "megamod:block/viking_axe_shield", "y": 90 },
+    "facing=west": { "model": "megamod:block/viking_axe_shield", "y": 270 }
+  }
+}

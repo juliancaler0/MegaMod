@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:magma_cream",
+    "B": "minecraft:magma_block",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:magma_cube_backpack",
+    "count": 1
+  }
+}

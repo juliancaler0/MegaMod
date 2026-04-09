@@ -1,0 +1,91 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "megamod:block/ossukage_trophy",
+		"particle": "megamod:block/ossukage_trophy"
+	},
+	"elements": [
+		{
+			"name": "base_wide",
+			"from": [3, 0, 3],
+			"to": [13, 2, 13],
+			"faces": {
+				"north": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"east": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"west": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"up": {"uv": [3, 4, 13, 14], "texture": "#0"},
+				"down": {"uv": [3, 4, 13, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_mid",
+			"from": [4, 2, 4],
+			"to": [12, 4, 12],
+			"faces": {
+				"north": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"east": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"south": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"west": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_top",
+			"from": [5, 4, 5],
+			"to": [11, 6, 11],
+			"faces": {
+				"north": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"east": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"south": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"west": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#0"}
+			}
+		},
+		{
+			"name": "skull",
+			"from": [5.5, 7, 5.5],
+			"to": [10.5, 12, 10.5],
+			"faces": {
+				"north": {"uv": [0, 0, 5, 5], "texture": "#0"},
+				"east": {"uv": [0, 0, 5, 5], "texture": "#0"},
+				"south": {"uv": [5, 0, 10, 5], "texture": "#0"},
+				"west": {"uv": [0, 0, 5, 5], "texture": "#0"},
+				"up": {"uv": [5, 0, 10, 5], "texture": "#0"}
+			}
+		},
+		{
+			"name": "katana_l",
+			"from": [3, 4, 7.5],
+			"to": [4, 13, 8.5],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [3.5, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 3, 1, 12], "texture": "#0"},
+				"south": {"uv": [0, 3, 1, 12], "texture": "#0"},
+				"east": {"uv": [0, 3, 1, 12], "texture": "#0"},
+				"west": {"uv": [0, 3, 1, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "katana_r",
+			"from": [12, 4, 7.5],
+			"to": [13, 13, 8.5],
+			"rotation": {"angle": -22.5, "axis": "z", "origin": [12.5, 8, 8]},
+			"faces": {
+				"north": {"uv": [15, 3, 16, 12], "texture": "#0"},
+				"south": {"uv": [15, 3, 16, 12], "texture": "#0"},
+				"east": {"uv": [15, 3, 16, 12], "texture": "#0"},
+				"west": {"uv": [15, 3, 16, 12], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"thirdperson_lefthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"firstperson_lefthand": {"rotation": [0, 225, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"ground": {"translation": [0, 3, 0], "scale": [0.25, 0.25, 0.25]},
+		"gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.625, 0.625, 0.625]},
+		"fixed": {"scale": [0.5, 0.5, 0.5]}
+	}
+}

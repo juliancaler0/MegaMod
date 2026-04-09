@@ -1,0 +1,11 @@
+{
+  "vertex": "accessories:core/fish",
+  "fragment": "accessories:core/fish",
+  "attributes": [ "Position" ],
+  "samplers": [
+    { "name": "DiffuseSampler" }
+  ],
+  "uniforms": [
+    { "name": "ColorModulator", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] }
+  ]
+}

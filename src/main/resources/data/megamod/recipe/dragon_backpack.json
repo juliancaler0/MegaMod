@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:dragon_breath",
+    "B": "minecraft:end_stone",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:dragon_backpack",
+    "count": 1
+  }
+}

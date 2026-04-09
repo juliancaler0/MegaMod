@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "dyer",
+  "inputs": [
+    { "item": "minecraft:white_wool", "count": 1 },
+    { "item": "minecraft:cyan_dye", "count": 1 }
+  ],
+  "result": { "item": "minecraft:cyan_wool", "count": 1 }
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Fortitude",
+  "branch": "civilian",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:civilian/adversity"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "hospital",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_armor_max",
+      "type": "MODIFIER",
+      "stat": "citizen_armor",
+      "value": 10,
+      "description": "Citizen Armor +10"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:civilian/beanstalk",
+    "megamod:civilian/motherly",
+    "megamod:civilian/enlightenment"
+  ]
+}

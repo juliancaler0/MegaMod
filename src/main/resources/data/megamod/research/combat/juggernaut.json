@@ -1,0 +1,38 @@
+{
+  "name": "Juggernaut",
+  "branch": "combat",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:combat/titanarmor"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "all_armor_max",
+      "type": "MODIFIER",
+      "stat": "guard_armor",
+      "value": 20,
+      "description": "Guard Armor +20"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:combat/warlord",
+    "megamod:combat/sharpshooter",
+    "megamod:combat/phantom"
+  ]
+}

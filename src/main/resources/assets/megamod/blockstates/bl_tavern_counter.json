@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bl_tavern_counter"
+    },
+    "facing=south": {
+      "model": "megamod:block/bl_tavern_counter",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bl_tavern_counter",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bl_tavern_counter",
+      "y": 270
+    }
+  }
+}

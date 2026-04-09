@@ -1,0 +1,10 @@
+{
+  "type": "megamod:pocket",
+  "generator": {
+    "type": "megamod:blank",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "minecraft:the_void"
+    }
+  }
+}

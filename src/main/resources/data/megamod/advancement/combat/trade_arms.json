@@ -1,0 +1,38 @@
+{
+  "parent": "megamod:misc_items",
+  "criteria": {
+    "trade_with_arms_dealer": {
+      "conditions": {
+        "villager": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "nbt": "{VillagerData:{profession:\"megamod:arms_merchant\"}}"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:villager_trade"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.rpg_series.trade_with_arms_dealer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "megamod:iron_double_axe"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.trade_with_arms_dealer.title"
+    },
+    "hidden": true
+  },
+  "requirements": [
+    [
+      "trade_with_arms_dealer"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

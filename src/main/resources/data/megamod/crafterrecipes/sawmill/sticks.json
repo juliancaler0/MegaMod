@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "sawmill",
+  "inputs": [
+    { "item": "minecraft:oak_planks", "count": 2 }
+  ],
+  "result": { "item": "minecraft:stick", "count": 4 }
+}

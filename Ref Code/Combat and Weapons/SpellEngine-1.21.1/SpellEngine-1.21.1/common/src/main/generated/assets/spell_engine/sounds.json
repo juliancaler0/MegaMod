@@ -1,0 +1,288 @@
+{
+  "bind_spell": {
+    "sounds": [
+      "spell_engine:bind_spell"
+    ]
+  },
+  "dodge": {
+    "sounds": [
+      "spell_engine:dodge_1",
+      "spell_engine:dodge_2"
+    ]
+  },
+  "generic_arcane_casting": {
+    "sounds": [
+      "spell_engine:generic_arcane_casting"
+    ]
+  },
+  "generic_arcane_release": {
+    "sounds": [
+      "spell_engine:generic_arcane_release"
+    ]
+  },
+  "generic_dispel_1": {
+    "sounds": [
+      "spell_engine:generic_dispel_1"
+    ]
+  },
+  "generic_fire_casting": {
+    "sounds": [
+      "spell_engine:generic_fire_casting"
+    ]
+  },
+  "generic_fire_ignite": {
+    "sounds": [
+      "spell_engine:generic_fire_ignite"
+    ]
+  },
+  "generic_fire_impact_1": {
+    "sounds": [
+      "spell_engine:generic_fire_impact_1"
+    ]
+  },
+  "generic_fire_impact_2": {
+    "sounds": [
+      "spell_engine:generic_fire_impact_2"
+    ]
+  },
+  "generic_fire_impact_3": {
+    "sounds": [
+      "spell_engine:generic_fire_impact_3"
+    ]
+  },
+  "generic_fire_release": {
+    "sounds": [
+      "spell_engine:generic_fire_release"
+    ]
+  },
+  "generic_frost_casting": {
+    "sounds": [
+      "spell_engine:generic_frost_casting"
+    ]
+  },
+  "generic_frost_impact": {
+    "sounds": [
+      "spell_engine:generic_frost_impact"
+    ]
+  },
+  "generic_frost_release": {
+    "sounds": [
+      "spell_engine:generic_frost_release"
+    ]
+  },
+  "generic_healing_casting": {
+    "sounds": [
+      "spell_engine:generic_healing_casting"
+    ]
+  },
+  "generic_healing_impact_1": {
+    "sounds": [
+      "spell_engine:generic_healing_impact_1"
+    ]
+  },
+  "generic_healing_impact_2": {
+    "sounds": [
+      "spell_engine:generic_healing_impact_2"
+    ]
+  },
+  "generic_healing_impact_3": {
+    "sounds": [
+      "spell_engine:generic_healing_impact_3"
+    ]
+  },
+  "generic_healing_impact_4": {
+    "sounds": [
+      "spell_engine:generic_healing_impact_4"
+    ]
+  },
+  "generic_healing_release": {
+    "sounds": [
+      "spell_engine:generic_healing_release"
+    ]
+  },
+  "generic_lightning_casting": {
+    "sounds": [
+      "spell_engine:generic_lightning_casting"
+    ]
+  },
+  "generic_lightning_release": {
+    "sounds": [
+      "spell_engine:generic_lightning_release"
+    ]
+  },
+  "generic_poison_impact": {
+    "sounds": [
+      "spell_engine:generic_poison_impact"
+    ]
+  },
+  "generic_soul_casting": {
+    "sounds": [
+      "spell_engine:generic_soul_casting"
+    ]
+  },
+  "generic_soul_release": {
+    "sounds": [
+      "spell_engine:generic_soul_release"
+    ]
+  },
+  "generic_wind_charging": {
+    "sounds": [
+      "spell_engine:generic_wind_charging"
+    ]
+  },
+  "leeching_impact": {
+    "sounds": [
+      "spell_engine:leeching_impact"
+    ]
+  },
+  "poison_cloud_spawn": {
+    "sounds": [
+      "spell_engine:poison_cloud_spawn"
+    ]
+  },
+  "poison_cloud_tick": {
+    "sounds": [
+      "spell_engine:poison_cloud_tick"
+    ]
+  },
+  "radiance_impact": {
+    "sounds": [
+      "spell_engine:radiance_impact"
+    ]
+  },
+  "signal_instant_cast": {
+    "sounds": [
+      "spell_engine:signal_instant_cast"
+    ]
+  },
+  "signal_spell_crit": {
+    "sounds": [
+      "spell_engine:signal_spell_crit"
+    ]
+  },
+  "speed_boost": {
+    "sounds": [
+      "spell_engine:speed_boost"
+    ]
+  },
+  "spell_cooldown_impact": {
+    "sounds": [
+      "spell_engine:spell_cooldown_impact"
+    ]
+  },
+  "spellbook_equip": {
+    "sounds": [
+      "spell_engine:spellbook_equip"
+    ]
+  },
+  "stun_generic": {
+    "sounds": [
+      "spell_engine:stun_generic"
+    ]
+  },
+  "unbind_spell": {
+    "sounds": [
+      "spell_engine:unbind_spell"
+    ]
+  },
+  "weapon_claymore_impact": {
+    "sounds": [
+      "spell_engine:weapon_claymore_impact"
+    ]
+  },
+  "weapon_claymore_swing": {
+    "sounds": [
+      "spell_engine:weapon_claymore_swing"
+    ]
+  },
+  "weapon_cleave": {
+    "sounds": [
+      "spell_engine:weapon_cleave"
+    ]
+  },
+  "weapon_dagger_impact": {
+    "sounds": [
+      "spell_engine:weapon_dagger_impact"
+    ]
+  },
+  "weapon_dagger_throw": {
+    "sounds": [
+      "spell_engine:weapon_dagger_throw"
+    ]
+  },
+  "weapon_dagger_travel": {
+    "sounds": [
+      "spell_engine:weapon_dagger_travel"
+    ]
+  },
+  "weapon_ground_slam": {
+    "sounds": [
+      "spell_engine:weapon_ground_slam"
+    ]
+  },
+  "weapon_hammer_swing": {
+    "sounds": [
+      "spell_engine:weapon_hammer_swing"
+    ]
+  },
+  "weapon_mace_smash_impact": {
+    "sounds": [
+      "spell_engine:weapon_mace_smash_impact"
+    ]
+  },
+  "weapon_shing_a": {
+    "sounds": [
+      "spell_engine:weapon_shing_a"
+    ]
+  },
+  "weapon_sickle_impact_large": {
+    "sounds": [
+      "spell_engine:weapon_sickle_impact_large"
+    ]
+  },
+  "weapon_sickle_impact_small": {
+    "sounds": [
+      "spell_engine:weapon_sickle_impact_small"
+    ]
+  },
+  "weapon_spear_stab": {
+    "sounds": [
+      "spell_engine:weapon_spear_stab"
+    ]
+  },
+  "weapon_spear_throw": {
+    "sounds": [
+      "spell_engine:weapon_spear_throw"
+    ]
+  },
+  "weapon_spear_travel": {
+    "sounds": [
+      "spell_engine:weapon_spear_travel"
+    ]
+  },
+  "weapon_swipe_launch": {
+    "sounds": [
+      "spell_engine:weapon_swipe_launch"
+    ]
+  },
+  "weapon_sword_swing": {
+    "sounds": [
+      "spell_engine:weapon_sword_swing"
+    ]
+  },
+  "weapon_throw": {
+    "sounds": [
+      "spell_engine:weapon_throw"
+    ]
+  },
+  "weapon_thrust_launch": {
+    "sounds": [
+      "spell_engine:weapon_thrust_launch"
+    ]
+  },
+  "whirlwind": {
+    "sounds": [
+      "spell_engine:whirlwind"
+    ]
+  }
+}

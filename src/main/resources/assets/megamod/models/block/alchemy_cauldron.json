@@ -1,0 +1,100 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "base": "megamod:block/alchemy_cauldron_side",
+    "top": "megamod:block/alchemy_cauldron_top",
+    "bottom": "megamod:block/alchemy_cauldron_bottom",
+    "inner": "megamod:block/alchemy_cauldron_inner",
+    "particle": "megamod:block/alchemy_cauldron_side"
+  },
+  "elements": [
+    {
+      "name": "base_plate",
+      "from": [2, 0, 2],
+      "to": [14, 2, 14],
+      "faces": {
+        "down": { "texture": "#bottom", "uv": [2, 2, 14, 14] },
+        "up": { "texture": "#bottom", "uv": [2, 2, 14, 14] },
+        "north": { "texture": "#base", "uv": [2, 14, 14, 16] },
+        "south": { "texture": "#base", "uv": [2, 14, 14, 16] },
+        "east": { "texture": "#base", "uv": [2, 14, 14, 16] },
+        "west": { "texture": "#base", "uv": [2, 14, 14, 16] }
+      }
+    },
+    {
+      "name": "lower_ring",
+      "from": [1, 2, 1],
+      "to": [15, 4, 15],
+      "faces": {
+        "up": { "texture": "#base", "uv": [1, 1, 15, 15] },
+        "north": { "texture": "#base", "uv": [1, 12, 15, 14] },
+        "south": { "texture": "#base", "uv": [1, 12, 15, 14] },
+        "east": { "texture": "#base", "uv": [1, 12, 15, 14] },
+        "west": { "texture": "#base", "uv": [1, 12, 15, 14] }
+      }
+    },
+    {
+      "name": "body",
+      "from": [0, 4, 0],
+      "to": [16, 14, 16],
+      "faces": {
+        "north": { "texture": "#base", "uv": [0, 2, 16, 12] },
+        "south": { "texture": "#base", "uv": [0, 2, 16, 12] },
+        "east": { "texture": "#base", "uv": [0, 2, 16, 12] },
+        "west": { "texture": "#base", "uv": [0, 2, 16, 12] }
+      }
+    },
+    {
+      "name": "inner_bottom",
+      "from": [2, 4, 2],
+      "to": [14, 5, 14],
+      "faces": {
+        "up": { "texture": "#inner", "uv": [2, 2, 14, 14] }
+      }
+    },
+    {
+      "name": "rim_north",
+      "from": [0, 14, 0],
+      "to": [16, 16, 2],
+      "faces": {
+        "up": { "texture": "#top", "uv": [0, 0, 16, 2] },
+        "north": { "texture": "#base", "uv": [0, 0, 16, 2] },
+        "south": { "texture": "#inner", "uv": [0, 0, 16, 2] },
+        "east": { "texture": "#base", "uv": [0, 0, 2, 2] },
+        "west": { "texture": "#base", "uv": [14, 0, 16, 2] }
+      }
+    },
+    {
+      "name": "rim_south",
+      "from": [0, 14, 14],
+      "to": [16, 16, 16],
+      "faces": {
+        "up": { "texture": "#top", "uv": [0, 14, 16, 16] },
+        "south": { "texture": "#base", "uv": [0, 0, 16, 2] },
+        "north": { "texture": "#inner", "uv": [0, 14, 16, 16] },
+        "east": { "texture": "#base", "uv": [14, 0, 16, 2] },
+        "west": { "texture": "#base", "uv": [0, 0, 2, 2] }
+      }
+    },
+    {
+      "name": "rim_west",
+      "from": [0, 14, 2],
+      "to": [2, 16, 14],
+      "faces": {
+        "up": { "texture": "#top", "uv": [0, 2, 2, 14] },
+        "west": { "texture": "#base", "uv": [2, 0, 14, 2] },
+        "east": { "texture": "#inner", "uv": [0, 2, 2, 14] }
+      }
+    },
+    {
+      "name": "rim_east",
+      "from": [14, 14, 2],
+      "to": [16, 16, 14],
+      "faces": {
+        "up": { "texture": "#top", "uv": [14, 2, 16, 14] },
+        "east": { "texture": "#base", "uv": [2, 0, 14, 2] },
+        "west": { "texture": "#inner", "uv": [14, 2, 16, 14] }
+      }
+    }
+  ]
+}

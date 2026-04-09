@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:piston", "count": 1 },
+    { "item": "minecraft:slime_ball", "count": 1 }
+  ],
+  "result": { "item": "minecraft:sticky_piston", "count": 1 }
+}

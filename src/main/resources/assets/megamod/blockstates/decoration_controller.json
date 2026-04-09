@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "facing=north,level=0": { "model": "megamod:block/decoration_controller" },
+    "facing=east,level=0": { "model": "megamod:block/decoration_controller", "y": 90 },
+    "facing=south,level=0": { "model": "megamod:block/decoration_controller", "y": 180 },
+    "facing=west,level=0": { "model": "megamod:block/decoration_controller", "y": 270 },
+    "facing=north,level=1": { "model": "megamod:block/decoration_controller" },
+    "facing=east,level=1": { "model": "megamod:block/decoration_controller", "y": 90 },
+    "facing=south,level=1": { "model": "megamod:block/decoration_controller", "y": 180 },
+    "facing=west,level=1": { "model": "megamod:block/decoration_controller", "y": 270 },
+    "facing=north,level=2": { "model": "megamod:block/decoration_controller" },
+    "facing=east,level=2": { "model": "megamod:block/decoration_controller", "y": 90 },
+    "facing=south,level=2": { "model": "megamod:block/decoration_controller", "y": 180 },
+    "facing=west,level=2": { "model": "megamod:block/decoration_controller", "y": 270 },
+    "facing=north,level=3": { "model": "megamod:block/decoration_controller" },
+    "facing=east,level=3": { "model": "megamod:block/decoration_controller", "y": 90 },
+    "facing=south,level=3": { "model": "megamod:block/decoration_controller", "y": 180 },
+    "facing=west,level=3": { "model": "megamod:block/decoration_controller", "y": 270 },
+    "facing=north,level=4": { "model": "megamod:block/decoration_controller" },
+    "facing=east,level=4": { "model": "megamod:block/decoration_controller", "y": 90 },
+    "facing=south,level=4": { "model": "megamod:block/decoration_controller", "y": 180 },
+    "facing=west,level=4": { "model": "megamod:block/decoration_controller", "y": 270 }
+  }
+}

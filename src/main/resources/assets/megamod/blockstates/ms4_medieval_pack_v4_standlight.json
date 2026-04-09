@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/ms4_medieval_pack_v4_standlight"
+    },
+    "facing=south": {
+      "model": "megamod:block/ms4_medieval_pack_v4_standlight",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/ms4_medieval_pack_v4_standlight",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/ms4_medieval_pack_v4_standlight",
+      "y": 270
+    }
+  }
+}

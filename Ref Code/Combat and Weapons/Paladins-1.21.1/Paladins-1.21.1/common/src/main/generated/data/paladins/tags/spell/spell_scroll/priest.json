@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "paladins:holy_beam",
+      "required": false
+    },
+    {
+      "id": "paladins:circle_of_healing",
+      "required": false
+    },
+    {
+      "id": "paladins:barrier",
+      "required": false
+    }
+  ]
+}

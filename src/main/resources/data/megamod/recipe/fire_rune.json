@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " B ",
+    "BCB",
+    " B "
+  ],
+  "key": {
+    "B": "minecraft:blaze_powder",
+    "C": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:fire_rune", "count": 2 }
+}

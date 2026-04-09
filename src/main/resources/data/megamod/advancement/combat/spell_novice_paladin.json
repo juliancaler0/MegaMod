@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:iron_mace"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_novice_paladin.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_novice_paladin.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "megamod:path_choose_paladin",
+  "criteria": {
+    "bind": {
+      "trigger": "megamod:spell_binding",
+      "conditions": {
+        "complete": false,
+        "spell_pool": "megamod:spell_book/paladin"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bind"
+    ]
+  ]
+}

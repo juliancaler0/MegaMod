@@ -1,0 +1,32 @@
+{
+  "name": "The Hut",
+  "branch": "technology",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "lumberjack",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:oak_log",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "lumber_speed_1",
+      "type": "MULTIPLIER",
+      "stat": "lumber_speed",
+      "value": 1.1,
+      "description": "Lumber Speed +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

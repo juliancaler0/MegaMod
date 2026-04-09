@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NPN", "P P", "NPN"],
+  "key": {
+    "P": "minecraft:oak_planks",
+    "N": "minecraft:iron_nugget"
+  },
+  "result": { "id": "megamod:rack", "count": 1 }
+}

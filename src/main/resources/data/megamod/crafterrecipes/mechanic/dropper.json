@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:cobblestone", "count": 7 },
+    { "item": "minecraft:redstone", "count": 1 }
+  ],
+  "result": { "item": "minecraft:dropper", "count": 1 }
+}

@@ -1,0 +1,4 @@
+{
+  "parent": "megamod:block/timber_frame/dynamic_timberframe_item_spec",
+  "loader": "megamod:materially_textured"
+}

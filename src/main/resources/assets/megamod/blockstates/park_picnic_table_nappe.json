@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_picnic_table_nappe"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_picnic_table_nappe",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_picnic_table_nappe",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_picnic_table_nappe",
+      "y": 270
+    }
+  }
+}

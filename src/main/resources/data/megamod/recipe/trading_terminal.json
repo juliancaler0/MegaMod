@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IRI", "ECE", "III"],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "E": "minecraft:emerald",
+    "C": "minecraft:chest"
+  },
+  "result": { "id": "megamod:trading_terminal", "count": 1 }
+}

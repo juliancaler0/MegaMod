@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "pile=1": {"model": "megamod:block/dnl/book_pile_1"},
+    "pile=2": {"model": "megamod:block/dnl/book_pile_2"},
+    "pile=3": {"model": "megamod:block/dnl/book_pile_3"},
+    "pile=4": {"model": "megamod:block/dnl/book_pile_4"}
+  }
+}

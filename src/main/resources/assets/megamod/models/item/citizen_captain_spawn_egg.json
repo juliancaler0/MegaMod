@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "megamod:item/citizen_captain_spawn_egg"
+  }
+}

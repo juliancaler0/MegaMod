@@ -1,0 +1,79 @@
+plugins {
+    id 'multiloader-loader'
+    id 'fabric-loom' version "${fabric_loom_version}"
+    id 'me.modmuss50.mod-publish-plugin' version "${modmuss50_mod_publish_version}"
+    id 'com.diffplug.spotless' version "7.0.0.BETA3"
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+    compileOnly "maven.modrinth:shoulder-surfing-reloaded:1.21.1-4.14.3+fabric"
+}
+
+loom {
+    def aw = project(":common").file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    mixin {
+        defaultRefmapName.set("${mod_id}.refmap.json")
+    }
+    runs {
+        client {
+            client()
+            setConfigName("Fabric Client")
+            ideConfigGenerated(true)
+            runDir("runs/client")
+        }
+        server {
+            server()
+            setConfigName("Fabric Server")
+            ideConfigGenerated(true)
+            runDir("runs/server")
+        }
+    }
+}
+
+def keyPropsFile = new File(rootProject.projectDir, "key.properties")
+if (keyPropsFile.exists()) {
+    publishMods {
+        def releaseProp = new Properties()
+        releaseProp.load(new FileInputStream(keyPropsFile))
+        file = remapJar.archiveFile
+        changelog = rootProject.file("changelog.md").text
+        type = STABLE
+        modLoaders.add("fabric")
+        modLoaders.add("quilt")
+        displayName = "${mod_id} fabric ${minecraft_version}"
+
+        discord {
+            webhookUrl = releaseProp.getProperty("discordKey")
+            dryRunWebhookUrl = releaseProp.getProperty("discordKey")
+            username = "AzureBot"
+            avatarUrl = "https://cdn.modrinth.com/data/7zlUOZvb/8b2cb16452c1d3bb33574519a6f5cf4ce86f13a3_96.webp"
+            content = changelog.map { "# A new version of AzureLib Armor for Fabric has been released for 1.21.1 \n" + it}
+            setPlatforms(publishMods.platforms.curseforge, publishMods.platforms.modrinth)
+            style {
+                look = "MODERN"
+                thumbnailUrl = "https://cdn.modrinth.com/data/7zlUOZvb/8b2cb16452c1d3bb33574519a6f5cf4ce86f13a3_96.webp"
+            }
+        }
+        curseforge {
+            projectId = project.curseforge_id
+            projectSlug = "azurelib-armor"
+            accessToken = releaseProp.getProperty("curseKey")
+            minecraftVersions.add(project.minecraft_version)
+            requires {
+                slug = "fabric-api"
+            }
+        }
+        modrinth {
+            projectId = project.modrinth_id
+            accessToken = releaseProp.getProperty('modrinthKey')
+            minecraftVersions.add(project.minecraft_version)
+        }
+    }
+}

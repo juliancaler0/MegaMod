@@ -1,0 +1,34 @@
+{
+  "name": "Undertaker Run II",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/undertaker_emergency"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:diamond_boots",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "undertaker_speed",
+      "type": "MULTIPLIER",
+      "stat": "undertaker_speed",
+      "value": 1.15,
+      "description": "Undertaker Speed +15%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

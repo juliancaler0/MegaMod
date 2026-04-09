@@ -1,0 +1,17 @@
+{
+  "accessWidener": "accessories.accesswidener",
+  "injected_interfaces": {
+    "net/minecraft/class_1309": [
+      "io/wispforest/accessories/pond/AccessoriesAPIAccess"
+    ],
+    "net/minecraft/class_4264": [
+      "io/wispforest/accessories/client/gui/AbstractButtonExtension"
+    ],
+    "net/minecraft/class_10042": [
+      "io/wispforest/accessories/pond/AccessoriesRenderStateAPI"
+    ],
+    "net/minecraft/class_1836": [
+      "io/wispforest/accessories/pond/TooltipFlagExtended"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "megamod:block/wheel"
+	},
+	"elements": []
+}

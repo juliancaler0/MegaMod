@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["PPP", "PIP", "PPP"],
+  "key": {
+    "P": "minecraft:oak_planks",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": { "id": "megamod:supply_chest", "count": 1 }
+}

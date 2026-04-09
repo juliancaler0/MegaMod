@@ -1,0 +1,20 @@
+{
+    "variants": {
+      "facing=north": {
+        "model": "theaurorian:block/aurorian_portal",
+        "y": 0
+      },
+      "facing=east": {
+        "model": "theaurorian:block/aurorian_portal",
+        "y": 90
+      },
+      "facing=south": {
+        "model": "theaurorian:block/aurorian_portal",
+        "y": 180
+      },
+      "facing=west": {
+        "model": "theaurorian:block/aurorian_portal",
+        "y": 270
+      }
+    }
+  }

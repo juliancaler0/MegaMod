@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/medium_staff",
+  "textures": {
+    "layer0": "megamod:item/staff_wizard"
+  }
+}

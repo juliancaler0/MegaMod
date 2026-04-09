@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_vase"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_vase",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_vase",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_vase",
+      "y": 270
+    }
+  }
+}

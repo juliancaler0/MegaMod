@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_table_sawing"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_table_sawing",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_table_sawing",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_table_sawing",
+      "y": 270
+    }
+  }
+}

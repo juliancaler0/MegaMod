@@ -1,0 +1,10 @@
+{
+	"parent": "megamod:item/base/metal_kite_shield_b_template",
+	"textures": {
+		"0": "megamod:item/netherite_kite_shield",
+		"particle": "megamod:item/netherite_kite_shield"
+	},
+	"overrides": [
+		{"predicate": { "blocking": 1 }, "model": "megamod:item/netherite_kite_shield_blocking" }
+	]
+}

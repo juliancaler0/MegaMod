@@ -1,0 +1,21 @@
+{
+  "values": [
+    "paladins:stone_claymore",
+    "paladins:iron_claymore",
+    "paladins:golden_claymore",
+    "paladins:diamond_claymore",
+    "paladins:netherite_claymore",
+    {
+      "id": "paladins:aeternium_claymore",
+      "required": false
+    },
+    {
+      "id": "paladins:ruby_claymore",
+      "required": false
+    },
+    {
+      "id": "paladins:aether_claymore",
+      "required": false
+    }
+  ]
+}

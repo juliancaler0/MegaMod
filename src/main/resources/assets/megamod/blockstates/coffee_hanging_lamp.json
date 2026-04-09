@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/coffee_hanging_lamp"},
+    "facing=south": {"model": "megamod:block/coffee_hanging_lamp", "y": 180},
+    "facing=east": {"model": "megamod:block/coffee_hanging_lamp", "y": 90},
+    "facing=west": {"model": "megamod:block/coffee_hanging_lamp", "y": 270}
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Magic Furnace",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/blast_furnace"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "smeltery",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "smelting_output_max",
+      "type": "MULTIPLIER",
+      "stat": "smelting_output",
+      "value": 3.0,
+      "description": "Smelting Output x3"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

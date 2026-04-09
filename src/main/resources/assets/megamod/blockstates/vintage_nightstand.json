@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_nightstand"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_nightstand",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_nightstand",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_nightstand",
+      "y": 270
+    }
+  }
+}

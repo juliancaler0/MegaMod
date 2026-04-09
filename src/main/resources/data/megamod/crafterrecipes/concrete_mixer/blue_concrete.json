@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "concrete_mixer",
+  "inputs": [
+    { "item": "minecraft:blue_concrete_powder", "count": 1 }
+  ],
+  "result": { "item": "minecraft:blue_concrete", "count": 1 },
+  "requires_water": true
+}

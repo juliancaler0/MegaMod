@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${list_of_authors}"
+  ],
+  "contributors": [
+    "${list_of_contributors}"
+  ],
+  "contact": {
+    "${contact_entry}": ""
+  },
+  "license": "${mod_license}",
+  "icon": "assets/${mod_id}/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "io.wispforest.accessories.fabric.AccessoriesFabric"
+    ],
+    "client":[
+      "io.wispforest.accessories.fabric.client.AccessoriesClientFabric"
+    ],
+    "rei_client": [
+      "io.wispforest.accessories.compat.rei.AccessoriesClientREIPlugin"
+    ],
+    "emi": [
+      "io.wispforest.accessories.compat.emi.AccessoriesClientEMIPlugin"
+    ],
+    "jei": [
+      "io.wispforest.accessories.compat.jei.AccessoriesClientJEIPlugin"
+    ]
+  },
+  "mixins": [
+    "${mod_id}-fabric.mixins.json",
+    "${mod_id}-common.mixins.json"
+  ],
+  "accessWidener": "${mod_id}.accesswidener",
+  "depends": {
+    "fabricloader": "${fabric_loader_version_range}",
+    "fabric-api": "${fabric_api_version_range}",
+    "minecraft": "${fabric_minecraft_version_range}",
+    "owo": "${owo_fabric_version_range}"
+  },
+  "breaks": {
+    "accessories_compat_layer": "<=0.1.9"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_1309": [
+        "io/wispforest/accessories/pond/AccessoriesAPIAccess"
+      ],
+      "net/minecraft/class_4264": [
+        "io/wispforest/accessories/client/gui/AbstractButtonExtension"
+      ],
+      "net/minecraft/class_10042": [
+        "io/wispforest/accessories/pond/AccessoriesRenderStateAPI"
+      ]
+    }
+  }
+}

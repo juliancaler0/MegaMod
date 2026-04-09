@@ -1,0 +1,7 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    { "weight": 50, "element": { "element_type": "minecraft:empty_pool_element" } },
+    { "weight": 5, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/hanging_lantern", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } }
+  ]
+}

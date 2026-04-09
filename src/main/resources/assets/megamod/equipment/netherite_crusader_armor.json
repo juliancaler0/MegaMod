@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:netherite_crusader_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:netherite_crusader_armor"
+      }
+    ]
+  }
+}

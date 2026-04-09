@@ -1,0 +1,28 @@
+{
+  "name": "Deep Dive",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/scuba"
+  ],
+  "requirements": [],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:prismarine_shard",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_deep_water_work",
+      "type": "UNLOCK",
+      "stat": "deep_water_work",
+      "value": 1,
+      "description": "Citizens Work Underwater"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

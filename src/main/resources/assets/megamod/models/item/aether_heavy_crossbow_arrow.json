@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/aether_heavy_crossbow",
+  "textures": {
+    "layer0": "megamod:item/aether_heavy_crossbow_arrow"
+  }
+}

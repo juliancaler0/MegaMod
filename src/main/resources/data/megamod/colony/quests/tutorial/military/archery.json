@@ -1,0 +1,106 @@
+{
+  "name": "Sharp Shooters",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/military/guards"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/military/guards"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, the guards in the towers are doing their best, but their aim is terrible! Half their arrows miss the target entirely. If we had a proper archery range, they could practice and become real sharpshooters!",
+      "options": [
+        {
+          "answer": "An archery range sounds like a great idea!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build an Archery! It is a dedicated training ground where your rangers can hone their bow skills. Better trained archers means fewer arrows wasted and more enemies taken down before they even reach our walls!",
+            "options": [
+              {
+                "answer": "Time to train some marksmen!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already built one!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You have? I can already see the guards improving! Smart move, Mayor!",
+                  "options": [
+                    {
+                      "answer": "A prepared colony is a safe colony!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:archery",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The archery range is set up and the guards are already lining up to practice! Their accuracy will improve over time as they train. Make sure to keep them supplied with arrows. Here, take these for the range!",
+      "options": [
+        {
+          "answer": "Bullseye!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:arrow",
+        "qty": 16
+      }
+    }
+  ]
+}

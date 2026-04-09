@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bl_glass_beer"
+    },
+    "facing=south": {
+      "model": "megamod:block/bl_glass_beer",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bl_glass_beer",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bl_glass_beer",
+      "y": 270
+    }
+  }
+}

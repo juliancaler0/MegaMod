@@ -1,0 +1,25 @@
+{
+  "parent": "megamod:colony/builder_placed",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_tavern"
+    },
+    "title": {
+      "text": "Come One, Come All"
+    },
+    "description": {
+      "text": "Place a Tavern"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_tavern"
+      }
+    }
+  }
+}

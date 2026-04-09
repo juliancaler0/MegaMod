@@ -1,0 +1,42 @@
+{
+  "archer_armor": {
+    "sounds": [
+      "archers:archer_armor"
+    ]
+  },
+  "archers_workbench": {
+    "sounds": [
+      "archers:archers_workbench"
+    ]
+  },
+  "bow_pull": {
+    "sounds": [
+      "archers:bow_pull"
+    ]
+  },
+  "entangling_roots": {
+    "sounds": [
+      "archers:entangling_roots"
+    ]
+  },
+  "magic_arrow_impact": {
+    "sounds": [
+      "archers:magic_arrow_impact"
+    ]
+  },
+  "magic_arrow_release": {
+    "sounds": [
+      "archers:magic_arrow_release"
+    ]
+  },
+  "magic_arrow_start": {
+    "sounds": [
+      "archers:magic_arrow_start"
+    ]
+  },
+  "marker_shot": {
+    "sounds": [
+      "archers:marker_shot"
+    ]
+  }
+}

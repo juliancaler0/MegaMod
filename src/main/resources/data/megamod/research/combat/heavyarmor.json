@@ -1,0 +1,34 @@
+{
+  "name": "Heavy Armor",
+  "branch": "combat",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:combat/ironarmour"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:diamond_chestplate",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "guard_armor_2",
+      "type": "MODIFIER",
+      "stat": "guard_armor",
+      "value": 4,
+      "description": "Guard Armor +4"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

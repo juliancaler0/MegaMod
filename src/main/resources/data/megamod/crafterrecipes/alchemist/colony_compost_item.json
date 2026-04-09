@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "alchemist",
+  "inputs": [
+    { "item": "minecraft:bone_meal", "count": 2 },
+    { "item": "minecraft:wheat_seeds", "count": 3 }
+  ],
+  "result": { "item": "megamod:colony_compost_item", "count": 2 }
+}

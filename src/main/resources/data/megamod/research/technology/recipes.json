@@ -1,0 +1,34 @@
+{
+  "name": "Recipes",
+  "branch": "technology",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:technology/capacity"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:crafting_table",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_auto_craft",
+      "type": "UNLOCK",
+      "stat": "auto_crafting",
+      "value": 1,
+      "description": "Warehouse Auto-Crafting"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

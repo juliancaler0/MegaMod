@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/netherite_heavy_crossbow",
+  "textures": {
+    "layer0": "megamod:item/netherite_heavy_crossbow_pulling_1"
+  }
+}

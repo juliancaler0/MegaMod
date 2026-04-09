@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:light_gray_dye"
+  ],
+  "result": {
+    "id": "megamod:sheep_backpack",
+    "count": 1
+  }
+}

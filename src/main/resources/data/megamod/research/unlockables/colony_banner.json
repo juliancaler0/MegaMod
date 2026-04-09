@@ -1,0 +1,32 @@
+{
+  "name": "Colony Banner",
+  "branch": "unlockables",
+  "tier": 1,
+  "researchTime": 2400,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:white_banner",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_colony_banner",
+      "type": "UNLOCK",
+      "stat": "colony_banner",
+      "value": 1,
+      "description": "Unlocks Colony Banner"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

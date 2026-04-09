@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/first_delivery",
+  "display": {
+    "icon": {
+      "id": "minecraft:golden_apple"
+    },
+    "title": {
+      "text": "Fully Upgraded"
+    },
+    "description": {
+      "text": "Upgrade any building to level 5"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "mod.azure.azurelibarmor.common.internal.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "AbstractContainerMenuMixin_AzItemIDFix",
+    "ItemStackMixin_AzItemStackIdentityRegistry"
+  ],
+  "client": [
+    "MixinItemRenderer",
+    "ItemStackMixin_AzItemAnimatorCache",
+    "TextureManagerMixin"
+  ]
+}

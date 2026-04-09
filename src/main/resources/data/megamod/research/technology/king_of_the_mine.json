@@ -1,0 +1,38 @@
+{
+  "name": "King of the Mine",
+  "branch": "technology",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:technology/bedrock_drill"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "mine",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "all_mining_max",
+      "type": "MULTIPLIER",
+      "stat": "mining_speed",
+      "value": 3.0,
+      "description": "All Mining x3"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:technology/king_of_the_forest",
+    "megamod:technology/king_of_the_furnace",
+    "megamod:technology/king_of_the_field"
+  ]
+}

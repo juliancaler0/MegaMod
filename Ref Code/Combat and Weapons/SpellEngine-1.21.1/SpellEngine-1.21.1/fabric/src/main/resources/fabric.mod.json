@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "spell_engine",
+  "version": "${version}",
+  "name": "Spell Engine",
+  "description": "Data driven magic library.",
+  "authors": [
+    "Daedelus"
+  ],
+  "contact": {
+    "repo": "https://github.com/ZsoltMolnarrr/SpellEngine",
+    "issues": "https://github.com/ZsoltMolnarrr/SpellEngine/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.spell_engine.fabric.client.FabricClientMod"
+    ],
+    "main": [
+      "net.spell_engine.fabric.FabricMod"
+    ],
+    "fabric-datagen": [
+      "net.spell_engine.fabric.datagen.SpellEngineDataGenerator"
+    ],
+    "fabric-model-loading-plugin": [
+      "net.spell_engine.fabric.client.FabricModelDiscovery"
+    ],
+    "modmenu": [
+      "net.spell_engine.fabric.client.compat.ModMenuCompatibility"
+    ],
+    "dynamiclights": [
+      "net.spell_engine.fabric.client.compat.DynamicLightsCompatibility"
+    ],
+    "from 1.21.4: lambdynlights:initializer": [
+      "net.spell_engine.fabric.client.compat.DynamicLightsCompatibility"
+    ]
+  },
+  "mixins": [
+    "spell_engine.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=${minecraft_compat_version}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric": ">=${fabric_api_version}",
+    "cloth-config": ">=${cloth_config_version}",
+    "playeranimator": ">=1.9.0",
+    "spell_power": ">=${spell_power_version}"
+  },
+  "recommends": {
+    "trinkets": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/KN9b3pjFTM"
+      }
+    }
+  }
+}

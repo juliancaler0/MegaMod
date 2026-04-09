@@ -1,0 +1,66 @@
+accessWidener v1 named
+
+# Because its package private
+#accessible	    class		net/minecraft/client/render/RenderLayer$MultiPhase
+#accessible		class		net/minecraft/client/render/RenderLayer$MultiPhaseParameters
+#accessible class net/minecraft/client/render/RenderPhase$ShaderProgram
+#accessible class net/minecraft/client/render/RenderPhase$Textures
+#accessible method net/minecraft/entity/Entity setRotation (FF)V
+
+# for MutableBlockEntityType
+#extendable    class    net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
+
+# for HackyFluidState
+extendable class net/minecraft/world/level/material/FluidState
+accessible field net/minecraft/world/level/block/state/StateHolder propertiesCodec Lcom/mojang/serialization/MapCodec;#Lnet/minecraft/state/State;codec:Lcom/mojang/serialization/MapCodec;
+
+# for lazy pocket gen/ getting all currently loaded chunks
+accessible method net/minecraft/server/level/ChunkMap getChunks ()Ljava/lang/Iterable;
+
+#accessible method net/minecraft/client/render/WorldRenderer renderEndSky (Lnet/minecraft/client/util/math/MatrixStack;)V
+
+#accessible method net/minecraft/world/biome/Biome getCategory ()Lnet/minecraft/world/biome/Biome$Category;
+
+accessible field net/minecraft/world/level/block/Block LOGGER Lorg/slf4j/Logger;
+
+#accessible method net/minecraft/world/gen/feature/OrePlacedFeatures modifiersWithCount (ILnet/minecraft/world/gen/placementmodifier/PlacementModifier;)Ljava/util/List;
+
+#accessible class net/minecraft/data/models/BlockModelGenerators$BlockFamilyProvider
+
+#accessible method net/minecraft/world/level/block/entity/BlockEntity saveMetadata (Lnet/minecraft/nbt/CompoundTag;)Lnet/minecraft/nbt/CompoundTag;
+
+#accessible method net/minecraft/commands/arguments/blocks/BlockStateParser parse (Z)Lnet/minecraft/commands/arguments/blocks/BlockStateParser;
+
+accessible method net/minecraft/world/item/crafting/ShapedRecipe shrink ([Ljava/lang/String;)[Ljava/lang/String;
+accessible method net/minecraft/world/item/crafting/ShapedRecipe keyFromJson (Lcom/google/gson/JsonObject;)Ljava/util/Map;
+accessible method net/minecraft/world/item/crafting/ShapedRecipe patternFromJson (Lcom/google/gson/JsonArray;)[Ljava/lang/String;
+accessible method net/minecraft/world/item/crafting/RecipeManager byType (Lnet/minecraft/world/item/crafting/RecipeType;)Ljava/util/Map;
+accessible method net/minecraft/world/item/crafting/ShapedRecipe dissolvePattern ([Ljava/lang/String;Ljava/util/Map;II)Lnet/minecraft/core/NonNullList;
+accessible method net/minecraft/world/item/crafting/Ingredient valueFromJson (Lcom/google/gson/JsonObject;)Lnet/minecraft/world/item/crafting/Ingredient$Value;
+
+accessible class net/minecraft/core/particles/SimpleParticleType
+
+accessible class net/minecraft/world/level/levelgen/structure/structures/NetherFortressPieces$NetherBridgePiece
+accessible class net/minecraft/world/level/levelgen/structure/structures/NetherFortressPieces$PieceWeight
+
+accessible method net/minecraft/world/level/block/DoorBlock playSound (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Z)V
+
+accessible field net/minecraft/client/renderer/LevelRenderer skyBuffer Lcom/mojang/blaze3d/vertex/VertexBuffer;
+
+accessible field net/minecraft/client/renderer/LevelRenderer SUN_LOCATION Lnet/minecraft/resources/ResourceLocation;
+accessible field net/minecraft/client/renderer/LevelRenderer MOON_LOCATION Lnet/minecraft/resources/ResourceLocation;
+accessible field net/minecraft/client/renderer/LevelRenderer starBuffer Lcom/mojang/blaze3d/vertex/VertexBuffer;
+accessible field net/minecraft/client/renderer/LevelRenderer darkBuffer Lcom/mojang/blaze3d/vertex/VertexBuffer;
+accessible class net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager$Source
+accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager$Source <init> (Ljava/util/function/Function;Ljava/util/function/Supplier;)V
+accessible class net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplateManager$InputStreamOpener
+
+accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate size Lnet/minecraft/core/Vec3i;
+accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate palettes Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate entityInfoList Ljava/util/List;
+accessible class net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$SimplePalette
+
+accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$SimplePalette <init> ()V
+accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$Palette <init> (Ljava/util/List;)V
+accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate addToLists (Lnet/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate$StructureBlockInfo;Ljava/util/List;Ljava/util/List;Ljava/util/List;)V
+accessible method net/minecraft/world/level/levelgen/structure/templatesystem/StructureTemplate buildInfoList (Ljava/util/List;Ljava/util/List;Ljava/util/List;)Ljava/util/List;

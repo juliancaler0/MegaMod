@@ -1,0 +1,34 @@
+{
+  "name": "Commander Training",
+  "branch": "combat",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:combat/captaintraining"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "knight_damage_4",
+      "type": "MULTIPLIER",
+      "stat": "knight_damage",
+      "value": 2.0,
+      "description": "Knight Damage x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

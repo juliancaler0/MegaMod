@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:berserker_armor"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:berserker_armor"
+      }
+    ]
+  }
+}

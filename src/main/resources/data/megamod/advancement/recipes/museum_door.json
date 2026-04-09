@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gold_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": "minecraft:gold_ingot" }]
+      }
+    }
+  },
+  "requirements": [["has_gold_ingot"]],
+  "rewards": {
+    "recipes": ["megamod:museum_door"]
+  }
+}

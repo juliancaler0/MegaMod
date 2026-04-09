@@ -1,0 +1,25 @@
+{
+  "parent": "megamod:colony/guard_tower",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_barracks"
+    },
+    "title": {
+      "text": "Fortified"
+    },
+    "description": {
+      "text": "Place a Barracks"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_barracks"
+      }
+    }
+  }
+}

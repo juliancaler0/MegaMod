@@ -1,0 +1,35 @@
+{
+  "name": "Infinite Arrow",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/poisonarrow",
+    "megamod:combat/flamingarrow"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "archery",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:tipped_arrow",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_infinite_arrows",
+      "type": "UNLOCK",
+      "stat": "infinite_arrows",
+      "value": 1,
+      "description": "Archers Have Infinite Arrows"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

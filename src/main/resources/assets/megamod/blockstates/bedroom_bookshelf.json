@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/bedroom_bookshelf" },
+    "facing=south": { "model": "megamod:block/bedroom_bookshelf", "y": 180 },
+    "facing=east": { "model": "megamod:block/bedroom_bookshelf", "y": 90 },
+    "facing=west": { "model": "megamod:block/bedroom_bookshelf", "y": 270 }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:pink_dye"
+  ],
+  "result": {
+    "id": "megamod:pig_backpack",
+    "count": 1
+  }
+}

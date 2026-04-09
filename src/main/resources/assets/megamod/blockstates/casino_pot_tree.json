@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_pot_tree"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_pot_tree",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_pot_tree",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_pot_tree",
+      "y": 270
+    }
+  }
+}

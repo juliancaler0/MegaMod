@@ -1,0 +1,34 @@
+{
+  "name": "Express",
+  "branch": "technology",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:technology/flatter"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:emerald",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "delivery_speed_2",
+      "type": "MULTIPLIER",
+      "stat": "delivery_speed",
+      "value": 1.25,
+      "description": "Delivery Speed +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

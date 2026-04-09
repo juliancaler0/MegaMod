@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BLB",
+    "DPD",
+    "PPP"
+  ],
+  "key": {
+    "B": "minecraft:book",
+    "L": "minecraft:lapis_lazuli",
+    "D": "minecraft:diamond",
+    "P": "minecraft:oak_planks"
+  },
+  "result": { "id": "megamod:spell_binding_table", "count": 1 }
+}

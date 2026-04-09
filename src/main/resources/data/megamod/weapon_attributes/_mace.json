@@ -1,0 +1,1 @@
+{"attributes":{"range_bonus":0,"two_handed":false,"category":"mace","attacks":[{"hitbox":"VERTICAL_PLANE","damage_multiplier":1.2,"angle":90,"upswing":0.5,"animation":"one_handed_slam","swing_direction":"SLASH_DOWN"},{"hitbox":"HORIZONTAL_PLANE","damage_multiplier":1.0,"angle":120,"upswing":0.5,"animation":"one_handed_slash_horizontal_right","swing_direction":"SLASH_RIGHT"}]}}

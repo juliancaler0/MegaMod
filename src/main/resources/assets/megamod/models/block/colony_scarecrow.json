@@ -1,0 +1,49 @@
+{
+  "credit": "Scarecrow block model",
+  "ambientocclusion": false,
+  "textures": {
+    "scarecrow": "megamod:block/blockscarecrownormal",
+    "particle": "megamod:block/blockscarecrownormal"
+  },
+  "elements": [
+    {
+      "name": "post",
+      "from": [7, 0, 7],
+      "to": [9, 16, 9],
+      "faces": {
+        "north": {"uv": [7, 0, 9, 16], "texture": "#scarecrow"},
+        "east": {"uv": [7, 0, 9, 16], "texture": "#scarecrow"},
+        "south": {"uv": [7, 0, 9, 16], "texture": "#scarecrow"},
+        "west": {"uv": [7, 0, 9, 16], "texture": "#scarecrow"},
+        "up": {"uv": [7, 7, 9, 9], "texture": "#scarecrow"},
+        "down": {"uv": [7, 7, 9, 9], "texture": "#scarecrow"}
+      }
+    },
+    {
+      "name": "arms",
+      "from": [2, 10, 7.5],
+      "to": [14, 12, 8.5],
+      "faces": {
+        "north": {"uv": [2, 4, 14, 6], "texture": "#scarecrow"},
+        "east": {"uv": [7, 4, 8, 6], "texture": "#scarecrow"},
+        "south": {"uv": [2, 4, 14, 6], "texture": "#scarecrow"},
+        "west": {"uv": [7, 4, 8, 6], "texture": "#scarecrow"},
+        "up": {"uv": [2, 7, 14, 8], "texture": "#scarecrow"},
+        "down": {"uv": [2, 7, 14, 8], "texture": "#scarecrow"}
+      }
+    },
+    {
+      "name": "head",
+      "from": [5, 12, 5],
+      "to": [11, 16, 11],
+      "faces": {
+        "north": {"uv": [5, 0, 11, 4], "texture": "#scarecrow"},
+        "east": {"uv": [5, 0, 11, 4], "texture": "#scarecrow"},
+        "south": {"uv": [5, 0, 11, 4], "texture": "#scarecrow"},
+        "west": {"uv": [5, 0, 11, 4], "texture": "#scarecrow"},
+        "up": {"uv": [5, 5, 11, 11], "texture": "#scarecrow"},
+        "down": {"uv": [5, 5, 11, 11], "texture": "#scarecrow"}
+      }
+    }
+  ]
+}

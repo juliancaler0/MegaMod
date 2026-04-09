@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "particle": "block/oak_planks",
+    "down": "megamod:block/blocksolidsubstitution",
+    "up": "megamod:block/blocksolidsubstitution",
+    "north": "megamod:block/blocksolidsubstitution",
+    "east": "megamod:block/blocksolidsubstitution",
+    "south": "megamod:block/blocksolidsubstitution",
+    "west": "megamod:block/blocksolidsubstitution"
+  }
+}

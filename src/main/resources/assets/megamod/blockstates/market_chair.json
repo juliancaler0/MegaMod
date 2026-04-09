@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/market_chair"},
+    "facing=south": {"model": "megamod:block/market_chair", "y": 180},
+    "facing=east": {"model": "megamod:block/market_chair", "y": 90},
+    "facing=west": {"model": "megamod:block/market_chair", "y": 270}
+  }
+}

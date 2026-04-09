@@ -1,0 +1,32 @@
+{
+  "name": "Improved Dodge",
+  "branch": "combat",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "guardtower",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:leather",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "guard_dodge_1",
+      "type": "MULTIPLIER",
+      "stat": "guard_dodge",
+      "value": 1.05,
+      "description": "Guard Dodge +5%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

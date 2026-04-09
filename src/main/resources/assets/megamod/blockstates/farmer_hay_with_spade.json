@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_hay_with_spade"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_hay_with_spade",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_hay_with_spade",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_hay_with_spade",
+      "y": 270
+    }
+  }
+}

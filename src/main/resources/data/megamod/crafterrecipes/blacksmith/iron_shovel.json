@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "blacksmith",
+  "inputs": [
+    { "item": "minecraft:iron_ingot", "count": 1 },
+    { "item": "minecraft:stick", "count": 2 }
+  ],
+  "result": { "item": "minecraft:iron_shovel", "count": 1 }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Hormones",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/nurture"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "school",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:apple",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "child_growth_2",
+      "type": "MULTIPLIER",
+      "stat": "child_growth",
+      "value": 1.1,
+      "description": "Child Growth +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

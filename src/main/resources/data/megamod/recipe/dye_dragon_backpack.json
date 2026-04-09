@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:purple_dye"
+  ],
+  "result": {
+    "id": "megamod:dragon_backpack",
+    "count": 1
+  }
+}

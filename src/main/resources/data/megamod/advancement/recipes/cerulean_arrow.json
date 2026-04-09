@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_rat_fang": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": "megamod:rat_fang" }]
+      }
+    }
+  },
+  "requirements": [["has_rat_fang"]],
+  "rewards": {
+    "recipes": ["megamod:cerulean_arrow"]
+  }
+}

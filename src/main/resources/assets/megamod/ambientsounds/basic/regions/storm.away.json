@@ -1,0 +1,32 @@
+{
+    "name": "storm.away",
+    "storming": true,
+    "bad-regions": [
+        "cold"
+    ],
+    "regions": [
+        "cave",
+        "sky"
+    ],
+    "relative-height": {
+        "min": -30,
+        "fade": 20
+    },
+    "sounds": [
+        {
+            "name": "storm-away",
+            "category": "weather",
+            "files": [
+                "megamod:ambient.weather.storm-away"
+            ]
+        },
+        {
+            "name": "howling-wind",
+            "category": "weather",
+            "files": [
+                "megamod:ambient.wind.howling-wind"
+            ],
+            "volume": 0.2
+        }
+    ]
+}

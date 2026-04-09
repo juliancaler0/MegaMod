@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:diamond", "count": 3 },
+    { "item": "minecraft:iron_ingot", "count": 2 }
+  ],
+  "result": { "item": "megamod:mesh_diamond", "count": 1 }
+}

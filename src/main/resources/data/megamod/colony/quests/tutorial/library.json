@@ -1,0 +1,106 @@
+{
+  "name": "Bookworms",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/enchanter"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/enchanter"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, I have been thinking. Our citizens are hard workers, but they could be so much more if they had access to knowledge. A library would let them study and improve their skills on their own time. Smarter workers means a more productive colony!",
+      "options": [
+        {
+          "answer": "Knowledge is power. What do we need?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build a Library! The librarian will manage a collection of books that your citizens can study from. Over time, their skills will improve much faster. Plus, the enchanter will appreciate having a proper research partner nearby!",
+            "options": [
+              {
+                "answer": "A library it is!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Way ahead of you!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You already built one? The citizens must be thrilled!",
+                  "options": [
+                    {
+                      "answer": "They love it!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:library",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The library is open for business! Citizens will visit during their free time to study and level up their skills faster. Make sure to stock it with plenty of books and paper. Here is some paper to start your collection!",
+      "options": [
+        {
+          "answer": "Time to build a well-read colony!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:paper",
+        "qty": 10
+      }
+    }
+  ]
+}

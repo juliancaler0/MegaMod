@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:ghast_tear",
+    "B": "minecraft:white_wool",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:ghast_backpack",
+    "count": 1
+  }
+}

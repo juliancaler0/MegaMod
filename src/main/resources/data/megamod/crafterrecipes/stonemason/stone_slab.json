@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "stonemason",
+  "inputs": [
+    { "item": "minecraft:stone", "count": 3 }
+  ],
+  "result": { "item": "minecraft:stone_slab", "count": 6 }
+}

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "megamod:block/fence/fence_post_spec"
+  }
+}

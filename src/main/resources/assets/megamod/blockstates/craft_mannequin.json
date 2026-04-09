@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/craft_mannequin"
+    },
+    "facing=south": {
+      "model": "megamod:block/craft_mannequin",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/craft_mannequin",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/craft_mannequin",
+      "y": 270
+    }
+  }
+}

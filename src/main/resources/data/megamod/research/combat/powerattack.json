@@ -1,0 +1,34 @@
+{
+  "name": "Power Attack",
+  "branch": "combat",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:combat/improvedswords"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 2
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_axe",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "melee_damage_2",
+      "type": "MULTIPLIER",
+      "stat": "melee_damage",
+      "value": 1.15,
+      "description": "Melee Damage +15%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

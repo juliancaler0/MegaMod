@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bl_tavern_bench"
+    },
+    "facing=south": {
+      "model": "megamod:block/bl_tavern_bench",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bl_tavern_bench",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bl_tavern_bench",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "combat_roll",
+  "version": "${version}",
+  "name": "Combat Roll",
+  "description": "Adds combat roll ability, with related attributes and enchantments.",
+  "authors": [
+    "Daedelus"
+  ],
+  "contact": {
+    "repo": "https://github.com/ZsoltMolnarrr/combat_roll",
+    "issues": "https://github.com/ZsoltMolnarrr/combat_roll/issues"
+  },
+  "license": "GPL-3.0",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.combat_roll.fabric.client.CombatRollClientModFabric"
+    ],
+    "main": [
+      "net.combat_roll.fabric.CombatRollModFabric"
+    ],
+    "modmenu": [
+      "net.combat_roll.fabric.client.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "combat_roll.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=1.21.6",
+    "fabricloader": "*",
+    "fabric-api": "*",
+    "cloth-config": "*",
+    "player_animation_library": ">=1.0.13"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/KN9b3pjFTM"
+      }
+    }
+  }
+}

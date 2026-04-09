@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_streamers_hanging"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_streamers_hanging",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_streamers_hanging",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_streamers_hanging",
+      "y": 270
+    }
+  }
+}

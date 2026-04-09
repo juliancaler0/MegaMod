@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_stele_2"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_stele_2",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_stele_2",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_stele_2",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/university_placed",
+  "display": {
+    "icon": {
+      "id": "minecraft:book"
+    },
+    "title": {
+      "text": "Eureka!"
+    },
+    "description": {
+      "text": "Complete a research in the University"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

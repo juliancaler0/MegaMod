@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["LLL", "WGW", "WWW"],
+  "key": {
+    "L": "minecraft:lapis_lazuli",
+    "W": "minecraft:oak_planks",
+    "G": "minecraft:gold_ingot"
+  },
+  "result": { "id": "megamod:researching_table", "count": 1 }
+}

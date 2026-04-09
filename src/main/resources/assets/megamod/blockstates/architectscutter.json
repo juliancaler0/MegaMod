@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "megamod:block/architectscutter",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "megamod:block/architectscutter"
+    },
+    "facing=south": {
+      "model": "megamod:block/architectscutter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "megamod:block/architectscutter",
+      "y": 270
+    }
+  }
+}

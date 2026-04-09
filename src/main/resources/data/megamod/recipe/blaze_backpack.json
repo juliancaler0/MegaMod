@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:blaze_rod",
+    "B": "minecraft:blaze_powder",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:blaze_backpack",
+    "count": 1
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "megamod:block/slab/slab_bottom_spec"
+    },
+    "type=top": {
+      "model": "megamod:block/slab/slab_bottom_spec",
+      "x": 180,
+      "uvlock": true
+    },
+    "type=double": {
+      "model": "megamod:block/slab/slab_bottom_spec"
+    }
+  }
+}

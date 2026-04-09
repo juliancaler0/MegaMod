@@ -1,0 +1,15 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    { "weight": 150, "element": { "element_type": "minecraft:empty_pool_element" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/new", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/chipped", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/damaged", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 12, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/armor_stand", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 12, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/brewing_stand", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/hanging_lantern", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/hanging_lantern", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/hanging_lantern", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/hanging_lantern", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } }
+  ]
+}

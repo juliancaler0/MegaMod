@@ -1,0 +1,18 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    { "weight": 150, "element": { "element_type": "minecraft:empty_pool_element" } },
+    { "weight": 24, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/boss_room/outer_ring/spike", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 24, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/boss_room/outer_ring/wall", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 24, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/boss_room/outer_ring/bridge", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/new", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/chipped", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/anvils/damaged", "processors": "megamod:dungeon/anvil", "projection": "rigid" } },
+    { "weight": 12, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/armor_stand", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 12, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/brewing_stand", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/juke_boxes/13", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/juke_boxes/cat", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/juke_boxes/otherside", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/decors/juke_boxes/ward", "processors": "megamod:dungeon/waterlogging_fix", "projection": "rigid" } }
+  ]
+}

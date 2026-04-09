@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.rogues.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "LivingEntityStealth",
+    "TrackTargetGoalStealth"
+  ],
+  "client": [
+    "client.LivingEntityRendererWhirlwind",
+    "client.LivingEntityRenderStealth"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

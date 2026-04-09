@@ -1,0 +1,84 @@
+{
+    "name": "plains",
+    "features": [
+        "grass"
+    ],
+    "bad-regions": [
+        "ocean",
+        "forest",
+        "savanna",
+        "swamp",
+        "highland",
+        "nether",
+        "rain",
+        "taiga"
+    ],
+    "temperature": {
+        "min": 0.2
+    },
+    "biomes": [
+        "plains",
+        "chaparral",
+        "field",
+        "flower",
+        "grass",
+        "oasis",
+        "tundra",
+        "mushroom*fields",
+        "darklands",
+        "badlands",
+        "pasture",
+        "rocky plateau",
+        "tropics plains",
+        "mycelium",
+        "firecracker_chaparral",
+        "pumpkin_valley",
+        "bayou",
+        "skyrise_vale"
+    ],
+    "sounds": [
+        {
+            "name": "cricket",
+            "category": "cricket_day",
+            "files": [
+                "megamod:ambient.animals.cricket",
+                "megamod:ambient.animals.cricket2",
+                "megamod:ambient.animals.cricket3"
+            ],
+            "overall-raining": false,
+            "length": {
+                "min": 1000,
+                "max": 1500
+            },
+            "transition": 100,
+            "volume": 0.3
+        },
+        {
+            "name": "cricket-night",
+            "category": "cricket_night",
+            "files": [
+                "megamod:ambient.animals.cricket-night",
+                "megamod:ambient.animals.cricket-night2",
+                "megamod:ambient.animals.cricket-night3",
+                "megamod:ambient.animals.cricket-night4",
+                "megamod:ambient.animals.cricket-night5"
+            ],
+            "overall-raining": false,
+            "length": {
+                "min": 1000,
+                "max": 1500
+            },
+            "transition": 100,
+            "volume": 0.3
+        },
+        {
+            "name": "cicadas-night",
+            "category": "cicadas",
+            "files": [
+                "megamod:ambient.animals.cicadas-night"
+            ],
+            "time": "night",
+            "volume": 0.3
+        }
+    ]
+}

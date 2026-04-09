@@ -1,0 +1,106 @@
+{
+  "name": "Into the Nether",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/mysticalsite"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/mysticalsite"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, our miners have extracted everything they can from the overworld mines, but the colony's appetite for rare materials keeps growing. The Mystical Site has revealed a way to safely send miners into the Nether dimension to gather exotic resources!",
+      "options": [
+        {
+          "answer": "The Nether? Is that safe for our miners?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "With proper preparation, absolutely! Build a Nether Mine and your miners will be able to safely extract netherrack, quartz, glowstone, and other Nether resources without ever stepping foot through a portal themselves. The building handles all the dimensional logistics!",
+            "options": [
+              {
+                "answer": "Let us tap into the Nether's riches!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already set one up!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "Impressive! The Nether's resources are already flowing in!",
+                  "options": [
+                    {
+                      "answer": "Nothing can stop this colony!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:nethermine",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Nether Mine is operational! Your miners are now bringing back exotic resources from the fiery dimension. Quartz, glowstone, netherite scraps, you name it! Here is some obsidian to reinforce the mine's portal frame!",
+      "options": [
+        {
+          "answer": "To the Nether and beyond!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:obsidian",
+        "qty": 4
+      }
+    }
+  ]
+}

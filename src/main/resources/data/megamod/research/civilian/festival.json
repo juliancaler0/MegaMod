@@ -1,0 +1,34 @@
+{
+  "name": "Festival",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/carnival_ii"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "dining_hall",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_happiness_4",
+      "type": "MULTIPLIER",
+      "stat": "citizen_happiness",
+      "value": 1.25,
+      "description": "Citizen Happiness +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

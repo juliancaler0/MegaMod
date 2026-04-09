@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "theaurorian:block/darkstone",
+    "side": "theaurorian:block/darkstone",
+    "top": "theaurorian:block/darkstone"
+  }
+}

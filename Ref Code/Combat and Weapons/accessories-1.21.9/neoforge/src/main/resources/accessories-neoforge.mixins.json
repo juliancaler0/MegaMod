@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "io.wispforest.accessories.neoforge.mixin",
+  "plugin": "io.wispforest.accessories.neoforge.mixin.AccessoriesNeoforgeMixinConfig",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "NeoForgeLoadingOverlayMixin",
+    "client.AbstractContainerScreenMixin",
+    "client.AccessoriesPipelinesMixin"
+  ],
+  "mixins": [
+    "CommandHelperMixin",
+    "ContextAwareReloadListenerAccessor",
+    "curios.CurioInventoryMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

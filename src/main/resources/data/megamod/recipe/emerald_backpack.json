@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:emerald",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:emerald_backpack",
+    "count": 1
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "id": "rogues",
+  "version": "${version}",
+  "name": "Rogues & Warriors (RPG Series)",
+  "description": "Silent Blades, Mighty Blows - Dominate with martial skills!",
+  "authors": [
+    "Daedelus"
+  ],
+  "contributors": [
+    "Kenddie (Artwork)",
+    "Ron (Artwork)"
+  ],
+  "contact": {
+    "repo": "https://github.com/zsoltmolnarrr/Rogues",
+    "issues": "https://github.com/ZsoltMolnarrr/Rogues/issues"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.rogues.fabric.client.FabricClientMod"
+    ],
+    "main": [
+      "net.rogues.fabric.FabricMod"
+    ],
+    "modmenu": [
+      "net.spell_engine.fabric.client.compat.ModMenuCompatibility"
+    ],
+    "fabric-datagen": [
+      "net.rogues.datagen.RoguesDataGenerator"
+    ]
+  },
+  "mixins": [
+    "rogues.mixins.json"
+  ],
+  "depends": {
+    "minecraft": ">=${minecraft_compat_version}",
+    "fabricloader": ">=${fabric_loader_version}",
+    "azurelibarmor": ">=${project.azure_lib_version}",
+    "spell_engine": ">=${spell_engine_version}",
+    "structure_pool_api": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/KN9b3pjFTM"
+      }
+    }
+  }
+}

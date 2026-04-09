@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:wither_skeleton_skull",
+    "B": "minecraft:soul_sand",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:wither_backpack",
+    "count": 1
+  }
+}

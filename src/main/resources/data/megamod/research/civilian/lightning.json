@@ -1,0 +1,34 @@
+{
+  "name": "Lightning",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/sprint"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "walk_speed_4",
+      "type": "MULTIPLIER",
+      "stat": "citizen_walk_speed",
+      "value": 1.25,
+      "description": "Walk Speed +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

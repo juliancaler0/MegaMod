@@ -1,0 +1,10 @@
+{
+  "type": "recipe",
+  "crafter": "fletcher",
+  "inputs": [
+    { "item": "minecraft:stick", "count": 1 },
+    { "item": "minecraft:flint", "count": 1 },
+    { "item": "minecraft:feather", "count": 1 }
+  ],
+  "result": { "item": "minecraft:arrow", "count": 4 }
+}

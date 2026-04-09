@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "megamod:block/panel/panel_horizontally_striped_spec"
+  }
+}

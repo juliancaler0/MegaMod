@@ -1,0 +1,11 @@
+{
+  "net/minecraft/world/entity/LivingEntity": [
+    "io/wispforest/accessories/pond/AccessoriesAPIAccess"
+  ],
+  "net/minecraft/client/renderer/entity/state/LivingEntityRenderState": [
+    "io/wispforest/accessories/pond/AccessoriesRenderStateAPI"
+  ],
+  "net/minecraft/world/item/TooltipFlag": [
+    "io/wispforest/accessories/pond/TooltipFlagExtended"
+  ]
+}

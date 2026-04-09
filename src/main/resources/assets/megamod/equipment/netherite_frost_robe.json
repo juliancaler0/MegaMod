@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "megamod:netherite_frost_robe"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "megamod:netherite_frost_robe"
+      }
+    ]
+  }
+}

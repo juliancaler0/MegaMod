@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino2_chip_set"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino2_chip_set",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino2_chip_set",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino2_chip_set",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/casino_table_wood"
+    },
+    "facing=south": {
+      "model": "megamod:block/casino_table_wood",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/casino_table_wood",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/casino_table_wood",
+      "y": 270
+    }
+  }
+}

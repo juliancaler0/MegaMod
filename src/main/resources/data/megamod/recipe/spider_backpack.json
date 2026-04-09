@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:string",
+    "B": "minecraft:spider_eye",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:spider_backpack",
+    "count": 1
+  }
+}

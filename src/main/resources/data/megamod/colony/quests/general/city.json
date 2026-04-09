@@ -1,0 +1,89 @@
+{
+  "name": "City",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:general/village"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:state",
+      "state": {
+        "path": "citizens",
+        "match": {
+          "type": "count",
+          "level": 150
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 && 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor... no, I should say Governor now! One hundred and fifty citizens! Our village has grown into a full-fledged city! The skyline is dotted with towers and chimneys, the markets are bustling, and our military stands strong. This is truly remarkable!",
+      "options": [
+        {
+          "answer": "Governor? I like the sound of that!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "You have earned it! A city of this size requires exceptional leadership, and you have proven yourself time and time again. The city council has commissioned a special reward for this historic milestone!",
+            "options": [
+              {
+                "answer": "I am speechless!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "It takes a city to raise a city!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Well said! Every citizen played their part, but none of this would be possible without your vision. Here, the council insists you accept this!",
+            "options": [
+              {
+                "answer": "For the city and all who call it home!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "A city of one hundred and fifty! Legends will be written about this place. But I sense there is still one more milestone on the horizon...",
+      "options": [
+        {
+          "answer": "We will reach it!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:diamond_block",
+        "qty": 1
+      }
+    }
+  ]
+}

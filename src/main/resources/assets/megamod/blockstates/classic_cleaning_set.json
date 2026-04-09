@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/classic_cleaning_set"
+    },
+    "facing=south": {
+      "model": "megamod:block/classic_cleaning_set",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/classic_cleaning_set",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/classic_cleaning_set",
+      "y": 270
+    }
+  }
+}

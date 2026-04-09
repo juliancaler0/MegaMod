@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "ftbquests:book",
+	"result": {
+		"id": "ftbquests:book",
+		"count": 1
+	},
+	"ingredients": [
+		"minecraft:book",
+		"#c:stones"
+	]
+}

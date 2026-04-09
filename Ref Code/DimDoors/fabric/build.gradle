@@ -1,0 +1,147 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+
+architectury {
+    platformSetupLoomIde()
+    fabric()
+}
+
+loom {
+    runs {
+        data {
+            inherit client
+            name "Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${project(":common").file("src/main/generated")}"
+            vmArg "-Dfabric-api.datagen.modid=dimdoors"
+
+            runDir "build/datagen"
+        }
+    }
+
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+}
+
+def includeCompile(entry) {
+    project.dependencies {
+        modApi(entry)
+        include(entry)
+    }
+}
+
+repositories {
+   maven {
+       url = "https://maven.terraformersmc.com/releases/"
+   }
+}
+
+dependencies {
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modApi "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+    // Remove the next line if you don't want to depend on the API
+    modApi "dev.architectury:architectury-fabric:${rootProject.architectury_version}"
+    modApi "me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config}"
+
+    includeCompile("curse.maven:cardinal-components-base-${project.project.cardinal_components}:${project.cardinal_components_base}")
+    includeCompile("curse.maven:cardinal-components-item-${project.project.cardinal_components}:${project.cardinal_components_item}")
+    includeCompile("curse.maven:cardinal-components-world-${project.project.cardinal_components}:${project.cardinal_components_world}")
+    includeCompile("curse.maven:cardinal-components-chunk-${project.project.cardinal_components}:${project.cardinal_components_chunk}")
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+
+    includeCompile "com.flowpowered:flow-math:1.0.3"
+    includeCompile "org.jgrapht:jgrapht-core:1.1.0"
+    includeCompile "com.github.DimensionalDevelopment:poly2tri.java:0.1.1"
+
+    includeCompile "com.github.Chocohead:Fabric-ASM:v2.3"
+
+    modApi "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
+//    modApi "lol.bai:badpackets:fabric-4.2.0"
+
+    modApi("me.shedaniel.cloth:cloth-config:${rootProject.properties["cloth_config"]}")
+    modApi("curse.maven:worldedit-${project.properties["worldedit_CF"]}:${project.properties["worldedit_CF_version"]}")
+//    modApi "com.sk89q.worldedit:worldedit-fabric-mc${rootProject.world_edit_minecraft_version}:${rootProject.worldedit}"
+    modApi "mcp.mobius.waila:wthit:fabric-${wthitVersion}"
+    modApi "com.terraformersmc:modmenu:7.2.2"
+
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+//    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:$rei_version"
+//    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-fabric:$rei_version"
+}
+
+processResources {
+//    inputs.property "version", project.version
+//    inputs.property "minecraft_version", minecraft_version
+//    inputs.property "architectury_version", architectury_version
+//    inputs.property "cloth_config_version", cloth_config
+
+    def props = [
+            "version": mod_version,
+            "minecraft_version": minecraft_version,
+            "architectury_version": architectury_version,
+            "cloth_config_version": cloth_config
+    ]
+
+    filesMatching("fabric.mod.json") {
+        expand props
+    }
+
+    from(rootProject.file("common/src/main/resources")) {
+        include("**/**")
+        duplicatesStrategy = DuplicatesStrategy.WARN
+    }
+}
+
+shadowJar {
+    exclude "architectury.common.json"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = "dev-shadow"
+}
+
+remapJar {
+    injectAccessWidener = true
+    inputFile.set(shadowJar.archiveFile)
+    dependsOn shadowJar
+    archiveClassifier = "fabric"
+}
+
+jar {
+    archiveClassifier = "dev"
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "src/main/datagen"
+        }
+        resources {
+            srcDirs += [
+                    project(":common").file("src/main/generated")
+            ]
+        }
+    }
+}

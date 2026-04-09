@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CGC",
+    "GNG",
+    "CGC"
+  ],
+  "key": {
+    "C": "minecraft:crying_obsidian",
+    "G": "minecraft:gold_block",
+    "N": "minecraft:nether_star"
+  },
+  "result": { "id": "megamod:soul_anchor", "count": 1 }
+}

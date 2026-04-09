@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["   ", "CCC", "CCC"],
+  "key": {
+    "C": "minecraft:chest"
+  },
+  "result": { "id": "megamod:town_chest", "count": 1 }
+}

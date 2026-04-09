@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:staff_netherite_frost"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_master_frost.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_master_frost.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "megamod:spell_novice_frost",
+  "criteria": {
+    "bind": {
+      "trigger": "megamod:spell_binding",
+      "conditions": {
+        "complete": true,
+        "spell_pool": "megamod:spell_book/frost"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bind"
+    ]
+  ]
+}

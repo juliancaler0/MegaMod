@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " S ",
+    "SCS",
+    " S "
+  ],
+  "key": {
+    "S": "minecraft:soul_sand",
+    "C": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:soul_rune", "count": 2 }
+}

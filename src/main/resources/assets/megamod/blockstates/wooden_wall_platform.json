@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": {"model": "megamod:block/dnl/wooden_wall_platform", "y": 180},
+    "facing=south": {"model": "megamod:block/dnl/wooden_wall_platform"},
+    "facing=east": {"model": "megamod:block/dnl/wooden_wall_platform", "y": 270},
+    "facing=west": {"model": "megamod:block/dnl/wooden_wall_platform", "y": 90}
+  }
+}

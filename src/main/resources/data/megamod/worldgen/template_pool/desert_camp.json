@@ -1,0 +1,15 @@
+{
+  "name": "megamod:start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:camps/desert_camp",
+        "processors": "megamod:placeholder_replacement_desert",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

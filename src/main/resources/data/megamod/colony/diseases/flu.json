@@ -1,0 +1,7 @@
+{
+  "name": "Flu",
+  "rarity": 0.2,
+  "symptoms": ["fever", "weakness", "coughing"],
+  "cure_items": ["minecraft:golden_apple", "minecraft:honey_bottle"],
+  "duration": 12000
+}

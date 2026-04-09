@@ -1,0 +1,34 @@
+{
+  "name": "Nuclear Smelting",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/alloy"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "smeltery",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_ingot",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "smelting_speed_4",
+      "type": "MULTIPLIER",
+      "stat": "smelting_speed",
+      "value": 2.0,
+      "description": "Smelting Speed x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

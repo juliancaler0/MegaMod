@@ -1,0 +1,22 @@
+{
+  "fallback": "megamod:dungeon/segment_fallbacks",
+  "elements": [
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/snake", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/checker", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/cross", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/hollow_chamber", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/maze", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/prison_cell", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/skeleton_bridge", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/skeleton_platform", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/zigzag", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/vertical", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/vertical_t", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/vertical_u", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/explosive_barrel", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/stable", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/suspicious", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/grand_hall", "processors": "megamod:dungeon/generic_degradation", "projection": "rigid" } },
+    { "weight": 1, "element": { "element_type": "minecraft:single_pool_element", "location": "megamod:dungeon/rooms/ore_deposit", "processors": "megamod:dungeon/ores/deposit", "projection": "rigid" } }
+  ]
+}

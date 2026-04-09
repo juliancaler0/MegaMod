@@ -1,0 +1,44 @@
+{
+  "parent": "block/orientable",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "back": "theaurorian:block/aurorian_portal",
+    "front": "theaurorian:block/aurorian_portal",
+    "side": "theaurorian:block/aurorian_portal",
+    "particle": "theaurorian:block/aurorian_portal"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        6
+      ],
+      "to": [
+        16,
+        16,
+        10
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#front"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#back"
+        }
+      }
+    }
+  ]
+}

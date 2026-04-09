@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/mkt_medieval_market_campfire"
+    },
+    "facing=south": {
+      "model": "megamod:block/mkt_medieval_market_campfire",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/mkt_medieval_market_campfire",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/mkt_medieval_market_campfire",
+      "y": 270
+    }
+  }
+}

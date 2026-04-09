@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["III", "SCS", " S "],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "S": "minecraft:stone",
+    "C": "minecraft:crafting_table"
+  },
+  "result": { "id": "megamod:architects_cutter", "count": 1 }
+}

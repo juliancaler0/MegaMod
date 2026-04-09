@@ -1,0 +1,37 @@
+# eclipse
+/bin
+*.launch
+/.settings
+/.metadata
+/.classpath
+/.project
+
+# idea
+/out
+*.ipr
+*.iws
+*.iml
+/.idea
+/classes
+
+# gradle
+/build
+/.gradle
+/runs
+
+# other
+/.vscode
+/eclipse
+/run
+/runClient
+/runServer
+.cache
+/libs
+
+/src/main/generated/java
+
+/logs/
+
+gradle/local.gradle
+gradle/local.configuration.gradle
+/repo/

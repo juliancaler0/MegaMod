@@ -1,0 +1,7 @@
+{
+  "parent": "megamod:block/backpack_base",
+  "textures": {
+    "0": "megamod:block/backpack/enderman",
+    "particle": "megamod:block/backpack/enderman"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "parent":"neoneoforge:item/default",
+  "loader":"neoneoforge:separate_transforms",
+  "base": {
+    "parent": "megamod:item/spear_in_hand",
+    "textures": {
+      "spear": "megamod:item/spear"
+    }
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "megamod:item/spear"
+      }
+    },
+    "ground": {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "megamod:item/spear"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:throwing": 1
+      },
+      "model": "megamod:item/spear_throwing",
+      "textures": {
+        "spear": "megamod:item/spear"
+      }
+    }
+  ]
+}

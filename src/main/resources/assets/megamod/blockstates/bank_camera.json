@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bank_camera"
+    },
+    "facing=south": {
+      "model": "megamod:block/bank_camera",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bank_camera",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bank_camera",
+      "y": 270
+    }
+  }
+}

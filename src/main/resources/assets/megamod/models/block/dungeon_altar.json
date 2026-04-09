@@ -1,0 +1,467 @@
+{
+	"credit": "Made with Blockbench",
+	"render_type": "minecraft:cutout",
+	"ambientocclusion": false,
+	"gui_light": "front",
+	"texture_size": [
+		16,
+		16
+	],
+	"textures": {
+		"0": "megamod:block/dungeon_altar",
+		"particle": "megamod:block/dungeon_altar"
+	},
+	"elements": [
+		{
+			"name": "base_wide",
+			"from": [
+				1,
+				0,
+				1
+			],
+			"to": [
+				15,
+				2,
+				15
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						1,
+						14,
+						15,
+						16
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						1,
+						14,
+						15,
+						16
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						1,
+						14,
+						15,
+						16
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						1,
+						14,
+						15,
+						16
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						1,
+						1,
+						15,
+						15
+					],
+					"texture": "#0"
+				},
+				"down": {
+					"uv": [
+						1,
+						1,
+						15,
+						15
+					],
+					"texture": "#0"
+				}
+			}
+		},
+		{
+			"name": "base_step",
+			"from": [
+				2,
+				2,
+				2
+			],
+			"to": [
+				14,
+				4,
+				14
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						2,
+						12,
+						14,
+						14
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						2,
+						12,
+						14,
+						14
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						2,
+						12,
+						14,
+						14
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						2,
+						12,
+						14,
+						14
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						2,
+						2,
+						14,
+						14
+					],
+					"texture": "#0"
+				}
+			}
+		},
+		{
+			"name": "pillar",
+			"from": [
+				3,
+				4,
+				3
+			],
+			"to": [
+				13,
+				10,
+				13
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						3,
+						6,
+						13,
+						12
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						3,
+						6,
+						13,
+						12
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						3,
+						6,
+						13,
+						12
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						3,
+						6,
+						13,
+						12
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						3,
+						3,
+						13,
+						13
+					],
+					"texture": "#0"
+				}
+			}
+		},
+		{
+			"name": "top_slab",
+			"from": [
+				2,
+				10,
+				2
+			],
+			"to": [
+				14,
+				12,
+				14
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						2,
+						4,
+						14,
+						6
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						2,
+						4,
+						14,
+						6
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						2,
+						4,
+						14,
+						6
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						2,
+						4,
+						14,
+						6
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						2,
+						2,
+						14,
+						14
+					],
+					"texture": "#0"
+				},
+				"down": {
+					"uv": [
+						2,
+						2,
+						14,
+						14
+					],
+					"texture": "#0"
+				}
+			}
+		},
+		{
+			"name": "soul_flame",
+			"from": [
+				5,
+				12,
+				5
+			],
+			"to": [
+				11,
+				14,
+				11
+			],
+			"faces": {
+				"north": {
+					"uv": [
+						5,
+						0,
+						11,
+						2
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						5,
+						0,
+						11,
+						2
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						5,
+						0,
+						11,
+						2
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						5,
+						0,
+						11,
+						2
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						5,
+						5,
+						11,
+						11
+					],
+					"texture": "#0"
+				}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [
+				67.5,
+				0,
+				0
+			],
+			"translation": [
+				0,
+				1.25,
+				0
+			],
+			"scale": [
+				0.27734,
+				0.27734,
+				0.27734
+			]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [
+				67.5,
+				0,
+				0
+			],
+			"translation": [
+				0,
+				1.25,
+				0
+			],
+			"scale": [
+				0.27734,
+				0.27734,
+				0.27734
+			]
+		},
+		"firstperson_righthand": {
+			"rotation": [
+				0,
+				45,
+				0
+			],
+			"translation": [
+				3,
+				3.25,
+				0
+			],
+			"scale": [
+				0.4293,
+				0.4293,
+				0.4293
+			]
+		},
+		"firstperson_lefthand": {
+			"rotation": [
+				0,
+				45,
+				0
+			],
+			"translation": [
+				3,
+				3.25,
+				0
+			],
+			"scale": [
+				0.4293,
+				0.4293,
+				0.4293
+			]
+		},
+		"ground": {
+			"translation": [
+				0,
+				6,
+				0
+			],
+			"scale": [
+				0.6,
+				0.6,
+				0.6
+			]
+		},
+		"gui": {
+			"rotation": [
+				30,
+				135,
+				0
+			],
+			"translation": [
+				0,
+				0.25,
+				0
+			],
+			"scale": [
+				0.72461,
+				0.72461,
+				0.72461
+			]
+		},
+		"head": {
+			"rotation": [
+				0,
+				180,
+				0
+			],
+			"translation": [
+				0,
+				-30.4,
+				0
+			],
+			"scale": [
+				1.6,
+				1.6,
+				1.6
+			]
+		},
+		"fixed": {
+			"rotation": [
+				-90,
+				0,
+				0
+			],
+			"translation": [
+				0,
+				0,
+				-16
+			],
+			"scale": [
+				2,
+				2,
+				2
+			]
+		}
+	}
+}

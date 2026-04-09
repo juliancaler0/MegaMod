@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/base/glaive_30",
+  "textures": {
+    "layer0": "megamod:item/ruby_glaive"
+  }
+}

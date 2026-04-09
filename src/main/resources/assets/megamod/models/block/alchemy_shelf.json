@@ -1,0 +1,59 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "wood": "megamod:block/alchemy_shelf",
+    "particle": "megamod:block/alchemy_shelf"
+  },
+  "elements": [
+    {
+      "name": "bottom_shelf",
+      "from": [0, 0, 2],
+      "to": [16, 2, 14],
+      "faces": {
+        "down": { "texture": "#wood", "uv": [0, 2, 16, 14] },
+        "up": { "texture": "#wood", "uv": [0, 2, 16, 14] },
+        "north": { "texture": "#wood", "uv": [0, 14, 16, 16] },
+        "south": { "texture": "#wood", "uv": [0, 14, 16, 16] }
+      }
+    },
+    {
+      "name": "middle_shelf",
+      "from": [0, 8, 2],
+      "to": [16, 10, 14],
+      "faces": {
+        "down": { "texture": "#wood", "uv": [0, 2, 16, 14] },
+        "up": { "texture": "#wood", "uv": [0, 2, 16, 14] },
+        "north": { "texture": "#wood", "uv": [0, 6, 16, 8] },
+        "south": { "texture": "#wood", "uv": [0, 6, 16, 8] }
+      }
+    },
+    {
+      "name": "left_side",
+      "from": [0, 0, 2],
+      "to": [1, 16, 14],
+      "faces": {
+        "west": { "texture": "#wood", "uv": [2, 0, 14, 16] },
+        "east": { "texture": "#wood", "uv": [2, 0, 14, 16] }
+      }
+    },
+    {
+      "name": "right_side",
+      "from": [15, 0, 2],
+      "to": [16, 16, 14],
+      "faces": {
+        "west": { "texture": "#wood", "uv": [2, 0, 14, 16] },
+        "east": { "texture": "#wood", "uv": [2, 0, 14, 16] }
+      }
+    },
+    {
+      "name": "top",
+      "from": [0, 14, 2],
+      "to": [16, 16, 14],
+      "faces": {
+        "up": { "texture": "#wood", "uv": [0, 2, 16, 14] },
+        "north": { "texture": "#wood", "uv": [0, 0, 16, 2] },
+        "south": { "texture": "#wood", "uv": [0, 0, 16, 2] }
+      }
+    }
+  ]
+}

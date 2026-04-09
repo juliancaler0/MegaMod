@@ -1,0 +1,12 @@
+{
+  "type": "recipe",
+  "crafter": "chef",
+  "inputs": [
+    { "item": "minecraft:cooked_rabbit", "count": 1 },
+    { "item": "minecraft:carrot", "count": 1 },
+    { "item": "minecraft:baked_potato", "count": 1 },
+    { "item": "minecraft:red_mushroom", "count": 1 },
+    { "item": "minecraft:bowl", "count": 1 }
+  ],
+  "result": { "item": "minecraft:rabbit_stew", "count": 1 }
+}

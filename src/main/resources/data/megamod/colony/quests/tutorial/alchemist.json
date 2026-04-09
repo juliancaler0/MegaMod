@@ -1,0 +1,120 @@
+{
+  "name": "Magic Potions",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/enchanter"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/enchanter"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, the enchanter has been studying those ancient tomes and discovered references to powerful potions and elixirs. They believe if we set up a proper alchemy laboratory, we could brew healing draughts for the hospital and strength potions for the guards!",
+      "options": [
+        {
+          "answer": "Potions for the colony? That sounds amazing!",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "Build an Alchemist's Laboratory! The alchemist will brew all manner of potions: healing for the hospital, strength for the guards, swiftness for the couriers. It will give the entire colony a magical edge! Craft the hut block and get it built!",
+            "options": [
+              {
+                "answer": "Time to brew some magic!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already bubbling away!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "You already built it? The enchanter is thrilled to have a fellow practitioner of the arcane arts!",
+                  "options": [
+                    {
+                      "answer": "Double, double, toil and trouble!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:alchemist",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0, 1, 2],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The Alchemist's Laboratory is bubbling with mysterious concoctions! The alchemist is already experimenting with ingredients. Supply them with nether wart, blaze powder, and other reagents. Here are some potions from their first batch!",
+      "options": [
+        {
+          "answer": "Cheers to alchemy!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:potion",
+        "qty": 1
+      }
+    },
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:glass_bottle",
+        "qty": 3
+      }
+    },
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:nether_wart",
+        "qty": 3
+      }
+    }
+  ]
+}

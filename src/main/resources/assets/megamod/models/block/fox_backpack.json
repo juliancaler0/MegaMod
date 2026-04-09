@@ -1,0 +1,7 @@
+{
+  "parent": "megamod:block/backpack_base",
+  "textures": {
+    "0": "megamod:block/backpack/fox",
+    "particle": "megamod:block/backpack/fox"
+  }
+}

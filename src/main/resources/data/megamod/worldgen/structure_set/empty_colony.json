@@ -1,0 +1,58 @@
+{
+  "structures": [
+    {
+      "structure": "megamod:medieval_birch_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:medieval_oak_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:medieval_spruce_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:medieval_dark_oak_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:asian_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:caledonia_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:lostmesacity_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:desertoasis_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:shire_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:incan_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:colonial_colony",
+      "weight": 1
+    },
+    {
+      "structure": "megamod:warpednetherlands_colony",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 1225566777,
+    "spacing": 95,
+    "separation": 45,
+    "type": "minecraft:random_spread"
+  }
+}

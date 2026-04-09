@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bank_greek_balance"
+    },
+    "facing=south": {
+      "model": "megamod:block/bank_greek_balance",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bank_greek_balance",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bank_greek_balance",
+      "y": 270
+    }
+  }
+}

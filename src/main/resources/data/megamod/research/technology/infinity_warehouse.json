@@ -1,0 +1,34 @@
+{
+  "name": "Infinity Warehouse",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/distribution"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "warehouse",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "warehouse_capacity_max",
+      "type": "MODIFIER",
+      "stat": "warehouse_capacity",
+      "value": 270,
+      "description": "Warehouse +270 Slots"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

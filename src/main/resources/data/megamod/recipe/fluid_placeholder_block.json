@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": ["LBL", "BIB", "LBL"],
+  "key": {
+    "L": "minecraft:oak_log",
+    "B": "minecraft:bucket",
+    "I": "minecraft:iron_ingot"
+  },
+  "result": { "id": "megamod:fluid_placeholder_block", "count": 32 }
+}

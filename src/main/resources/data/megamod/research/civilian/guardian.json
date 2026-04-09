@@ -1,0 +1,34 @@
+{
+  "name": "Guardian",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/haste"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_chestplate",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "walk_speed_2",
+      "type": "MULTIPLIER",
+      "stat": "citizen_walk_speed",
+      "value": 1.1,
+      "description": "Walk Speed +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

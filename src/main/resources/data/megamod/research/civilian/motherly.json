@@ -1,0 +1,38 @@
+{
+  "name": "Motherly",
+  "branch": "civilian",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:civilian/vigour"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "hospital",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_hp_max",
+      "type": "MODIFIER",
+      "stat": "citizen_hp",
+      "value": 10,
+      "description": "Citizen HP +10"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:civilian/beanstalk",
+    "megamod:civilian/enlightenment",
+    "megamod:civilian/fortitude"
+  ]
+}

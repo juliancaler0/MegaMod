@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "megamod:block/barrel_dec/barreldeco_standing"
+    },
+    "facing=west": {
+      "model": "megamod:block/barrel_dec/barreldeco_standing",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "megamod:block/barrel_dec/barreldeco_standing",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/barrel_dec/barreldeco_standing",
+      "y": 270
+    }
+  }
+}

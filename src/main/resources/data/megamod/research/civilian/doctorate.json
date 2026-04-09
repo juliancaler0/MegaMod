@@ -1,0 +1,34 @@
+{
+  "name": "Doctorate",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/academic"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "library",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:book",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_xp_3",
+      "type": "MULTIPLIER",
+      "stat": "citizen_xp_growth",
+      "value": 1.25,
+      "description": "Citizen XP Growth +25%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

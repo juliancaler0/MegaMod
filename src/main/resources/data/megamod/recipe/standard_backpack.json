@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SLS",
+    "LCL",
+    "SLS"
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "L": "minecraft:leather",
+    "C": "minecraft:chest"
+  },
+  "result": {
+    "id": "megamod:standard_backpack",
+    "count": 1
+  }
+}

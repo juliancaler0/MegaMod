@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/tiledpaperwall/blockpaperwall_post_spec"
+    }
+  }
+}

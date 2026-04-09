@@ -1,0 +1,181 @@
+6.3.5
+Added contact information to fabric.mod.json
+
+6.3.4
+Added trapdoors to solids
+Fixed glass_panes not being considered solid (changed to common tag c:glass_panes, which will work on fabric as well)
+
+6.3.3
+Added pale garden ambience
+
+6.3.2
+Added tidepools to beach region
+Added chaparral to savanna region
+Added support for region_unexplored, yungscavebiomes and galasphere blocks (thanks to Redls07)
+Removed rain from bad biomes in jungle
+
+6.3.1
+Added slabs to considered solid list
+
+6.3.0
+Fixed light only considering block light
+Added blockLight condition
+Added sky condition
+Added better air and sky calculations
+Made cave sounds not play when the player is not underground
+Made cave sounds depend on sky light
+
+6.2.3
+Made owl sound play more often
+Fixed light-wind3 not playing correctly
+Added lush_stacks from biomeswevegone to highlands
+
+6.2.2
+Fixed applying volume setting twice which caused some sounds to be silent
+
+6.2.1
+Added performance improvement for biome tags check
+Fixed sound after transition playing with full volume for a split second (this bug has occurred in the past and got fixed, but due to the recent changes it reappeared)
+
+6.2.0
+Added drylands to the desert biome list
+Fixed desert region required water to played
+Fixed random crash occuring from time to time (caused by random generator not being available on different threads)
+Fixed unwanted volume jumps by separating condition and output volume
+Fixed bird-ambience2.ogg (thanks to HowardCLH)
+
+6.1.12
+Reverted Compressed ogg audios to ~160 kbps VBR
+
+6.1.11
+Fixed not playing sounds when using biomeswevegone (Thanks to MylesGit)
+Fixed not playing anything in Terralith:Shield
+Compressed ogg audios to ~160 kbps VBR (Thanks to MylesGit)
+
+6.1.10
+Fixed wind sounds in caves
+
+6.1.9
+Fixed not getting biome name in all cases
+
+6.1.8
+Added pattern matching for silent dimension configuration
+Made ocean feature require a lot more water (fixes whale sound in small rivers)
+
+6.1.7
+Adapted to CreativeCore 2.13.0
+
+6.1.6
+Made lush require a few rocks to be active (fixes unwanted situations of cave sounds playing)
+Made dripstone require a few rocks to be active (fixes unwanted situations of cave sounds playing)
+
+6.1.4
+Fixed not playing jungle sounds in rainforest biomes
+
+6.1.3
+Added min count to grass, ice, rock and sand feature to prevent it from being active too early
+Fixed not playing sky wind sound
+Fixed relative min and max height calculations being off
+Normalized bird, cricket and cave sounds
+Updated way of sorting biomes and muting sounds
+
+6.1.2
+Made AmbientSounds not load on server side (NeoForge)
+Fix async engine reloading (Thanks to Steveplays28)
+
+6.1.0
+Added creepier wolf sound which plays in savanna during night every 1-6 days (suggested by richarddddy)
+Added whale sounds (can be heard underwater in the ocean) suggested by richarddddy
+Added mouring dove to swamp region (only audible in the morning) Suggested by NicoleConcrete
+Fixed blocks that let light through cases engine to think there is an unblocked way to the sky
+Made underwater mute all other sound effects entire when being 7 blocks in
+Fixed random seeking causes sound engine to crash (big thank goes to @Charleychar for his endless amount of testing)
+Fixed savanna bird sound not transitioning
+Reload the engine asynchronously (Thanks to Steveplays28)
+
+6.0.6
+Fixed stop playing sounds when game is paused
+
+6.0.5
+Fixed cricket day and night not extending crickt sound category
+Fixed sound category not working properly when setting it to zero volume
+
+6.0.4
+Adapted CreativeCore 2.12.0 changes
+
+6.0.3
+Fixed not loading some regions for dimensions
+
+6.0.2
+Fixed sound collections causing sounds to be queued endlessly which made the sound engine behave weirdly
+
+6.0.1
+Fixed wind sound collection not working properly
+
+6.0.0
+Reworked block format to better align with vanilla's tag definitions
+Reworked volume calculations of birds and crickets in regards to time of day
+Reworked debug renderer to use DebugTextRenderer (from CreativeCore)
+Reworked engine folder structure and defining components (like dimension, region, sound, feature, etc.)
+Added ability to define biome tags for biomes condition (beach, forest, highland, jungle, mesa, ocean, savanna and taiga make use of that feature)
+Added sound collections
+Added sound categories
+Added mute-priority to enhance situations were there are multiple muting sounds
+Added stack configuration for dimension, feature
+Added new property time to better organize during what time of day a sound should be played and how loud
+Added new light-wind sound variant
+Made owl & crow sound less frequent
+Fixed cold region playing underground and in the air
+Fixed playing two wind sounds in mesa biome
+
+5.3.9
+Fixed glass panes not being considered as a solid block
+
+5.3.8
+Fixed biome check ignoring location namespace
+
+5.3.7
+Fixed not detecting rain when standing inside half slab
+
+5.3.6
+Fixed creativecore dependency not working properly for forge
+Fixed playing seagulls at night
+Fixed not playing desert sounds in gravel desert (from terralith)
+Fixed playing storm.close even if not being close to rain
+Lowered sound volume of cicadas-desert2
+
+5.3.5
+Stopped playing ambience in alexcaves
+Fixed bad-biomes property applies biome volume
+
+5.3.4
+Added property random-offset (boolean, default: true)
+
+5.3.3
+Fixed mute-resistant not being considered correctly
+
+5.3.2
+Fixed looping sound with random offset
+Added property mute-resistant (boolean, default: false)
+
+5.3.1
+Fixed not invalid refmap for forge
+
+5.3.0
+Added sounds for mushroom fields
+Added new condition "entity" (which allows to define rules based on entities in the world)
+Added new cricket variant
+Added second cicadas-desert variant
+Added new feature to play sound files with a random offset (also has a config option)
+Added sound for when warden is around (will make all other sounds get quieter)
+Reworked volume calculation to differentiate between condition and setting volume
+Fixed forest sounds even in cold regions
+Fixed issue related to cold, highland and very_cold playing at the same time
+Fixed underwater sound not properly muting all other sounds
+Fixed mute value of sounds being dependent of user volume configuration
+Fixed missing mute property inheritance
+Fixed not detecting snow correctly
+Fixed playing sounds even though the game is paused
+
+5.2.24
+Replaced rain sound with two new ones which should solve the claim issue on youtube

@@ -1,0 +1,32 @@
+{
+  "name": "Improved Swords",
+  "branch": "combat",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:iron_sword",
+      "count": 8
+    }
+  ],
+  "effects": [
+    {
+      "id": "melee_damage_1",
+      "type": "MULTIPLIER",
+      "stat": "melee_damage",
+      "value": 1.1,
+      "description": "Melee Damage +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

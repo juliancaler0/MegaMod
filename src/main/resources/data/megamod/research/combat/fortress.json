@@ -1,0 +1,34 @@
+{
+  "name": "Fortress",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/phalanx"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:obsidian",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "shield_block_3",
+      "type": "MULTIPLIER",
+      "stat": "shield_block_chance",
+      "value": 1.5,
+      "description": "Shield Block +50%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

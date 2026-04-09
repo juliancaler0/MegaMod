@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/post/post_turned_spec"
+    }
+  }
+}

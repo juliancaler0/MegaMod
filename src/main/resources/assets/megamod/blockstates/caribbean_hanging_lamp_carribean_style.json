@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/caribbean_hanging_lamp_carribean_style" },
+    "facing=south": { "model": "megamod:block/caribbean_hanging_lamp_carribean_style", "y": 180 },
+    "facing=east": { "model": "megamod:block/caribbean_hanging_lamp_carribean_style", "y": 90 },
+    "facing=west": { "model": "megamod:block/caribbean_hanging_lamp_carribean_style", "y": 270 }
+  }
+}

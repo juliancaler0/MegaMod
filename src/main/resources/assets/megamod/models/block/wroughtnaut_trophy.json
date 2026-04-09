@@ -1,0 +1,100 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "megamod:block/wroughtnaut_trophy",
+		"particle": "megamod:block/wroughtnaut_trophy"
+	},
+	"elements": [
+		{
+			"name": "base_wide",
+			"from": [3, 0, 3],
+			"to": [13, 2, 13],
+			"faces": {
+				"north": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"east": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"south": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"west": {"uv": [3, 14, 13, 16], "texture": "#0"},
+				"up": {"uv": [3, 4, 13, 14], "texture": "#0"},
+				"down": {"uv": [3, 4, 13, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_mid",
+			"from": [4, 2, 4],
+			"to": [12, 4, 12],
+			"faces": {
+				"north": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"east": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"south": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"west": {"uv": [4, 12, 12, 14], "texture": "#0"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#0"}
+			}
+		},
+		{
+			"name": "base_top",
+			"from": [5, 4, 5],
+			"to": [11, 6, 11],
+			"faces": {
+				"north": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"east": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"south": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"west": {"uv": [5, 8, 11, 10], "texture": "#0"},
+				"up": {"uv": [5, 5, 11, 11], "texture": "#0"}
+			}
+		},
+		{
+			"name": "helm",
+			"from": [4, 7, 5],
+			"to": [12, 13, 11],
+			"faces": {
+				"north": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"east": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"south": {"uv": [0, 0, 8, 6], "texture": "#0"},
+				"west": {"uv": [0, 0, 6, 6], "texture": "#0"},
+				"up": {"uv": [4, 0, 12, 6], "texture": "#0"}
+			}
+		},
+		{
+			"name": "visor",
+			"from": [5, 8, 4.5],
+			"to": [11, 11, 5],
+			"faces": {
+				"north": {"uv": [1, 6, 7, 9], "texture": "#0"}
+			}
+		},
+		{
+			"name": "axe_shaft",
+			"from": [2, 3, 7.5],
+			"to": [3, 14, 8.5],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [2.5, 8, 8]},
+			"faces": {
+				"north": {"uv": [0, 2, 1, 13], "texture": "#0"},
+				"south": {"uv": [0, 2, 1, 13], "texture": "#0"},
+				"east": {"uv": [0, 2, 1, 13], "texture": "#0"},
+				"west": {"uv": [0, 2, 1, 13], "texture": "#0"}
+			}
+		},
+		{
+			"name": "axe_blade",
+			"from": [0.5, 11, 6.5],
+			"to": [3.5, 14, 9.5],
+			"rotation": {"angle": 22.5, "axis": "z", "origin": [2, 12.5, 8]},
+			"faces": {
+				"north": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"south": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"west": {"uv": [0, 0, 3, 3], "texture": "#0"},
+				"up": {"uv": [0, 0, 3, 3], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"thirdperson_lefthand": {"rotation": [75, 45, 0], "translation": [0, 2.5, 0], "scale": [0.375, 0.375, 0.375]},
+		"firstperson_righthand": {"rotation": [0, 45, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"firstperson_lefthand": {"rotation": [0, 225, 0], "translation": [0, 3, 0], "scale": [0.4, 0.4, 0.4]},
+		"ground": {"translation": [0, 3, 0], "scale": [0.25, 0.25, 0.25]},
+		"gui": {"rotation": [30, 225, 0], "translation": [0, 0, 0], "scale": [0.625, 0.625, 0.625]},
+		"fixed": {"scale": [0.5, 0.5, 0.5]}
+	}
+}

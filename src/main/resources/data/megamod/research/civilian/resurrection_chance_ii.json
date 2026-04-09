@@ -1,0 +1,34 @@
+{
+  "name": "Resurrection Chance II",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/resurrection_chance_i"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:ghast_tear",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "resurrection_2",
+      "type": "MODIFIER",
+      "stat": "resurrection_chance",
+      "value": 2,
+      "description": "Resurrection +2%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

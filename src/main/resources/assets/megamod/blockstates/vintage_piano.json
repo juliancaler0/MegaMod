@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_piano"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_piano",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_piano",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_piano",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "megamod:start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:camps/amazon/amazon_jungle_pyramid",
+        "processors": "megamod:placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "megamod:camps/big_amazon_pyramid",
+        "processors": "megamod:placeholder_replacement",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

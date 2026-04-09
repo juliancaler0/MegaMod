@@ -1,0 +1,64 @@
+{
+    "name": "grass",
+    "features": [
+        "grass"
+    ],
+    "bad-regions": [
+        "plains",
+        "savanna",
+        "swamp",
+        "ocean",
+        "highland",
+        "jungle",
+        "rain"
+    ],
+    "bad-biomes": [
+        "river"
+    ],
+    "temperature": {
+        "min": 0.2
+    },
+    "sounds": [
+        {
+            "name": "cricket",
+            "category": "cricket_day",
+            "files": [
+                "megamod:ambient.animals.cricket",
+                "megamod:ambient.animals.cricket2",
+                "megamod:ambient.animals.cricket3"
+            ],
+            "overall-raining": false,
+            "length": {
+                "min": 1000,
+                "max": 1500
+            },
+            "transition": 100,
+            "volume": 0.05
+        },
+        {
+            "name": "cricket-night",
+            "category": "cricket_night",
+            "files": [
+                "megamod:ambient.animals.cricket-night",
+                "megamod:ambient.animals.cricket-night2",
+                "megamod:ambient.animals.cricket-night3",
+                "megamod:ambient.animals.cricket-night4"
+            ],
+            "overall-raining": false,
+            "length": {
+                "min": 1000,
+                "max": 1500
+            },
+            "transition": 100,
+            "volume": 0.05
+        },
+        {
+            "name": "cicadas-night",
+            "category": "cicadas",
+            "files": [
+                "megamod:ambient.animals.cicadas-night"
+            ],
+            "time": "day"
+        }
+    ]
+}

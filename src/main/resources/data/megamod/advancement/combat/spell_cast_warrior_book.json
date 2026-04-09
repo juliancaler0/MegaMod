@@ -1,0 +1,32 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:spell_book",
+      "components": { "megamod:item_model": "megamod:item/spell_book/warrior" }
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_cast_warrior_book.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_cast_warrior_book.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "megamod:spell_novice_warrior",
+  "criteria": {
+    "cast": {
+      "trigger": "megamod:spell_cast",
+      "conditions": {
+        "spell": "#megamod:spell_book/warrior"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cast"
+    ]
+  ]
+}

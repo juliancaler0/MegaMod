@@ -1,0 +1,34 @@
+{
+  "name": "Master Riposte",
+  "branch": "combat",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:combat/riposte"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:netherite_sword",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "riposte_damage_2",
+      "type": "MULTIPLIER",
+      "stat": "riposte_damage",
+      "value": 2.0,
+      "description": "Riposte Damage x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

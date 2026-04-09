@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "blacksmith",
+  "inputs": [
+    { "item": "minecraft:iron_ingot", "count": 5 },
+    { "item": "minecraft:stick", "count": 2 }
+  ],
+  "result": { "item": "megamod:mesh_iron", "count": 1 }
+}

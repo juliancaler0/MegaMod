@@ -1,0 +1,30 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "input_predicate": { "predicate_type": "minecraft:block_match", "block": "minecraft:cobblestone" },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:mossy_cobblestone" },
+          "block_entity_modifier": { "type": "minecraft:passthrough" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:block_match", "block": "minecraft:stone_bricks" },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:mossy_stone_bricks" },
+          "block_entity_modifier": { "type": "minecraft:passthrough" }
+        },
+        {
+          "input_predicate": { "predicate_type": "minecraft:block_match", "block": "minecraft:black_stained_glass" },
+          "location_predicate": { "predicate_type": "minecraft:always_true" },
+          "output_state": { "Name": "minecraft:stone" },
+          "block_entity_modifier": { "type": "minecraft:passthrough" }
+        }
+      ]
+    },
+    {
+      "processor_type": "megamod:waterlogging_fix"
+    }
+  ]
+}

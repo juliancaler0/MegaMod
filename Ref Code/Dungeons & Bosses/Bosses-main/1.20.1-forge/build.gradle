@@ -1,0 +1,43 @@
+plugins {
+    id 'eclipse'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.99'
+}
+
+base {
+    archivesName = 'remnant-bosses-forge'
+}
+version = rootProject.version
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+legacyForge {
+    version = "1.20.1-47.4.0"
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        remnant_bosses {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+// Note: JAuml is declared in mods.toml as an optional runtime dependency.
+// If you want JAuml available in development runs add it to `localRuntime` or `libs/` and reference it from here.
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+

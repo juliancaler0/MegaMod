@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "baker",
+  "inputs": [
+    { "item": "minecraft:apple", "count": 1 },
+    { "item": "minecraft:gold_ingot", "count": 8 }
+  ],
+  "result": { "item": "minecraft:golden_apple", "count": 1 }
+}

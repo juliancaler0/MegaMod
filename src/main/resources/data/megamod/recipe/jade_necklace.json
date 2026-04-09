@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "S S",
+    " G "
+  ],
+  "key": {
+    "S": "minecraft:string",
+    "G": "megamod:jade"
+  },
+  "result": { "id": "megamod:jade_necklace", "count": 1 }
+}

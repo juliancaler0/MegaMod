@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_slime_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": "minecraft:slime_ball" }]
+      }
+    }
+  },
+  "rewards": {
+    "recipes": ["megamod:mob_net"]
+  }
+}

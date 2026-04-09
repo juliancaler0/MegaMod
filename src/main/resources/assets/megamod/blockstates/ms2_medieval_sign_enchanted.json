@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/ms2_medieval_sign_enchanted"
+    },
+    "facing=south": {
+      "model": "megamod:block/ms2_medieval_sign_enchanted",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/ms2_medieval_sign_enchanted",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/ms2_medieval_sign_enchanted",
+      "y": 270
+    }
+  }
+}

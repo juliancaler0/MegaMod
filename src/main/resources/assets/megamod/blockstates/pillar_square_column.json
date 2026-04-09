@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/pillar/squarepillar_pillar_column_spec"
+    }
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "variants": {
+    "facing=east,half=lower,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=lower,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=east,half=upper,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec"
+    },
+    "facing=south,half=lower,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=lower,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=south,half=upper,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 90
+    },
+    "facing=west,half=lower,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=lower,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=west,half=upper,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 180
+    },
+    "facing=north,half=lower,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=lower,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=left,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=false,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=true,powered=false": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    },
+    "facing=north,half=upper,hinge=right,open=true,powered=true": {
+      "model": "megamod:block/door/door_waffle_spec",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "megamod:colony/warehouse_placed",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_university"
+    },
+    "title": {
+      "text": "Higher Learning"
+    },
+    "description": {
+      "text": "Place a University"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_university"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_skeleton_bone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": "megamod:skeleton_bone" }]
+      }
+    }
+  },
+  "requirements": [["has_skeleton_bone"]],
+  "rewards": {
+    "recipes": ["megamod:crystal_arrow"]
+  }
+}

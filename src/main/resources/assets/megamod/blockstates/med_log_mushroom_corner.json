@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_log_mushroom_corner"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_log_mushroom_corner",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_log_mushroom_corner",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_log_mushroom_corner",
+      "y": 270
+    }
+  }
+}

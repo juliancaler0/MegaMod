@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "key": {
+    "A": "minecraft:crafting_table",
+    "B": "megamod:blank_upgrade",
+    "C": "minecraft:chest"
+  },
+  "result": {
+    "id": "megamod:crafting_upgrade",
+    "count": 1
+  }
+}

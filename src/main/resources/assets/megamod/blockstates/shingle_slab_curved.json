@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "megamod:block/shingle_slab/shingle_slab_curved_spec"
+    },
+    "type=top": {
+      "model": "megamod:block/shingle_slab/shingle_slab_curved_spec",
+      "x": 180,
+      "uvlock": true
+    },
+    "type=double": {
+      "model": "megamod:block/shingle_slab/shingle_slab_curved_spec"
+    }
+  }
+}

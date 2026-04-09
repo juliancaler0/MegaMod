@@ -1,0 +1,54 @@
+architectury {
+    common rootProject.enabled_platforms.split(',')
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "RedlanceMinecraft"
+        url = "https://repo.redlance.org/public"
+    }
+    maven { url 'https://maven.shedaniel.me/' }
+    maven { url 'https://maven.fabricmc.net/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.terraformersmc.com/' }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven {
+                url = "https://maven.ftb.dev/releases"
+            }
+        }
+        filter {
+            includeGroup"dev.latvian.mods"
+            includeGroup"dev.ftb.mods"
+        }
+    }
+}
+
+dependencies {
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$project.fabric_loader_version"
+    // compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${project.mixin_extras_version}"))
+
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+    modApi("com.zigythebird.playeranim:PlayerAnimationLibCommon:${project.player_anim_version}")
+    implementation("com.zigythebird.playeranim:PlayerAnimationLibCore:${project.player_anim_version}")
+    modImplementation("maven.modrinth:tiny-config:${project.tiny_config_version}-fabric")
+
+    modCompileOnly("maven.modrinth:first-person-model:${project.fpm_version}")
+    modCompileOnly("maven.modrinth:spell-engine:${project.spell_engine_version}-fabric")
+    modCompileOnly("dev.ftb.mods:ftb-teams:${project.ftb_teams_version}")
+    modCompileOnly("dev.ftb.mods:ftb-library:${project.ftb_library_version}")
+}

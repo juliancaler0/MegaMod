@@ -1,0 +1,11 @@
+{
+  "type": "travelersbackpack:add_item",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/abandoned_mineshaft"
+    }
+  ],
+  "item": "travelersbackpack:bat",
+  "weight": 0.05
+}

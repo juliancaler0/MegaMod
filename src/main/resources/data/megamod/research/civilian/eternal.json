@@ -1,0 +1,34 @@
+{
+  "name": "Eternal",
+  "branch": "civilian",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:civilian/full_recovery"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "hospital",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_regen_4",
+      "type": "MULTIPLIER",
+      "stat": "citizen_regeneration",
+      "value": 2.0,
+      "description": "Citizen Regeneration x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

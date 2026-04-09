@@ -1,0 +1,10 @@
+{
+  "icon": "theaurorian:cerulean_ore",
+  "x": 40,
+  "y": 40,
+  "children": [
+    "theaurorian:ore_cerulean",
+    "theaurorian:ore_moonstone",
+    "theaurorian:ore_geode"
+  ]
+}

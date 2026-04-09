@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/caribbean_icecreambox_bike" },
+    "facing=south": { "model": "megamod:block/caribbean_icecreambox_bike", "y": 180 },
+    "facing=east": { "model": "megamod:block/caribbean_icecreambox_bike", "y": 90 },
+    "facing=west": { "model": "megamod:block/caribbean_icecreambox_bike", "y": 270 }
+  }
+}

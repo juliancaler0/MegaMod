@@ -1,0 +1,106 @@
+{
+  "name": "Iron Will",
+  "max-occurrences": 1,
+  "parents": [
+    "megamod:tutorial/sawmill"
+  ],
+  "triggers": [
+    {
+      "type": "megamod:citizen",
+      "state": {
+        "notmatch": {
+          "finavquests": [
+            "megamod:tutorial/sawmill"
+          ]
+        }
+      }
+    },
+    {
+      "type": "megamod:citizen",
+      "state": { }
+    }
+  ],
+  "triggerOrder": "1 || 2",
+  "objectives": [
+    {
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "Mayor, we have a problem. Our tools keep breaking left and right! The miners are going through pickaxes like crazy, and the foresters are snapping axes every other day. We really need a proper blacksmith to keep everyone equipped.",
+      "options": [
+        {
+          "answer": "That does sound urgent. What do we need?",
+          "result": {
+            "type": "megamod:dialogue",
+            "text": "A Blacksmith's Hut! The blacksmith will craft and repair tools for all your workers automatically. Craft the hut block, place it, and let your builder construct it. You know the drill by now!",
+            "options": [
+              {
+                "answer": "On it!",
+                "result": {
+                  "type": "megamod:advanceobjective",
+                  "go-to": 1
+                }
+              },
+              {
+                "answer": "Already done!",
+                "result": {
+                  "type": "megamod:dialogue",
+                  "text": "Wait, really? You are always one step ahead! Well done!",
+                  "options": [
+                    {
+                      "answer": "What can I say!",
+                      "result": {
+                        "type": "megamod:advanceobjective",
+                        "go-to": 10
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "answer": "Not right now. I will come back to you later!",
+          "result": {
+            "type": "megamod:return"
+          }
+        }
+      ]
+    },
+    {
+      "type": "megamod:buildbuilding",
+      "details": {
+        "type": "megamod:blacksmith",
+        "count-existing": true,
+        "lvl": 1,
+        "qty": 1,
+        "target": 0,
+        "next-objective": 2
+      }
+    },
+    {
+      "unlocks-rewards": [0],
+      "type": "megamod:dialogue",
+      "target": 0,
+      "text": "The blacksmith is up and running! Now our workers will always have sharp tools at their disposal. Make sure to provide the blacksmith with raw materials like iron and coal. Here, take some iron ingots to get them started!",
+      "options": [
+        {
+          "answer": "Great, no more broken tools!",
+          "result": {
+            "type": "megamod:advanceobjective",
+            "go-to": 10
+          }
+        }
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "type": "megamod:item",
+      "details": {
+        "item": "minecraft:iron_ingot",
+        "qty": 3
+      }
+    }
+  ]
+}

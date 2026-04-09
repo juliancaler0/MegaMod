@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/office_projector" },
+    "facing=south": { "model": "megamod:block/office_projector", "y": 180 },
+    "facing=east": { "model": "megamod:block/office_projector", "y": 90 },
+    "facing=west": { "model": "megamod:block/office_projector", "y": 270 }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "recipe",
+  "crafter": "mechanic",
+  "inputs": [
+    { "item": "minecraft:piston", "count": 1 },
+    { "item": "minecraft:redstone", "count": 4 },
+    { "item": "minecraft:iron_ingot", "count": 2 }
+  ],
+  "result": { "item": "megamod:multi_piston", "count": 1 }
+}

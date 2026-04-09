@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SSS", "SES", "TTT"],
+  "key": {
+    "S": "minecraft:string",
+    "E": "minecraft:ender_pearl",
+    "T": "minecraft:stick"
+  },
+  "result": { "id": "megamod:mob_net", "count": 2 }
+}

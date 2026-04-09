@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "key": {
+    "A": "minecraft:jukebox",
+    "B": "megamod:blank_upgrade",
+    "C": "minecraft:note_block"
+  },
+  "result": {
+    "id": "megamod:jukebox_upgrade",
+    "count": 1
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Ancient Tome",
+  "branch": "unlockables",
+  "tier": 1,
+  "researchTime": 2400,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "townhall",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:enchanted_book",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_ancient_tome",
+      "type": "UNLOCK",
+      "stat": "ancient_tome_crafting",
+      "value": 1,
+      "description": "Unlocks Ancient Tome Crafting"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

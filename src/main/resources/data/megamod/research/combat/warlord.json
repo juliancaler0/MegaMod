@@ -1,0 +1,38 @@
+{
+  "name": "Warlord",
+  "branch": "combat",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:combat/commandertraining"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "all_melee_max",
+      "type": "MULTIPLIER",
+      "stat": "melee_damage",
+      "value": 2.0,
+      "description": "All Melee Damage x2"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:combat/sharpshooter",
+    "megamod:combat/juggernaut",
+    "megamod:combat/phantom"
+  ]
+}

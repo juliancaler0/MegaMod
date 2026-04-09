@@ -1,0 +1,32 @@
+{
+  "name": "Stone Cake",
+  "branch": "technology",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "stonemason",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:stone",
+      "count": 64
+    }
+  ],
+  "effects": [
+    {
+      "id": "stonemason_speed_1",
+      "type": "MULTIPLIER",
+      "stat": "stonemason_speed",
+      "value": 1.1,
+      "description": "Stonemason Speed +10%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

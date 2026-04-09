@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,brewing=false": { "model": "megamod:block/alchemy_cauldron" },
+    "facing=south,brewing=false": { "model": "megamod:block/alchemy_cauldron", "y": 180 },
+    "facing=east,brewing=false": { "model": "megamod:block/alchemy_cauldron", "y": 90 },
+    "facing=west,brewing=false": { "model": "megamod:block/alchemy_cauldron", "y": 270 },
+    "facing=north,brewing=true": { "model": "megamod:block/alchemy_cauldron_brewing" },
+    "facing=south,brewing=true": { "model": "megamod:block/alchemy_cauldron_brewing", "y": 180 },
+    "facing=east,brewing=true": { "model": "megamod:block/alchemy_cauldron_brewing", "y": 90 },
+    "facing=west,brewing=true": { "model": "megamod:block/alchemy_cauldron_brewing", "y": 270 }
+  }
+}

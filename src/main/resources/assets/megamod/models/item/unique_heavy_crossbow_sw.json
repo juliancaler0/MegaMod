@@ -1,0 +1,41 @@
+{
+  "parent": "megamod:item/base/crossbow_20",
+  "textures": {
+    "layer0": "megamod:item/unique_heavy_crossbow_sw_standby"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "pulling": 1
+      },
+      "model": "megamod:item/unique_heavy_crossbow_sw_pulling_0"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 0.58
+      },
+      "model": "megamod:item/unique_heavy_crossbow_sw_pulling_1"
+    },
+    {
+      "predicate": {
+        "pulling": 1,
+        "pull": 1.0
+      },
+      "model": "megamod:item/unique_heavy_crossbow_sw_pulling_2"
+    },
+    {
+      "predicate": {
+        "charged": 1
+      },
+      "model": "megamod:item/unique_heavy_crossbow_sw_arrow"
+    },
+    {
+      "predicate": {
+        "charged": 1,
+        "firework": 1
+      },
+      "model": "megamod:item/unique_heavy_crossbow_sw_firework"
+    }
+  ]
+}

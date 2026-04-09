@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "fletcher",
+  "inputs": [
+    { "item": "minecraft:arrow", "count": 8 },
+    { "item": "minecraft:fire_charge", "count": 1 }
+  ],
+  "result": { "item": "megamod:fire_arrow", "count": 8 }
+}

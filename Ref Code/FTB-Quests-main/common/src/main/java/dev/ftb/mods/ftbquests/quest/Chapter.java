@@ -1,0 +1,554 @@
+package dev.ftb.mods.ftbquests.quest;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+
+import dev.ftb.mods.ftblibrary.client.config.EditableConfigGroup;
+import dev.ftb.mods.ftblibrary.client.config.Tristate;
+import dev.ftb.mods.ftblibrary.client.config.editable.EditableString;
+import dev.ftb.mods.ftblibrary.icon.AnimatedIcon;
+import dev.ftb.mods.ftblibrary.icon.Icon;
+import dev.ftb.mods.ftblibrary.math.Bits;
+import dev.ftb.mods.ftbquests.events.ObjectCompletedEvent;
+import dev.ftb.mods.ftbquests.events.ObjectStartedEvent;
+import dev.ftb.mods.ftbquests.events.QuestProgressEventData;
+import dev.ftb.mods.ftbquests.quest.translation.TranslationKey;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.regex.Pattern;
+
+public final class Chapter extends QuestObject {
+	private static final Pattern HEX_STRING = Pattern.compile("^([a-fA-F0-9]+)?$");
+
+	public final BaseQuestFile file;
+
+	private ChapterGroup group;
+	private String filename;
+	private final List<Quest> quests;
+	private final List<QuestLink> questLinks;
+	private boolean alwaysInvisible;
+	private String defaultQuestShape;
+	private double defaultQuestSize;
+	private final List<ChapterImage> images;
+	boolean defaultHideDependencyLines;
+	private int defaultMinWidth = 0;
+	private ProgressionMode progressionMode;
+	private boolean hideQuestDetailsUntilStartable;
+	private boolean hideQuestUntilDepsComplete;
+	private boolean hideQuestUntilDepsVisible;
+	private boolean hideTextUntilComplete;
+	private boolean defaultRepeatable;
+	private Tristate consumeItems;
+	private boolean requireSequentialTasks;
+	private String autoFocusId;
+
+	public Chapter(long id, BaseQuestFile file, ChapterGroup group) {
+		this(id, file, group, "");
+	}
+
+	public Chapter(long id, BaseQuestFile file, ChapterGroup group, String filename) {
+		super(id);
+
+		this.file = file;
+		this.group = group;
+		this.filename = filename;
+		quests = new ArrayList<>();
+		questLinks = new ArrayList<>();
+		alwaysInvisible = false;
+		defaultQuestShape = "";
+		defaultQuestSize = 1D;
+		images = new ArrayList<>();
+		defaultHideDependencyLines = false;
+		progressionMode = ProgressionMode.DEFAULT;
+		hideQuestUntilDepsVisible = false;
+		hideQuestUntilDepsComplete = false;
+		hideQuestDetailsUntilStartable = false;
+		defaultRepeatable = false;
+		consumeItems = Tristate.DEFAULT;
+		requireSequentialTasks = false;
+		autoFocusId = "";
+	}
+
+	public void setDefaultQuestShape(String defaultQuestShape) {
+		this.defaultQuestShape = defaultQuestShape;
+	}
+
+	public ChapterGroup getGroup() {
+		return group;
+	}
+
+	void setGroup(ChapterGroup group) {
+		this.group = group;
+	}
+
+	@Override
+	public QuestObjectType getObjectType() {
+		return QuestObjectType.CHAPTER;
+	}
+
+	@Override
+	public BaseQuestFile getQuestFile() {
+		return group.getFile();
+	}
+
+	@Override
+	public Chapter getQuestChapter() {
+		return this;
+	}
+
+	public int getDefaultMinWidth() {
+		return defaultMinWidth;
+	}
+
+	public boolean isAlwaysInvisible() {
+		return alwaysInvisible;
+	}
+
+	public boolean isDefaultRepeatable() {
+		return defaultRepeatable;
+	}
+
+	public boolean isRequireSequentialTasks() {
+		return requireSequentialTasks;
+	}
+
+	public boolean isHideTextUntilComplete() {
+		return hideTextUntilComplete;
+	}
+
+	public List<Quest> getQuests() {
+		return Collections.unmodifiableList(quests);
+	}
+
+	public List<QuestLink> getQuestLinks() {
+		return Collections.unmodifiableList(questLinks);
+	}
+
+	public List<ChapterImage> getImages() {
+		return Collections.unmodifiableList(images);
+	}
+
+	public void addQuest(Quest quest) {
+		quests.add(quest);
+	}
+
+	public void removeQuest(Quest quest) {
+		quests.remove(quest);
+	}
+
+	public void addImage(ChapterImage image) {
+		images.add(image);
+	}
+
+	public void removeImage(ChapterImage image) {
+		images.remove(image);
+	}
+
+	public void addQuestLink(QuestLink link) {
+		questLinks.add(link);
+	}
+
+	public void removeQuestLink(QuestLink link) {
+		questLinks.remove(link);
+	}
+
+	public void addChildObject(Movable child) {
+        switch (child) {
+            case Quest q -> addQuest(q);
+            case QuestLink ql -> addQuestLink(ql);
+            case ChapterImage img -> addImage(img);
+            default -> throw new IllegalArgumentException("expecting quest, quest link or chapter image!");
+        }
+	}
+
+	public void removeChildObject(Movable child) {
+		switch (child) {
+			case Quest q -> removeQuest(q);
+			case QuestLink ql -> removeQuestLink(ql);
+			case ChapterImage img -> removeImage(img);
+			default -> throw new IllegalArgumentException("expecting quest, quest link or chapter image!");
+		}
+	}
+
+	@Override
+	public void writeData(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.writeData(nbt, provider);
+
+		nbt.putString("filename", filename);
+		if (alwaysInvisible) nbt.putBoolean("always_invisible", true);
+		nbt.putString("default_quest_shape", defaultQuestShape);
+		if (defaultQuestSize != 1D) nbt.putDouble("default_quest_size", defaultQuestSize);
+		nbt.putBoolean("default_hide_dependency_lines", defaultHideDependencyLines);
+		if (defaultMinWidth > 0) nbt.putInt("default_min_width", defaultMinWidth);
+		if (progressionMode != ProgressionMode.DEFAULT) nbt.putString("progression_mode", progressionMode.getId());
+		consumeItems.write(nbt, "consume_items");
+		if (hideQuestDetailsUntilStartable) nbt.putBoolean("hide_quest_details_until_startable", true);
+		if (hideQuestUntilDepsVisible) nbt.putBoolean("hide_quest_until_deps_visible", true);
+		if (hideQuestUntilDepsComplete) nbt.putBoolean("hide_quest_until_deps_complete", true);
+		if (hideTextUntilComplete) nbt.putBoolean("hide_text_until_complete", true);
+		if (defaultRepeatable) nbt.putBoolean("default_repeatable_quest", true);
+		if (requireSequentialTasks) nbt.putBoolean("require_sequential_tasks", true);
+
+		if (!autoFocusId.isEmpty()) nbt.putString("autofocus_id", autoFocusId);
+	}
+
+	@Override
+	public void readData(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.readData(nbt, provider);
+
+		filename = nbt.getString("filename").orElseThrow();
+		alwaysInvisible = nbt.getBooleanOr("always_invisible", false);
+		defaultQuestShape = nbt.getString("default_quest_shape").orElseThrow();
+		defaultQuestSize = nbt.getDoubleOr("default_quest_size", 1D);
+		defaultHideDependencyLines = nbt.getBooleanOr("default_hide_dependency_lines", false);
+		defaultMinWidth = nbt.getIntOr("default_min_width", 0);
+		progressionMode = nbt.getString("progression_mode").map(ProgressionMode.NAME_MAP::get).orElse(ProgressionMode.DEFAULT);
+		consumeItems = Tristate.read(nbt, "consume_items");
+		hideQuestDetailsUntilStartable = nbt.getBooleanOr("hide_quest_details_until_startable", false);
+		hideQuestUntilDepsVisible = nbt.getBooleanOr("hide_quest_until_deps_visible", false);
+		hideQuestUntilDepsComplete = nbt.getBooleanOr("hide_quest_until_deps_complete", false);
+		hideTextUntilComplete = nbt.getBooleanOr("hide_text_until_complete", false);
+		defaultRepeatable = nbt.getBooleanOr("default_repeatable_quest", false);
+		requireSequentialTasks = nbt.getBooleanOr("require_sequential_tasks", false);
+		autoFocusId = nbt.getStringOr("autofocus_id", "");
+
+		if (defaultQuestShape.equals("default")) {
+			defaultQuestShape = "";
+		}
+	}
+
+	@Override
+	public void writeNetData(RegistryFriendlyByteBuf buffer) {
+		super.writeNetData(buffer);
+		buffer.writeUtf(filename, Short.MAX_VALUE);
+		buffer.writeUtf(defaultQuestShape, Short.MAX_VALUE);
+		buffer.writeDouble(defaultQuestSize);
+		buffer.writeInt(defaultMinWidth);
+		ProgressionMode.NAME_MAP.write(buffer, progressionMode);
+
+		int flags = makeFlags();
+		buffer.writeVarInt(flags);
+
+		if (!autoFocusId.isEmpty()) buffer.writeLong(QuestObjectBase.parseHexId(autoFocusId).orElse(0L));
+	}
+
+	private int makeFlags() {
+		int flags = 0;
+		flags = Bits.setFlag(flags, 0x01, alwaysInvisible);
+		flags = Bits.setFlag(flags, 0x02, defaultHideDependencyLines);
+		flags = Bits.setFlag(flags, 0x04, hideQuestDetailsUntilStartable);
+		flags = Bits.setFlag(flags, 0x08, hideQuestUntilDepsComplete);
+		flags = Bits.setFlag(flags, 0x10, defaultRepeatable);
+		flags = Bits.setFlag(flags, 0x20, consumeItems != Tristate.DEFAULT);
+		flags = Bits.setFlag(flags, 0x40, consumeItems == Tristate.TRUE);
+		flags = Bits.setFlag(flags, 0x80, requireSequentialTasks);
+		flags = Bits.setFlag(flags, 0x100, !autoFocusId.isEmpty());
+		flags = Bits.setFlag(flags, 0x200, hideQuestUntilDepsVisible);
+		flags = Bits.setFlag(flags, 0x400, hideTextUntilComplete);
+		return flags;
+	}
+
+	@Override
+	public void readNetData(RegistryFriendlyByteBuf buffer) {
+		super.readNetData(buffer);
+		filename = buffer.readUtf(Short.MAX_VALUE);
+		defaultQuestShape = buffer.readUtf(Short.MAX_VALUE);
+		defaultQuestSize = buffer.readDouble();
+		defaultMinWidth = buffer.readInt();
+		progressionMode = ProgressionMode.NAME_MAP.read(buffer);
+
+		int flags = buffer.readVarInt();
+		alwaysInvisible = Bits.getFlag(flags, 0x01);
+		defaultHideDependencyLines = Bits.getFlag(flags, 0x02);
+		hideQuestDetailsUntilStartable = Bits.getFlag(flags, 0x04);
+		hideQuestUntilDepsComplete = Bits.getFlag(flags, 0x08);
+		defaultRepeatable = Bits.getFlag(flags, 0x10);
+		consumeItems = Bits.getFlag(flags, 0x20) ? Bits.getFlag(flags, 0x40) ? Tristate.TRUE : Tristate.FALSE : Tristate.DEFAULT;
+		requireSequentialTasks = Bits.getFlag(flags, 0x80);
+		hideQuestUntilDepsVisible = Bits.getFlag(flags, 0x200);
+		hideTextUntilComplete = Bits.getFlag(flags, 0x400);
+
+		autoFocusId = Bits.getFlag(flags, 0x100) ? QuestObjectBase.getCodeString(buffer.readLong()) : "";
+	}
+
+	public int getIndex() {
+		return group.getChapters().indexOf(this);
+	}
+
+	@Override
+	public int getRelativeProgressFromChildren(TeamData data) {
+		if (alwaysInvisible) {
+			return 100;
+		}
+
+		if (quests.isEmpty()) {
+			return 100;
+		}
+
+		int progress = 0;
+		int count = 0;
+
+		for (Quest quest : quests) {
+			if (!quest.isOptionalForProgression(data)) {
+				progress += data.getRelativeProgress(quest);
+				count++;
+			}
+		}
+
+		if (count <= 0) {
+			return 100;
+		}
+
+		return getRelativeProgressFromChildren(progress, count);
+	}
+
+	@Override
+	public void onStarted(QuestProgressEventData<?> data) {
+		data.setStarted(id);
+		ObjectStartedEvent.CHAPTER.invoker().act(new ObjectStartedEvent.ChapterEvent(data.withObject(this)));
+
+		if (!data.getTeamData().isStarted(file)) {
+			file.onStarted(data.withObject(file));
+		}
+	}
+
+	@Override
+	public void onCompleted(QuestProgressEventData<?> data) {
+		data.setCompleted(id);
+		ObjectCompletedEvent.CHAPTER.invoker().act(new ObjectCompletedEvent.ChapterEvent(data.withObject(this)));
+
+		if (!disableToast) {
+			data.notifyPlayers(id);
+		}
+
+		file.forAllQuests(quest -> {
+			if (quest.hasDependency(this)) {
+				data.getTeamData().checkAutoCompletion(quest);
+			}
+		});
+
+		if (group.isCompletedRaw(data.getTeamData())) {
+			group.onCompleted(data.withObject(group));
+		}
+	}
+
+	@Override
+	public MutableComponent getAltTitle() {
+		return Component.translatable("ftbquests.unnamed");
+	}
+
+	@Override
+	public Icon<?> getAltIcon() {
+		List<Icon<?>> list = new ArrayList<>();
+
+		for (Quest quest : quests) {
+			list.add(quest.getIcon());
+		}
+
+		return AnimatedIcon.fromList(list, false);
+	}
+
+	@Override
+	public void deleteSelf() {
+		super.deleteSelf();
+		group.removeChapter(this);
+	}
+
+	@Override
+	public void deleteChildren() {
+		for (Quest quest : quests) {
+			quest.deleteChildren();
+			quest.invalid = true;
+		}
+
+		quests.clear();
+	}
+
+	@Override
+	public void onCreated() {
+		// filename should have been suggested by the client and available here
+		// but in case not, fall back to the chapter's hex object id
+		if (filename.isEmpty()) {
+			filename = getCodeString();
+		}
+
+		// ensure the filename is actually unique (same chapter name could appear in multiple groups...)
+		Set<String> existingNames = new HashSet<>();
+		getQuestFile().forAllChapters(ch -> existingNames.add(ch.filename));
+		if (existingNames.contains(filename)) {
+			filename = filename + "_" + getCodeString();
+		}
+
+		group.addChapter(this);
+
+		if (!quests.isEmpty()) {
+			List<Quest> l = new ArrayList<>(quests);
+			quests.clear();
+			for (Quest quest : l) {
+				quest.onCreated();
+			}
+		}
+	}
+
+	public String getFilename() {
+		if (filename.isEmpty()) {
+			filename = getCodeString(this);
+		}
+
+		return filename;
+	}
+
+	@Override
+	public Optional<String> getPath() {
+		return Optional.of("chapters/" + getFilename() + ".snbt");
+	}
+
+	@Override
+	public void fillConfigGroup(EditableConfigGroup config) {
+		super.fillConfigGroup(config);
+
+		config.addList("subtitle", getRawSubtitle(), new EditableString(), this::setRawSubtitle, "");
+
+		EditableConfigGroup appearance = config.getOrCreateSubgroup("appearance").setNameKey("ftbquests.quest.appearance");
+		appearance.addEnum("default_quest_shape", defaultQuestShape.isEmpty() ? "default" : defaultQuestShape, v -> defaultQuestShape = v.equals("default") ? "" : v, QuestShape.idMapWithDefault);
+		appearance.addDouble("default_quest_size", defaultQuestSize, v -> defaultQuestSize = v, 1, 0.0625D, 8D);
+		appearance.addInt("default_min_width", defaultMinWidth, v -> defaultMinWidth = v, 0, 0, 3000);
+
+		EditableConfigGroup visibility = config.getOrCreateSubgroup("visibility").setNameKey("ftbquests.quest.visibility");
+		visibility.addBool("always_invisible", alwaysInvisible, v -> alwaysInvisible = v, false);
+		visibility.addBool("default_hide_dependency_lines", defaultHideDependencyLines, v -> defaultHideDependencyLines = v, false);
+		visibility.addBool("hide_quest_details_until_startable", hideQuestDetailsUntilStartable, v -> hideQuestDetailsUntilStartable = v, false);
+		visibility.addBool("hide_quest_until_deps_visible", hideQuestUntilDepsVisible, v -> hideQuestUntilDepsVisible = v, false);
+		visibility.addBool("hide_quest_until_deps_complete", hideQuestUntilDepsComplete, v -> hideQuestUntilDepsComplete = v, false);
+		visibility.addBool("hide_text_until_complete", hideTextUntilComplete, v -> hideTextUntilComplete = v, false);
+
+		EditableConfigGroup misc = config.getOrCreateSubgroup("misc").setNameKey("ftbquests.quest.misc");
+		misc.addString("autofocus_id", autoFocusId, v -> autoFocusId = v, "", HEX_STRING);
+		misc.addEnum("progression_mode", progressionMode, v -> progressionMode = v, ProgressionMode.NAME_MAP);
+		misc.addBool("default_repeatable", defaultRepeatable, v -> defaultRepeatable = v, false);
+		misc.addTristate("consume_items", consumeItems, v -> consumeItems = v);
+		misc.addBool("require_sequential_tasks", requireSequentialTasks, v -> requireSequentialTasks = v, false);
+	}
+
+	@Override
+	public boolean isVisible(TeamData data) {
+		return !alwaysInvisible &&
+				(quests.isEmpty() && questLinks.isEmpty() ||
+						quests.stream().anyMatch(quest -> quest.isVisible(data)) ||
+						questLinks.stream().anyMatch(link -> link.isVisible(data)));
+	}
+
+	@Override
+	public void clearCachedData() {
+		super.clearCachedData();
+
+		for (Quest quest : quests) {
+			quest.clearCachedData();
+		}
+	}
+
+	@Override
+	protected void verifyDependenciesInternal(long original, int depth) {
+		if (depth >= 1000) {
+			throw new DependencyDepthException(this);
+		}
+
+		for (Quest quest : quests) {
+			if (quest.id == original) {
+				throw new DependencyLoopException(this);
+			}
+
+			quest.verifyDependenciesInternal(original, depth + 1);
+		}
+	}
+
+	public boolean hasGroup() {
+		return !group.isDefaultGroup();
+	}
+
+	public String getDefaultQuestShape() {
+		return defaultQuestShape.isEmpty() ? file.getDefaultQuestShape() : defaultQuestShape;
+	}
+
+	@Override
+	public Collection<? extends QuestObject> getChildren() {
+		return quests;
+	}
+
+	@Override
+	public boolean hasUnclaimedRewardsRaw(TeamData teamData, UUID player) {
+		for (Quest quest : quests) {
+			if (teamData.hasUnclaimedRewards(player, quest)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public ProgressionMode getProgressionMode() {
+		return progressionMode == ProgressionMode.DEFAULT ? file.getProgressionMode() : progressionMode;
+	}
+
+	public boolean hideQuestDetailsUntilStartable() {
+		return hideQuestDetailsUntilStartable;
+	}
+
+	public boolean hideQuestUntilDepsComplete() {
+		return hideQuestUntilDepsComplete;
+	}
+
+	public boolean isHideQuestUntilDepsVisible() {
+		return hideQuestUntilDepsVisible;
+	}
+
+	public List<String> getRawSubtitle() {
+		return file.getTranslationManager().getStringListTranslation(this, file.getLocale(), TranslationKey.CHAPTER_SUBTITLE)
+				.orElse(List.of());
+	}
+
+	public void setRawSubtitle(List<String> rawSubtitle) {
+		setTranslatableValue(TranslationKey.CHAPTER_SUBTITLE, rawSubtitle);
+	}
+
+	public boolean consumeItems() {
+		return consumeItems.get(file.isDefaultTeamConsumeItems());
+	}
+
+	public double getDefaultQuestSize() {
+		return defaultQuestSize;
+	}
+
+	public boolean hasAnyVisibleChildren() {
+		return !quests.isEmpty() || !questLinks.isEmpty();
+	}
+
+	public Optional<Movable> getAutofocus() {
+		if (!autoFocusId.isEmpty()) {
+			return QuestObjectBase.parseHexId(autoFocusId)
+					.flatMap(id -> file.get(id) instanceof Movable m && m.getChapter() == this ?
+							Optional.of(m) :
+							Optional.empty()
+					);
+		}
+		return Optional.empty();
+	}
+
+	public void setAutofocus(long id) {
+		autoFocusId = id == 0L ? "" : QuestObjectBase.getCodeString(id);
+	}
+
+	public boolean isAutofocus(long id) {
+		return id == getAutofocus().map(Movable::getMovableID).orElse(0L);
+	}
+}

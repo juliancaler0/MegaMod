@@ -1,0 +1,34 @@
+{
+  "name": "Grave Decay II",
+  "branch": "civilian",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:civilian/grave_decay_i"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:bone_block",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "grave_decay_2",
+      "type": "MODIFIER",
+      "stat": "grave_decay_time",
+      "value": 600,
+      "description": "Graves decay 10 min slower"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

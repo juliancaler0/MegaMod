@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/root",
+  "display": {
+    "icon": {
+      "id": "megamod:supply_camp"
+    },
+    "title": {
+      "text": "First Steps"
+    },
+    "description": {
+      "text": "Place a Supply Camp or Ship"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

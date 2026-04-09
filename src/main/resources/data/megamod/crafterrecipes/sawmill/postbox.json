@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "sawmill",
+  "inputs": [
+    { "item": "minecraft:oak_planks", "count": 4 },
+    { "item": "minecraft:iron_ingot", "count": 1 }
+  ],
+  "result": { "item": "megamod:post_box", "count": 1 }
+}

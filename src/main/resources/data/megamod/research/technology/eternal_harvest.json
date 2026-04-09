@@ -1,0 +1,34 @@
+{
+  "name": "Eternal Harvest",
+  "branch": "technology",
+  "tier": 5,
+  "researchTime": 19200,
+  "parents": [
+    "megamod:technology/harvest_festival"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "farm",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "farming_output_max",
+      "type": "MULTIPLIER",
+      "stat": "farming_output",
+      "value": 2.0,
+      "description": "Farming Output x2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

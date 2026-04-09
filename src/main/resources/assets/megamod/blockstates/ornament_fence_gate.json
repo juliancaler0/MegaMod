@@ -1,0 +1,156 @@
+{
+  "variants": {
+    "facing=south,in_wall=false,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=false,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=false,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=false,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=true,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=true,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=true,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true
+    },
+    "facing=south,in_wall=true,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true
+    },
+    "facing=west,in_wall=false,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=false,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=false,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=false,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=true,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=true,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=true,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=west,in_wall=true,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 90
+    },
+    "facing=north,in_wall=false,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=false,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=false,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=false,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=north,in_wall=true,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 180
+    },
+    "facing=east,in_wall=false,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=false,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=false,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=false,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_open_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=false,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=false,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=true,powered=false": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 270
+    },
+    "facing=east,in_wall=true,open=true,powered=true": {
+      "model": "megamod:block/fence_gate/fence_gate_wall_open_spec",
+      "uvlock": true,
+      "y": 270
+    }
+  }
+}

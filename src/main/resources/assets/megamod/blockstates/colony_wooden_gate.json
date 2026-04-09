@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/colony_wooden_gate" },
+    "facing=east": { "model": "megamod:block/colony_wooden_gate", "y": 90 },
+    "facing=south": { "model": "megamod:block/colony_wooden_gate", "y": 180 },
+    "facing=west": { "model": "megamod:block/colony_wooden_gate", "y": 270 }
+  }
+}

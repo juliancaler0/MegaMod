@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/park_bench"
+    },
+    "facing=south": {
+      "model": "megamod:block/park_bench",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/park_bench",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/park_bench",
+      "y": 270
+    }
+  }
+}

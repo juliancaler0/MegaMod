@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "megamod:standard_backpack",
+    "minecraft:cyan_dye"
+  ],
+  "result": {
+    "id": "megamod:squid_backpack",
+    "count": 1
+  }
+}

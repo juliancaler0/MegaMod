@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/bl_barrel_table"
+    },
+    "facing=south": {
+      "model": "megamod:block/bl_barrel_table",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/bl_barrel_table",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/bl_barrel_table",
+      "y": 270
+    }
+  }
+}

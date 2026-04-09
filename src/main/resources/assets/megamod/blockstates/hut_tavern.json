@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=south": {
+      "model": "megamod:block/blockhuttavern"
+    },
+    "facing=west": {
+      "model": "megamod:block/blockhuttavern",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "megamod:block/blockhuttavern",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/blockhuttavern",
+      "y": 270
+    }
+  }
+}

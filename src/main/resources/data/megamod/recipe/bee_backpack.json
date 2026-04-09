@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABA",
+    "ASA",
+    "ABA"
+  ],
+  "key": {
+    "A": "minecraft:honeycomb",
+    "B": "minecraft:honey_block",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:bee_backpack",
+    "count": 1
+  }
+}

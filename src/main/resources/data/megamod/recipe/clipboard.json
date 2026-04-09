@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" P ", "PPP", "PPP"],
+  "key": {
+    "P": "minecraft:oak_planks"
+  },
+  "result": { "id": "megamod:clipboard", "count": 1 }
+}

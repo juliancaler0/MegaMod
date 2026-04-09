@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "megamod:block/office_bookshelf_tall" },
+    "facing=south": { "model": "megamod:block/office_bookshelf_tall", "y": 180 },
+    "facing=east": { "model": "megamod:block/office_bookshelf_tall", "y": 90 },
+    "facing=west": { "model": "megamod:block/office_bookshelf_tall", "y": 270 }
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "sounds": [
+        {
+            "name": "suspense",
+            "files": [
+                "megamod:ambient.suspense.end"
+            ]
+        }
+    ]
+}

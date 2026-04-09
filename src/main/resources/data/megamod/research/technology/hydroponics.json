@@ -1,0 +1,34 @@
+{
+  "name": "Hydroponics",
+  "branch": "technology",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:technology/compost"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "farm",
+      "level": 4
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:sea_lantern",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "crop_growth_3",
+      "type": "MULTIPLIER",
+      "stat": "crop_growth",
+      "value": 1.5,
+      "description": "Crop Growth +50%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

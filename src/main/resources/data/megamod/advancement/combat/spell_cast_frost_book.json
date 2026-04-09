@@ -1,0 +1,34 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:spell_book",
+      "components": {
+        "megamod:item_model": "megamod:item/spell_book/frost"
+      }
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_cast_frost_book.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_cast_frost_book.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "megamod:spell_novice_frost",
+  "criteria": {
+    "cast": {
+      "trigger": "megamod:spell_cast",
+      "conditions": {
+        "spell": "#megamod:spell_book/frost"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cast"
+    ]
+  ]
+}

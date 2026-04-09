@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "crusher",
+  "inputs": [
+    { "item": "minecraft:clay", "count": 1 }
+  ],
+  "result": { "item": "minecraft:clay_ball", "count": 4 }
+}

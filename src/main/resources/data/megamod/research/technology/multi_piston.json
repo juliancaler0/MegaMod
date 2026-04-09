@@ -1,0 +1,34 @@
+{
+  "name": "Multi Piston",
+  "branch": "technology",
+  "tier": 3,
+  "researchTime": 9600,
+  "parents": [
+    "megamod:technology/hardened"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "stonemason",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:piston",
+      "count": 16
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_crusher",
+      "type": "UNLOCK",
+      "stat": "crusher",
+      "value": 1,
+      "description": "Unlocks Crusher Building"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

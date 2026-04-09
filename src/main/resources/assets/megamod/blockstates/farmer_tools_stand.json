@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_tools_stand"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_tools_stand",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_tools_stand",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_tools_stand",
+      "y": 270
+    }
+  }
+}

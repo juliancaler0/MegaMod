@@ -1,0 +1,32 @@
+{
+  "name": "Higher Learning",
+  "branch": "civilian",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "residence",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:book",
+      "count": 3
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_school",
+      "type": "UNLOCK",
+      "stat": "school",
+      "value": 1,
+      "description": "Unlocks School"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

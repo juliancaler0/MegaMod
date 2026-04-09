@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " G ",
+    "GjG",
+    " G "
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "j": "megamod:jade"
+  },
+  "result": { "id": "megamod:jade_ring", "count": 1 }
+}

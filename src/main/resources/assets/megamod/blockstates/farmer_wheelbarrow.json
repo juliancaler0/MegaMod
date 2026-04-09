@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/farmer_wheelbarrow"
+    },
+    "facing=south": {
+      "model": "megamod:block/farmer_wheelbarrow",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/farmer_wheelbarrow",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/farmer_wheelbarrow",
+      "y": 270
+    }
+  }
+}

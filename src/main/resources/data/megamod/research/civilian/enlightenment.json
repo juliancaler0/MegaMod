@@ -1,0 +1,38 @@
+{
+  "name": "Enlightenment",
+  "branch": "civilian",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:civilian/mastery"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "library",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "citizen_xp_max",
+      "type": "MULTIPLIER",
+      "stat": "citizen_xp_growth",
+      "value": 3.0,
+      "description": "Citizen XP Growth x3"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:civilian/beanstalk",
+    "megamod:civilian/motherly",
+    "megamod:civilian/fortitude"
+  ]
+}

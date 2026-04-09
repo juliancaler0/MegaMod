@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "${mod_credits}"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/azurelib",
+    "issues": "https://github.com/AzureDoom/AzureLib/issues",
+    "sources": "https://github.com/AzureDoom/AzureLib"
+  },
+  "license": "${mod_license}",
+  "icon": "${mod_logo}",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "mod.azure.azurelibarmor.fabric.FabricAzureLibMod"
+    ],
+    "client": [
+      "mod.azure.azurelibarmor.fabric.ClientListener"
+    ]
+  },
+  "mixins": [
+    "azurelibarmor.mixins.json",
+    "azurelibarmor.fabric.mixins.json"
+  ],
+  "accessWidener": "azurelibarmor.accesswidener",
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "java": ">=${java_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": [
+        "library"
+      ]
+    }
+  }
+}

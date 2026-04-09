@@ -1,0 +1,9 @@
+{
+  "type": "recipe",
+  "crafter": "blacksmith",
+  "inputs": [
+    { "item": "minecraft:iron_ingot", "count": 1 },
+    { "item": "minecraft:oak_planks", "count": 6 }
+  ],
+  "result": { "item": "minecraft:shield", "count": 1 }
+}

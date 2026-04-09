@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "ISI",
+    "III"
+  ],
+  "key": {
+    "I": "minecraft:quartz",
+    "S": "megamod:standard_backpack"
+  },
+  "result": {
+    "id": "megamod:quartz_backpack",
+    "count": 1
+  }
+}

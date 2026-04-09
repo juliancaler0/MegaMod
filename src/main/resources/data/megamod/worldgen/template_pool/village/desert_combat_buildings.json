@@ -1,0 +1,6 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    {"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/sanctuary","projection":"rigid"},"weight":2},{"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/barracks","projection":"rigid"},"weight":2},{"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/archery_range_large","projection":"rigid"},"weight":1},{"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/archery_range_small","projection":"rigid"},"weight":2},{"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/wizard_tower","projection":"rigid"},"weight":2},{"element":{"element_type":"minecraft:single_pool_element","processors":"minecraft:empty","location":"megamod:village/desert/jewelry_shop","projection":"rigid"},"weight":1}
+  ]
+}

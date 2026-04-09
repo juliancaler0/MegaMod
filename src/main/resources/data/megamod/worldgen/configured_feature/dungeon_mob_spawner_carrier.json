@@ -1,0 +1,6 @@
+{
+  "type": "megamod:dungeon_mob",
+  "config": {
+    "entity_type": "megamod:spawner_carrier"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/med_ore"
+    },
+    "facing=south": {
+      "model": "megamod:block/med_ore",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/med_ore",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/med_ore",
+      "y": 270
+    }
+  }
+}

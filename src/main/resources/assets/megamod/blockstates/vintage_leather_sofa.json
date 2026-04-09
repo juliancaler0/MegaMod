@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/vintage_leather_sofa"
+    },
+    "facing=south": {
+      "model": "megamod:block/vintage_leather_sofa",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/vintage_leather_sofa",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/vintage_leather_sofa",
+      "y": 270
+    }
+  }
+}

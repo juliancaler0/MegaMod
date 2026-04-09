@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/dungeon_table_decor"
+    },
+    "facing=south": {
+      "model": "megamod:block/dungeon_table_decor",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/dungeon_table_decor",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/dungeon_table_decor",
+      "y": 270
+    }
+  }
+}

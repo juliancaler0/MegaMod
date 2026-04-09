@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/ten_citizens",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_residence"
+    },
+    "title": {
+      "text": "Outpost"
+    },
+    "description": {
+      "text": "Have 25 citizens in your colony"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

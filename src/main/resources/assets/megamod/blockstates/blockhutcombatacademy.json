@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "megamod:block/blockhutcombatacademy",
+      "y": 0
+    },
+    "facing=south": {
+      "model": "megamod:block/blockhutcombatacademy",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/blockhutcombatacademy",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "megamod:block/blockhutcombatacademy",
+      "y": 270
+    }
+  }
+}

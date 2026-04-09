@@ -1,0 +1,42 @@
+{
+  "name": "megamod:warpednetherlands/roads",
+  "fallback": "megamod:warpednetherlands/buildings",
+  "elements": [
+    {
+      "weight": 5,
+      "element": {
+        "location": "megamod:warpednetherlands/intersection",
+        "processors": "megamod:warpednetherlands/street",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:warpednetherlands/straight_both",
+        "processors": "megamod:warpednetherlands/street",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:warpednetherlands/straight_right",
+        "processors": "megamod:warpednetherlands/street",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    },
+    {
+      "weight": 6,
+      "element": {
+        "location": "megamod:warpednetherlands/straight_left",
+        "processors": "megamod:warpednetherlands/street",
+        "projection": "rigid",
+        "element_type": "minecraft:legacy_single_pool_element"
+      }
+    }
+  ]
+}

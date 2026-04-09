@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "crusher",
+  "inputs": [
+    { "item": "minecraft:gravel", "count": 2 }
+  ],
+  "result": { "item": "minecraft:flint", "count": 1 }
+}

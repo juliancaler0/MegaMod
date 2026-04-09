@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " L ",
+    "LCL",
+    " L "
+  ],
+  "key": {
+    "L": "minecraft:lapis_lazuli",
+    "C": "megamod:crystalline_shard"
+  },
+  "result": { "id": "megamod:arcane_rune", "count": 2 }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Ambition",
+  "branch": "civilian",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:diamond",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_mystical_site",
+      "type": "UNLOCK",
+      "stat": "mystical_site",
+      "value": 1,
+      "description": "Unlocks Mystical Site"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

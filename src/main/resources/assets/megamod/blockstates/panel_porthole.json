@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "megamod:block/panel/panel_porthole_spec"
+    }
+  }
+}

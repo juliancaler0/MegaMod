@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PLP",
+    "LRL",
+    "PLP"
+  ],
+  "key": {
+    "P": "minecraft:paper",
+    "L": "minecraft:leather",
+    "R": "minecraft:redstone"
+  },
+  "result": {
+    "id": "megamod:blank_upgrade",
+    "count": 1
+  }
+}

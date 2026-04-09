@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "megamod:block/classic_wall_lamp"
+    },
+    "facing=south": {
+      "model": "megamod:block/classic_wall_lamp",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "megamod:block/classic_wall_lamp",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "megamod:block/classic_wall_lamp",
+      "y": 270
+    }
+  }
+}

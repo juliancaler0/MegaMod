@@ -1,0 +1,34 @@
+{
+  "name": "Dual Residence",
+  "branch": "civilian",
+  "tier": 4,
+  "researchTime": 14400,
+  "parents": [
+    "megamod:civilian/hamlet"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "residence",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:oak_door",
+      "count": 32
+    }
+  ],
+  "effects": [
+    {
+      "id": "residence_capacity",
+      "type": "MODIFIER",
+      "stat": "residence_capacity",
+      "value": 2,
+      "description": "Residence Capacity +2"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

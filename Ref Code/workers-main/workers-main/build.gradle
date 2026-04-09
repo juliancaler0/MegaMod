@@ -1,0 +1,150 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+    }
+}
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+
+plugins {
+    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "com.github.johnrengelman.shadow" version "7.1.0"
+}
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'idea'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'org.spongepowered.mixin'
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+mixin{
+    add sourceSets.main, 'mixins.workers.refmap.json'
+    config 'mixins.workers.json'
+
+    disableTargetValidator = true
+    overwriteErrorLevel = 'error'
+}
+
+version = '1.7.9.1'
+
+group = 'com.talhanation.workers'
+archivesBaseName = 'workers-1.20.1'
+
+
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg') // Currently, this location cannot be changed from the default.
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            property 'forge.enabledGameTestNamespaces', 'workers'
+
+            Random rnd = new Random()
+
+            args = ['--username', 'talhanation']
+
+
+            mods {
+                'workers' {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'forge.enabledGameTestNamespaces', 'workers'
+
+
+            mods {
+                'workers' {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', 'workers', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                'workers' {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    maven {
+        name = "henkelmax.public"
+        url = 'https://maven.maxhenkel.de/repository/public'
+    }
+    mavenLocal()
+    maven {
+
+        url "https://www.cursemaven.com"
+    }
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    shadow fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0:api")
+    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0")
+    runtimeOnly fg.deobf("de.maxhenkel.corelib:corelib:1.20.1-1.0.0:javadoc")
+
+    //implementation fg.deobf("curse.maven:small-ships-450659:5324996")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+}
+
+// Example for how to get properties into the manifest for reading at runtime.
+jar {
+
+}
+
+jar.finalizedBy('reobfJar')
+
+artifacts {
+    archives shadowJar
+}
+
+shadowJar {
+    project.configurations.shadow.setTransitive(true)
+    configurations = [project.configurations.shadow]
+    //classifier = ""
+    relocate 'de.maxhenkel.corelib', "de.maxhenkel.workers.corelib"
+}
+
+reobf {
+    shadowJar {}
+}

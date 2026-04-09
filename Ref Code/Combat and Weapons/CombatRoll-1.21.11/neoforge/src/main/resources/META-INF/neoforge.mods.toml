@@ -1,0 +1,45 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "GPL-3.0"
+
+[[mods]]
+modId = "combat_roll"
+version = "${version}"
+displayName = "Combat Roll"
+authors = "Daedelus"
+description = '''
+Adds combat roll ability, with related attributes and enchantments.
+'''
+logoFile = "icon.png"
+
+[[dependencies.combat_roll]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.6,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.combat_roll]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.combat_roll]]
+modId="player_animation_library"
+type = "required"
+versionRange="[1,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.combat_roll]]
+modId="cloth_config"
+type = "required"
+versionRange="[19.0.0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[mixins]]
+config = "combat_roll.mixins.json"

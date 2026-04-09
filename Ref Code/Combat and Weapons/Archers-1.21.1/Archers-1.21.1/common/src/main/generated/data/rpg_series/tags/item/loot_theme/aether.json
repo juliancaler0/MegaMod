@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "archers:aether_spear",
+      "required": false
+    },
+    {
+      "id": "archers:aether_heavy_crossbow",
+      "required": false
+    },
+    {
+      "id": "archers:aether_rapid_crossbow",
+      "required": false
+    },
+    {
+      "id": "archers:aether_longbow",
+      "required": false
+    }
+  ]
+}

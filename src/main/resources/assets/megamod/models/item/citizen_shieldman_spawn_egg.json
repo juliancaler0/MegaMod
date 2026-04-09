@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "megamod:item/citizen_shieldman_spawn_egg"
+  }
+}

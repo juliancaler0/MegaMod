@@ -1,0 +1,39 @@
+{
+  "name": "King of the Field",
+  "branch": "technology",
+  "tier": 6,
+  "researchTime": 28800,
+  "parents": [
+    "megamod:technology/eternal_growth",
+    "megamod:technology/eternal_harvest"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "farm",
+      "level": 5
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:nether_star",
+      "count": 2
+    }
+  ],
+  "effects": [
+    {
+      "id": "all_farming_max",
+      "type": "MULTIPLIER",
+      "stat": "farming_speed",
+      "value": 3.0,
+      "description": "All Farming x3"
+    }
+  ],
+  "exclusive": true,
+  "blocking": [
+    "megamod:technology/king_of_the_mine",
+    "megamod:technology/king_of_the_forest",
+    "megamod:technology/king_of_the_furnace"
+  ]
+}

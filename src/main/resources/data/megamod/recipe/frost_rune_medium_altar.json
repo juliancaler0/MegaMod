@@ -1,0 +1,13 @@
+{
+  "type": "megamod:crafting",
+  "base": {
+    "tag": "megamod:rune_crafting/base/stone"
+  },
+  "addition": {
+    "tag": "megamod:rune_crafting/reagent/frost_medium"
+  },
+  "result": {
+    "count": 16,
+    "id": "megamod:frost_stone"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "facing=north,lit=true": {"model": "megamod:block/dnl/dungeon_wall_torch", "y": 180},
+    "facing=south,lit=true": {"model": "megamod:block/dnl/dungeon_wall_torch"},
+    "facing=east,lit=true": {"model": "megamod:block/dnl/dungeon_wall_torch", "y": 270},
+    "facing=west,lit=true": {"model": "megamod:block/dnl/dungeon_wall_torch", "y": 90},
+    "facing=north,lit=false": {"model": "megamod:block/dnl/dungeon_wall_torch_unlit", "y": 180},
+    "facing=south,lit=false": {"model": "megamod:block/dnl/dungeon_wall_torch_unlit"},
+    "facing=east,lit=false": {"model": "megamod:block/dnl/dungeon_wall_torch_unlit", "y": 270},
+    "facing=west,lit=false": {"model": "megamod:block/dnl/dungeon_wall_torch_unlit", "y": 90}
+  }
+}

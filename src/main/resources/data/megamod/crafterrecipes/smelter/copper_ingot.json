@@ -1,0 +1,8 @@
+{
+  "type": "recipe",
+  "crafter": "smelter",
+  "inputs": [
+    { "item": "minecraft:raw_copper", "count": 1 }
+  ],
+  "result": { "item": "minecraft:copper_ingot", "count": 1 }
+}

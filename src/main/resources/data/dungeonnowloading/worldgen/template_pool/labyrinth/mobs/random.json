@@ -1,0 +1,20 @@
+{
+  "fallback": "minecraft:empty",
+  "elements": [
+    { "weight": 100, "element": { "element_type": "minecraft:empty_pool_element" } },
+    { "weight": 20, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_dungeon_mob", "projection": "rigid" } },
+    { "weight": 15, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_undead_knight", "projection": "rigid" } },
+    { "weight": 15, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_rat", "projection": "rigid" } },
+    { "weight": 10, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_hollow", "projection": "rigid" } },
+    { "weight": 10, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_dungeon_slime", "projection": "rigid" } },
+    { "weight": 8, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_naga", "projection": "rigid" } },
+    { "weight": 5, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_grottol", "projection": "rigid" } },
+    { "weight": 5, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_lantern", "projection": "rigid" } },
+    { "weight": 5, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_foliaath", "projection": "rigid" } },
+    { "weight": 3, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_umvuthana", "projection": "rigid" } },
+    { "weight": 4, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_spawner_carrier", "projection": "rigid" } },
+    { "weight": 15, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_zombie", "projection": "rigid" } },
+    { "weight": 15, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_skeleton", "projection": "rigid" } },
+    { "weight": 10, "element": { "element_type": "minecraft:feature_pool_element", "feature": "megamod:dungeon_mob_spider", "projection": "rigid" } }
+  ]
+}

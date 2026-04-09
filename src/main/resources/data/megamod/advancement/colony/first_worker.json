@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/builder_placed",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_miner"
+    },
+    "title": {
+      "text": "Gainful Employment"
+    },
+    "description": {
+      "text": "Place any worker hut"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

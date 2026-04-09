@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/base/spear_28",
+  "textures": {
+    "layer0": "megamod:item/aeternium_spear"
+  }
+}

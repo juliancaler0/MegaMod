@@ -1,0 +1,22 @@
+{
+  "parent": "megamod:colony/research_complete",
+  "display": {
+    "icon": {
+      "id": "minecraft:enchanted_book"
+    },
+    "title": {
+      "text": "Magical Knowledge"
+    },
+    "description": {
+      "text": "Have an Enchanter create an enchanted book"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

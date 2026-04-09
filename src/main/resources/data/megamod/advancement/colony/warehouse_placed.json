@@ -1,0 +1,25 @@
+{
+  "parent": "megamod:colony/first_worker",
+  "display": {
+    "icon": {
+      "id": "megamod:hut_warehouse"
+    },
+    "title": {
+      "text": "Organized Storage"
+    },
+    "description": {
+      "text": "Place a Warehouse"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "placed": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "block": "megamod:hut_warehouse"
+      }
+    }
+  }
+}

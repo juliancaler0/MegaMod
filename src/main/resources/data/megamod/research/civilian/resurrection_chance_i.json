@@ -1,0 +1,34 @@
+{
+  "name": "Resurrection Chance I",
+  "branch": "civilian",
+  "tier": 2,
+  "researchTime": 6000,
+  "parents": [
+    "megamod:civilian/remembrance"
+  ],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "graveyard",
+      "level": 3
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:ghast_tear",
+      "count": 1
+    }
+  ],
+  "effects": [
+    {
+      "id": "resurrection_1",
+      "type": "MODIFIER",
+      "stat": "resurrection_chance",
+      "value": 1,
+      "description": "Resurrection +1%"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Shield Usage",
+  "branch": "combat",
+  "tier": 1,
+  "researchTime": 4800,
+  "parents": [],
+  "requirements": [
+    {
+      "type": "building",
+      "building": "barracks",
+      "level": 1
+    }
+  ],
+  "costs": [
+    {
+      "type": "item",
+      "item": "minecraft:shield",
+      "count": 4
+    }
+  ],
+  "effects": [
+    {
+      "id": "unlock_shields",
+      "type": "UNLOCK",
+      "stat": "guard_shields",
+      "value": 1,
+      "description": "Guards Use Shields"
+    }
+  ],
+  "exclusive": false,
+  "blocking": []
+}

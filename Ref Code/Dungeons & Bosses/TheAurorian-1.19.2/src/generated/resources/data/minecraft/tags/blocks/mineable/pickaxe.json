@@ -1,0 +1,25 @@
+{
+  "values": [
+    "theaurorian:aurorian_coal_ore",
+    "theaurorian:aurorian_cobblestone",
+    "theaurorian:aurorian_cobblestone_slab",
+    "theaurorian:aurorian_cobblestone_stairs",
+    "theaurorian:aurorian_cobblestone_wall",
+    "theaurorian:aurorian_deepslate",
+    "theaurorian:aurorian_deepslate_slab",
+    "theaurorian:aurorian_deepslate_stairs",
+    "theaurorian:aurorian_deepslate_wall",
+    "theaurorian:aurorian_furnace",
+    "theaurorian:aurorian_portal_frame",
+    "theaurorian:aurorian_stone",
+    "theaurorian:cerulean_ore",
+    "theaurorian:chimney",
+    "theaurorian:deepslate_cerulean_ore",
+    "theaurorian:deepslate_moonstone_ore",
+    "theaurorian:geode",
+    "theaurorian:moon_gem",
+    "theaurorian:moonlight_forge",
+    "theaurorian:moonstone_ore",
+    "theaurorian:scrapper"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GG",
+    "OO",
+    "OO"
+  ],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "O": "minecraft:oak_planks"
+  },
+  "result": { "id": "megamod:museum_door", "count": 1 }
+}
