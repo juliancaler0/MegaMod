@@ -47,9 +47,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes SWORD = new WeaponAttributes(
             0.0, false, "sword",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 120, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 120, 0.5, SwingDirection.SLASH_LEFT, null),
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 120, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 120, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, "one_handed_stab", null)
             }
     );
 
@@ -60,9 +60,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes CLAYMORE = new WeaponAttributes(
             0.25, true, "claymore",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.75, 150, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 60, 0.5, SwingDirection.STAB, null),
-                    new Attack(HitboxShape.VERTICAL_PLANE, 1.25, 150, 0.5, SwingDirection.SLASH_DOWN, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.75, 150, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 60, 0.5, SwingDirection.STAB, "two_handed_stab_right", null),
+                    new Attack(HitboxShape.VERTICAL_PLANE, 1.25, 150, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam", null)
             }
     );
 
@@ -73,8 +73,8 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes AXE = new WeaponAttributes(
             -0.25, false, "axe",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 90, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 90, 0.5, SwingDirection.SLASH_LEFT, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 90, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 90, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null)
             }
     );
 
@@ -85,8 +85,8 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes DOUBLE_AXE = new WeaponAttributes(
             0.0, true, "double_axe",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 180, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 360, 0.5, SwingDirection.SPIN, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 180, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 360, 0.5, SwingDirection.SPIN, "two_handed_spin", null)
             }
     );
 
@@ -97,9 +97,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes DAGGER = new WeaponAttributes(
             -0.5, false, "dagger",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_LEFT, null),
-                    new Attack(HitboxShape.FORWARD_BOX, 1.4, 80, 0.5, SwingDirection.STAB, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_switch_blade_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_switch_blade_left", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.4, 80, 0.5, SwingDirection.STAB, "one_handed_stab", null)
             }
     );
 
@@ -110,9 +110,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes MACE = new WeaponAttributes(
             0.0, false, "mace",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, null),
-                    new Attack(HitboxShape.VERTICAL_PLANE, 1.4, 90, 0.5, SwingDirection.SLASH_DOWN, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_swipe_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null),
+                    new Attack(HitboxShape.VERTICAL_PLANE, 1.4, 90, 0.5, SwingDirection.SLASH_DOWN, "one_handed_slam", null)
             }
     );
 
@@ -123,7 +123,7 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes GREAT_HAMMER = new WeaponAttributes(
             0.0, true, "great_hammer",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.SLASH_DOWN, null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam_heavy", null)
             }
     );
 
@@ -134,7 +134,7 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes SPEAR = new WeaponAttributes(
             1.0, true, "spear",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "weapon_thrust_full", null)
             }
     );
 
@@ -145,9 +145,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes GLAIVE = new WeaponAttributes(
             0.5, true, "glaive",
             new Attack[]{
-                    new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.4, 180, 0.5, SwingDirection.SLASH_RIGHT, null)
+                    new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_vertical_right", null),
+                    new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, "two_handed_slash_vertical_left", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.4, 180, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_horizontal_right", null)
             }
     );
 
@@ -158,8 +158,8 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes SICKLE = new WeaponAttributes(
             -0.25, false, "sickle",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_LEFT, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_switch_blade_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_switch_blade_left", null)
             }
     );
 
@@ -170,7 +170,7 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes WAND = new WeaponAttributes(
             -0.5, false, "wand",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "one_handed_staff_forward", null)
             }
     );
 
@@ -181,9 +181,9 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes STAFF = new WeaponAttributes(
             0.25, true, "staff",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 160, 0.5, SwingDirection.SLASH_RIGHT, null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 160, 0.5, SwingDirection.SLASH_LEFT, null),
-                    new Attack(HitboxShape.VERTICAL_PLANE, 1.2, 120, 0.5, SwingDirection.SLASH_DOWN, null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 160, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 1.0, 160, 0.5, SwingDirection.SLASH_LEFT, "two_handed_slash_horizontal_left", null),
+                    new Attack(HitboxShape.VERTICAL_PLANE, 1.2, 120, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam", null)
             }
     );
 
@@ -193,7 +193,7 @@ public final class WeaponAttributeRegistry {
     private static final WeaponAttributes TRIDENT = new WeaponAttributes(
             0.25, false, "spear",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "one_handed_stab", null)
             }
     );
 

@@ -35,7 +35,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.LevelRenderState;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -54,7 +54,7 @@ public class LevelRendererMixin {
     }
 
     @Inject(method = "extractVisibleEntities", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
-    private void setRenderStateToFirstPerson(Camera camera, Frustum frustum, DeltaTracker deltaTracker, CameraRenderState renderState, CallbackInfo ci, @Local Entity entity, @Local EntityRenderState entityRenderState, @Share("firstPerson") LocalBooleanRef isFirstPerson) {
+    private void setRenderStateToFirstPerson(Camera camera, Frustum frustum, DeltaTracker deltaTracker, LevelRenderState renderState, CallbackInfo ci, @Local Entity entity, @Local EntityRenderState entityRenderState, @Share("firstPerson") LocalBooleanRef isFirstPerson) {
         if (entity == camera.entity() && isFirstPerson.get()) {
             ((IAvatarAnimationState) entityRenderState).playerAnimLib$setFirstPersonPass(true);
             entityRenderState.shadowPieces.clear();

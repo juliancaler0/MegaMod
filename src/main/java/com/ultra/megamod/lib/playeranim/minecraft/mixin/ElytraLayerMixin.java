@@ -6,21 +6,19 @@ import com.ultra.megamod.lib.playeranim.minecraft.animation.AvatarAnimManager;
 import com.ultra.megamod.lib.playeranim.minecraft.util.RenderUtil;
 import com.ultra.megamod.lib.playeranim.core.bones.PlayerAnimBone;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.player.PlayerModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.layers.WingsLayer;
-import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WingsLayer.class)
 public abstract class ElytraLayerMixin<S extends HumanoidRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
-    @Shadow private RenderLayerParent<S, M> renderer;
 
     private ElytraLayerMixin(RenderLayerParent<S, M> renderLayerParent) {
         super(renderLayerParent);
@@ -30,14 +28,17 @@ public abstract class ElytraLayerMixin<S extends HumanoidRenderState, M extends 
     private void inject(PoseStack poseStack, SubmitNodeCollector submitNodeCollector, int i, S humanoidRenderState, float f, float g, CallbackInfo ci) {
         if (humanoidRenderState instanceof IAvatarAnimationState animationState) {
             AvatarAnimManager emote = animationState.playerAnimLib$getAnimManager();
-            if (emote != null && emote.isActive() && this.renderer instanceof AvatarRenderer<?> playerRenderer) {
-                playerRenderer.getModel().body.translateAndRotate(poseStack);
-                poseStack.translate(0, 0, 0.125);
-                PlayerAnimBone bone = emote.get3DTransform("elytra");
-                bone.applyOtherBone(emote.get3DTransform("cape"));
-                bone.position.y *= -1;
-                RenderUtil.translateMatrixToBone(poseStack, bone);
-                poseStack.translate(0, 0, -0.125);
+            if (emote != null && emote.isActive()) {
+                var model = this.getParentModel();
+                if (model instanceof PlayerModel playerModel) {
+                    playerModel.body.translateAndRotate(poseStack);
+                    poseStack.translate(0, 0, 0.125);
+                    PlayerAnimBone bone = emote.get3DTransform("elytra");
+                    bone.applyOtherBone(emote.get3DTransform("cape"));
+                    bone.position.y *= -1;
+                    RenderUtil.translateMatrixToBone(poseStack, bone);
+                    poseStack.translate(0, 0, -0.125);
+                }
             }
         }
     }

@@ -120,24 +120,29 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
             return;
         }
 
-        com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Playing animation: {} | length={} | isActive={}",
-                name, length, megamod$attackAnimation.isActive());
+        // Calculate speed using endTick (actual hit point), NOT animation.length() (includes recovery)
+        // This matches BetterCombat's original: speed = endTick / weaponCooldown
+        var endTick = animation.data().<Float>get(
+                com.ultra.megamod.lib.playeranim.core.animation.ExtraAnimationData.END_TICK_KEY
+        ).orElse(animation.length());
+        float speed = endTick / length;
 
-        // Calculate speed: scale animation to match weapon cooldown
-        float animLength = animation.length();
-        float speed = animLength / length;
-
-        // Calculate upswing gear (faster during upswing phase)
-        float upswingTicks = length * upswing;
-        float trueUpswingRatio = upswing > 0 ? upswing : 0.5f;
+        // Upswing speed: original uses upswingMultiplier config (default 0.5)
+        float upswingMultiplier = Math.clamp(BetterCombatConfig.upswing_multiplier, 0.2f, 1.0f);
+        float trueUpswingRatio = upswing / upswingMultiplier;
         float upswingSpeed = speed / trueUpswingRatio;
 
-        // Downswing speed (after the hit)
-        float downswingSpeed = speed * 0.8f;
+        // Downswing speed: original BetterCombat lerp formula
+        float downswingSpeed = (float) (speed *
+                net.minecraft.util.Mth.lerp(
+                        Math.max(upswingMultiplier - 0.5, 0) / 0.5,
+                        (1F - upswing),
+                        upswing / (1F - upswing)));
 
+        // Gear shifts: upswingSpeed initially, then downswingSpeed, then baseSpeed
         List<TransmissionSpeedModifier.Gear> gears = List.of(
-                new TransmissionSpeedModifier.Gear(0, upswingSpeed),
-                new TransmissionSpeedModifier.Gear(upswingTicks, downswingSpeed)
+                new TransmissionSpeedModifier.Gear(length * upswing, downswingSpeed),
+                new TransmissionSpeedModifier.Gear(length, speed)
         );
 
         // Mirror for off-hand / left-handed
@@ -156,7 +161,7 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
             fpConfig = FirstPersonHelper.mirrored(fpConfig);
         }
 
-        megamod$attackAnimation.playAnimation(name, mirror, speed, gears, fpConfig);
+        megamod$attackAnimation.playAnimation(name, mirror, upswingSpeed, gears, fpConfig);
     }
 
     @Override

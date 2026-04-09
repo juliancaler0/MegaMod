@@ -138,11 +138,17 @@ public class MegaModClient {
         // Particle provider registration
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleProviders::registerParticleProviders);
 
-        // Register BlockUI XML loader as a client reload listener so gui XMLs are cached
+        // Initialize PlayerAnimationLib (registers factory, sound keyframe handler)
+        com.ultra.megamod.lib.playeranim.minecraft.PlayerAnimLibMod.init();
+
+        // Register BlockUI XML loader and PlayerAnimResources as client reload listeners
         modEventBus.addListener((net.neoforged.neoforge.client.event.AddClientReloadListenersEvent event) -> {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "blockui_xml_loader"),
                     com.ultra.megamod.feature.citizen.blockui.Loader.INSTANCE);
+            event.addListener(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "player_animations"),
+                    new com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources());
         });
 
         // Renderer and pipeline registrations
