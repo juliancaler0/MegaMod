@@ -1892,5 +1892,8 @@
   "enchantment.megamod.combatroll.multi_roll": "Multi-Roll",
   "attribute.name.megamod.combatroll.distance": "Roll Distance",
   "attribute.name.megamod.combatroll.count": "Extra Roll",
-  "attribute.name.megamod.combatroll.recharge": "Roll Recharge"
+  "attribute.name.megamod.combatroll.recharge": "Roll Recharge",
+
+  "key.megamod.etf_config": "Open ETF Config",
+  "config.entity_texture_features.title": "ETF - Entity Texture Features"
 }

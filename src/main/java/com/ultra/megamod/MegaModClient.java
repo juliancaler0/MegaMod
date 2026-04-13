@@ -171,6 +171,11 @@ public class MegaModClient {
             etfInit.enqueueWork(() -> com.ultra.megamod.lib.etf.features.ETFManager.getInstance());
         });
 
+        // ETF Phase C: config keybind registration + emissive feature layer on players
+        modEventBus.addListener(com.ultra.megamod.lib.etf.config.screen.ETFConfigKeybind::onRegisterKeyMappings);
+        modEventBus.addListener((net.neoforged.neoforge.client.event.EntityRenderersEvent.AddLayers e) ->
+                com.ultra.megamod.lib.etf.features.ETFEmissiveFeatureLayer.onAddLayers(e));
+
         // Initialize Archers client (armor renderers, effect renderers, tooltips)
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event2) -> {
             event2.enqueueWork(() -> com.ultra.megamod.feature.combat.archers.client.ArchersClientMod.init());
