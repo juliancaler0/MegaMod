@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinEntity",
-    "MixinBlockEntity"
+    "MixinBlockEntity",
+    "MixinIdentifier"
   ],
   "client": [
     "MixinEntityRenderState",
