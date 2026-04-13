@@ -1,0 +1,57 @@
+package com.ultra.megamod.lib.etf.features.property_reading.properties.generic_properties;
+
+import com.ultra.megamod.lib.etf.features.property_reading.properties.RandomProperty;
+import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
+import com.ultra.megamod.lib.etf.utils.ETFUtils2;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Properties;
+
+/**
+ * Base class for boolean-valued predicates.
+ * <p>
+ * Ported 1:1 from Entity_Texture_Features (traben).
+ */
+public abstract class BooleanProperty extends RandomProperty {
+
+    private final boolean BOOLEAN;
+
+    protected BooleanProperty(Boolean bool) throws RandomPropertyException {
+        if (bool == null) throw new RandomPropertyException(getPropertyId() + " property was broken");
+        BOOLEAN = bool;
+    }
+
+    @Nullable
+    public static Boolean getGenericBooleanThatCanNull(Properties props, int num, String... propertyNames) {
+        if (propertyNames.length == 0)
+            throw new IllegalArgumentException("BooleanProperty, empty property names given");
+        for (String propertyName : propertyNames) {
+            if (props.containsKey(propertyName + "." + num)) {
+                String input = props.getProperty(propertyName + "." + num).trim();
+                if ("true".equals(input) || "false".equals(input)) {
+                    return "true".equals(input);
+                } else {
+                    ETFUtils2.logWarn("properties files number error in " + propertyName + " category");
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean testEntityInternal(ETFEntityRenderState entity) {
+        Boolean entityBoolean = getValueFromEntity(entity);
+        if (entityBoolean != null) {
+            return BOOLEAN == entityBoolean;
+        }
+        return false;
+    }
+
+    @Nullable
+    protected abstract Boolean getValueFromEntity(ETFEntityRenderState entity);
+
+    @Override
+    protected String getPrintableRuleInfo() {
+        return BOOLEAN ? "true" : "false";
+    }
+}

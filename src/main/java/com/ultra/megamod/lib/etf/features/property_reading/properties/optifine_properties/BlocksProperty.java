@@ -1,0 +1,171 @@
+package com.ultra.megamod.lib.etf.features.property_reading.properties.optifine_properties;
+
+import com.ultra.megamod.lib.etf.ETFApi;
+import com.ultra.megamod.lib.etf.features.property_reading.properties.generic_properties.StringArrayOrRegexProperty;
+import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
+import com.ultra.megamod.lib.etf.utils.ETFUtils2;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.Property;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
+import java.util.stream.Collectors;
+
+/**
+ * {@code blocks} / {@code block} predicate with optional block-state matching
+ * (e.g. {@code minecraft:oak_log:axis=x}). Ported 1:1 from Entity_Texture_Features (traben).
+ */
+public class BlocksProperty extends StringArrayOrRegexProperty {
+    private static final java.util.function.Function<Map.Entry<Property<?>, Comparable<?>>, String> PROPERTY_MAP_PRINTER = new java.util.function.Function<>() {
+        public String apply(@Nullable Map.Entry<Property<?>, Comparable<?>> entry) {
+            if (entry == null) {
+                return "<NULL>";
+            } else {
+                Property<?> property = entry.getKey();
+                String var10000 = property.getName();
+                return var10000 + "=" + this.nameValue(property, entry.getValue());
+            }
+        }
+
+        private <T extends Comparable<T>> String nameValue(Property<T> property, Comparable<?> value) {
+            //noinspection unchecked
+            return property.getName((T) value);
+        }
+    };
+
+    protected final java.util.function.Function<BlockState, Boolean> blockStateMatcher;
+    protected final boolean botherWithDeepStateCheck;
+
+    protected BlocksProperty(Properties properties, int propertyNum, String[] ids) throws RandomPropertyException {
+        super(readPropertiesOrThrow(properties, propertyNum, ids).replaceAll("(?<=(^| ))minecraft:", ""));
+        if (usesRegex) {
+            blockStateMatcher = (blockState) -> {
+                if (MATCHER.testString(getFromStateBlockNameOnly(blockState))) {
+                    return true;
+                } else {
+                    return MATCHER.testString(getFromStateBlockNameWithStateData(blockState));
+                }
+            };
+            botherWithDeepStateCheck = false;
+        } else {
+            blockStateMatcher = this::testBlocks;
+            boolean hasStateNeeds = false;
+            for (String s : ARRAY) {
+                if (s.contains(":")) {
+                    hasStateNeeds = true;
+                    break;
+                }
+            }
+            botherWithDeepStateCheck = hasStateNeeds;
+        }
+    }
+
+    public static BlocksProperty getPropertyOrNull(Properties properties, int propertyNum) {
+        try {
+            return new BlocksProperty(properties, propertyNum, new String[]{"blocks", "block"});
+        } catch (RandomPropertyException e) {
+            return null;
+        }
+    }
+
+    protected String getFromStateBlockNameOnly(BlockState state) {
+        String block = BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString().replaceFirst("minecraft:", "");
+        if (doPrint) ETFUtils2.logMessage("Blocks property print (no blockstate data): [" + block + "]");
+        return block;
+    }
+
+    private String getFromStateBlockNameWithStateData(BlockState state) {
+        String block = getFromStateBlockNameOnly(state);
+        if (!state.getValues().isEmpty())
+            block = block + ':' + state.getValues().entrySet().stream().map(PROPERTY_MAP_PRINTER).collect(Collectors.joining(":"));
+
+        if (doPrint) ETFUtils2.logMessage("Blocks property print (with blockstate data): [" + block + "]");
+        return block;
+    }
+
+    protected boolean testBlocks(BlockState blockState) {
+        if (MATCHER.testString(getFromStateBlockNameOnly(blockState))) {
+            return true;
+        } else if (botherWithDeepStateCheck) {
+            String fullBlockState = getFromStateBlockNameWithStateData(blockState);
+            for (String string : ARRAY) {
+                if (string.contains(":")) {
+                    boolean matchesAllStateDataNeeded = true;
+                    for (String split : string.split(":")) {
+                        if (!fullBlockState.contains(split)) {
+                            matchesAllStateDataNeeded = false;
+                            break;
+                        }
+                    }
+                    if (matchesAllStateDataNeeded) return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean shouldForceLowerCaseCheck() {
+        return true;
+    }
+
+    @Nullable
+    protected BlockState[] getTestingBlocks(ETFEntityRenderState entity) {
+        if (entity.uuid().getLeastSignificantBits() == ETFApi.ETF_SPAWNER_MARKER) {
+            return new BlockState[]{Blocks.SPAWNER.defaultBlockState()};
+        } else if (entity instanceof BlockEntity blockEntity) {
+            if (blockEntity.getLevel() == null) {
+                return new BlockState[]{blockEntity.getBlockState()};
+            } else {
+                return new BlockState[]{blockEntity.getBlockState(), blockEntity.getLevel().getBlockState(blockEntity.getBlockPos().below())};
+            }
+        } else {
+            if (entity.world() == null || entity.blockPos() == null) {
+                return null;
+            }
+            Level world = entity.world();
+            BlockPos pos = entity.blockPos();
+            return new BlockState[]{world.getBlockState(pos), world.getBlockState(pos.below())};
+        }
+    }
+
+    @Override
+    public boolean testEntityInternal(ETFEntityRenderState entity) {
+        BlockState[] entityBlocks = getTestingBlocks(entity);
+        if (entityBlocks == null) {
+            if (doPrint) ETFUtils2.logMessage("Blocks property print result: [false], because null");
+            return false;
+        }
+
+        if (doPrint) ETFUtils2.logMessage("Blocks property print, found blocks: [" + Arrays.toString(entityBlocks) + "]");
+
+        for (BlockState entityBlock : entityBlocks) {
+            if (blockStateMatcher.apply(entityBlock)) {
+                if (doPrint) ETFUtils2.logMessage("Blocks property print result: [true]");
+                return true;
+            }
+        }
+        if (doPrint) ETFUtils2.logMessage("Blocks property print result: [false]");
+        return false;
+    }
+
+
+    @Override
+    public @Nullable String getValueFromEntity(ETFEntityRenderState etfEntity) {
+        return null;
+    }
+
+
+    @Override
+    public @NotNull String[] getPropertyIds() {
+        return new String[]{"blocks", "block"};
+    }
+}
