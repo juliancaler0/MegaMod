@@ -201,7 +201,7 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
         megamod$lastAttacked = 0;
         megamod$upswingStack = player.getMainHandItem();
         float attackCooldownTicks = PlayerAttackHelper.getAttackCooldownTicksCapped(player);
-        this.megamod$comboReset = Math.round(attackCooldownTicks * BetterCombatConfig.combo_reset_rate);
+        this.megamod$comboReset = Math.round(attackCooldownTicks * com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.comboResetRate(player));
         int upswingTicks = Math.max(Math.round(attackCooldownTicks * upswingRate), 1);
         this.megamod$ongoingSwing = new WeaponSwing(attackHand, megamod$currentTime(), upswingTicks, attackCooldownTicks);
         this.megamod$lastSwingDuration = attackCooldownTicks;

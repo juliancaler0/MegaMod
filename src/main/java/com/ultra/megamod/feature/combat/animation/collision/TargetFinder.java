@@ -87,7 +87,7 @@ public class TargetFinder {
 
     public static List<Entity> getInitialTargets(Player player, @Nullable Entity cursorTarget, double attackRange) {
         AABB box = player.getBoundingBox().inflate(
-                attackRange * BetterCombatConfig.target_search_range_multiplier + 1.0);
+                attackRange * com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.targetSearchRangeMultiplier(player) + 1.0);
         List<Entity> entities = player.level()
                 .getEntities(player, box, entity -> !entity.isSpectator() && entity.isPickable())
                 .stream()

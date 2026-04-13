@@ -31,7 +31,9 @@ public abstract class ClientPlayerEntityMixin implements ItemStackViewerPlayer {
         if (!isControlledCamera()) {
             return;
         }
-        float multiplier = (float) Math.min(Math.max(BetterCombatConfig.movement_speed_while_attacking, 0.0), 1.0);
+        float multiplier = (float) Math.min(Math.max(
+                com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.movementSpeedWhileAttacking(clientPlayer),
+                0.0), 1.0);
         var client = (MinecraftClient_BetterCombat) Minecraft.getInstance();
         var attack = client.getCurrentAttack();
         if (attack != null) {

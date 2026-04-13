@@ -21,8 +21,8 @@ public class PlayerAttackHelper {
     public static float getDualWieldingAttackDamageMultiplier(Player player, AttackHand hand) {
         return isDualWielding(player)
                 ? (hand.isOffHand()
-                    ? BetterCombatConfig.dual_wielding_off_hand_damage_multiplier
-                    : BetterCombatConfig.dual_wielding_main_hand_damage_multiplier)
+                    ? com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.dualWieldingOffHandDamageMultiplier(player)
+                    : com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.dualWieldingMainHandDamageMultiplier(player))
                 : 1;
     }
 
@@ -47,17 +47,31 @@ public class PlayerAttackHelper {
     }
 
     public static float getAttackCooldownTicksCapped(Player player) {
-        float base = Math.max(player.getCurrentItemAttackStrengthDelay(), BetterCombatConfig.attack_interval_cap);
-        // Apply COMBO_SPEED as a haste multiplier so player buffs/jewelry speed up swings.
-        // COMBO_SPEED is expressed as percent (e.g. 25.0 = +25% faster).
+        int intervalCap = com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.attackIntervalCap(player);
+        float base = Math.max(player.getCurrentItemAttackStrengthDelay(), intervalCap);
+        // COMBO_SPEED attribute — gear/jewelry/prestige haste (applies to everyone)
         double comboSpeed = player.getAttributeValue(
                 com.ultra.megamod.feature.attributes.MegaModAttributes.COMBO_SPEED);
         if (comboSpeed > 0) {
             float hasteFactor = 1.0f + (float) (comboSpeed / 100.0);
             base = base / hasteFactor;
         }
-        // Clamp to the interval cap again so haste can't push below the minimum
-        return Math.max(base, BetterCombatConfig.attack_interval_cap);
+        // Admin-only attack speed multiplier — lets admins tune their own swing speed
+        // via the combat tab slider without affecting regular players.
+        if (player instanceof net.minecraft.server.level.ServerPlayer sp
+                && com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(sp)) {
+            float adminMult = BetterCombatConfig.admin_attack_speed_multiplier;
+            if (adminMult > 0 && adminMult != 1.0f) {
+                base = base / adminMult;
+            }
+        } else if (!BetterCombatConfig.admin_only_combat_effects) {
+            // If admin-only scoping is OFF, apply the admin speed multiplier globally.
+            float adminMult = BetterCombatConfig.admin_attack_speed_multiplier;
+            if (adminMult > 0 && adminMult != 1.0f) {
+                base = base / adminMult;
+            }
+        }
+        return Math.max(base, intervalCap);
     }
 
     @Nullable

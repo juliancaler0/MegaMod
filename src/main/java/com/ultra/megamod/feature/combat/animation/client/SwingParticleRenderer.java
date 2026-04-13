@@ -49,7 +49,7 @@ public class SwingParticleRenderer {
         // Smooth movement speed reduction during attacks (ported from BC's ClientPlayerEntityMixin)
         var bcClient = (com.ultra.megamod.feature.combat.animation.api.MinecraftClient_BetterCombat) mc;
         float speedMult = (float) Math.min(Math.max(
-                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.movement_speed_while_attacking, 0), 1);
+                com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.movementSpeedWhileAttacking(mc.player), 0), 1);
         // Note: Our Attack record doesn't have movementSpeedMultiplier yet
         // so we skip per-attack multiplier for now
         if (speedMult < 1.0f && !mc.player.isPassenger()) {

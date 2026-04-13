@@ -56,5 +56,12 @@ public class BetterCombatNetwork {
                 SpellAnimationPayload.STREAM_CODEC,
                 SpellAnimationPayload::handleClient
         );
+
+        // ── Ability trigger HUD popup (manual cast or passive proc) ──
+        registrar.playToClient(
+                com.ultra.megamod.feature.hud.network.AbilityTriggerPayload.TYPE,
+                com.ultra.megamod.feature.hud.network.AbilityTriggerPayload.STREAM_CODEC,
+                com.ultra.megamod.feature.hud.network.AbilityTriggerPayload::handleOnClient
+        );
     }
 }

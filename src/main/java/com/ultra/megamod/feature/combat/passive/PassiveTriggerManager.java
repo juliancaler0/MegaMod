@@ -84,14 +84,48 @@ public class PassiveTriggerManager {
         String cdKey = player.getUUID() + ":" + trigger.effectId();
         Long expiry = cooldowns.get(cdKey);
         if (expiry != null && level.getGameTime() < expiry) return;
-        // Apply global admin-tunable multiplier so the combat tab slider can scale
-        // all passive fire rates at once. 0 disables, 1 = vanilla, 5 = 5x.
-        float procScale = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.passive_proc_multiplier;
-        float effectiveChance = Math.min(1.0f, trigger.chance() * procScale);
+
+        var cfg = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.class;
+        boolean isAdmin = com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(player);
+        boolean adminScoped = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_only_combat_effects;
+
+        float effectiveChance;
+        if (isAdmin && com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_proc_override_chance >= 0.0f) {
+            // Direct override — admin slider can force any % (including 100%).
+            effectiveChance = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_proc_override_chance;
+        } else {
+            float procScale = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.passive_proc_multiplier;
+            // If adminScoped is on and player isn't admin, ignore the multiplier so regular players stay at base rates.
+            if (adminScoped && !isAdmin) procScale = 1.0f;
+            effectiveChance = Math.min(1.0f, trigger.chance() * procScale);
+        }
+
         if (player.getRandom().nextFloat() > effectiveChance) return;
         cooldowns.put(cdKey, level.getGameTime() + trigger.cooldownTicks());
         broadcastPassiveAnimation(player, trigger.effectId());
+        broadcastAbilityPopup(player, trigger.effectId(), /*passive=*/true);
         executeEffect(player, target, trigger.effectId(), level);
+    }
+
+    /** Pushes an "Ability Triggered: X" HUD popup to the acting player. */
+    private static void broadcastAbilityPopup(ServerPlayer player, String effectId, boolean passive) {
+        String label = prettify(effectId);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                player,
+                new com.ultra.megamod.feature.hud.network.AbilityTriggerPayload(label, passive ? 1 : 0));
+    }
+
+    private static String prettify(String id) {
+        if (id == null || id.isEmpty()) return "";
+        String[] parts = id.split("_");
+        StringBuilder sb = new StringBuilder();
+        for (String p : parts) {
+            if (p.isEmpty()) continue;
+            if (sb.length() > 0) sb.append(' ');
+            sb.append(Character.toUpperCase(p.charAt(0)));
+            if (p.length() > 1) sb.append(p.substring(1));
+        }
+        return sb.toString();
     }
 
     /**

@@ -81,6 +81,11 @@ public class MapChunkTileManager {
     public void updateCurrentTile() {
         if (mc.level == null || mc.player == null) return;
 
+        // Re-check world/dimension identity every tick — the map screen can
+        // stay open across a dimension switch, and waiting for the 2-second
+        // background tick lets stale render tasks write to the wrong world.
+        initializeIfNeeded(mc.level);
+
         // Evict old tiles here (during tick), NOT during getOrCreateTile().
         // Evicting during the render loop causes "Sampler0 has been closed" crashes
         // because GuiRenderer batch-executes blits after the textures are freed.
@@ -426,8 +431,13 @@ public class MapChunkTileManager {
         loadedTiles.clear();
         lastUpdateTimes.clear();
         mergedFromDisk.clear();
+        dirtyTiles.clear();
         dirtyChunks.clear();
         uploadedToServer.clear();
+        // Drop any render tasks queued for the previous world/dimension —
+        // otherwise they execute against the new ClientLevel and write
+        // cross-contaminated pixels into this world's tile cache.
+        MapAsyncRenderer.getInstance().resetQueue();
         SharedMapTileReceiver.reset();
         currentTileX = Integer.MAX_VALUE;
         currentTileZ = Integer.MAX_VALUE;

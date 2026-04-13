@@ -49,6 +49,12 @@ public class StructureChestLootModifier extends LootModifier {
             generatedLoot.add(relic);
         }
 
+        // Jewelry is a separate independent roll — a chest can drop both a relic and jewelry.
+        ItemStack jewelry = WorldLootIntegration.tryGenerateStructureChestJewelry(lootTableId, random, luck);
+        if (jewelry != null) {
+            generatedLoot.add(jewelry);
+        }
+
         return generatedLoot;
     }
 

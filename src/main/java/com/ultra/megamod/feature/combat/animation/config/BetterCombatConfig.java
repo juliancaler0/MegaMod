@@ -48,6 +48,9 @@ public class BetterCombatConfig {
     private final ModConfigSpec.DoubleValue dualWieldMainDmgCfg;
     private final ModConfigSpec.DoubleValue dualWieldOffDmgCfg;
     private final ModConfigSpec.DoubleValue passiveProcMultCfg;
+    private final ModConfigSpec.BooleanValue adminOnlyEffectsCfg;
+    private final ModConfigSpec.DoubleValue adminAttackSpeedMultCfg;
+    private final ModConfigSpec.DoubleValue adminProcOverrideCfg;
 
     // ═══════════════════════════════════════════
     // Client Config
@@ -86,13 +89,19 @@ public class BetterCombatConfig {
         dualWieldSpeedMultCfg = builder.defineInRange("dual_wielding_attack_speed_multiplier", 1.2, 0.5, 2.0);
         dualWieldMainDmgCfg = builder.defineInRange("dual_wielding_main_hand_damage_multiplier", 1.0, 0.1, 2.0);
         dualWieldOffDmgCfg = builder.defineInRange("dual_wielding_off_hand_damage_multiplier", 1.0, 0.1, 2.0);
-        passiveProcMultCfg = builder.comment("Global multiplier applied to weapon passive trigger chance (0.0 = disabled, 1.0 = default, 5.0 = 5x)")
-                .defineInRange("passive_proc_multiplier", 1.0, 0.0, 5.0);
+        passiveProcMultCfg = builder.comment("Multiplier applied to weapon passive trigger chance (0.0 = disabled, 1.0 = default, 10.0 = 10x)")
+                .defineInRange("passive_proc_multiplier", 1.0, 0.0, 10.0);
+        adminOnlyEffectsCfg = builder.comment("If true, proc multiplier + admin attack speed only affect admin players (others get vanilla rates)")
+                .define("admin_only_combat_effects", true);
+        adminAttackSpeedMultCfg = builder.comment("Extra attack-speed multiplier applied only to admin players (1.0 = normal, 2.0 = twice as fast)")
+                .defineInRange("admin_attack_speed_multiplier", 1.0, 0.1, 5.0);
+        adminProcOverrideCfg = builder.comment("If > 0, force passive proc chance for admins to this value (0.0 = 0%, 1.0 = always). Set to -1 to disable the override.")
+                .defineInRange("admin_proc_override_chance", -1.0, -1.0, 1.0);
         builder.pop();
 
         builder.push("client");
         holdToAttackCfg = builder.define("hold_to_attack", true);
-        miningWithWeaponsCfg = builder.define("mining_with_weapons", true);
+        miningWithWeaponsCfg = builder.define("mining_with_weapons", false);
         swingThruGrassCfg = builder.define("swing_thru_grass", true);
         swingThruGrassSmartCfg = builder.define("swing_thru_grass_smart", true);
         attackInsteadMineCfg = builder.define("attack_instead_mine_when_enemies_close", true);
@@ -131,6 +140,9 @@ public class BetterCombatConfig {
     public static float dual_wielding_main_hand_damage_multiplier;
     public static float dual_wielding_off_hand_damage_multiplier;
     public static float passive_proc_multiplier;
+    public static boolean admin_only_combat_effects;
+    public static float admin_attack_speed_multiplier;
+    public static float admin_proc_override_chance;
 
     // Client
     public static boolean isHoldToAttackEnabled;
@@ -172,6 +184,9 @@ public class BetterCombatConfig {
         dual_wielding_main_hand_damage_multiplier = INSTANCE.dualWieldMainDmgCfg.get().floatValue();
         dual_wielding_off_hand_damage_multiplier = INSTANCE.dualWieldOffDmgCfg.get().floatValue();
         passive_proc_multiplier = INSTANCE.passiveProcMultCfg.get().floatValue();
+        admin_only_combat_effects = INSTANCE.adminOnlyEffectsCfg.get();
+        admin_attack_speed_multiplier = INSTANCE.adminAttackSpeedMultCfg.get().floatValue();
+        admin_proc_override_chance = INSTANCE.adminProcOverrideCfg.get().floatValue();
 
         isHoldToAttackEnabled = INSTANCE.holdToAttackCfg.get();
         isMiningWithWeaponsEnabled = INSTANCE.miningWithWeaponsCfg.get();
@@ -213,6 +228,9 @@ public class BetterCombatConfig {
             case "dual_wielding_main_hand_damage_multiplier" -> INSTANCE.dualWieldMainDmgCfg.set(((Number) value).doubleValue());
             case "dual_wielding_off_hand_damage_multiplier" -> INSTANCE.dualWieldOffDmgCfg.set(((Number) value).doubleValue());
             case "passive_proc_multiplier" -> INSTANCE.passiveProcMultCfg.set(((Number) value).doubleValue());
+            case "admin_only_combat_effects" -> INSTANCE.adminOnlyEffectsCfg.set((Boolean) value);
+            case "admin_attack_speed_multiplier" -> INSTANCE.adminAttackSpeedMultCfg.set(((Number) value).doubleValue());
+            case "admin_proc_override_chance" -> INSTANCE.adminProcOverrideCfg.set(((Number) value).doubleValue());
         }
         syncFromSpec();
     }

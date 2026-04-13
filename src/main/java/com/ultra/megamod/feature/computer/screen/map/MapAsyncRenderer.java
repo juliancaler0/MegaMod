@@ -123,6 +123,17 @@ public class MapAsyncRenderer {
     }
 
     /**
+     * Clear pending render work without destroying the singleton.
+     * Call when the tile manager detects a world/dimension switch — otherwise
+     * queued tasks from the old world execute against the new ClientLevel and
+     * write cross-contaminated pixels into the new world's tile cache.
+     */
+    public void resetQueue() {
+        queue.clear();
+        queuedChunks.clear();
+    }
+
+    /**
      * Clear all pending work.
      */
     public void close() {

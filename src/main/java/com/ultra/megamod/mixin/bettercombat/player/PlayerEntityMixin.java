@@ -86,7 +86,7 @@ public abstract class PlayerEntityMixin implements PlayerAttackProperties, Entit
         if (newState != currentState) {
             if (newState) {
                 this.bettercombat$dualWieldingAttributeMap = HashMultimap.create();
-                double multiplier = BetterCombatConfig.dual_wielding_attack_speed_multiplier - 1;
+                double multiplier = com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.dualWieldingAttackSpeedMultiplier(player) - 1;
                 bettercombat$dualWieldingAttributeMap.put(
                         Attributes.ATTACK_SPEED,
                         new AttributeModifier(

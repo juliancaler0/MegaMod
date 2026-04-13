@@ -77,9 +77,8 @@ public class BetterCombatHandler {
 
             // Calculate attack range
             double attackRange = com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper.getAttackRange(player);
-            double rangeSquared = attackRange * attackRange
-                    * com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.target_search_range_multiplier
-                    * com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.target_search_range_multiplier;
+            float tsrm = com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.targetSearchRangeMultiplier(player);
+            double rangeSquared = attackRange * attackRange * tsrm * tsrm;
 
             // Process entity IDs from client
             // Wrap in attribute swap for off-hand attacks (dual-wielding)

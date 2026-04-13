@@ -267,6 +267,9 @@ public class CombatVillagerRegistry {
         event.getTrades().get(4).add(sellItem(JewelryRegistry.SAPPHIRE_RING.get(), 1, 35, 5, 15));
         event.getTrades().get(4).add(sellItem(JewelryRegistry.TANZANITE_RING.get(), 1, 35, 5, 13));
 
+        // Level 4: Gem rings (continued) — diamond ring available mid-tier
+        event.getTrades().get(4).add(sellItem(JewelryRegistry.DIAMOND_RING.get(), 1, 30, 5, 15));
+
         // Level 5: Gem necklaces
         event.getTrades().get(5).add(sellItem(JewelryRegistry.RUBY_NECKLACE.get(), 1, 45, 3, 15));
         event.getTrades().get(5).add(sellItem(JewelryRegistry.TOPAZ_NECKLACE.get(), 1, 45, 3, 15));
@@ -274,6 +277,15 @@ public class CombatVillagerRegistry {
         event.getTrades().get(5).add(sellItem(JewelryRegistry.JADE_NECKLACE.get(), 1, 45, 3, 15));
         event.getTrades().get(5).add(sellItem(JewelryRegistry.SAPPHIRE_NECKLACE.get(), 1, 45, 3, 15));
         event.getTrades().get(5).add(sellItem(JewelryRegistry.TANZANITE_NECKLACE.get(), 1, 45, 3, 15));
+
+        // Level 5: Rare netherite-tier jewelry (high cost, very limited stock)
+        // These are the master jeweler's endgame offerings — players can also find these in high-tier chests.
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_RUBY_RING.get(), 1, 62, 1, 30));
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_SAPPHIRE_RING.get(), 1, 62, 1, 30));
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_JADE_RING.get(), 1, 62, 1, 30));
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_RUBY_NECKLACE.get(), 1, 64, 1, 30));
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_SAPPHIRE_NECKLACE.get(), 1, 64, 1, 30));
+        event.getTrades().get(5).add(sellItem(JewelryRegistry.NETHERITE_TOPAZ_NECKLACE.get(), 1, 64, 1, 30));
     }
 
     // ─── Trade Helper Methods ───

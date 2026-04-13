@@ -3,6 +3,7 @@ package com.ultra.megamod.feature.combat.rogues.client;
 import com.ultra.megamod.feature.combat.items.ClassArmorRegistry;
 import com.ultra.megamod.feature.combat.rogues.client.armor.RogueArmorRenderer;
 import com.ultra.megamod.feature.combat.rogues.client.armor.WarriorArmorRenderer;
+import com.ultra.megamod.feature.dungeons.entity.DungeonEntityRegistry;
 import com.ultra.megamod.lib.azurelib.common.render.armor.AzArmorRenderer;
 import com.ultra.megamod.lib.azurelib.common.render.armor.AzArmorRendererRegistry;
 import net.minecraft.world.item.Item;
@@ -61,6 +62,16 @@ public class RoguesClientMod {
                 ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_LEGS.get(),
                 ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_BOOTS.get(),
                 WarriorArmorRenderer::netheriteBerserker);
+
+        // Geomancer armor — class-armor visuals chosen per slot:
+        //   Helm + Leggings -> warrior renderer
+        //   Chest + Boots   -> berserker renderer
+        // (Class armor renders through AzureLib, not the vanilla equipment system,
+        //  which is why the prior EQUIPPABLE-asset wiring alone made it invisible.)
+        AzArmorRendererRegistry.register(DungeonEntityRegistry.GEOMANCER_HELM.get(), WarriorArmorRenderer::warrior);
+        AzArmorRendererRegistry.register(DungeonEntityRegistry.GEOMANCER_LEGS.get(), WarriorArmorRenderer::warrior);
+        AzArmorRendererRegistry.register(DungeonEntityRegistry.GEOMANCER_CHEST.get(), WarriorArmorRenderer::berserker);
+        AzArmorRendererRegistry.register(DungeonEntityRegistry.GEOMANCER_BOOTS.get(), WarriorArmorRenderer::berserker);
     }
 
     private static void registerArmorRenderer(Item head, Item chest, Item legs, Item feet,

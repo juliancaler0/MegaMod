@@ -5670,139 +5670,180 @@ extends Screen {
     // ═══════════════════════════════════════════════════════════════
 
     private void renderCombatConfig(net.minecraft.client.gui.GuiGraphics g, int mouseX, int mouseY) {
-        var BC = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.class;
         this.combatSliders.clear();
         this.combatToggles.clear();
-        int x = this.contentLeft + 10;
-        int y = this.contentTop + 5;
-        int col2 = x + 260;
 
-        g.drawString(this.font, "\u2694 BetterCombat Configuration", x, y, 0xFFCC00);
-        y += 16;
+        int x = this.contentLeft + 6;
+        int y = this.contentTop + 6;
+        int contentW = this.contentRight - this.contentLeft - 12;
+        int col2X = x + contentW / 2 + 6;
 
-        // ── Passive procs (headline slider) ───────────────────────────
-        g.drawString(this.font, "Passive Trigger Rate", x, y, 0xFFAA55);
-        y += 14;
-        y = drawCombatSlider(g, x, y, "Proc Multiplier",
+        // Top banner
+        this.drawSectionHeader(g, "Combat Configuration", x, y, contentW);
+        y += 18;
+
+        // ── LEFT COLUMN: sliders
+        int ly = y;
+        this.drawSectionHeader(g, "Passive Trigger Rate", x, ly, contentW / 2 - 6);
+        ly += 14;
+        ly = drawCombatSlider(g, x, ly, "Proc Multiplier",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.passive_proc_multiplier,
-                0.0, 5.0, "passive_proc_multiplier", "%.2fx");
-        g.drawString(this.font, "\u00A78  0 = disabled, 1 = normal, 5 = 5x proc chance", x, y, 0x888888);
-        y += 12;
+                0.0, 10.0, "passive_proc_multiplier", "%.2fx", 1.0);
+        g.drawString(this.font, "0 = off  \u00B7  1 = normal  \u00B7  10 = always", x, ly, 0xFF8B949E, false);
+        ly += 12;
+        // Admin-only direct override (set to -1 to disable, 0-1 to force a fixed % chance)
+        float procOverride = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_proc_override_chance;
+        // Slider shows -1..1; at -1 we label it "Off". The percent readout treats < 0 as disabled.
+        ly = drawCombatSlider(g, x, ly, "Admin Force Chance",
+                procOverride,
+                -1.0, 1.0, "admin_proc_override_chance",
+                procOverride < 0 ? "OFF" : "%.0f%%", 100.0);
+        g.drawString(this.font, "Drag fully left to disable; 100% = always procs", x, ly, 0xFF8B949E, false);
+        ly += 12;
+        ly = drawCombatSlider(g, x, ly, "Admin Attack Speed",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_attack_speed_multiplier,
+                0.1, 5.0, "admin_attack_speed_multiplier", "%.2fx", 1.0);
 
-        // ── Server settings ───────────────────────────────────────────
-        g.drawString(this.font, "Server Settings", x, y, 0x55FFFF);
-        y += 14;
-        y = drawCombatSlider(g, x, y, "Upswing Multiplier",
+        this.drawSectionHeader(g, "Server Combat", x, ly + 4, contentW / 2 - 6);
+        ly += 18;
+        ly = drawCombatSlider(g, x, ly, "Upswing Multiplier",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.upswing_multiplier,
-                0.2, 1.0, "upswing_multiplier", "%.2f");
-        y = drawCombatSlider(g, x, y, "Attack Interval Cap",
+                0.2, 1.0, "upswing_multiplier", "%.2f", 1.0);
+        ly = drawCombatSlider(g, x, ly, "Attack Interval Cap",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.attack_interval_cap,
-                0, 20, "attack_interval_cap", "%.0f");
-        y = drawCombatSlider(g, x, y, "Combo Reset Rate",
+                0, 20, "attack_interval_cap", "%.0f ticks", 1.0);
+        ly = drawCombatSlider(g, x, ly, "Combo Reset Rate",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.combo_reset_rate,
-                1.0, 10.0, "combo_reset_rate", "%.1fx");
-        y = drawCombatSlider(g, x, y, "Target Search Range",
+                1.0, 10.0, "combo_reset_rate", "%.1fx", 1.0);
+        ly = drawCombatSlider(g, x, ly, "Target Search Range",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.target_search_range_multiplier,
-                1.0, 5.0, "target_search_range_multiplier", "%.1fx");
-        y = drawCombatSlider(g, x, y, "Move Speed While Attacking",
+                1.0, 5.0, "target_search_range_multiplier", "%.1fx", 1.0);
+        ly = drawCombatSlider(g, x, ly, "Move Speed Attacking",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.movement_speed_while_attacking,
                 0.0, 1.0, "movement_speed_while_attacking", "%.0f%%", 100.0);
-        y = drawCombatToggle(g, x, y, "Allow Fast Attacks",
-                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_fast_attacks,
-                "allow_fast_attacks");
-        y = drawCombatToggle(g, x, y, "Reworked Sweeping",
-                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_reworked_sweeping,
-                "allow_reworked_sweeping");
-        y = drawCombatToggle(g, x, y, "Vanilla Sweeping",
-                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_vanilla_sweeping,
-                "allow_vanilla_sweeping");
-        y = drawCombatToggle(g, x, y, "Attacking Through Walls",
-                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_attacking_thru_walls,
-                "allow_attacking_thru_walls");
 
-        y += 8;
-        g.drawString(this.font, "Dual Wielding", x, y, 0x55FFFF);
-        y += 14;
-        y = drawCombatSlider(g, x, y, "DW Attack Speed",
+        this.drawSectionHeader(g, "Dual Wielding", x, ly + 4, contentW / 2 - 6);
+        ly += 18;
+        ly = drawCombatSlider(g, x, ly, "DW Attack Speed",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.dual_wielding_attack_speed_multiplier,
-                0.5, 2.0, "dual_wielding_attack_speed_multiplier", "%.2fx");
-        y = drawCombatSlider(g, x, y, "DW Main Hand Damage",
+                0.5, 2.0, "dual_wielding_attack_speed_multiplier", "%.2fx", 1.0);
+        ly = drawCombatSlider(g, x, ly, "DW Main Hand Damage",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.dual_wielding_main_hand_damage_multiplier,
                 0.1, 2.0, "dual_wielding_main_hand_damage_multiplier", "%.0f%%", 100.0);
-        y = drawCombatSlider(g, x, y, "DW Off Hand Damage",
+        ly = drawCombatSlider(g, x, ly, "DW Off Hand Damage",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.dual_wielding_off_hand_damage_multiplier,
                 0.1, 2.0, "dual_wielding_off_hand_damage_multiplier", "%.0f%%", 100.0);
 
-        // ── Client toggles (right column) ─────────────────────────────
-        int cy = this.contentTop + 5 + 16;
-        g.drawString(this.font, "Client Settings", col2, cy, 0x55FFFF);
-        cy += 14;
-        cy = drawCombatToggle(g, col2, cy, "Hold To Attack",
+        // ── RIGHT COLUMN: toggles (rendered as button-style rows so text is identical to confirmed-working widgets)
+        int ry = y;
+        this.drawSectionHeader(g, "Server Toggles", col2X, ry, contentW / 2 - 6);
+        ry += 18;
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Admin-Only Effects",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.admin_only_combat_effects,
+                "admin_only_combat_effects");
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Allow Fast Attacks",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_fast_attacks,
+                "allow_fast_attacks");
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Reworked Sweeping",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_reworked_sweeping,
+                "allow_reworked_sweeping");
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Vanilla Sweeping",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_vanilla_sweeping,
+                "allow_vanilla_sweeping");
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Attack Through Walls",
+                com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_attacking_thru_walls,
+                "allow_attacking_thru_walls");
+
+        this.drawSectionHeader(g, "Client Toggles", col2X, ry + 4, contentW / 2 - 6);
+        ry += 18;
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Hold To Attack",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.isHoldToAttackEnabled,
                 "hold_to_attack");
-        cy = drawCombatToggle(g, col2, cy, "Mining With Weapons",
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Mining With Weapons",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.isMiningWithWeaponsEnabled,
                 "mining_with_weapons");
-        cy = drawCombatToggle(g, col2, cy, "Swing Through Grass",
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Swing Through Grass",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.isSwingThruGrassEnabled,
                 "swing_thru_grass");
-        cy = drawCombatToggle(g, col2, cy, "Show Weapon Trails",
+        ry = drawCombatToggleRow(g, col2X, ry, mouseX, mouseY, "Show Weapon Trails",
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.isShowingWeaponTrails,
                 "show_weapon_trails");
 
-        cy += 12;
-        g.drawString(this.font, "\u00A78Click a slider to set its value.", col2, cy, 0x888888);
-        cy += 10;
-        g.drawString(this.font, "\u00A78Toggles fire on click. Changes sync live.", col2, cy, 0x888888);
+        ry += 10;
+        g.drawString(this.font, "Click a slider to set its value", col2X, ry,      0xFF8B949E, false);
+        g.drawString(this.font, "Click a toggle to flip ON/OFF",   col2X, ry + 11, 0xFF8B949E, false);
     }
 
-    /** Renders a horizontal slider bar. Click-to-set-value. Registers a CombatSlider for mouseClicked. */
-    private int drawCombatSlider(net.minecraft.client.gui.GuiGraphics g, int x, int y, String label,
-                                  double current, double min, double max, String configKey,
-                                  String valueFormat) {
-        return drawCombatSlider(g, x, y, label, current, min, max, configKey, valueFormat, 1.0);
-    }
-
+    /**
+     * Slider row: label → bar → value. Uses the same drawString(this.font, s, x, y, color, false)
+     * convention as {@code renderCleanup} so text is always visible.
+     */
     private int drawCombatSlider(net.minecraft.client.gui.GuiGraphics g, int x, int y, String label,
                                   double current, double min, double max, String configKey,
                                   String valueFormat, double displayScale) {
-        int labelW = 150;
+        int rowH = 18;
+        int labelW = 140;
+        int valueW = 60;
         int barX = x + labelW;
-        int barW = 90;
-        int barH = 8;
-        g.drawString(this.font, label, x, y, 0xDDDDDD);
-        // Bar track
-        g.fill(barX, y + 2, barX + barW, y + 2 + barH, 0xFF333333);
-        g.fill(barX, y + 2, barX + barW, y + 3, 0xFF555555);
-        // Filled portion
+        int barW = 120;
+        int barY = y + 6;
+        int barH = 6;
+
+        // Row background stripe — helps the text pop off the panel
+        g.fill(x, y, x + labelW + barW + valueW, y + rowH, 0xFF161B22);
+        g.fill(x, y, x + labelW + barW + valueW, y + 1,    0xFF21262D);
+
+        // Label
+        g.drawString(this.font, label, x + 4, y + 5, 0xFFC9D1D9, false);
+
+        // Track
+        g.fill(barX, barY, barX + barW, barY + barH, 0xFF30363D);
+        // Fill
         double t = Math.max(0.0, Math.min(1.0, (current - min) / (max - min)));
-        int fillW = (int) (t * barW);
-        g.fill(barX, y + 2, barX + fillW, y + 2 + barH, 0xFF55AAFF);
-        // Handle
-        int handleX = barX + fillW - 2;
-        g.fill(handleX, y, handleX + 4, y + 12, 0xFFFFFFFF);
-        // Value label
+        int fillW = (int) Math.round(t * barW);
+        if (fillW > 0) g.fill(barX, barY, barX + fillW, barY + barH, 0xFF58A6FF);
+        // Handle (bigger + taller so it's obvious where to click)
+        int handleX = Math.min(barX + fillW - 1, barX + barW - 3);
+        g.fill(handleX, barY - 2, handleX + 3, barY + barH + 2, 0xFFE6EDF3);
+
+        // Value readout on right
         String valStr = String.format(valueFormat, current * displayScale);
-        g.drawString(this.font, valStr, barX + barW + 6, y + 2, 0xFFFF88);
-        this.combatSliders.add(new CombatSlider(configKey, barX, y, barW, 12, min, max));
-        return y + 14;
+        g.drawString(this.font, valStr, barX + barW + 6, y + 5, 0xFFD29922, false);
+
+        this.combatSliders.add(new CombatSlider(configKey, barX, y, barW, rowH, min, max));
+        return y + rowH + 2;
     }
 
-    /** Renders a [X]/[ ] toggle. Click flips. */
-    private int drawCombatToggle(net.minecraft.client.gui.GuiGraphics g, int x, int y, String label,
-                                  boolean current, String configKey) {
-        int boxW = 10;
-        int boxH = 10;
-        int bx = x;
-        int color = current ? 0xFF55FF55 : 0xFF555555;
-        g.fill(bx, y, bx + boxW, y + boxH, 0xFF000000);
-        g.fill(bx + 1, y + 1, bx + boxW - 1, y + boxH - 1, color);
+    /**
+     * Toggle row rendered like a button — identical drawString path as drawActionButton, which is
+     * confirmed to render text correctly. The full row is clickable.
+     */
+    private int drawCombatToggleRow(net.minecraft.client.gui.GuiGraphics g, int x, int y, int mouseX, int mouseY,
+                                     String label, boolean current, String configKey) {
+        int w = 200;
+        int h = 16;
+        boolean hovered = mouseX >= x && mouseX < x + w && mouseY >= y && mouseY < y + h;
+
+        int border = hovered ? 0xFF58A6FF : 0xFF30363D;
+        int bg     = hovered ? 0xFF21262D : 0xFF161B22;
+        g.fill(x, y, x + w, y + h, border);
+        g.fill(x + 1, y + 1, x + w - 1, y + h - 1, bg);
+
+        // On/off indicator box
+        int dotColor = current ? 0xFF3FB950 : 0xFF484F58;
+        g.fill(x + 3, y + 3, x + 13, y + 13, dotColor);
         if (current) {
-            g.drawString(this.font, "\u2713", bx + 2, y + 1, 0xFF000000);
+            g.drawString(this.font, "\u2713", x + 4, y + 4, 0xFF000000, false);
         }
-        g.drawString(this.font, label, bx + boxW + 6, y + 1, 0xDDDDDD);
-        this.combatToggles.add(new CombatToggle(configKey, bx, y, boxW, boxH, current));
-        return y + 12;
+        // Label + status
+        g.drawString(this.font, label, x + 18, y + 4, 0xFFC9D1D9, false);
+        String status = current ? "ON" : "OFF";
+        int statusColor = current ? 0xFF3FB950 : 0xFFF85149;
+        int sw = this.font.width(status);
+        g.drawString(this.font, status, x + w - sw - 6, y + 4, statusColor, false);
+
+        this.combatToggles.add(new CombatToggle(configKey, x, y, w, h, current));
+        return y + h + 2;
     }
 
     /** Handle a click in the combat tab. Returns true if the click hit a widget. */

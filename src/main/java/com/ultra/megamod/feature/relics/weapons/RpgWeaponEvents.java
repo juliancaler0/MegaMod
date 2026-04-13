@@ -85,6 +85,10 @@ public class RpgWeaponEvents {
             int effectiveCooldown = getEffectiveWeaponCooldown(weaponStack, skill);
             COOLDOWNS.put(cooldownKey, now + (long)effectiveCooldown);
             player.displayClientMessage(Component.literal((skill.name() + "!")).withStyle(ChatFormatting.GOLD), true);
+            // HUD popup so the player sees what ability just fired
+            net.neoforged.neoforge.network.PacketDistributor.sendToPlayer(
+                    player,
+                    new com.ultra.megamod.feature.hud.network.AbilityTriggerPayload(skill.name(), /*MANUAL=*/0));
         }
     }
 

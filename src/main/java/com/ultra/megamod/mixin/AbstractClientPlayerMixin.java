@@ -130,7 +130,9 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
         float speed = endTick / length;
 
         // Upswing speed: original uses upswingMultiplier config (default 0.5)
-        float upswingMultiplier = Math.clamp(BetterCombatConfig.upswing_multiplier, 0.2f, 1.0f);
+        float upswingMultiplier = Math.clamp(
+                com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.upswingMultiplier(player),
+                0.2f, 1.0f);
         float trueUpswingRatio = upswing / upswingMultiplier;
         float upswingSpeed = speed / trueUpswingRatio;
 

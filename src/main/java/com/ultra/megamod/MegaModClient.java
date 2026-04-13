@@ -87,6 +87,7 @@ public class MegaModClient {
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.SpellBookHudOverlay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.combos.CombatComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.KillComboDisplay::onRegisterGuiLayers);
+        modEventBus.addListener(com.ultra.megamod.feature.hud.AbilityTriggerHud::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.arena.client.ArenaWaveHud::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.client.InGameHudOverlay::onRegisterGuiLayers);
 

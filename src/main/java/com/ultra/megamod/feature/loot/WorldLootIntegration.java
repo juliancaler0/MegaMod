@@ -238,6 +238,103 @@ public class WorldLootIntegration {
         return STRUCTURE_UNCOMMON_RELICS;
     }
 
+    // ======================== JEWELRY POOLS ========================
+
+    private static List<Item> JEWELRY_BASIC;    // copper/iron/gold rings (tier 0)
+    private static List<Item> JEWELRY_GEM;      // ruby/topaz/citrine/jade/sapphire/tanzanite + diamond/emerald (tier 1-2)
+    private static List<Item> JEWELRY_NETHERITE; // netherite-framed variants (tier 3)
+
+    private static List<Item> getBasicJewelry() {
+        if (JEWELRY_BASIC == null) {
+            JEWELRY_BASIC = List.of(
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.COPPER_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.IRON_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.GOLD_RING.get()
+            );
+        }
+        return JEWELRY_BASIC;
+    }
+
+    private static List<Item> getGemJewelry() {
+        if (JEWELRY_GEM == null) {
+            var R = com.ultra.megamod.feature.combat.items.JewelryRegistry.class;
+            JEWELRY_GEM = List.of(
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.RUBY_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.TOPAZ_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.CITRINE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.JADE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.SAPPHIRE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.TANZANITE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.RUBY_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.TOPAZ_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.CITRINE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.JADE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.SAPPHIRE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.TANZANITE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.DIAMOND_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.DIAMOND_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.EMERALD_NECKLACE.get()
+            );
+        }
+        return JEWELRY_GEM;
+    }
+
+    private static List<Item> getNetheriteJewelry() {
+        if (JEWELRY_NETHERITE == null) {
+            JEWELRY_NETHERITE = List.of(
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_RUBY_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_TOPAZ_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_CITRINE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_JADE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_SAPPHIRE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_TANZANITE_RING.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_RUBY_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_TOPAZ_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_CITRINE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_JADE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_SAPPHIRE_NECKLACE.get(),
+                    com.ultra.megamod.feature.combat.items.JewelryRegistry.NETHERITE_TANZANITE_NECKLACE.get()
+            );
+        }
+        return JEWELRY_NETHERITE;
+    }
+
+    /**
+     * Independent jewelry drop roll for vanilla structure chests. Called alongside
+     * the relic roll from {@link StructureChestLootModifier}. Jewelry is obtainable
+     * ONLY from loot drops and villager trades — crafting recipes have been removed.
+     */
+    public static ItemStack tryGenerateStructureChestJewelry(String lootTablePath, RandomSource random, double luck) {
+        double baseChance;
+        List<Item> pool;
+
+        if (lootTablePath.contains("end_city") || lootTablePath.contains("bastion")
+                || lootTablePath.contains("stronghold") || lootTablePath.contains("ancient_city")) {
+            baseChance = 0.18;
+            // High-tier structures favour netherite jewelry
+            pool = random.nextFloat() < 0.55f ? getNetheriteJewelry() : getGemJewelry();
+        } else if (lootTablePath.contains("desert_pyramid") || lootTablePath.contains("jungle_temple")
+                || lootTablePath.contains("woodland_mansion") || lootTablePath.contains("nether_bridge")) {
+            baseChance = 0.14;
+            pool = getGemJewelry();
+        } else if (lootTablePath.contains("village") || lootTablePath.contains("pillager_outpost")
+                || lootTablePath.contains("shipwreck") || lootTablePath.contains("igloo")
+                || lootTablePath.contains("buried_treasure") || lootTablePath.contains("underwater_ruin")
+                || lootTablePath.contains("abandoned_mineshaft") || lootTablePath.contains("ruined_portal")) {
+            baseChance = 0.10;
+            // Low-tier — mostly basic, occasional gem
+            pool = random.nextFloat() < 0.75f ? getBasicJewelry() : getGemJewelry();
+        } else {
+            return null;
+        }
+
+        double finalChance = Math.min(0.40, baseChance + luck * LUCK_CHANCE_BONUS);
+        if (random.nextDouble() >= finalChance) return null;
+
+        Item baseItem = pool.get(random.nextInt(pool.size()));
+        return new ItemStack(baseItem);
+    }
+
     /**
      * Picks a relic for vanilla structure chest injection based on the loot table ID.
      * Called from StructureChestLootModifier.
