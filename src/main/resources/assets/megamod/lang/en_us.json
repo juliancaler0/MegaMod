@@ -1892,5 +1892,11 @@
   "enchantment.megamod.combatroll.multi_roll": "Multi-Roll",
   "attribute.name.megamod.combatroll.distance": "Roll Distance",
   "attribute.name.megamod.combatroll.count": "Extra Roll",
-  "attribute.name.megamod.combatroll.recharge": "Roll Recharge"
+  "attribute.name.megamod.combatroll.recharge": "Roll Recharge",
+  "item.megamod.we_wand": "WorldEdit Wand",
+  "item.megamod.we_far_wand": "WorldEdit Far Wand",
+  "item.megamod.we_brush": "WorldEdit Brush",
+  "item.megamod.we_super_pickaxe": "Super Pickaxe",
+  "item.megamod.we_info_tool": "WorldEdit Info Tool",
+  "item.megamod.we_tree_planter": "Tree Planter"
 }

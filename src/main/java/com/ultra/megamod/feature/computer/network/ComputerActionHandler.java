@@ -72,7 +72,7 @@ public class ComputerActionHandler {
     private static void handleActionInner(ServerPlayer player, String action, String jsonData, ServerLevel level, EconomyManager eco) {
         // Block all admin-only actions for non-admin players (packet spoofing protection)
         if (!AdminSystem.isAdmin(player)) {
-            if (action.startsWith("admin_") || action.startsWith("eco_") || action.startsWith("cosm_")
+            if (action.startsWith("admin_") || action.startsWith("eco_") || action.startsWith("cosm_") || action.startsWith("we_")
                     || action.startsWith("shop_admin_") || action.startsWith("research_")
                     || action.startsWith("vanish_") || action.startsWith("alias_")
                     || action.startsWith("deathlog_") || action.startsWith("loot_")
@@ -143,6 +143,7 @@ public class ComputerActionHandler {
         if (com.ultra.megamod.feature.computer.network.handlers.SystemHealthHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.PrestigeShopHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.AdminSearchHandler.handle(player, action, jsonData, level, eco)) return;
+        if (com.ultra.megamod.feature.computer.network.handlers.WorldEditHandler.handle(player, action, jsonData, level, eco)) return;
         switch (action) {
             case "execute_command": {
                 String result = AdminSystem.executeCommand(player, jsonData);

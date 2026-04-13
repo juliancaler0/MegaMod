@@ -146,6 +146,8 @@ public class MegaMod {
         com.ultra.megamod.feature.citizen.worldgen.ColonyWorldGenRegistry.init(modEventBus);
         com.ultra.megamod.feature.citizen.enchantment.ColonyEnchantmentRegistry.init(modEventBus);
         com.ultra.megamod.lib.spellengine.api.effect.SpellEngineSyncAttachments.init(modEventBus);
+        // WorldEdit port — admin-gated in-game world editor
+        com.ultra.megamod.feature.worldedit.WorldEditRegistry.init(modEventBus);
         LOGGER.info("MegaMod loading - all systems enabled");
     }
 }
