@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "megamod:slice_and_dice",
+      "required": false
+    },
+    {
+      "id": "megamod:shock_powder",
+      "required": false
+    },
+    {
+      "id": "megamod:shadow_step",
+      "required": false
+    },
+    {
+      "id": "megamod:vanish",
+      "required": false
+    }
+  ]
+}

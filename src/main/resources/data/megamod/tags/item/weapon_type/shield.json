@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_shield_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_shield_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_shield_sw",
+      "required": false
+    }
+  ]
+}

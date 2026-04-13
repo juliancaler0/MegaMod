@@ -272,21 +272,28 @@ public class JewelryRegistry {
     public static final DeferredItem<Item> UNIQUE_ATTACK_RING = ITEMS.registerItem("unique_attack_ring",
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
-            buildModifiers(new ModEntry(Attributes.ATTACK_DAMAGE, "unique_attack_ring.attack_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+            buildModifiers(
+                new ModEntry(Attributes.ATTACK_DAMAGE, "unique_attack_ring.attack_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.KNOCKBACK_RESISTANCE, "unique_attack_ring.knockback_resistance", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
         ));
 
     public static final DeferredItem<Item> UNIQUE_ATTACK_NECKLACE = ITEMS.registerItem("unique_attack_necklace",
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
-            buildModifiers(new ModEntry(Attributes.ATTACK_DAMAGE, "unique_attack_necklace.attack_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+            buildModifiers(
+                new ModEntry(Attributes.ATTACK_DAMAGE, "unique_attack_necklace.attack_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.KNOCKBACK_RESISTANCE, "unique_attack_necklace.knockback_resistance", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
         ));
 
     public static final DeferredItem<Item> UNIQUE_DEX_RING = ITEMS.registerItem("unique_dex_ring",
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(Attributes.ATTACK_SPEED, "unique_dex_ring.attack_speed", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(Attributes.MOVEMENT_SPEED, "unique_dex_ring.movement_speed", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(Attributes.ATTACK_SPEED, "unique_dex_ring.attack_speed", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.ATTACK_DAMAGE, "unique_dex_ring.attack_damage", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.MOVEMENT_SPEED, "unique_dex_ring.movement_speed", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -294,8 +301,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(Attributes.ATTACK_SPEED, "unique_dex_necklace.attack_speed", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(Attributes.MOVEMENT_SPEED, "unique_dex_necklace.movement_speed", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(Attributes.ATTACK_SPEED, "unique_dex_necklace.attack_speed", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.ATTACK_DAMAGE, "unique_dex_necklace.attack_damage", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.MOVEMENT_SPEED, "unique_dex_necklace.movement_speed", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -304,7 +312,7 @@ public class JewelryRegistry {
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
                 new ModEntry(Attributes.MAX_HEALTH, "unique_tank_ring.max_health", 6.0, AttributeModifier.Operation.ADD_VALUE),
-                new ModEntry(Attributes.ARMOR, "unique_tank_ring.armor", 4.0, AttributeModifier.Operation.ADD_VALUE)
+                new ModEntry(Attributes.ARMOR_TOUGHNESS, "unique_tank_ring.armor_toughness", 1.0, AttributeModifier.Operation.ADD_VALUE)
             )
         ));
 
@@ -313,28 +321,36 @@ public class JewelryRegistry {
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
                 new ModEntry(Attributes.MAX_HEALTH, "unique_tank_necklace.max_health", 6.0, AttributeModifier.Operation.ADD_VALUE),
-                new ModEntry(Attributes.ARMOR, "unique_tank_necklace.armor", 4.0, AttributeModifier.Operation.ADD_VALUE)
+                new ModEntry(Attributes.ARMOR_TOUGHNESS, "unique_tank_necklace.armor_toughness", 1.0, AttributeModifier.Operation.ADD_VALUE)
             )
         ));
 
     public static final DeferredItem<Item> UNIQUE_ARCHER_RING = ITEMS.registerItem("unique_archer_ring",
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
-            buildModifiers(new ModEntry(MegaModAttributes.RANGED_DAMAGE, "unique_archer_ring.ranged_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+            buildModifiers(
+                new ModEntry(MegaModAttributes.RANGED_DAMAGE, "unique_archer_ring.ranged_damage", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_archer_ring.haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
         ));
 
     public static final DeferredItem<Item> UNIQUE_ARCHER_NECKLACE = ITEMS.registerItem("unique_archer_necklace",
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
-            buildModifiers(new ModEntry(MegaModAttributes.RANGED_DAMAGE, "unique_archer_necklace.ranged_damage", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE))
+            buildModifiers(
+                new ModEntry(MegaModAttributes.RANGED_DAMAGE, "unique_archer_necklace.ranged_damage", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(Attributes.MOVEMENT_SPEED, "unique_archer_necklace.movement_speed", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_archer_necklace.haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
         ));
 
     public static final DeferredItem<Item> UNIQUE_ARCANE_RING = ITEMS.registerItem("unique_arcane_ring",
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_arcane_ring.arcane_power", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_arcane_ring.spell_haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_arcane_ring.arcane_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_arcane_ring.critical_chance", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_arcane_ring.spell_haste", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -342,8 +358,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_arcane_necklace.arcane_power", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_arcane_necklace.spell_haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_arcane_necklace.arcane_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_arcane_necklace.critical_chance", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_arcane_necklace.spell_haste", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -351,8 +368,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_fire_ring.fire_damage_bonus", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_fire_ring.critical_chance", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_fire_ring.fire_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_fire_ring.critical_chance", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_fire_ring.critical_damage", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -360,8 +378,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_fire_necklace.fire_damage_bonus", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_fire_necklace.critical_chance", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_fire_necklace.fire_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_fire_necklace.critical_chance", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_fire_necklace.critical_damage", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -369,8 +388,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_frost_ring.ice_damage_bonus", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_frost_ring.critical_damage", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_frost_ring.ice_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_frost_ring.spell_haste", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_frost_ring.critical_damage", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -378,8 +398,9 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_frost_necklace.ice_damage_bonus", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_frost_necklace.critical_damage", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_frost_necklace.ice_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_frost_necklace.spell_haste", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_frost_necklace.critical_damage", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -387,8 +408,8 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.HEALING_POWER, "unique_healing_ring.healing_power", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_healing_ring.spell_haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.HEALING_POWER, "unique_healing_ring.healing_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_healing_ring.spell_haste", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -396,8 +417,8 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.HEALING_POWER, "unique_healing_necklace.healing_power", 0.12, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_healing_necklace.spell_haste", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.HEALING_POWER, "unique_healing_necklace.healing_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_healing_necklace.spell_haste", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -406,8 +427,8 @@ public class JewelryRegistry {
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
                 new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_spell_ring.arcane_power", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_spell_ring.fire_damage_bonus", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_spell_ring.ice_damage_bonus", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_spell_ring.critical_chance", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_spell_ring.spell_haste", 0.03, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -415,9 +436,62 @@ public class JewelryRegistry {
         props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
         () -> new Item.Properties().stacksTo(1).attributes(
             buildModifiers(
-                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_spell_necklace.arcane_power", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.FIRE_DAMAGE_BONUS, "unique_spell_necklace.fire_damage_bonus", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
-                new ModEntry(MegaModAttributes.ICE_DAMAGE_BONUS, "unique_spell_necklace.ice_damage_bonus", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+                new ModEntry(MegaModAttributes.ARCANE_POWER, "unique_spell_necklace.arcane_power", 0.10, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_spell_necklace.critical_damage", 0.1, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_CRIT_RING = ITEMS.registerItem("unique_crit_ring",
+        props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_crit_ring.critical_chance", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_crit_ring.critical_damage", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_CRIT_NECKLACE = ITEMS.registerItem("unique_crit_necklace",
+        props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_crit_necklace.critical_chance", 0.04, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_DAMAGE, "unique_crit_necklace.critical_damage", 0.16, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_LIGHTNING_RING = ITEMS.registerItem("unique_lightning_ring",
+        props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.LIGHTNING_DAMAGE_BONUS, "unique_lightning_ring.lightning_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_lightning_ring.critical_chance", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_LIGHTNING_NECKLACE = ITEMS.registerItem("unique_lightning_necklace",
+        props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.LIGHTNING_DAMAGE_BONUS, "unique_lightning_necklace.lightning_damage_bonus", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.CRITICAL_CHANCE, "unique_lightning_necklace.critical_chance", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_SOUL_RING = ITEMS.registerItem("unique_soul_ring",
+        props -> new RpgJewelryItem(props, AccessorySlotType.RING_LEFT),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.SOUL_POWER, "unique_soul_ring.soul_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_soul_ring.spell_haste", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
+            )
+        ));
+
+    public static final DeferredItem<Item> UNIQUE_SOUL_NECKLACE = ITEMS.registerItem("unique_soul_necklace",
+        props -> new RpgJewelryItem(props, AccessorySlotType.NECKLACE),
+        () -> new Item.Properties().stacksTo(1).attributes(
+            buildModifiers(
+                new ModEntry(MegaModAttributes.SOUL_POWER, "unique_soul_necklace.soul_power", 0.08, AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+                new ModEntry(MegaModAttributes.SPELL_HASTE, "unique_soul_necklace.spell_haste", 0.06, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             )
         ));
 
@@ -475,7 +549,10 @@ public class JewelryRegistry {
             UNIQUE_FIRE_RING.get(), UNIQUE_FIRE_NECKLACE.get(),
             UNIQUE_FROST_RING.get(), UNIQUE_FROST_NECKLACE.get(),
             UNIQUE_HEALING_RING.get(), UNIQUE_HEALING_NECKLACE.get(),
-            UNIQUE_SPELL_RING.get(), UNIQUE_SPELL_NECKLACE.get()
+            UNIQUE_SPELL_RING.get(), UNIQUE_SPELL_NECKLACE.get(),
+            UNIQUE_CRIT_RING.get(), UNIQUE_CRIT_NECKLACE.get(),
+            UNIQUE_LIGHTNING_RING.get(), UNIQUE_LIGHTNING_NECKLACE.get(),
+            UNIQUE_SOUL_RING.get(), UNIQUE_SOUL_NECKLACE.get()
         );
     }
 

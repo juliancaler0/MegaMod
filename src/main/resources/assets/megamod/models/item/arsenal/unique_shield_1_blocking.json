@@ -1,0 +1,7 @@
+{
+	"parent": "megamod:item/arsenal/base/unique_shield_1_blocking",
+	"textures": {
+		"0": "megamod:item/arsenal/unique_shield_1",
+		"particle": "megamod:item/arsenal/unique_shield_1"
+	}
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:gold_ingot",
+    "H": "minecraft:stick"
+  },
+  "pattern": [
+    " B",
+    "HB"
+  ],
+  "result": {
+    "id": "megamod:golden_mace"
+  }
+}

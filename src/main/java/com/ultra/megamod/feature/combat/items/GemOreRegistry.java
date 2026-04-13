@@ -16,14 +16,24 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * Gem ore blocks that generate at diamond depth (half as common as diamonds).
- * Each gem ore drops the corresponding gem item from JewelryRegistry.
- * Ores require iron pickaxe or better to mine.
+ * Gem ore blocks and gem vein blocks ported from the Jewelry mod.
+ * Individual gem ores (deepslate_ruby_ore, etc.) generate at diamond depth.
+ * Gem vein blocks (gem_vein, deepslate_gem_vein) drop a random gem when mined.
+ * All require iron pickaxe or better to mine.
  */
 public class GemOreRegistry {
 
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MegaMod.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MegaMod.MODID);
+
+    // ── Gem Vein blocks (from Jewelry mod — drop random gems) ──
+
+    private static BlockBehaviour.Properties stoneOreProps() {
+        return BlockBehaviour.Properties.of()
+                .mapColor(MapColor.STONE)
+                .strength(3.0f, 3.0f)
+                .requiresCorrectToolForDrops();
+    }
 
     private static BlockBehaviour.Properties deepslateOreProps() {
         return BlockBehaviour.Properties.of()
@@ -32,6 +42,20 @@ public class GemOreRegistry {
                 .sound(SoundType.DEEPSLATE)
                 .requiresCorrectToolForDrops();
     }
+
+    // Gem Vein (stone variant) — replaces stone at ore generation
+    public static final DeferredBlock<Block> GEM_VEIN = BLOCKS.registerBlock("gem_vein",
+            props -> new DropExperienceBlock(UniformInt.of(3, 7), props), GemOreRegistry::stoneOreProps);
+
+    // Deepslate Gem Vein — replaces deepslate at ore generation
+    public static final DeferredBlock<Block> DEEPSLATE_GEM_VEIN = BLOCKS.registerBlock("deepslate_gem_vein",
+            props -> new DropExperienceBlock(UniformInt.of(3, 7), props), GemOreRegistry::deepslateOreProps);
+
+    // Block items for gem veins
+    public static final DeferredItem<BlockItem> GEM_VEIN_ITEM = ITEMS.registerSimpleBlockItem(GEM_VEIN);
+    public static final DeferredItem<BlockItem> DEEPSLATE_GEM_VEIN_ITEM = ITEMS.registerSimpleBlockItem(DEEPSLATE_GEM_VEIN);
+
+    // ── Individual deepslate gem ores ──
 
     // Deepslate gem ores (primary — found at diamond depths)
     public static final DeferredBlock<Block> DEEPSLATE_RUBY_ORE = BLOCKS.registerBlock("deepslate_ruby_ore",

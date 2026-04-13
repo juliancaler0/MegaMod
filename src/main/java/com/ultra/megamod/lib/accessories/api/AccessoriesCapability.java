@@ -1,0 +1,331 @@
+package com.ultra.megamod.lib.accessories.api;
+
+import com.google.common.collect.Multimap;
+import com.ultra.megamod.lib.accessories.api.caching.ItemStackBasedPredicate;
+import com.ultra.megamod.lib.accessories.api.caching.ItemStackPredicate;
+import com.ultra.megamod.lib.accessories.api.core.Accessory;
+import com.ultra.megamod.lib.accessories.api.equip.EquipAction;
+import com.ultra.megamod.lib.accessories.api.equip.EquipCheck;
+import com.ultra.megamod.lib.accessories.api.equip.EquipmentChecking;
+import com.ultra.megamod.lib.accessories.api.slot.*;
+import com.ultra.megamod.lib.accessories.api.slot.validator.SlotValidatorRegistry;
+import com.ultra.megamod.lib.accessories.data.SlotTypeLoader;
+import com.ultra.megamod.lib.accessories.impl.core.AccessoriesHolderImpl;
+import com.ultra.megamod.lib.accessories.pond.AccessoriesAPIAccess;
+import it.unimi.dsi.fastutil.Pair;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import org.apache.commons.lang3.function.TriFunction;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.function.Predicate;
+
+public interface AccessoriesCapability extends AccessoriesStorageLookup {
+
+    /**
+     * @return The {@link AccessoriesCapability} Bound to the given living entity if present
+     */
+    @Nullable
+    static AccessoriesCapability get(@NotNull LivingEntity livingEntity){
+        return ((AccessoriesAPIAccess) livingEntity).accessoriesCapability();
+    }
+
+    static Optional<AccessoriesCapability> getOptionally(@NotNull LivingEntity livingEntity){
+        return Optional.ofNullable(get(livingEntity));
+    }
+
+    static Collection<SlotType> getUsedSlotsFor(Player player) {
+        return getUsedSlotsFor(player, player.getInventory());
+    }
+
+    static Collection<SlotType> getUsedSlotsFor(LivingEntity entity, Container container) {
+        var capability = get(entity);
+
+        return (capability != null) ? capability.getUsedSlotsFor(container) : Set.of();
+    }
+
+    //--
+
+    /**
+     * @return The entity bound to the given {@link AccessoriesCapability} instance
+     */
+    LivingEntity entity();
+
+    //--
+
+    /**
+     * Method used to clear all containers bound to the given {@link LivingEntity}
+     */
+    void reset(boolean loadedFromTag);
+
+    /**
+     * @return A Map containing all the {@link AccessoriesContainer}s with their {@link SlotType#name()} as the key
+     */
+    Map<String, AccessoriesContainer> getContainers();
+
+    /**
+     * @return a given {@link AccessoriesContainer} if found on the given {@link LivingEntity} tied to the Capability or null if not
+     */
+    @Nullable
+    default AccessoriesContainer getContainer(SlotType slotType){
+        return getContainers().get(slotType.name());
+    }
+
+    @Nullable
+    default AccessoriesContainer getContainer(SlotTypeReference reference){
+        return getContainers().get(reference.slotName());
+    }
+
+    default Collection<SlotType> getUsedSlotsFor(Container container) {
+        var entity = this.entity();
+        var slots = new HashSet<SlotType>();
+
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            var stack = container.getItem(i);
+
+            if (stack.isEmpty()) continue;
+
+            slots.addAll(SlotValidatorRegistry.getValidSlotTypes(entity, stack));
+        }
+
+        for (var ref : this.getAllEquipped()) {
+            slots.addAll(SlotValidatorRegistry.getValidSlotTypes(entity, ref.stack()));
+        }
+
+        slots.addAll(SlotTypeLoader.getUsedSlotsByRegistryItem(entity));
+
+        return slots;
+    }
+
+    void updateContainers();
+
+    //--
+
+    /**
+     * Attempts to equip a given stack within any available {@link AccessoriesContainer} returning a
+     * reference to where it was equipped. The given passed stack <b>will</b> be adjusted passed on
+     * the amount of room that can be found within the found container.
+     *
+     * @param stack The given stack attempting to be equipped
+     */
+    @Nullable
+    default SlotReference attemptToEquipAccessory(ItemStack stack) {
+        var result = attemptToEquipAccessory(stack, false);
+
+        return result != null ? result.first() : null;
+    }
+
+    /**
+     * Attempts to equip a given stack within any available {@link AccessoriesContainer} returning a
+     * reference to where it was equipped and an {@link Optional} of the previous stack if swapped for
+     * the passed stack. The given passed stack <b>will</b> be adjusted passed on the amount of room that
+     * can be found within the found container.
+     *
+     * @param stack The given stack attempting to be equipped
+     */
+    @Nullable
+    default Pair<SlotReference, Optional<ItemStack>> attemptToEquipAccessory(ItemStack stack, boolean allowSwapping) {
+        var result = canEquipAccessory(stack, allowSwapping, (slotStack, slotReference) -> true);
+
+        return result != null ? Pair.of(result.first(), result.second().equipStack(stack)) : null;
+    }
+
+    default Pair<SlotReference, EquipAction> canEquipAccessory(ItemStack stack, boolean allowSwapping) {
+        return canEquipAccessory(stack, allowSwapping, (slotStack, slotReference) -> true);
+    }
+
+    /**
+     * Attempts to equip a given stack within any available {@link AccessoriesContainer} returning a
+     * reference to where it can be equipped and a function to attempt equipping of the item which
+     * may return an {@link Optional} of the previous stack if allowing for swapping.
+     * <p>
+     * Info: The passed stack will not be mutated in any way! Such only occurs on call of the possible
+     * returned function.
+     *
+     * @param stack The given stack attempting to be equipped
+     */
+    @Nullable
+    Pair<SlotReference, EquipAction> canEquipAccessory(ItemStack stack, boolean allowSwapping, EquipCheck extraCheck);
+
+    /**
+     * @return The first {@link ItemStack} formatted within {@link SlotEntryReference} that matches the given {@link Item}.
+     */
+    @Nullable
+    default SlotEntryReference getFirstEquipped(Item item){
+        return getFirstEquipped(item, EquipmentChecking.ACCESSORIES_ONLY);
+    }
+
+    /**
+     * @return The first {@link ItemStack} formatted within {@link SlotEntryReference} that matches the given {@link Item}
+     * with the given {@link EquipmentChecking} useful for detecting Cosmetic overrides for rendering.
+     */
+    @Nullable
+    default SlotEntryReference getFirstEquipped(Item item, EquipmentChecking check){
+        return getFirstEquipped(ItemStackBasedPredicate.ofItem(item), check);
+    }
+
+    /**
+     * @return The first {@link ItemStack} formatted within {@link SlotEntryReference} that matches the given {@link Predicate}.
+     */
+    @Nullable
+    default SlotEntryReference getFirstEquipped(Predicate<ItemStack> predicate) {
+        return getFirstEquipped(predicate, EquipmentChecking.ACCESSORIES_ONLY);
+    }
+
+    /**
+     * @return The first {@link ItemStack} formatted within {@link SlotEntryReference} that matches the given {@link Predicate}
+     * with the given {@link EquipmentChecking} useful for detecting Cosmetic overrides for rendering.
+     */
+    @Nullable
+    default SlotEntryReference getFirstEquipped(Predicate<ItemStack> predicate, EquipmentChecking check) {
+        return getFirstEquipped(ItemStackBasedPredicate.ofPredicate(predicate), check);
+    }
+
+    @Nullable
+    default SlotEntryReference getFirstEquipped(ItemStackBasedPredicate predicate, EquipmentChecking check) {
+        var cache = AccessoriesHolderImpl.getHolder(this).getLookupCache();
+
+        if (cache != null && !(predicate instanceof ItemStackPredicate)) return cache.firstEquipped(predicate, check);
+
+        return AccessoriesStorageLookupUtils.getFirstEquipped(this.getContainers(), (path, stack) -> new SlotEntryReference(this.entity(), path, stack),
+                predicate,
+                check
+        );
+    }
+
+    /**
+     * @return A list of all {@link ItemStack}'s formatted within {@link SlotEntryReference} matching the given {@link Item}
+     */
+    default List<SlotEntryReference> getEquipped(Item item){
+        return getEquipped(ItemStackBasedPredicate.ofItem(item));
+    }
+
+    /**
+     * @return A list of all {@link SlotEntryReference}'s formatted within {@link SlotEntryReference} matching the passed predicate
+     */
+    default List<SlotEntryReference> getEquipped(Predicate<ItemStack> predicate){
+        return getEquipped(ItemStackBasedPredicate.ofPredicate(predicate));
+    }
+
+    default List<SlotEntryReference> getEquipped(ItemStackBasedPredicate predicate) {
+        return getAllEquipped().stream().filter(reference -> predicate.test(reference.stack())).toList();
+    }
+
+    @Override
+    default List<SlotEntryReference> getAllEquipped() {
+        var cache = AccessoriesHolderImpl.getHolder(this).getLookupCache();
+
+        if (cache != null) return cache.getAllEquipped();
+
+        return AccessoriesStorageLookupUtils.getAllEquipped(this.getContainers(), (path, stack) -> new SlotEntryReference(this.entity(), path, stack));
+    }
+
+    //--
+
+    /**
+     * Add map containing slot attributes to the given capability based on the keys used referencing specific slots
+     * with being lost on reload
+     * @param modifiers Slot Attribute Modifiers
+     */
+    void addTransientSlotModifiers(Multimap<String, AttributeModifier> modifiers);
+
+    /**
+     * Add slot attribute attributes to the given capability based on the keys used referencing specific slots
+     * with being persistent on a reload
+     * @param modifiers Slot Attribute Modifiers
+     */
+    void addPersistentSlotModifiers(Multimap<String, AttributeModifier> modifiers);
+
+    /**
+     * Add slot attribute attributes to the given capability based on the keys
+     * @param modifiers Slot Attribute Modifiers
+     */
+    void removeSlotModifiers(Multimap<String, AttributeModifier> modifiers);
+
+    /**
+     * Get all modifiers from the given containers bound to the capability
+     */
+    Multimap<String, AttributeModifier> getSlotModifiers();
+
+    /**
+     * Remove all modifiers from the given containers bound to the capability
+     */
+    void clearSlotModifiers();
+
+    /**
+     * Remove all cached modifiers from the given containers bound to the capability
+     */
+    void clearCachedSlotModifiers();
+
+    //-- Deprecated meaning to be removed within the future
+
+    /**
+     * Used to attempt to equip a given stack within any available {@link AccessoriesContainer} returning a
+     * reference and list within a pair. The given list may contain the overflow that could not fit based
+     * on the containers max stack size.
+     * <p>
+     * <b>WARNING: THE GIVEN STACK PASSED WILL NOT BE MUTATED AT ALL!</b>
+     *
+     * @param stack          The given stack attempting to be equipped
+     */
+    @Deprecated
+    @Nullable
+    default Pair<SlotReference, List<ItemStack>> equipAccessory(ItemStack stack){
+        return equipAccessory(stack, false);
+    }
+
+    /**
+     * Used to attempt to equip a given stack within any available {@link AccessoriesContainer} returning a
+     * reference and list within a pair. The given list may contain the overflow that could not fit based
+     * on the containers max stack size and the old stack found if swapping was allowed.
+     * <p>
+     * <b>WARNING: THE GIVEN STACK PASSED WILL NOT BE MUTATED AT ALL!</b>
+     *
+     * @param stack          The given stack attempting to be equipped
+     * @param allowSwapping  If the given call can attempt to swap accessories
+     */
+    @Deprecated
+    default Pair<SlotReference, List<ItemStack>> equipAccessory(ItemStack stack, boolean allowSwapping) {
+        var stackCopy = stack.copy();
+
+        var result = attemptToEquipAccessory(stackCopy, allowSwapping);
+
+        if(result == null) return null;
+
+        var returnStacks = new ArrayList<ItemStack>();
+
+        if(!stackCopy.isEmpty()) returnStacks.add(stackCopy);
+
+        result.second().ifPresent(returnStacks::add);
+
+        return Pair.of(result.first(), returnStacks);
+    }
+
+    @Nullable
+    @Deprecated
+    default Pair<SlotReference, List<ItemStack>> equipAccessory(ItemStack stack, boolean allowSwapping, TriFunction<Accessory, ItemStack, SlotReference, Boolean> additionalCheck) {
+        return equipAccessory(stack, allowSwapping);
+    }
+
+    /**
+     * @deprecated Use {@link #isAnotherEquipped(ItemStack, SlotReference, Item)}
+     */
+    @Deprecated(forRemoval = true)
+    default boolean isAnotherEquipped(SlotReference slotReference, Item item) {
+        return isAnotherEquipped(slotReference.getStack() /* <- DO NOT DO THIS! */, slotReference, item);
+    }
+
+    /**
+     * @deprecated Use {@link #isAnotherEquipped(ItemStack, SlotReference, Predicate)}
+     */
+    @Deprecated(forRemoval = true)
+    default boolean isAnotherEquipped(SlotReference slotReference, Predicate<ItemStack> predicate) {
+        return isAnotherEquipped(slotReference.getStack() /* <- DO NOT DO THIS! */, slotReference, predicate);
+    }
+}

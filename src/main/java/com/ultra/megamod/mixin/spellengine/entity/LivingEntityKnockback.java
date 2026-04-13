@@ -1,0 +1,44 @@
+package com.ultra.megamod.mixin.spellengine.entity;
+
+import net.minecraft.world.entity.LivingEntity;
+import com.ultra.megamod.lib.spellengine.entity.ConfigurableKnockback;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+
+import java.util.Stack;
+
+@Mixin(LivingEntity.class)
+public abstract class LivingEntityKnockback implements ConfigurableKnockback {
+
+    /**
+     * ConfigurableKnockback
+     */
+
+    private Stack<Float> customKnockbackMultipliers = new Stack<>();
+
+    private float getKnockbackMultiplier_SpellEngine() {
+        if (customKnockbackMultipliers.isEmpty()) {
+            return 1F;
+        } else {
+            var multiplier = 1F;
+            for (var m : customKnockbackMultipliers) {
+                multiplier *= m;
+            }
+            return multiplier;
+        }
+    }
+
+    public void pushKnockbackMultiplier_SpellEngine(float multiplier) {
+        customKnockbackMultipliers.push(multiplier);
+    }
+
+    public void popKnockbackMultiplier_SpellEngine() {
+        customKnockbackMultipliers.pop();
+    }
+
+    @ModifyVariable(method = "knockback", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    public double knockback_HEAD_changeStrength(double knockbackStrength) {
+        return knockbackStrength * getKnockbackMultiplier_SpellEngine();
+    }
+}

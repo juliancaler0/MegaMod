@@ -93,6 +93,7 @@ public class PlayerAnimResources implements ResourceManagerReloadListener {
 				PlayerAnimLib.LOGGER.error("Player Animation Library failed to load animation {} because:", resource.getKey(), e);
 			}
 		}
+		PlayerAnimLib.LOGGER.info("[PlayerAnimResources] Loaded {} player animations", ANIMATIONS.size());
 	}
 
 	@Override

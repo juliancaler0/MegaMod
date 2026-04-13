@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 150,
+  "experience": 0.1,
+  "group": "disassemble",
+  "ingredient": "megamod:warrior_armor_chest",
+  "result": {
+    "id": "minecraft:iron_nugget"
+  }
+}

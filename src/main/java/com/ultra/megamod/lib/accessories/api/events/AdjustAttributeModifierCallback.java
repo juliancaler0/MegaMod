@@ -1,0 +1,34 @@
+package com.ultra.megamod.lib.accessories.api.events;
+
+import com.ultra.megamod.lib.accessories.api.attributes.AccessoryAttributeBuilder;
+import com.ultra.megamod.lib.accessories.api.slot.SlotReference;
+import com.ultra.megamod.lib.accessories.impl.AccessoryAttributeLogic;
+import com.ultra.megamod.lib.accessories.api.core.AccessoryNestUtils;
+import com.ultra.megamod.lib.accessories.fabric.event.Event;
+import com.ultra.megamod.lib.accessories.fabric.event.EventFactory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+
+/**
+ * Event callback used to adjust the given attributes being evaluated within {@link AccessoryAttributeLogic#getAttributeModifiers(ItemStack, LivingEntity, String, int)}
+ * call to which is fired after evaluation of NBT and Accessories own attributes
+ */
+public interface AdjustAttributeModifierCallback {
+
+    Event<AdjustAttributeModifierCallback> EVENT = EventFactory.createArrayBacked(AdjustAttributeModifierCallback.class,
+            (invokers) -> (stack, reference, builder) -> {
+                AccessoryNestUtils.recursivelyConsume(stack, reference, (stack1, reference1) -> {
+                    var innerBuilder = new AccessoryAttributeBuilder(reference1, builder);
+
+                    for (var invoker : invokers) invoker.adjustAttributes(stack1, reference1, innerBuilder);
+                });
+            }
+    );
+
+    /**
+     * @param stack     The specific stack being evaluated
+     * @param reference The reference to the specific location within the Accessories Inventory
+     * @param builder   The builder containing the to be applied attributes modifications
+     */
+    void adjustAttributes(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder);
+}

@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:unique_attack_ring",
+    "megamod:unique_attack_necklace",
+    "megamod:unique_dex_ring",
+    "megamod:unique_dex_necklace",
+    "megamod:unique_tank_ring",
+    "megamod:unique_tank_necklace",
+    "megamod:unique_archer_ring",
+    "megamod:unique_archer_necklace",
+    "megamod:unique_arcane_ring",
+    "megamod:unique_arcane_necklace",
+    "megamod:unique_fire_ring",
+    "megamod:unique_fire_necklace",
+    "megamod:unique_frost_ring",
+    "megamod:unique_frost_necklace",
+    "megamod:unique_healing_ring",
+    "megamod:unique_healing_necklace",
+    "megamod:unique_spell_ring",
+    "megamod:unique_spell_necklace",
+    "megamod:unique_crit_ring",
+    "megamod:unique_crit_necklace",
+    "megamod:unique_lightning_ring",
+    "megamod:unique_lightning_necklace",
+    "megamod:unique_soul_ring",
+    "megamod:unique_soul_necklace"
+  ]
+}

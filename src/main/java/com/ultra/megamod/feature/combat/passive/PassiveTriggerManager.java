@@ -1,6 +1,7 @@
 package com.ultra.megamod.feature.combat.passive;
 
 import com.ultra.megamod.MegaMod;
+import com.ultra.megamod.feature.combat.animation.SpellAnimationPayload;
 import com.ultra.megamod.feature.combat.passive.PassiveTriggerRegistry.PassiveTrigger;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -21,6 +22,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.List;
 import java.util.Map;
@@ -82,9 +84,48 @@ public class PassiveTriggerManager {
         String cdKey = player.getUUID() + ":" + trigger.effectId();
         Long expiry = cooldowns.get(cdKey);
         if (expiry != null && level.getGameTime() < expiry) return;
-        if (player.getRandom().nextFloat() > trigger.chance()) return;
+        // Apply global admin-tunable multiplier so the combat tab slider can scale
+        // all passive fire rates at once. 0 disables, 1 = vanilla, 5 = 5x.
+        float procScale = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.passive_proc_multiplier;
+        float effectiveChance = Math.min(1.0f, trigger.chance() * procScale);
+        if (player.getRandom().nextFloat() > effectiveChance) return;
         cooldowns.put(cdKey, level.getGameTime() + trigger.cooldownTicks());
+        broadcastPassiveAnimation(player, trigger.effectId());
         executeEffect(player, target, trigger.effectId(), level);
+    }
+
+    /**
+     * Broadcast a brief cast-release animation to nearby clients when a passive fires.
+     * Picks an animation that fits the effect category (AOE burst, buff flare, single-target hit).
+     */
+    private static void broadcastPassiveAnimation(ServerPlayer player, String effectId) {
+        String animId = animationForEffect(effectId);
+        if (animId == null) return;
+        SpellAnimationPayload payload = new SpellAnimationPayload(
+                player.getId(),
+                1, // RELEASE — one-shot cast animation
+                animId,
+                1.5f,  // play slightly sped up so it doesn't block attack timing
+                false
+        );
+        PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, payload);
+    }
+
+    private static String animationForEffect(String effectId) {
+        return switch (effectId) {
+            // Area bursts — both hands flare outward
+            case "exploding_hit", "shockwave", "flame_cloud", "poison_cloud",
+                 "scorched_earth" -> "off_hand_area_release";
+            // Self buffs / heals — shout-style pose
+            case "radiance_heal", "rampaging_buff", "guarding_shield",
+                 "unyielding_shield" -> "one_handed_shout_release";
+            // Single-target projectile-style passives — one-hand thrust
+            case "wither_apply", "slowing_hit", "stunning_hit", "leeching_hit",
+                 "bonus_shot" -> "one_handed_projectile_release";
+            // Block passives — short flare
+            case "spiked_shield" -> "off_hand_area_release";
+            default -> null;
+        };
     }
 
     private static float getPlayerAttackDamage(ServerPlayer player) {

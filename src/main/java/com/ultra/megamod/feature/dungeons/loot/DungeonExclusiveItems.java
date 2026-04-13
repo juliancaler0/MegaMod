@@ -229,19 +229,12 @@ public class DungeonExclusiveItems {
         }
     });
 
-    // Mythic Netherite gear — Mythic+ dungeon exclusive
+    // Mythic Netherite gear — Mythic+ dungeon exclusive (weapons only;
+    // the armor set was removed since Dungeon Netherite armor covers it).
     public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_SWORD = ITEMS.registerItem("mythic_netherite_sword",
             props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.SWORD));
     public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_AXE = ITEMS.registerItem("mythic_netherite_axe",
             props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.AXE));
-    public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_HELMET = ITEMS.registerItem("mythic_netherite_helmet",
-            props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.HELMET));
-    public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_CHESTPLATE = ITEMS.registerItem("mythic_netherite_chestplate",
-            props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.CHESTPLATE));
-    public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_LEGGINGS = ITEMS.registerItem("mythic_netherite_leggings",
-            props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.LEGGINGS));
-    public static final DeferredItem<MythicNetheriteItem> MYTHIC_NETHERITE_BOOTS = ITEMS.registerItem("mythic_netherite_boots",
-            props -> new MythicNetheriteItem(props, MythicNetheriteItem.Piece.BOOTS));
 
     // --- Dungeon Armor: rollable Chainmail / Iron / Diamond / Netherite ---
     public static final DeferredItem<DungeonArmorItem> DUNGEON_CHAINMAIL_HELMET = ITEMS.registerItem("dungeon_chainmail_helmet",
@@ -342,11 +335,6 @@ public class DungeonExclusiveItems {
             output.accept((ItemLike)DungeonEntityRegistry.GEOMANCER_BOOTS.get());
             // Wrought Helm
             output.accept((ItemLike)DungeonEntityRegistry.WROUGHT_HELM.get());
-            // Mythic Netherite Armor
-            output.accept((ItemLike)MYTHIC_NETHERITE_HELMET.get());
-            output.accept((ItemLike)MYTHIC_NETHERITE_CHESTPLATE.get());
-            output.accept((ItemLike)MYTHIC_NETHERITE_LEGGINGS.get());
-            output.accept((ItemLike)MYTHIC_NETHERITE_BOOTS.get());
         }).build());
 
     public static void init(IEventBus modBus) {

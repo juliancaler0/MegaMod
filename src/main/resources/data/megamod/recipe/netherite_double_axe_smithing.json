@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:diamond_double_axe",
+  "result": {
+    "id": "megamod:netherite_double_axe"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

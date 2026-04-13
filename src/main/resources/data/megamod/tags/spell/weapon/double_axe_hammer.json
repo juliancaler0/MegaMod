@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:ground_slam",
+      "required": false
+    },
+    {
+      "id": "megamod:whirlwind",
+      "required": false
+    }
+  ]
+}

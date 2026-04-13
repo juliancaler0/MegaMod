@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:rogue_armor_legs",
+    "megamod:assassin_armor_legs",
+    "megamod:netherite_assassin_armor_legs",
+    "megamod:warrior_armor_legs",
+    "megamod:berserker_armor_legs",
+    "megamod:netherite_berserker_armor_legs"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/arsenal/base/double_axe_24",
+  "textures": {
+    "layer0": "megamod:item/arsenal/unique_double_axe_2"
+  }
+}

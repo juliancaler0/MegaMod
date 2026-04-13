@@ -1,0 +1,35 @@
+{
+  "anvil_cost": 3,
+  "description": {
+    "translate": "enchantment.megamod.critical_chance"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": {
+          "type": "minecraft:linear",
+          "base": 0.04,
+          "per_level_above_first": 0.04
+        },
+        "attribute": "megamod:sp_critical_chance",
+        "id": "megamod:enchantment",
+        "operation": "add_multiplied_base"
+      }
+    ]
+  },
+  "exclusive_set": "#megamod:exclusive_set/spell_critical",
+  "max_cost": {
+    "base": 15,
+    "per_level_above_first": 15
+  },
+  "max_level": 5,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 12
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "supported_items": "#megamod:enchantable/critical_chance",
+  "weight": 4
+}

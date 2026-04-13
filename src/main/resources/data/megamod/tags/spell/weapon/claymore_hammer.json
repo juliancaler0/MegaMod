@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:flurry",
+      "required": false
+    },
+    {
+      "id": "megamod:ground_slam",
+      "required": false
+    }
+  ]
+}

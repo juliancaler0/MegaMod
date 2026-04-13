@@ -1,0 +1,37 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+
+# Files from Forge MDK
+forge*changelog.txt
+run/
+docs/
+
+# Claude Code
+.claude/
+
+# Other mods/repositories
+MapFrontiers/
+journeymap-api/
+
+# Build logs
+build_error.log
+*.log

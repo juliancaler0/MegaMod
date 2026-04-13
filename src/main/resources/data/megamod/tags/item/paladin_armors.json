@@ -1,0 +1,18 @@
+{
+  "values": [
+    "megamod:paladin_armor_head",
+    "megamod:paladin_armor_chest",
+    "megamod:paladin_armor_legs",
+    "megamod:paladin_armor_boots",
+
+    "megamod:crusader_armor_head",
+    "megamod:crusader_armor_chest",
+    "megamod:crusader_armor_legs",
+    "megamod:crusader_armor_boots",
+
+    "megamod:netherite_crusader_armor_head",
+    "megamod:netherite_crusader_armor_chest",
+    "megamod:netherite_crusader_armor_legs",
+    "megamod:netherite_crusader_armor_boots"
+  ]
+}

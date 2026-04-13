@@ -1,0 +1,56 @@
+{
+  "values": [
+    {
+      "id": "megamod:radiance_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:stunning_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:exploding_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:wither_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:flame_cloud_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:poison_cloud_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:slowing_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:leeching_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:swirling_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:guarding_strike_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:sundering_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:rampaging_melee",
+      "required": false
+    },
+    {
+      "id": "megamod:shockwave_melee",
+      "required": false
+    }
+  ]
+}

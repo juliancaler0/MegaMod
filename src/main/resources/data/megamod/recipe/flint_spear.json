@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "minecraft:stick",
+    "P": "minecraft:flint"
+  },
+  "pattern": [
+    "  P",
+    " # ",
+    "#  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:flint_spear"
+  }
+}

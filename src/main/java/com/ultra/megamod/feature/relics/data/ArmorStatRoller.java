@@ -87,15 +87,19 @@ public class ArmorStatRoller {
 
         ItemAttributeModifiers.Builder modBuilder = ItemAttributeModifiers.builder();
 
+        // Slot-specific modifier suffix so multiple armor pieces worn together don't collide.
+        // AttributeMap keys modifiers by Identifier — matching IDs overwrite each other.
+        String slotSuffix = slot.getName();
+
         // Base armor — use direct Attributes reference (string resolution can silently fail)
         modBuilder.add(Attributes.ARMOR, new AttributeModifier(
-            Identifier.fromNamespaceAndPath("megamod", "armor_base"),
+            Identifier.fromNamespaceAndPath("megamod", "armor_base_" + slotSuffix),
             finalArmor, AttributeModifier.Operation.ADD_VALUE), group);
 
         // Base toughness
         if (finalToughness > 0) {
             modBuilder.add(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(
-                Identifier.fromNamespaceAndPath("megamod", "armor_toughness_base"),
+                Identifier.fromNamespaceAndPath("megamod", "armor_toughness_base_" + slotSuffix),
                 finalToughness, AttributeModifier.Operation.ADD_VALUE), group);
         }
 
@@ -103,7 +107,7 @@ public class ArmorStatRoller {
         double kbResist = rarity.ordinal() * 0.025; // 0, 0.025, 0.05, 0.075, 0.1
         if (kbResist > 0) {
             modBuilder.add(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(
-                Identifier.fromNamespaceAndPath("megamod", "armor_kb_resist_base"),
+                Identifier.fromNamespaceAndPath("megamod", "armor_kb_resist_base_" + slotSuffix),
                 kbResist, AttributeModifier.Operation.ADD_VALUE), group);
         }
 
@@ -124,7 +128,7 @@ public class ArmorStatRoller {
 
             double value = bonus.roll(random, rarity);
             AttributeModifier modifier = new AttributeModifier(
-                Identifier.fromNamespaceAndPath("megamod", "armor_bonus_" + applied + "_" + random.nextInt(10000)),
+                Identifier.fromNamespaceAndPath("megamod", "armor_bonus_" + slotSuffix + "_" + applied + "_" + random.nextInt(10000)),
                 value, bonus.operation());
             modBuilder.add(attrHolder.get(), modifier, group);
 

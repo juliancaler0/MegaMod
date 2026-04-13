@@ -1,13 +1,9 @@
 {
   "type": "megamod:crafting",
-  "base": {
-    "tag": "megamod:rune_crafting/base/stone"
-  },
-  "addition": {
-    "tag": "megamod:rune_crafting/reagent/healing_medium"
-  },
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/healing_medium",
   "result": {
     "count": 16,
-    "id": "megamod:healing_stone"
+    "id": "megamod:healing_rune"
   }
 }

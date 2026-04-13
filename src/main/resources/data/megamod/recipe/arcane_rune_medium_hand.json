@@ -1,15 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "megamod:rune_crafting/base/stone"
-    },
-    {
-      "tag": "megamod:rune_crafting/reagent/arcane_medium"
-    }
+    "#megamod:rune_crafting/base/stone",
+    "#megamod:rune_crafting/reagent/arcane_medium"
   ],
   "result": {
     "count": 4,
-    "id": "megamod:arcane_stone"
+    "id": "megamod:arcane_rune"
   }
 }

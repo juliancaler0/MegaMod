@@ -1,0 +1,33 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:copper_ring",
+    "megamod:iron_ring",
+    "megamod:gold_ring",
+    "megamod:diamond_ring",
+    "megamod:ruby_ring",
+    "megamod:topaz_ring",
+    "megamod:citrine_ring",
+    "megamod:jade_ring",
+    "megamod:sapphire_ring",
+    "megamod:tanzanite_ring",
+    "megamod:netherite_ruby_ring",
+    "megamod:netherite_topaz_ring",
+    "megamod:netherite_citrine_ring",
+    "megamod:netherite_jade_ring",
+    "megamod:netherite_sapphire_ring",
+    "megamod:netherite_tanzanite_ring",
+    "megamod:unique_attack_ring",
+    "megamod:unique_dex_ring",
+    "megamod:unique_tank_ring",
+    "megamod:unique_archer_ring",
+    "megamod:unique_arcane_ring",
+    "megamod:unique_fire_ring",
+    "megamod:unique_frost_ring",
+    "megamod:unique_healing_ring",
+    "megamod:unique_spell_ring",
+    "megamod:unique_crit_ring",
+    "megamod:unique_lightning_ring",
+    "megamod:unique_soul_ring"
+  ]
+}

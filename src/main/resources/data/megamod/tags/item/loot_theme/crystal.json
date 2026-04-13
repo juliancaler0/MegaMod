@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_staff_damage_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_staff_heal_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_glaive_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_hammer_1",
+      "required": false
+    }
+  ]
+}

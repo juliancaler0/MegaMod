@@ -1,0 +1,148 @@
+package com.ultra.megamod.lib.spellengine.spellbinding;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.LootContext;
+// LootContextParam removed in 1.21.11
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProviders;
+import net.minecraft.core.Holder;
+import net.minecraft.tags.TagKey;
+import net.minecraft.resources.Identifier;
+import com.ultra.megamod.lib.spellengine.SpellEngineMod;
+import com.ultra.megamod.lib.spellengine.api.spell.Spell;
+import com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents;
+import com.ultra.megamod.lib.spellengine.api.spell.container.SpellContainer;
+import com.ultra.megamod.lib.spellengine.api.spell.registry.SpellRegistry;
+import com.ultra.megamod.lib.spellengine.api.spell.container.SpellContainerHelper;
+import com.ultra.megamod.lib.spellengine.item.ScrollItem;
+import com.ultra.megamod.lib.spellengine.item.SpellEngineItems;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
+public class SpellBindRandomlyLootFunction extends LootItemConditionalFunction {
+    public static final String NAME = "spell_bind_randomly";
+    public static final Identifier ID = Identifier.fromNamespaceAndPath("megamod", NAME);
+
+    public static final MapCodec<SpellBindRandomlyLootFunction> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> commonFields(instance)
+                    .<String, NumberProvider, NumberProvider>and(
+                            instance.group(
+                                    Codec.STRING.fieldOf("pool").orElse(null).forGetter(function -> function.pool),
+                                    NumberProviders.CODEC.fieldOf("tier").forGetter(function -> function.tier),
+                                    NumberProviders.CODEC.fieldOf("count").forGetter(function -> function.count)
+                            )
+                    )
+                    .apply(instance, SpellBindRandomlyLootFunction::new)
+    );
+    public static final LootItemFunctionType<SpellBindRandomlyLootFunction> TYPE = new LootItemFunctionType<SpellBindRandomlyLootFunction>(CODEC);
+
+    private final NumberProvider tier;
+    @Nullable private final String pool;
+    @Nullable private final NumberProvider count;
+
+    private SpellBindRandomlyLootFunction(List<LootItemCondition> conditions, String pool, NumberProvider tier, NumberProvider count) {
+        super(conditions);
+        this.pool = pool;
+        this.tier = tier;
+        this.count = count;
+    }
+
+    @Override
+    public LootItemFunctionType<SpellBindRandomlyLootFunction> getType() {
+        return TYPE;
+    }
+
+    @Nullable TagKey<Spell> getSpellTag() {
+        if (this.pool == null || this.pool.isEmpty()) {
+            return null;
+        }
+        Identifier id;
+        if (this.pool.startsWith("#")) {
+            id = Identifier.parse(this.pool.substring(1));
+        } else {
+            id = Identifier.parse(this.pool);
+        }
+        return TagKey.create(SpellRegistry.KEY, id);
+    }
+
+    @Override
+    public ItemStack run(ItemStack stack, LootContext context) {
+        @Nullable final var spellTag = getSpellTag();
+        final var selectedTier = this.tier != null ? this.tier.getInt(context) : -1;
+        @Nullable var existingContainer = SpellContainerHelper.containerFromItemStack(stack);
+        final List<Identifier> alreadyPresentSpells = existingContainer != null
+                ? existingContainer.spell_ids().stream().map(Identifier::parse).toList()
+                : List.of();
+        var spells = SpellRegistry.stream(context.getLevel())
+                .filter(entry -> {
+                    var id = entry.unwrapKey().get().identifier();
+                    return (selectedTier < 0 || entry.value().tier == selectedTier)
+                            // && (entry.value().active != null && entry.value().active.scroll != null)
+                            && (spellTag == null || entry.is(spellTag))
+                            && !alreadyPresentSpells.contains(id);
+                })
+                .toList();
+
+        ArrayList<Holder<Spell>> selectedSpells = new ArrayList<>();
+        if (!spells.isEmpty()) {
+            var selectedCount = this.count != null ? this.count.getInt(context) : 1;
+            var retryAttempts = 3;
+            for (int i = 0; i < selectedCount; i++) {
+                var entry = spells.get(context.getLevel().random.nextInt(spells.size()));
+                while (
+                        (retryAttempts > 0) &&
+                                // Reroll if
+                                // already selected
+                                (
+                                        selectedSpells.contains(entry)
+                                )
+                ) {
+                    entry = spells.get(context.getLevel().random.nextInt(spells.size()));
+                    retryAttempts -= 1;
+                }
+
+                selectedSpells.add(entry);
+            }
+        }
+
+        if (!selectedSpells.isEmpty()) {
+            var newContainer = existingContainer != null ? existingContainer : SpellContainer.EMPTY;
+            var newSpellIds = selectedSpells.stream().map(entry -> entry.unwrapKey().get().identifier().toString()).toList();
+            newContainer = newContainer
+                    .withAdditionalSpell(newSpellIds);
+            var sortedSpellIds = SpellContainerHelper.sortedSpells(context.getLevel(), newContainer.spell_ids());
+            newContainer = newContainer.copyWith(sortedSpellIds);
+
+            stack.set(SpellDataComponents.SPELL_CONTAINER, newContainer);
+
+            if (stack.getItem() == SpellEngineItems.SCROLL) {
+                ScrollItem.onSpellAdded(stack, selectedSpells.getFirst(), ScrollItem.resolveSpellPool(context.getLevel(), selectedSpells.getFirst()));
+            }
+        } else {
+            if (stack.getItem() == SpellEngineItems.SCROLL) {
+                return ItemStack.EMPTY;
+            }
+        }
+
+        return stack;
+    }
+
+//    public static LootItemConditionalFunction.Builder<?> builder(String pool, NumberProvider tier) {
+//        return builder(conditions -> new SpellBindRandomlyLootFunction(conditions, tier, null));
+//    }
+
+    public static LootItemConditionalFunction.Builder<?> builder(String pool, NumberProvider tier, NumberProvider count) {
+        return simpleBuilder(conditions -> new SpellBindRandomlyLootFunction(conditions, pool, tier, count));
+    }
+}
+

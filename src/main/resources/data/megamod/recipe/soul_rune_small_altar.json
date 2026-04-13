@@ -1,0 +1,9 @@
+{
+  "type": "megamod:crafting",
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/soul_small",
+  "result": {
+    "count": 8,
+    "id": "megamod:soul_rune"
+  }
+}

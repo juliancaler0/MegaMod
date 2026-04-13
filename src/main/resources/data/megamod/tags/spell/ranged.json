@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "megamod:radiance_ranged",
+      "required": false
+    },
+    {
+      "id": "megamod:wither_ranged",
+      "required": false
+    },
+    {
+      "id": "megamod:flame_cloud_ranged",
+      "required": false
+    },
+    {
+      "id": "megamod:poison_cloud_ranged",
+      "required": false
+    },
+    {
+      "id": "megamod:bonus_shot_ranged",
+      "required": false
+    },
+    {
+      "id": "megamod:rampaging_ranged",
+      "required": false
+    }
+  ]
+}

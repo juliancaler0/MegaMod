@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:emerald_necklace",
+    "megamod:diamond_necklace",
+    "megamod:ruby_necklace",
+    "megamod:topaz_necklace",
+    "megamod:citrine_necklace",
+    "megamod:jade_necklace",
+    "megamod:sapphire_necklace",
+    "megamod:tanzanite_necklace",
+    "megamod:netherite_ruby_necklace",
+    "megamod:netherite_topaz_necklace",
+    "megamod:netherite_citrine_necklace",
+    "megamod:netherite_jade_necklace",
+    "megamod:netherite_sapphire_necklace",
+    "megamod:netherite_tanzanite_necklace",
+    "megamod:unique_attack_necklace",
+    "megamod:unique_dex_necklace",
+    "megamod:unique_tank_necklace",
+    "megamod:unique_archer_necklace",
+    "megamod:unique_arcane_necklace",
+    "megamod:unique_fire_necklace",
+    "megamod:unique_frost_necklace",
+    "megamod:unique_healing_necklace",
+    "megamod:unique_spell_necklace",
+    "megamod:unique_crit_necklace",
+    "megamod:unique_lightning_necklace",
+    "megamod:unique_soul_necklace"
+  ]
+}

@@ -1,0 +1,50 @@
+package com.ultra.megamod.lib.spellengine.spellbinding;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.Identifier;
+import com.ultra.megamod.lib.spellengine.SpellEngineMod;
+
+import java.util.Optional;
+
+public class SpellBookCreationCriteria extends SimpleCriterionTrigger<SpellBookCreationCriteria.Condition> {
+    public static final Identifier ID = Identifier.fromNamespaceAndPath("megamod", "spell_book_creation");
+    public static final SpellBookCreationCriteria INSTANCE = new SpellBookCreationCriteria();
+
+    @Override
+    public Codec<SpellBookCreationCriteria.Condition> codec() {
+        return SpellBookCreationCriteria.Condition.CODEC;
+    }
+
+    public void trigger(ServerPlayer player, Identifier spellPoolId) {
+        trigger(player, condition -> {
+            return condition.matches(spellPoolId);
+        });
+    }
+
+    public record Condition(Optional<ContextAwarePredicate> player, Optional<String> spell_pool) implements SimpleInstance {
+        public static final Codec<SpellBookCreationCriteria.Condition> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(SpellBookCreationCriteria.Condition::player),
+                        Codec.optionalField("spell_pool", Codec.STRING, true).forGetter(SpellBookCreationCriteria.Condition::spell_pool)
+                )
+                .apply(instance, SpellBookCreationCriteria.Condition::new)
+        );
+
+        public boolean matches(Identifier id) {
+            var poolMatches = true;
+            if (spell_pool.isPresent()) {
+                poolMatches = spell_pool.get().equals(id.toString());
+            }
+            return poolMatches;
+        }
+
+        @Override
+        public Optional<ContextAwarePredicate> player() {
+            return this.player;
+        }
+    }
+}

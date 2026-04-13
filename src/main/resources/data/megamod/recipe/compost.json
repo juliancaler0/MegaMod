@@ -6,5 +6,5 @@
     "D": "minecraft:dirt",
     "B": "minecraft:bone_meal"
   },
-  "result": { "id": "megamod:compost", "count": 4 }
+  "result": { "id": "megamod:colony_compost", "count": 4 }
 }

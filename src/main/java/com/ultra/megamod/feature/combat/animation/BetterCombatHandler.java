@@ -313,13 +313,17 @@ public class BetterCombatHandler {
         String animName = selectedAttack.animation() != null ? selectedAttack.animation()
                 : mapDirectionToAnimation(direction, activeAttributes.twoHanded());
 
+        float cooldownTicks = com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper
+                .getAttackCooldownTicksCapped(player);
         AttackAnimationPayload animPayload = new AttackAnimationPayload(
                 player.getId(),
                 usedIndex,
                 direction.ordinal(),
                 isOffHand,
                 activeAttributes.twoHanded(),
-                animName
+                animName,
+                cooldownTicks,
+                (float) selectedAttack.upswing()
         );
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, animPayload);
 
@@ -490,13 +494,17 @@ public class BetterCombatHandler {
         String animName2 = selectedAttack.animation() != null ? selectedAttack.animation()
                 : mapDirectionToAnimation(direction, activeAttributes.twoHanded());
 
+        float cooldownTicks2 = com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper
+                .getAttackCooldownTicksCapped(player);
         AttackAnimationPayload animPayload = new AttackAnimationPayload(
                 player.getId(),
                 usedIndex,
                 direction.ordinal(),
                 isOffHand,
                 activeAttributes.twoHanded(),
-                animName2
+                animName2,
+                cooldownTicks2,
+                (float) selectedAttack.upswing()
         );
         PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, animPayload);
 

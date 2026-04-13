@@ -12,8 +12,8 @@
           "base": 0.03,
           "per_level_above_first": 0.03
         },
-        "attribute": "megamod:arcane_power",
-        "id": "megamod:enchantment.sunfire",
+        "attribute": "megamod:arcane",
+        "id": "megamod:sunfire_enchantment",
         "operation": "add_multiplied_base"
       },
       {
@@ -22,8 +22,8 @@
           "base": 0.03,
           "per_level_above_first": 0.03
         },
-        "attribute": "megamod:fire_damage_bonus",
-        "id": "megamod:enchantment.sunfire",
+        "attribute": "megamod:fire",
+        "id": "megamod:sunfire_enchantment",
         "operation": "add_multiplied_base"
       }
     ]
@@ -41,6 +41,6 @@
   "slots": [
     "armor"
   ],
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#megamod:enchantable/spell_power_sunfire",
   "weight": 2
 }

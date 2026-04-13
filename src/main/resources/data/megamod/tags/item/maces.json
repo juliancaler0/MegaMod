@@ -1,0 +1,20 @@
+{
+  "values": [
+    "megamod:iron_mace",
+    "megamod:golden_mace",
+    "megamod:diamond_mace",
+    "megamod:netherite_mace",
+    {
+      "id": "megamod:aeternium_mace",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_mace",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_mace",
+      "required": false
+    }
+  ]
+}

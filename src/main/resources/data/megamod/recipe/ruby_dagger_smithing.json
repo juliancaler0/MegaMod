@@ -14,16 +14,10 @@
     }
   ],
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "betternether:nether_ruby"
-  },
-  "base": {
-    "item": "megamod:netherite_dagger"
-  },
+  "addition": "betternether:nether_ruby",
+  "base": "megamod:netherite_dagger",
   "result": {
     "id": "megamod:ruby_dagger"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

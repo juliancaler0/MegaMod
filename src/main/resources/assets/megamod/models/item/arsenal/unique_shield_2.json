@@ -1,0 +1,10 @@
+{
+	"parent": "megamod:item/arsenal/base/unique_shield_2",
+	"textures": {
+		"0": "megamod:item/arsenal/unique_shield_2",
+		"particle": "megamod:item/arsenal/unique_shield_2"
+	},
+	"overrides": [
+		{ "predicate": { "blocking": 1 }, "model": "megamod:item/arsenal/unique_shield_2_blocking" }
+	]
+}

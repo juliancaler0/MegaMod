@@ -3,44 +3,45 @@ package com.ultra.megamod.feature.map;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.feature.adminmodules.modules.render.ESPRenderHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import org.joml.Matrix4f;
 
 import java.util.List;
 
 /**
- * Renders colored beacon beams at waypoint positions in the 3D game world.
- * Beams are thin cross-shaped quads (lines) from Y=0 to Y=320 using
- * the existing ESP see-through render pipeline so they are visible through blocks.
+ * Renders vanilla-style beacon beams at waypoint positions.
+ * Bottom of the beam is clamped to the surface so it doesn't pierce the
+ * terrain below; top extends to the world ceiling.
  */
 @EventBusSubscriber(modid = MegaMod.MODID, value = Dist.CLIENT)
 public class WaypointBeaconRenderer {
 
-    // Waypoint colors matching MapScreen (8 colors) as float RGB
-    private static final float[][] BEACON_COLORS = {
-            {1.0f, 0.33f, 0.33f},   // 0 = Red
-            {0.33f, 0.33f, 1.0f},   // 1 = Blue
-            {0.33f, 1.0f, 0.33f},   // 2 = Green
-            {1.0f, 1.0f, 0.33f},    // 3 = Yellow
-            {0.67f, 0.33f, 1.0f},   // 4 = Purple
-            {1.0f, 0.67f, 0.0f},    // 5 = Orange
-            {0.33f, 1.0f, 1.0f},    // 6 = Cyan
-            {1.0f, 0.33f, 0.67f},   // 7 = Pink
+    private static final Identifier BEAM_LOCATION = Identifier.withDefaultNamespace("textures/entity/beacon_beam.png");
+
+    /** Waypoint colors as packed 0xRRGGBB ints (matches MapScreen palette). */
+    private static final int[] BEACON_COLORS = {
+            0xFF5555, 0x5555FF, 0x55FF55, 0xFFFF55,
+            0xAA55FF, 0xFFAA00, 0x55FFFF, 0xFF55AA,
     };
 
-    /** Maximum render distance for beacons (in blocks). */
+    /** Maximum render distance for beacons (horizontal, blocks). */
     private static final double MAX_RENDER_DIST_SQ = 256.0 * 256.0;
 
-    /** Beam extends from Y=0 to Y=320 (full world height). */
-    private static final float BEAM_BOTTOM = 0f;
-    private static final float BEAM_TOP = 320f;
+    private static final int BEAM_TOP_Y = 320;
+    private static final float SOLID_RADIUS = 0.2f;
+    private static final float GLOW_RADIUS = 0.25f;
+    private static final int FULL_BRIGHT = 0xF000F0;
 
     @SubscribeEvent
     public static void onRenderWorld(RenderLevelStageEvent.AfterTranslucentBlocks event) {
@@ -48,53 +49,80 @@ public class WaypointBeaconRenderer {
         if (mc.level == null || mc.player == null) return;
 
         String currentDim = mc.level.dimension().identifier().toString();
-
         List<MapWaypointSyncManager.BeaconWaypoint> waypoints =
                 MapWaypointSyncManager.getActiveBeaconWaypoints(currentDim);
         if (waypoints.isEmpty()) return;
 
+        // Defensive: if any of this throws (bad render type, unloaded chunk, etc.)
+        // we want to skip the frame instead of crashing the entire game.
+        try {
+            renderAll(event, mc, waypoints);
+        } catch (Throwable ignored) {}
+    }
+
+    private static void renderAll(RenderLevelStageEvent event, Minecraft mc,
+                                   List<MapWaypointSyncManager.BeaconWaypoint> waypoints) {
+        Vec3 cam = mc.gameRenderer.getMainCamera().position();
         PoseStack poseStack = event.getPoseStack();
-        Vec3 cam = mc.player.getEyePosition(mc.getDeltaTracker().getRealtimeDeltaTicks());
-
         MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-        VertexConsumer lines = bufferSource.getBuffer(ESPRenderHelper.LINES_SEE_THROUGH);
-
-        poseStack.pushPose();
-        poseStack.translate(-cam.x, -cam.y, -cam.z);
-        Matrix4f matrix = poseStack.last().pose();
+        // Use entityTranslucentEmissive so the beam glows full-bright like a beacon
+        // and integrates cleanly with the standard buffer-source flush order.
+        RenderType beamType = RenderTypes.entityTranslucentEmissive(BEAM_LOCATION);
+        VertexConsumer beam = bufferSource.getBuffer(beamType);
 
         for (MapWaypointSyncManager.BeaconWaypoint wp : waypoints) {
-            // Distance check (horizontal only)
             double dx = (wp.x() + 0.5) - cam.x;
             double dz = (wp.z() + 0.5) - cam.z;
-            double distSq = dx * dx + dz * dz;
-            if (distSq > MAX_RENDER_DIST_SQ) continue;
+            if (dx * dx + dz * dz > MAX_RENDER_DIST_SQ) continue;
 
-            float[] color = BEACON_COLORS[wp.colorIndex() % BEACON_COLORS.length];
-            float r = color[0];
-            float g = color[1];
-            float b = color[2];
-            float a = 0.8f;
+            int surfaceY;
+            try {
+                surfaceY = mc.level.getHeight(Heightmap.Types.WORLD_SURFACE, wp.x(), wp.z());
+            } catch (Exception e) {
+                continue; // chunk unloaded / heightmap unavailable
+            }
+            int height = BEAM_TOP_Y - surfaceY;
+            if (height <= 0) continue;
 
-            float cx2 = wp.x() + 0.5f;
-            float cz = wp.z() + 0.5f;
+            int rgb = BEACON_COLORS[wp.colorIndex() % BEACON_COLORS.length];
 
-            // Render 4 vertical lines forming a cross at the waypoint's X,Z
-            // Line 1: north-south axis
-            lines.addVertex(matrix, cx2, BEAM_BOTTOM, cz - 0.15f).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
-            lines.addVertex(matrix, cx2, BEAM_TOP, cz - 0.15f).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
+            poseStack.pushPose();
+            poseStack.translate(wp.x() + 0.5 - cam.x, surfaceY - cam.y, wp.z() + 0.5 - cam.z);
+            PoseStack.Pose pose = poseStack.last();
 
-            lines.addVertex(matrix, cx2, BEAM_BOTTOM, cz + 0.15f).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
-            lines.addVertex(matrix, cx2, BEAM_TOP, cz + 0.15f).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
+            emitBeam(pose, beam, ARGB.color(180, rgb), 0, height, SOLID_RADIUS);
+            emitBeam(pose, beam, ARGB.color(64, rgb), 0, height, GLOW_RADIUS);
 
-            // Line 2: east-west axis
-            lines.addVertex(matrix, cx2 - 0.15f, BEAM_BOTTOM, cz).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
-            lines.addVertex(matrix, cx2 - 0.15f, BEAM_TOP, cz).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
-
-            lines.addVertex(matrix, cx2 + 0.15f, BEAM_BOTTOM, cz).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
-            lines.addVertex(matrix, cx2 + 0.15f, BEAM_TOP, cz).setColor(r, g, b, a).setNormal(0, 1, 0).setLineWidth(2.0f);
+            poseStack.popPose();
         }
 
-        poseStack.popPose();
+        bufferSource.endBatch(beamType);
+    }
+
+    /** Emits the four-quad cross that makes up a beacon column. */
+    private static void emitBeam(PoseStack.Pose pose, VertexConsumer c, int argb, int yMin, int yMax, float r) {
+        emitQuad(pose, c, argb, yMin, yMax, -r, -r, -r,  r);
+        emitQuad(pose, c, argb, yMin, yMax, -r,  r,  r,  r);
+        emitQuad(pose, c, argb, yMin, yMax,  r,  r,  r, -r);
+        emitQuad(pose, c, argb, yMin, yMax,  r, -r, -r, -r);
+    }
+
+    private static void emitQuad(PoseStack.Pose pose, VertexConsumer c, int argb,
+                                  int yMin, int yMax,
+                                  float minX, float minZ, float maxX, float maxZ) {
+        addVertex(pose, c, argb, yMax, minX, minZ, 0.0f, 0.0f);
+        addVertex(pose, c, argb, yMin, minX, minZ, 0.0f, 1.0f);
+        addVertex(pose, c, argb, yMin, maxX, maxZ, 1.0f, 1.0f);
+        addVertex(pose, c, argb, yMax, maxX, maxZ, 1.0f, 0.0f);
+    }
+
+    private static void addVertex(PoseStack.Pose pose, VertexConsumer c, int argb,
+                                   int y, float x, float z, float u, float v) {
+        c.addVertex(pose, x, (float) y, z)
+            .setColor(argb)
+            .setUv(u, v)
+            .setOverlay(OverlayTexture.NO_OVERLAY)
+            .setLight(FULL_BRIGHT)
+            .setNormal(pose, 0, 1, 0);
     }
 }

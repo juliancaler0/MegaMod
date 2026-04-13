@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:bow",
+    "minecraft:crossbow",
+    "#megamod:bows",
+    "#megamod:crossbows",
+    "#rpg_series:archetype/ranged_damage_weapon"
+  ]
+}

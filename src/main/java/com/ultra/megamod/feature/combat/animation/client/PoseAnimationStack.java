@@ -50,7 +50,7 @@ public class PoseAnimationStack extends PlayerAnimationController {
         if (animationId == null || animationId.isEmpty()) {
             stop();
         } else {
-            Identifier animId = Identifier.fromNamespaceAndPath("megamod", animationId);
+            Identifier animId = animationId.contains(":") ? Identifier.parse(animationId) : Identifier.fromNamespaceAndPath("megamod", animationId);
             if (PlayerAnimResources.hasAnimation(animId)) {
                 mirror.enabled = shouldMirror;
                 AbstractFadeModifier fade = AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE);

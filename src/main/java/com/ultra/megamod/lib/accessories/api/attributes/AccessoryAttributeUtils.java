@@ -1,0 +1,35 @@
+package com.ultra.megamod.lib.accessories.api.attributes;
+
+import com.ultra.megamod.lib.accessories.api.components.AccessoriesDataComponents;
+import com.ultra.megamod.lib.accessories.api.components.AccessoryItemAttributeModifiers;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
+
+///
+/// Utility class for handling the adding or removal of
+/// attributes from a given [ItemStack] using the
+/// [AccessoryItemAttributeModifiers] data component
+///
+public class AccessoryAttributeUtils {
+
+    public static void addAttribute(ItemStack stack, String slotName, Holder<Attribute> attribute, Identifier location, double amount, AttributeModifier.Operation operation, boolean isStackable) {
+        stack.update(
+                AccessoriesDataComponents.ATTRIBUTES.get(),
+                new AccessoryItemAttributeModifiers(List.of(), true),
+                modifiers -> modifiers.withModifierAdded(attribute, new AttributeModifier(location, amount, operation), slotName, isStackable)
+        );
+    }
+
+    public static void removeAttribute(ItemStack stack, Holder<Attribute> attribute, Identifier location) {
+        stack.update(
+                AccessoriesDataComponents.ATTRIBUTES.get(),
+                new AccessoryItemAttributeModifiers(List.of(), true),
+                modifiers -> modifiers.withoutModifier(attribute, location)
+        );
+    }
+}

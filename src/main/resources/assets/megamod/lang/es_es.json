@@ -1,0 +1,77 @@
+{
+  "itemGroup.megamod.general": "Archers",
+  "item.megamod.auto_fire_hook.description_1": "Libera automáticamente flechas cargadas.",
+  "item.megamod.auto_fire_hook.description_2": "Se puede aplicar a armas de largo alcance en un Yunque.",
+  "item.ranged_weapon.pull_time": "Tiempo de Tensión: %1$s seg",
+
+  "block.megamod.megamod_workbench": "Banco de Trabajo de Arquero",
+  "block.megamod.megamod_workbench.hint": "Banco de Trabajo para aldeanos artesanos de arquería.",
+  "entity.minecraft.villager.archery_artisan": "Artesano de Arquería",
+  "entity.minecraft.villager.megamod.archery_artisan": "Artesano de Arquería",
+  "entity.minecraft.villager.megamod:archery_artisan": "Artesano de Arquería",
+
+  "item.megamod.auto_fire_hook": "Gancho de Disparo Automático",
+
+  "item.megamod.flint_spear": "Lanza de Pedernal",
+  "item.megamod.iron_spear": "Lanza de Hierro",
+  "item.megamod.golden_spear": "Lanza de Oro",
+  "item.megamod.diamond_spear": "Lanza de Diamante",
+  "item.megamod.netherite_spear": "Lanza de Netherita",
+
+  "item.megamod.archer_armor_head": "Capucha de Arquero",
+  "item.megamod.archer_armor_chest": "Túnica de Arquero",
+  "item.megamod.archer_armor_legs": "Pantalones de Arquero",
+  "item.megamod.archer_armor_feet": "Botas de Arquero",
+
+  "item.megamod.ranger_armor_head": "Capucha de Explorador",
+  "item.megamod.ranger_armor_chest": "Túnica de Explorador",
+  "item.megamod.ranger_armor_legs": "Pantalones de Explorador",
+  "item.megamod.ranger_armor_feet": "Botas de Explorador",
+
+  "item.megamod.composite_longbow": "Arco Largo Compuesto",
+  "item.megamod.mechanic_shortbow": "Arco Corto Mecánico",
+  "item.megamod.royal_longbow": "Arco Largo Real",
+  "item.megamod.rapid_crossbow": "Ballesta Rápida",
+  "item.megamod.heavy_crossbow": "Ballesta Pesada",
+  "item.megamod.netherite_shortbow": "Arco Corto de Netherite",
+  "item.megamod.netherite_longbow": "Arco Largo de Netherite",
+  "item.megamod.netherite_rapid_crossbow": "Ballesta Rápida de Netherita",
+  "item.megamod.netherite_heavy_crossbow": "Ballesta Pesada de Netherita",
+  "item.megamod.crystal_shortbow": "Arco Corto de Cristal",
+  "item.megamod.crystal_longbow": "Arco Largo de Cristal",
+  "item.megamod.ruby_rapid_crossbow": "Ballesta Rápida de Rubí",
+  "item.megamod.ruby_heavy_crossbow": "Ballesta Pesada de Rubí",
+
+  "item.megamod.spell_book/archer": "Manual de Arquería",
+
+  "spell.megamod.power_shot.name": "Disparo Potente",
+  "spell.megamod.power_shot.description": "Las flechas infligen la Marca del Cazador al objetivo durante {effect_duration} segundos, aumentando el daño recibido en un {damage_taken}, acumulándose hasta {effect_amplifier} veces.",
+  "effect.megamod.hunters_mark": "Marcado",
+  "effect.megamod.hunters_mark.description": "Aumenta el daño recibido de todas las fuentes en un 5%%",
+
+  "spell.megamod.entangling_roots.name": "Raíces Enredadoras",
+  "spell.megamod.entangling_roots.description": "Conjura raíces que brotan del suelo en el área cercana, ralentizando a los enemigos durante {cloud_duration} segundos.",
+  "effect.megamod.entangling_roots": "Raíces Enredadoras",
+  "effect.megamod.entangling_roots.description": "Reduce la velocidad de movimiento",
+
+  "spell.megamod.barrage.name": "Ráfaga",
+  "spell.megamod.barrage.description": "Dispara múltiples flechas en rápida sucesión.",
+
+  "spell.megamod.magic_arrow.name": "Flecha Mágica",
+  "spell.megamod.magic_arrow.description": "Dispara una flecha mágica que atraviesa objetivos, infligiendo {damage} de daño a cada objetivo.",
+
+  "advancements.rpg_series.obtain_arrow.title": "Camino del Arquero",
+  "advancements.rpg_series.obtain_arrow.description": "Obtén una Flecha",
+  "advancements.rpg_series.spell_master_archer.title": "Experto en Balística",
+  "advancements.rpg_series.spell_master_archer.description": "Completa el Manual de Arquería",
+
+  "gui.megamod.rune_crafting": "Elaboración de Runas",
+  "block.megamod.crafting_altar": "Altar de Elaboración de Runas",
+  "block.megamod.crafting_altar.hint": "Elabora runas con coste más eficiente.",
+  "item.megamod.arcane_rune": "Runa Arcana",
+  "item.megamod.fire_rune": "Runa de Fuego",
+  "item.megamod.frost_rune": "Runa de Escarcha",
+  "item.megamod.healing_rune": "Runa de Curación",
+  "item.megamod.lightning_rune": "Runa de Relámpago",
+  "item.megamod.soul_rune": "Runa de Alma"
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "T": "minecraft:ghast_tear",
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "GTG",
+    "W W",
+    "W W"
+  ],
+  "result": {
+    "id": "megamod:prior_robe_legs"
+  }
+}

@@ -260,10 +260,42 @@ public class DungeonEntityRegistry {
     public static final DeferredItem<UmvuthanaMaskItem> MASK_OF_MISERY = ITEMS.registerItem("mask_of_misery", p -> new UmvuthanaMaskItem(p, UmvuthanaMaskItem.MaskType.MISERY));
     public static final DeferredItem<UmvuthanaMaskItem> MASK_OF_BLISS = ITEMS.registerItem("mask_of_bliss", p -> new UmvuthanaMaskItem(p, UmvuthanaMaskItem.MaskType.BLISS));
     public static final DeferredItem<GreatExperienceBottleItem> GREAT_EXPERIENCE_BOTTLE = ITEMS.registerItem("great_experience_bottle", p -> new GreatExperienceBottleItem(p));
-    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_HELM = ITEMS.registerItem("geomancer_helm", p -> new GeomancerArmorItem(p, "Helm"));
-    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_CHEST = ITEMS.registerItem("geomancer_chest", p -> new GeomancerArmorItem(p, "Chestplate"));
-    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_LEGS = ITEMS.registerItem("geomancer_legs", p -> new GeomancerArmorItem(p, "Leggings"));
-    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_BOOTS = ITEMS.registerItem("geomancer_boots", p -> new GeomancerArmorItem(p, "Boots"));
+    // Geomancer armor — registers each piece with a Properties supplier that
+    // pre-bakes the EQUIPPABLE component, mirroring how the working RpgArmorItem
+    // class-armor sets are registered in ClassArmorRegistry. Per-piece donor
+    // assets: Helm/Leggings -> warrior_armor, Chest/Boots -> berserker_armor.
+    private static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GEOMANCER_WARRIOR_ASSET =
+            net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "warrior_armor"));
+    private static final net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> GEOMANCER_BERSERKER_ASSET =
+            net.minecraft.resources.ResourceKey.create(
+                    net.minecraft.world.item.equipment.EquipmentAssets.ROOT_ID,
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "berserker_armor"));
+
+    private static net.neoforged.neoforge.registries.DeferredItem<GeomancerArmorItem> registerGeomancer(
+            String name, String pieceName,
+            net.minecraft.world.entity.EquipmentSlot slot,
+            net.minecraft.resources.ResourceKey<net.minecraft.world.item.equipment.EquipmentAsset> asset) {
+        return ITEMS.registerItem(name,
+                p -> new GeomancerArmorItem(p, pieceName),
+                () -> new net.minecraft.world.item.Item.Properties()
+                        .stacksTo(1)
+                        .rarity(net.minecraft.world.item.Rarity.RARE)
+                        .component(net.minecraft.core.component.DataComponents.EQUIPPABLE,
+                                net.minecraft.world.item.equipment.Equippable.builder(slot)
+                                        .setAsset(asset)
+                                        .build()));
+    }
+
+    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_HELM = registerGeomancer(
+            "geomancer_helm", "Helm", net.minecraft.world.entity.EquipmentSlot.HEAD, GEOMANCER_WARRIOR_ASSET);
+    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_CHEST = registerGeomancer(
+            "geomancer_chest", "Chestplate", net.minecraft.world.entity.EquipmentSlot.CHEST, GEOMANCER_BERSERKER_ASSET);
+    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_LEGS = registerGeomancer(
+            "geomancer_legs", "Leggings", net.minecraft.world.entity.EquipmentSlot.LEGS, GEOMANCER_WARRIOR_ASSET);
+    public static final DeferredItem<GeomancerArmorItem> GEOMANCER_BOOTS = registerGeomancer(
+            "geomancer_boots", "Boots", net.minecraft.world.entity.EquipmentSlot.FEET, GEOMANCER_BERSERKER_ASSET);
     public static final DeferredItem<BlowgunItem> BLOWGUN = ITEMS.registerItem("blowgun", p -> new BlowgunItem(p));
     public static final DeferredItem<DartItem> DART_ITEM = ITEMS.registerItem("dart_ammo", p -> new DartItem(p));
     public static final DeferredItem<CapturedGrottolItem> CAPTURED_GROTTOL = ITEMS.registerItem("captured_grottol", p -> new CapturedGrottolItem(p));

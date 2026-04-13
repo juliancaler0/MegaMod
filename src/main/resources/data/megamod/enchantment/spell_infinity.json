@@ -1,10 +1,24 @@
 {
   "anvil_cost": 8,
   "description": {
-    "translate": "enchantment.megamod.spell_infinity",
-    "fallback": "Spell Infinity"
+    "translate": "enchantment.spell_engine.spell_infinity"
   },
-  "effects": {},
+  "effects": {
+    "minecraft:ammo_use": [
+      {
+        "effect": {
+          "type": "minecraft:set",
+          "value": 0.0
+        },
+        "requirements": {
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": "#megamod:runes"
+          }
+        }
+      }
+    ]
+  },
   "max_cost": {
     "base": 50,
     "per_level_above_first": 0
@@ -15,9 +29,8 @@
     "per_level_above_first": 0
   },
   "slots": [
-    "mainhand",
-    "offhand"
+    "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/weapon",
+  "supported_items": "#megamod:enchantable/spell_infinity",
   "weight": 1
 }

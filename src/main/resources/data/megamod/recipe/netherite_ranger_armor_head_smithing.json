@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:ranger_armor_head",
+  "result": {
+    "count": 1,
+    "id": "megamod:netherite_ranger_armor_head"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

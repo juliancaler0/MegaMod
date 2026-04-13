@@ -58,7 +58,9 @@ public class SharedMapManager {
     public void initializeIfNeeded(ServerLevel level) {
         if (initialized) return;
         Path worldDir = level.getServer().getWorldPath(LevelResource.ROOT);
-        this.mapBaseDir = worldDir.resolve("data").resolve("megamod_map");
+        // megamod_map_v2: bumped to invalidate server tiles uploaded with the
+        // legacy ARGB→ABGR byte-swap (R/B inverted).
+        this.mapBaseDir = worldDir.resolve("data").resolve("megamod_map_v2");
         try {
             Files.createDirectories(mapBaseDir.resolve("surface"));
             Files.createDirectories(mapBaseDir.resolve("cave"));

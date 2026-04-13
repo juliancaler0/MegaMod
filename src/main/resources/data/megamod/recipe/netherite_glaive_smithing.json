@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:diamond_glaive",
+  "result": {
+    "id": "megamod:netherite_glaive"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

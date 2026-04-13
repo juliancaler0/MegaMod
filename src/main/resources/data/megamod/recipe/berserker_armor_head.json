@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:goat_horn",
+    "I": "minecraft:chain",
+    "T": "minecraft:netherite_scrap"
+  },
+  "pattern": [
+    "GTG",
+    "I I"
+  ],
+  "result": {
+    "id": "megamod:berserker_armor_head"
+  }
+}

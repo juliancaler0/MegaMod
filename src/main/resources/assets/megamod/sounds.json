@@ -1277,4 +1277,187 @@
   ,"combat.weapon_sword_swing": {"sounds": ["megamod:combat/weapon_sword_swing"]}
   ,"combat.weapon_throw": {"sounds": ["megamod:combat/weapon_throw"]}
   ,"combat.weapon_thrust_launch": {"sounds": ["megamod:combat/weapon_thrust_launch"]}
+  ,"roll": {"sounds": ["megamod:combatroll/roll"]}
+  ,"roll_cooldown_ready": {"sounds": ["megamod:combatroll/roll_cooldown_ready"]}
+
+  ,"bettercombat.anchor_slam": {
+    "sounds": [
+      {"name": "megamod:bettercombat/anchor_slam-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.axe_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/axe_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.claymore_swing": {
+    "sounds": [
+      {"name": "megamod:bettercombat/claymore_swing-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.claymore_stab": {
+    "sounds": [
+      {"name": "megamod:bettercombat/claymore_stab-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.claymore_slam": {
+    "sounds": [
+      {"name": "megamod:bettercombat/claymore_slam-01", "stream": false, "pitch": 0.87}
+    ]
+  }
+  ,"bettercombat.dagger_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/dagger_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.double_axe_swing": {
+    "sounds": [
+      {"name": "megamod:bettercombat/double_axe_swing-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.fist_punch": {
+    "sounds": [
+      {"name": "megamod:bettercombat/fist_punch-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.glaive_slash_quick": {
+    "sounds": [
+      {"name": "megamod:bettercombat/glaive_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.glaive_slash_slow": {
+    "sounds": [
+      {"name": "megamod:bettercombat/glaive_slash-02", "stream": false}
+    ]
+  }
+  ,"bettercombat.hammer_slam": {
+    "sounds": [
+      {"name": "megamod:bettercombat/hammer_slam-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.katana_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/katana_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.mace_slam": {
+    "sounds": [
+      {"name": "megamod:bettercombat/mace_slam-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.mace_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/mace_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.pickaxe_swing": {
+    "sounds": [
+      {"name": "megamod:bettercombat/pickaxe_swing-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.rapier_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/rapier_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.rapier_stab": {
+    "sounds": [
+      {"name": "megamod:bettercombat/rapier_stab-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.scythe_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/scythe_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.spear_stab": {
+    "sounds": [
+      {"name": "megamod:bettercombat/spear_stab-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.staff_slam": {
+    "sounds": [
+      {"name": "megamod:bettercombat/staff_slam-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.staff_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/staff_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.staff_spin": {
+    "sounds": [
+      {"name": "megamod:bettercombat/staff_spin-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.staff_stab": {
+    "sounds": [
+      {"name": "megamod:bettercombat/staff_stab-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.sickle_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/sickle_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.sword_slash": {
+    "sounds": [
+      {"name": "megamod:bettercombat/sword_slash-01", "stream": false}
+    ]
+  }
+  ,"bettercombat.wand_swing": {
+    "sounds": [
+      {"name": "megamod:bettercombat/wand_swing-01", "stream": false}
+    ]
+  }
+  ,"marker_shot": {"sounds": ["megamod:sounds/marker_shot"]}
+  ,"entangling_roots": {"sounds": ["megamod:sounds/entangling_roots"]}
+  ,"bow_pull": {"sounds": ["megamod:sounds/bow_pull"]}
+  ,"magic_arrow_impact": {"sounds": ["megamod:sounds/magic_arrow_impact"]}
+  ,"magic_arrow_release": {"sounds": ["megamod:sounds/magic_arrow_release"]}
+  ,"magic_arrow_start": {"sounds": ["megamod:sounds/magic_arrow_start"]}
+  ,"archers_workbench": {"sounds": ["megamod:sounds/archers_workbench"]}
+  ,"archer_armor": {"sounds": ["megamod:sounds/archer_armor"]}
+  ,"plate_equip": {"sounds": ["megamod:plate_equip_1","megamod:plate_equip_2","megamod:plate_equip_3"]}
+  ,"cloth_equip": {"sounds": ["megamod:cloth_equip_1","megamod:cloth_equip_2","megamod:cloth_equip_3"]}
+  ,"shield_equip": {"sounds": ["megamod:plate_equip_1","megamod:plate_equip_2","megamod:plate_equip_3"]}
+  ,"divine_protection_impact": {"sounds": ["megamod:divine_protection_impact"]}
+  ,"divine_protection_release": {"sounds": ["megamod:divine_protection_release"]}
+  ,"judgement_impact": {"sounds": ["megamod:judgement_impact"]}
+  ,"battle_banner_release": {"sounds": ["megamod:battle_banner_release"]}
+  ,"battle_banner_presence": {"sounds": ["megamod:battle_banner_presence"]}
+  ,"holy_shock_damage": {"sounds": ["megamod:holy_shock_damage"]}
+  ,"holy_shock_heal": {"sounds": ["megamod:holy_shock_heal"]}
+  ,"holy_beam_start_casting": {"sounds": ["megamod:holy_beam_start_casting"]}
+  ,"holy_beam_casting": {"sounds": ["megamod:holy_beam_casting"]}
+  ,"holy_beam_damage": {"sounds": ["megamod:holy_beam_damage"]}
+  ,"holy_beam_heal": {"sounds": ["megamod:holy_beam_heal"]}
+  ,"holy_beam_release": {"sounds": ["megamod:holy_beam_release"]}
+  ,"holy_barrier_activate": {"sounds": ["megamod:holy_barrier_activate"]}
+  ,"holy_barrier_idle": {"sounds": ["megamod:holy_barrier_idle"]}
+  ,"holy_barrier_impact": {"sounds": ["megamod:holy_barrier_impact"]}
+  ,"holy_barrier_deactivate": {"sounds": ["megamod:holy_barrier_deactivate"]}
+  ,"jewelry_equip": {"sounds": ["megamod:jewelry_equip"]}
+  ,"jewelry_workbench": {"sounds": ["megamod:jewelry_workbench"]}
+  ,"arsenal_shield_equip": {"sounds": ["megamod:arsenal/shield_equip_1","megamod:arsenal/shield_equip_2","megamod:arsenal/shield_equip_3"]}
+  ,"arsenal_wither_impact": {"sounds": ["megamod:arsenal/wither_impact"]}
+  ,"arsenal_poison_cloud_spawn": {"sounds": ["megamod:arsenal/poison_cloud_spawn"]}
+  ,"arsenal_poison_cloud_tick": {"sounds": ["megamod:arsenal/poison_cloud_tick"]}
+  ,"arsenal_leeching_impact": {"sounds": ["megamod:arsenal/leeching_impact"]}
+  ,"arsenal_guardian_strike_release": {"sounds": ["megamod:arsenal/guardian_strike_release"]}
+  ,"arsenal_guardian_strike_impact": {"sounds": ["megamod:arsenal/guardian_strike_impact"]}
+  ,"arsenal_guardian_heal_impact": {"sounds": ["megamod:arsenal/guardian_heal_impact"]}
+  ,"arsenal_missile_impact": {"sounds": ["megamod:arsenal/missile_impact"]}
+  ,"arsenal_missile_release": {"sounds": ["megamod:arsenal/missile_release"]}
+  ,"arsenal_sunder_impact": {"sounds": ["megamod:arsenal/sunder_impact"]}
+  ,"arsenal_unyielding_impact": {"sounds": ["megamod:arsenal/unyielding_impact"]}
+  ,"arsenal_shockwave_impact": {"sounds": ["megamod:arsenal/shockwave_impact"]}
+  ,"arsenal_shockwave_release": {"sounds": ["megamod:arsenal/shockwave_release"]}
+  ,"arsenal_spike_impact": {"sounds": ["megamod:arsenal/spike_impact"]}
+  ,"arsenal_spell_cooldown_impact": {"sounds": ["megamod:arsenal/spell_cooldown_impact"]}
+  ,"arsenal_swirling": {"sounds": ["megamod:arsenal/swirling"]}
+  ,"arsenal_radiance_impact": {"sounds": ["megamod:arsenal/radiance_impact"]}
+  ,"arsenal_rampaging_activate": {"sounds": ["megamod:arsenal/rampaging_activate"]}
+  ,"arsenal_focusing_activate": {"sounds": ["megamod:arsenal/focusing_activate"]}
+  ,"arsenal_surging_activate": {"sounds": ["megamod:arsenal/surging_activate"]}
 }

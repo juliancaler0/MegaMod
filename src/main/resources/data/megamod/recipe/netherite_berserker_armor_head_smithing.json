@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:berserker_armor_head",
+  "result": {
+    "id": "megamod:netherite_berserker_armor_head"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

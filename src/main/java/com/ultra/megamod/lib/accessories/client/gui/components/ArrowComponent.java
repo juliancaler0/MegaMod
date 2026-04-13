@@ -1,0 +1,128 @@
+package com.ultra.megamod.lib.accessories.client.gui.components;
+import com.ultra.megamod.lib.accessories.owo.ui.core.*;
+
+import com.ultra.megamod.lib.accessories.Accessories;
+import com.ultra.megamod.lib.accessories.client.DrawUtils;
+import com.ultra.megamod.lib.accessories.owo.ui.base.BaseComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.core.PositionedRectangle;
+import net.minecraft.resources.Identifier;
+
+public class ArrowComponent extends BaseComponent {
+    protected final Identifier texture = Accessories.of("textures/gui/theme/all_arrow_directions.png");
+
+    protected final int textureWidth = 32;
+    protected final int textureHeight = 32;
+
+    protected Direction direction;
+    protected boolean centered = false;
+
+    protected final AnimatableProperty<PositionedRectangle> visibleArea;
+
+    public ArrowComponent(Direction direction) {
+        this.direction = direction;
+        this.visibleArea = AnimatableProperty.of(PositionedRectangle.of(0, 0, this.regionWidth(), this.regionHeight()));
+    }
+
+    protected int regionWidth() {
+        return this.direction.regionWidth;
+    }
+
+    protected int regionHeight() {
+        return this.direction.regionHeight;
+    }
+
+    protected int u() {
+        return this.direction.u;
+    }
+
+    protected int v() {
+        return this.direction.v;
+    }
+
+    protected int determineHorizontalContentSize(Sizing sizing) {
+        return this.regionWidth();
+    }
+
+    protected int determineVerticalContentSize(Sizing sizing) {
+        return this.regionHeight();
+    }
+
+    public void update(float delta, int mouseX, int mouseY) {
+        super.update(delta, mouseX, mouseY);
+        this.visibleArea.update(delta);
+    }
+
+    public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+        context.push();
+        context.translate((float) this.x, (float) this.y);
+
+        if(this.centered) context.translate(this.direction.getXOffset(), this.direction.getYOffset());
+
+        context.scale((float) this.width / (float) this.regionWidth(), (float) this.height / (float) this.regionHeight());
+        PositionedRectangle visibleArea = this.visibleArea.get();
+        int bottomEdge = Math.min(visibleArea.y() + visibleArea.height(), this.regionHeight());
+        int rightEdge = Math.min(visibleArea.x() + visibleArea.width(), this.regionWidth());
+        DrawUtils.blit(context, this.texture,
+            visibleArea.x(), visibleArea.y(),
+            (float) (this.u() + visibleArea.x()), (float) (this.v() + visibleArea.y()),
+            rightEdge - visibleArea.x(), bottomEdge - visibleArea.y(),
+            rightEdge - visibleArea.x(), bottomEdge - visibleArea.y(),
+            this.textureWidth, this.textureHeight);
+
+        context.pop();
+    }
+
+    public ArrowComponent changeDirection(Direction direction) {
+        this.direction = direction;
+        this.resetVisibleArea();
+
+        return this;
+    }
+
+    public ArrowComponent centered(boolean value) {
+        this.centered = value;
+
+        return this;
+    }
+
+    public ArrowComponent visibleArea(PositionedRectangle visibleArea) {
+        this.visibleArea.set(visibleArea);
+        return this;
+    }
+
+    public ArrowComponent resetVisibleArea() {
+        this.visibleArea(PositionedRectangle.of(0, 0, this.regionWidth(), this.regionHeight()));
+        return this;
+    }
+
+    public AnimatableProperty<PositionedRectangle> visibleArea() {
+        return this.visibleArea;
+    }
+
+    public enum Direction {
+        RIGHT( 0,  0, 16, 14),
+        LEFT (16,  0, 16, 14),
+        UP   ( 0, 16, 14, 16),
+        DOWN (16, 16, 14, 16);
+
+        public final int u;
+        public final int v;
+        public final int regionWidth;
+        public final int regionHeight;
+
+        Direction(int u, int v, int regionWidth, int regionHeight) {
+            this.u = u;
+            this.v = v;
+            this.regionWidth = regionWidth;
+            this.regionHeight = regionHeight;
+        }
+
+        public float getXOffset() {
+            return (this == UP || this == DOWN) ? 0.5f : 0;
+        }
+
+        public float getYOffset() {
+            return (this == LEFT || this == RIGHT) ? 0.5f : 0;
+        }
+    }
+}

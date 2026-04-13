@@ -50,7 +50,9 @@ public class MapChunkTileManager {
         String subDir = caveView ? "cave" : "surface";
         this.currentDimension = level.dimension().identifier().toString();
         this.currentWorldId = worldName;
-        this.worldMapDir = new File(mc.gameDirectory, "megamod/worldmap/" + worldName + "/" + dimId + "/" + subDir);
+        // worldmap_v2: bumped from v1 to invalidate tiles saved with the legacy
+        // ARGB→ABGR byte-swap (R/B inverted, made desert/sand render bluish).
+        this.worldMapDir = new File(mc.gameDirectory, "megamod/worldmap_v2/" + worldName + "/" + dimId + "/" + subDir);
         this.worldMapDir.mkdirs();
     }
 
@@ -118,9 +120,13 @@ public class MapChunkTileManager {
             dirtyTiles.clear();
         }
 
-        // Submit current tile for rendering
+        // Submit current tile for rendering.
+        // Also mark the player's current chunk dirty so it re-renders even without
+        // a block-change event — needed because BlockEvent.BreakEvent only fires
+        // server-side, so multiplayer clients miss block changes otherwise.
         if (tileX != currentTileX || tileZ != currentTileZ ||
                 lastUpdate == null || currentTime - lastUpdate > 1000) {
+            dirtyChunks.add(ChunkPos.asLong(chunkX, chunkZ));
             submitTileForRendering(tileX, tileZ);
             currentTileX = tileX;
             currentTileZ = tileZ;

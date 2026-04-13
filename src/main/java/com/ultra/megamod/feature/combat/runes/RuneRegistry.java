@@ -79,7 +79,8 @@ public class RuneRegistry {
 
     /**
      * Checks if the player has at least {@code count} runes of the given school
-     * and removes them if found.
+     * and removes them if found. Searches both raw inventory AND rune pouches
+     * (BundleItems) so runes stored in pouches are properly consumed.
      *
      * @return true if the runes were consumed, false if the player didn't have enough
      */
@@ -87,19 +88,44 @@ public class RuneRegistry {
         Item runeItem = getRuneForSchool(schoolName);
         if (runeItem == null) return true; // No rune requirement for this school
 
+        java.util.function.Predicate<net.minecraft.world.item.ItemStack> runeTest = stack -> stack.is(runeItem);
+
+        // Phase 1: Count available runes across inventory + pouches
         int found = 0;
+
+        // Check rune pouches first (BundleItems in inventory)
+        var pouchSources = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
+        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+            var stack = player.getInventory().getItem(i);
+            if (stack.getItem() instanceof BundleItem) {
+                int inPouch = countInBundle(stack, runeTest);
+                if (inPouch > 0) {
+                    pouchSources.add(stack);
+                    found += inPouch;
+                }
+            }
+        }
+
+        // Then check loose runes in inventory
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             var stack = player.getInventory().getItem(i);
             if (stack.is(runeItem)) {
                 found += stack.getCount();
-                if (found >= count) break;
             }
         }
 
         if (found < count) return false;
 
-        // Consume the runes
+        // Phase 2: Consume from pouches first, then loose inventory
         int remaining = count;
+
+        // Consume from pouches
+        for (var pouchStack : pouchSources) {
+            if (remaining <= 0) break;
+            remaining -= takeFromBundle(pouchStack, runeTest, remaining);
+        }
+
+        // Consume from loose inventory
         for (int i = 0; i < player.getInventory().getContainerSize() && remaining > 0; i++) {
             var stack = player.getInventory().getItem(i);
             if (stack.is(runeItem)) {
@@ -109,5 +135,54 @@ public class RuneRegistry {
             }
         }
         return true;
+    }
+
+    /**
+     * Count how many items matching the predicate are inside a BundleItem stack.
+     */
+    private static int countInBundle(net.minecraft.world.item.ItemStack containerStack,
+                                      java.util.function.Predicate<net.minecraft.world.item.ItemStack> predicate) {
+        var bundle = containerStack.get(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS);
+        if (bundle == null) return 0;
+        int total = 0;
+        for (var item : bundle.items()) {
+            if (predicate.test(item)) {
+                total += item.getCount();
+            }
+        }
+        return total;
+    }
+
+    /**
+     * Remove up to {@code amount} matching items from inside a BundleItem stack.
+     * @return number of items actually removed
+     */
+    private static int takeFromBundle(net.minecraft.world.item.ItemStack containerStack,
+                                       java.util.function.Predicate<net.minecraft.world.item.ItemStack> predicate,
+                                       int amount) {
+        var bundle = containerStack.get(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS);
+        if (bundle == null) return 0;
+        int taken = 0;
+        int toTake = amount;
+        var putBack = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
+        for (var storedStack : bundle.items()) {
+            if (predicate.test(storedStack) && toTake > 0) {
+                int decrementable = Math.min(storedStack.getCount(), toTake);
+                storedStack.shrink(decrementable);
+                toTake -= decrementable;
+                taken += decrementable;
+            }
+            if (!storedStack.isEmpty()) {
+                putBack.add(storedStack);
+            }
+        }
+        // Rebuild the bundle contents
+        var freshBundle = new net.minecraft.world.item.component.BundleContents.Mutable(
+                net.minecraft.world.item.component.BundleContents.EMPTY);
+        for (var stackToAdd : putBack.reversed()) {
+            freshBundle.tryInsert(stackToAdd);
+        }
+        containerStack.set(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS, freshBundle.toImmutable());
+        return taken;
     }
 }

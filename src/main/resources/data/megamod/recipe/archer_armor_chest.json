@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:chain",
+    "L": "minecraft:leather"
+  },
+  "pattern": [
+    "C C",
+    "LLL",
+    "LLL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:archer_armor_chest"
+  }
+}

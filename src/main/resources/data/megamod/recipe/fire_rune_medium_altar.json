@@ -1,13 +1,9 @@
 {
   "type": "megamod:crafting",
-  "base": {
-    "tag": "megamod:rune_crafting/base/stone"
-  },
-  "addition": {
-    "tag": "megamod:rune_crafting/reagent/fire_medium"
-  },
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/fire_medium",
   "result": {
     "count": 16,
-    "id": "megamod:fire_stone"
+    "id": "megamod:fire_rune"
   }
 }

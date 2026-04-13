@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "minecraft:leather",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "WWW",
+    "L L",
+    "W W"
+  ],
+  "result": {
+    "id": "megamod:rogue_armor_legs"
+  }
+}

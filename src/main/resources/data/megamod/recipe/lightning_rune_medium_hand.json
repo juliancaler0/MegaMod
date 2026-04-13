@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "#megamod:rune_crafting/base/stone",
+    "#megamod:rune_crafting/reagent/lightning_medium"
+  ],
+  "result": {
+    "count": 4,
+    "id": "megamod:lightning_rune"
+  }
+}

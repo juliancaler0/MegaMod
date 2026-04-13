@@ -1,0 +1,91 @@
+{
+"itemGroup.megamod.general": "Archers",
+"item.megamod.auto_fire_hook.description_1": "Автоматически выпускает заряженную стрелу.",
+"item.megamod.auto_fire_hook.description_2": "Можно применить на дальнестрелковом оружии в Наковальне.",
+"item.ranged_weapon.pull_time": "Время растяжки %1$s секунд.",
+
+"block.megamod.megamod_workbench": "Стол лучника-механика",
+"block.megamod.megamod_workbench.hint": "Верстак для Лучника-механика.",
+"entity.minecraft.villager.archery_artisan": "Лучник-механик",
+"entity.minecraft.villager.megamod.archery_artisan": "Лучник-механик",
+"entity.minecraft.villager.megamod:archery_artisan": "Лучник-механик",
+
+"item.megamod.auto_fire_hook": "Спусковой крючок авто-выстрела",
+
+"item.megamod.flint_spear": "Кремнёвое копьё",
+"item.megamod.iron_spear": "Железное копьё",
+"item.megamod.golden_spear": "Золотое копьё",
+"item.megamod.diamond_spear": "Алмазное копьё",
+"item.megamod.netherite_spear": "Незеритовое копьё",
+"item.megamod.aeternium_spear": "Эйтериевое копьё",
+"item.megamod.ruby_spear": "Рубиновое копьё",
+
+"item.megamod.archer_armor_head": "Капюшон лучника",
+"item.megamod.archer_armor_chest": "Китель лучника",
+"item.megamod.archer_armor_legs": "Поножи лучника",
+"item.megamod.archer_armor_feet": "Ботинки лучника",
+
+"item.megamod.ranger_armor_head": "Капюшон следопыта",
+"item.megamod.ranger_armor_chest": "Китель следопыта",
+"item.megamod.ranger_armor_legs": "Поножи следопыта",
+"item.megamod.ranger_armor_feet": "Ботинки следопыта",
+
+"item.megamod.netherite_ranger_armor_head": "Незеритовый капюшон следопыта",
+"item.megamod.netherite_ranger_armor_chest": "Незеритовый китель следопыта",
+"item.megamod.netherite_ranger_armor_legs": "Незеритовые поножи следопыта",
+"item.megamod.netherite_ranger_armor_feet": "Незеритовые ботинки следопыта",
+
+"item.megamod.composite_longbow": "Составной длинный лук",
+"item.megamod.mechanic_shortbow": "Механический короткий лук",
+"item.megamod.royal_longbow": "Царский длинный лук",
+"item.megamod.rapid_crossbow": "Скоростной арбалет",
+"item.megamod.heavy_crossbow": "Шквальный арбалет",
+"item.megamod.netherite_shortbow": "Незеритовый короткий лук",
+"item.megamod.netherite_longbow": "Незеритовый длинный лук",
+"item.megamod.netherite_rapid_crossbow": "Незеритовый скоростной арбалет",
+"item.megamod.netherite_heavy_crossbow": "Незеритовый шквальный арбалет",
+"item.megamod.crystal_shortbow": "Хрустальный короткий лук",
+"item.megamod.crystal_longbow": "Хрустальный длинный лук",
+"item.megamod.ruby_rapid_crossbow": "Рубиновый скоростной арбалет",
+"item.megamod.ruby_heavy_crossbow": "Рубиновый шквальный арбалет",
+
+"item.megamod.spell_book/archer": "Пособие лучника",
+
+"spell.megamod.power_shot.name": "Мощный выстрел",
+"spell.megamod.power_shot.description": "Пассивный навык: стрелы наносят повышенный урон по цели с Меткой охотника на {damage_taken} ед. в течение {effect_duration} секунд, суммируясь до {effect_amplifier} раз.",
+"effect.megamod.hunters_mark": "Помеченный",
+"effect.megamod.hunters_mark.description": "Повышает урон, получаемый со всех источников.",
+
+"spell.megamod.entangling_roots.name": "Гнев деревьев",
+"spell.megamod.entangling_roots.description": "Вызывает корни, что прорастают с земли в окрестной зоне, замедляя врагов на {cloud_duration} секунд.",
+"effect.megamod.entangling_roots": "Гнев деревьев",
+"effect.megamod.entangling_roots.description": "Понижает скорость передвижения.",
+
+"spell.megamod.barrage.name": "Обстрел",
+"spell.megamod.barrage.description": "Стреляет несколькими стрелами один за другим.",
+
+"spell.megamod.magic_arrow.name": "Магическая стрела",
+"spell.megamod.magic_arrow.description": "Выстреливает магической стрелой, что пронзается сквозь всех врагов на своём пути, нанося {damage} ед. урона каждой цели.",
+
+"advancements.rpg_series.path_choose_archer.title": "Путь лучника",
+"advancements.rpg_series.path_choose_archer.description": "Создайте пособие лучника.",
+
+"advancements.rpg_series.spell_novice_archer.title": "Смертоносные выстрелы",
+"advancements.rpg_series.spell_novice_archer.description": "Заполучите свой первый навык Лучника.",
+
+"advancements.rpg_series.spell_master_archer.title": "Эксперт в баллистике",
+"advancements.rpg_series.spell_master_archer.description": "Завершите пособие лучника.",
+
+"advancements.rpg_series.obtain_arrow.title": "Путь лучника",
+"advancements.rpg_series.obtain_arrow.description": "Заполучите стрелу.",
+
+"gui.megamod.rune_crafting": "Создание рун",
+"block.megamod.crafting_altar": "Алтарь создания рун",
+"block.megamod.crafting_altar.hint": "Создавайте руны более выгодно.",
+"item.megamod.arcane_rune": "Руна тайнства",
+"item.megamod.fire_rune": "Руна огня",
+"item.megamod.frost_rune": "Руна льда",
+"item.megamod.healing_rune": "Руна исцеления",
+"item.megamod.lightning_rune": "Руна грозы",
+"item.megamod.soul_rune": "Руна души"
+}

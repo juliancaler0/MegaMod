@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "amount": 1,
+  "order": 100,
+  "icon": "megamod:gui/slot/back",
+  "validators": [],
+  "dropRule": "DEFAULT"
+}

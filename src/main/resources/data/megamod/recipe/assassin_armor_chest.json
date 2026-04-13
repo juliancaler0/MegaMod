@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "R": "minecraft:rabbit_hide",
+    "S": "minecraft:ink_sac"
+  },
+  "pattern": [
+    "S S",
+    "RGR",
+    "RRR"
+  ],
+  "result": {
+    "id": "megamod:assassin_armor_chest"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:healing_spell_book"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.path_choose_priest.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.path_choose_priest.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "rpg_series:classes",
+  "criteria": {
+    "book": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "book"
+    ]
+  ]
+}

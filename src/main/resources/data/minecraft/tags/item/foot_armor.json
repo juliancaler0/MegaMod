@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:rogue_armor_boots",
+    "megamod:assassin_armor_boots",
+    "megamod:netherite_assassin_armor_boots",
+    "megamod:warrior_armor_boots",
+    "megamod:berserker_armor_boots",
+    "megamod:netherite_berserker_armor_boots"
+  ]
+}

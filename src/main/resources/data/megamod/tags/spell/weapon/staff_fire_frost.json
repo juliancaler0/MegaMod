@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#megamod:weapon/fire_staff",
+      "required": false
+    },
+    {
+      "id": "#megamod:weapon/frost_staff",
+      "required": false
+    }
+  ]
+}

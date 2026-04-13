@@ -52,7 +52,7 @@ import java.util.function.Function;
  *     float offsetY = 0;
  *     float offsetZ = 0;
  *
- *     var pitch = player.getPitch() / 2F;
+ *     var pitch = player.getXRot() / 2F;
  *     pitch = (float) Math.toRadians(pitch);
  *     switch (partName) {
  *         case "body" -> {

@@ -1,1 +1,24 @@
-{"replace":false,"values":["megamod:rapid_crossbow","megamod:heavy_crossbow","megamod:netherite_rapid_crossbow","megamod:netherite_heavy_crossbow"]}
+{
+  "values": [
+    "megamod:rapid_crossbow",
+    "megamod:heavy_crossbow",
+    "megamod:netherite_rapid_crossbow",
+    "megamod:netherite_heavy_crossbow",
+    {
+      "id": "megamod:ruby_rapid_crossbow",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_heavy_crossbow",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_rapid_crossbow",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_heavy_crossbow",
+      "required": false
+    }
+  ]
+}

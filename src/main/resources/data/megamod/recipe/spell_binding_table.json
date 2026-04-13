@@ -1,16 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
-  "pattern": [
-    "BLB",
-    "DPD",
-    "PPP"
-  ],
   "key": {
     "B": "minecraft:book",
-    "L": "minecraft:lapis_lazuli",
-    "D": "minecraft:diamond",
-    "P": "minecraft:oak_planks"
+    "A": "minecraft:amethyst_shard",
+    "G": "minecraft:gold_ingot",
+    "D": "minecraft:polished_diorite"
   },
-  "result": { "id": "megamod:spell_binding_table", "count": 1 }
+  "pattern": [
+    " B ",
+    "AGA",
+    "DDD"
+  ],
+  "result": {
+    "id": "megamod:spell_binding_table"
+  }
 }

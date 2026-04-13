@@ -6,7 +6,11 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
@@ -66,19 +70,29 @@ public class ClassArmorRegistry {
 
     // ─── Armor weight classes ───
     // Armor values: [head, chest, legs, boots]
-    private static final int[] ROBE_T1 = {1, 3, 2, 1};
-    private static final int[] PLATE_T1 = {2, 6, 5, 2};
-    private static final int[] MEDIUM_T1 = {2, 4, 4, 2};
+    // Progression: T1 < T2 < T3 within each weight class.
+    // Robes are leather-weight (spell-focused), Plate is heavy (warrior-focused),
+    // Medium is balanced (rogue/archer-focused).
 
-    private static final int[] ROBE_T2 = {1, 3, 2, 1};
-    private static final int[] PLATE_T2 = {3, 8, 6, 3};
-    private static final int[] MEDIUM_T2 = {2, 4, 4, 2};
+    // Robes — starter 7 total (leather), T2 chain-tier 11, T3 iron+ 14
+    private static final int[] ROBE_T1 = {1, 3, 2, 1};     // 7 total (leather)
+    private static final int[] ROBE_T2 = {2, 4, 3, 2};     // 11 total (chain+)
+    private static final int[] ROBE_T3 = {2, 5, 4, 3};     // 14 total (iron+, netherite tier)
 
-    // T3 uses same armor values as T2 but adds +1 toughness per piece
-    private static final int[] ROBE_T3 = ROBE_T2;
-    private static final int[] PLATE_T3 = PLATE_T2;
-    private static final int[] MEDIUM_T3 = MEDIUM_T2;
-    private static final double T3_TOUGHNESS = 1.0;
+    // Plate — starter 15 total (iron), T2 diamond 20, T3 netherite+ 24
+    private static final int[] PLATE_T1 = {2, 6, 5, 2};    // 15 total (iron)
+    private static final int[] PLATE_T2 = {3, 8, 6, 3};    // 20 total (diamond)
+    private static final int[] PLATE_T3 = {4, 9, 7, 4};    // 24 total (netherite+)
+
+    // Medium — starter 11 total (chain), T2 iron+ 17, T3 diamond+ 20
+    private static final int[] MEDIUM_T1 = {2, 4, 3, 2};   // 11 total (chain)
+    private static final int[] MEDIUM_T2 = {3, 6, 5, 3};   // 17 total (iron+)
+    private static final int[] MEDIUM_T3 = {3, 7, 6, 4};   // 20 total (diamond+)
+
+    // T3 adds real netherite-tier toughness on top of the higher armor values
+    private static final double T3_ROBE_TOUGHNESS = 1.0;
+    private static final double T3_MEDIUM_TOUGHNESS = 1.5;
+    private static final double T3_PLATE_TOUGHNESS = 2.0;
 
     // ─── Slot index constants ───
     private static final int HEAD = 0;
@@ -98,10 +112,30 @@ public class ClassArmorRegistry {
             default -> 0;
         };
         double baseArmor = armorValues[slotIndex];
+        EquipmentSlotGroup group = switch (slot) {
+            case HEAD -> EquipmentSlotGroup.HEAD;
+            case CHEST -> EquipmentSlotGroup.CHEST;
+            case LEGS -> EquipmentSlotGroup.LEGS;
+            case FEET -> EquipmentSlotGroup.FEET;
+            default -> EquipmentSlotGroup.ARMOR;
+        };
+        Identifier armorModId = Identifier.fromNamespaceAndPath(MegaMod.MODID, "armor." + name);
+        Identifier toughModId = Identifier.fromNamespaceAndPath(MegaMod.MODID, "armor_toughness." + name);
+        ItemAttributeModifiers.Builder attrBuilder = ItemAttributeModifiers.builder()
+            .add(Attributes.ARMOR,
+                new AttributeModifier(armorModId, baseArmor, AttributeModifier.Operation.ADD_VALUE),
+                group);
+        if (toughness > 0) {
+            attrBuilder.add(Attributes.ARMOR_TOUGHNESS,
+                new AttributeModifier(toughModId, toughness, AttributeModifier.Operation.ADD_VALUE),
+                group);
+        }
+        ItemAttributeModifiers defaultAttrs = attrBuilder.build();
         return ITEMS.registerItem(name,
             props -> new RpgArmorItem(baseArmor, toughness, slot, (Item.Properties) props),
             () -> new Item.Properties().stacksTo(1)
-                .component(DataComponents.EQUIPPABLE, Equippable.builder(slot).setAsset(asset).build()));
+                .component(DataComponents.EQUIPPABLE, Equippable.builder(slot).setAsset(asset).build())
+                .component(DataComponents.ATTRIBUTE_MODIFIERS, defaultAttrs));
     }
 
     // ═══════════════════════════════════════════════════════════════
@@ -133,22 +167,22 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> FROST_ROBE_BOOTS = rpgArmor("frost_robe_boots", EquipmentSlot.FEET, FROST_ROBE_ASSET, ROBE_T2, 0);
 
     // --- Netherite Arcane Robe (T3 robe) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_HEAD = rpgArmor("netherite_arcane_robe_head", EquipmentSlot.HEAD, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_CHEST = rpgArmor("netherite_arcane_robe_chest", EquipmentSlot.CHEST, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_LEGS = rpgArmor("netherite_arcane_robe_legs", EquipmentSlot.LEGS, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_BOOTS = rpgArmor("netherite_arcane_robe_boots", EquipmentSlot.FEET, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_HEAD = rpgArmor("netherite_arcane_robe_head", EquipmentSlot.HEAD, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_CHEST = rpgArmor("netherite_arcane_robe_chest", EquipmentSlot.CHEST, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_LEGS = rpgArmor("netherite_arcane_robe_legs", EquipmentSlot.LEGS, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ARCANE_ROBE_BOOTS = rpgArmor("netherite_arcane_robe_boots", EquipmentSlot.FEET, NETHERITE_ARCANE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
 
     // --- Netherite Fire Robe (T3 robe) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_HEAD = rpgArmor("netherite_fire_robe_head", EquipmentSlot.HEAD, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_CHEST = rpgArmor("netherite_fire_robe_chest", EquipmentSlot.CHEST, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_LEGS = rpgArmor("netherite_fire_robe_legs", EquipmentSlot.LEGS, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_BOOTS = rpgArmor("netherite_fire_robe_boots", EquipmentSlot.FEET, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_HEAD = rpgArmor("netherite_fire_robe_head", EquipmentSlot.HEAD, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_CHEST = rpgArmor("netherite_fire_robe_chest", EquipmentSlot.CHEST, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_LEGS = rpgArmor("netherite_fire_robe_legs", EquipmentSlot.LEGS, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FIRE_ROBE_BOOTS = rpgArmor("netherite_fire_robe_boots", EquipmentSlot.FEET, NETHERITE_FIRE_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
 
     // --- Netherite Frost Robe (T3 robe) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_HEAD = rpgArmor("netherite_frost_robe_head", EquipmentSlot.HEAD, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_CHEST = rpgArmor("netherite_frost_robe_chest", EquipmentSlot.CHEST, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_LEGS = rpgArmor("netherite_frost_robe_legs", EquipmentSlot.LEGS, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_BOOTS = rpgArmor("netherite_frost_robe_boots", EquipmentSlot.FEET, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_HEAD = rpgArmor("netherite_frost_robe_head", EquipmentSlot.HEAD, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_CHEST = rpgArmor("netherite_frost_robe_chest", EquipmentSlot.CHEST, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_LEGS = rpgArmor("netherite_frost_robe_legs", EquipmentSlot.LEGS, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_FROST_ROBE_BOOTS = rpgArmor("netherite_frost_robe_boots", EquipmentSlot.FEET, NETHERITE_FROST_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
 
     // ═══════════════════════════════════════════════════════════════
     // PALADIN ARMOR (3 sets) — Heavy plate, holy warrior
@@ -167,10 +201,10 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> CRUSADER_ARMOR_BOOTS = rpgArmor("crusader_armor_boots", EquipmentSlot.FEET, CRUSADER_ARMOR_ASSET, PLATE_T2, 0);
 
     // --- Netherite Crusader Armor (T3 plate) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_HEAD = rpgArmor("netherite_crusader_armor_head", EquipmentSlot.HEAD, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_CHEST = rpgArmor("netherite_crusader_armor_chest", EquipmentSlot.CHEST, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_LEGS = rpgArmor("netherite_crusader_armor_legs", EquipmentSlot.LEGS, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_BOOTS = rpgArmor("netherite_crusader_armor_boots", EquipmentSlot.FEET, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_HEAD = rpgArmor("netherite_crusader_armor_head", EquipmentSlot.HEAD, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_CHEST = rpgArmor("netherite_crusader_armor_chest", EquipmentSlot.CHEST, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_LEGS = rpgArmor("netherite_crusader_armor_legs", EquipmentSlot.LEGS, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_CRUSADER_ARMOR_BOOTS = rpgArmor("netherite_crusader_armor_boots", EquipmentSlot.FEET, NETHERITE_CRUSADER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
 
     // ═══════════════════════════════════════════════════════════════
     // PRIEST ROBES (3 sets) — Light-weight, healing focused
@@ -189,10 +223,10 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> PRIOR_ROBE_BOOTS = rpgArmor("prior_robe_boots", EquipmentSlot.FEET, PRIOR_ROBE_ASSET, ROBE_T2, 0);
 
     // --- Netherite Prior Robe (T3 robe) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_HEAD = rpgArmor("netherite_prior_robe_head", EquipmentSlot.HEAD, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_CHEST = rpgArmor("netherite_prior_robe_chest", EquipmentSlot.CHEST, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_LEGS = rpgArmor("netherite_prior_robe_legs", EquipmentSlot.LEGS, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_BOOTS = rpgArmor("netherite_prior_robe_boots", EquipmentSlot.FEET, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_HEAD = rpgArmor("netherite_prior_robe_head", EquipmentSlot.HEAD, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_CHEST = rpgArmor("netherite_prior_robe_chest", EquipmentSlot.CHEST, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_LEGS = rpgArmor("netherite_prior_robe_legs", EquipmentSlot.LEGS, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_PRIOR_ROBE_BOOTS = rpgArmor("netherite_prior_robe_boots", EquipmentSlot.FEET, NETHERITE_PRIOR_ROBE_ASSET, ROBE_T3, T3_ROBE_TOUGHNESS);
 
     // ═══════════════════════════════════════════════════════════════
     // ROGUE ARMOR (3 sets) — Light leather, agility focused
@@ -211,10 +245,10 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> ASSASSIN_ARMOR_BOOTS = rpgArmor("assassin_armor_boots", EquipmentSlot.FEET, ASSASSIN_ARMOR_ASSET, MEDIUM_T2, 0);
 
     // --- Netherite Assassin Armor (T3 medium) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_HEAD = rpgArmor("netherite_assassin_armor_head", EquipmentSlot.HEAD, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_CHEST = rpgArmor("netherite_assassin_armor_chest", EquipmentSlot.CHEST, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_LEGS = rpgArmor("netherite_assassin_armor_legs", EquipmentSlot.LEGS, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_BOOTS = rpgArmor("netherite_assassin_armor_boots", EquipmentSlot.FEET, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_HEAD = rpgArmor("netherite_assassin_armor_head", EquipmentSlot.HEAD, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_CHEST = rpgArmor("netherite_assassin_armor_chest", EquipmentSlot.CHEST, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_LEGS = rpgArmor("netherite_assassin_armor_legs", EquipmentSlot.LEGS, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_ASSASSIN_ARMOR_BOOTS = rpgArmor("netherite_assassin_armor_boots", EquipmentSlot.FEET, NETHERITE_ASSASSIN_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
 
     // ═══════════════════════════════════════════════════════════════
     // WARRIOR ARMOR (3 sets) — Heavy plate, melee focused
@@ -233,10 +267,10 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> BERSERKER_ARMOR_BOOTS = rpgArmor("berserker_armor_boots", EquipmentSlot.FEET, BERSERKER_ARMOR_ASSET, PLATE_T2, 0);
 
     // --- Netherite Berserker Armor (T3 plate) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_HEAD = rpgArmor("netherite_berserker_armor_head", EquipmentSlot.HEAD, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_CHEST = rpgArmor("netherite_berserker_armor_chest", EquipmentSlot.CHEST, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_LEGS = rpgArmor("netherite_berserker_armor_legs", EquipmentSlot.LEGS, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_BOOTS = rpgArmor("netherite_berserker_armor_boots", EquipmentSlot.FEET, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_HEAD = rpgArmor("netherite_berserker_armor_head", EquipmentSlot.HEAD, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_CHEST = rpgArmor("netherite_berserker_armor_chest", EquipmentSlot.CHEST, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_LEGS = rpgArmor("netherite_berserker_armor_legs", EquipmentSlot.LEGS, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_BERSERKER_ARMOR_BOOTS = rpgArmor("netherite_berserker_armor_boots", EquipmentSlot.FEET, NETHERITE_BERSERKER_ARMOR_ASSET, PLATE_T3, T3_PLATE_TOUGHNESS);
 
     // ═══════════════════════════════════════════════════════════════
     // ARCHER ARMOR (3 sets) — Light leather, ranged focused
@@ -255,10 +289,10 @@ public class ClassArmorRegistry {
     public static final DeferredItem<RpgArmorItem> RANGER_ARMOR_BOOTS = rpgArmor("ranger_armor_boots", EquipmentSlot.FEET, RANGER_ARMOR_ASSET, MEDIUM_T2, 0);
 
     // --- Netherite Ranger Armor (T3 medium) ---
-    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_HEAD = rpgArmor("netherite_ranger_armor_head", EquipmentSlot.HEAD, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_CHEST = rpgArmor("netherite_ranger_armor_chest", EquipmentSlot.CHEST, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_LEGS = rpgArmor("netherite_ranger_armor_legs", EquipmentSlot.LEGS, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
-    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_BOOTS = rpgArmor("netherite_ranger_armor_boots", EquipmentSlot.FEET, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_HEAD = rpgArmor("netherite_ranger_armor_head", EquipmentSlot.HEAD, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_CHEST = rpgArmor("netherite_ranger_armor_chest", EquipmentSlot.CHEST, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_LEGS = rpgArmor("netherite_ranger_armor_legs", EquipmentSlot.LEGS, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
+    public static final DeferredItem<RpgArmorItem> NETHERITE_RANGER_ARMOR_BOOTS = rpgArmor("netherite_ranger_armor_boots", EquipmentSlot.FEET, NETHERITE_RANGER_ARMOR_ASSET, MEDIUM_T3, T3_MEDIUM_TOUGHNESS);
 
     public static void init(IEventBus modBus) {
         ITEMS.register(modBus);

@@ -139,6 +139,10 @@ public class MapScreen extends Screen {
     // Waypoint refresh after mutation (re-requests data to handle lost responses)
     private int wpRefreshCountdown = -1;
 
+    // Survives screen close so reopening shows the existing waypoints instantly
+    // instead of an empty list while we wait for the server's response.
+    private static List<Waypoint> cachedWaypoints = new ArrayList<>();
+
     // ===== Phase B & C: Toolbar, Layers, Drawing =====
     private MapToolbar toolbar;
     private final MapLayerRenderer layers = new MapLayerRenderer();
@@ -242,6 +246,12 @@ public class MapScreen extends Screen {
         this.layerToggleX = 4;
         this.layerToggleY = this.mapTop + 4;
 
+        // Pre-populate from the session cache so the list isn't blank during
+        // the round-trip while we wait for the server's response.
+        if (this.waypoints.isEmpty() && !cachedWaypoints.isEmpty()) {
+            this.waypoints.addAll(cachedWaypoints);
+        }
+
         // Request waypoints from server
         ClientPacketDistributor.sendToServer(
             (CustomPacketPayload) new ComputerActionPayload("map_request_waypoints", ""),
@@ -266,9 +276,11 @@ public class MapScreen extends Screen {
             sendToServer("map_locate_all_structures", "{}");
         }
 
-        // Initialize chunk tile manager for GPU-accelerated map rendering
+        // Initialize chunk tile manager for GPU-accelerated map rendering.
+        // initializeIfNeeded() closes stale in-memory tiles when switching worlds/dimensions —
+        // calling initialize() unconditionally would leak the previous world's tiles.
         MapChunkTileManager mgr = MapChunkTileManager.getInstance();
-        mgr.initialize(mc.level);
+        mgr.initializeIfNeeded(mc.level);
 
         // Reset pan/zoom when switching worlds so we don't show stale offsets
         String worldId = mgr.getCurrentWorldId();
@@ -787,6 +799,10 @@ public class MapScreen extends Screen {
             this.mouseWorldZ = (int) (centerWorldZ + relZ * zoomScale);
             this.hoveredCoords = "X: " + this.mouseWorldX + "  Z: " + this.mouseWorldZ;
 
+            // Re-enable scissor so cursor/tool overlays clip to the map and don't bleed
+            // into the layer toggle column or waypoint panel when the mouse is at an edge.
+            g.enableScissor(this.mapLeft, this.mapTop, this.mapLeft + this.mapWidth, this.mapTop + this.mapHeight);
+
             // Crosshair at mouse
             g.fill(mouseX - 4, mouseY, mouseX - 1, mouseY + 1, 0x88FFFFFF);
             g.fill(mouseX + 2, mouseY, mouseX + 5, mouseY + 1, 0x88FFFFFF);
@@ -834,6 +850,7 @@ public class MapScreen extends Screen {
                     g.fill(mouseX - 6, mouseY - 1, mouseX + 7, mouseY + 2, 0xAAFF8844);
                 }
             }
+            g.disableScissor();
         } else {
             this.hoveredCoords = "";
         }
@@ -2287,54 +2304,58 @@ public class MapScreen extends Screen {
     }
 
     private void parseWaypoints(String json) {
-        this.waypoints.clear();
-        if (json == null || json.length() < 3) return;
+        // Parse into temp list first so a malformed payload doesn't wipe the
+        // existing waypoints (and the cached beacon list) mid-flight.
+        List<Waypoint> parsed = new ArrayList<>();
+        List<MapWaypointSyncManager.BeaconWaypoint> beaconWaypoints = new ArrayList<>();
+        boolean ok = false;
 
-        // Parse JSON array of waypoints
-        // Format: {"waypoints":[{"id":"...","name":"...","x":0,"y":0,"z":0,"colorIndex":0,"created":0,
-        //          "category":"Base","dimension":"minecraft:overworld","beaconEnabled":true}, ...]}
-        try {
-            // Remove outer braces for the waypoints wrapper
-            int arrStart = json.indexOf('[');
-            int arrEnd = json.lastIndexOf(']');
-            if (arrStart < 0 || arrEnd < 0) return;
+        if (json != null && json.length() >= 3) {
+            try {
+                int arrStart = json.indexOf('[');
+                int arrEnd = json.lastIndexOf(']');
+                if (arrStart >= 0 && arrEnd >= 0) {
+                    String arrStr = json.substring(arrStart + 1, arrEnd);
+                    if (!arrStr.trim().isEmpty()) {
+                        String[] entries = splitJsonArray(arrStr);
+                        for (String entry : entries) {
+                            String e = entry.trim();
+                            if (e.isEmpty()) continue;
 
-            String arrStr = json.substring(arrStart + 1, arrEnd);
-            if (arrStr.trim().isEmpty()) return;
+                            String id = extractJsonString(e, "id");
+                            String name = extractJsonString(e, "name");
+                            int x = extractJsonInt(e, "x");
+                            int y = extractJsonInt(e, "y");
+                            int z = extractJsonInt(e, "z");
+                            int colorIndex = extractJsonInt(e, "colorIndex");
+                            long created = extractJsonLong(e, "created");
+                            String category = extractJsonString(e, "category");
+                            String dimension = extractJsonString(e, "dimension");
+                            boolean beaconEnabled = extractJsonBoolean(e, "beaconEnabled");
 
-            List<MapWaypointSyncManager.BeaconWaypoint> beaconWaypoints = new ArrayList<>();
+                            if (category == null || category.isEmpty()) category = "General";
+                            if (dimension == null || dimension.isEmpty()) dimension = "minecraft:overworld";
 
-            // Split on },{
-            String[] entries = splitJsonArray(arrStr);
-            for (String entry : entries) {
-                String e = entry.trim();
-                if (e.isEmpty()) continue;
-
-                String id = extractJsonString(e, "id");
-                String name = extractJsonString(e, "name");
-                int x = extractJsonInt(e, "x");
-                int y = extractJsonInt(e, "y");
-                int z = extractJsonInt(e, "z");
-                int colorIndex = extractJsonInt(e, "colorIndex");
-                long created = extractJsonLong(e, "created");
-                String category = extractJsonString(e, "category");
-                String dimension = extractJsonString(e, "dimension");
-                boolean beaconEnabled = extractJsonBoolean(e, "beaconEnabled");
-
-                if (category == null || category.isEmpty()) category = "General";
-                if (dimension == null || dimension.isEmpty()) dimension = "minecraft:overworld";
-
-                if (id != null && name != null) {
-                    this.waypoints.add(new Waypoint(id, name, x, y, z, colorIndex, created,
-                            category, dimension, beaconEnabled));
-                    beaconWaypoints.add(new MapWaypointSyncManager.BeaconWaypoint(
-                            x, y, z, colorIndex, beaconEnabled, dimension));
+                            if (id != null && name != null) {
+                                parsed.add(new Waypoint(id, name, x, y, z, colorIndex, created,
+                                        category, dimension, beaconEnabled));
+                                beaconWaypoints.add(new MapWaypointSyncManager.BeaconWaypoint(
+                                        x, y, z, colorIndex, beaconEnabled, dimension));
+                            }
+                        }
+                    }
+                    ok = true; // valid JSON envelope (even if array is empty)
                 }
-            }
+            } catch (Exception ignored) {}
+        }
 
-            // Feed the sync manager for 3D beacon rendering
-            MapWaypointSyncManager.updateWaypoints(beaconWaypoints);
-        } catch (Exception ignored) {}
+        if (!ok) return; // malformed — keep prior data
+
+        // Apply atomically so an empty list correctly clears stale beacons too.
+        this.waypoints.clear();
+        this.waypoints.addAll(parsed);
+        MapWaypointSyncManager.updateWaypoints(beaconWaypoints);
+        cachedWaypoints = new ArrayList<>(parsed);
     }
 
     private String[] splitJsonArray(String arrStr) {

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:royal_longbow"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_master_archer.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_master_archer.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "rpg_series:spell_novice_archer",
+  "criteria": {
+    "cast": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "cast"
+    ]
+  ]
+}

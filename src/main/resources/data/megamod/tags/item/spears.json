@@ -1,0 +1,21 @@
+{
+  "values": [
+    "megamod:flint_spear",
+    "megamod:iron_spear",
+    "megamod:golden_spear",
+    "megamod:diamond_spear",
+    "megamod:netherite_spear",
+    {
+      "id": "megamod:aeternium_spear",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_spear",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_spear",
+      "required": false
+    }
+  ]
+}

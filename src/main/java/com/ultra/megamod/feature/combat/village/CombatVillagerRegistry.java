@@ -102,7 +102,7 @@ public class CombatVillagerRegistry {
                     holder -> holder.is(JEWELER_POI.getKey()),
                     holder -> holder.is(JEWELER_POI.getKey()),
                     ImmutableSet.of(), ImmutableSet.of(),
-                    SoundEvents.VILLAGER_WORK_MASON));
+                    com.ultra.megamod.feature.combat.jewelry.JewelrySounds.JEWELRY_WORKBENCH.get()));
 
     public static void init(IEventBus modBus) {
         POI_TYPES.register(modBus);

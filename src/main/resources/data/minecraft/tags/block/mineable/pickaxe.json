@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "megamod:computer"
+    "megamod:spell_binding_table",
+    "megamod:crafting_altar",
+    "megamod:gem_vein",
+    "megamod:deepslate_gem_vein"
   ]
 }

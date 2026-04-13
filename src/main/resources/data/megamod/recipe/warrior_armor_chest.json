@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:string",
+    "I": "minecraft:iron_ingot",
+    "L": "minecraft:leather"
+  },
+  "pattern": [
+    "C C",
+    "III",
+    "LLL"
+  ],
+  "result": {
+    "id": "megamod:warrior_armor_chest"
+  }
+}

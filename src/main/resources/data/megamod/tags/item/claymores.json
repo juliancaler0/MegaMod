@@ -1,0 +1,21 @@
+{
+  "values": [
+    "megamod:stone_claymore",
+    "megamod:iron_claymore",
+    "megamod:golden_claymore",
+    "megamod:diamond_claymore",
+    "megamod:netherite_claymore",
+    {
+      "id": "megamod:aeternium_claymore",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_claymore",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_claymore",
+      "required": false
+    }
+  ]
+}

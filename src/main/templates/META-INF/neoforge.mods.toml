@@ -51,10 +51,22 @@ config="${mod_id}.mixins.json"
 [[mixins]]
 config="playeranim.mixins.json"
 
+# AzureLib-Armor mixins for animated armor/item rendering
+[[mixins]]
+config="azurelib.mixins.json"
+
+# Accessories system mixins for accessory slot/container/rendering
+[[mixins]]
+config="accessories.mixins.json"
+
+# SpellEngine mixins for spell casting, effects, combat integration
+[[mixins]]
+config="spellengine.mixins.json"
+
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg
-#[[accessTransformers]]
-#file="META-INF/accesstransformer.cfg"
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
 
 # The coremods config file path is not configurable and is always loaded from META-INF/coremods.json
 

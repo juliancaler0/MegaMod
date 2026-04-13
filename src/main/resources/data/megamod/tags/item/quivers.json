@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:small_quiver",
+      "required": false
+    },
+    {
+      "id": "megamod:medium_quiver",
+      "required": false
+    },
+    {
+      "id": "megamod:large_quiver",
+      "required": false
+    }
+  ]
+}

@@ -1,16 +1,13 @@
 package com.ultra.megamod.feature.dungeons.item;
 
-import com.ultra.megamod.feature.relics.data.ArmorStatRoller;
 import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
 import java.util.Optional;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -25,84 +22,46 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
 
 /**
- * Mythic Netherite gear — superior to vanilla Netherite.
+ * Mythic Netherite weapons — superior to vanilla Netherite.
  * Dungeon-exclusive: only drops from Mythic+ tier dungeons.
- * Armor uses ArmorStatRoller; Sword/Axe use WeaponStatRoller.
+ * The matching armor set was removed; Dungeon Netherite armor covers that role.
  */
 public class MythicNetheriteItem extends Item {
 
     public enum Piece {
-        SWORD("Sword", null, 11.0, 0.0),
-        AXE("Axe", null, 13.0, 0.0),
-        HELMET("Helmet", EquipmentSlot.HEAD, 4.5, 3.5),
-        CHESTPLATE("Chestplate", EquipmentSlot.CHEST, 10.0, 4.0),
-        LEGGINGS("Leggings", EquipmentSlot.LEGS, 8.0, 3.5),
-        BOOTS("Boots", EquipmentSlot.FEET, 4.5, 3.5);
+        SWORD("Sword", 11.0),
+        AXE("Axe", 13.0);
 
         public final String displayName;
-        @Nullable public final EquipmentSlot slot;
-        public final double primaryStat; // armor for armor pieces, attack damage for weapons
-        public final double toughness;
+        public final double primaryStat;
 
-        Piece(String displayName, @Nullable EquipmentSlot slot, double primaryStat, double toughness) {
+        Piece(String displayName, double primaryStat) {
             this.displayName = displayName;
-            this.slot = slot;
             this.primaryStat = primaryStat;
-            this.toughness = toughness;
         }
 
-        public boolean isArmor() { return slot != null; }
-        public boolean isWeapon() { return this == SWORD || this == AXE; }
+        public boolean isArmor() { return false; }
+        public boolean isWeapon() { return true; }
     }
 
     private final Piece piece;
 
     public MythicNetheriteItem(Item.Properties props, Piece piece) {
-        super(buildProperties(props, piece));
+        super(props.stacksTo(1).rarity(Rarity.EPIC).fireResistant().durability(2500));
         this.piece = piece;
-    }
-
-    private static Item.Properties buildProperties(Item.Properties props, Piece piece) {
-        props = props.stacksTo(1).rarity(Rarity.EPIC).fireResistant();
-        if (piece.isArmor()) {
-            props = props.durability(getArmorDurability(piece)).equippable(piece.slot);
-        } else {
-            props = props.durability(2500);
-        }
-        return props;
-    }
-
-    private static int getArmorDurability(Piece piece) {
-        return switch (piece) {
-            case HELMET -> 550;
-            case CHESTPLATE -> 800;
-            case LEGGINGS -> 750;
-            case BOOTS -> 650;
-            default -> 500;
-        };
     }
 
     public Piece getPiece() { return piece; }
 
     @Override
-    public @Nullable EquipmentSlot getEquipmentSlot(ItemStack stack) {
-        return piece.slot;
-    }
-
-    @Override
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot equippedSlot) {
-        if (piece.isArmor() && !ArmorStatRoller.isArmorInitialized(stack)) {
-            ArmorStatRoller.rollAndApply(stack, piece.primaryStat, piece.toughness, piece.slot, level.random);
-        }
-        if (piece.isWeapon() && !WeaponStatRoller.isWeaponInitialized(stack)) {
+        if (!WeaponStatRoller.isWeaponInitialized(stack)) {
             WeaponStatRoller.rollAndApply(stack, (float) piece.primaryStat, level.random);
         }
     }
@@ -110,14 +69,8 @@ public class MythicNetheriteItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
-        if (piece.isArmor()) {
-            ArmorStatRoller.appendArmorTooltip(stack, tooltip);
-            tooltip.accept(Component.empty());
-        }
-        if (piece.isWeapon()) {
-            WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
-            tooltip.accept(Component.empty());
-        }
+        WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
+        tooltip.accept(Component.empty());
         tooltip.accept(Component.literal("Mythic Netherite " + piece.displayName).withStyle(ChatFormatting.LIGHT_PURPLE));
         tooltip.accept(Component.literal("Superior to Netherite").withStyle(ChatFormatting.GRAY));
         tooltip.accept(Component.literal("Mythic+ Dungeon Exclusive").withStyle(ChatFormatting.DARK_RED));

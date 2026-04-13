@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:gold_ingot",
+    "H": "minecraft:stick"
+  },
+  "pattern": [
+    " BB",
+    " BB",
+    "H  "
+  ],
+  "result": {
+    "id": "megamod:golden_great_hammer"
+  }
+}

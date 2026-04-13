@@ -8,9 +8,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.BlockEvent;
 
 /**
- * Listens for block changes on the client side and marks the affected map tiles
- * as dirty so they get re-rendered immediately instead of waiting for the
- * periodic update cycle.
+ * Listens for block changes and marks the affected map tiles as dirty.
+ *
+ * BlockEvent.BreakEvent / EntityPlaceEvent only fire server-side, so this
+ * subscriber only catches changes when the integrated server is in-process
+ * (singleplayer / LAN host). On dedicated multiplayer the player's tile still
+ * refreshes via MapChunkTileManager.updateCurrentTile (per-tick dirty marking).
  */
 @EventBusSubscriber(modid = MegaMod.MODID, value = Dist.CLIENT)
 public class MapBlockChangeListener {

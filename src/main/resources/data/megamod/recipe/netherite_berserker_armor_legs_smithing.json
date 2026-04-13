@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:berserker_armor_legs",
+  "result": {
+    "id": "megamod:netherite_berserker_armor_legs"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

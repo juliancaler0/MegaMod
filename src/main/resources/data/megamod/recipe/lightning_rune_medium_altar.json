@@ -1,0 +1,9 @@
+{
+  "type": "megamod:crafting",
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/lightning_medium",
+  "result": {
+    "count": 16,
+    "id": "megamod:lightning_rune"
+  }
+}

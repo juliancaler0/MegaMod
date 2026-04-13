@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "minecraft:chain",
+    "T": "minecraft:netherite_scrap"
+  },
+  "pattern": [
+    "III",
+    "T T",
+    "I I"
+  ],
+  "result": {
+    "id": "megamod:berserker_armor_legs"
+  }
+}

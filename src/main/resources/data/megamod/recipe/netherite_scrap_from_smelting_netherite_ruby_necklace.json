@@ -4,9 +4,7 @@
   "cookingtime": 300,
   "experience": 0.1,
   "group": "disassemble",
-  "ingredient": {
-    "item": "megamod:netherite_ruby_necklace"
-  },
+  "ingredient": "megamod:netherite_ruby_necklace",
   "result": {
     "id": "minecraft:netherite_scrap"
   }

@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:impale",
+      "required": false
+    },
+    {
+      "id": "megamod:thrust",
+      "required": false
+    }
+  ]
+}

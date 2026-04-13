@@ -1,1 +1,15 @@
-{"replace":false,"values":["megamod:staff_wizard","megamod:staff_arcane","megamod:staff_fire","megamod:staff_frost","megamod:staff_netherite_arcane","megamod:staff_netherite_fire","megamod:staff_netherite_frost","megamod:holy_staff","megamod:diamond_holy_staff","megamod:netherite_holy_staff"]}
+{
+  "values": [
+    "megamod:holy_staff",
+    "megamod:diamond_holy_staff",
+    "megamod:netherite_holy_staff",
+    {
+      "id": "megamod:ruby_holy_staff",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_holy_staff",
+      "required": false
+    }
+  ]
+}

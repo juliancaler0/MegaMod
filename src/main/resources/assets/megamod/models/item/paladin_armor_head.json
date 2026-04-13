@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/paladin_armor_head"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "megamod:item/paladin_armor_head"
+  }
+}

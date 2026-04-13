@@ -100,15 +100,34 @@ public class MegaMod {
         modEventBus.addListener(com.ultra.megamod.feature.combat.network.ClassNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.BetterCombatNetwork::registerPayloads);
         // Combat overhaul registries
+        com.ultra.megamod.lib.combatroll.CombatRollInit.register(modEventBus);
+        com.ultra.megamod.lib.combatroll.CombatRollInit.init();
+        modEventBus.addListener(com.ultra.megamod.lib.combatroll.network.NetworkEvents::registerConfigurationTasks);
+        modEventBus.addListener(com.ultra.megamod.lib.combatroll.network.NetworkEvents::registerPayloadHandlers);
         com.ultra.megamod.feature.combat.spell.SpellEffects.init(modEventBus);
+        // Initialize ported RPG combat libraries
+        com.ultra.megamod.lib.accessories.neoforge.AccessoriesForge.init(modEventBus);
+        com.ultra.megamod.lib.spellpower.SpellPowerMod.init(modEventBus);
+        com.ultra.megamod.lib.rangedweapon.RangedWeaponMod.init();
+        com.ultra.megamod.lib.azurelib.NeoForgeAzureLibMod.register(modEventBus);
+        com.ultra.megamod.feature.combat.paladins.PaladinsMod.init(modEventBus);
+        com.ultra.megamod.feature.combat.wizards.WizardsMod.init(modEventBus);
+
         com.ultra.megamod.feature.combat.spell.CombatEntityRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ClassArmorRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.JewelryRegistry.init(modEventBus);
+        com.ultra.megamod.feature.combat.jewelry.JewelrySounds.SOUND_EVENTS.register(modEventBus);
         com.ultra.megamod.feature.combat.items.ArcherItemRegistry.init(modEventBus);
+        com.ultra.megamod.lib.spellengine.api.effect.Effects.init(modEventBus);
+        com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry.init(modEventBus);
+        com.ultra.megamod.feature.combat.archers.ArchersMod.init(modEventBus);
+        com.ultra.megamod.feature.combat.arsenal.ArsenalMod.init(modEventBus);
+        com.ultra.megamod.feature.combat.rogues.RoguesMod.init();
         com.ultra.megamod.feature.combat.spell.SpellItemRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.runes.RuneRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.runes.RuneWorkbenchRegistry.init(modEventBus);
+        com.ultra.megamod.feature.combat.runes.RuneCrafting.init(modEventBus);
         com.ultra.megamod.feature.combat.items.GemOreRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.village.CombatVillagerRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleRegistry.init(modEventBus);
@@ -126,6 +145,7 @@ public class MegaMod {
         com.ultra.megamod.feature.citizen.multipiston.MultiPistonRegistry.init(modEventBus);
         com.ultra.megamod.feature.citizen.worldgen.ColonyWorldGenRegistry.init(modEventBus);
         com.ultra.megamod.feature.citizen.enchantment.ColonyEnchantmentRegistry.init(modEventBus);
+        com.ultra.megamod.lib.spellengine.api.effect.SpellEngineSyncAttachments.init(modEventBus);
         LOGGER.info("MegaMod loading - all systems enabled");
     }
 }

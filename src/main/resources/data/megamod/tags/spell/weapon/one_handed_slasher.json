@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:swift_strikes",
+      "required": false
+    },
+    {
+      "id": "megamod:cleave",
+      "required": false
+    },
+    {
+      "id": "megamod:swipe",
+      "required": false
+    }
+  ]
+}

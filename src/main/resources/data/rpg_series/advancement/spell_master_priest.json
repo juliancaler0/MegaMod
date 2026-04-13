@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:holy_staff"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_master_priest.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_master_priest.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "rpg_series:spell_novice_priest",
+  "criteria": {
+    "cast": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "cast"
+    ]
+  ]
+}

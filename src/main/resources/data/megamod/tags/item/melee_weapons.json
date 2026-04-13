@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#megamod:claymores",
+    "#megamod:great_hammers",
+    "#megamod:maces",
+    "#megamod:daggers",
+    "#megamod:double_axes",
+    "#megamod:glaives",
+    "#megamod:sickles"
+  ]
+}

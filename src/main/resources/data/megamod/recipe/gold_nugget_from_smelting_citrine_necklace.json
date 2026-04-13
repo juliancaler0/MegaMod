@@ -4,9 +4,7 @@
   "cookingtime": 300,
   "experience": 0.1,
   "group": "disassemble",
-  "ingredient": {
-    "item": "megamod:citrine_necklace"
-  },
+  "ingredient": "megamod:citrine_necklace",
   "result": {
     "id": "minecraft:gold_nugget"
   }

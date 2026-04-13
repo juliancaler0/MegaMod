@@ -1,0 +1,66 @@
+package com.ultra.megamod.lib.spellengine.api.datagen;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public abstract class WeaponAttributeGenerator implements DataProvider {
+    private final CompletableFuture<HolderLookup.Provider> registryLookup;
+    protected final PackOutput dataOutput;
+
+    public WeaponAttributeGenerator(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        this.dataOutput = dataOutput;
+        this.registryLookup = registryLookup;
+    }
+
+    public record Entry(Identifier id, String preset) {  }
+    public static class Builder {
+        public final List<Entry> entries = new ArrayList<>();
+    }
+
+    public abstract void generateWeaponAttributes(Builder builder);
+
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    private record WeaponAttributesFile(String parent) { }
+    private static WeaponAttributesFile createFileContent(String preset) {
+        var prefix = preset.contains(":") ? "" : "bettercombat:";
+        return new WeaponAttributesFile(prefix + preset);
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput writer) {
+        var builder = new Builder();
+        generateWeaponAttributes(builder);
+        var entries = builder.entries;
+
+        List<CompletableFuture> writes = new ArrayList<>();
+        for (var entry: entries) {
+            var content = createFileContent(entry.preset);
+            var json = gson.toJsonTree(content);
+            var path = getFilePath(entry.id());
+            writes.add(DataProvider.saveStable(writer, json, path));
+        }
+
+        return CompletableFuture.allOf(writes.toArray(new CompletableFuture[0]));
+    }
+
+    @Override
+    public String getName() {
+        return "Weapon Attributes File Generator";
+    }
+
+    private Path getFilePath(Identifier id) {
+        return this.dataOutput.createPathProvider(PackOutput.Target.DATA_PACK, "weapon_attributes").json(id);
+    }
+}

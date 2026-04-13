@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": "minecraft:diamond",
+    "I": "minecraft:iron_ingot",
+    "T": "minecraft:tripwire_hook",
+    "X": "minecraft:string"
+  },
+  "pattern": [
+    "IDI",
+    "XTX",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:heavy_crossbow"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "minecraft:chain",
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "L L",
+    "W W"
+  ],
+  "result": {
+    "id": "megamod:priest_robe_boots"
+  }
+}

@@ -49,6 +49,7 @@ public class MegaModClient {
     public MegaModClient(IEventBus modEventBus, ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, (IConfigScreenFactory) ConfigurationScreen::new);
         AmbientSoundsFeature.init(modEventBus);
+        com.ultra.megamod.lib.accessories.neoforge.client.AccessoriesClientForge.init(modEventBus);
 
         // Register PlayerAnimationLib spell animation layers (per-player event)
         com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.registerFactories();
@@ -117,6 +118,8 @@ public class MegaModClient {
         modEventBus.addListener(com.ultra.megamod.feature.backpacks.client.BackpackKeybind::onRegisterKeyMappings);
         modEventBus.addListener(com.ultra.megamod.feature.schematic.client.SchematicKeybind::onRegisterKeyMappings);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.client.CombatKeybindings::onRegisterKeyMappings);
+        modEventBus.addListener(com.ultra.megamod.lib.combatroll.client.CombatRollClientInit::registerKeys);
+        modEventBus.addListener(com.ultra.megamod.lib.combatroll.client.CombatRollClientInit::onClientSetup);
         // Map keybind disabled — map is computer-app only
         // modEventBus.addListener(com.ultra.megamod.feature.computer.screen.map.MapKeybind::onRegisterKeyMappings);
 
@@ -135,6 +138,12 @@ public class MegaModClient {
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
                 (net.neoforged.neoforge.event.level.LevelEvent.Unload e) -> SwingAnimationState.clearAll());
 
+        // Wizard effect renderers and animated armor (deferred until FMLClientSetupEvent,
+        // when DeferredHolder values are bound)
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) -> {
+            event.enqueueWork(() -> com.ultra.megamod.feature.combat.wizards.client.WizardsClientInit.init());
+        });
+
         // Particle provider registration
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleProviders::registerParticleProviders);
 
@@ -149,6 +158,27 @@ public class MegaModClient {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "player_animations"),
                     new com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources());
+        });
+
+        // Initialize Archers client (armor renderers, effect renderers, tooltips)
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event2) -> {
+            event2.enqueueWork(() -> com.ultra.megamod.feature.combat.archers.client.ArchersClientMod.init());
+        });
+
+        // Initialize Paladins client (armor renderers, effect renderers)
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event4) -> {
+            event4.enqueueWork(() -> com.ultra.megamod.feature.combat.paladins.client.PaladinsClientMod.init());
+        });
+
+        // Initialize Rogues & Warriors client (armor renderers)
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event5) -> {
+            event5.enqueueWork(() -> com.ultra.megamod.feature.combat.rogues.client.RoguesClientMod.init());
+        });
+
+        // Initialize Arsenal client (spell tooltips, effect particle spawners)
+        // Deferred until registry values are bound
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event3) -> {
+            event3.enqueueWork(() -> com.ultra.megamod.feature.combat.arsenal.client.ArsenalClientMod.init());
         });
 
         // Renderer and pipeline registrations
@@ -176,6 +206,9 @@ public class MegaModClient {
         // Spell combat entity renderers
         event.registerEntityRenderer(CombatEntityRegistry.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
         event.registerEntityRenderer(CombatEntityRegistry.SPELL_CLOUD.get(), SpellCloudRenderer::new);
+
+        // Paladin entity renderers (Barrier + Battle Banner)
+        com.ultra.megamod.feature.combat.paladins.client.PaladinsClientMod.registerEntityRenderers(event);
 
         // MC Citizen renderer (unified citizen entity)
         event.registerEntityRenderer(com.ultra.megamod.feature.citizen.CitizenRegistry.MC_CITIZEN.get(),

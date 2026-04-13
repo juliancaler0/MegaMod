@@ -1,13 +1,9 @@
 {
   "type": "megamod:crafting",
-  "base": {
-    "tag": "megamod:rune_crafting/base/stone"
-  },
-  "addition": {
-    "tag": "megamod:rune_crafting/reagent/arcane_small"
-  },
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/arcane_small",
   "result": {
     "count": 8,
-    "id": "megamod:arcane_stone"
+    "id": "megamod:arcane_rune"
   }
 }

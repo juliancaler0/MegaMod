@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:ruby_ring",
+    "megamod:topaz_ring",
+    "megamod:citrine_ring",
+    "megamod:jade_ring",
+    "megamod:sapphire_ring",
+    "megamod:tanzanite_ring",
+    "megamod:ruby_necklace",
+    "megamod:topaz_necklace",
+    "megamod:citrine_necklace",
+    "megamod:jade_necklace",
+    "megamod:sapphire_necklace",
+    "megamod:tanzanite_necklace"
+  ]
+}

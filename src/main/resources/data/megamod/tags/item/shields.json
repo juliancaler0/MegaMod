@@ -1,1 +1,20 @@
-{"replace":false,"values":["megamod:iron_kite_shield","megamod:golden_kite_shield","megamod:diamond_kite_shield","megamod:netherite_kite_shield"]}
+{
+  "values": [
+    "megamod:iron_kite_shield",
+    "megamod:golden_kite_shield",
+    "megamod:diamond_kite_shield",
+    "megamod:netherite_kite_shield",
+    {
+      "id": "megamod:aeternium_kite_shield",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_kite_shield",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_kite_shield",
+      "required": false
+    }
+  ]
+}

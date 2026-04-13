@@ -1,0 +1,73 @@
+package com.ultra.megamod.lib.spellengine.api.datagen;
+
+import com.google.gson.JsonObject;
+
+
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+
+import java.nio.file.Path;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.concurrent.CompletableFuture;
+
+public abstract class NamespacedLangGenerator implements DataProvider {
+    private final CompletableFuture<HolderLookup.Provider> registryLookup;
+    protected final PackOutput dataOutput;
+    private final String languageCode;
+    private final String namespace;
+    protected NamespacedLangGenerator(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup, String namespace) {
+        this.dataOutput = dataOutput;
+        this.languageCode = "en_us";
+        this.registryLookup = registryLookup;
+        this.namespace = namespace;
+    }
+
+    public abstract void generateTranslations(HolderLookup.Provider lookup, TranslationConsumer consumer);
+
+    @FunctionalInterface
+    public interface TranslationConsumer {
+        void accept(String key, String value);
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput writer) {
+        TreeMap<String, String> translationEntries = new TreeMap<>();
+
+        return this.registryLookup.thenCompose(lookup -> {
+            generateTranslations(lookup, (String key, String value) -> {
+                Objects.requireNonNull(key);
+                Objects.requireNonNull(value);
+
+                if (translationEntries.containsKey(key)) {
+                    throw new RuntimeException("Existing translation key found - " + key + " - Duplicate will be ignored.");
+                }
+
+                translationEntries.put(key, value);
+            });
+
+            JsonObject langEntryJson = new JsonObject();
+
+            for (Map.Entry<String, String> entry : translationEntries.entrySet()) {
+                langEntryJson.addProperty(entry.getKey(), entry.getValue());
+            }
+
+            return DataProvider.saveStable(writer, langEntryJson, getLangFilePath(this.languageCode));
+        });
+    }
+
+    @Override
+    public String getName() {
+        return "Namespaced Lang Generator";
+    }
+
+    private Path getLangFilePath(String code) {
+        return dataOutput
+                .createPathProvider(PackOutput.Target.RESOURCE_PACK, "lang")
+                .json(Identifier.fromNamespaceAndPath(namespace, code));
+    }
+}

@@ -7,5 +7,5 @@
     "G": "minecraft:glass_pane",
     "R": "minecraft:redstone"
   },
-  "result": { "id": "megamod:phone_item", "count": 1 }
+  "result": { "id": "megamod:phone", "count": 1 }
 }

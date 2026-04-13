@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_staff_damage_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_staff_damage_5",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_spear_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_sickle_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_mace_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_shield_2",
+      "required": false
+    }
+  ]
+}

@@ -40,15 +40,6 @@ public class MapChunkImage {
         this.image = generateImage(level, pos, caveView);
     }
 
-    /**
-     * Convert ARGB (0xAARRGGBB) to ABGR (0xAABBGGRR) for NativeImage.setPixel.
-     * NativeImage Format.RGBA stores bytes as R,G,B,A in memory; on little-endian
-     * systems, reading as an int yields ABGR. MapColor and BiomeColors return ARGB.
-     */
-    private static int argbToAbgr(int argb) {
-        return (argb & 0xFF00FF00) | ((argb >> 16) & 0xFF) | ((argb & 0xFF) << 16);
-    }
-
     private NativeImage generateImage(ClientLevel level, ChunkPos pos, boolean caveView) {
         NativeImage img = new NativeImage(NativeImage.Format.RGBA, 16, 16, true);
         for (int x = 0; x < 16; x++) {
@@ -61,7 +52,7 @@ public class MapChunkImage {
                 } else {
                     worldY = level.getHeight(Heightmap.Types.WORLD_SURFACE, worldX, worldZ) - 1;
                 }
-                img.setPixel(x, z, argbToAbgr(getReliefColor(level, new BlockPos(worldX, worldY, worldZ), caveView)));
+                img.setPixel(x, z, getReliefColor(level, new BlockPos(worldX, worldY, worldZ), caveView));
             }
         }
         img.untrack();
@@ -92,10 +83,22 @@ public class MapChunkImage {
 
         if (isWaterLike) {
             int depth = getWaterDepth(level, pos);
-            MapColor.Brightness brightness =
-                    depth > 6 ? MapColor.Brightness.LOWEST :
-                            depth > 3 ? MapColor.Brightness.LOW :
-                                    MapColor.Brightness.NORMAL;
+            // Ocean-floor relief: show underwater hills/trenches instead of a flat slab
+            int floorHere = level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX(), pos.getZ());
+            int floorN = level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX(), pos.getZ() - 1);
+            int floorW = level.getHeight(Heightmap.Types.OCEAN_FLOOR, pos.getX() - 1, pos.getZ());
+            int relFloor = floorHere - Math.max(floorN, floorW);
+
+            int depthLevel = depth <= 2 ? 0 : depth <= 5 ? 1 : depth <= 10 ? 2 : 3;
+            if (relFloor > 0) depthLevel = Math.max(0, depthLevel - 1);
+            else if (relFloor < -2) depthLevel = Math.min(3, depthLevel + 1);
+
+            MapColor.Brightness brightness = switch (depthLevel) {
+                case 0 -> MapColor.Brightness.HIGH;
+                case 1 -> MapColor.Brightness.NORMAL;
+                case 2 -> MapColor.Brightness.LOW;
+                default -> MapColor.Brightness.LOWEST;
+            };
             // Use biome-specific water color (swamp=murky, warm ocean=light blue, etc.)
             try {
                 int biomeWaterColor = BiomeColors.getAverageWaterColor(level, pos);

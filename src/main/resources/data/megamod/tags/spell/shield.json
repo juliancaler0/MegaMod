@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:unyielding_shield",
+      "required": false
+    },
+    {
+      "id": "megamod:guarding_shield",
+      "required": false
+    },
+    {
+      "id": "megamod:spiked_shield",
+      "required": false
+    }
+  ]
+}

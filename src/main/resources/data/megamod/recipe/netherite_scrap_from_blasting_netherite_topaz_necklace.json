@@ -4,9 +4,7 @@
   "cookingtime": 150,
   "experience": 0.1,
   "group": "disassemble",
-  "ingredient": {
-    "item": "megamod:netherite_topaz_necklace"
-  },
+  "ingredient": "megamod:netherite_topaz_necklace",
   "result": {
     "id": "minecraft:netherite_scrap"
   }

@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_claymore_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_staff_heal_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_spear_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_longbow_1",
+      "required": false
+    }
+  ]
+}

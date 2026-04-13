@@ -1,15 +1,11 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "tag": "megamod:rune_crafting/base/stone"
-    },
-    {
-      "tag": "megamod:rune_crafting/reagent/healing_medium"
-    }
+    "#megamod:rune_crafting/base/stone",
+    "#megamod:rune_crafting/reagent/healing_medium"
   ],
   "result": {
     "count": 4,
-    "id": "megamod:healing_stone"
+    "id": "megamod:healing_rune"
   }
 }

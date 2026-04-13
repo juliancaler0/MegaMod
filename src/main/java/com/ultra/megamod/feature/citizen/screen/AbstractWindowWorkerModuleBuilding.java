@@ -146,7 +146,7 @@ public abstract class AbstractWindowWorkerModuleBuilding<B> extends AbstractBuil
     protected void hireClicked(@NotNull final Button button)
     {
         // TODO: Check buildingView.allowsAssignment() and open WindowHireWorker
-        // new WindowHireWorker(buildingView.getColony(), buildingView.getPosition()).open();
+        // new WindowHireWorker(buildingView.getColony(), buildingView.position()).open();
     }
 
     /**

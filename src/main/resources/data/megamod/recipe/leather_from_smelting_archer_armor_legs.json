@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 300,
+  "experience": 0.1,
+  "group": "disassemble",
+  "ingredient": "megamod:archer_armor_legs",
+  "result": {
+    "id": "minecraft:leather"
+  }
+}

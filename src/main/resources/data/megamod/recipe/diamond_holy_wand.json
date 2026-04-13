@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": "minecraft:diamond",
+    "H": "minecraft:gold_ingot"
+  },
+  "pattern": [
+    " A",
+    "H "
+  ],
+  "result": {
+    "id": "megamod:diamond_holy_wand"
+  }
+}

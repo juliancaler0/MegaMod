@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:iron_sickle",
+    "megamod:golden_sickle",
+    "megamod:diamond_sickle",
+    "megamod:netherite_sickle",
+    {
+      "id": "megamod:aeternium_sickle",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_sickle",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_sickle",
+      "required": false
+    }
+  ]
+}

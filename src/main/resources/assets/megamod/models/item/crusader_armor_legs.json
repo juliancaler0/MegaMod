@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/crusader_armor_legs"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "megamod:item/crusader_armor_legs"
+  }
+}

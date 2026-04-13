@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "amount": 1,
+  "order": 500,
+  "icon": "megamod:gui/slot/necklace",
+  "validators": [],
+  "dropRule": "DEFAULT"
+}

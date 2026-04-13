@@ -1,1 +1,6 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/prior_robe_chest"}}
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "megamod:item/prior_robe_chest"
+  }
+}

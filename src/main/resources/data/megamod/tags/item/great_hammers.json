@@ -1,0 +1,22 @@
+{
+  "values": [
+    "megamod:wooden_great_hammer",
+    "megamod:stone_great_hammer",
+    "megamod:iron_great_hammer",
+    "megamod:golden_great_hammer",
+    "megamod:diamond_great_hammer",
+    "megamod:netherite_great_hammer",
+    {
+      "id": "megamod:aeternium_great_hammer",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_great_hammer",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_great_hammer",
+      "required": false
+    }
+  ]
+}

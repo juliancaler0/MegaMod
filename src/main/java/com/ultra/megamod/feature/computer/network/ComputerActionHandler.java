@@ -3088,7 +3088,63 @@ public class ComputerActionHandler {
                 }
                 break;
             }
+            case "set_combat_config": {
+                if (!AdminSystem.isAdmin(player)) break;
+                // JSON: {"key":"passive_proc_multiplier","value":1.5} or {"key":"allow_fast_attacks","value":true}
+                try {
+                    String cfgKey = extractJsonString(jsonData, "key");
+                    String rawValue = extractJsonValue(jsonData, "value");
+                    if (cfgKey == null || rawValue == null) break;
+                    Object parsed;
+                    if ("true".equalsIgnoreCase(rawValue) || "false".equalsIgnoreCase(rawValue)) {
+                        parsed = Boolean.parseBoolean(rawValue);
+                    } else {
+                        parsed = Double.parseDouble(rawValue);
+                    }
+                    com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.setAndSave(cfgKey, parsed);
+                    ComputerActionHandler.sendResponse(player, "admin_result",
+                        "{\"success\":true,\"msg\":\"Combat " + cfgKey + " = " + rawValue + "\"}", eco);
+                } catch (Exception e) {
+                    ComputerActionHandler.sendResponse(player, "admin_result",
+                        "{\"success\":false,\"msg\":\"Bad config payload: " + e.getMessage().replace("\"", "'") + "\"}", eco);
+                }
+                break;
+            }
         }
+    }
+
+    /** Tiny JSON extractor for {"key":"<str>","value":"<str|num|bool>"}. Returns null if missing. */
+    private static String extractJsonString(String json, String field) {
+        if (json == null) return null;
+        int idx = json.indexOf("\"" + field + "\"");
+        if (idx < 0) return null;
+        int colon = json.indexOf(':', idx);
+        if (colon < 0) return null;
+        int quote = json.indexOf('"', colon);
+        if (quote < 0) return null;
+        int end = json.indexOf('"', quote + 1);
+        if (end < 0) return null;
+        return json.substring(quote + 1, end);
+    }
+
+    /** Extracts a value — either quoted string or raw number/bool — following the given field. */
+    private static String extractJsonValue(String json, String field) {
+        if (json == null) return null;
+        int idx = json.indexOf("\"" + field + "\"");
+        if (idx < 0) return null;
+        int colon = json.indexOf(':', idx);
+        if (colon < 0) return null;
+        int pos = colon + 1;
+        while (pos < json.length() && Character.isWhitespace(json.charAt(pos))) pos++;
+        if (pos >= json.length()) return null;
+        char c = json.charAt(pos);
+        if (c == '"') {
+            int end = json.indexOf('"', pos + 1);
+            return end < 0 ? null : json.substring(pos + 1, end);
+        }
+        int end = pos;
+        while (end < json.length() && "-0123456789.eEtrufals".indexOf(json.charAt(end)) >= 0) end++;
+        return json.substring(pos, end);
     }
 
     private static void sendEconomyData(ServerPlayer player, EconomyManager eco, ServerLevel level) {

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone"
+  },
+  "pattern": [
+    "C  ",
+    "C I",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:auto_fire_hook"
+  }
+}

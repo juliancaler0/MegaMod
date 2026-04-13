@@ -1,0 +1,74 @@
+{
+  "school": "spell_power:physical_melee",
+  "range": 0.0,
+  "tier": 4,
+  "learn": {},
+  "active": {},
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "particles": [
+      {
+        "particle_id": "megamod:sign_speed",
+        "origin": "CENTER",
+        "shape": "LINE_VERTICAL",
+        "count": 1.0,
+        "min_speed": 0.75,
+        "max_speed": 0.75,
+        "color_rgba": 3208659199,
+        "scale": 0.8,
+        "follow_entity": true
+      },
+      {
+        "particle_id": "megamod:magic_stripe_float",
+        "origin": "FEET",
+        "shape": "WIDE_PIPE",
+        "count": 25.0,
+        "min_speed": 0.2,
+        "max_speed": 0.25,
+        "extent": -0.2,
+        "color_rgba": 3208659199
+      },
+      {
+        "particle_id": "megamod:magic_spark_decelerate",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 25.0,
+        "min_speed": 0.1,
+        "max_speed": 0.1,
+        "extent": 0.2,
+        "color_rgba": 3208659199
+      },
+      {
+        "particle_id": "megamod:smoke_medium",
+        "origin": "FEET",
+        "shape": "CIRCLE",
+        "count": 50.0,
+        "min_speed": 0.15,
+        "max_speed": 0.15,
+        "pre_spawn_travel": 1.0
+      }
+    ],
+    "sound": {
+      "id": "megamod:combat.charge_activate"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "megamod:charge_buff",
+          "duration": 2.0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.4,
+    "cooldown": {
+      "duration": 12.0
+    }
+  }
+}

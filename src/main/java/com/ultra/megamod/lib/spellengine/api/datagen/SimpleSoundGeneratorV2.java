@@ -1,0 +1,84 @@
+package com.ultra.megamod.lib.spellengine.api.datagen;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import net.minecraft.data.PackOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public abstract class SimpleSoundGeneratorV2 implements DataProvider {
+    private final CompletableFuture<HolderLookup.Provider> registryLookup;
+    protected final PackOutput dataOutput;
+
+    public SimpleSoundGeneratorV2(PackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        this.dataOutput = dataOutput;
+        this.registryLookup = registryLookup;
+    }
+
+    public record Entry(String namespace, List<SoundEntry> sounds) {  }
+    public record SoundEntry(String name, List<String> variants) {
+        public static SoundEntry withVariants(String name, int count) {
+            if (count > 1) {
+                List<String> variants = new ArrayList<>();
+                for (int i = 0; i < count; i++) {
+                    variants.add(name + "_" + (i+1));
+                }
+                return new SoundEntry(name, variants);
+            } else {
+                return new SoundEntry(name, List.of(name));
+            }
+        }
+    }
+    public static class Builder {
+        public final List<Entry> entries = new ArrayList<>();
+    }
+
+    public abstract void generateSounds(Builder builder);
+
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    private record Sound(List<String> sounds) { }
+    private static LinkedHashMap<String, Sound> createFileContent(String namespace, List<SoundEntry> soundEntries) {
+        var map = new LinkedHashMap<String, Sound>();
+        for (var sound: soundEntries) {
+            var soundIds = sound.variants().stream().map(variant -> Identifier.fromNamespaceAndPath(namespace, variant).toString()).toList();
+            map.put(sound.name, new Sound(soundIds));
+        }
+        return map;
+    }
+
+    @Override
+    public CompletableFuture<?> run(CachedOutput writer) {
+        var builder = new Builder();
+        generateSounds(builder);
+        var entries = builder.entries;
+
+        List<CompletableFuture> writes = new ArrayList<>();
+        for (var entry: entries) {
+            var content = createFileContent(entry.namespace(), entry.sounds);
+            var json = gson.toJsonTree(content);
+            var path = getFilePath(entry.namespace());
+            writes.add(DataProvider.saveStable(writer, json, path));
+        }
+
+        return CompletableFuture.allOf(writes.toArray(new CompletableFuture[0]));
+    }
+
+    @Override
+    public String getName() {
+        return "Simple Sound Entry Generator";
+    }
+
+    private Path getFilePath(String namespace) {
+        return this.dataOutput.createPathProvider(PackOutput.Target.RESOURCE_PACK, "").json(Identifier.fromNamespaceAndPath(namespace, "sounds"));
+    }
+}

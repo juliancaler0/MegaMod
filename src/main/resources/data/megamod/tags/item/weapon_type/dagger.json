@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_dagger_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_dagger_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_dagger_sw",
+      "required": false
+    }
+  ]
+}

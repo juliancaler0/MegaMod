@@ -1,1 +1,21 @@
-{"replace":false,"values":["megamod:composite_longbow","megamod:mechanic_shortbow","megamod:royal_longbow","megamod:netherite_shortbow","megamod:netherite_longbow"]}
+{
+  "values": [
+    "megamod:composite_longbow",
+    "megamod:mechanic_shortbow",
+    "megamod:royal_longbow",
+    "megamod:netherite_shortbow",
+    "megamod:netherite_longbow",
+    {
+      "id": "megamod:crystal_shortbow",
+      "required": false
+    },
+    {
+      "id": "megamod:crystal_longbow",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_longbow",
+      "required": false
+    }
+  ]
+}

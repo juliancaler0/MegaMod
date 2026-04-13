@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:swipe",
+      "required": false
+    },
+    {
+      "id": "megamod:cleave",
+      "required": false
+    }
+  ]
+}

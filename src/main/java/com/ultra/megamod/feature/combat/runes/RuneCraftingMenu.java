@@ -1,25 +1,27 @@
 package com.ultra.megamod.feature.combat.runes;
 
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
  * Smithing-style menu for the Rune Crafting Altar.
- * Two input slots (base item + rune) produce one output.
- * Uses the same recipe matching as SmithingMenu but with our RuneCraftingRecipe type.
+ * Two input slots (base item + reagent) produce one output via RuneCraftingRecipe.
  * Ported 1:1 from the Runes mod's RuneCraftingScreenHandler.
  */
 public class RuneCraftingMenu extends ItemCombinerMenu {
 
     private final Level level;
+    @Nullable
+    private RecipeHolder<RuneCraftingRecipe> currentRecipe;
 
     public RuneCraftingMenu(int syncId, Inventory playerInventory) {
         this(syncId, playerInventory, ContainerLevelAccess.NULL);
@@ -34,14 +36,15 @@ public class RuneCraftingMenu extends ItemCombinerMenu {
     private static ItemCombinerMenuSlotDefinition createInputSlotDefinitions() {
         return ItemCombinerMenuSlotDefinition.create()
                 .withSlot(0, 27, 47, stack -> true)  // base item
-                .withSlot(1, 76, 47, stack -> true)  // rune/addition
+                .withSlot(1, 76, 47, stack -> true)  // reagent/addition
                 .withResultSlot(2, 134, 47)
                 .build();
     }
 
     @Override
     protected boolean mayPickup(Player player, boolean hasStack) {
-        return !this.resultSlots.getItem(0).isEmpty();
+        return this.currentRecipe != null
+                && this.currentRecipe.value().matches(this.createRecipeInput(), this.level);
     }
 
     @Override
@@ -52,11 +55,19 @@ public class RuneCraftingMenu extends ItemCombinerMenu {
         shrinkInput(0);
         shrinkInput(1);
 
-        // Play rune crafting sound
-        this.access.execute((level, pos) -> {
-            level.playSound(null, pos, SoundEvents.SMITHING_TABLE_USE, SoundSource.BLOCKS,
-                    level.random.nextFloat() * 0.1F + 0.9F, 1.0F);
-        });
+        // Play rune crafting sound with timing control
+        var runeCrafter = (RuneCrafter) player;
+        if (runeCrafter.shouldPlayRuneCraftingSound(player.tickCount)) {
+            this.access.execute((level, pos) -> {
+                level.playSound(null, pos, RuneCrafting.SOUND.get(), SoundSource.BLOCKS,
+                        level.random.nextFloat() * 0.1F + 0.9F, 1.0F);
+            });
+            runeCrafter.onPlayedRuneCraftingSound(player.tickCount);
+        }
+    }
+
+    private RuneCraftingRecipeInput createRecipeInput() {
+        return new RuneCraftingRecipeInput(this.inputSlots.getItem(0), this.inputSlots.getItem(1));
     }
 
     private List<ItemStack> getRelevantItems() {
@@ -78,34 +89,21 @@ public class RuneCraftingMenu extends ItemCombinerMenu {
 
     @Override
     public void createResult() {
-        ItemStack base = this.inputSlots.getItem(0);
-        ItemStack addition = this.inputSlots.getItem(1);
+        var recipeInput = this.createRecipeInput();
+        if (!(this.level instanceof net.minecraft.server.level.ServerLevel serverLevel)) return;
+        var result = serverLevel.recipeAccess()
+                .getRecipeFor(RuneCrafting.RECIPE_TYPE.get(), recipeInput, this.level);
 
-        if (base.isEmpty() || addition.isEmpty()) {
-            this.resultSlots.setItem(0, ItemStack.EMPTY);
-            return;
-        }
-
-        // Check if the addition is a rune item
-        if (isRuneItem(addition)) {
-            // Create enhanced item: copy the base with rune applied
-            ItemStack result = base.copy();
-            // Apply a simple enchantment glow to indicate rune enhancement
-            // The actual rune effects are handled by the combat system via NBT tags
-            result.setCount(1);
-            this.resultSlots.setItem(0, result);
+        if (result.isPresent()) {
+            var recipeHolder = result.get();
+            ItemStack itemStack = recipeHolder.value().assemble(recipeInput, this.level.registryAccess());
+            this.currentRecipe = recipeHolder;
+            this.resultSlots.setRecipeUsed(recipeHolder);
+            this.resultSlots.setItem(0, itemStack);
         } else {
+            this.currentRecipe = null;
             this.resultSlots.setItem(0, ItemStack.EMPTY);
         }
-    }
-
-    private boolean isRuneItem(ItemStack stack) {
-        return stack.is(RuneRegistry.ARCANE_RUNE.get())
-                || stack.is(RuneRegistry.FIRE_RUNE.get())
-                || stack.is(RuneRegistry.FROST_RUNE.get())
-                || stack.is(RuneRegistry.HEALING_RUNE.get())
-                || stack.is(RuneRegistry.LIGHTNING_RUNE.get())
-                || stack.is(RuneRegistry.SOUL_RUNE.get());
     }
 
     @Override

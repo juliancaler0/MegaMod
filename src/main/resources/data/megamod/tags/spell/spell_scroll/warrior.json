@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:shattering_throw",
+      "required": false
+    },
+    {
+      "id": "megamod:shout",
+      "required": false
+    },
+    {
+      "id": "megamod:charge",
+      "required": false
+    }
+  ]
+}

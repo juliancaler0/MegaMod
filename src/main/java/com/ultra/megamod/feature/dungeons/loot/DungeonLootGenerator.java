@@ -326,10 +326,6 @@ public class DungeonLootGenerator {
             list.addAll(List.of(
                 DungeonExclusiveItems.MYTHIC_NETHERITE_SWORD.get(),
                 DungeonExclusiveItems.MYTHIC_NETHERITE_AXE.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_HELMET.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_CHESTPLATE.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_LEGGINGS.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_BOOTS.get(),
                 Items.NETHERITE_SWORD, Items.NETHERITE_AXE,
                 Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS,
                 Items.ENCHANTED_GOLDEN_APPLE, Items.TOTEM_OF_UNDYING));
@@ -345,10 +341,6 @@ public class DungeonLootGenerator {
             list.addAll(List.of(
                 DungeonExclusiveItems.MYTHIC_NETHERITE_SWORD.get(),
                 DungeonExclusiveItems.MYTHIC_NETHERITE_AXE.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_HELMET.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_CHESTPLATE.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_LEGGINGS.get(),
-                DungeonExclusiveItems.MYTHIC_NETHERITE_BOOTS.get(),
                 DungeonExclusiveItems.MYTHIC_NETHERITE_SWORD.get(),
                 DungeonExclusiveItems.MYTHIC_NETHERITE_AXE.get(),
                 Items.ENCHANTED_GOLDEN_APPLE, Items.TOTEM_OF_UNDYING, Items.NETHER_STAR));
@@ -496,30 +488,7 @@ public class DungeonLootGenerator {
                 slotGroup
             );
         }
-        // MythicNetheriteItem armor doesn't extend ArmorItem — add base armor/toughness scaled by quality
-        if (baseItem instanceof com.ultra.megamod.feature.dungeons.item.MythicNetheriteItem mythic && mythic.getPiece().isArmor()) {
-            float qualityMult = switch (quality) {
-                case COMMON -> 1.0f;
-                case UNCOMMON -> 1.15f;
-                case RARE -> 1.3f;
-                case EPIC -> 1.5f;
-                case LEGENDARY -> 2.0f;
-            };
-            double finalArmor = mythic.getPiece().primaryStat * qualityMult;
-            double finalToughness = mythic.getPiece().toughness * qualityMult;
-            modBuilder.add(
-                net.minecraft.world.entity.ai.attributes.Attributes.ARMOR,
-                new AttributeModifier(Identifier.fromNamespaceAndPath("megamod", "armor_base"), finalArmor, AttributeModifier.Operation.ADD_VALUE),
-                slotGroup
-            );
-            if (finalToughness > 0) {
-                modBuilder.add(
-                    net.minecraft.world.entity.ai.attributes.Attributes.ARMOR_TOUGHNESS,
-                    new AttributeModifier(Identifier.fromNamespaceAndPath("megamod", "armor_toughness_base"), finalToughness, AttributeModifier.Operation.ADD_VALUE),
-                    slotGroup
-                );
-            }
-        }
+        // (Mythic Netherite armor was removed; only weapons remain — handled below.)
         // DungeonArmorItem — add base armor/toughness scaled by quality
         if (baseItem instanceof com.ultra.megamod.feature.dungeons.item.DungeonArmorItem dungeonArmor) {
             float qualityMult = switch (quality) {
@@ -599,24 +568,10 @@ public class DungeonLootGenerator {
             tag.putInt("relic_level", 0);
             tag.putInt("relic_xp", 0);
             stack.set(DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
-        } else if (baseItem instanceof com.ultra.megamod.feature.dungeons.item.MythicNetheriteItem mythicItem) {
+        } else if (baseItem instanceof com.ultra.megamod.feature.dungeons.item.MythicNetheriteItem) {
             net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
-            if (mythicItem.getPiece().isArmor()) {
-                tag.putBoolean("armor_stats_initialized", true);
-                tag.putInt("armor_rarity", quality.ordinal());
-                float qualityMult = switch (quality) {
-                    case COMMON -> 1.0f;
-                    case UNCOMMON -> 1.15f;
-                    case RARE -> 1.3f;
-                    case EPIC -> 1.5f;
-                    case LEGENDARY -> 2.0f;
-                };
-                tag.putDouble("armor_base_value", mythicItem.getPiece().primaryStat * qualityMult);
-                tag.putDouble("armor_toughness_value", mythicItem.getPiece().toughness * qualityMult);
-            } else {
-                tag.putBoolean("weapon_stats_initialized", true);
-                tag.putInt("weapon_rarity", quality.ordinal());
-            }
+            tag.putBoolean("weapon_stats_initialized", true);
+            tag.putInt("weapon_rarity", quality.ordinal());
             stack.set(DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.of(tag));
         } else if (baseItem instanceof com.ultra.megamod.feature.dungeons.item.DungeonArmorItem dungeonArmorItem) {
             net.minecraft.nbt.CompoundTag tag = stack.getOrDefault(DataComponents.CUSTOM_DATA, net.minecraft.world.item.component.CustomData.EMPTY).copyTag();
@@ -823,16 +778,6 @@ public class DungeonLootGenerator {
     }
 
     private static EquipmentSlotGroup getSlotGroupForItem(Item item) {
-        // Mythic Netherite armor uses EquipmentSlot from the item class
-        if (item instanceof com.ultra.megamod.feature.dungeons.item.MythicNetheriteItem mythic && mythic.getPiece().isArmor()) {
-            return switch (mythic.getPiece().slot) {
-                case HEAD -> EquipmentSlotGroup.HEAD;
-                case CHEST -> EquipmentSlotGroup.CHEST;
-                case LEGS -> EquipmentSlotGroup.LEGS;
-                case FEET -> EquipmentSlotGroup.FEET;
-                default -> EquipmentSlotGroup.MAINHAND;
-            };
-        }
         // Dungeon armor (Chainmail/Iron/Diamond/Netherite rollable variants)
         if (item instanceof com.ultra.megamod.feature.dungeons.item.DungeonArmorItem dungeonArmor) {
             return switch (dungeonArmor.getArmorSlot()) {

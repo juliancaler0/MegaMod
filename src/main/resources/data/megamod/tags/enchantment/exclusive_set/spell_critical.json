@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "megamod:spell_critical_chance",
-    "megamod:spell_critical_damage"
+    "megamod:critical_chance",
+    "megamod:critical_damage"
   ]
 }

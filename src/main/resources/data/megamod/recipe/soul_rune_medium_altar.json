@@ -1,0 +1,9 @@
+{
+  "type": "megamod:crafting",
+  "base": "#megamod:rune_crafting/base/stone",
+  "addition": "#megamod:rune_crafting/reagent/soul_medium",
+  "result": {
+    "count": 16,
+    "id": "megamod:soul_rune"
+  }
+}

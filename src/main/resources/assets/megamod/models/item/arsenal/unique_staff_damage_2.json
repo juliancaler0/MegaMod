@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/arsenal/base/staff_28",
+  "textures": {
+    "layer0": "megamod:item/arsenal/unique_staff_damage_2"
+  }
+}

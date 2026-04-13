@@ -1,0 +1,11 @@
+{
+  "parent": "megamod:sword",
+  "attributes" : {
+    "range_bonus": -0.25,
+    "category": "cutlass",
+    "attacks": [
+      {},
+      {}
+    ]
+  }
+}

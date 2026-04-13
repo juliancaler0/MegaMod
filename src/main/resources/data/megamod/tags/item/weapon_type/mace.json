@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:unique_mace_1",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_mace_2",
+      "required": false
+    },
+    {
+      "id": "megamod:unique_mace_sw",
+      "required": false
+    }
+  ]
+}

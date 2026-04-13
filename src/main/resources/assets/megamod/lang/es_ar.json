@@ -1,0 +1,113 @@
+{
+  "itemGroup.megamod.general": "Archers",
+  "item.megamod.auto_fire_hook.description_1": "Dispara automáticamente la flecha cargada.",
+  "item.megamod.auto_fire_hook.description_2": "Se puede aplicar a armas a distancia, usando un Yunque.",
+  "item.ranged_weapon.pull_time": "%1$s seg de tiempo de carga",
+
+  "block.megamod.megamod_workbench": "Mesa de Artesano Arquero",
+  "block.megamod.megamod_workbench.hint": "Banco de trabajo para aldeanos artesanos de arquería.",
+  "entity.minecraft.villager.archery_artisan": "Artesano Arquero",
+  "entity.minecraft.villager.megamod.archery_artisan": "Artesano Arquero",
+  "entity.minecraft.villager.megamod:archery_artisan": "Artesano Arquero",
+
+  "item.megamod.auto_fire_hook": "Gancho de Disparo Automático",
+  "item.megamod.small_quiver": "Carcaj",
+  "item.megamod.medium_quiver": "Carcaj de Caza",
+  "item.megamod.large_quiver": "Carcaj de Batalla",
+  "item.megamod.quiver.hint": "Proporciona flechas para la arquería al equiparlo.",
+
+  "item.megamod.flint_spear": "Lanza de Pedernal",
+  "item.megamod.iron_spear": "Lanza de Hierro",
+  "item.megamod.golden_spear": "Lanza de Oro",
+  "item.megamod.diamond_spear": "Lanza de Diamante",
+  "item.megamod.netherite_spear": "Lanza de Netherite",
+  "item.megamod.aeternium_spear": "Lanza de Aeternium",
+  "item.megamod.ruby_spear": "Lanza de Rubí",
+  "item.megamod.aether_spear": "Lanza Sagrada",
+
+  "item.megamod.archer_armor_head": "Capucha de Arquero",
+  "item.megamod.archer_armor_chest": "Túnica de Arquero",
+  "item.megamod.archer_armor_legs": "Pantalones de Arquero",
+  "item.megamod.archer_armor_feet": "Botas de Arquero",
+
+  "item.megamod.ranger_armor_head": "Capucha de Explorador",
+  "item.megamod.ranger_armor_chest": "Túnica de Explorador",
+  "item.megamod.ranger_armor_legs": "Pantalones de Explorador",
+  "item.megamod.ranger_armor_feet": "Botas de Explorador",
+
+  "item.megamod.netherite_ranger_armor_head": "Capucha de Explorador de Netherite",
+  "item.megamod.netherite_ranger_armor_chest": "Túnica de Explorador de Netherite",
+  "item.megamod.netherite_ranger_armor_legs": "Pantalones de Explorador de Netherite",
+  "item.megamod.netherite_ranger_armor_feet": "Botas de Explorador de Netherite",
+
+  "item.megamod.composite_longbow": "Arco Largo Compuesto",
+  "item.megamod.mechanic_shortbow": "Arco Corto Mecánico",
+  "item.megamod.royal_longbow": "Arco Largo Real",
+  "item.megamod.rapid_crossbow": "Ballesta Rápida",
+  "item.megamod.heavy_crossbow": "Ballesta Pesada",
+  "item.megamod.netherite_shortbow": "Arco Corto de Netherite",
+  "item.megamod.netherite_longbow": "Arco Largo de Netherite",
+  "item.megamod.netherite_rapid_crossbow": "Ballesta Rápida de Netherite",
+  "item.megamod.netherite_heavy_crossbow": "Ballesta Pesada de Netherite",
+  "item.megamod.crystal_shortbow": "Arco Corto de Cristal",
+  "item.megamod.crystal_longbow": "Arco Largo de Cristal",
+  "item.megamod.ruby_rapid_crossbow": "Ballesta Rápida de Rubí",
+  "item.megamod.ruby_heavy_crossbow": "Ballesta Pesada de Rubí",
+  "item.megamod.aether_longbow": "Arco de Plata de la Acrópolis",
+  "item.megamod.aether_rapid_crossbow": "Ballesta del Cielo",
+  "item.megamod.aether_heavy_crossbow": "Balista de Valquiria",
+
+  "item.megamod.spell_book/archer": "Manual de Arquería",
+  "item.megamod.spell_book/archer.spell_binding.description": "Libro de Hechizos de los Arqueros, que usan armas a distancia y habilidades de tiro con arco para derrotar enemigos desde lejos\n- Fortalezas: Alto daño a distancia y buena movilidad\n- Debilidades: Enemigos con armadura pesada\n- Equipo: Armadura media"
+  "item.megamod.spell_scroll/archer": "Pergamino de Arquería",
+
+  "spell.megamod.power_shot.name": "Disparo Potente",
+  "spell.megamod.power_shot.description": "Tus próximas {effect_amplifier} flechas marcan al objetivo con Marca del Cazador durante {effect_duration} segundos, aumentando el daño que recibe en {damage_taken}, acumulándose hasta {effect_amplifier} veces.",
+  "effect.megamod.hunters_mark_stash": "Disparo Potente",
+  "effect.megamod.hunters_mark_stash.description": "El próximo disparo aplica Marca del Cazador" ,
+  "effect.megamod.hunters_mark": "Marcado",
+  "effect.megamod.hunters_mark.description": "Aumenta el daño recibido de todas las fuentes",
+
+  "spell.megamod.entangling_roots.name": "Raíces Enredadoras",
+  "spell.megamod.entangling_roots.description": "Invoca raíces que brotan del suelo en el área cercana, ralentizando a los enemigos durante {cloud_duration} segundos.",
+  "effect.megamod.entangling_roots": "Raíces Enredadoras",
+  "effect.megamod.entangling_roots.description": "Reduce la velocidad de movimiento",
+
+  "spell.megamod.barrage.name": "Barricada",
+  "spell.megamod.barrage.description": "Dispara múltiples flechas en rápida sucesión.",
+
+  "spell.megamod.magic_arrow.name": "Flecha Mágica",
+  "spell.megamod.magic_arrow.description": "Dispara una flecha mágica que atraviesa a todos los enemigos en su camino, infligiendo {damage} de daño a cada uno.",
+
+  "advancements.rpg_series.path_choose_archer.title": "Camino de la Arquería",
+  "advancements.rpg_series.path_choose_archer.description": "Creá un Manual de Arquería",
+
+  "advancements.rpg_series.spell_novice_archer.title": "Disparos Letales",
+  "advancements.rpg_series.spell_novice_archer.description": "Obtené tu primera habilidad de Arquería",
+
+  "advancements.rpg_series.spell_master_archer.title": "Experto en Balística",
+  "advancements.rpg_series.spell_master_archer.description": "Completá el Manual de Arquería",
+
+  "advancements.rpg_series.obtain_arrow.title": "Camino del Arquero",
+  "advancements.rpg_series.obtain_arrow.description": "Obtené una Flecha",
+
+  "advancements.rpg_series.spell_cast_archer_book.title": "Entrenamiento de Arquería",
+  "advancements.rpg_series.spell_cast_archer_book.description": "Usá una habilidad del Manual de Arquería",
+
+  "advancements.rpg_series.trade_with_archery_artisan.title": "Venta de Arquería",
+  "advancements.rpg_series.trade_with_archery_artisan.description": "Comprá un objeto de un Artesano Arquero",
+
+  "gui.megamod.rune_crafting": "Fabricación de Runas",
+  "block.megamod.crafting_altar": "Altar de Fabricación de Runas",
+  "block.megamod.crafting_altar.hint": "Fabricá runas de forma más económica.",
+  "item.megamod.arcane_rune": "Runa Arcana",
+  "item.megamod.fire_rune": "Runa de Fuego",
+  "item.megamod.frost_rune": "Runa de Escarcha",
+  "item.megamod.healing_rune": "Runa de Curación",
+  "item.megamod.lightning_rune": "Runa de Rayo",
+  "item.megamod.soul_rune": "Runa de Alma",
+  "item.megamod.small_rune_pouch": "Bolsa de Runas",
+  "item.megamod.medium_rune_pouch": "Bolsa de Runas Fantasmal",
+  "item.megamod.large_rune_pouch": "Bolsa de Runas Mística",
+  "item.megamod.rune_pouch.hint": "Provee runas para lanzar hechizos al estar equipada."
+}

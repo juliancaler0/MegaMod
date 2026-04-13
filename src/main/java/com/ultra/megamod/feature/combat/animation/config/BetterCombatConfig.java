@@ -47,6 +47,7 @@ public class BetterCombatConfig {
     private final ModConfigSpec.DoubleValue dualWieldSpeedMultCfg;
     private final ModConfigSpec.DoubleValue dualWieldMainDmgCfg;
     private final ModConfigSpec.DoubleValue dualWieldOffDmgCfg;
+    private final ModConfigSpec.DoubleValue passiveProcMultCfg;
 
     // ═══════════════════════════════════════════
     // Client Config
@@ -85,6 +86,8 @@ public class BetterCombatConfig {
         dualWieldSpeedMultCfg = builder.defineInRange("dual_wielding_attack_speed_multiplier", 1.2, 0.5, 2.0);
         dualWieldMainDmgCfg = builder.defineInRange("dual_wielding_main_hand_damage_multiplier", 1.0, 0.1, 2.0);
         dualWieldOffDmgCfg = builder.defineInRange("dual_wielding_off_hand_damage_multiplier", 1.0, 0.1, 2.0);
+        passiveProcMultCfg = builder.comment("Global multiplier applied to weapon passive trigger chance (0.0 = disabled, 1.0 = default, 5.0 = 5x)")
+                .defineInRange("passive_proc_multiplier", 1.0, 0.0, 5.0);
         builder.pop();
 
         builder.push("client");
@@ -127,6 +130,7 @@ public class BetterCombatConfig {
     public static float dual_wielding_attack_speed_multiplier;
     public static float dual_wielding_main_hand_damage_multiplier;
     public static float dual_wielding_off_hand_damage_multiplier;
+    public static float passive_proc_multiplier;
 
     // Client
     public static boolean isHoldToAttackEnabled;
@@ -167,6 +171,7 @@ public class BetterCombatConfig {
         dual_wielding_attack_speed_multiplier = INSTANCE.dualWieldSpeedMultCfg.get().floatValue();
         dual_wielding_main_hand_damage_multiplier = INSTANCE.dualWieldMainDmgCfg.get().floatValue();
         dual_wielding_off_hand_damage_multiplier = INSTANCE.dualWieldOffDmgCfg.get().floatValue();
+        passive_proc_multiplier = INSTANCE.passiveProcMultCfg.get().floatValue();
 
         isHoldToAttackEnabled = INSTANCE.holdToAttackCfg.get();
         isMiningWithWeaponsEnabled = INSTANCE.miningWithWeaponsCfg.get();
@@ -193,13 +198,21 @@ public class BetterCombatConfig {
         switch (key) {
             case "upswing_multiplier" -> INSTANCE.upswingMultiplierCfg.set(((Number) value).doubleValue());
             case "allow_fast_attacks" -> INSTANCE.allowFastAttacksCfg.set((Boolean) value);
+            case "attack_interval_cap" -> INSTANCE.attackIntervalCapCfg.set(((Number) value).intValue());
+            case "allow_reworked_sweeping" -> INSTANCE.allowReworkedSwpCfg.set((Boolean) value);
+            case "allow_vanilla_sweeping" -> INSTANCE.allowVanillaSwpCfg.set((Boolean) value);
+            case "allow_attacking_thru_walls" -> INSTANCE.allowThruWallsCfg.set((Boolean) value);
+            case "combo_reset_rate" -> INSTANCE.comboResetRateCfg.set(((Number) value).doubleValue());
+            case "target_search_range_multiplier" -> INSTANCE.targetSearchMultCfg.set(((Number) value).doubleValue());
             case "hold_to_attack" -> INSTANCE.holdToAttackCfg.set((Boolean) value);
             case "mining_with_weapons" -> INSTANCE.miningWithWeaponsCfg.set((Boolean) value);
             case "swing_thru_grass" -> INSTANCE.swingThruGrassCfg.set((Boolean) value);
+            case "show_weapon_trails" -> INSTANCE.showWeaponTrailsCfg.set((Boolean) value);
             case "movement_speed_while_attacking" -> INSTANCE.moveSpeedWhileAttackingCfg.set(((Number) value).doubleValue());
             case "dual_wielding_attack_speed_multiplier" -> INSTANCE.dualWieldSpeedMultCfg.set(((Number) value).doubleValue());
             case "dual_wielding_main_hand_damage_multiplier" -> INSTANCE.dualWieldMainDmgCfg.set(((Number) value).doubleValue());
             case "dual_wielding_off_hand_damage_multiplier" -> INSTANCE.dualWieldOffDmgCfg.set(((Number) value).doubleValue());
+            case "passive_proc_multiplier" -> INSTANCE.passiveProcMultCfg.set(((Number) value).doubleValue());
         }
         syncFromSpec();
     }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "T": "minecraft:ghast_tear",
+    "#": "minecraft:polished_andesite"
+  },
+  "pattern": [
+    "GTG",
+    " # ",
+    "###"
+  ],
+  "result": {
+    "id": "megamod:monk_workbench"
+  }
+}

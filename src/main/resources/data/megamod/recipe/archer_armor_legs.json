@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "minecraft:chain",
+    "L": "minecraft:leather"
+  },
+  "pattern": [
+    "CCC",
+    "L L",
+    "L L"
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:archer_armor_legs"
+  }
+}

@@ -24,9 +24,7 @@
         "item": "minecraft:stick"
       }
     ],
-    "M": {
-      "item": "betterend:aeternium_ingot"
-    }
+    "M": "betterend:aeternium_ingot"
   },
   "pattern": [
     " MM",

@@ -12,8 +12,8 @@
           "base": 0.05,
           "per_level_above_first": 0.05
         },
-        "attribute": "megamod:ability_power",
-        "id": "megamod:enchantment.spell_power",
+        "attribute": "megamod:generic",
+        "id": "megamod:spell_power",
         "operation": "add_multiplied_base"
       }
     ]
@@ -30,6 +30,6 @@
   "slots": [
     "mainhand"
   ],
-  "supported_items": "#minecraft:enchantable/weapon",
+  "supported_items": "#megamod:enchantable/spell_power_generic",
   "weight": 10
 }

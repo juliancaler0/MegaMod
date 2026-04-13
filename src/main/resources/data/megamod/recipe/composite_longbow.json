@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "minecraft:stick",
+    "B": "minecraft:bone",
+    "X": "minecraft:string"
+  },
+  "pattern": [
+    " #X",
+    "B X",
+    " #X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:composite_longbow"
+  }
+}

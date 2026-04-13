@@ -1,0 +1,85 @@
+{
+  "itemGroup.megamod.general": "Archers",
+  "item.megamod.auto_fire_hook.description_1": "Rilascia automaticamente le frecce.",
+  "item.megamod.auto_fire_hook.description_2": "Può essere applicato alle armi a distanza.",
+  "item.ranged_weapon.pull_time": "%1$s sec per caricare",
+
+  "block.megamod.megamod_workbench": "Banco da arcieria",
+  "block.megamod.megamod_workbench.hint": "Postazione da lavoro per i villici.",
+  "entity.minecraft.villager.archery_artisan": "Fabbricante d'archi",
+  "entity.minecraft.villager.megamod.archery_artisan": "Fabbricante d'archi",
+  "entity.minecraft.villager.megamod:archery_artisan": "Fabbricante d'archi",
+
+  "item.megamod.auto_fire_hook": "Colpo automatico",
+
+  "item.megamod.flint_spear": "Lancia di selce",
+  "item.megamod.iron_spear": "Lancia di ferro",
+  "item.megamod.golden_spear": "Lancia d'oro",
+  "item.megamod.diamond_spear": "Lancia di diamante",
+  "item.megamod.netherite_spear": "Lancia di netherite",
+  "item.megamod.aeternium_spear": "Lancia di aeternium",  
+  "item.megamod.ruby_spear": "Lancia di rubino",  
+
+  "item.megamod.archer_armor_head": "Cappuccio da arciere",
+  "item.megamod.archer_armor_chest": "Tunica da arciere",
+  "item.megamod.archer_armor_legs": "Pantaloni da arciere",
+  "item.megamod.archer_armor_feet": "Stivali da arciere",
+
+  "item.megamod.ranger_armor_head": "Cappuccio da tiratore",
+  "item.megamod.ranger_armor_chest": "Tunica da tiratore",
+  "item.megamod.ranger_armor_legs": "Pantaloni da tiratore",
+  "item.megamod.ranger_armor_feet": "Stivali da tiratore",
+
+  "item.megamod.composite_longbow": "Arco composito",
+  "item.megamod.mechanic_shortbow": "Arco corto meccanico",
+  "item.megamod.royal_longbow": "Arco lungo raffinato",
+  "item.megamod.rapid_crossbow": "Balestra leggera",
+  "item.megamod.heavy_crossbow": "Balestra pesante",
+  "item.megamod.netherite_shortbow": "Arco corto di netherite",
+  "item.megamod.netherite_longbow": "Arco lungo di netherite",
+  "item.megamod.netherite_rapid_crossbow": "Balestra leggera di netherite",
+  "item.megamod.netherite_heavy_crossbow": "Balestra pesante di netherite",
+  "item.megamod.crystal_shortbow": "Arco corto di cristallo",
+  "item.megamod.crystal_longbow": "Arco lungo di cristallo",
+  "item.megamod.ruby_rapid_crossbow": "Balestra leggera di rubino",
+  "item.megamod.ruby_heavy_crossbow": "Balestra pesante di rubino",  
+
+  "item.megamod.spell_book/archer": "Manuale di tiro",
+
+  "spell.megamod.power_shot.name": "Colpo potente",
+  "spell.megamod.power_shot.description": "Scocca una potente freccia e infligge al bersaglio il Marchio del cacciatore per {effect_duration} secondi, aumentandone i danni subiti del 5%, accumulandosi fino a {effect_amplifier} volte.",
+  "effect.megamod.hunters_mark": "Marchiato",
+  "effect.megamod.hunters_mark.description": "Aumenta i danni di qualsiasi tipo ricevuti del 5%%",  
+
+  "spell.megamod.entangling_roots.name": "Radici",
+  "spell.megamod.entangling_roots.description": "Evoca radici che germogliano dal terreno nell'area vicina, rallentando i nemici per {cloud_duration} secondi.",
+  "effect.megamod.entangling_roots": "Impigliato",
+  "effect.megamod.entangling_roots.description": "Riduce la velocità di movimento",  
+  
+  "spell.megamod.barrage.name": "Sbarramento",
+  "spell.megamod.barrage.description": "Spara frecce multiple in rapida successione.",
+  
+  "spell.megamod.magic_arrow.name": "Freccia magica",
+  "spell.megamod.magic_arrow.description": "Scocca una freccia magica che trafigge tutti i nemici sul suo cammino, infliggendo {damage} danni a ciascun bersaglio.",
+
+  "advancements.rpg_series.path_choose_archer.title": "Via dell'arciere",
+  "advancements.rpg_series.path_choose_archer.description": "Crea un manuale di tiro",
+
+  "advancements.rpg_series.spell_novice_archer.title": "Colpo letale",
+  "advancements.rpg_series.spell_novice_archer.description": "Ottieni la tua prima abilità da arciere",
+
+  "advancements.rpg_series.spell_master_archer.title": "Esperto balistico",
+  "advancements.rpg_series.spell_master_archer.description": "Completa il manuale di tiro",
+
+  "advancements.rpg_series.obtain_arrow.title": "Via della freccia",
+  "advancements.rpg_series.obtain_arrow.description": "Ottieni una freccia",
+
+  "gui.megamod.rune_crafting": "Creazione rune",
+  "block.megamod.crafting_altar": "Altare runico",
+  "item.megamod.arcane_rune": "Runa arcana",
+  "item.megamod.fire_rune": "Runa di fuoco",
+  "item.megamod.frost_rune": "Runa del gelo",
+  "item.megamod.healing_rune": "Runa curativa",
+  "item.megamod.lightning_rune": "Runa del fulmine",
+  "item.megamod.soul_rune": "Runa dell'anima"
+}

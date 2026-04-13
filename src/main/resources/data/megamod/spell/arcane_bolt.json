@@ -1,0 +1,101 @@
+{
+  "school": "megamod:arcane",
+  "range": 48.0,
+  "group": "primary",
+  "tier": 0,
+  "learn": {},
+  "active": {
+    "cast": {
+      "duration": 1.0,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      },
+      "sound": {
+        "id": "megamod:generic_arcane_casting",
+        "randomness": 0.0
+      },
+      "particles": [
+        {
+          "particle_id": "megamod:magic_spell_ascend",
+          "origin": "FEET",
+          "shape": "WIDE_PIPE",
+          "count": 1.0,
+          "min_speed": 0.05,
+          "max_speed": 0.1,
+          "color_rgba": 4284940287
+        }
+      ]
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_projectile_release"
+    },
+    "sound": {
+      "id": "megamod:arcane_missile_release"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {}
+  },
+  "deliver": {
+    "type": "PROJECTILE",
+    "projectile": {
+      "projectile": {
+        "client_data": {
+          "light_level": 10,
+          "travel_particles": [
+            {
+              "particle_id": "megamod:magic_spell_ascend",
+              "origin": "CENTER",
+              "shape": "CIRCLE",
+              "rotation": "LOOK",
+              "count": 1.0,
+              "min_speed": 0.05,
+              "max_speed": 0.1,
+              "color_rgba": 4284940287
+            }
+          ],
+          "model": {
+            "model_id": "megamod:spell_projectile/arcane_bolt",
+            "scale": 0.5
+          }
+        }
+      }
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.7,
+          "knockback": 0.6
+        }
+      },
+      "particles": [
+        {
+          "particle_id": "megamod:magic_arcane_burst",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 20.0,
+          "min_speed": 0.2,
+          "max_speed": 0.7,
+          "color_rgba": 4284940287
+        }
+      ],
+      "sound": {
+        "id": "megamod:arcane_missile_impact"
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "group": "weapon"
+    },
+    "item": {
+      "id": "megamod:arcane_rune"
+    }
+  }
+}

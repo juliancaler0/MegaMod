@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": "minecraft:diamond",
+    "G": "minecraft:gold_ingot",
+    "X": "minecraft:string"
+  },
+  "pattern": [
+    " GX",
+    "D X",
+    " GX"
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:royal_longbow"
+  }
+}

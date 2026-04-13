@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "minecraft:leather",
+    "M": "minecraft:diamond"
+  },
+  "pattern": [
+    "MLM",
+    "MMM",
+    " M "
+  ],
+  "result": {
+    "id": "megamod:diamond_kite_shield"
+  }
+}

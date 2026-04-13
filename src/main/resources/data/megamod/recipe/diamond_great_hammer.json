@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": "minecraft:diamond",
+    "H": "minecraft:stick"
+  },
+  "pattern": [
+    " BB",
+    " BB",
+    "H  "
+  ],
+  "result": {
+    "id": "megamod:diamond_great_hammer"
+  }
+}

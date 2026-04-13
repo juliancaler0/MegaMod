@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "T": "minecraft:ghast_tear",
+    "I": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "I I",
+    "GTG",
+    "IGI"
+  ],
+  "result": {
+    "id": "megamod:crusader_armor_chest"
+  }
+}

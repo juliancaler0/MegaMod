@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "megamod:radiance_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:cooldown_shot_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:shockwave_area_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:chain_reaction_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:guardian_heal",
+      "required": false
+    },
+    {
+      "id": "megamod:cooldown_heal",
+      "required": false
+    }
+  ]
+}

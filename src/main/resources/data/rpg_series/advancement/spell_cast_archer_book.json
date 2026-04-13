@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "id": "megamod:archery_manual"
+    },
+    "title": {
+      "translate": "advancements.rpg_series.spell_cast_archer_book.title"
+    },
+    "description": {
+      "translate": "advancements.rpg_series.spell_cast_archer_book.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "parent": "rpg_series:spell_novice_archer",
+  "criteria": {
+    "cast": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "cast"
+    ]
+  ]
+}

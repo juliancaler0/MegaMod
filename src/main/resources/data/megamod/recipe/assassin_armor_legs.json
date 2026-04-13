@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "R": "minecraft:rabbit_hide",
+    "S": "minecraft:ink_sac"
+  },
+  "pattern": [
+    "SGS",
+    "R R",
+    "R R"
+  ],
+  "result": {
+    "id": "megamod:assassin_armor_legs"
+  }
+}

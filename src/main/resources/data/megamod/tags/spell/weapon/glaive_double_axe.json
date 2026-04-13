@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:thrust",
+      "required": false
+    },
+    {
+      "id": "megamod:whirlwind",
+      "required": false
+    }
+  ]
+}

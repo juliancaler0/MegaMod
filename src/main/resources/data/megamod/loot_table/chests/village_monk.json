@@ -76,7 +76,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "runes:healing_stone",
+          "name": "megamod:healing_rune",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -103,7 +103,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:priest_robe_feet"
+          "name": "megamod:priest_robe_boots"
         },
         {
           "type": "minecraft:item",
@@ -119,7 +119,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:paladin_armor_feet"
+          "name": "megamod:paladin_armor_boots"
         },
         {
           "type": "minecraft:item",

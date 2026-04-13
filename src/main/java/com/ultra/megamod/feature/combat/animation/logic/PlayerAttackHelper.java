@@ -47,7 +47,17 @@ public class PlayerAttackHelper {
     }
 
     public static float getAttackCooldownTicksCapped(Player player) {
-        return Math.max(player.getCurrentItemAttackStrengthDelay(), BetterCombatConfig.attack_interval_cap);
+        float base = Math.max(player.getCurrentItemAttackStrengthDelay(), BetterCombatConfig.attack_interval_cap);
+        // Apply COMBO_SPEED as a haste multiplier so player buffs/jewelry speed up swings.
+        // COMBO_SPEED is expressed as percent (e.g. 25.0 = +25% faster).
+        double comboSpeed = player.getAttributeValue(
+                com.ultra.megamod.feature.attributes.MegaModAttributes.COMBO_SPEED);
+        if (comboSpeed > 0) {
+            float hasteFactor = 1.0f + (float) (comboSpeed / 100.0);
+            base = base / hasteFactor;
+        }
+        // Clamp to the interval cap again so haste can't push below the minimum
+        return Math.max(base, BetterCombatConfig.attack_interval_cap);
     }
 
     @Nullable
@@ -136,6 +146,29 @@ public class PlayerAttackHelper {
             baseRange += mainAttrs.rangeBonus();
         }
         return baseRange;
+    }
+
+    /**
+     * Returns the interaction range modified by the weapon's range bonus.
+     * Used by PlayerEntityRangeMixin to augment getEntityInteractionRange.
+     * Ported from BetterCombat (net.bettercombat.logic.PlayerAttackHelper.getRangeWithWeapon).
+     */
+    public static double getRangeWithWeapon(Player player, double interactionRangeValue) {
+        return getRangeWithItem(player.getMainHandItem(), interactionRangeValue);
+    }
+
+    private static double getRangeWithItem(net.minecraft.world.item.ItemStack stack, double interactionRangeValue) {
+        if (EntityAttributeHelper.itemHasRangeAttribute(stack)) {
+            return interactionRangeValue;
+        }
+        var attributes = WeaponAttributeRegistry.getAttributes(stack);
+        if (attributes != null) {
+            if (attributes.attackRange() != 0) {
+                return attributes.attackRange();
+            }
+            return interactionRangeValue + attributes.rangeBonus();
+        }
+        return interactionRangeValue;
     }
 
     /**

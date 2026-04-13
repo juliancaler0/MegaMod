@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:smash",
+      "required": false
+    },
+    {
+      "id": "megamod:swift_strikes",
+      "required": false
+    }
+  ]
+}

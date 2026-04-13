@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:rogue_armor_head",
+    "megamod:assassin_armor_head",
+    "megamod:netherite_assassin_armor_head",
+    "megamod:warrior_armor_head",
+    "megamod:berserker_armor_head",
+    "megamod:netherite_berserker_armor_head"
+  ]
+}

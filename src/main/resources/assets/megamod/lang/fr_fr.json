@@ -1,0 +1,109 @@
+{
+  "itemGroup.megamod.general": "Archers",
+  "item.megamod.auto_fire_hook.description_1": "Relâche automatiquement la flèche encochée.",
+  "item.megamod.auto_fire_hook.description_2": "Peut être appliqué aux armes à distance sur une enclume.",
+  "item.ranged_weapon.pull_time": "Temps de charge : %1$s s",
+
+  "block.megamod.megamod_workbench": "Table d’artisanat d’archerie",
+  "block.megamod.megamod_workbench.hint": "Établi utilisé par les villageois artisans en archerie.",
+  "entity.minecraft.villager.archery_artisan": "Artisan en archerie",
+  "entity.minecraft.villager.megamod.archery_artisan": "Artisan en archerie",
+  "entity.minecraft.villager.megamod:archery_artisan": "Artisan en archerie",
+
+  "item.megamod.auto_fire_hook": "Crochet de tir automatique",
+  "item.megamod.small_quiver": "Carquois",
+  "item.megamod.medium_quiver": "Carquois de chasse",
+  "item.megamod.large_quiver": "Carquois de bataille",
+  "item.megamod.quiver.hint": "Fournit des flèches pour l’archerie lorsqu’il est équipé.",
+
+  "item.megamod.flint_spear": "Lance en silex",
+  "item.megamod.iron_spear": "Lance en fer",
+  "item.megamod.golden_spear": "Lance en or",
+  "item.megamod.diamond_spear": "Lance en diamant",
+  "item.megamod.netherite_spear": "Lance en Netherite",
+  "item.megamod.aeternium_spear": "Lance en Aeternium",
+  "item.megamod.ruby_spear": "Lance en rubis",
+  "item.megamod.aether_spear": "Lance sacrée",
+
+  "item.megamod.archer_armor_head": "Capuche d’archer",
+  "item.megamod.archer_armor_chest": "Tunique d’archer",
+  "item.megamod.archer_armor_legs": "Jambières d’archer",
+  "item.megamod.archer_armor_feet": "Bottes d’archer",
+
+  "item.megamod.ranger_armor_head": "Capuche de rôdeur",
+  "item.megamod.ranger_armor_chest": "Tunique de rôdeur",
+  "item.megamod.ranger_armor_legs": "Jambières de rôdeur",
+  "item.megamod.ranger_armor_feet": "Bottes de rôdeur",
+
+  "item.megamod.netherite_ranger_armor_head": "Capuche de rôdeur en Netherite",
+  "item.megamod.netherite_ranger_armor_chest": "Tunique de rôdeur en Netherite",
+  "item.megamod.netherite_ranger_armor_legs": "Jambières de rôdeur en Netherite",
+  "item.megamod.netherite_ranger_armor_feet": "Bottes de rôdeur en Netherite",
+
+  "item.megamod.composite_longbow": "Grand arc composite",
+  "item.megamod.mechanic_shortbow": "Arc court mécanique",
+  "item.megamod.royal_longbow": "Grand arc royal",
+  "item.megamod.rapid_crossbow": "Arbalète rapide",
+  "item.megamod.heavy_crossbow": "Arbalète lourde",
+  "item.megamod.netherite_shortbow": "Arc court en Netherite",
+  "item.megamod.netherite_longbow": "Grand arc en Netherite",
+  "item.megamod.netherite_rapid_crossbow": "Arbalète rapide en Netherite",
+  "item.megamod.netherite_heavy_crossbow": "Arbalète lourde en Netherite",
+  "item.megamod.crystal_shortbow": "Arc court en cristal",
+  "item.megamod.crystal_longbow": "Grand arc en cristal",
+  "item.megamod.ruby_rapid_crossbow": "Arbalète rapide en rubis",
+  "item.megamod.ruby_heavy_crossbow": "Arbalète lourde en rubis",
+  "item.megamod.aether_longbow": "Arc d’argent de l’Acropole",
+  "item.megamod.aether_rapid_crossbow": "Arbalète céleste",
+  "item.megamod.aether_heavy_crossbow": "Baliste des Valkyries",
+
+  "item.megamod.spell_book/archer": "Manuel d’archerie",
+  "item.megamod.spell_book/archer.spell_binding.description": "Grimoire des megamod, utilisant les armes à distance et les compétences d’archerie pour vaincre les ennemis à longue portée\n- Forces : Dégâts élevés à distance et grande mobilité\n- Faiblesses : Ennemis lourdement blindés\n- Équipement : Armure moyenne",
+  "item.megamod.spell_scroll/archer": "Parchemin d’archerie",
+
+  "spell.megamod.power_shot.name": "Tir puissant",
+  "spell.megamod.power_shot.description": "Vos {effect_amplifier_cap} prochaines flèches marquent la cible avec la Marque du chasseur pendant {effect_duration} secondes, augmentant les dégâts subis de {damage_taken}, cumulable jusqu’à {effect_amplifier_cap} fois.",
+  "effect.megamod.hunters_mark_stash": "Tir puissant",
+  "effect.megamod.hunters_mark_stash.description": "Le prochain tir applique la Marque du chasseur",
+  "effect.megamod.hunters_mark": "Marqué",
+  "effect.megamod.hunters_mark.description": "Augmente les dégâts subis de toutes les sources",
+
+  "spell.megamod.entangling_roots.name": "Racines entravantes",
+  "spell.megamod.entangling_roots.description": "Fait surgir des racines du sol dans la zone proche, ralentissant les ennemis pendant {cloud_duration} secondes.",
+  "effect.megamod.entangling_roots": "Racines entravantes",
+  "effect.megamod.entangling_roots.description": "Réduit la vitesse de déplacement",
+
+  "spell.megamod.barrage.name": "Tir en rafale",
+  "spell.megamod.barrage.description": "Tire plusieurs flèches en succession rapide.",
+
+  "spell.megamod.magic_arrow.name": "Flèche magique",
+  "spell.megamod.magic_arrow.description": "Tire une flèche magique qui transperce tous les ennemis sur sa trajectoire, infligeant {damage} dégâts à chaque cible.",
+
+  "advancements.rpg_series.path_choose_archer.title": "Voie de l’archerie",
+  "advancements.rpg_series.path_choose_archer.description": "Créer le manuel d’archerie",
+
+  "advancements.rpg_series.spell_novice_archer.title": "Tirs létaux",
+  "advancements.rpg_series.spell_novice_archer.description": "Obtenir votre première compétence d’archerie",
+
+  "advancements.rpg_series.spell_master_archer.title": "Expert en balistique",
+  "advancements.rpg_series.spell_master_archer.description": "Compléter le manuel d’archerie",
+
+  "advancements.rpg_series.obtain_arrow.title": "Voie de l’archer",
+  "advancements.rpg_series.obtain_arrow.description": "Obtenir une flèche",
+
+  "advancements.rpg_series.spell_cast_archer_book.title": "Entraînement d’archerie",
+  "advancements.rpg_series.spell_cast_archer_book.description": "Utiliser une compétence du manuel d’archerie",
+
+  "advancements.rpg_series.trade_with_archery_artisan.title": "Commerce d’archerie",
+  "advancements.rpg_series.trade_with_archery_artisan.description": "Acheter un objet à un artisan en archerie",
+
+  "gui.megamod.rune_crafting": "Fabrication de runes",
+  "block.megamod.crafting_altar": "Altar de fabrication de runes",
+  "block.megamod.crafting_altar.hint": "Fabriquer des runes de manière plus rentable.",
+  "item.megamod.arcane_rune": "Rune d'arcane",
+  "item.megamod.fire_rune": "Rune de feu",
+  "item.megamod.frost_rune": "Rune de glace",
+  "item.megamod.healing_rune": "Rune de soin",
+  "item.megamod.lightning_rune": "Rune de foudre",
+  "item.megamod.soul_rune": "Rune des âmes"
+}

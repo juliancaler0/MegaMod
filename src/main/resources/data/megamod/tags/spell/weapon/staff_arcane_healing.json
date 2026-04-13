@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#megamod:weapon/arcane_staff",
+      "required": false
+    },
+    {
+      "id": "#megamod:weapon/holy_staff",
+      "required": false
+    }
+  ]
+}

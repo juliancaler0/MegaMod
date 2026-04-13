@@ -112,7 +112,9 @@ public class AttackAnimationStack extends PlayerAnimationController {
     public void playAnimation(String name, boolean mirror, float baseSpeed,
                                java.util.List<TransmissionSpeedModifier.Gear> gears,
                                FirstPersonConfiguration fpConfig) {
-        Identifier animId = Identifier.fromNamespaceAndPath("megamod", name);
+        // Animation name may already include namespace (e.g., "megamod:one_handed_slash")
+        // or be plain (e.g., "one_handed_slash"). Identifier.parse handles both.
+        Identifier animId = name.contains(":") ? Identifier.parse(name) : Identifier.fromNamespaceAndPath("megamod", name);
         if (!com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources.hasAnimation(animId)) {
             com.ultra.megamod.MegaMod.LOGGER.warn("[BetterCombat] Animation NOT FOUND: {}", animId);
             return;

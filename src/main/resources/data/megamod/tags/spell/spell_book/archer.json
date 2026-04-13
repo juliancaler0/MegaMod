@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "megamod:power_shot",
+      "required": false
+    },
+    {
+      "id": "megamod:entangling_roots",
+      "required": false
+    },
+    {
+      "id": "megamod:barrage",
+      "required": false
+    },
+    {
+      "id": "megamod:magic_arrow",
+      "required": false
+    }
+  ]
+}

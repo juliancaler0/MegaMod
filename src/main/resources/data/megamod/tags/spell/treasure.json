@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#megamod:spell_scroll/archer",
+      "required": false
+    },
+    {
+      "id": "#megamod:spell_scroll/rogue",
+      "required": false
+    },
+    {
+      "id": "#megamod:spell_scroll/warrior",
+      "required": false
+    }
+  ]
+}

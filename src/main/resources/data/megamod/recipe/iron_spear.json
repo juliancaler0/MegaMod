@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": "minecraft:stick",
+    "P": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "  P",
+    " # ",
+    "#  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:iron_spear"
+  }
+}

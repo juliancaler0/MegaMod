@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "#minecraft:planks",
+    "A": "minecraft:arrow",
+    "L": "minecraft:leather",
+    "S": "minecraft:string"
+  },
+  "pattern": [
+    "SAL",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:archers_workbench"
+  }
+}

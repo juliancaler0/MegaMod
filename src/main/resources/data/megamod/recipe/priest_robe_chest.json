@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "L": "minecraft:chain",
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "L L",
+    "WWW",
+    "WWW"
+  ],
+  "result": {
+    "id": "megamod:priest_robe_chest"
+  }
+}

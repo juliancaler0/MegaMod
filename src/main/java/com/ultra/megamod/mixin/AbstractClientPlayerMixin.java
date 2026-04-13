@@ -113,7 +113,9 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
         }
 
         var player = (AbstractClientPlayer) (Object) this;
-        Identifier animId = Identifier.fromNamespaceAndPath("megamod", name);
+        // Animation name may already include namespace (e.g., "megamod:one_handed_slash")
+        // or be plain (e.g., "one_handed_slash"). Identifier.parse handles both.
+        Identifier animId = name.contains(":") ? Identifier.parse(name) : Identifier.fromNamespaceAndPath("megamod", name);
         Animation animation = PlayerAnimResources.getAnimation(animId);
         if (animation == null) {
             com.ultra.megamod.MegaMod.LOGGER.warn("[BetterCombat] Animation NOT FOUND: {}", animId);

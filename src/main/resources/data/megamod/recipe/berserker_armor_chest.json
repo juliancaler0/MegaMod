@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "minecraft:chain",
+    "L": "minecraft:leather",
+    "T": "minecraft:netherite_scrap"
+  },
+  "pattern": [
+    "T T",
+    "III",
+    "LLL"
+  ],
+  "result": {
+    "id": "megamod:berserker_armor_chest"
+  }
+}

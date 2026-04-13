@@ -1,0 +1,36 @@
+{
+  "values": [
+    {
+      "id": "megamod:radiance_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:flame_cloud_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:leeching_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:rampaging_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:frost_cloud_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:cooldown_shot_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:shockwave_area_spell",
+      "required": false
+    },
+    {
+      "id": "megamod:chain_reaction_spell",
+      "required": false
+    }
+  ]
+}

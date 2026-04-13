@@ -44,7 +44,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "runes:arcane_stone",
+          "name": "megamod:arcane_rune",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -60,7 +60,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "runes:fire_stone",
+          "name": "megamod:fire_rune",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -76,7 +76,7 @@
         {
           "type": "minecraft:item",
           "weight": 2,
-          "name": "runes:frost_stone",
+          "name": "megamod:frost_rune",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -135,7 +135,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:wizard_robe_feet"
+          "name": "megamod:wizard_robe_boots"
         },
         {
           "type": "minecraft:item",

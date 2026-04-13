@@ -182,11 +182,15 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
 
     @Unique
     private void megamod$startUpswing(WeaponAttributes attributes) {
-        if (player == null || player.isPassenger()) return;
+        if (player == null || player.isPassenger()) {
+            com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Exit: player={} passenger={}", player, player != null && player.isPassenger());
+            return;
+        }
 
         var attackHand = megamod$getCurrentHand();
         if (attackHand == null) return;
         float upswingRate = (float) attackHand.upswingRate();
+        // Vanilla cooldown check prevents hold-to-attack spam; required for proper combo pacing.
         if (megamod$currentUpswingTicks() > 0 || player.isUsingItem()
                 || player.getAttackStrengthScale(0) < (1.0 - upswingRate)) {
             return;

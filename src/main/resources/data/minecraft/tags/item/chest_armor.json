@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:rogue_armor_chest",
+    "megamod:assassin_armor_chest",
+    "megamod:netherite_assassin_armor_chest",
+    "megamod:warrior_armor_chest",
+    "megamod:berserker_armor_chest",
+    "megamod:netherite_berserker_armor_chest"
+  ]
+}

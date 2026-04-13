@@ -32,11 +32,11 @@ public class TemplateParticleType {
 
         public Appearance() {}
 
-        public Appearance(@Nullable Color color, float scale, @Nullable Entity entityFollowed, float maxAge) {
+        public Appearance(@Nullable Color color, float scale, @Nullable Entity entityFollowed, float lifetime) {
             this.color = color;
             this.scale = scale;
             this.entityFollowed = entityFollowed;
-            this.max_age = maxAge;
+            this.max_age = lifetime;
         }
     }
 

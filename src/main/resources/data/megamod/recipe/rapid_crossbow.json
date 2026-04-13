@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "R": "minecraft:redstone",
+    "T": "minecraft:tripwire_hook",
+    "X": "minecraft:string"
+  },
+  "pattern": [
+    "IRI",
+    "XTX",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "megamod:rapid_crossbow"
+  }
+}

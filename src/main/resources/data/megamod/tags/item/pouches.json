@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "megamod:small_rune_pouch",
+      "required": false
+    },
+    {
+      "id": "megamod:medium_rune_pouch",
+      "required": false
+    },
+    {
+      "id": "megamod:large_rune_pouch",
+      "required": false
+    }
+  ]
+}

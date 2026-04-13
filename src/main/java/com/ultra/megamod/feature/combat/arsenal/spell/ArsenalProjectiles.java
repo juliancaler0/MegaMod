@@ -1,0 +1,20 @@
+package com.ultra.megamod.feature.combat.arsenal.spell;
+
+import com.ultra.megamod.feature.combat.arsenal.ArsenalMod;
+import net.minecraft.resources.Identifier;
+
+import java.util.ArrayList;
+
+public class ArsenalProjectiles {
+    public record Entry(Identifier id) { }
+    public static final ArrayList<Entry> all = new ArrayList<>();
+    public static Entry entry(String name) {
+        var entry = new Entry(Identifier.fromNamespaceAndPath(ArsenalMod.NAMESPACE, "spell_projectile/" + name));
+        all.add(entry);
+        return entry;
+    }
+
+    public static final Entry shockwave = entry("shockwave");
+    public static final Entry shockwave_large = entry("shockwave_large");
+    public static final Entry missile = entry("missile");
+}

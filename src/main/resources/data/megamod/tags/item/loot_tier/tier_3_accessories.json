@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:netherite_ruby_ring",
+    "megamod:netherite_topaz_ring",
+    "megamod:netherite_citrine_ring",
+    "megamod:netherite_jade_ring",
+    "megamod:netherite_sapphire_ring",
+    "megamod:netherite_tanzanite_ring",
+    "megamod:netherite_ruby_necklace",
+    "megamod:netherite_topaz_necklace",
+    "megamod:netherite_citrine_necklace",
+    "megamod:netherite_jade_necklace",
+    "megamod:netherite_sapphire_necklace",
+    "megamod:netherite_tanzanite_necklace"
+  ]
+}

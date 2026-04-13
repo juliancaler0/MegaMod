@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "D": "minecraft:red_dye",
+    "W": "#minecraft:wool"
+  },
+  "pattern": [
+    "WDW",
+    " W "
+  ],
+  "result": {
+    "id": "megamod:rogue_armor_head"
+  }
+}

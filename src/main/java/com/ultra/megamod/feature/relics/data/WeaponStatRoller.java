@@ -95,6 +95,21 @@ public class WeaponStatRoller {
             AttributeModifier baseDmgMod = new AttributeModifier(Identifier.fromNamespaceAndPath("megamod",KEY_WEAPON_BASE_DAMAGE), (double)finalDamage - 1.0, AttributeModifier.Operation.ADD_VALUE);
             modBuilder.add(attackDmgAttr.get(), baseDmgMod, EquipmentSlotGroup.MAINHAND);
         }
+        // Apply BetterCombat-style base attack_speed so each weapon type has the right swing cadence
+        // (vanilla default is 4.0 which maps to 5-tick cooldowns — way too fast for heavy weapons).
+        if (!isShield) {
+            Optional<Holder<Attribute>> attackSpeedAttr = WeaponStatRoller.resolveAttribute("minecraft:attack_speed");
+            if (attackSpeedAttr.isPresent()) {
+                String itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(stack.getItem()).toString();
+                double targetSpeed = WeaponCategorySpeed.getTargetAttackSpeed(itemId);
+                double delta = WeaponCategorySpeed.toModifierDelta(targetSpeed);
+                AttributeModifier baseSpeedMod = new AttributeModifier(
+                        Identifier.fromNamespaceAndPath("megamod", "weapon_base_attack_speed"),
+                        delta, AttributeModifier.Operation.ADD_VALUE);
+                modBuilder.add(attackSpeedAttr.get(), baseSpeedMod, EquipmentSlotGroup.MAINHAND);
+            }
+        }
         CompoundTag bonusesTag = new CompoundTag();
         int applied = 0;
         for (int i = 0; i < available.size() && applied < bonusCount; ++i) {
@@ -141,6 +156,20 @@ public class WeaponStatRoller {
         if (attackDmgAttr.isPresent()) {
             AttributeModifier baseDmgMod = new AttributeModifier(Identifier.fromNamespaceAndPath("megamod", KEY_WEAPON_BASE_DAMAGE), (double) baseDamage - 1.0, AttributeModifier.Operation.ADD_VALUE);
             modBuilder.add(attackDmgAttr.get(), baseDmgMod, EquipmentSlotGroup.MAINHAND);
+        }
+        // Reapply base attack_speed on reroll so the weapon keeps its category's swing cadence
+        if (!isShield) {
+            Optional<Holder<Attribute>> attackSpeedAttr = resolveAttribute("minecraft:attack_speed");
+            if (attackSpeedAttr.isPresent()) {
+                String itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getKey(stack.getItem()).toString();
+                double targetSpeed = WeaponCategorySpeed.getTargetAttackSpeed(itemId);
+                double delta = WeaponCategorySpeed.toModifierDelta(targetSpeed);
+                AttributeModifier baseSpeedMod = new AttributeModifier(
+                        Identifier.fromNamespaceAndPath("megamod", "weapon_base_attack_speed"),
+                        delta, AttributeModifier.Operation.ADD_VALUE);
+                modBuilder.add(attackSpeedAttr.get(), baseSpeedMod, EquipmentSlotGroup.MAINHAND);
+            }
         }
         CompoundTag bonusesTag = new CompoundTag();
         int applied = 0;

@@ -1,0 +1,6 @@
+{
+  "parent": "megamod:item/arsenal/base/spear_32",
+  "textures": {
+    "layer0": "megamod:item/arsenal/unique_spear_2"
+  }
+}

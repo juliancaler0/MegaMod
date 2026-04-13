@@ -16,7 +16,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Blocks;
@@ -29,8 +28,12 @@ public class GeomancerArmorItem extends Item {
     private final double baseArmor;
     private final double baseToughness;
 
+    /**
+     * Mirrors the RpgArmorItem pattern — Properties (including EQUIPPABLE) are
+     * built in a supplier at registration time, not inside the constructor.
+     */
     public GeomancerArmorItem(Item.Properties props, String pieceName) {
-        super(props.stacksTo(1).rarity(Rarity.RARE).equippable(slotFor(pieceName)));
+        super(props);
         this.pieceName = pieceName;
         this.slot = slotFor(pieceName);
         this.baseArmor = switch (this.slot) {

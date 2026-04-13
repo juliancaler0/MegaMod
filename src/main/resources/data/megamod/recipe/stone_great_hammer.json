@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "tag": "minecraft:stone_tool_materials"
+    },
+    "H": "minecraft:stick"
+  },
+  "pattern": [
+    " BB",
+    " BB",
+    "H  "
+  ],
+  "result": {
+    "id": "megamod:stone_great_hammer"
+  }
+}

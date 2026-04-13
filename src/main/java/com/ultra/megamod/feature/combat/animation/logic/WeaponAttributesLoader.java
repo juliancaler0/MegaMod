@@ -63,29 +63,46 @@ public class WeaponAttributesLoader {
         var resources = resourceManager.listResources("weapon_attributes",
                 id -> id.getPath().endsWith(".json"));
 
-        int loaded = 0;
+        // Two-pass loading: first load all raw JSON, then resolve parents
+        // This ensures parent templates are available regardless of load order
+        Map<String, JsonObject> rawJsons = new LinkedHashMap<>();
+
         for (var entry : resources.entrySet()) {
             Identifier id = entry.getKey();
             try (var stream = entry.getValue().open()) {
                 var reader = new InputStreamReader(stream);
                 var json = JsonParser.parseReader(reader).getAsJsonObject();
-
                 String itemId = id.getNamespace() + ":" + id.getPath()
                         .replace("weapon_attributes/", "")
                         .replace(".json", "");
-
-                WeaponAttributes attrs = parseWithInheritance(json);
-                if (attrs != null) {
-                    JSON_ATTRIBUTES.put(itemId, attrs);
-                    loaded++;
-                }
+                rawJsons.put(itemId, json);
             } catch (Exception e) {
-                LOGGER.warn("Failed to load weapon_attributes {}: {}", id, e.getMessage());
+                LOGGER.warn("Failed to read weapon_attributes {}: {}", id, e.getMessage());
             }
         }
 
-        if (loaded > 0) {
-            LOGGER.info("[WeaponAttributesLoader] Loaded {} weapon attribute overrides from data packs", loaded);
+        // Pass 1: Load all non-parent (self-contained) entries first
+        for (var entry : rawJsons.entrySet()) {
+            if (!entry.getValue().has("parent")) {
+                WeaponAttributes attrs = parseWithInheritance(entry.getValue());
+                if (attrs != null) {
+                    JSON_ATTRIBUTES.put(entry.getKey(), attrs);
+                }
+            }
+        }
+
+        // Pass 2: Load entries with parents (now parents are available)
+        for (var entry : rawJsons.entrySet()) {
+            if (entry.getValue().has("parent") && !JSON_ATTRIBUTES.containsKey(entry.getKey())) {
+                WeaponAttributes attrs = parseWithInheritance(entry.getValue());
+                if (attrs != null) {
+                    JSON_ATTRIBUTES.put(entry.getKey(), attrs);
+                }
+            }
+        }
+
+        if (!JSON_ATTRIBUTES.isEmpty()) {
+            LOGGER.info("[WeaponAttributesLoader] Loaded {} weapon attribute definitions from data packs", JSON_ATTRIBUTES.size());
         }
     }
 

@@ -12,8 +12,8 @@
           "base": 0.03,
           "per_level_above_first": 0.03
         },
-        "attribute": "megamod:healing_power",
-        "id": "megamod:enchantment.energize",
+        "attribute": "megamod:healing",
+        "id": "megamod:energize_enchantment",
         "operation": "add_multiplied_base"
       },
       {
@@ -22,8 +22,8 @@
           "base": 0.03,
           "per_level_above_first": 0.03
         },
-        "attribute": "megamod:lightning_damage_bonus",
-        "id": "megamod:enchantment.energize",
+        "attribute": "megamod:lightning",
+        "id": "megamod:energize_enchantment",
         "operation": "add_multiplied_base"
       }
     ]
@@ -41,6 +41,6 @@
   "slots": [
     "armor"
   ],
-  "supported_items": "#minecraft:enchantable/armor",
+  "supported_items": "#megamod:enchantable/spell_power_energize",
   "weight": 2
 }

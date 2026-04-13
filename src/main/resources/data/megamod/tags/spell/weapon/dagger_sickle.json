@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "megamod:fan_of_knives",
+      "required": false
+    },
+    {
+      "id": "megamod:swipe",
+      "required": false
+    }
+  ]
+}
