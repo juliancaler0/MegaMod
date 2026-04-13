@@ -175,6 +175,7 @@ public class MegaModClient {
         modEventBus.addListener(com.ultra.megamod.lib.etf.config.screen.ETFConfigKeybind::onRegisterKeyMappings);
         modEventBus.addListener((net.neoforged.neoforge.client.event.EntityRenderersEvent.AddLayers e) ->
                 com.ultra.megamod.lib.etf.features.ETFEmissiveFeatureLayer.onAddLayers(e));
+        modEventBus.addListener(com.ultra.megamod.lib.etf.debug.ETFDebugHud::onRegisterGuiLayers);
 
         // Initialize Archers client (armor renderers, effect renderers, tooltips)
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event2) -> {
