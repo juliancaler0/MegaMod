@@ -1,0 +1,44 @@
+version: '0.0.2'
+source: "https://github.com/tr7zw/ProcessedModTemplate/tree/master"
+replacements:
+  name: "EntityCulling"
+  id: "entityculling"
+  version: "1.10.1"
+  description: "This mod uses async path-tracing to hide Tiles/Entities that are not visible."
+  homepageUrl: "https://modrinth.com/mod/entityculling"
+  sourcesUrl: "https://github.com/tr7zw/EntityCulling"
+  issuesUrl: "https://github.com/tr7zw/EntityCulling/issues"
+  fabric_entrypoint: "dev.tr7zw.entityculling.EntityCullingMod"
+  fabric_modmenu_entrypoint: "dev.tr7zw.entityculling.config.EntityCullingModMenu"
+  relocationpackage: "dev.tr7zw.entityculling"
+  dependencies: '
+  	inc "com.logisticscraft:occlusionculling:0.0.8-SNAPSHOT"
+  '
+  licensename: "LICENSE-EntityCulling"
+  modrinthid: NNAgCjsB
+  curseforgeid: 448233
+  versionlessname: "EntityCulling-Versionless"
+enabledFlags:
+  - autopublish
+  - publishFabric
+  - publishForge
+  - publishNeo
+  - modrinth
+  - curseforge
+  - versionless
+  - includeLibs
+  - addTRenderLib
+  - addTRansitionLib
+rootProject:
+  template: "."
+subProjects:
+  EntityCulling-Versionless:
+    template: "Versionless"
+    replacements:
+      dependencies: '
+      compileOnly "com.logisticscraft:occlusionculling:0.0.8-SNAPSHOT"
+
+      compileOnly "com.google.code.gson:gson:2.10.1"
+
+      compileOnly "org.apache.logging.log4j:log4j-core:2.20.0"
+      '
