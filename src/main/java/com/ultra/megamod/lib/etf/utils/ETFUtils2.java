@@ -57,6 +57,42 @@ public abstract class ETFUtils2 {
         return identifier.equals(changed) ? null : changed;
     }
 
+    /**
+     * Applies a regex/replace pair to the path component of an identifier.
+     * Used by the variator when building the .properties companion path for a .png.
+     * Ported 1:1 from upstream.
+     */
+    @Nullable
+    public static Identifier replaceIdentifier(@Nullable Identifier id, String regex, String replace) {
+        if (id == null) return null;
+        try {
+            return res(id.getNamespace(), id.getPath().replaceFirst(regex, replace));
+        } catch (Exception ignored) {
+            return null;
+        }
+    }
+
+    /**
+     * Texture-swap entry point for the {@code RenderTypes.*} static-factory injector.
+     * <p>
+     * Returns either {@code identifier} unchanged (no matching entity, or render-layer
+     * modification is currently disabled) or the resolved variant identifier from the
+     * current entity's variator.
+     */
+    @NotNull
+    public static Identifier getETFVariantNotNullForInjector(@NotNull Identifier identifier) {
+        com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState current =
+                com.ultra.megamod.lib.etf.features.ETFRenderContext.getCurrentEntityState();
+        if (current == null
+                || !com.ultra.megamod.lib.etf.features.ETFRenderContext.isAllowedToRenderLayerTextureModify()) {
+            return identifier;
+        }
+        com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture variant =
+                com.ultra.megamod.lib.etf.features.ETFManager.getInstance().getETFTextureVariant(identifier, current);
+        Identifier modified = variant.getTextureIdentifier(current);
+        return modified == null ? identifier : modified;
+    }
+
     @NotNull
     public static String addVariantNumberSuffix(String identifierString, int variant) {
         if (variant < 2) return identifierString;
