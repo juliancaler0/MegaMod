@@ -159,6 +159,16 @@ public class MegaModClient {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "player_animations"),
                     new com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources());
+            // ETF Phase B: reset variator/texture/directory caches on resource-pack reload
+            event.addListener(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "etf"),
+                    com.ultra.megamod.lib.etf.ETFReloadListener.INSTANCE);
+        });
+
+        // ETF Phase B: eagerly init the manager on client setup so it populates
+        // KNOWN_RESOURCEPACK_ORDER before the first render frame
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent etfInit) -> {
+            etfInit.enqueueWork(() -> com.ultra.megamod.lib.etf.features.ETFManager.getInstance());
         });
 
         // Initialize Archers client (armor renderers, effect renderers, tooltips)

@@ -1,7 +1,11 @@
 package com.ultra.megamod.lib.etf.features;
 
 import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
+import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.UUID;
+import java.util.function.Supplier;
 
 /**
  * Global per-render-pass context.
@@ -37,7 +41,23 @@ public final class ETFRenderContext {
     private static boolean isInSpecialRenderOverlayPhase = false;
     private static boolean allowedToPatch = false;
 
+    private static CompoundTag currentEntityNBT = null;
+    private static UUID entityNBT_UUID = null;
+
     private ETFRenderContext() {}
+
+    /**
+     * Cache an entity's NBT snapshot for the current frame. Ported 1:1 from upstream —
+     * used by {@code MixinEntity} / {@code MixinBlockEntity} to avoid re-serialising
+     * the same entity's NBT multiple times per render tick.
+     */
+    public static CompoundTag cacheEntityNBTForFrame(UUID entityUUID, Supplier<CompoundTag> computeNBT) {
+        if (currentEntityNBT == null || !entityUUID.equals(entityNBT_UUID)) {
+            currentEntityNBT = computeNBT.get();
+            entityNBT_UUID = entityUUID;
+        }
+        return currentEntityNBT;
+    }
 
     @Nullable
     public static ETFEntityRenderState getCurrentEntityState() {
@@ -50,6 +70,8 @@ public final class ETFRenderContext {
      */
     public static void setCurrentEntity(@Nullable ETFEntityRenderState state) {
         allowRenderLayerTextureModify = true;
+        currentEntityNBT = null;
+        entityNBT_UUID = null;
         currentEntity = state;
     }
 
@@ -131,5 +153,7 @@ public final class ETFRenderContext {
         allowedToPatch = false;
         allowRenderLayerTextureModify = true;
         limitModifyToProperties = false;
+        currentEntityNBT = null;
+        entityNBT_UUID = null;
     }
 }

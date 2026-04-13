@@ -1,0 +1,20 @@
+{
+  "required": true,
+  "package": "com.ultra.megamod.lib.etf.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinEntity",
+    "MixinBlockEntity"
+  ],
+  "client": [
+    "MixinEntityRenderState",
+    "MixinBlockEntityRenderState",
+    "MixinEntityRenderer",
+    "MixinEntityRenderDispatcher",
+    "MixinLivingEntityRenderer",
+    "MixinRenderTypes"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
