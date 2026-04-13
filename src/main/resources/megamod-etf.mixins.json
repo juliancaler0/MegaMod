@@ -15,7 +15,8 @@
     "MixinRenderTypes",
     "MixinEndCrystalRenderer",
     "MixinEnderDragonRenderer",
-    "MixinIllusionerRenderer"
+    "MixinIllusionerRenderer",
+    "MixinPaintingRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
