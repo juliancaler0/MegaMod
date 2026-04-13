@@ -78,7 +78,7 @@ public class AdminTerminalScreen
 extends Screen {
     private final Screen parent;
     private final Minecraft mc = Minecraft.getInstance();
-    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Corruption", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "\u2315 Search"};
+    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Corruption", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "World Edit", "\u2315 Search"};
     private int currentTab = 0;
     private int tabScroll = 0; // vertical scroll offset for sidebar tabs (in pixels)
     private static final String WELCOME_TEXT = "Welcome back, NeverNotch...";
@@ -237,6 +237,7 @@ extends Screen {
     private AlchemyAdminPanel alchemyAdminPanel;
     private SystemHealthPanel systemHealthPanel;
     private com.ultra.megamod.feature.computer.screen.panels.AdminSearchPanel adminSearchPanel;
+    private com.ultra.megamod.feature.computer.screen.panels.WorldEditPanel worldEditPanel;
 
     // Corruption panel
     private CorruptionAdminPanel corruptionPanel;
@@ -338,6 +339,7 @@ extends Screen {
         this.alchemyAdminPanel = new AlchemyAdminPanel(this.font);
         this.systemHealthPanel = new SystemHealthPanel(this.font);
         this.adminSearchPanel = new com.ultra.megamod.feature.computer.screen.panels.AdminSearchPanel();
+        this.worldEditPanel = new com.ultra.megamod.feature.computer.screen.panels.WorldEditPanel(this.font);
     }
 
     private void switchTab(int tab) {
@@ -717,6 +719,9 @@ extends Screen {
             } else if (responseType.startsWith("locate_") && this.structureLocatorPanel != null) {
                 this.structureLocatorPanel.handleResponse(responseType, response.jsonData());
                 ComputerDataPayload.lastResponse = null;
+            } else if (responseType.startsWith("we_") && this.worldEditPanel != null) {
+                this.worldEditPanel.handleResponse(responseType, response.jsonData());
+                ComputerDataPayload.lastResponse = null;
             } else if (responseType.startsWith("scheduler_") && this.schedulerPanel != null) {
                 this.schedulerPanel.handleResponse(responseType, response.jsonData());
                 ComputerDataPayload.lastResponse = null;
@@ -787,7 +792,8 @@ extends Screen {
         if (this.currentTab == 25 && this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.tick();
         if (this.currentTab == 26 && this.alchemyAdminPanel != null) this.alchemyAdminPanel.tick();
         if (this.currentTab == 27 && this.systemHealthPanel != null) this.systemHealthPanel.tick();
-        if (this.currentTab == 35 && this.adminSearchPanel != null) this.adminSearchPanel.tick();
+        if (this.currentTab == 36 && this.adminSearchPanel != null) this.adminSearchPanel.tick();
+        if (this.currentTab == 35 && this.worldEditPanel != null) this.worldEditPanel.tick();
         // Performance auto-refresh when on Dashboard
         if (this.currentTab == 0 && this.animationComplete) {
             this.perfRefreshCounter++;
@@ -939,7 +945,8 @@ extends Screen {
             case 32: { this.renderUndo(g, mouseX, mouseY); break; }
             case 33: { if (this.mobShowcasePanel != null) { this.mobShowcasePanel.setActiveView(1); this.mobShowcasePanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
             case 34: { this.renderCombatConfig(g, mouseX, mouseY); break; }
-            case 35: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 35: { if (this.worldEditPanel != null) { this.worldEditPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 36: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
         }
         super.render(g, mouseX, mouseY, partialTick);
     }
@@ -4021,7 +4028,8 @@ extends Screen {
         if (this.currentTab == 25 && this.marketplaceAdminPanel != null && this.marketplaceAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 26 && this.alchemyAdminPanel != null && this.alchemyAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 27 && this.systemHealthPanel != null && this.systemHealthPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
-        if (this.currentTab == 35 && this.adminSearchPanel != null && this.adminSearchPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
+        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
+        if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         return super.mouseClicked(event, consumed);
     }
 
@@ -4883,7 +4891,8 @@ extends Screen {
         if (this.currentTab == 20 && this.adminModulesPanel != null && this.adminModulesPanel.keyPressed(keyCode, 0, 0)) return true;
         if (this.currentTab == 21 && this.warpPanel != null && this.warpPanel.keyPressed(keyCode, 0, 0)) return true;
         // TODO: citizensPanel removed - if (this.currentTab == 22 && this.citizensPanel != null && this.citizensPanel.keyPressed(keyCode, 0, 0)) return true;
-        if (this.currentTab == 35 && this.adminSearchPanel != null && this.adminSearchPanel.keyPressed(keyCode, 0, 0)) return true;
+        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.keyPressed(keyCode, 0, 0)) return true;
+        if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.keyPressed(keyCode, 0, 0)) return true;
         if (keyCode == 256) {
             if (this.mc != null) {
                 this.mc.setScreen(this.parent);
@@ -4995,7 +5004,8 @@ extends Screen {
             case 25: { if (this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 26: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 27: { if (this.systemHealthPanel != null) this.systemHealthPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 35: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 35: { if (this.worldEditPanel != null) this.worldEditPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 36: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
@@ -5006,7 +5016,8 @@ extends Screen {
         if (this.currentTab == 20 && this.adminModulesPanel != null && this.adminModulesPanel.charTyped(ch, event.modifiers())) return true;
         if (this.currentTab == 21 && this.warpPanel != null && this.warpPanel.charTyped(ch, event.modifiers())) return true;
         // TODO: citizensPanel removed - if (this.currentTab == 22 && this.citizensPanel != null && this.citizensPanel.charTyped(ch, event.modifiers())) return true;
-        if (this.currentTab == 35 && this.adminSearchPanel != null && this.adminSearchPanel.charTyped(ch, event.modifiers())) return true;
+        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.charTyped(ch, event.modifiers())) return true;
+        if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.charTyped(ch, event.modifiers())) return true;
         return super.charTyped(event);
     }
 
