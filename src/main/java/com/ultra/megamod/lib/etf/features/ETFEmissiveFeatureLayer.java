@@ -44,6 +44,28 @@ public class ETFEmissiveFeatureLayer<S extends LivingEntityRenderState, M extend
                        int packedLight, S renderState, float yRot, float xRot) {
         ETFConfig cfg = ETF.config().getConfig();
         ETFTexture tex = ETFRenderContext.getCurrentTexture();
+
+        // Fall back to the current player's stored skin texture if the variator hasn't
+        // published one — happens for vanilla skins that aren't listed in any .properties.
+        if (tex == null) {
+            net.minecraft.client.Minecraft mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.level != null) {
+                int entityId = com.ultra.megamod.feature.backpacks.client.BackpackRenderContext.getEntityId();
+                if (entityId >= 0) {
+                    net.minecraft.world.entity.Entity e = mc.level.getEntity(entityId);
+                    if (e instanceof net.minecraft.client.player.AbstractClientPlayer acp) {
+                        var holder = (com.ultra.megamod.lib.etf.features.player.ETFPlayerSkinHolder) acp;
+                        var pt = holder.etf$getETFPlayerTexture();
+                        if (pt == null) {
+                            pt = new com.ultra.megamod.lib.etf.features.player.ETFPlayerTexture(acp);
+                            holder.etf$setETFPlayerTexture(pt);
+                        }
+                        tex = pt.getSkinTexture();
+                    }
+                }
+            }
+        }
+
         if (tex == null) return;
 
         EntityModel<? super S> model = getParentModel();

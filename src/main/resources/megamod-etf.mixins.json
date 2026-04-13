@@ -17,7 +17,8 @@
     "MixinEndCrystalRenderer",
     "MixinEnderDragonRenderer",
     "MixinIllusionerRenderer",
-    "MixinPaintingRenderer"
+    "MixinPaintingRenderer",
+    "MixinAbstractClientPlayerSkinHolder"
   ],
   "injectors": {
     "defaultRequire": 1
