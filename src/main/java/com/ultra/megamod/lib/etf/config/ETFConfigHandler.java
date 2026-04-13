@@ -1,19 +1,42 @@
 package com.ultra.megamod.lib.etf.config;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.ultra.megamod.lib.etf.ETF;
+import net.neoforged.fml.loading.FMLPaths;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /**
- * Phase A stand-in for upstream ETF's {@code TConfigHandler<ETFConfig>} so that the
- * parser / selector code can use the same {@code ETF.config().getConfig()} access
- * pattern that the upstream code uses.
+ * JSON-backed ETF config handler. Loads on first access, persists on demand.
  * <p>
- * This shim holds a single live {@link ETFConfig} instance. Phase C will replace it
- * with a real on-disk-backed handler.
+ * File path: {@code <gamedir>/config/megamod-etf.json}. JSON written with GSON using a
+ * 2-space indent so the user can hand-edit it.
  */
 public class ETFConfigHandler {
 
+    private static final String FILE_NAME = "megamod-etf.json";
+    private static final Gson GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .disableHtmlEscaping()
+            .serializeNulls()
+            .create();
+
     private ETFConfig config;
+    private final Path file;
 
     public ETFConfigHandler() {
-        this.config = new ETFConfig();
+        Path configDir;
+        try {
+            configDir = FMLPaths.CONFIGDIR.get();
+        } catch (Throwable t) {
+            configDir = Path.of("config");
+        }
+        this.file = configDir.resolve(FILE_NAME);
+        this.config = loadFromDisk();
     }
 
     public ETFConfig getConfig() {
@@ -25,16 +48,44 @@ public class ETFConfigHandler {
     }
 
     public ETFConfig copyOfConfig() {
-        ETFConfig copy = new ETFConfig();
-        copy.advanced_IncreaseCacheSizeModifier = config.advanced_IncreaseCacheSizeModifier;
-        copy.optifine_allowWeirdSkipsInTrueRandom = config.optifine_allowWeirdSkipsInTrueRandom;
-        return copy;
+        // Cheap deep copy via GSON round-trip
+        String json = GSON.toJson(config);
+        return GSON.fromJson(json, ETFConfig.class);
     }
 
-    /**
-     * Stub — in Phase A there is no file persistence.
-     */
     public void saveToFile() {
-        // no-op in Phase A
+        try {
+            Path parent = file.getParent();
+            if (parent != null && !Files.exists(parent)) {
+                Files.createDirectories(parent);
+            }
+            String json = GSON.toJson(config);
+            Files.writeString(file, json);
+        } catch (IOException e) {
+            ETF.LOGGER.warn("[ETF] Failed to save config to {}: {}", file, e.toString());
+        }
+    }
+
+    private ETFConfig loadFromDisk() {
+        if (!Files.exists(file)) {
+            ETFConfig fresh = new ETFConfig();
+            // Attempt to write defaults so user has a reference file.
+            try {
+                Path parent = file.getParent();
+                if (parent != null && !Files.exists(parent)) {
+                    Files.createDirectories(parent);
+                }
+                Files.writeString(file, GSON.toJson(fresh));
+            } catch (IOException ignored) {}
+            return fresh;
+        }
+        try {
+            String text = Files.readString(file);
+            ETFConfig loaded = GSON.fromJson(text, ETFConfig.class);
+            return loaded != null ? loaded : new ETFConfig();
+        } catch (IOException | JsonSyntaxException e) {
+            ETF.LOGGER.warn("[ETF] Failed to load config from {}, using defaults: {}", file, e.toString());
+            return new ETFConfig();
+        }
     }
 }
