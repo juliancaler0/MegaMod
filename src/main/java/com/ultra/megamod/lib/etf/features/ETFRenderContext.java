@@ -41,6 +41,13 @@ public final class ETFRenderContext {
     private static boolean isInSpecialRenderOverlayPhase = false;
     private static boolean allowedToPatch = false;
 
+    /** Current ETFTexture — Phase C addition, set by the variator each frame so the
+     *  emissive/enchant model-part overlay mixins know which texture's emissive variant
+     *  to render. */
+    private static com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture currentTexture = null;
+    private static net.minecraft.client.renderer.MultiBufferSource currentBufferSource = null;
+    private static net.minecraft.client.renderer.rendertype.RenderType currentRenderType = null;
+
     private static CompoundTag currentEntityNBT = null;
     private static UUID entityNBT_UUID = null;
 
@@ -150,10 +157,50 @@ public final class ETFRenderContext {
     public static void reset() {
         currentModelPartDepth = 0;
         currentEntity = null;
+        currentTexture = null;
+        currentBufferSource = null;
+        currentRenderType = null;
         allowedToPatch = false;
         allowRenderLayerTextureModify = true;
         limitModifyToProperties = false;
         currentEntityNBT = null;
         entityNBT_UUID = null;
+    }
+
+    // === Phase C: current ETFTexture bookkeeping for emissive/enchant overlays ===
+
+    @Nullable
+    public static com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture getCurrentTexture() {
+        return currentTexture;
+    }
+
+    public static void setCurrentTexture(@Nullable com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture texture) {
+        currentTexture = texture;
+    }
+
+    @Nullable
+    public static net.minecraft.client.renderer.MultiBufferSource getCurrentBufferSource() {
+        return currentBufferSource;
+    }
+
+    public static void setCurrentBufferSource(@Nullable net.minecraft.client.renderer.MultiBufferSource bufferSource) {
+        currentBufferSource = bufferSource;
+    }
+
+    @Nullable
+    public static net.minecraft.client.renderer.rendertype.RenderType getCurrentRenderType() {
+        return currentRenderType;
+    }
+
+    public static void setCurrentRenderType(@Nullable net.minecraft.client.renderer.rendertype.RenderType renderType) {
+        currentRenderType = renderType;
+    }
+
+    /**
+     * True when we're currently rendering the main pass for an entity (not feature-renderer
+     * overlays, not recursed from inside an emissive/enchant pass).
+     */
+    public static boolean isCurrentlyRenderingEntity() {
+        return currentEntity != null && !isInSpecialRenderOverlayPhase;
     }
 }

@@ -1,10 +1,19 @@
 package com.ultra.megamod.lib.etf.features.texture_handlers;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.ultra.megamod.lib.etf.ETF;
 import com.ultra.megamod.lib.etf.config.ETFConfig;
+import com.ultra.megamod.lib.etf.features.ETFRenderContext;
 import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
 import com.ultra.megamod.lib.etf.utils.ETFUtils2;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.Model;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.Resource;
 import org.jetbrains.annotations.NotNull;
@@ -195,9 +204,97 @@ public class ETFTexture {
         return mc.getResourceManager().getResource(thisIdentifier).isPresent();
     }
 
+    // ========================================================================
+    // Emissive rendering helpers — port of upstream's renderEmissive methods.
+    // ========================================================================
+
+    public void renderEmissive(PoseStack poseStack, MultiBufferSource buffers, ModelPart part) {
+        renderEmissive(poseStack, buffers, part, ETF.config().getConfig().getEmissiveRenderMode());
+    }
+
+    public void renderEmissive(PoseStack poseStack, MultiBufferSource buffers, ModelPart part,
+                               ETFConfig.EmissiveRenderModes mode) {
+        VertexConsumer vc = getEmissiveVertexConsumer(buffers, null, mode);
+        if (vc != null) {
+            ETFRenderContext.startSpecialRenderOverlayPhase();
+            part.render(poseStack, vc, ETF.EMISSIVE_FEATURE_LIGHT_VALUE, OverlayTexture.NO_OVERLAY);
+            ETFRenderContext.endSpecialRenderOverlayPhase();
+        }
+    }
+
+    public void renderEmissive(PoseStack poseStack, MultiBufferSource buffers, Model model) {
+        renderEmissive(poseStack, buffers, model, ETF.config().getConfig().getEmissiveRenderMode());
+    }
+
+    public void renderEmissive(PoseStack poseStack, MultiBufferSource buffers, Model model,
+                               ETFConfig.EmissiveRenderModes mode) {
+        VertexConsumer vc = getEmissiveVertexConsumer(buffers, model, mode);
+        if (vc != null) {
+            ETFRenderContext.startSpecialRenderOverlayPhase();
+            model.renderToBuffer(poseStack, vc, ETF.EMISSIVE_FEATURE_LIGHT_VALUE, OverlayTexture.NO_OVERLAY);
+            ETFRenderContext.endSpecialRenderOverlayPhase();
+        }
+    }
+
+    @Nullable
+    public VertexConsumer getEmissiveVertexConsumer(MultiBufferSource buffers, @Nullable Model model,
+                                                    ETFConfig.EmissiveRenderModes mode) {
+        RenderType type = getEmissiveRenderLayer(model, mode);
+        if (type == null) return null;
+        return buffers.getBuffer(type);
+    }
+
+    @Nullable
+    public RenderType getEmissiveRenderLayer(@Nullable Model model) {
+        return getEmissiveRenderLayer(model, ETF.config().getConfig().getEmissiveRenderMode());
+    }
+
+    @Nullable
+    public RenderType getEmissiveRenderLayer(@Nullable Model model, ETFConfig.EmissiveRenderModes mode) {
+        ETFRenderContext.preventRenderLayerTextureModify();
+        try {
+            if (!isEmissive()) return null;
+            Identifier id = getEmissiveIdentifierOfCurrentState();
+            if (id == null) return null;
+            if (mode == ETFConfig.EmissiveRenderModes.BRIGHT) {
+                return RenderTypes.beaconBeam(id, true);
+            }
+            if (model == null) {
+                return RenderTypes.entityCutoutNoCull(id);
+            }
+            return model.renderType(id);
+        } finally {
+            ETFRenderContext.allowRenderLayerTextureModify();
+        }
+    }
+
+    // ========================================================================
+    // Enchant rendering helpers.
+    // ========================================================================
+
+    public void renderEnchanted(PoseStack poseStack, MultiBufferSource buffers, Model model) {
+        if (!isEnchanted()) return;
+        Identifier id = getEnchantIdentifierOfCurrentState();
+        if (id == null) return;
+        ETFRenderContext.preventRenderLayerTextureModify();
+        try {
+            // Use the entity-cutout render type on the enchant texture itself, then
+            // overlay the vanilla glint as an extra pass via getBuffer(glint()).
+            RenderType baseType = RenderTypes.entityCutoutNoCull(id);
+            VertexConsumer vc = com.mojang.blaze3d.vertex.VertexMultiConsumer.create(
+                    buffers.getBuffer(RenderTypes.glint()),
+                    buffers.getBuffer(baseType));
+            ETFRenderContext.startSpecialRenderOverlayPhase();
+            model.renderToBuffer(poseStack, vc, ETF.EMISSIVE_FEATURE_LIGHT_VALUE, OverlayTexture.NO_OVERLAY);
+            ETFRenderContext.endSpecialRenderOverlayPhase();
+        } finally {
+            ETFRenderContext.allowRenderLayerTextureModify();
+        }
+    }
+
     @Override
     public String toString() {
-        return "ETFTexture{" + thisIdentifier + "}";
+        return "ETFTexture{" + thisIdentifier + ", emissive=" + isEmissive() + ", enchant=" + isEnchanted() + "}";
     }
 
     public enum TextureReturnState {

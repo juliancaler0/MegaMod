@@ -89,6 +89,9 @@ public abstract class ETFUtils2 {
         }
         com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture variant =
                 com.ultra.megamod.lib.etf.features.ETFManager.getInstance().getETFTextureVariant(identifier, current);
+        // Phase C: publish the current ETFTexture so the ModelPart emissive overlay mixin
+        // can add emissive/enchant passes after the base render completes.
+        com.ultra.megamod.lib.etf.features.ETFRenderContext.setCurrentTexture(variant);
         Identifier modified = variant.getTextureIdentifier(current);
         return modified == null ? identifier : modified;
     }
