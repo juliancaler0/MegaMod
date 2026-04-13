@@ -12,7 +12,10 @@
     "MixinEntityRenderer",
     "MixinEntityRenderDispatcher",
     "MixinLivingEntityRenderer",
-    "MixinRenderTypes"
+    "MixinRenderTypes",
+    "MixinEndCrystalRenderer",
+    "MixinEnderDragonRenderer",
+    "MixinIllusionerRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

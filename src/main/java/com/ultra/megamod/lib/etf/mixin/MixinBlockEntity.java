@@ -46,7 +46,7 @@ public abstract class MixinBlockEntity implements ETFEntity {
     @Shadow public abstract BlockEntityType<?> getType();
     @Shadow public abstract BlockPos getBlockPos();
     @Shadow @Nullable public abstract Level getLevel();
-    @Shadow protected abstract void saveMetadata(ValueOutput valueOutput);
+    @Shadow public abstract void saveWithFullMetadata(ValueOutput valueOutput);
 
     @Override
     public EntityType<?> etf$getType() {
@@ -100,7 +100,9 @@ public abstract class MixinBlockEntity implements ETFEntity {
         return ETFRenderContext.cacheEntityNBTForFrame(etf$getUuid(),
                 () -> {
                     TagValueOutput compound = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
-                    saveMetadata(compound);
+                    // upstream calls private saveMetadata; saveWithFullMetadata is the public
+                    // wrapper that runs saveWithoutMetadata + saveMetadata — same payload.
+                    saveWithFullMetadata(compound);
                     return compound.buildResult();
                 });
     }
