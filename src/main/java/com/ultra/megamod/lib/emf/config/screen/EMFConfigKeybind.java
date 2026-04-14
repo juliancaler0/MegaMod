@@ -25,9 +25,14 @@ public class EMFConfigKeybind {
         event.register(OPEN_CONFIG);
     }
 
+    // Per-tick counter used by EmfEntityVariantCache for update-frequency gating.
+    private static long TICK = 0L;
+
     @SubscribeEvent
     public static void onClientTick(ClientTickEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
+        TICK++;
+        com.ultra.megamod.lib.emf.runtime.EmfEntityVariantCache.getInstance().setTick(TICK);
         if (mc.player == null || mc.screen != null) return;
         while (OPEN_CONFIG.consumeClick()) {
             mc.setScreen(new EMFConfigScreen(null));

@@ -256,4 +256,20 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
     public EntityType<?> entityType() {
         return entityType;
     }
+
+    /** Phase F: expose the captured UUID for the pause / vanilla-lock fast path. */
+    @Nullable
+    public UUID uuid() {
+        return uuid;
+    }
+
+    @Nullable
+    public EntityRenderState vanilla() {
+        return vanilla;
+    }
+
+    @Nullable
+    public ETFEntityRenderState etfState() {
+        return etfState;
+    }
 }

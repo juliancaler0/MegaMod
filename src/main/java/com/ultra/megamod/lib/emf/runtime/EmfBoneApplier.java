@@ -43,10 +43,28 @@ public final class EmfBoneApplier {
     /**
      * Applies every compiled animation in {@code active} to {@code active.bone(...)}.
      * Returns the number of assignments successfully written.
+     * <p>
+     * Phase F: honours EMFApi pause / part-pause / vanilla-lock state keyed by the
+     * entity UUID surfaced through the variable context.
      */
     public static int apply(EmfActiveModel active, ModelPart root, EmfVariableContext ctx) {
         if (active == null || active.definition == null) return 0;
         active.bindRoot(root);
+
+        // Phase F: pause / vanilla-lock gating ---------------------------------------
+        java.util.UUID uuid = null;
+        if (ctx instanceof MinecraftRenderStateContext mrs) {
+            uuid = mrs.uuid();
+        }
+        if (uuid != null
+                && (com.ultra.megamod.lib.emf.api.EMFApi.isEntityLockedToVanillaModel(uuid)
+                        || com.ultra.megamod.lib.emf.api.EMFApi.isEntityAnimationPaused(uuid))) {
+            // Fully paused / vanilla-locked: skip every bone for this frame.
+            return 0;
+        }
+        ModelPart[] pausedParts = uuid == null
+                ? null
+                : com.ultra.megamod.lib.emf.api.EMFApi.pausedPartsFor(uuid);
 
         int written = 0;
         try (AutoCloseable scope = EmfRuntime.current().push(ctx)) {
@@ -55,6 +73,7 @@ public final class EmfBoneApplier {
                 String boneName = entry.getKey();
                 ModelPart bone = active.bone(boneName);
                 if (bone == null) continue;
+                if (isPausedPart(pausedParts, bone)) continue;
 
                 for (EmfModelDefinition.CompiledAnimation anim : entry.getValue()) {
                     if (applyOne(bone, anim, active, ctx)) written++;
@@ -64,6 +83,12 @@ public final class EmfBoneApplier {
             EMFUtils.logError("EMF apply failed for " + active.sourceJemId + ": " + e.getMessage());
         }
         return written;
+    }
+
+    private static boolean isPausedPart(ModelPart[] paused, ModelPart bone) {
+        if (paused == null || paused.length == 0 || bone == null) return false;
+        for (ModelPart p : paused) if (p == bone) return true;
+        return false;
     }
 
     private static boolean applyOne(ModelPart bone, EmfModelDefinition.CompiledAnimation anim,
@@ -103,7 +128,12 @@ public final class EmfBoneApplier {
         }
 
         float value = expr.evaluate(ctx);
-        return writeField(part, axis, value);
+        boolean wrote = writeField(part, axis, value);
+        if (wrote) {
+            // Phase F: notify mod-compat listeners of every successful write.
+            com.ultra.megamod.lib.emf.api.EMFApi.fireBoneApply(anim.vanillaBone, key, part, value);
+        }
+        return wrote;
     }
 
     private static boolean writeField(ModelPart part, String axis, float value) {

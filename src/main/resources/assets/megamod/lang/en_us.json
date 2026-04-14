@@ -1895,5 +1895,15 @@
   "attribute.name.megamod.combatroll.recharge": "Roll Recharge",
 
   "key.megamod.etf_config": "Open ETF Config",
-  "config.entity_texture_features.title": "ETF - Entity Texture Features"
+  "config.entity_texture_features.title": "ETF - Entity Texture Features",
+
+  "key.megamod.emf_config": "Open EMF Config",
+  "config.entity_model_features.title": "EMF - Entity Model Features",
+  "emf.debug.title": "EMF Debug",
+  "emf.debug.models_cached": "Models cached",
+  "emf.debug.entity": "Entity",
+  "emf.debug.jem": ".jem",
+  "emf.debug.tex_override": "Texture override",
+  "emf.debug.bones_animated": "Bones animated",
+  "emf.debug.variant": "Variant"
 }
