@@ -21,7 +21,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_frostbite",
+          "effect_id": "megamod:frostbite",
           "duration": 4.0
         }
       },
@@ -45,14 +45,6 @@
     "cooldown": {
       "duration": 3.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

@@ -33,10 +33,7 @@
   },
   "release": {
     "sound": {
-      "id": "megamod:arsenal_focusing_activate"
-    },
-    "animation": {
-      "id": "megamod:one_handed_healing_release"
+      "id": "megamod:focusing_activate"
     }
   },
   "target": {
@@ -45,7 +42,7 @@
   "deliver": {
     "type": "STASH_EFFECT",
     "stash_effect": {
-      "id": "megamod:arsenal_focusing",
+      "id": "megamod:focusing",
       "triggers": [
         {
           "target_override": "CASTER",
@@ -80,7 +77,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_focusing",
+          "effect_id": "megamod:focusing",
           "duration": 12.0,
           "amplifier": 1,
           "amplifier_cap": 2,

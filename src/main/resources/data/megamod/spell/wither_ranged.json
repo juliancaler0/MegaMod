@@ -37,7 +37,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_wither_impact"
+        "id": "megamod:wither_impact"
       }
     }
   ],
@@ -46,14 +46,6 @@
     "cooldown": {
       "duration": 3.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.evoker.cast_spell"
     }
   }
 }

@@ -1,45 +1,48 @@
 {
-  "school": "megamod:soul",
+  "school": "megamod:healing",
   "range": 0.0,
-  "tier": 4,
-  "active": {
-    "cast": {
-      "duration": 0.5,
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "tier": 2,
+  "learn": {},
+  "active": {},
   "release": {
-    "sound": {
-      "id": "minecraft:entity.wither.spawn"
-    },
     "animation": {
       "id": "megamod:one_handed_area_release"
     }
-  },
-  "target": {
-    "type": "CASTER"
   },
   "impacts": [
     {
       "action": {
         "type": "STATUS_EFFECT",
-        "apply_to_caster": true,
         "status_effect": {
-          "effect_id": "strength",
-          "duration": 5.0,
-          "amplifier": 1
+          "effect_id": "megamod:divine_protection",
+          "duration": 8.0,
+          "amplifier_power_multiplier": 0.5,
+          "amplifier_cap": 2
         }
+      },
+      "particles": [
+        {
+          "particle_id": "megamod:magic_holy_decelerate",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 40.0,
+          "min_speed": 0.2,
+          "max_speed": 0.2,
+          "color_rgba": 4294954239
+        }
+      ],
+      "sound": {
+        "id": "megamod:divine_protection_release"
       }
     }
   ],
   "cost": {
+    "exhaust": 0.3,
     "cooldown": {
-      "duration": 8.0
+      "duration": 30.0
     },
     "item": {
-      "id": "megamod:soul_rune"
+      "id": "runes:healing_stone"
     }
   }
 }

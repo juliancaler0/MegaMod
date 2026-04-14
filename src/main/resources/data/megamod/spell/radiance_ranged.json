@@ -23,13 +23,7 @@
         "max_speed": 0.0,
         "color_rgba": 4294954239
       }
-    ],
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "megamod:generic_healing_release"
-    }
+    ]
   },
   "target": {
     "type": "AREA",
@@ -79,7 +73,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_radiance_impact"
+        "id": "megamod:radiance_impact"
       }
     }
   ],

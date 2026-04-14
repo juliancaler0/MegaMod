@@ -21,7 +21,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_sundering",
+          "effect_id": "megamod:sundering",
           "duration": 5.0
         }
       },
@@ -37,7 +37,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_sunder_impact"
+        "id": "megamod:sunder_impact"
       }
     }
   ],
@@ -46,14 +46,6 @@
     "cooldown": {
       "duration": 5.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

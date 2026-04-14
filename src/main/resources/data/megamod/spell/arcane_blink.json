@@ -3,13 +3,7 @@
   "range": 0.0,
   "tier": 4,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"
@@ -60,7 +54,7 @@
       "duration": 12.0
     },
     "item": {
-      "id": "megamod:arcane_rune"
+      "id": "runes:arcane_stone"
     }
   }
 }

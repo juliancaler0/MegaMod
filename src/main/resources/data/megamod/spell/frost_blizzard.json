@@ -29,9 +29,6 @@
   "release": {
     "sound": {
       "id": "megamod:fire_breath_release"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {
@@ -171,7 +168,7 @@
       "proportional": true
     },
     "item": {
-      "id": "megamod:frost_rune"
+      "id": "runes:frost_stone"
     }
   }
 }

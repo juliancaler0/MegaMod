@@ -77,17 +77,9 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_leeching_impact",
+        "id": "megamod:leeching_impact",
         "volume": 0.6
       }
     }
-  ],
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
-    }
-  }
+  ]
 }

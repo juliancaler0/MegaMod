@@ -26,7 +26,7 @@
             "vertical_range_multiplier": 0.3
           },
           "sound": {
-            "id": "megamod:arsenal_poison_cloud_tick"
+            "id": "megamod:poison_cloud_tick"
           }
         },
         "time_to_live_seconds": 6.0,
@@ -55,7 +55,7 @@
         },
         "spawn": {
           "sound": {
-            "id": "megamod:arsenal_poison_cloud_spawn"
+            "id": "megamod:poison_cloud_spawn"
           }
         }
       }
@@ -101,14 +101,6 @@
     "cooldown": {
       "duration": 3.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

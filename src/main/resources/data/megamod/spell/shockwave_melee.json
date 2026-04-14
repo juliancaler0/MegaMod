@@ -26,7 +26,7 @@
       "launch_properties": {
         "velocity": 0.75,
         "sound": {
-          "id": "megamod:arsenal_shockwave_release"
+          "id": "megamod:shockwave_release"
         }
       },
       "projectile": {
@@ -68,16 +68,8 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_shockwave_impact"
+        "id": "megamod:shockwave_impact"
       }
     }
-  ],
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_projectile_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
-    }
-  }
+  ]
 }

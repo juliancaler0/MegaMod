@@ -1,52 +1,73 @@
 {
-  "school": "megamod:healing",
-  "range": 6.0,
-  "tier": 4,
-  "active": {
-    "cast": {
-      "duration": 0.75,
-      "animation": {
-        "id": "megamod:one_handed_sky_charge"
-      }
-    }
-  },
+  "school": "megamod:physical_melee",
+  "secondary_archetype": "ANY",
+  "range": 0.0,
+  "tier": 3,
+  "learn": {},
+  "active": {},
   "release": {
-    "sound": {
-      "id": "minecraft:block.grass.break"
-    },
     "animation": {
       "id": "megamod:one_handed_area_release"
     }
   },
-  "target": {
-    "type": "AREA",
-    "area": {
-      "distance_dropoff": "SQUARED"
-    }
+  "deliver": {
+    "type": "CLOUD",
+    "clouds": [
+      {
+        "volume": {
+          "radius": 3.5,
+          "area": {
+            "vertical_range_multiplier": 0.3
+          },
+          "sound": {
+            "id": "megamod:entangling_roots"
+          }
+        },
+        "time_to_live_seconds": 8.0,
+        "impact_tick_interval": 15,
+        "client_data": {
+          "particles": [
+            {
+              "particle_id": "megamod:roots",
+              "origin": "FEET",
+              "shape": "PILLAR",
+              "count": 2.0,
+              "max_speed": 0.0
+            }
+          ]
+        }
+      }
+    ]
   },
   "impacts": [
     {
       "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 1.4
-        }
-      }
-    },
-    {
-      "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "poison",
-          "duration": 5.0,
-          "amplifier": 1
+          "effect_id": "megamod:entangling_roots",
+          "duration": 1.0,
+          "apply_limit": {
+            "health_base": 50.0,
+            "spell_power_multiplier": 5.0
+          }
         }
-      }
+      },
+      "particles": [
+        {
+          "particle_id": "falling_spore_blossom",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 2.0,
+          "min_speed": 0.1,
+          "max_speed": 0.2
+        }
+      ]
     }
   ],
   "cost": {
+    "exhaust": 0.2,
     "cooldown": {
-      "duration": 9.0
+      "duration": 18.0
     }
   }
 }

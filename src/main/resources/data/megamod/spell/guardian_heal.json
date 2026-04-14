@@ -31,7 +31,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_absorption",
+          "effect_id": "megamod:absorption",
           "duration": 6.0,
           "amplifier_power_multiplier": 0.2
         }
@@ -59,7 +59,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_guardian_heal_impact"
+        "id": "megamod:guardian_heal_impact"
       }
     }
   ],
@@ -68,14 +68,6 @@
     "cooldown": {
       "duration": 6.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "megamod:generic_healing_release"
     }
   }
 }

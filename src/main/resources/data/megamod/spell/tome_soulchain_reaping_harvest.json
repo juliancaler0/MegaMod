@@ -1,51 +1,76 @@
 {
-  "school": "megamod:soul",
-  "range": 4.0,
-  "tier": 4,
+  "school": "megamod:healing",
+  "range": 16.0,
+  "group": "primary",
+  "tier": 0,
   "active": {
     "cast": {
-      "duration": 0.5,
+      "duration": 1.0,
       "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
+        "id": "megamod:one_handed_healing_charge"
+      },
+      "sound": {
+        "id": "megamod:generic_healing_casting",
+        "randomness": 0.0
+      },
+      "particles": [
+        {
+          "particle_id": "megamod:magic_spark_float",
+          "origin": "FEET",
+          "shape": "WIDE_PIPE",
+          "count": 1.0,
+          "min_speed": 0.05,
+          "max_speed": 0.1,
+          "color_rgba": 4294954239
+        }
+      ]
     }
   },
   "release": {
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
-    },
     "animation": {
-      "id": "megamod:one_handed_area_release"
+      "id": "megamod:one_handed_healing_release"
+    },
+    "sound": {
+      "id": "megamod:generic_healing_release"
     }
   },
   "target": {
-    "type": "AREA"
+    "type": "AIM",
+    "aim": {
+      "sticky": true,
+      "use_caster_as_fallback": true
+    }
   },
   "impacts": [
     {
       "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 1.4
-        }
-      }
-    },
-    {
-      "action": {
         "type": "HEAL",
-        "apply_to_caster": true,
         "heal": {
-          "spell_power_coefficient": 0.3
+          "spell_power_coefficient": 0.5
         }
+      },
+      "particles": [
+        {
+          "particle_id": "megamod:magic_heal_ascend",
+          "origin": "FEET",
+          "shape": "PILLAR",
+          "count": 20.0,
+          "min_speed": 0.02,
+          "max_speed": 0.15,
+          "color_rgba": 1728014079
+        }
+      ],
+      "sound": {
+        "id": "megamod:generic_healing_impact_1"
       }
     }
   ],
   "cost": {
     "cooldown": {
-      "duration": 8.0
+      "duration": 4.0
     },
     "item": {
-      "id": "megamod:soul_rune"
+      "id": "runes:healing_stone"
     }
   }
 }

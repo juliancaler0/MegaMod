@@ -1,42 +1,61 @@
 {
-  "school": "megamod:arcane",
+  "school": "megamod:physical_melee",
   "range": 0.0,
-  "tier": 5,
-  "active": {
-    "cast": {
-      "duration": 0.3,
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "tier": 2,
+  "learn": {},
+  "active": {},
   "release": {
-    "sound": {
-      "id": "minecraft:item.shield.block"
-    },
     "animation": {
-      "id": "megamod:one_handed_area_release"
+      "id": "megamod:dual_handed_weapon_charge"
+    },
+    "particles": [
+      {
+        "particle_id": "megamod:magic_spark_float",
+        "origin": "LAUNCH_POINT",
+        "shape": "SPHERE",
+        "count": 15.0,
+        "min_speed": 0.15,
+        "max_speed": 0.2,
+        "pre_spawn_travel": 7.0,
+        "invert": true,
+        "color_rgba": 4294967295
+      }
+    ],
+    "sound": {
+      "id": "megamod:slice_and_dice"
     }
   },
-  "target": {
-    "type": "CASTER"
+  "deliver": {
+    "type": "STASH_EFFECT",
+    "stash_effect": {
+      "id": "megamod:slice_and_dice",
+      "triggers": [
+        {
+          "target_override": "CASTER",
+          "type": "MELEE_IMPACT"
+        }
+      ],
+      "consume": 0
+    }
   },
   "impacts": [
     {
       "action": {
         "type": "STATUS_EFFECT",
-        "apply_to_caster": true,
         "status_effect": {
-          "effect_id": "resistance",
-          "duration": 3.0,
-          "amplifier": 3
+          "effect_id": "megamod:slice_and_dice",
+          "amplifier": 1,
+          "amplifier_cap": 9,
+          "refresh_duration": false,
+          "apply_mode": "ADD"
         }
       }
     }
   ],
   "cost": {
+    "exhaust": 0.2,
     "cooldown": {
-      "duration": 12.0
+      "duration": 15.0
     }
   }
 }

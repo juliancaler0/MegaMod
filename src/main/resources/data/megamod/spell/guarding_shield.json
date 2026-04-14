@@ -21,13 +21,7 @@
         "max_speed": 0.0,
         "color_rgba": 1724710911
       }
-    ],
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
-    }
+    ]
   },
   "target": {
     "type": "AREA",
@@ -40,7 +34,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_guarding",
+          "effect_id": "megamod:guarding",
           "duration": 5.0
         }
       },
@@ -70,7 +64,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_guardian_strike_impact"
+        "id": "megamod:guardian_strike_impact"
       }
     }
   ],

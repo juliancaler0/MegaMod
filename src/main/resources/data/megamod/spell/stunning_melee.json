@@ -21,7 +21,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_stun",
+          "effect_id": "megamod:stun",
           "duration": 2.0
         }
       },
@@ -35,14 +35,6 @@
     "cooldown": {
       "duration": 20.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

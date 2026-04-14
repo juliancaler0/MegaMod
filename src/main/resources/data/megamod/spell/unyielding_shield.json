@@ -15,7 +15,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_unyielding",
+          "effect_id": "megamod:unyielding",
           "duration": 5.0
         }
       },
@@ -42,7 +42,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_unyielding_impact"
+        "id": "megamod:unyielding_impact"
       }
     }
   ],
@@ -50,14 +50,6 @@
     "cooldown": {
       "duration": 10.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

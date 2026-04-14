@@ -3,13 +3,7 @@
   "range": 0.0,
   "tier": 2,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_healing_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:dual_handed_weapon_charge"
@@ -28,7 +22,7 @@
       }
     ],
     "sound": {
-      "id": "megamod:combat.slice_and_dice"
+      "id": "megamod:slice_and_dice"
     }
   },
   "deliver": {

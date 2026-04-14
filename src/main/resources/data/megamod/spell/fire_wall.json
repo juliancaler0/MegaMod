@@ -3,19 +3,10 @@
   "range": 0.0,
   "tier": 4,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release_ground_left_to_right"
-    },
-    "sound": {
-      "id": "megamod:generic_fire_release"
     }
   },
   "deliver": {
@@ -169,7 +160,7 @@
       "duration": 24.0
     },
     "item": {
-      "id": "megamod:fire_rune"
+      "id": "runes:fire_stone"
     }
   }
 }

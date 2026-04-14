@@ -32,7 +32,7 @@
       "launch_properties": {
         "velocity": 0.75,
         "sound": {
-          "id": "megamod:arsenal_missile_release"
+          "id": "megamod:missile_release"
         }
       },
       "projectile": {
@@ -90,7 +90,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_missile_impact"
+        "id": "megamod:missile_impact"
       }
     }
   ],
@@ -98,14 +98,6 @@
     "cooldown": {
       "duration": 1.0,
       "hosting_item": false
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_projectile_release"
-    },
-    "sound": {
-      "id": "megamod:generic_arcane_release"
     }
   }
 }

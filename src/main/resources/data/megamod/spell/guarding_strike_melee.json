@@ -45,10 +45,7 @@
       }
     ],
     "sound": {
-      "id": "megamod:arsenal_guardian_strike_release"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
+      "id": "megamod:guardian_strike_release"
     }
   },
   "target": {
@@ -62,7 +59,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:arsenal_guarding",
+          "effect_id": "megamod:guarding",
           "duration": 5.0
         }
       },
@@ -92,7 +89,7 @@
         }
       ],
       "sound": {
-        "id": "megamod:arsenal_guardian_strike_impact"
+        "id": "megamod:guardian_strike_impact"
       }
     }
   ],

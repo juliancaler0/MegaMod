@@ -3,13 +3,7 @@
   "range": 5.0,
   "tier": 2,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:dual_handed_ground_release"
@@ -62,7 +56,7 @@
       }
     ],
     "sound": {
-      "id": "megamod:combat.shock_powder_release"
+      "id": "megamod:shock_powder_release"
     }
   },
   "target": {
@@ -85,7 +79,7 @@
         }
       },
       "sound": {
-        "id": "megamod:combat.shock_powder_impact"
+        "id": "megamod:shock_powder_impact"
       }
     }
   ],

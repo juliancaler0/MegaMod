@@ -1,20 +1,15 @@
 {
-  "school": "megamod:lightning",
-  "range": 10.0,
+  "school": "megamod:physical_melee",
+  "range": 15.0,
   "tier": 3,
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "learn": {},
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"
     },
     "sound": {
-      "id": "minecraft:entity.enderman.teleport"
+      "id": "megamod:shadow_step_depart"
     }
   },
   "target": {
@@ -30,25 +25,47 @@
         "teleport": {
           "mode": "BEHIND_TARGET",
           "intent": "HARMFUL",
-          "behind_target": {}
+          "behind_target": {},
+          "depart_particles": [
+            {
+              "particle_id": "cloud",
+              "origin": "FEET",
+              "shape": "SPHERE",
+              "count": 20.0,
+              "min_speed": 0.05,
+              "max_speed": 0.1,
+              "pre_spawn_travel": 15.0,
+              "invert": true
+            }
+          ],
+          "arrive_particles": [
+            {
+              "particle_id": "poof",
+              "origin": "FEET",
+              "shape": "SPHERE",
+              "count": 10.0,
+              "min_speed": 0.05,
+              "max_speed": 0.1,
+              "pre_spawn_travel": 2.0
+            }
+          ]
         }
       }
     },
     {
       "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 1.3
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "megamod:shadow_step",
+          "duration": 1.5
         }
       }
     }
   ],
   "cost": {
+    "exhaust": 0.4,
     "cooldown": {
-      "duration": 4.0
-    },
-    "item": {
-      "id": "megamod:lightning_rune"
+      "duration": 12.0
     }
   }
 }

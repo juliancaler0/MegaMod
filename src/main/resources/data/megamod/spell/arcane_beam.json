@@ -43,9 +43,6 @@
   "release": {
     "sound": {
       "id": "megamod:arcane_beam_release"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {
@@ -133,7 +130,7 @@
       "proportional": true
     },
     "item": {
-      "id": "megamod:arcane_rune"
+      "id": "runes:arcane_stone"
     }
   }
 }

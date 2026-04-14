@@ -1,44 +1,68 @@
 {
-  "school": "megamod:arcane",
-  "range": 12.0,
-  "tier": 5,
-  "active": {
-    "cast": {
-      "duration": 1.0,
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "school": "megamod:physical_melee",
+  "range": 0.0,
+  "tier": 4,
+  "learn": {},
+  "active": {},
   "release": {
-    "sound": {
-      "id": "minecraft:entity.wither.spawn"
-    },
     "animation": {
-      "id": "megamod:one_handed_area_release"
-    }
-  },
-  "target": {
-    "type": "AREA",
-    "area": {
-      "distance_dropoff": "SQUARED",
-      "horizontal_range_multiplier": 1.2
+      "id": "megamod:dual_handed_weapon_cross"
+    },
+    "particles": [
+      {
+        "particle_id": "megamod:smoke_medium",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 20.0,
+        "min_speed": 0.12,
+        "max_speed": 0.15,
+        "pre_spawn_travel": 3.0
+      },
+      {
+        "particle_id": "megamod:smoke_medium",
+        "origin": "FEET",
+        "shape": "CIRCLE",
+        "count": 20.0,
+        "min_speed": 0.12,
+        "max_speed": 0.15,
+        "pre_spawn_travel": 4.0
+      },
+      {
+        "particle_id": "poof",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 10.0,
+        "min_speed": 0.01,
+        "max_speed": 0.1
+      },
+      {
+        "particle_id": "campfire_cosy_smoke",
+        "origin": "FEET",
+        "shape": "WIDE_PIPE",
+        "count": 10.0,
+        "min_speed": 0.01,
+        "max_speed": 0.1
+      }
+    ],
+    "sound": {
+      "id": "megamod:vanish_combined"
     }
   },
   "impacts": [
     {
       "action": {
-        "type": "DAMAGE",
-        "damage": {
-          "spell_power_coefficient": 2.0,
-          "knockback": -1.5
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "megamod:stealth",
+          "duration": 8.0
         }
       }
     }
   ],
   "cost": {
+    "exhaust": 0.4,
     "cooldown": {
-      "duration": 12.0
+      "duration": 30.0
     }
   }
 }

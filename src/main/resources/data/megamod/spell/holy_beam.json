@@ -43,9 +43,6 @@
   "release": {
     "sound": {
       "id": "megamod:holy_beam_release"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {
@@ -157,7 +154,7 @@
       "proportional": true
     },
     "item": {
-      "id": "megamod:healing_rune"
+      "id": "runes:healing_stone"
     }
   }
 }

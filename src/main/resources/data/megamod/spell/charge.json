@@ -3,13 +3,7 @@
   "range": 0.0,
   "tier": 4,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"
@@ -57,7 +51,7 @@
       }
     ],
     "sound": {
-      "id": "megamod:combat.charge_activate"
+      "id": "megamod:charge_activate"
     }
   },
   "impacts": [
@@ -65,7 +59,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:charge_buff",
+          "effect_id": "megamod:charge",
           "duration": 2.0
         }
       }

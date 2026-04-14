@@ -3,13 +3,7 @@
   "range": 0.0,
   "tier": 2,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_healing_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "particles": [
       {
@@ -25,9 +19,6 @@
     "sound": {
       "id": "megamod:marker_shot",
       "volume": 0.5
-    },
-    "animation": {
-      "id": "megamod:one_handed_healing_release"
     }
   },
   "deliver": {

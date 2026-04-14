@@ -3,19 +3,13 @@
   "range": 15.0,
   "tier": 3,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"
     },
     "sound": {
-      "id": "megamod:combat.shadow_step_depart"
+      "id": "megamod:shadow_step_depart"
     }
   },
   "target": {
@@ -62,7 +56,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "megamod:shadow_step_buff",
+          "effect_id": "megamod:shadow_step",
           "duration": 1.5
         }
       }
