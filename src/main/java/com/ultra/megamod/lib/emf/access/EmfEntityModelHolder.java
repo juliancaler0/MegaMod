@@ -1,4 +1,4 @@
-package com.ultra.megamod.lib.emf.mixin;
+package com.ultra.megamod.lib.emf.access;
 
 import com.ultra.megamod.lib.emf.runtime.EmfActiveModel;
 import org.jetbrains.annotations.Nullable;
@@ -8,9 +8,10 @@ import org.jetbrains.annotations.Nullable;
  * so every vanilla entity model can carry an optional
  * {@link EmfActiveModel} binding.
  * <p>
- * Upstream EMF uses {@code IEMFModel} which exposes both a boolean and a root
- * getter; we collapse into one nullable getter because the Phase D definition
- * can be reconstituted from the active model.
+ * Lives outside the {@code .mixin} package because non-mixin runtime code
+ * references it directly (the mixin package is declared mixin-only in
+ * {@code megamod-emf.mixins.json}; placing a plain interface there causes
+ * {@code IllegalClassLoadError} at class-load time).
  */
 public interface EmfEntityModelHolder {
 

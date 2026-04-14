@@ -1,5 +1,7 @@
 package com.ultra.megamod.lib.emf.mixin;
 
+import com.ultra.megamod.lib.emf.access.EmfModelPartAccessor;
+
 import net.minecraft.client.model.geom.ModelPart;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

@@ -172,7 +172,7 @@ public final class EMFApi {
     public static boolean isModelCustomizedByEMF(EntityModel<?> model) {
         if (model == null) return false;
         try {
-            var holder = (com.ultra.megamod.lib.emf.mixin.EmfEntityModelHolder) model;
+            var holder = (com.ultra.megamod.lib.emf.access.EmfEntityModelHolder) model;
             return holder.emf$getActiveModel() != null;
         } catch (Throwable t) {
             return false;
@@ -186,7 +186,7 @@ public final class EMFApi {
     public static boolean isModelAnimatedByEMF(EntityModel<?> model) {
         if (!isModelCustomizedByEMF(model)) return false;
         try {
-            var holder = (com.ultra.megamod.lib.emf.mixin.EmfEntityModelHolder) model;
+            var holder = (com.ultra.megamod.lib.emf.access.EmfEntityModelHolder) model;
             EmfActiveModel active = holder.emf$getActiveModel();
             return active != null && active.definition != null
                     && !active.definition.animationsByBone.isEmpty();
@@ -203,7 +203,7 @@ public final class EMFApi {
     public static EmfActiveModel getActiveModel(EntityModel<?> model) {
         if (model == null) return null;
         try {
-            var holder = (com.ultra.megamod.lib.emf.mixin.EmfEntityModelHolder) model;
+            var holder = (com.ultra.megamod.lib.emf.access.EmfEntityModelHolder) model;
             return holder.emf$getActiveModel();
         } catch (Throwable t) {
             return null;

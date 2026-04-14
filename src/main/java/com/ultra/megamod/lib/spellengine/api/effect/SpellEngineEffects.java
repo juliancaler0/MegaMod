@@ -17,7 +17,7 @@ public class SpellEngineEffects {
         return entry;
     }
 
-    public static Effects.Entry STUN = add(new Effects.Entry(Identifier.fromNamespaceAndPath("megamod","stun"),
+    public static Effects.Entry STUN = add(new Effects.Entry(Identifier.fromNamespaceAndPath("megamod","spell_stun"),
             "Stunned",
             "Cannot move or act.",
             new CustomStatusEffect(MobEffectCategory.HARMFUL, 0x888800),

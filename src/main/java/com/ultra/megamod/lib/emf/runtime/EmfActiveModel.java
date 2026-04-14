@@ -16,7 +16,7 @@ import java.util.Map;
  * <p>
  * One of these is attached to each vanilla {@code EntityModel} instance that has a
  * matching {@code .jem} in the active resource pack. The
- * {@link com.ultra.megamod.lib.emf.mixin.EmfEntityModelHolder} interface mixed in
+ * {@link com.ultra.megamod.lib.emf.access.EmfEntityModelHolder} interface mixed in
  * via Mixin is the storage handle; this class is the business data.
  * <p>
  * Phase E's render-time apply loop consumes two things:
@@ -83,7 +83,7 @@ public final class EmfActiveModel {
 
     /**
      * Reads the children map via the accessor mixin
-     * ({@link com.ultra.megamod.lib.emf.mixin.EmfModelPartAccessor}).
+     * ({@link com.ultra.megamod.lib.emf.access.EmfModelPartAccessor}).
      * Returns {@code null} if the accessor isn't applied (shouldn't happen at runtime).
      * <p>
      * The accessor interface is implemented at runtime by the Mixin injector, which
@@ -93,7 +93,7 @@ public final class EmfActiveModel {
     private static @Nullable Map<String, ModelPart> emf$childrenOf(ModelPart part) {
         try {
             Object opaque = part;
-            if (opaque instanceof com.ultra.megamod.lib.emf.mixin.EmfModelPartAccessor acc) {
+            if (opaque instanceof com.ultra.megamod.lib.emf.access.EmfModelPartAccessor acc) {
                 return (Map<String, ModelPart>) acc.emf$children();
             }
         } catch (Throwable ignored) {

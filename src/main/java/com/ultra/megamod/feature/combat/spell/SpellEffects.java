@@ -179,16 +179,7 @@ public class SpellEffects {
                             -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
     // ========================== Arsenal ==========================
-
-    /** Stun: -100% movement, -100% attack speed. 2s. */
-    public static final DeferredHolder<MobEffect, MobEffect> STUN = EFFECTS.register("stun",
-            () -> new SimpleSpellEffect(MobEffectCategory.HARMFUL, 0xDDDD00) {}
-                    .addAttributeModifier(Attributes.MOVEMENT_SPEED,
-                            Identifier.fromNamespaceAndPath("megamod", "effect.stun.speed"),
-                            -1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-                    .addAttributeModifier(Attributes.ATTACK_SPEED,
-                            Identifier.fromNamespaceAndPath("megamod", "effect.stun.attack_speed"),
-                            -1.0, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+    // Note: Arsenal's "stun" effect is registered via ArsenalEffects.STUN (id megamod:arsenal_stun).
 
     /** Frostbite: -30% movement, -20% attack speed. */
     public static final DeferredHolder<MobEffect, MobEffect> FROSTBITE = EFFECTS.register("frostbite",

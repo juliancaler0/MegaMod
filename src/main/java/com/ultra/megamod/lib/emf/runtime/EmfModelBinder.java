@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.emf.runtime;
 
 import com.ultra.megamod.lib.emf.animation.EmfVariableContext;
-import com.ultra.megamod.lib.emf.mixin.EmfEntityModelHolder;
+import com.ultra.megamod.lib.emf.access.EmfEntityModelHolder;
 import com.ultra.megamod.lib.etf.features.ETFRenderContext;
 import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
 import net.minecraft.client.model.EntityModel;

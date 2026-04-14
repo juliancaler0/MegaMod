@@ -1,5 +1,7 @@
 package com.ultra.megamod.lib.emf.mixin;
 
+import com.ultra.megamod.lib.emf.access.EmfEntityModelHolder;
+
 import com.ultra.megamod.lib.emf.runtime.EmfActiveModel;
 import net.minecraft.client.model.EntityModel;
 import org.jetbrains.annotations.Nullable;
