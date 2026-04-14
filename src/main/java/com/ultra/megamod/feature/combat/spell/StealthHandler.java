@@ -1,10 +1,13 @@
 package com.ultra.megamod.feature.combat.spell;
 
 import com.ultra.megamod.MegaMod;
+import com.ultra.megamod.feature.combat.rogues.effect.StealthEffect;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 
 /**
@@ -12,6 +15,7 @@ import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
  * <p>
  * - Prevents mobs from targeting stealthed players (unless within 2 blocks).
  * - Breaks stealth when the stealthed player attacks an entity.
+ * - Plays a smoke-puff and stealth-leave sound whenever STEALTH is removed.
  */
 @EventBusSubscriber(modid = MegaMod.MODID)
 public class StealthHandler {
@@ -42,6 +46,38 @@ public class StealthHandler {
             if (player.hasEffect(SpellEffects.STEALTH)) {
                 player.removeEffect(SpellEffects.STEALTH);
                 player.removeEffect(SpellEffects.STEALTH_SPEED);
+            }
+        }
+    }
+
+    /**
+     * When STEALTH is removed (by attack, expiration, or any other source),
+     * spawn a smoke puff and play the stealth-leave sound.
+     * Mirrors Rogues' {@code OnRemoval.configure(STEALTH...)} behaviour.
+     */
+    @SubscribeEvent
+    public static void onStealthRemoved(MobEffectEvent.Remove event) {
+        if (event.getEffect().value() == SpellEffects.STEALTH.value()) {
+            LivingEntity entity = event.getEntity();
+            StealthEffect.onRemove(entity);
+            // Companion STEALTH_SPEED should always be cleared with STEALTH.
+            if (entity.hasEffect(SpellEffects.STEALTH_SPEED)) {
+                entity.removeEffect(SpellEffects.STEALTH_SPEED);
+            }
+        }
+    }
+
+    /**
+     * Mirror of {@link #onStealthRemoved(MobEffectEvent.Remove)} for natural expiration.
+     */
+    @SubscribeEvent
+    public static void onStealthExpired(MobEffectEvent.Expired event) {
+        var instance = event.getEffectInstance();
+        if (instance != null && instance.getEffect().value() == SpellEffects.STEALTH.value()) {
+            LivingEntity entity = event.getEntity();
+            StealthEffect.onRemove(entity);
+            if (entity.hasEffect(SpellEffects.STEALTH_SPEED)) {
+                entity.removeEffect(SpellEffects.STEALTH_SPEED);
             }
         }
     }
