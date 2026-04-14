@@ -10,19 +10,20 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.AlkahestryTomeItem;
 
+import java.util.List;
+
 public class AlkahestryDrainRecipe implements CraftingRecipe {
 	private final int chargeToDrain;
 	private final ItemStack result;
-	private final Ingredient tomeIngredient;
 
 	public AlkahestryDrainRecipe(int chargeToDrain, ItemStack result) {
 		this.chargeToDrain = chargeToDrain;
 		this.result = result;
-		tomeIngredient = Ingredient.of(AlkahestryTomeItem.setCharge(new ItemStack(ModItems.ALKAHESTRY_TOME.get()), AlkahestryTomeItem.getChargeLimit()));
 		AlkahestryRecipeRegistry.setDrainRecipe(this);
 	}
 
@@ -52,11 +53,6 @@ public class AlkahestryDrainRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.of(Ingredient.EMPTY, tomeIngredient);
-	}
-
-	@Override
 	public ItemStack assemble(CraftingInput inv, HolderLookup.Provider registries) {
 		ItemStack tome = getTome(inv).copy();
 
@@ -79,16 +75,6 @@ public class AlkahestryDrainRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= 1;
-	}
-
-	@Override
-	public ItemStack getResultItem(HolderLookup.Provider registries) {
-		return result;
-	}
-
-	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInput inv) {
 		NonNullList<ItemStack> ret = CraftingRecipe.super.getRemainingItems(inv);
 		for (int slot = 0; slot < inv.size(); slot++) {
@@ -106,8 +92,8 @@ public class AlkahestryDrainRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.ALKAHESTRY_DRAIN_SERIALIZER.get();
+	public RecipeSerializer<AlkahestryDrainRecipe> getSerializer() {
+		return (RecipeSerializer<AlkahestryDrainRecipe>) ModItems.ALKAHESTRY_DRAIN_SERIALIZER.get();
 	}
 
 	@Override
@@ -115,7 +101,21 @@ public class AlkahestryDrainRecipe implements CraftingRecipe {
 		return CraftingBookCategory.MISC;
 	}
 
-	private ItemStack getResult() {
+	@Override
+	public PlacementInfo placementInfo() {
+		return PlacementInfo.NOT_PLACEABLE;
+	}
+
+	@Override
+	public List<RecipeDisplay> display() {
+		return List.of();
+	}
+
+	public ItemStack getResultItem(HolderLookup.Provider registries) {
+		return result;
+	}
+
+	public ItemStack getResult() {
 		return result;
 	}
 
@@ -126,8 +126,8 @@ public class AlkahestryDrainRecipe implements CraftingRecipe {
 	public static class Serializer implements RecipeSerializer<AlkahestryDrainRecipe> {
 		private static final MapCodec<AlkahestryDrainRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
-								Codec.INT.fieldOf("charge").forGetter(recipe -> recipe.chargeToDrain),
-								ItemStack.CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+								Codec.INT.fieldOf("charge").forGetter((AlkahestryDrainRecipe recipe) -> recipe.chargeToDrain),
+								ItemStack.CODEC.fieldOf("result").forGetter((AlkahestryDrainRecipe recipe) -> recipe.result)
 						)
 						.apply(instance, AlkahestryDrainRecipe::new));
 

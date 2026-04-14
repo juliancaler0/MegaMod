@@ -1,10 +1,11 @@
 package com.ultra.megamod.reliquary.item;
 
-import com.google.common.collect.ImmutableMap;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -19,23 +20,22 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
-	private static final Map<Class<? extends Item>, IRepairableItem> REPAIRABLE_ITEMS = new ImmutableMap.Builder<Class<? extends Item>, IRepairableItem>()
-			.put(TieredItem.class, item -> {
-				Tier tier = ((TieredItem) item).getTier();
-				return tier.equals(Tiers.GOLD) || tier.equals(Tiers.NETHERITE);
-			})
-			.put(ArmorItem.class, item -> {
-				Holder<ArmorMaterial> material = ((ArmorItem) item).getMaterial();
-				return material.equals(ArmorMaterials.GOLD) || material.equals(ArmorMaterials.NETHERITE);
-			})
-			.build();
 
 	public MidasTouchstoneItem() {
 		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	}
+
+	private static boolean isRepairableByMidas(ItemStack stack) {
+		// Gold / Netherite tools and armor via repair ingredient tags
+		return stack.is(ItemTags.REPAIRS_GOLD_ARMOR) || stack.is(ItemTags.REPAIRS_NETHERITE_ARMOR)
+				|| stack.is(Items.GOLDEN_PICKAXE) || stack.is(Items.GOLDEN_AXE) || stack.is(Items.GOLDEN_SHOVEL)
+				|| stack.is(Items.GOLDEN_HOE) || stack.is(Items.GOLDEN_SWORD)
+				|| stack.is(Items.NETHERITE_PICKAXE) || stack.is(Items.NETHERITE_AXE) || stack.is(Items.NETHERITE_SHOVEL)
+				|| stack.is(Items.NETHERITE_HOE) || stack.is(Items.NETHERITE_SWORD)
+				|| stack.is(Items.GOLDEN_HELMET) || stack.is(Items.GOLDEN_CHESTPLATE) || stack.is(Items.GOLDEN_LEGGINGS) || stack.is(Items.GOLDEN_BOOTS)
+				|| stack.is(Items.NETHERITE_HELMET) || stack.is(Items.NETHERITE_CHESTPLATE) || stack.is(Items.NETHERITE_LEGGINGS) || stack.is(Items.NETHERITE_BOOTS);
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean f) {
-		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		if (!(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 
@@ -101,8 +101,7 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 	}
 
 	private void tryRepairingItem(ItemStack touchstone, Player player, List<String> goldItems, ItemStack stack, Item item) {
-		Optional<IRepairableItem> repairableItem = getRepairableItem(item.getClass());
-		if ((repairableItem.isPresent() && repairableItem.get().materialMatches(item)) || goldItems.contains(RegistryHelper.getItemRegistryName(item))) {
+		if (isRepairableByMidas(stack) || goldItems.contains(RegistryHelper.getItemRegistryName(item))) {
 			repairItem(stack, touchstone, player);
 		}
 	}
@@ -130,15 +129,6 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 		return Config.COMMON.items.midasTouchstone.glowstoneLimit.get();
 	}
 
-	private Optional<IRepairableItem> getRepairableItem(Class<? extends Item> item) {
-		for (Map.Entry<Class<? extends Item>, IRepairableItem> repairableItem : REPAIRABLE_ITEMS.entrySet()) {
-			if (repairableItem.getKey().isAssignableFrom(item)) {
-				return Optional.of(repairableItem.getValue());
-			}
-		}
-		return Optional.empty();
-	}
-
 	@Override
 	public Type getCuriosType() {
 		return Type.CHARM;
@@ -146,7 +136,9 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 
 	@Override
 	public void onWornTick(ItemStack stack, LivingEntity player) {
-		inventoryTick(stack, player.level(), player, 0, false);
+		if (player.level() instanceof ServerLevel serverLevel) {
+			inventoryTick(stack, serverLevel, player, null);
+		}
 	}
 
 	@Override
@@ -162,9 +154,5 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 	@Override
 	public int getStoredCharge(ItemStack containerStack, int slot) {
 		return getGlowstoneCharge(containerStack);
-	}
-
-	private interface IRepairableItem {
-		boolean materialMatches(Item item);
 	}
 }

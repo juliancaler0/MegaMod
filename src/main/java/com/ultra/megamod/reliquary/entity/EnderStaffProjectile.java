@@ -3,7 +3,6 @@ package com.ultra.megamod.reliquary.entity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -16,6 +15,8 @@ import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrownEnder
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -32,7 +33,9 @@ public class EnderStaffProjectile extends ThrowableProjectile implements ItemSup
 	private boolean normalGravity = false;
 
 	public EnderStaffProjectile(Level level, Player entityPlayer, boolean shortRange) {
-		super(ModEntities.ENDER_STAFF_PROJECTILE.get(), entityPlayer, level);
+		super(ModEntities.ENDER_STAFF_PROJECTILE.get(), level);
+		setPos(entityPlayer.getX(), entityPlayer.getEyeY() - 0.1, entityPlayer.getZ());
+		setOwner(entityPlayer);
 		normalGravity = shortRange;
 	}
 
@@ -67,8 +70,8 @@ public class EnderStaffProjectile extends ThrowableProjectile implements ItemSup
 	}
 
 	@Override
-	protected void checkInsideBlocks() {
-		super.checkInsideBlocks();
+	protected void applyEffectsFromBlocks() {
+		super.applyEffectsFromBlocks();
 
 		//scaling up delta movement here because this is the last place that can be overriden before ThrowableProjectile's tick logic scales delta movement down using set constant
 		Vec3 deltaMovement = getDeltaMovement();
@@ -118,7 +121,7 @@ public class EnderStaffProjectile extends ThrowableProjectile implements ItemSup
 			float targetY = y + 0.5F;
 			float targetZ = z + 0.5F;
 			if (thrower instanceof ServerPlayer serverPlayer) {
-				EventHooks.onEnderPearlLand(serverPlayer, targetX, targetY, targetZ, new ThrownEnderpearl(level(), serverPlayer), 0, result);
+				EventHooks.onEnderPearlLand(serverPlayer, targetX, targetY, targetZ, new ThrownEnderpearl(level(), serverPlayer, new ItemStack(Items.ENDER_PEARL)), 0, result);
 			}
 
 			thrower.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0f, 1.0f);
@@ -133,14 +136,14 @@ public class EnderStaffProjectile extends ThrowableProjectile implements ItemSup
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
-		tag.putBoolean("normalGravity", normalGravity);
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.putBoolean("normalGravity", normalGravity);
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag tag) {
-		super.readAdditionalSaveData(tag);
-		normalGravity = tag.getBoolean("normalGravity");
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		normalGravity = input.getBooleanOr("normalGravity", false);
 	}
 }

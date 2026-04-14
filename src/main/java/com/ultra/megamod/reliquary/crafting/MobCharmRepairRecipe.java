@@ -94,17 +94,12 @@ public class MobCharmRepairRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width >= 2 && height >= 2;
-	}
-
-	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInput inv) {
 		return NonNullList.withSize(inv.size(), ItemStack.EMPTY);
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.MOB_CHARM_REPAIR_SERIALIZER.get();
+	public RecipeSerializer<MobCharmRepairRecipe> getSerializer() {
+		return (RecipeSerializer<MobCharmRepairRecipe>) ModItems.MOB_CHARM_REPAIR_SERIALIZER.get();
 	}
 }

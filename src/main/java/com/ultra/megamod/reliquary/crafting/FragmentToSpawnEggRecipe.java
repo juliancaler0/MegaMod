@@ -12,17 +12,19 @@ import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.init.ModItems;
 
+import java.util.List;
+
 public class FragmentToSpawnEggRecipe extends ShapelessRecipe {
 	private final ShapelessRecipe recipeDelegate;
 
 	public FragmentToSpawnEggRecipe(ShapelessRecipe recipeDelegate) {
-		super(recipeDelegate.getGroup(), CraftingBookCategory.MISC, recipeDelegate.result, recipeDelegate.getIngredients());
+		super(recipeDelegate.group(), CraftingBookCategory.MISC, recipeDelegate.result, List.of());
 		this.recipeDelegate = recipeDelegate;
 	}
 
 	@Override
 	public boolean matches(CraftingInput inv, Level level) {
-		return super.matches(inv, level) && FragmentRecipeHelper.hasOnlyOneFragmentType(inv);
+		return recipeDelegate.matches(inv, level) && FragmentRecipeHelper.hasOnlyOneFragmentType(inv);
 	}
 
 	@Override
@@ -32,8 +34,10 @@ public class FragmentToSpawnEggRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.FRAGMENT_TO_SPAWN_EGG_SERIALIZER.get();
+	public RecipeSerializer<ShapelessRecipe> getSerializer() {
+		@SuppressWarnings("unchecked")
+		RecipeSerializer<ShapelessRecipe> ser = (RecipeSerializer<ShapelessRecipe>) (RecipeSerializer<?>) ModItems.FRAGMENT_TO_SPAWN_EGG_SERIALIZER.get();
+		return ser;
 	}
 
 	@Override

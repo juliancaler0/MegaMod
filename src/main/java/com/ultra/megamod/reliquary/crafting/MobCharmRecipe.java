@@ -22,7 +22,7 @@ public class MobCharmRecipe extends ShapedRecipe {
 	private final ShapedRecipe compose;
 
 	public MobCharmRecipe(ShapedRecipe compose) {
-		super(compose.getGroup(), CraftingBookCategory.MISC, compose.pattern, compose.result);
+		super(compose.group(), CraftingBookCategory.MISC, compose.pattern, compose.result);
 		this.compose = compose;
 		REGISTERED_RECIPES.add(this);
 	}
@@ -45,8 +45,8 @@ public class MobCharmRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.MOB_CHARM_RECIPE_SERIALIZER.get();
+	public RecipeSerializer<MobCharmRecipe> getSerializer() {
+		return (RecipeSerializer<MobCharmRecipe>) ModItems.MOB_CHARM_RECIPE_SERIALIZER.get();
 	}
 
 	public static class Serializer implements RecipeSerializer<MobCharmRecipe> {

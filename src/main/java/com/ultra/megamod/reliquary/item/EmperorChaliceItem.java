@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
 import net.minecraft.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -92,7 +91,7 @@ public class EmperorChaliceItem extends ToggleableItem {
 				return InteractionResult.FAIL;
 			}
 
-			IFluidHandlerItem fluidHandler = emperorChalice.getCapability(Capabilities.FluidHandler.ITEM);
+			IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(emperorChalice).orElse(null);
 			if (fluidHandler != null) {
 				boolean success;
 				if (!isEnabled(emperorChalice)) {

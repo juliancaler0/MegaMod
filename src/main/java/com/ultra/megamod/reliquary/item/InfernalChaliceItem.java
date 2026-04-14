@@ -18,10 +18,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidUtil;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
@@ -98,7 +98,7 @@ public class InfernalChaliceItem extends ToggleableItem {
 				return InteractionResult.PASS;
 			}
 
-			IFluidHandlerItem fluidHandler = stack.getCapability(Capabilities.FluidHandler.ITEM);
+			IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack).orElse(null);
 			if (fluidHandler == null) {
 				return InteractionResult.FAIL;
 			}
@@ -141,7 +141,7 @@ public class InfernalChaliceItem extends ToggleableItem {
 	}
 
 	public static int getFluidBucketAmount(ItemStack stack) {
-		IFluidHandlerItem fluidHandler = stack.getCapability(Capabilities.FluidHandler.ITEM);
+		IFluidHandlerItem fluidHandler = FluidUtil.getFluidHandler(stack).orElse(null);
 		return fluidHandler != null ? fluidHandler.getFluidInTank(0).getAmount() / FluidType.BUCKET_VOLUME : 0;
 	}
 }

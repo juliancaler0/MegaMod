@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -12,11 +11,13 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.util.IPotionItem;
 import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 
+import java.util.List;
 import java.util.Optional;
 
 public class PotionEffectsRecipe implements CraftingRecipe {
@@ -39,11 +40,6 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 		findMatchAndUpdatePotionContents(inv).ifPresent(potionContents -> PotionHelper.addPotionContentsToStack(newOutput, potionContents));
 
 		return newOutput;
-	}
-
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width >= pattern.width() && height >= pattern.height();
 	}
 
 	private Optional<PotionContents> findMatchAndUpdatePotionContents(CraftingInput inv) {
@@ -69,10 +65,10 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 				int subX = x - startX;
 				int subY = y - startY;
 
-				Ingredient target = getTarget(subX, subY, mirror);
+				Optional<Ingredient> targetOpt = getTarget(subX, subY, mirror);
 
 				ItemStack stack = inv.getItem(x + y * inv.width());
-				if (target.test(stack)) {
+				if (Ingredient.testOptionalIngredient(targetOpt, stack)) {
 					targetPotionContents = updateTargetEffects(stack, targetPotionContents).getB();
 				} else {
 					return Optional.empty();
@@ -106,10 +102,10 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 				int subX = x - startX;
 				int subY = y - startY;
 
-				Ingredient target = getTarget(subX, subY, mirror);
+				Optional<Ingredient> targetOpt = getTarget(subX, subY, mirror);
 
 				ItemStack stack = inv.getItem(x + y * inv.width());
-				if (!target.test(stack)) {
+				if (!Ingredient.testOptionalIngredient(targetOpt, stack)) {
 					return false;
 				}
 				Tuple<Boolean, PotionContents> result = updateTargetEffects(stack, targetPotionContents);
@@ -122,17 +118,7 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 		return true;
 	}
 
-	@Override
-	public ItemStack getResultItem(HolderLookup.Provider registries) {
-		return result;
-	}
-
-	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		return pattern.ingredients();
-	}
-
-	private Ingredient getTarget(int subX, int subY, boolean mirror) {
+	private Optional<Ingredient> getTarget(int subX, int subY, boolean mirror) {
 		if (subX >= 0 && subY >= 0 && subX < pattern.width() && subY < pattern.height()) {
 			if (mirror) {
 				return pattern.ingredients().get(pattern.width() - subX - 1 + subY * pattern.width());
@@ -140,7 +126,7 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 				return pattern.ingredients().get(subX + subY * pattern.width());
 			}
 		}
-		return Ingredient.EMPTY;
+		return Optional.empty();
 	}
 
 	private Tuple<Boolean, PotionContents> updateTargetEffects(ItemStack stack, PotionContents targetPotionContents) {
@@ -165,13 +151,32 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.POTION_EFFECTS_SERIALIZER.get();
+	public RecipeSerializer<PotionEffectsRecipe> getSerializer() {
+		return (RecipeSerializer<PotionEffectsRecipe>) ModItems.POTION_EFFECTS_SERIALIZER.get();
 	}
 
 	@Override
 	public CraftingBookCategory category() {
 		return CraftingBookCategory.MISC;
+	}
+
+	@Override
+	public PlacementInfo placementInfo() {
+		return PlacementInfo.NOT_PLACEABLE;
+	}
+
+	@Override
+	public List<RecipeDisplay> display() {
+		return List.of();
+	}
+
+	@Override
+	public String group() {
+		return group;
+	}
+
+	public String getGroup() {
+		return group;
 	}
 
 	public ShapedRecipePattern getPattern() {
@@ -189,10 +194,10 @@ public class PotionEffectsRecipe implements CraftingRecipe {
 	public static class Serializer implements RecipeSerializer<PotionEffectsRecipe> {
 		private static final MapCodec<PotionEffectsRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
-								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-								ShapedRecipePattern.MAP_CODEC.forGetter(recipe -> recipe.pattern),
-								ItemStack.STRICT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-								Codec.FLOAT.fieldOf("duration_factor").forGetter(recipe -> recipe.potionDurationFactor)
+								Codec.STRING.optionalFieldOf("group", "").forGetter((PotionEffectsRecipe recipe) -> recipe.group),
+								ShapedRecipePattern.MAP_CODEC.forGetter((PotionEffectsRecipe recipe) -> recipe.pattern),
+								ItemStack.STRICT_CODEC.fieldOf("result").forGetter((PotionEffectsRecipe recipe) -> recipe.result),
+								Codec.FLOAT.fieldOf("duration_factor").forGetter((PotionEffectsRecipe recipe) -> recipe.potionDurationFactor)
 						)
 						.apply(instance, PotionEffectsRecipe::new));
 

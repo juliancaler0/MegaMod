@@ -117,7 +117,9 @@ public class HandgunItem extends ItemBase {
 	}
 
 	private String getMagazineName(ItemStack handgun) {
-		return getMagazineType(handgun).map(magazineType -> BuiltInRegistries.ITEM.get(magazineType).getName(new ItemStack(Items.AIR)).getString()).orElse("");
+		return getMagazineType(handgun)
+				.flatMap(magazineType -> BuiltInRegistries.ITEM.get(magazineType).map(holder -> holder.value().getName(new ItemStack(Items.AIR)).getString()))
+				.orElse("");
 	}
 
 	@Override
@@ -184,9 +186,9 @@ public class HandgunItem extends ItemBase {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack handgun, Level level, LivingEntity livingEntity, int timeLeft) {
+	public boolean releaseUsing(ItemStack handgun, Level level, LivingEntity livingEntity, int timeLeft) {
 		if (!(livingEntity instanceof Player player)) {
-			return;
+			return false;
 		}
 
 		// fire bullet
@@ -195,19 +197,19 @@ public class HandgunItem extends ItemBase {
 				setFiringCooldown(handgun, level, player);
 				fireBullet(handgun, level, player, handgun == player.getMainHandItem() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
 			}
-			return;
+			return true;
 		}
 
 		//arbitrary "feels good" cooldown for after the reload - this is to prevent accidentally discharging the weapon immediately after reload.
 		setCooldown(handgun, player.level().getGameTime() + 12);
 
 		getMagazineSlot(player).ifPresent(slot -> {
-			ItemStack magazine = player.getInventory().getItems().get(slot);
+			ItemStack magazine = player.getInventory().getNonEquipmentItems().get(slot);
 			setMagazineType(handgun, magazine);
 			setPotionEffects(handgun, magazine.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY));
 			magazine.shrink(1);
 			if (magazine.isEmpty()) {
-				player.getInventory().getItems().set(slot, ItemStack.EMPTY);
+				player.getInventory().getNonEquipmentItems().set(slot, ItemStack.EMPTY);
 			}
 			player.swing(player.getUsedItemHand());
 			spawnEmptyMagazine(player);
@@ -219,6 +221,7 @@ public class HandgunItem extends ItemBase {
 		if (getBulletCount(handgun) == 0) {
 			setPotionEffects(handgun, PotionContents.EMPTY);
 		}
+		return true;
 	}
 
 	private void setSecondHandgunFiringCooldown(Player player, ItemStack currentHandgun) {
@@ -290,20 +293,20 @@ public class HandgunItem extends ItemBase {
 
 	private void spawnEmptyMagazine(Player player) {
 		ItemStack emptyMagazine = new ItemStack(ModItems.EMPTY_MAGAZINE.get());
-		if (!player.getInventory().add(emptyMagazine)) {
-			player.spawnAtLocation(emptyMagazine, 0.1F);
+		if (!player.getInventory().add(emptyMagazine) && player.level() instanceof ServerLevel serverLevel) {
+			player.spawnAtLocation(serverLevel, emptyMagazine, 0.1F);
 		}
 	}
 
 	private void spawnCasing(Player player) {
 		ItemStack emptyCasing = new ItemStack(ModItems.EMPTY_BULLET.get());
-		if (!player.getInventory().add(emptyCasing)) {
-			player.spawnAtLocation(emptyCasing, 0.1F);
+		if (!player.getInventory().add(emptyCasing) && player.level() instanceof ServerLevel serverLevel) {
+			player.spawnAtLocation(serverLevel, emptyCasing, 0.1F);
 		}
 	}
 
 	private boolean hasFilledMagazine(Player player) {
-		for (ItemStack stack : player.getInventory().getItems()) {
+		for (ItemStack stack : player.getInventory().getNonEquipmentItems()) {
 			if (stack == null) {
 				continue;
 			}
@@ -315,8 +318,8 @@ public class HandgunItem extends ItemBase {
 	}
 
 	private Optional<Integer> getMagazineSlot(Player player) {
-		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
-			Item item = player.getInventory().getItems().get(slot).getItem();
+		for (int slot = 0; slot < player.getInventory().getNonEquipmentItems().size(); slot++) {
+			Item item = player.getInventory().getNonEquipmentItems().get(slot).getItem();
 			if (item instanceof MagazineItem && item != ModItems.EMPTY_MAGAZINE.get()) {
 				return Optional.of(slot);
 			}

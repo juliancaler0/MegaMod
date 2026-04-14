@@ -1,8 +1,11 @@
 package com.ultra.megamod.reliquary.crafting.alkahestry;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import com.ultra.megamod.reliquary.Reliquary;
 import com.ultra.megamod.reliquary.crafting.AlkahestryChargingRecipe;
@@ -23,7 +26,8 @@ public class ChargingRecipeBuilder {
 
 	public void build(RecipeOutput recipeOutput, Identifier id) {
 		Identifier fullId = Reliquary.getRL("alkahestry/charging/" + id.getPath());
+		ResourceKey<Recipe<?>> key = ResourceKey.create(Registries.RECIPE, fullId);
 		recipeOutput.withConditions(new AlkahestryEnabledCondition())
-				.accept(fullId, new AlkahestryChargingRecipe(ingredient, charge), null);
+				.accept(key, new AlkahestryChargingRecipe(ingredient, charge), null);
 	}
 }

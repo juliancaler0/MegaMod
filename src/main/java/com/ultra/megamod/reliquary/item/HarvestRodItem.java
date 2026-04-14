@@ -18,6 +18,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -131,8 +132,8 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		if (!(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 
@@ -190,13 +191,13 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	private void consumePlantables(ItemStack harvestRod, Player player) {
 		int leftToInsert = 16;
 
-		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
-			ItemStack currentStack = player.getInventory().getItems().get(slot);
+		for (int slot = 0; slot < player.getInventory().getNonEquipmentItems().size(); slot++) {
+			ItemStack currentStack = player.getInventory().getNonEquipmentItems().get(slot);
 			if (isPlantable(currentStack)) {
 				int countInserted = incrementPlantable(harvestRod, currentStack, leftToInsert);
 				leftToInsert -= countInserted;
 				currentStack.shrink(countInserted);
-				player.getInventory().getItems().set(slot, currentStack.isEmpty() ? ItemStack.EMPTY : currentStack);
+				player.getInventory().getNonEquipmentItems().set(slot, currentStack.isEmpty() ? ItemStack.EMPTY : currentStack);
 				if (leftToInsert == 0) {
 					break;
 				}
@@ -208,7 +209,9 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 		return currentStack.is(Tags.Items.SEEDS) || currentStack.is(ItemTags.VILLAGER_PLANTABLE_SEEDS) || currentStack.getItem() instanceof SpecialPlantable;
 	}
 
-	@Override
+	// Note: canAttackBlock was removed from Item in 1.21.11. The harvest rod's AoE
+	// break behavior must now be triggered via BlockEvent.BreakEvent or similar
+	// handler. Keeping the logic here for reference.
 	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
 		if (player.level().isClientSide()) {
 			return true;
@@ -330,9 +333,9 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack harvestRod, Level level, LivingEntity entity, int timeLeft) {
+	public boolean releaseUsing(ItemStack harvestRod, Level level, LivingEntity entity, int timeLeft) {
 		if (entity.level().isClientSide() || !(entity instanceof Player player)) {
-			return;
+			return false;
 		}
 
 		BlockHitResult result = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.ANY);
@@ -340,7 +343,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 		if (result.getType() == HitResult.Type.BLOCK) {
 			HarvestRodCache harvestRodCache = harvestRod.getCapability(ModItems.HARVEST_ROD_CACHE_CAPABILITY);
 			if (harvestRodCache == null) {
-				return;
+				return false;
 			}
 			harvestRodCache.reset();
 			BlockPos pos = result.getBlockPos();
@@ -365,6 +368,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 		} else {
 			removeStackFromCurrent(harvestRod, player);
 		}
+		return true;
 	}
 
 	private void hoeLand(Level level, BlockPos pos) {

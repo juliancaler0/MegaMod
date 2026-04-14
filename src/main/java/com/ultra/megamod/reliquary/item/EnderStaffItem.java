@@ -18,6 +18,7 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -90,8 +91,8 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack staff, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+	public void inventoryTick(ItemStack staff, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		if (!(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 
@@ -157,14 +158,15 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
+	public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
 		if (!(livingEntity instanceof Player player)) {
-			return;
+			return false;
 		}
 
 		if (timeLeft == 1) {
 			doWraithNodeWarpCheck(stack, player.level(), player);
 		}
+		return true;
 	}
 
 	@Override
@@ -203,7 +205,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 
 		Identifier wraithNodeDimension = Preconditions.checkNotNull(stack.get(ModDataComponents.WARP_DIMENSION));
 		BlockPos wraithNodePos = Preconditions.checkNotNull(stack.get(ModDataComponents.WARP_POSITION));
-		if (!player.level().dimension().location().equals(wraithNodeDimension) && player.level() instanceof ServerLevel serverLevel) {
+		if (!player.level().dimension().identifier().equals(wraithNodeDimension) && player.level() instanceof ServerLevel serverLevel) {
 			ServerLevel destination = serverLevel.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, wraithNodeDimension));
 			if (destination != null && canTeleport(destination, wraithNodePos)) {
 				teleportToDimension(player, destination, wraithNodePos);
@@ -222,7 +224,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	private static void teleportToDimension(Player player, ServerLevel destination, BlockPos wraithNodePos) {
-		player.changeDimension(new TeleportTransition(destination, wraithNodePos.above().getBottomCenter(), Vec3.ZERO,
+		player.teleport(new TeleportTransition(destination, wraithNodePos.above().getBottomCenter(), Vec3.ZERO,
 				player.getYRot(), player.getXRot(), TeleportTransition.DO_NOTHING));
 	}
 
@@ -249,7 +251,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 		tooltipBuilder.charge(this, ".tooltip.charge", getPearlCount(staff));
 
 		if (staff.has(ModDataComponents.WARP_POSITION)) {
-			Identifier dimension = staff.getOrDefault(ModDataComponents.WARP_DIMENSION, Level.OVERWORLD.location());
+			Identifier dimension = staff.getOrDefault(ModDataComponents.WARP_DIMENSION, Level.OVERWORLD.identifier());
 			BlockPos pos = staff.getOrDefault(ModDataComponents.WARP_POSITION, BlockPos.ZERO);
 			tooltipBuilder.data(this, ".tooltip.position", pos.getX(), pos.getY(), pos.getZ(), dimension);
 		} else {
@@ -276,7 +278,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 
 		// if right clicking on a wraith node, bind the eye to that wraith node.
 		if (level.getBlockState(pos).getBlock() == ModBlocks.WRAITH_NODE.get()) {
-			setWraithNode(stack, pos, level.dimension().location());
+			setWraithNode(stack, pos, level.dimension().identifier());
 
 			Player player = itemUseContext.getPlayer();
 			if (player != null) {

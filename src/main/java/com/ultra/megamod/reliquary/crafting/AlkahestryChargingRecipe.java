@@ -3,19 +3,22 @@ package com.ultra.megamod.reliquary.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.crafting.ICustomIngredient;
 import net.neoforged.neoforge.common.crafting.IngredientType;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.AlkahestryTomeItem;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class AlkahestryChargingRecipe implements CraftingRecipe {
@@ -85,28 +88,13 @@ public class AlkahestryChargingRecipe implements CraftingRecipe {
 		return tome;
 	}
 
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width * height >= 2;
-	}
-
-	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		return NonNullList.of(Ingredient.EMPTY, chargingIngredient, tomeIngredient);
-	}
-
 	public ItemStack getRecipeOutput() {
 		return recipeOutput;
 	}
 
 	@Override
-	public ItemStack getResultItem(HolderLookup.Provider registries) {
-		return recipeOutput;
-	}
-
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return ModItems.ALKAHESTRY_CHARGING_SERIALIZER.get();
+	public RecipeSerializer<AlkahestryChargingRecipe> getSerializer() {
+		return (RecipeSerializer<AlkahestryChargingRecipe>) ModItems.ALKAHESTRY_CHARGING_SERIALIZER.get();
 	}
 
 	public int getChargeToAdd() {
@@ -122,11 +110,21 @@ public class AlkahestryChargingRecipe implements CraftingRecipe {
 		return CraftingBookCategory.MISC;
 	}
 
+	@Override
+	public PlacementInfo placementInfo() {
+		return PlacementInfo.NOT_PLACEABLE;
+	}
+
+	@Override
+	public List<RecipeDisplay> display() {
+		return List.of();
+	}
+
 	public static class Serializer implements RecipeSerializer<AlkahestryChargingRecipe> {
 		private static final MapCodec<AlkahestryChargingRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
-								Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.chargingIngredient),
-								Codec.INT.fieldOf("charge").forGetter(recipe -> recipe.chargeToAdd)
+								Ingredient.CODEC.fieldOf("ingredient").forGetter((AlkahestryChargingRecipe recipe) -> recipe.chargingIngredient),
+								Codec.INT.fieldOf("charge").forGetter((AlkahestryChargingRecipe recipe) -> recipe.chargeToAdd)
 						)
 						.apply(instance, AlkahestryChargingRecipe::new));
 		private static final StreamCodec<RegistryFriendlyByteBuf, AlkahestryChargingRecipe> STREAM_CODEC = StreamCodec.composite(
@@ -164,8 +162,8 @@ public class AlkahestryChargingRecipe implements CraftingRecipe {
 		}
 
 		@Override
-		public Stream<ItemStack> getItems() {
-			return Stream.of(tome);
+		public Stream<Holder<Item>> items() {
+			return Stream.of(tome.getItemHolder());
 		}
 
 		@Override
