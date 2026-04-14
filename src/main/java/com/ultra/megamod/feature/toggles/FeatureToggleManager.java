@@ -97,7 +97,7 @@ public class FeatureToggleManager {
         new FeatureDefinition("arena", "Arena System", "Combat", "PvE wave arena and PvP combat with ELO ranking"),
         new FeatureDefinition("corruption", "Corruption Spread", "World Events", "Hostile corruption zones that spread and can be purged"),
         new FeatureDefinition("marketplace", "Marketplace", "Economy", "Player-to-player WTS/WTB marketplace with trading terminals"),
-        new FeatureDefinition("alchemy", "Alchemy System", "Combat", "Custom potion brewing with reagent grinding and cauldron mechanics"),
+        // MegaMod alchemy system deleted — see the "Reliquary" category for the apothecary replacement.
         new FeatureDefinition("tree_felling", "Tree Felling", "Farming", "Chop whole trees with an axe (requires Crop Master or Herbalist T3+)"),
         new FeatureDefinition("world_loot", "World Loot Drops", "Exploration", "Relics and weapons drop from mobs, fishing, and structure chests"),
         new FeatureDefinition("builder_admin_bypass", "Builder Admin Bypass", "Admin", "Admin builders skip material requirements — place blocks without needing items in the town chest"),

@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "facing=north": { "model": "megamod:block/alchemy_shelf" },
-    "facing=south": { "model": "megamod:block/alchemy_shelf", "y": 180 },
-    "facing=east": { "model": "megamod:block/alchemy_shelf", "y": 90 },
-    "facing=west": { "model": "megamod:block/alchemy_shelf", "y": 270 }
-  }
-}

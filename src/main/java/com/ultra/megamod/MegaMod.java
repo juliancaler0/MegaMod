@@ -97,7 +97,7 @@ public class MegaMod {
         modEventBus.addListener(com.ultra.megamod.feature.arena.network.ArenaNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.furniture.QuestBoardNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.corruption.network.CorruptionNetwork::registerPayloads);
-        com.ultra.megamod.feature.alchemy.AlchemyRegistry.init(modEventBus);
+        // MegaMod alchemy system deleted — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.network.ClassNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.BetterCombatNetwork::registerPayloads);
@@ -148,7 +148,7 @@ public class MegaMod {
         com.ultra.megamod.feature.combat.village.CombatVillagerRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleRegistry.init(modEventBus);
         modEventBus.addListener(com.ultra.megamod.feature.combat.CombatCreativeTab::onBuildContents);
-        modEventBus.addListener(com.ultra.megamod.feature.alchemy.network.AlchemyNetwork::registerPayloads);
+        // AlchemyNetwork deleted with feature/alchemy/ — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.map.network.MapTileSyncNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.schematic.network.SchematicNetwork::registerPayloads);
         com.ultra.megamod.feature.citizen.blueprint.BlueprintRegistry.init(modEventBus);

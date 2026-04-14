@@ -128,7 +128,7 @@ public class MegaModClient {
         // Menu screen registrations
         modEventBus.addListener(com.ultra.megamod.feature.citizen.block.TownChestRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.backpacks.BackpackRegistry::onRegisterMenuScreens);
-        modEventBus.addListener(com.ultra.megamod.feature.alchemy.AlchemyRegistry::onRegisterMenuScreens);
+        // AlchemyRegistry menu screens deleted — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.combat.runes.RuneWorkbenchRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.combat.runes.RuneRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.citizen.ornament.OrnamentRegistry::onRegisterMenuScreens);

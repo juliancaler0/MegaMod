@@ -136,10 +136,9 @@ public class ComputerActionHandler {
         if (com.ultra.megamod.feature.casino.network.CasinoManagerHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.CorruptionAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.CorruptionHandler.handle(player, action, jsonData, level, eco)) return;
-        if (com.ultra.megamod.feature.computer.network.handlers.AlchemyHandler.handle(player, action, jsonData, level, eco)) return;
+        // AlchemyHandler / AlchemyAdminHandler deleted — Reliquary apothecary replaces them.
         if (com.ultra.megamod.feature.computer.network.handlers.EconomyAnalyticsHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.MarketplaceAdminHandler.handle(player, action, jsonData, level, eco)) return;
-        if (com.ultra.megamod.feature.computer.network.handlers.AlchemyAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.SystemHealthHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.PrestigeShopHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.AdminSearchHandler.handle(player, action, jsonData, level, eco)) return;
@@ -2302,22 +2301,19 @@ public class ComputerActionHandler {
                 break;
             }
             // ═══════════════════════════════════════════════════════════════
-            // ALCHEMY ADMIN
+            // RELIQUARY APOTHECARY ADMIN (replaced the deleted MegaMod alchemy)
             // ═══════════════════════════════════════════════════════════════
             case "admin_give_all_potions": {
                 ServerPlayer target = jsonData.isEmpty() ? player : level.getServer().getPlayerList().getPlayerByName(jsonData);
                 if (target == null) target = player;
                 net.minecraft.world.item.Item[] potions = {
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_INFERNO.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_GLACIER.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_SHADOW_STEP.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_VITALITY.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_BERSERKER.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_VOID_WALK.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_TEMPEST.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_STARLIGHT.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_STONE_SKIN.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.POTION_ARCANE_SURGE.get()
+                    com.ultra.megamod.reliquary.init.ModItems.POTION.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.LINGERING_POTION.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.SPLASH_POTION.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.APHRODITE_POTION.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.FERTILE_POTION.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.ANGELHEART_VIAL.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.GLOWING_WATER.get()
                 };
                 int given = 0;
                 for (net.minecraft.world.item.Item potion : potions) {
@@ -2325,29 +2321,30 @@ public class ComputerActionHandler {
                     if (!target.getInventory().add(stack)) target.spawnAtLocation(level, stack);
                     given++;
                 }
-                sendResponse(player, "admin_result", "{\"msg\":\"Gave " + given + " potion types (x3 each) to " + target.getGameProfile().name() + "\"}", eco);
+                sendResponse(player, "admin_result", "{\"msg\":\"Gave " + given + " Reliquary potion types (x3 each) to " + target.getGameProfile().name() + "\"}", eco);
                 break;
             }
             case "admin_give_all_reagents": {
                 ServerPlayer target = jsonData.isEmpty() ? player : level.getServer().getPlayerList().getPlayerByName(jsonData);
                 if (target == null) target = player;
+                // Reliquary's reagents are the potion-ingredient-bearing mob drops
                 net.minecraft.world.item.Item[] reagents = {
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_EMBER_DUST.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_FROST_CRYSTAL.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_SHADOW_ESSENCE.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_LIFE_BLOOM.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_VOID_SALT.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_STORM_CHARGE.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_BLOOD_MOSS.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_STARLIGHT_DEW.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_EARTH_ROOT.get(),
-                    com.ultra.megamod.feature.alchemy.AlchemyRegistry.REAGENT_ARCANE_FLUX.get()
+                    com.ultra.megamod.reliquary.init.ModItems.POTION_ESSENCE.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.SLIME_PEARL.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.CATALYZING_GLAND.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.CHELICERAE.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.RIB_BONE.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.MOLTEN_CORE.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.BAT_WING.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.EYE_OF_THE_STORM.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.FROZEN_CORE.get(),
+                    com.ultra.megamod.reliquary.init.ModItems.NEBULOUS_HEART.get()
                 };
                 for (net.minecraft.world.item.Item reagent : reagents) {
                     net.minecraft.world.item.ItemStack stack = new net.minecraft.world.item.ItemStack(reagent, 16);
                     if (!target.getInventory().add(stack)) target.spawnAtLocation(level, stack);
                 }
-                sendResponse(player, "admin_result", "{\"msg\":\"Gave all 10 reagent types (x16 each) to " + target.getGameProfile().name() + "\"}", eco);
+                sendResponse(player, "admin_result", "{\"msg\":\"Gave all 10 Reliquary reagent types (x16 each) to " + target.getGameProfile().name() + "\"}", eco);
                 break;
             }
             // ═══════════════════════════════════════════════════════════════

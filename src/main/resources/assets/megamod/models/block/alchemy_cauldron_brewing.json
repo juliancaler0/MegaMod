@@ -1,6 +1,0 @@
-{
-  "parent": "megamod:block/alchemy_cauldron",
-  "textures": {
-    "inner": "megamod:block/alchemy_cauldron_inner_brewing"
-  }
-}
