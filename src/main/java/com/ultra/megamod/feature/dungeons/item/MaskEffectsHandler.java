@@ -1,9 +1,8 @@
 package com.ultra.megamod.feature.dungeons.item;
 
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -21,11 +20,8 @@ public class MaskEffectsHandler {
     public static void onServerTick(ServerTickEvent.Post event) {
         if (event.getServer().getTickCount() % 40 != 0) return;
 
-        ServerLevel overworld = event.getServer().overworld();
-        AccessoryManager manager = AccessoryManager.get(overworld);
-
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
-            ItemStack headAccessory = manager.getEquipped(player.getUUID(), AccessorySlotType.FACE);
+            ItemStack headAccessory = LibAccessoryLookup.getEquipped(player, AccessorySlotType.FACE);
             if (headAccessory.isEmpty() || !(headAccessory.getItem() instanceof UmvuthanaMaskItem maskItem)) continue;
 
             UmvuthanaMaskItem.MaskType maskType = maskItem.getMaskType();

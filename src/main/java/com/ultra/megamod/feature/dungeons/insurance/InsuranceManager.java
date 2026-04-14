@@ -13,7 +13,7 @@ import com.ultra.megamod.feature.dungeons.network.DungeonSyncPayload;
 import com.ultra.megamod.feature.dungeons.insurance.network.InsuranceOpenPayload;
 import com.ultra.megamod.feature.dungeons.insurance.network.InsuranceStatusPayload;
 import com.ultra.megamod.feature.economy.EconomyManager;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -119,10 +119,9 @@ public class InsuranceManager {
         }
 
         // Accessory slots
-        AccessoryManager accMgr = AccessoryManager.get(overworld);
         for (AccessorySlotType slotType : AccessorySlotType.values()) {
             if (slotType == AccessorySlotType.NONE) continue;
-            ItemStack accessory = accMgr.getEquipped(player.getUUID(), slotType);
+            ItemStack accessory = LibAccessoryLookup.getEquipped(player, slotType);
             if (!accessory.isEmpty()) {
                 String key = "accessory_" + slotType.name();
                 costs.addProperty(key, InsuranceCosts.getCost(accessory, tier));
@@ -252,7 +251,7 @@ public class InsuranceManager {
             String accName = slotName.substring(10); // e.g. "BACK", "BELT", etc.
             try {
                 AccessorySlotType slotType = AccessorySlotType.valueOf(accName);
-                return AccessoryManager.get(overworld).getEquipped(player.getUUID(), slotType);
+                return LibAccessoryLookup.getEquipped(player, slotType);
             } catch (IllegalArgumentException e) {
                 return ItemStack.EMPTY;
             }

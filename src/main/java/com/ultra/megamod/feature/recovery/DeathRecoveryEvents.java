@@ -2,7 +2,7 @@ package com.ultra.megamod.feature.recovery;
 
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.computer.network.handlers.MailHandler;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import com.ultra.megamod.feature.toggles.FeatureToggleManager;
 import net.minecraft.core.BlockPos;
@@ -67,16 +67,17 @@ public class DeathRecoveryEvents {
             player.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
         }
 
-        // Store accessories from AccessoryManager
+        // Store accessories from the lib capability
         try {
-            AccessoryManager accMgr = AccessoryManager.get(level);
-            Map<AccessorySlotType, ItemStack> equipped = accMgr.getAllEquipped(player.getUUID());
+            Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(player);
             for (Map.Entry<AccessorySlotType, ItemStack> entry : equipped.entrySet()) {
-                if (!entry.getValue().isEmpty()) {
-                    grave.addItem(entry.getValue());
-                    accMgr.removeEquipped(player.getUUID(), entry.getKey());
+                ItemStack stack = entry.getValue();
+                if (!stack.isEmpty()) {
+                    grave.addItem(stack.copy());
+                    LibAccessoryLookup.removeEquipped(player, entry.getKey());
                 }
             }
+            LibAccessoryLookup.syncToClient(player);
         } catch (Exception e) {
             MegaMod.LOGGER.warn("Failed to store accessories in gravestone: {}", e.getMessage());
         }
