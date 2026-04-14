@@ -136,11 +136,19 @@ public final class ClientEventHandler {
 		// assets/reliquary/items/<name>.json — see ModItemColors javadoc.
 		modBus.addListener(ClientEventHandler::registerOverlay);
 		modBus.addListener(ClientEventHandler::registerClientExtensions);
+		modBus.addListener(ClientEventHandler::registerMenuScreens);
 
 		// Game bus: input handling (FortuneCoin keybind is hooked in loadComplete
 		// so the keybind singleton is already registered)
 		IEventBus eventBus = NeoForge.EVENT_BUS;
 		eventBus.addListener(ClientEventHandler::onMouseScrolled);
+	}
+
+	private static void registerMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+		event.register(ModItems.ALKAHEST_TOME_MENU_TYPE.get(),
+				com.ultra.megamod.reliquary.client.gui.AlkahestryTomeScreen::new);
+		event.register(ModItems.MOB_CHAR_BELT_MENU_TYPE.get(),
+				com.ultra.megamod.reliquary.client.gui.MobCharmBeltScreen::new);
 	}
 
 	private static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
