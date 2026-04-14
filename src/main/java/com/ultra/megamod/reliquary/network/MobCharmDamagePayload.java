@@ -17,8 +17,7 @@ public record MobCharmDamagePayload(ItemStack mobCharm, int slot) implements Cus
 			MobCharmDamagePayload::new);
 
 	public static void handlePayload(MobCharmDamagePayload payload) {
-		// TODO: wire to CharmPane.getInstance().damage(payload.mobCharm, payload.slot) once the
-		// client-layer agent restores com.ultra.megamod.reliquary.client.gui.hud.CharmPane.
+		com.ultra.megamod.reliquary.client.gui.hud.CharmPane.addCharmToDraw(payload.mobCharm, payload.slot);
 	}
 
 	@Override
