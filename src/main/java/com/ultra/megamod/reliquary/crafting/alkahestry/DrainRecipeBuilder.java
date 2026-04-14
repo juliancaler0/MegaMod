@@ -1,7 +1,7 @@
 package com.ultra.megamod.reliquary.crafting.alkahestry;
 
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -22,8 +22,8 @@ public class DrainRecipeBuilder {
 		return new DrainRecipeBuilder(result, charge);
 	}
 
-	public void build(RecipeOutput recipeOutput, ResourceLocation id) {
-		ResourceLocation fullId = Reliquary.getRL("alkahestry/drain/" + id.getPath());
+	public void build(RecipeOutput recipeOutput, Identifier id) {
+		Identifier fullId = Reliquary.getRL("alkahestry/drain/" + id.getPath());
 		recipeOutput.withConditions(new AlkahestryEnabledCondition())
 				.accept(fullId, new AlkahestryDrainRecipe(charge, new ItemStack(itemResult)), null);
 	}

@@ -10,24 +10,23 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
@@ -148,8 +147,8 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.BLOCK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.BLOCK;
 	}
 
 	@Override
@@ -169,12 +168,12 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (!player.isShiftKeyDown()) {
 			if (getMode(stack) == Mode.CAST || getMode(stack) == Mode.LONG_CAST) {
 				if (getPearlCount(stack) < getEnderStaffPearlCost() && !player.isCreative()) {
-					return new InteractionResultHolder<>(InteractionResult.FAIL, stack);
+					return InteractionResult.FAIL;
 				}
 				shootEnderStaffProjectile(level, player, hand, stack);
 			} else {
@@ -202,7 +201,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 			return;
 		}
 
-		ResourceLocation wraithNodeDimension = Preconditions.checkNotNull(stack.get(ModDataComponents.WARP_DIMENSION));
+		Identifier wraithNodeDimension = Preconditions.checkNotNull(stack.get(ModDataComponents.WARP_DIMENSION));
 		BlockPos wraithNodePos = Preconditions.checkNotNull(stack.get(ModDataComponents.WARP_POSITION));
 		if (!player.level().dimension().location().equals(wraithNodeDimension) && player.level() instanceof ServerLevel serverLevel) {
 			ServerLevel destination = serverLevel.getServer().getLevel(ResourceKey.create(Registries.DIMENSION, wraithNodeDimension));
@@ -223,8 +222,8 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	private static void teleportToDimension(Player player, ServerLevel destination, BlockPos wraithNodePos) {
-		player.changeDimension(new DimensionTransition(destination, wraithNodePos.above().getBottomCenter(), Vec3.ZERO,
-				player.getYRot(), player.getXRot(), DimensionTransition.DO_NOTHING));
+		player.changeDimension(new TeleportTransition(destination, wraithNodePos.above().getBottomCenter(), Vec3.ZERO,
+				player.getYRot(), player.getXRot(), TeleportTransition.DO_NOTHING));
 	}
 
 	private static boolean canTeleport(Level level, BlockPos pos) {
@@ -250,7 +249,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 		tooltipBuilder.charge(this, ".tooltip.charge", getPearlCount(staff));
 
 		if (staff.has(ModDataComponents.WARP_POSITION)) {
-			ResourceLocation dimension = staff.getOrDefault(ModDataComponents.WARP_DIMENSION, Level.OVERWORLD.location());
+			Identifier dimension = staff.getOrDefault(ModDataComponents.WARP_DIMENSION, Level.OVERWORLD.location());
 			BlockPos pos = staff.getOrDefault(ModDataComponents.WARP_POSITION, BlockPos.ZERO);
 			tooltipBuilder.data(this, ".tooltip.position", pos.getX(), pos.getY(), pos.getZ(), dimension);
 		} else {
@@ -292,7 +291,7 @@ public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
 		}
 	}
 
-	private void setWraithNode(ItemStack eye, BlockPos pos, ResourceLocation dimension) {
+	private void setWraithNode(ItemStack eye, BlockPos pos, Identifier dimension) {
 		eye.set(ModDataComponents.WARP_DIMENSION, dimension);
 		eye.set(ModDataComponents.WARP_POSITION, pos);
 	}

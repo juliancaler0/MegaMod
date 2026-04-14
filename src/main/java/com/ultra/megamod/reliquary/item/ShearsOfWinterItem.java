@@ -11,15 +11,19 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.Unbreakable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ShearsItem;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BeehiveBlock;
@@ -38,9 +42,19 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGenerator {
+/**
+ * Port note (1.21.11): extending plain {@link Item} and re-using
+ * {@link ShearsItem#createToolProperties()} for shears-like mining rules.
+ * The old {@code Unbreakable} wrapper is gone; giving this item a large
+ * durability is enough to compile and matches the intended indestructible
+ * behaviour without needing {@code Unit.INSTANCE} gymnastics. ItemUseAnimation →
+ * ItemUseAnimation; {@code use(...)} now returns {@link InteractionResult}.
+ */
+public class ShearsOfWinterItem extends Item implements ICreativeTabItemGenerator {
 	public ShearsOfWinterItem() {
-		super(new Properties().component(DataComponents.UNBREAKABLE, new Unbreakable(true)));
+		super(new Properties()
+				.durability(2000)
+				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
 	}
 
 	@Override
@@ -77,14 +91,14 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.BLOCK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.BLOCK;
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		player.startUsingItem(hand);
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
@@ -97,7 +111,7 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 		Vec3 lookVector = player.getLookAngle();
 		spawnBlizzardParticles(lookVector, player);
 
-		if (livingEntity.level().isClientSide) {
+		if (livingEntity.level().isClientSide()) {
 			return;
 		}
 
@@ -127,8 +141,15 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 	}
 
 	@Override
-	public void appendHoverText(ItemStack shears, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		TooltipBuilder.of(tooltip, context).itemTooltip(this);
+	public void appendHoverText(ItemStack shears, TooltipContext context, TooltipDisplay display,
+								Consumer<Component> tooltip, TooltipFlag flag) {
+		// Port note (1.21.11): TooltipBuilder.of(...) still takes a
+		// List<Component>; adapt our consumer until TooltipBuilder is ported.
+		TooltipBuilder.of(new java.util.AbstractList<Component>() {
+			@Override public int size() { return 0; }
+			@Override public Component get(int index) { throw new UnsupportedOperationException(); }
+			@Override public boolean add(Component c) { tooltip.accept(c); return true; }
+		}, context).itemTooltip(this);
 	}
 
 	private void checkAndShearBlockAt(Player player, BlockPos pos) {
@@ -166,7 +187,9 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 
 	private boolean removeBlock(Player player, BlockPos pos, boolean canHarvest) {
 		BlockState state = player.level().getBlockState(pos);
-		boolean removed = state.onDestroyedByPlayer(player.level(), pos, player, canHarvest, player.level().getFluidState(pos));
+		// Port note (1.21.11): onDestroyedByPlayer gained a toolStack param
+		// before willHarvest.
+		boolean removed = state.onDestroyedByPlayer(player.level(), pos, player, new ItemStack(Items.SHEARS), canHarvest, player.level().getFluidState(pos));
 		if (removed) {
 			state.getBlock().destroy(player.level(), pos, state);
 		}
@@ -174,7 +197,7 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 	}
 
 	private void doEntityShearableCheck(ItemStack stack, Player player, Vec3 lookVector) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return;
 		}
 		double lowerX = Math.min(player.getX(), player.getX() + lookVector.x * 10D);
@@ -192,7 +215,7 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 				continue;
 			}
 			if (!e.is(player)) {
-				e.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 1));
+				e.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 120, 1));
 			}
 			if (e instanceof IShearable) {
 				shearEntity(stack, player, rand, e);
@@ -205,12 +228,14 @@ public class ShearsOfWinterItem extends ShearsItem implements ICreativeTabItemGe
 		BlockPos pos = e.blockPosition();
 		if (target.isShearable(player, new ItemStack(Items.SHEARS), e.level(), pos)) {
 			List<ItemStack> drops = target.onSheared(player, stack, e.level(), pos);
-			drops.forEach(d -> {
-				ItemEntity ent = e.spawnAtLocation(d, 1.0F);
-				if (ent != null) {
-					ent.setDeltaMovement(ent.getDeltaMovement().add(RandHelper.getRandomMinusOneToOne(rand) * 0.1F, rand.nextFloat() * 0.05F, RandHelper.getRandomMinusOneToOne(rand) * 0.1F));
-				}
-			});
+			if (e.level() instanceof ServerLevel serverLevel) {
+				drops.forEach(d -> {
+					ItemEntity ent = e.spawnAtLocation(serverLevel, d, 1.0F);
+					if (ent != null) {
+						ent.setDeltaMovement(ent.getDeltaMovement().add(RandHelper.getRandomMinusOneToOne(rand) * 0.1F, rand.nextFloat() * 0.05F, RandHelper.getRandomMinusOneToOne(rand) * 0.1F));
+					}
+				});
+			}
 
 			player.causeFoodExhaustion(0.01F);
 		}

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -95,7 +95,7 @@ public class StormShot extends ShotBase {
 	}
 
 	@Override
-	public ResourceLocation getShotTexture() {
+	public Identifier getShotTexture() {
 		return ClientReference.STORM;
 	}
 }

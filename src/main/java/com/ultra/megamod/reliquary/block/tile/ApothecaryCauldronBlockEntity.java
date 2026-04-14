@@ -10,13 +10,13 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +37,6 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import com.ultra.megamod.reliquary.block.ApothecaryCauldronBlock;
 import com.ultra.megamod.reliquary.client.init.ModParticles;
-import com.ultra.megamod.reliquary.compat.jade.provider.IJadeDataChangeIndicator;
 import com.ultra.megamod.reliquary.init.ModBlocks;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.PotionEssenceItem;
@@ -48,7 +47,7 @@ import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJadeDataChangeIndicator {
+public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 	private int redstoneCount = 0;
 	private PotionContents potionContents = PotionContents.EMPTY;
 	private int glowstoneCount = 0;
@@ -297,7 +296,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 		Set<Block> heatSources = new HashSet<>();
 
         Config.COMMON.blocks.apothecaryCauldron.heatSources.get()
-				.forEach(blockName -> heatSources.add(BuiltInRegistries.BLOCK.get(ResourceLocation.parse(blockName))));
+				.forEach(blockName -> heatSources.add(BuiltInRegistries.BLOCK.get(Identifier.parse(blockName))));
 		//defaults that can't be removed.
 		heatSources.add(Blocks.LAVA);
 		heatSources.add(Blocks.FIRE);
@@ -399,26 +398,26 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 		}
 	}
 
-	public ItemInteractionResult handleBlockActivation(Level level, Player player, InteractionHand hand, BlockPos pos) {
+	public InteractionResult handleBlockActivation(Level level, Player player, InteractionHand hand, BlockPos pos) {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (itemStack.isEmpty()) {
-			return ItemInteractionResult.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 
 		if (getLiquidLevel() < 3 && !finishedCooking()) {
 			return fillWithWater(player, hand, itemStack);
 		} else if (itemStack.getItem() == ModItems.EMPTY_POTION_VIAL.get() && finishedCooking() && getLiquidLevel() > 0) {
 			if (fillVial(level, player, hand, itemStack, pos)) {
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		} else if (getLiquidLevel() == 3 && isItemValidForInput(itemStack)) {
 			return addIngredient(level, player, itemStack, pos);
 		}
-		return ItemInteractionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
-	private ItemInteractionResult addIngredient(Level level, Player player, ItemStack itemStack, BlockPos pos) {
+	private InteractionResult addIngredient(Level level, Player player, ItemStack itemStack, BlockPos pos) {
 		addItem(itemStack, level, pos);
 
 		if (itemStack.getItem() == Items.DRAGON_BREATH
@@ -428,7 +427,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 
 		itemStack.shrink(1);
 
-		return ItemInteractionResult.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	private boolean fillVial(Level level, Player player, InteractionHand hand, ItemStack itemStack, BlockPos pos) {
@@ -448,7 +447,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 		return false;
 	}
 
-	private ItemInteractionResult fillWithWater(Player player, InteractionHand hand, ItemStack itemStack) {
+	private InteractionResult fillWithWater(Player player, InteractionHand hand, ItemStack itemStack) {
 		if (itemStack.getItem() == Items.WATER_BUCKET) {
 			if (!player.isCreative()) {
 				player.setItemInHand(hand, new ItemStack(Items.BUCKET));
@@ -456,7 +455,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 		} else {
 			IFluidHandlerItem fluidHandlerCapability = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
 			if (fluidHandlerCapability == null || !drainWater(player, fluidHandlerCapability)) {
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		}
 
@@ -464,7 +463,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase implements IJ
 		player.level().playSound(null, worldPosition, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
 		cookTime = 0;
 
-		return ItemInteractionResult.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	private Boolean drainWater(Player player, IFluidHandlerItem fh) {

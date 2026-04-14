@@ -3,7 +3,7 @@ package com.ultra.megamod.reliquary.entity.shot;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -70,7 +70,7 @@ public class ConcussiveShot extends ShotBase {
 	}
 
 	@Override
-	public ResourceLocation getShotTexture() {
+	public Identifier getShotTexture() {
 		return ClientReference.CONCUSSIVE;
 	}
 }

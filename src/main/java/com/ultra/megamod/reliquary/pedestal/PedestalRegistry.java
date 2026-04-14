@@ -1,7 +1,7 @@
 package com.ultra.megamod.reliquary.pedestal;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -43,12 +43,12 @@ public class PedestalRegistry {
 		return Optional.empty();
 	}
 
-	public static void registerPosition(ResourceLocation dimension, BlockPos pos) {
+	public static void registerPosition(Identifier dimension, BlockPos pos) {
 		LocationKey key = new LocationKey(dimension, pos.asLong());
 		positions.putIfAbsent(key, pos);
 	}
 
-	public static void unregisterPosition(ResourceLocation dimension, BlockPos pos) {
+	public static void unregisterPosition(Identifier dimension, BlockPos pos) {
 		positions.remove(new LocationKey(dimension, pos.asLong()));
 	}
 
@@ -56,11 +56,11 @@ public class PedestalRegistry {
 		positions.clear();
 	}
 
-	public static List<BlockPos> getPositionsInRange(ResourceLocation dimension, BlockPos startPos, int range) {
+	public static List<BlockPos> getPositionsInRange(Identifier dimension, BlockPos startPos, int range) {
 		return getPositionsInRange(dimension, startPos, range, range, range);
 	}
 
-	private static List<BlockPos> getPositionsInRange(ResourceLocation dimension, BlockPos startPos, int xRange, int yRange, int zRange) {
+	private static List<BlockPos> getPositionsInRange(Identifier dimension, BlockPos startPos, int xRange, int yRange, int zRange) {
 		List<BlockPos> positionsInRange = new ArrayList<>();
 		for (Map.Entry<LocationKey, BlockPos> position : positions.entrySet()) {
 			if (!position.getKey().getDimension().equals(dimension)) {
@@ -83,7 +83,7 @@ public class PedestalRegistry {
 		PedestalRegistry.clearPositions();
 	}
 
-	private record LocationKey(ResourceLocation dimension, long location) {
+	private record LocationKey(Identifier dimension, long location) {
 		@Override
 		public int hashCode() {
 			return Objects.hash(dimension, location);
@@ -98,7 +98,7 @@ public class PedestalRegistry {
 			return getDimension().equals(key2.getDimension()) && getLocation() == key2.getLocation();
 		}
 
-		ResourceLocation getDimension() {
+		Identifier getDimension() {
 			return dimension;
 		}
 

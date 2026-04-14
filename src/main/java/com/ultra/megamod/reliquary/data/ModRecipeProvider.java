@@ -6,7 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.*;
@@ -34,10 +34,10 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider {
-	private static final TagKey<Item> INGOTS_COPPER = TagKey.create(Registries.ITEM, ResourceLocation.parse("forge:ingots/copper"));
-	private static final TagKey<Item> INGOTS_STEEL = TagKey.create(Registries.ITEM, ResourceLocation.parse("forge:ingots/steel"));
-	private static final TagKey<Item> INGOTS_SILVER = TagKey.create(Registries.ITEM, ResourceLocation.parse("forge:ingots/silver"));
-	private static final TagKey<Item> INGOTS_TIN = TagKey.create(Registries.ITEM, ResourceLocation.parse("forge:ingots/tin"));
+	private static final TagKey<Item> INGOTS_COPPER = TagKey.create(Registries.ITEM, Identifier.parse("forge:ingots/copper"));
+	private static final TagKey<Item> INGOTS_STEEL = TagKey.create(Registries.ITEM, Identifier.parse("forge:ingots/steel"));
+	private static final TagKey<Item> INGOTS_SILVER = TagKey.create(Registries.ITEM, Identifier.parse("forge:ingots/silver"));
+	private static final TagKey<Item> INGOTS_TIN = TagKey.create(Registries.ITEM, Identifier.parse("forge:ingots/tin"));
 	private static final String HAS_GUNPOWDER_CRITERION = "has_gunpowder";
 	private static final String HAS_NEBULOUS_HEART_CRITERION = "has_nebulous_heart";
 	private static final String HAS_FERTILE_ESSENCE_CRITERION = "has_fertile_essence";
@@ -584,7 +584,7 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy(HAS_WITHERED_RIB_CRITERION, has(ModItems.WITHERED_RIB.get()))
 				.save(recipeOutput, Reliquary.getRL(UNCRAFTING_FOLDER + "wither_skeleton_skull"));
 
-		ResourceLocation spawnEggId = Reliquary.getRL(UNCRAFTING_FOLDER + "spawn_egg");
+		Identifier spawnEggId = Reliquary.getRL(UNCRAFTING_FOLDER + "spawn_egg");
 		SpawnEggRecipeBuilder.spawnEggRecipe()
 				.addIngredient(ModItems.MOB_CHARM_FRAGMENT.get())
 				.addIngredient(ModItems.MOB_CHARM_FRAGMENT.get())
@@ -789,7 +789,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		CraftingRecipeBuilder.craftingRecipe(Items.CHARCOAL, 4, 5).save(recipeOutput, RegistryHelper.getRegistryName(Items.CHARCOAL));
 		CraftingRecipeBuilder.craftingRecipe(Items.CLAY, 4, 3).save(recipeOutput, RegistryHelper.getRegistryName(Items.CLAY));
 		CraftingRecipeBuilder.craftingRecipe(INGOTS_COPPER, 8, 5)
-				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_COPPER.location()))), ResourceLocation.parse("copper_ingot"));
+				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_COPPER.location()))), Identifier.parse("copper_ingot"));
 		CraftingRecipeBuilder.craftingRecipe(Tags.Items.GEMS_DIAMOND, 64, 2).save(recipeOutput, RegistryHelper.getRegistryName(Items.DIAMOND));
 		CraftingRecipeBuilder.craftingRecipe(Items.DIRT, 4, 33).save(recipeOutput, RegistryHelper.getRegistryName(Items.DIRT));
 		CraftingRecipeBuilder.craftingRecipe(Tags.Items.GEMS_EMERALD, 32, 2).save(recipeOutput, RegistryHelper.getRegistryName(Items.EMERALD));
@@ -806,12 +806,12 @@ public class ModRecipeProvider extends RecipeProvider {
 		CraftingRecipeBuilder.craftingRecipe(Tags.Items.SANDS, 4, 33).save(recipeOutput, RegistryHelper.getRegistryName(Items.SAND));
 		CraftingRecipeBuilder.craftingRecipe(Tags.Items.SANDSTONE_BLOCKS, 4, 9).save(recipeOutput, RegistryHelper.getRegistryName(Items.SANDSTONE));
 		CraftingRecipeBuilder.craftingRecipe(INGOTS_SILVER, 32, 2)
-				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_SILVER.location()))), ResourceLocation.parse("silver_ingot"));
+				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_SILVER.location()))), Identifier.parse("silver_ingot"));
 		CraftingRecipeBuilder.craftingRecipe(Items.SOUL_SAND, 8, 9).save(recipeOutput, RegistryHelper.getRegistryName(Items.SOUL_SAND));
 		CraftingRecipeBuilder.craftingRecipe(INGOTS_STEEL, 32, 2)
-				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_STEEL.location()))), ResourceLocation.parse("steel_ingot"));
+				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_STEEL.location()))), Identifier.parse("steel_ingot"));
 		CraftingRecipeBuilder.craftingRecipe(INGOTS_TIN, 32, 2)
-				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_TIN.location()))), ResourceLocation.parse("tin_ingot"));
+				.save(recipeOutput.withConditions(new NotCondition(new TagEmptyCondition(INGOTS_TIN.location()))), Identifier.parse("tin_ingot"));
 	}
 
 	private void registerPotionRecipes(RecipeOutput recipeOutput) {
@@ -1255,9 +1255,9 @@ public class ModRecipeProvider extends RecipeProvider {
 	}
 
 	private void addItemPotionRecipe(RecipeOutput recipeOutput, Item itemIngredient, Item item, float durationFactor, char itemKey, boolean includeSuffix) {
-		ResourceLocation registryName = RegistryHelper.getRegistryName(item);
+		Identifier registryName = RegistryHelper.getRegistryName(item);
 		String path = registryName.getPath();
-		ResourceLocation id = includeSuffix ? ResourceLocation.fromNamespaceAndPath(registryName.getNamespace(), registryName.getPath() + "_potion") : registryName;
+		Identifier id = includeSuffix ? Identifier.fromNamespaceAndPath(registryName.getNamespace(), registryName.getPath() + "_potion") : registryName;
 		PotionEffectsRecipeBuilder.potionEffectsRecipe(item, 8, durationFactor)
 				.pattern(String.valueOf(itemKey) + itemKey + itemKey)
 				.pattern(itemKey + "P" + itemKey)

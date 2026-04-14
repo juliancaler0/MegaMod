@@ -7,7 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -104,12 +103,12 @@ public class InfernalTearItem extends ToggleableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		if (level.isClientSide()) {
-			return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+			return InteractionResult.SUCCESS;
 		}
-		InteractionResultHolder<ItemStack> actionResult = super.use(level, player, hand);
-		ItemStack tear = actionResult.getObject();
+		InteractionResult actionResult = super.use(level, player, hand);
+		ItemStack tear = player.getItemInHand(hand);
 		if (player.isShiftKeyDown() && !isEnabled(tear)) {
 			return actionResult;
 		}
@@ -131,7 +130,7 @@ public class InfernalTearItem extends ToggleableItem {
 			IItemHandler playerInventory = InventoryHelper.getMainInventoryItemHandlerFrom(player);
 			ItemStack returnStack = buildTear(tear, playerInventory);
 			if (!returnStack.isEmpty()) {
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, returnStack);
+				return InteractionResult.SUCCESS;
 			}
 		}
 

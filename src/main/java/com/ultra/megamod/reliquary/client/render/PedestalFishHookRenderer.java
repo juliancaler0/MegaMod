@@ -8,13 +8,13 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import com.ultra.megamod.reliquary.api.client.IPedestalItemRenderer;
 import com.ultra.megamod.reliquary.block.tile.PedestalBlockEntity;
 
 public class PedestalFishHookRenderer implements IPedestalItemRenderer {
-	private static final ResourceLocation FISH_PARTICLES = ResourceLocation.parse("textures/entity/fishing_hook.png");
+	private static final Identifier FISH_PARTICLES = Identifier.parse("textures/entity/fishing_hook.png");
 	private static final RenderType ENTITY_CUTOUT = RenderType.entityCutout(FISH_PARTICLES);
 
 	@Override

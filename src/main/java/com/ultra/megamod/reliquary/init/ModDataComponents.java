@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.SimpleFluidContent;
@@ -23,8 +23,8 @@ import java.util.function.Supplier;
 public class ModDataComponents {
 	private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Reliquary.MOD_ID);
 
-	public static final Supplier<DataComponentType<ResourceLocation>> ENTITY_NAME = DATA_COMPONENT_TYPES.register("entity_name",
-			() -> new DataComponentType.Builder<ResourceLocation>().persistent(ResourceLocation.CODEC).networkSynchronized(ResourceLocation.STREAM_CODEC).build()
+	public static final Supplier<DataComponentType<Identifier>> ENTITY_NAME = DATA_COMPONENT_TYPES.register("entity_name",
+			() -> new DataComponentType.Builder<Identifier>().persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC).build()
 	);
 
 	public static final Supplier<DataComponentType<SimpleFluidContent>> FLUID_CONTENTS = DATA_COMPONENT_TYPES.register("fluid_contents",
@@ -39,8 +39,8 @@ public class ModDataComponents {
 	public static final Supplier<DataComponentType<BlockPos>> WARP_POSITION = DATA_COMPONENT_TYPES.register("warp_position",
 			() -> new DataComponentType.Builder<BlockPos>().persistent(BlockPos.CODEC).networkSynchronized(BlockPos.STREAM_CODEC).build());
 
-	public static final Supplier<DataComponentType<ResourceLocation>> WARP_DIMENSION = DATA_COMPONENT_TYPES.register("warp_dimension",
-			() -> new DataComponentType.Builder<ResourceLocation>().persistent(ResourceLocation.CODEC).networkSynchronized(ResourceLocation.STREAM_CODEC).build());
+	public static final Supplier<DataComponentType<Identifier>> WARP_DIMENSION = DATA_COMPONENT_TYPES.register("warp_dimension",
+			() -> new DataComponentType.Builder<Identifier>().persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC).build());
 
 	public static final Supplier<DataComponentType<Set<BlockPos>>> FROZEN_POSITIONS = DATA_COMPONENT_TYPES.register("frozen_positions",
 			() -> new DataComponentType.Builder<Set<BlockPos>>().persistent(CodecHelper.setOf(BlockPos.CODEC)).networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.collection(HashSet::new))).build());
@@ -63,8 +63,8 @@ public class ModDataComponents {
 	public static final Supplier<DataComponentType<Short>> BULLET_COUNT = DATA_COMPONENT_TYPES.register("bullet_count",
 			() -> new DataComponentType.Builder<Short>().persistent(Codec.SHORT).networkSynchronized(ByteBufCodecs.SHORT).build());
 
-	public static final Supplier<DataComponentType<ResourceLocation>> MAGAZINE_TYPE = DATA_COMPONENT_TYPES.register("magazine_type",
-			() -> new DataComponentType.Builder<ResourceLocation>().persistent(ResourceLocation.CODEC).networkSynchronized(ResourceLocation.STREAM_CODEC).build());
+	public static final Supplier<DataComponentType<Identifier>> MAGAZINE_TYPE = DATA_COMPONENT_TYPES.register("magazine_type",
+			() -> new DataComponentType.Builder<Identifier>().persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC).build());
 
 	public static final Supplier<DataComponentType<Long>> COOLDOWN_TIME = DATA_COMPONENT_TYPES.register("cooldown_time",
 			() -> new DataComponentType.Builder<Long>().persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG).build());

@@ -1,6 +1,6 @@
 package com.ultra.megamod.reliquary;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.config.ModConfig;
@@ -75,7 +75,7 @@ public final class Reliquary {
 		MobCharmRegistry.registerDynamicCharmDefinitions();
 	}
 
-	public static ResourceLocation getRL(String regName) {
-		return ResourceLocation.fromNamespaceAndPath(MOD_ID, regName);
+	public static Identifier getRL(String regName) {
+		return Identifier.fromNamespaceAndPath(MOD_ID, regName);
 	}
 }

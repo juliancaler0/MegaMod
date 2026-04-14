@@ -6,7 +6,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -16,10 +15,10 @@ import com.ultra.megamod.reliquary.entity.potion.ThrownPotion;
 
 public class ThrownPotionItem extends PotionItemBase implements ProjectileItem {
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (level.isClientSide) {
-			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+			return InteractionResult.PASS;
 		}
 		ThrownPotion e = new ThrownPotion(level, player, stack.copy());
 		e.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
@@ -29,7 +28,7 @@ public class ThrownPotionItem extends PotionItemBase implements ProjectileItem {
 		}
 		level.playSound(null, player.blockPosition(), SoundEvents.ARROW_SHOOT, SoundSource.NEUTRAL, 0.5F, 0.4F / (level.random.nextFloat() * 0.4F + 0.8F));
 		level.addFreshEntity(e);
-		return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+		return InteractionResult.PASS;
 	}
 
 	@Override

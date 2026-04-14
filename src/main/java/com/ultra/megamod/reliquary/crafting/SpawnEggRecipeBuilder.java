@@ -7,7 +7,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
@@ -39,7 +39,7 @@ public class SpawnEggRecipeBuilder {
 		return this;
 	}
 
-	public void build(RecipeOutput recipeOutput, ResourceLocation id) {
+	public void build(RecipeOutput recipeOutput, Identifier id) {
 		ensureValid(id);
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -49,7 +49,7 @@ public class SpawnEggRecipeBuilder {
 		recipeOutput.accept(id, new FragmentToSpawnEggRecipe(new ShapelessRecipe("", CraftingBookCategory.MISC, new ItemStack(Items.CHICKEN_SPAWN_EGG), ingredients)), advancementBuilder.build(id.withPrefix("recipes/")));
 	}
 
-	private void ensureValid(ResourceLocation id) {
+	private void ensureValid(Identifier id) {
 		if (criteria.isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		}

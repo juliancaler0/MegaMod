@@ -14,13 +14,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -162,8 +161,8 @@ public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.BLOCK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.BLOCK;
 	}
 
 	@Override
@@ -172,14 +171,14 @@ public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack rendingGale = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			super.use(level, player, hand);
 		} else {
 			player.startUsingItem(hand);
 		}
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, rendingGale);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

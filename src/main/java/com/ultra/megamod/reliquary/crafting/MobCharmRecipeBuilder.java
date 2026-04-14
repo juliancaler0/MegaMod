@@ -8,7 +8,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -76,7 +76,7 @@ public class MobCharmRecipeBuilder {
 	}
 
 	public void save(RecipeOutput recipeOutput) {
-		ResourceLocation id = Reliquary.getRL("mob_charm");
+		Identifier id = Reliquary.getRL("mob_charm");
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
 				.rewards(AdvancementRewards.Builder.recipe(id))
@@ -85,7 +85,7 @@ public class MobCharmRecipeBuilder {
 		recipeOutput.accept(id, new MobCharmRecipe(new ShapedRecipe(group == null ? "" : group, CraftingBookCategory.MISC, ensureValid(id), new ItemStack(ModItems.MOB_CHARM.get()))), null);
 	}
 
-	private ShapedRecipePattern ensureValid(ResourceLocation id) {
+	private ShapedRecipePattern ensureValid(Identifier id) {
 		if (criteria.isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		} else {

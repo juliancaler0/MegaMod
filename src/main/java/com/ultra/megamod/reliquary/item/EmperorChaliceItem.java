@@ -3,12 +3,11 @@ package com.ultra.megamod.reliquary.item;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -19,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.util.TriState;
+import net.minecraft.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.FluidType;
@@ -53,8 +52,8 @@ public class EmperorChaliceItem extends ToggleableItem {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.DRINK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.DRINK;
 	}
 
 	@Override
@@ -74,7 +73,7 @@ public class EmperorChaliceItem extends ToggleableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack emperorChalice = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			return super.use(level, player, hand);
@@ -87,10 +86,10 @@ public class EmperorChaliceItem extends ToggleableItem {
 			if (!isEnabled(emperorChalice)) {
 				player.startUsingItem(hand);
 			}
-			return new InteractionResultHolder<>(InteractionResult.SUCCESS, emperorChalice);
+			return InteractionResult.SUCCESS;
 		} else if (result.getType() == HitResult.Type.BLOCK) {
 			if (!level.mayInteract(player, result.getBlockPos()) || !player.mayUseItemAt(result.getBlockPos(), result.getDirection(), emperorChalice)) {
-				return new InteractionResultHolder<>(InteractionResult.FAIL, emperorChalice);
+				return InteractionResult.FAIL;
 			}
 
 			IFluidHandlerItem fluidHandler = emperorChalice.getCapability(Capabilities.FluidHandler.ITEM);
@@ -102,12 +101,12 @@ public class EmperorChaliceItem extends ToggleableItem {
 					success = FluidUtil.tryPickUpFluid(emperorChalice, player, level, result.getBlockPos(), result.getDirection()).isSuccess();
 				}
 				if (success) {
-					return new InteractionResultHolder<>(InteractionResult.SUCCESS, emperorChalice);
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
 
-		return new InteractionResultHolder<>(InteractionResult.PASS, emperorChalice);
+		return InteractionResult.PASS;
 	}
 
 	private boolean placeWater(Level level, Player player, InteractionHand hand, IFluidHandlerItem fluidHandler, BlockHitResult result) {

@@ -3,19 +3,18 @@ package com.ultra.megamod.reliquary.item;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
@@ -42,10 +41,10 @@ public class HandgunItem extends ItemBase {
 		ShotBase createShot(Level level, Player player, InteractionHand hand);
 	}
 
-	private final Map<ResourceLocation, IShotFactory> magazineShotFactories = new HashMap<>();
-	private final Map<ResourceLocation, Supplier<BulletItem>> magazineBulletItems = new HashMap<>();
+	private final Map<Identifier, IShotFactory> magazineShotFactories = new HashMap<>();
+	private final Map<Identifier, Supplier<BulletItem>> magazineBulletItems = new HashMap<>();
 
-	public void registerMagazine(ResourceLocation magazineRegistryName, IShotFactory factory, Supplier<BulletItem> getBulletItem) {
+	public void registerMagazine(Identifier magazineRegistryName, IShotFactory factory, Supplier<BulletItem> getBulletItem) {
 		magazineShotFactories.put(magazineRegistryName, factory);
 		magazineBulletItems.put(magazineRegistryName, getBulletItem);
 	}
@@ -74,7 +73,7 @@ public class HandgunItem extends ItemBase {
 		handgun.set(ModDataComponents.BULLET_COUNT, bulletCount);
 	}
 
-	private Optional<ResourceLocation> getMagazineType(ItemStack handgun) {
+	private Optional<Identifier> getMagazineType(ItemStack handgun) {
 		return Optional.ofNullable(handgun.get(ModDataComponents.MAGAZINE_TYPE));
 	}
 
@@ -122,11 +121,11 @@ public class HandgunItem extends ItemBase {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack handgun) {
+	public ItemUseAnimation getUseAnimation(ItemStack handgun) {
 		if (getBulletCount(handgun) > 0) {
-			return UseAnim.NONE;
+			return ItemUseAnimation.NONE;
 		} else {
-			return UseAnim.BLOCK;
+			return ItemUseAnimation.BLOCK;
 		}
 	}
 
@@ -140,18 +139,18 @@ public class HandgunItem extends ItemBase {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack handgun = player.getItemInHand(hand);
 
 		if (getBulletCount(handgun) > 0 && !isCooldownOver(level, handgun) && otherHandgunCooledDownMore(player, hand, handgun)) {
-			return new InteractionResultHolder<>(InteractionResult.PASS, handgun);
+			return InteractionResult.PASS;
 		}
 
 		if (getBulletCount(handgun) > 0 || hasFilledMagazine(player)) {
 			player.startUsingItem(hand);
-			return new InteractionResultHolder<>(InteractionResult.SUCCESS, handgun);
+			return InteractionResult.SUCCESS;
 		}
-		return new InteractionResultHolder<>(InteractionResult.PASS, handgun);
+		return InteractionResult.PASS;
 	}
 
 	private boolean otherHandgunCooledDownMore(Player player, InteractionHand currentHand, ItemStack currentHandgun) {
@@ -265,7 +264,7 @@ public class HandgunItem extends ItemBase {
 		}
 	}
 
-	private void spawnShotEntity(ItemStack handgun, Level level, Player player, InteractionHand hand, ResourceLocation magazineType) {
+	private void spawnShotEntity(ItemStack handgun, Level level, Player player, InteractionHand hand, Identifier magazineType) {
 		if (!magazineShotFactories.containsKey(magazineType)) {
 			return;
 		}

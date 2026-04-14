@@ -6,7 +6,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -41,18 +40,18 @@ public class AlkahestryTomeItem extends ChargeableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		ItemStack newStack = super.use(level, player, hand).getObject();
 		if (player.isShiftKeyDown()) {
-			return new InteractionResultHolder<>(InteractionResult.SUCCESS, newStack);
+			return InteractionResult.SUCCESS;
 		}
 
 		player.playSound(ModSounds.BOOK.get(), 1.0f, 1.0f);
 		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
 			serverPlayer.openMenu(new SimpleMenuProvider((w, p, pl) -> new AlkahestTomeMenu(w), stack.getHoverName()));
 		}
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override

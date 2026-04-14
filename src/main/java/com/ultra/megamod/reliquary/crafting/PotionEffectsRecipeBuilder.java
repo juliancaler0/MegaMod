@@ -8,7 +8,7 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -76,7 +76,7 @@ public class PotionEffectsRecipeBuilder {
 		return this;
 	}
 
-	public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+	public void save(RecipeOutput recipeOutput, Identifier id) {
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
 				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
 				.rewards(AdvancementRewards.Builder.recipe(id))
@@ -91,7 +91,7 @@ public class PotionEffectsRecipeBuilder {
 				), null);
 	}
 
-	private ShapedRecipePattern ensureValid(ResourceLocation id) {
+	private ShapedRecipePattern ensureValid(Identifier id) {
 		if (criteria.isEmpty()) {
 			throw new IllegalStateException("No way of obtaining recipe " + id);
 		} else {

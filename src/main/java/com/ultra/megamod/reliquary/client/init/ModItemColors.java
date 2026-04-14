@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FastColor;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -81,8 +81,8 @@ public class ModItemColors {
 				return -1;
 			}
 
-			ResourceLocation entityName = MobCharmItem.getEntityEggRegistryName(stack);
-			return getEgg(entityName).map(egg -> tintIndex == 1 ? FastColor.ARGB32.opaque(egg.getColor(0)) : FastColor.ARGB32.opaque(egg.getColor(1))).orElse(-1);
+			Identifier entityName = MobCharmItem.getEntityEggRegistryName(stack);
+			return getEgg(entityName).map(egg -> tintIndex == 1 ? ARGB.ARGB32.opaque(egg.getColor(0)) : ARGB.ARGB32.opaque(egg.getColor(1))).orElse(-1);
 		}, MOB_CHARM.get());
 
 		event.register((stack, tintIndex) -> {
@@ -90,12 +90,12 @@ public class ModItemColors {
 				return -1;
 			}
 
-			ResourceLocation entityName = MobCharmFragmentItem.getEntityRegistryName(stack);
-			return getEgg(entityName).map(egg -> tintIndex == 0 ? FastColor.ARGB32.opaque(egg.getColor(0)) : FastColor.ARGB32.opaque(egg.getColor(1))).orElse(-1);
+			Identifier entityName = MobCharmFragmentItem.getEntityRegistryName(stack);
+			return getEgg(entityName).map(egg -> tintIndex == 0 ? ARGB.ARGB32.opaque(egg.getColor(0)) : ARGB.ARGB32.opaque(egg.getColor(1))).orElse(-1);
 		}, MOB_CHARM_FRAGMENT.get());
 	}
 
-	private static Optional<SpawnEggItem> getEgg(ResourceLocation entityName) {
+	private static Optional<SpawnEggItem> getEgg(Identifier entityName) {
 		return Optional.ofNullable(SpawnEggItem.byId(BuiltInRegistries.ENTITY_TYPE.get(entityName)));
 	}
 

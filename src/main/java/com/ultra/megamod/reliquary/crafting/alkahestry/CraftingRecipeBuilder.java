@@ -1,7 +1,7 @@
 package com.ultra.megamod.reliquary.crafting.alkahestry;
 
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -29,8 +29,8 @@ public class CraftingRecipeBuilder {
 		return new CraftingRecipeBuilder(Ingredient.of(tag), charge, resultCount);
 	}
 
-	public void save(RecipeOutput recipeOutput, ResourceLocation id) {
-		ResourceLocation fullId = Reliquary.getRL("alkahestry/crafting/" + id.getPath());
+	public void save(RecipeOutput recipeOutput, Identifier id) {
+		Identifier fullId = Reliquary.getRL("alkahestry/crafting/" + id.getPath());
 		recipeOutput.withConditions(new AlkahestryEnabledCondition())
 				.accept(fullId, new AlkahestryCraftingRecipe(ingredient, charge, resultCount), null);
 	}

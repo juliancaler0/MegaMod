@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -494,5 +494,5 @@ public abstract class ShotBase extends Projectile {
 
 	// used by the renderer to pull the shot texture directly from the entity.
 	// This might not work.
-	public abstract ResourceLocation getShotTexture();
+	public abstract Identifier getShotTexture();
 }

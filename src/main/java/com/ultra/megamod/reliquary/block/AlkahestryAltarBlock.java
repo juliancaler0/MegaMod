@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -87,34 +87,34 @@ public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativ
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_316140_) {
+	protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult p_316140_) {
 		if (Boolean.TRUE.equals(state.getValue(ACTIVE))) {
-			return ItemInteractionResult.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 		AlkahestryAltarBlockEntity altar = (AlkahestryAltarBlockEntity) level.getBlockEntity(pos);
 		if (altar == null || heldItem.isEmpty()) {
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		if (heldItem.getItem() == Items.REDSTONE) {
 			int slot = getSlotWithRedstoneDust(player);
 			if (slot == -1) {
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 			playSoundAndSpawnParticles(level, pos, altar);
 			if (level.isClientSide) {
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 			player.getInventory().removeItem(slot, 1);
 			altar.addRedstone(level, pos);
 		} else if (heldItem.getItem() instanceof AlkahestryTomeItem && AlkahestryTomeItem.getCharge(heldItem) > 0) {
 			playSoundAndSpawnParticles(level, pos, altar);
 			if (level.isClientSide) {
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 			ModItems.ALKAHESTRY_TOME.get().useCharge(heldItem, 1);
 			altar.addRedstone(level, pos);
 		}
-		return ItemInteractionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	private void playSoundAndSpawnParticles(Level level, BlockPos pos, AlkahestryAltarBlockEntity altar) {

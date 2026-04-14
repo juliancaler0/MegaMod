@@ -8,7 +8,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -185,7 +184,7 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		if (!player.isShiftKeyDown()) {
 			HitResult rayTraceResult = longRayTrace(level, player);
 			if (rayTraceResult.getType() == HitResult.Type.BLOCK) {

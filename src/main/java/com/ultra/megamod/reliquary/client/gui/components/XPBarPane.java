@@ -3,11 +3,11 @@ package com.ultra.megamod.reliquary.client.gui.components;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import com.ultra.megamod.reliquary.Reliquary;
 
 public class XPBarPane extends Component {
-	private static final ResourceLocation XP_BAR = Reliquary.getRL("textures/gui/xp_bar.png");
+	private static final Identifier XP_BAR = Reliquary.getRL("textures/gui/xp_bar.png");
 	private float xpRatio;
 
 	public void setXpRatio(float xpRatio) {

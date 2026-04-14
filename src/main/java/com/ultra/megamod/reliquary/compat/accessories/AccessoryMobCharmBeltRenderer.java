@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +21,7 @@ import com.ultra.megamod.reliquary.Reliquary;
 
 public class AccessoryMobCharmBeltRenderer implements AccessoryRenderer {
 	public static final ModelLayerLocation MOB_CHARM_BELT_LAYER = new ModelLayerLocation(Reliquary.getRL("mob_charm_belt"), "main");
-	private static final ResourceLocation ON_BODY_TEXTURE = Reliquary.getRL("textures/models/armor/mob_charm_belt.png");
+	private static final Identifier ON_BODY_TEXTURE = Reliquary.getRL("textures/models/armor/mob_charm_belt.png");
 	private final HumanoidModel<Player> beltModel;
 
 	public AccessoryMobCharmBeltRenderer() {

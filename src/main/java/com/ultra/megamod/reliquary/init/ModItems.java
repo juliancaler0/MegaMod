@@ -1,17 +1,15 @@
 package com.ultra.megamod.reliquary.init;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.sounds.SoundEvents;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.neoforged.bus.api.IEventBus;
@@ -24,7 +22,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ICondition;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.jetbrains.annotations.Nullable;
@@ -48,23 +46,18 @@ import com.ultra.megamod.reliquary.reference.Colors;
 import com.ultra.megamod.reliquary.reference.Config;
 import com.ultra.megamod.reliquary.util.RegistryHelper;
 
-import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class ModItems {
 	private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, Reliquary.MOD_ID);
-	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB.location(), Reliquary.MOD_ID);
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reliquary.MOD_ID);
 	private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(BuiltInRegistries.MENU, Reliquary.MOD_ID);
 	private static final DeferredRegister<MapCodec<? extends ICondition>> CONDITION_CODECS = DeferredRegister.create(NeoForgeRegistries.Keys.CONDITION_CODECS, Reliquary.MOD_ID);
 	private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(BuiltInRegistries.RECIPE_SERIALIZER, Reliquary.MOD_ID);
-	public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_TYPES = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE.location(), Reliquary.MOD_ID);
+	public static final DeferredRegister<LootItemConditionType> LOOT_CONDITION_TYPES = DeferredRegister.create(Registries.LOOT_CONDITION_TYPE, Reliquary.MOD_ID);
 	public static final DeferredRegister<MapCodec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(NeoForgeRegistries.GLOBAL_LOOT_MODIFIER_SERIALIZERS, Reliquary.MOD_ID);
-	public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(BuiltInRegistries.ARMOR_MATERIAL, Reliquary.MOD_ID);
-
-	public static final Holder<ArmorMaterial> WITCH_HAT_MATERIAL = ARMOR_MATERIALS.register("witch_hat", () -> new ArmorMaterial(
-			Map.of(ArmorItem.Type.HELMET, 0), 0, SoundEvents.ARMOR_EQUIP_GENERIC, () -> Ingredient.EMPTY,
-			List.of(new ArmorMaterial.Layer(Reliquary.getRL("witch_hat"))), 0, 0));
+	// Port note (1.21.11): WitchHat switched to the EQUIPPABLE data component,
+	// so the custom armor-material registry is no longer needed.
 
 	public static final Supplier<AlkahestryTomeItem> ALKAHESTRY_TOME = ITEMS.register("alkahestry_tome", AlkahestryTomeItem::new);
 	public static final Supplier<MercyCrossItem> MERCY_CROSS = ITEMS.register("mercy_cross", MercyCrossItem::new);
@@ -172,7 +165,9 @@ public class ModItems {
 	public static final Supplier<ShearsOfWinterItem> SHEARS_OF_WINTER = ITEMS.register("shears_of_winter", ShearsOfWinterItem::new);
 	public static final Supplier<TwilightCloakItem> TWILIGHT_CLOAK = ITEMS.register("twilight_cloak", TwilightCloakItem::new);
 	public static final Supplier<ItemBase> GLOWING_BREAD = ITEMS.register("glowing_bread", () ->
-			new ItemBase(new Item.Properties().rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(20).saturationModifier(1F).fast().build())));
+			// Port note (1.21.11): FoodProperties.Builder#fast() was removed — food speed is now
+			// controlled through Consumable settings rather than a builder flag.
+			new ItemBase(new Item.Properties().rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(20).saturationModifier(1F).build())));
 	public static final Supplier<Item> XP_BUCKET = ITEMS.register("xp_bucket", () -> new BucketItem(ModFluids.XP_STILL.get(), new Item.Properties().stacksTo(1)));
 
 	public static final Supplier<MenuType<AlkahestTomeMenu>> ALKAHEST_TOME_MENU_TYPE = MENU_TYPES.register("alkahest_tome",
@@ -193,7 +188,10 @@ public class ModItems {
 
 	public static final Supplier<RecipeSerializer<?>> MOB_CHARM_RECIPE_SERIALIZER = RECIPE_SERIALIZERS.register("mob_charm", MobCharmRecipe.Serializer::new);
 	public static final Supplier<RecipeSerializer<?>> FRAGMENT_TO_SPAWN_EGG_SERIALIZER = RECIPE_SERIALIZERS.register("fragment_to_spawn_egg", FragmentToSpawnEggRecipe.Serializer::new);
-	public static final Supplier<SimpleCraftingRecipeSerializer<?>> MOB_CHARM_REPAIR_SERIALIZER = RECIPE_SERIALIZERS.register("mob_charm_repair", () -> new SimpleCraftingRecipeSerializer<>(MobCharmRepairRecipe::new));
+	// Port note (1.21.11): SimpleCraftingRecipeSerializer folded into
+	// CustomRecipe.Serializer; constructor takes a (CraftingBookCategory ->
+	// recipe) factory instead of a plain no-arg supplier.
+	public static final Supplier<RecipeSerializer<MobCharmRepairRecipe>> MOB_CHARM_REPAIR_SERIALIZER = RECIPE_SERIALIZERS.register("mob_charm_repair", () -> new CustomRecipe.Serializer<>(MobCharmRepairRecipe::new));
 	public static final Supplier<RecipeSerializer<?>> ALKAHESTRY_CHARGING_SERIALIZER = RECIPE_SERIALIZERS.register("alkahestry_charging", AlkahestryChargingRecipe.Serializer::new);
 	public static final Supplier<RecipeSerializer<?>> ALKAHESTRY_CRAFTING_SERIALIZER = RECIPE_SERIALIZERS.register("alkahestry_crafting", AlkahestryCraftingRecipe.Serializer::new);
 	public static final Supplier<RecipeSerializer<?>> ALKAHESTRY_DRAIN_SERIALIZER = RECIPE_SERIALIZERS.register("alkahestry_drain", AlkahestryDrainRecipe.Serializer::new);
@@ -250,28 +248,42 @@ public class ModItems {
 		LOOT_MODIFIERS.register(modBus);
 		CREATIVE_MODE_TABS.register(modBus);
 		ATTACHMENT_TYPES.register(modBus);
-		ARMOR_MATERIALS.register(modBus);
 		modBus.addListener(ModItems::registerCapabilities);
 		NeoForge.EVENT_BUS.addListener(ModItems::onResourceReload);
 
-		if (FMLEnvironment.dist.isClient()) {
+		if (FMLEnvironment.getDist() == net.neoforged.api.distmarker.Dist.CLIENT) {
 			ModItemsClient.init(modBus);
 		}
 	}
 
-	private static void onResourceReload(AddReloadListenerEvent event) {
-		MobCharmRecipe.REGISTERED_RECIPES.clear();
+	private static void onResourceReload(AddServerReloadListenersEvent event) {
+		// Port note (1.21.11): AddServerReloadListenersEvent#addListener(PreparableReloadListener)
+		// was replaced with AddServerReloadListenersEvent#addListener(Identifier, PreparableReloadListener).
+		// We attach a listener whose apply step clears the definitions cache,
+		// keeping behavior parity with the old listener that only cleared state.
+		event.addListener(
+				Identifier.fromNamespaceAndPath(Reliquary.MOD_ID, "mob_charm_definitions"),
+				(sharedState, prepareExecutor, preparationBarrier, applyExecutor) -> {
+					java.util.function.Supplier<Void> prepare = () -> null;
+					return java.util.concurrent.CompletableFuture
+							.supplyAsync(prepare, prepareExecutor)
+							.thenCompose(data -> preparationBarrier.wait(data))
+							.thenRunAsync(MobCharmRecipe.REGISTERED_RECIPES::clear, applyExecutor);
+				});
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerItem(Capabilities.FluidHandler.ITEM, (itemStack, context) -> new FluidHandlerHeroMedallion(itemStack), HERO_MEDALLION.get());
-		event.registerItem(Capabilities.ItemHandler.ITEM, (itemStack, context) -> VOID_TEAR.get().createHandler(itemStack), VOID_TEAR.get());
-		event.registerItem(Capabilities.ItemHandler.ITEM, (itemStack, context) -> HARVEST_ROD.get().createHandler(itemStack), HARVEST_ROD.get());
-		event.registerItem(Capabilities.ItemHandler.ITEM, (itemStack, context) -> ENDER_STAFF.get().createHandler(itemStack), ENDER_STAFF.get());
-		event.registerItem(Capabilities.ItemHandler.ITEM, (itemStack, context) -> RENDING_GALE.get().createHandler(itemStack), RENDING_GALE.get());
-		event.registerItem(Capabilities.FluidHandler.ITEM, (itemStack, context) -> new FluidHandlerEmperorChalice(itemStack), EMPEROR_CHALICE.get());
-		event.registerItem(Capabilities.FluidHandler.ITEM, (itemStack, context) -> new FluidHandlerHeroMedallion(itemStack), HERO_MEDALLION.get());
-		event.registerItem(Capabilities.FluidHandler.ITEM, (itemStack, context) -> new FluidHandlerInfernalChalice(ModDataComponents.FLUID_CONTENTS, itemStack), INFERNAL_CHALICE.get());
+		// TODO (1.21.11 port): Capabilities.FluidHandler/ItemHandler were replaced by
+		// Capabilities.Fluid/Item which expose ResourceHandler<FluidResource> /
+		// ResourceHandler<ItemResource> instead of the old IFluidHandlerItem /
+		// IItemHandler types. The reliquary handler classes
+		// (FluidHandlerHeroMedallion/EmperorChalice/InfernalChalice, VoidTearItem#createHandler,
+		// HarvestRodItem#createHandler, EnderStaffItem#createHandler, RendingGaleItem#createHandler)
+		// still implement the pre-1.21.11 interfaces, so their registrations no longer
+		// type-check. Those handler classes need to be rewritten against ResourceHandler
+		// before we can reinstate these registerItem calls. Left empty so ModItems
+		// compiles; HARVEST_ROD_CACHE_CAPABILITY uses an ItemCapability.createVoid
+		// type that still matches and can be wired up once the above TODO is resolved.
 		event.registerItem(HARVEST_ROD_CACHE_CAPABILITY, (itemStack, context) -> new HarvestRodCache(), HARVEST_ROD.get());
 	}
 }

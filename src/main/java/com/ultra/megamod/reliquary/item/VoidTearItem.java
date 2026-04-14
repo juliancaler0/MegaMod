@@ -16,7 +16,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.common.util.TriState;
+import net.minecraft.util.TriState;
 import net.neoforged.neoforge.event.entity.player.ItemEntityPickupEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
@@ -84,7 +83,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack voidTear = player.getItemInHand(hand);
 
 		if (!level.isClientSide) {
@@ -94,7 +93,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 			//noinspection ConstantConditions
 			if (rayTraceResult != null && rayTraceResult.getType() == HitResult.Type.BLOCK &&
 					(InventoryHelper.hasItemHandler(level, rayTraceResult.getBlockPos()) && player.isShiftKeyDown() || hasPlaceableBlock(voidTear))) {
-				return new InteractionResultHolder<>(InteractionResult.PASS, voidTear);
+				return InteractionResult.PASS;
 			}
 
 			if (isEmpty(voidTear)) {
@@ -103,7 +102,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 
 			if (getItemQuantity(voidTear) == 0) {
 				setEmpty(voidTear);
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, voidTear);
+				return InteractionResult.SUCCESS;
 			}
 
 			if (player.isShiftKeyDown()) {
@@ -114,17 +113,17 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 			if (attemptToEmptyIntoInventory(voidTear, player, playerInventory)) {
 				player.level().playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.1F, 0.5F * (RandHelper.getRandomMinusOneToOne(player.level().random) * 0.7F + 1.2F));
 				setEmpty(voidTear);
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, voidTear);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return new InteractionResultHolder<>(InteractionResult.PASS, voidTear);
+		return InteractionResult.PASS;
 	}
 
 	private boolean hasPlaceableBlock(ItemStack voidTear) {
 		return !isEmpty(voidTear) && getTearContents(voidTear).getItem() instanceof BlockItem;
 	}
 
-	private InteractionResultHolder<ItemStack> rightClickEmpty(ItemStack emptyVoidTear, Player player) {
+	private InteractionResult rightClickEmpty(ItemStack emptyVoidTear, Player player) {
 		IItemHandler playerInventory = InventoryHelper.getMainInventoryItemHandlerFrom(player);
 		ItemStack target = InventoryHelper.getTargetItem(emptyVoidTear, playerInventory);
 		if (!target.isEmpty()) {
@@ -138,13 +137,13 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 			buildTear(filledTear, target, player, playerInventory, true);
 			player.level().playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.1F, 0.5F * (RandHelper.getRandomMinusOneToOne(player.level().random) * 0.7F + 1.2F));
 			if (emptyVoidTear.getCount() == 1) {
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, filledTear);
+				return InteractionResult.SUCCESS;
 			} else {
 				InventoryHelper.addItemToPlayerInventory(player, filledTear);
-				return new InteractionResultHolder<>(InteractionResult.SUCCESS, emptyVoidTear);
+				return InteractionResult.SUCCESS;
 			}
 		}
-		return new InteractionResultHolder<>(InteractionResult.PASS, emptyVoidTear);
+		return InteractionResult.PASS;
 	}
 
 	private void buildTear(ItemStack voidTear, ItemStack target, Player player, IItemHandler inventory, boolean isPlayerInventory) {

@@ -11,17 +11,29 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ToolMaterial;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.AttackEntityEvent;
 
-import java.util.List;
 import java.util.function.Consumer;
 
-public class MercyCrossItem extends SwordItem implements ICreativeTabItemGenerator {
+/**
+ * Port note (1.21.11): SwordItem removed. We use Item.Properties#sword
+ * factory + plain Item and keep the original undead-bonus AttackEntityEvent
+ * listener. Tiers → ToolMaterial.
+ */
+public class MercyCrossItem extends Item implements ICreativeTabItemGenerator {
 	public MercyCrossItem() {
-		super(Tiers.GOLD, new Properties().stacksTo(1).durability(64).rarity(Rarity.EPIC)
-				.attributes(SwordItem.createAttributes(Tiers.GOLD, 6, -2.4f)));
+		super(new Properties()
+				.stacksTo(1)
+				.durability(64)
+				.rarity(Rarity.EPIC)
+				.sword(ToolMaterial.GOLD, 6.0f, -2.4f));
 		NeoForge.EVENT_BUS.addListener(this::handleDamage);
 	}
 
@@ -31,12 +43,13 @@ public class MercyCrossItem extends SwordItem implements ICreativeTabItemGenerat
 	}
 
 	@Override
-	public void appendHoverText(ItemStack cross, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
+	public void appendHoverText(ItemStack cross, TooltipContext context, TooltipDisplay display,
+								Consumer<Component> tooltip, TooltipFlag flag) {
+		tooltip.accept(Component.translatable(getDescriptionId() + ".tooltip").withStyle(ChatFormatting.GRAY));
 	}
 
 	private void handleDamage(AttackEntityEvent event) {
-		if (event.getEntity().level().isClientSide || !(event.getTarget() instanceof LivingEntity target)) {
+		if (event.getEntity().level().isClientSide() || !(event.getTarget() instanceof LivingEntity target)) {
 			return;
 		}
 

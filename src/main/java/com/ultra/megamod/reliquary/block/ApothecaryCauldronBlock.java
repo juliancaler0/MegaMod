@@ -2,7 +2,7 @@ package com.ultra.megamod.reliquary.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -97,12 +97,12 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		if (level.isClientSide) {
-			return !heldItem.isEmpty() ? ItemInteractionResult.SUCCESS : ItemInteractionResult.CONSUME;
+			return !heldItem.isEmpty() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
 		} else {
 			if (heldItem.isEmpty()) {
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 			} else {
 				ApothecaryCauldronBlockEntity cauldron = (ApothecaryCauldronBlockEntity) level.getBlockEntity(pos);
 
@@ -111,7 +111,7 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 				}
 			}
 		}
-		return ItemInteractionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	@Override

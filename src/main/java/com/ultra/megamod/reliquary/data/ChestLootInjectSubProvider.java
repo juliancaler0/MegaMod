@@ -4,7 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -40,7 +40,7 @@ public class ChestLootInjectSubProvider implements LootTableSubProvider {
 	public static final ResourceKey<LootTable> VILLAGE_WEAPONSMITH = createInjectLootTableRegistryKey(BuiltInLootTables.VILLAGE_WEAPONSMITH);
 
 	private static ResourceKey<LootTable> createInjectLootTableRegistryKey(ResourceKey<LootTable> vanillaLootTable) {
-		ResourceLocation location = Reliquary.getRL(INJECT_FOLDER + vanillaLootTable.location().getPath());
+		Identifier location = Reliquary.getRL(INJECT_FOLDER + vanillaLootTable.location().getPath());
 		ResourceKey<LootTable> injectLootTable = ResourceKey.create(Registries.LOOT_TABLE, location);
 		LOOT_INJECTS.put(vanillaLootTable, injectLootTable);
 		return injectLootTable;

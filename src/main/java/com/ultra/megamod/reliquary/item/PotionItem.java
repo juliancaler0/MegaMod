@@ -3,12 +3,11 @@ package com.ultra.megamod.reliquary.item;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.init.ModItems;
@@ -16,8 +15,8 @@ import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 
 public class PotionItem extends PotionItemBase {
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.DRINK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.DRINK;
 	}
 
 	@Override
@@ -26,12 +25,12 @@ public class PotionItem extends PotionItemBase {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (PotionHelper.hasPotionContents(stack)) {
 			return ItemUtils.startUsingInstantly(level, player, hand);
 		} else {
-			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
+			return InteractionResult.PASS;
 		}
 	}
 

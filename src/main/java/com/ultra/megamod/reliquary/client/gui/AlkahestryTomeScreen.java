@@ -8,7 +8,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.locale.Language;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class AlkahestryTomeScreen extends BaseScreen<AlkahestTomeMenu> {
-	private static final ResourceLocation BOOK_TEX = Reliquary.getRL("textures/gui/book.png");
+	private static final Identifier BOOK_TEX = Reliquary.getRL("textures/gui/book.png");
 
 	public AlkahestryTomeScreen(AlkahestTomeMenu container, Inventory playerInventory, Component title) {
 		super(container, playerInventory, title);

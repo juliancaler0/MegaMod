@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import com.ultra.megamod.reliquary.Reliquary;
@@ -14,8 +14,8 @@ import com.ultra.megamod.reliquary.item.MobCharmRegistry;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class MobCharmBeltScreen extends BaseScreen<MobCharmBeltMenu> {
-	private static final ResourceLocation BELT_TEX = Reliquary.getRL("textures/gui/mob_charm_belt.png");
-	private static final ResourceLocation BELT_ITEM_TEX = Reliquary.getRL("textures/item/mob_charm_belt.png");
+	private static final Identifier BELT_TEX = Reliquary.getRL("textures/gui/mob_charm_belt.png");
+	private static final Identifier BELT_ITEM_TEX = Reliquary.getRL("textures/item/mob_charm_belt.png");
 	private static final int WIDTH = 175;
 	private static final int HEIGHT = 221;
 

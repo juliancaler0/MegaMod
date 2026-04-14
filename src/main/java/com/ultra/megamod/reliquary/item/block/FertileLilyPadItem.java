@@ -2,7 +2,6 @@ package com.ultra.megamod.reliquary.item.block;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -18,11 +17,11 @@ public class FertileLilyPadItem extends BlockItemBase {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
+	public InteractionResult use(Level level, Player playerIn, InteractionHand handIn) {
 		BlockHitResult hitResult = getPlayerPOVHitResult(level, playerIn, ClipContext.Fluid.SOURCE_ONLY);
 		BlockHitResult hitResultAbove = hitResult.withPosition(hitResult.getBlockPos().above());
 		InteractionResult interactionResult = super.useOn(new UseOnContext(playerIn, handIn, hitResultAbove));
-		return new InteractionResultHolder<>(interactionResult, playerIn.getItemInHand(handIn));
+		return new InteractionResult(interactionResult, playerIn.getItemInHand(handIn));
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import com.ultra.megamod.reliquary.entity.shot.ShotBase;
 
@@ -54,7 +54,7 @@ public class ShotRenderer<T extends ShotBase> extends EntityRenderer<T> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(T entityShot) {
+	public Identifier getTextureLocation(T entityShot) {
 		return entityShot.getShotTexture();
 	}
 }

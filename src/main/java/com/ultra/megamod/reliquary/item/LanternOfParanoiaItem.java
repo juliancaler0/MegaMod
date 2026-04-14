@@ -8,7 +8,7 @@ import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -172,11 +172,11 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 	}
 
 	private Optional<Block> getTorchBlock(String registryName) {
-		Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.parse(registryName));
+		Block block = BuiltInRegistries.BLOCK.get(Identifier.parse(registryName));
 		if (block == Blocks.AIR) {
 			return Optional.empty();
 		}
-		return Optional.of(TORCH_BLOCKS.computeIfAbsent(registryName, rn -> BuiltInRegistries.BLOCK.get(ResourceLocation.parse(rn))));
+		return Optional.of(TORCH_BLOCKS.computeIfAbsent(registryName, rn -> BuiltInRegistries.BLOCK.get(Identifier.parse(rn))));
 	}
 
 	@Nullable

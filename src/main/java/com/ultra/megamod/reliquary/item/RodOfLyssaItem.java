@@ -6,7 +6,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -28,7 +27,7 @@ public class RodOfLyssaItem extends ItemBase {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		int entityId = getHookEntityId(stack);
 		if (entityId != 0 && level.getEntity(entityId) instanceof LyssaHook hook) {
@@ -53,7 +52,7 @@ public class RodOfLyssaItem extends ItemBase {
 			player.swing(hand);
 		}
 
-		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
+		return InteractionResult.SUCCESS;
 	}
 
 	private void setHookEntityId(ItemStack stack, int entityId) {

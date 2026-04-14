@@ -16,7 +16,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ItemPropertyFunction;
 import net.minecraft.locale.Language;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -332,17 +332,17 @@ public class ClientEventHandler {
 	}
 
 	private static void registerVoidTearItemProperties() {
-		ItemProperties.register(ModItems.VOID_TEAR.get(), ResourceLocation.parse("empty"),
+		ItemProperties.register(ModItems.VOID_TEAR.get(), Identifier.parse("empty"),
 				(stack, level, entity, seed) -> ModItems.VOID_TEAR.get().isEmpty(stack) ? 1.0F : 0.0F);
 	}
 
 	private static void registerInfernalTearItemProperties() {
-		ItemProperties.register(ModItems.INFERNAL_TEAR.get(), ResourceLocation.parse("empty"),
+		ItemProperties.register(ModItems.INFERNAL_TEAR.get(), Identifier.parse("empty"),
 				(stack, level, entity, seed) -> InfernalTearItem.getStackFromTear(stack).isEmpty() ? 1.0F : 0.0F);
 	}
 
 	private static void registerLyssaRodItemProperties() {
-		ItemProperties.register(ModItems.ROD_OF_LYSSA.get(), ResourceLocation.parse("cast"), (stack, level, entity, seed) -> {
+		ItemProperties.register(ModItems.ROD_OF_LYSSA.get(), Identifier.parse("cast"), (stack, level, entity, seed) -> {
 			if (entity == null) {
 				return 0.0F;
 			} else {
@@ -359,7 +359,7 @@ public class ClientEventHandler {
 		event.register(FORTUNE_COIN_TOGGLE_KEYBIND);
 	}
 
-	private static void registerPropertyToItems(ResourceLocation registryName, @SuppressWarnings("deprecation") ItemPropertyFunction propertyGetter, Item... items) {
+	private static void registerPropertyToItems(Identifier registryName, @SuppressWarnings("deprecation") ItemPropertyFunction propertyGetter, Item... items) {
 		for (Item item : items) {
 			ItemProperties.register(item, registryName, propertyGetter);
 		}
@@ -392,16 +392,16 @@ public class ClientEventHandler {
 		}, ModItems.WITCH_HAT.get());
 
 		event.registerFluidType(new IClientFluidTypeExtensions() {
-			private static final ResourceLocation XP_STILL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Reliquary.MOD_ID, "block/xp_still");
-			private static final ResourceLocation XP_FLOWING_TEXTURE = ResourceLocation.fromNamespaceAndPath(Reliquary.MOD_ID, "block/xp_flowing");
+			private static final Identifier XP_STILL_TEXTURE = Identifier.fromNamespaceAndPath(Reliquary.MOD_ID, "block/xp_still");
+			private static final Identifier XP_FLOWING_TEXTURE = Identifier.fromNamespaceAndPath(Reliquary.MOD_ID, "block/xp_flowing");
 
 			@Override
-			public ResourceLocation getStillTexture() {
+			public Identifier getStillTexture() {
 				return XP_STILL_TEXTURE;
 			}
 
 			@Override
-			public ResourceLocation getFlowingTexture() {
+			public Identifier getFlowingTexture() {
 				return XP_FLOWING_TEXTURE;
 			}
 		}, ModFluids.EXPERIENCE_FLUID_TYPE.get());

@@ -12,7 +12,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import com.ultra.megamod.reliquary.compat.jade.provider.IJadeDataChangeIndicator;
 import com.ultra.megamod.reliquary.init.ModBlocks;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
@@ -23,7 +22,7 @@ import com.ultra.megamod.reliquary.util.potions.PotionIngredient;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApothecaryMortarBlockEntity extends BlockEntityBase implements IJadeDataChangeIndicator {
+public class ApothecaryMortarBlockEntity extends BlockEntityBase {
 	public static final int PESTLE_USAGE_MAX = 5; // the number of times you have to use the pestle
 	// counts the number of times the player has right clicked the block
 	// arbitrarily setting the number of times the player needs to grind the
