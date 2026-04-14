@@ -49,6 +49,14 @@ public final class EmfBoneApplier {
      */
     public static int apply(EmfActiveModel active, ModelPart root, EmfVariableContext ctx) {
         if (active == null || active.definition == null) return 0;
+        // Phase F: honour animationFrameSkipDuringIrisShadowPass config.
+        try {
+            if (com.ultra.megamod.lib.emf.EMF.config().getConfig().animationFrameSkipDuringIrisShadowPass
+                    && com.ultra.megamod.lib.emf.compat.IrisShadowPassDetection.getInstance().inShadowPass()) {
+                return 0;
+            }
+        } catch (Throwable ignored) {
+        }
         active.bindRoot(root);
 
         // Phase F: pause / vanilla-lock gating ---------------------------------------
@@ -61,6 +69,19 @@ public final class EmfBoneApplier {
                         || com.ultra.megamod.lib.emf.api.EMFApi.isEntityAnimationPaused(uuid))) {
             // Fully paused / vanilla-locked: skip every bone for this frame.
             return 0;
+        }
+        // Phase F: LOD skip — entities far from the player take simplified writes.
+        try {
+            com.ultra.megamod.lib.emf.config.EMFConfig cfg = com.ultra.megamod.lib.emf.EMF.config().getConfig();
+            if (cfg.animationLODDistance > 0 && ctx instanceof MinecraftRenderStateContext mrs) {
+                float dist = mrs.getFloat("distance");
+                if (dist > cfg.animationLODDistance) {
+                    if (!cfg.retainDetailOnLowFps || com.ultra.megamod.lib.emf.runtime.EmfFrameCounter.current() % 2 == 0) {
+                        return 0;
+                    }
+                }
+            }
+        } catch (Throwable ignored) {
         }
         ModelPart[] pausedParts = uuid == null
                 ? null
