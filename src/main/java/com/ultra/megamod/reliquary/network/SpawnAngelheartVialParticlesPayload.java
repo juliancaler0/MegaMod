@@ -47,10 +47,18 @@ public record SpawnAngelheartVialParticlesPayload(Vec3 position) implements Cust
 			double xSpeed = Math.cos(angle) * distance;
 			double ySpeed = 0.01D + random.nextDouble() * 0.5D;
 			double zSpeed = Math.sin(angle) * distance;
-			Particle particle = Minecraft.getInstance().particleEngine.createParticle(ParticleTypes.EFFECT, x + xSpeed * 0.1D, y + 0.3D, z + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
+			// TODO: 1.21.11 port - ParticleTypes.EFFECT is ParticleType<SpellParticleOption>;
+			// we need a SpellParticleOption instance with colour packed in. Particle#setColor was
+			// removed, so colour tinting is now inherent to the options object.
+			float colorMultiplier = 0.75F + random.nextFloat() * 0.25F;
+			int argb = 0xFF000000
+					| (((int) Math.min(255, red * colorMultiplier * 255)) << 16)
+					| (((int) Math.min(255, green * colorMultiplier * 255)) << 8)
+					| ((int) Math.min(255, blue * colorMultiplier * 255));
+			net.minecraft.client.particle.Particle particle = Minecraft.getInstance().particleEngine.createParticle(
+					net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, argb),
+					x + xSpeed * 0.1D, y + 0.3D, z + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
 			if (particle != null) {
-				float colorMultiplier = 0.75F + random.nextFloat() * 0.25F;
-				particle.setColor(red * colorMultiplier, green * colorMultiplier, blue * colorMultiplier);
 				particle.setPower((float) distance);
 			}
 		}

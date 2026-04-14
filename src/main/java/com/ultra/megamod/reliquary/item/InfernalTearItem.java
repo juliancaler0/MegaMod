@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -25,6 +26,7 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class InfernalTearItem extends ToggleableItem {
 	private static final int COOLDOWN = 4;
@@ -35,12 +37,12 @@ public class InfernalTearItem extends ToggleableItem {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.RED);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.RED);
 	}
 
 	@Override
-	public void inventoryTick(ItemStack tear, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack tear, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0 || !isEnabled(tear) || isInCooldown(tear, level)) {
 			return;
 		}
@@ -71,8 +73,8 @@ public class InfernalTearItem extends ToggleableItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
-		super.appendHoverText(stack, context, tooltip, flag);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, net.minecraft.world.item.component.TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, tooltip, flag);
 		if (getStackFromTear(stack).isEmpty()) {
 			TooltipBuilder.of(tooltip, context).description("tooltip.reliquary.tear_empty");
 		}

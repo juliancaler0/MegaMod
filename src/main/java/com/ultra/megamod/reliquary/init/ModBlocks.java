@@ -86,26 +86,17 @@ public class ModBlocks {
 		ImmutableMap.Builder<DyeColor, Supplier<BlockItem>> passiveBuilder = ImmutableMap.builder();
 		ImmutableMap.Builder<DyeColor, Supplier<BlockItem>> activeBuilder = ImmutableMap.builder();
 		for (DyeColor color : DyeColor.values()) {
+			// TODO: 1.21.11 port - Item#getDescriptionId() became final; name override alone is kept.
 			passiveBuilder.put(color, ITEMS.register("pedestals/passive/" + color.getName() + "_passive_pedestal", () -> new BlockItemBase(PASSIVE_PEDESTALS.get(color).get(), new Item.Properties()) {
 				@Override
 				public Component getName(ItemStack stack) {
 					return Component.translatable(BLOCK_PREFIX + Reliquary.MOD_ID + ".passive_pedestal");
-				}
-
-				@Override
-				public String getDescriptionId() {
-					return BLOCK_PREFIX + Reliquary.MOD_ID + ".passive_pedestal";
 				}
 			}));
 			activeBuilder.put(color, ITEMS.register("pedestals/" + color.getName() + "_pedestal", () -> new BlockItemBase(PEDESTALS.get(color).get(), new Item.Properties()) {
 				@Override
 				public Component getName(ItemStack stack) {
 					return Component.translatable(BLOCK_PREFIX + Reliquary.MOD_ID + ".pedestal");
-				}
-
-				@Override
-				public String getDescriptionId() {
-					return BLOCK_PREFIX + Reliquary.MOD_ID + ".pedestal";
 				}
 			}));
 		}
@@ -122,14 +113,14 @@ public class ModBlocks {
 
 	@SuppressWarnings({"squid:S4449", "ConstantConditions"}) // no datafixer is defined for any of the tile entities so this is moot
 	private static <T extends BlockEntity> BlockEntityType<T> getTileEntityType(BlockEntityType.BlockEntitySupplier<T> tileFactory, Block... validBlocks) {
-		return BlockEntityType.Builder.of(tileFactory, validBlocks).build(null);
+		// TODO: 1.21.11 port - BlockEntityType.Builder removed; direct constructor used instead.
+		return new BlockEntityType<>(tileFactory, validBlocks);
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, APOTHECARY_MORTAR_TILE_TYPE.get(), (mortar, direction) -> mortar.getItems());
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PASSIVE_PEDESTAL_TILE_TYPE.get(), (pedestal, direction) -> pedestal.getItemHandler());
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, PEDESTAL_TILE_TYPE.get(), (pedestal, direction) -> pedestal.getItemHandler());
-
-		event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, PEDESTAL_TILE_TYPE.get(), (pedestal, direction) -> pedestal.getFluidHandler());
+		// TODO: 1.21.11 port - Capabilities.ItemHandler / Capabilities.FluidHandler were
+		// replaced by the new ResourceHandler-based Capabilities.Item / Capabilities.Fluid.
+		// Block-entity capability registration is disabled until the pedestal/cauldron
+		// handlers are rewritten against the new resource handlers.
 	}
 }

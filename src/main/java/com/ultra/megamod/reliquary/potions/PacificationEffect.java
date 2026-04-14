@@ -18,7 +18,7 @@ public class PacificationEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+	public boolean applyEffectTick(net.minecraft.server.level.ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
 		if (livingEntity.level().isClientSide() || !(livingEntity instanceof Mob entityLiving)) {
 			return false;
 		}

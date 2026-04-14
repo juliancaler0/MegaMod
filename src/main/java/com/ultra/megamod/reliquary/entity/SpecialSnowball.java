@@ -35,7 +35,7 @@ public class SpecialSnowball extends ThrowableItemProjectile {
 	}
 
 	public SpecialSnowball(Level level, LivingEntity entity, boolean b) {
-		super(ModEntities.SPECIAL_SNOWBALL.get(), entity, level);
+		super(ModEntities.SPECIAL_SNOWBALL.get(), entity, level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SNOWBALL));
 		fromGlacialStaff = b;
 	}
 

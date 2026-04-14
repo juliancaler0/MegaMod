@@ -16,14 +16,14 @@ public class ReliquaryEnchantmentProvider {
 		context.register(SEVERING,
 				Enchantment.enchantment(
 						Enchantment.definition(
-								context.lookup(Registries.ITEM).getOrThrow(ItemTags.SWORD_ENCHANTABLE),
+								context.lookup(Registries.ITEM).getOrThrow(ItemTags.SHARP_WEAPON_ENCHANTABLE),
 								1, //weight
 								5, // max level
 								Enchantment.dynamicCost(15, 9),
 								Enchantment.dynamicCost(65, 9),
 								6, // anvil cost
 								EquipmentSlotGroup.MAINHAND)
-				).build(SEVERING.location())
+				).build(SEVERING.identifier())
 		);
 	}
 }

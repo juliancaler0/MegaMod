@@ -154,7 +154,6 @@ public class ApothecaryMortarBlockEntity extends BlockEntityBase {
 		return level.getGameTime() < finishCoolDown;
 	}
 
-	@Override
 	public boolean getDataChanged() {
 		boolean ret = dataChanged;
 		dataChanged = false;

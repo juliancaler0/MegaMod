@@ -2,9 +2,11 @@ package com.ultra.megamod.reliquary.item;
 
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.component.TooltipDisplay;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.util.IPotionItem;
 import com.ultra.megamod.reliquary.reference.Config;
@@ -13,7 +15,6 @@ import com.ultra.megamod.reliquary.util.potions.PotionEssence;
 import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 import com.ultra.megamod.reliquary.util.potions.PotionMap;
 
-import java.util.List;
 import java.util.function.Consumer;
 
 public class PotionItemBase extends ItemBase implements IPotionItem {
@@ -21,20 +22,11 @@ public class PotionItemBase extends ItemBase implements IPotionItem {
 		super(new Properties());
 	}
 
-	// returns an empty vial when used in crafting recipes, unless it's one of
-	// the base potion types.
-	@Override
-	public boolean hasCraftingRemainingItem(ItemStack stack) {
-		return PotionHelper.hasPotionContents(stack);
-	}
+	// TODO: 1.21.11 port - hasCraftingRemainingItem/getCraftingRemainingItem were removed;
+	// use Properties#craftRemainder(Item) at item registration instead.
 
 	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack itemStack) {
-		return new ItemStack(ModItems.EMPTY_POTION_VIAL.get());
-	}
-
-	@Override
-	public void appendHoverText(ItemStack potion, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack potion, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
 		TooltipBuilder.of(tooltip, context).potionEffects(potion);
 	}
 

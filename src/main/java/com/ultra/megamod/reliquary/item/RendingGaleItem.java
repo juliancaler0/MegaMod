@@ -45,8 +45,8 @@ public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.YELLOW);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.YELLOW);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack rendingGale, Level level, Entity entity, int slotNumber, boolean isSelected) {
+	public void inventoryTick(ItemStack rendingGale, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || level.getGameTime() % 10 != 0) {
 			return;
 		}
@@ -237,9 +237,9 @@ public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 				attemptedY++;
 			}
 			if (!player.level().isClientSide() && player.level().isRainingAt(new BlockPos(pos.getX(), attemptedY, pos.getZ()))) {
-				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(player.level());
+				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(player.level(), net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
 				if (bolt != null) {
-					bolt.moveTo(pos.getX(), pos.getY(), pos.getZ());
+					bolt.snapTo(pos.getX(), pos.getY(), pos.getZ());
 					player.level().addFreshEntity(bolt);
 					useCharge(rendingGale, FIRST_SLOT, getBoltChargeCost());
 				}

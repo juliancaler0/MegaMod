@@ -1241,7 +1241,10 @@ public class Config {
 				}
 
 				private Set<Item> getTorchItemsFromRegistryNames() {
-					return torches.get().stream().map(torchRegistryName -> BuiltInRegistries.ITEM.get(Identifier.parse(torchRegistryName))).collect(Collectors.toSet());
+					return torches.get().stream()
+						.map(torchRegistryName -> BuiltInRegistries.ITEM.get(Identifier.parse(torchRegistryName)).map(net.minecraft.core.Holder::value).orElse(null))
+						.filter(java.util.Objects::nonNull)
+						.collect(Collectors.toSet());
 				}
 
 				private ArrayList<String> getDefaultTorches() {

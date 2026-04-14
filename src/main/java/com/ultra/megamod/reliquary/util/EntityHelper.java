@@ -9,7 +9,7 @@ public class EntityHelper {
 		player.removeEffect(MobEffects.HUNGER);
 		player.removeEffect(MobEffects.POISON);
 		player.removeEffect(MobEffects.NAUSEA);
-		player.removeEffect(MobEffects.DIG_SLOWDOWN);
+		player.removeEffect(MobEffects.MINING_FATIGUE);
 		player.removeEffect(MobEffects.SLOWNESS);
 		player.removeEffect(MobEffects.BLINDNESS);
 		player.removeEffect(MobEffects.WEAKNESS);

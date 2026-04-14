@@ -46,8 +46,8 @@ public class GlacialStaffItem extends IceMagusRodItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack staff, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		super.inventoryTick(staff, level, entity, itemSlot, isSelected);
+	public void inventoryTick(ItemStack staff, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
+		super.inventoryTick(staff, level, entity, slot);
 
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 2 != 0) {
 			return;

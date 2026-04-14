@@ -27,7 +27,7 @@ public class TwilightCloakItem extends ToggleableItem implements ICuriosItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack twilightCloak, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack twilightCloak, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator()) {
 			return;
 		}

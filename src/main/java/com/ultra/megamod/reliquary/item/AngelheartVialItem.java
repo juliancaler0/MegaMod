@@ -62,16 +62,8 @@ public class AngelheartVialItem extends ItemBase {
 		return true;
 	}
 
-	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack stack) {
-		return new ItemStack(ModItems.EMPTY_POTION_VIAL.get());
-	}
-
-	// returns an empty vial when used in crafting recipes.
-	@Override
-	public boolean hasCraftingRemainingItem(ItemStack stack) {
-		return true;
-	}
+	// TODO: 1.21.11 port - Item#getCraftingRemainingItem / hasCraftingRemainingItem were
+	// removed; configure Properties#craftRemainder(Item) at registration instead.
 
 	private static void decreaseAngelHeartByOne(Player player) {
 		ItemStack stack = InventoryHelper.getItemFromAllPlayerHandlers(player, ModItems.ANGELHEART_VIAL.get());

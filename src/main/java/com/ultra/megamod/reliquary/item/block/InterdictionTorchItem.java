@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class InterdictionTorchItem extends StandingAndWallBlockItem implements ICreativeTabItemGenerator {
 	public InterdictionTorchItem() {
-		super(ModBlocks.INTERDICTION_TORCH.get(), ModBlocks.WALL_INTERDICTION_TORCH.get(), new Item.Properties(), Direction.DOWN);
+		super(ModBlocks.INTERDICTION_TORCH.get(), ModBlocks.WALL_INTERDICTION_TORCH.get(), Direction.DOWN, new Item.Properties());
 	}
 
 	@Override

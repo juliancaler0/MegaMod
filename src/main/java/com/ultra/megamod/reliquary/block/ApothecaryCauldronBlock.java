@@ -87,7 +87,7 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean intersecting) {
 		if (!level.isClientSide()) {
 			ApothecaryCauldronBlockEntity cauldron = (ApothecaryCauldronBlockEntity) level.getBlockEntity(pos);
 			if (cauldron != null) {
@@ -137,7 +137,7 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 	 * comparator.
 	 */
 	@Override
-	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, net.minecraft.core.Direction direction) {
 		ApothecaryCauldronBlockEntity cauldron = (ApothecaryCauldronBlockEntity) level.getBlockEntity(pos);
 		if (cauldron != null) {
 			return cauldron.getLiquidLevel();

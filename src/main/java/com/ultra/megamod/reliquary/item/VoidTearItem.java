@@ -169,7 +169,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack voidTear, Level level, Entity entity, int slotNumber, boolean isSelected) {
+	public void inventoryTick(ItemStack voidTear, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 5 != 0) {
 			return;
 		}
@@ -251,7 +251,8 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 			return InteractionResult.PASS;
 		}
 
-		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+		// TODO: 1.21.11 port - Capabilities.ItemHandler.BLOCK replaced by Capabilities.Item.BLOCK (ResourceHandler).
+		IItemHandler handler = InventoryHelper.getInventoryAtPos(level, pos, null);
 		if (handler != null) {
 			return processItemHandlerInteraction(player, hand, level, voidTear, handler);
 		} else if (!level.isClientSide() && hasPlaceableBlock(voidTear) && getItemQuantity(voidTear) > 0) {

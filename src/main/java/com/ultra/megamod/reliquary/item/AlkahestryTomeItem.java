@@ -42,7 +42,7 @@ public class AlkahestryTomeItem extends ChargeableItem {
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		ItemStack newStack = super.use(level, player, hand).getObject();
+		super.use(level, player, hand);
 		if (player.isShiftKeyDown()) {
 			return InteractionResult.SUCCESS;
 		}
@@ -54,10 +54,7 @@ public class AlkahestryTomeItem extends ChargeableItem {
 		return InteractionResult.SUCCESS;
 	}
 
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
+	// TODO: 1.21.11 port - Item#isEnchantable was removed; use Properties#enchantable(0) at registration.
 
 	@Override
 	public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
@@ -65,7 +62,7 @@ public class AlkahestryTomeItem extends ChargeableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack tome, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack tome, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0 || !isEnabled(tome) || getCharge(tome) == getChargeLimit()) {
 			return;
 		}

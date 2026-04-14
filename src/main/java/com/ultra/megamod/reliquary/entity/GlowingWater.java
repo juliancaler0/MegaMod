@@ -32,7 +32,8 @@ public class GlowingWater extends ThrowableProjectile implements ItemSupplier {
 	}
 
 	public GlowingWater(Level level, Player player) {
-		super(ModEntities.GLOWING_WATER.get(), player, level);
+		super(ModEntities.GLOWING_WATER.get(), player.getX(), player.getEyeY() - 0.1, player.getZ(), level);
+		setOwner(player);
 	}
 
 	public GlowingWater(Level level, Position position) {

@@ -140,10 +140,8 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 			return;
 		}
 
-		IItemHandler ih = item.getCapability(Capabilities.ItemHandler.ITEM);
-		if (ih != null) {
-			itemHandler = ih;
-		}
+		// TODO: 1.21.11 port - Capabilities.ItemHandler.ITEM was removed; item-based
+		// sub-inventory capabilities are disabled until the new ResourceHandler API is wired.
 
 		if (item.getItem() instanceof IPedestalActionItem pedestalActionItem) {
 			tickable = true;
@@ -163,7 +161,8 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 		}
 
 
-		IFluidHandlerItem itemFluidHandler = item.getCapability(Capabilities.FluidHandler.ITEM);
+		// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM.
+		IFluidHandlerItem itemFluidHandler = null;
 		if (itemFluidHandler != null) {
 			fluidContainer = item;
 		}
@@ -229,7 +228,7 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 	public int addToConnectedInventory(Level level, ItemStack stack) {
 		int numberAdded = 0;
 		for (Direction side : Direction.values()) {
-			numberAdded += InventoryHelper.tryToAddToInventoryAtPos(stack, level, worldPosition.offset(side.getNormal()), side.getOpposite(), stack.getCount() - numberAdded);
+			numberAdded += InventoryHelper.tryToAddToInventoryAtPos(stack, level, worldPosition.relative(side), side.getOpposite(), stack.getCount() - numberAdded);
 			if (numberAdded >= stack.getCount()) {
 				break;
 			}
@@ -350,7 +349,7 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 		List<IFluidHandler> adjacentTanks = new ArrayList<>();
 
 		for (Direction side : Direction.values()) {
-			BlockPos tankPos = getBlockPos().offset(side.getNormal());
+			BlockPos tankPos = getBlockPos().relative(side);
 			Direction tankDirection = side.getOpposite();
 			addIfTank(adjacentTanks, tankPos, tankDirection);
 		}
@@ -359,10 +358,8 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 	}
 
 	private void addIfTank(List<IFluidHandler> adjacentTanks, BlockPos tankPos, Direction tankDirection) {
-		IFluidHandler fh = level.getCapability(Capabilities.FluidHandler.BLOCK, tankPos, tankDirection);
-		if (fh != null) {
-			adjacentTanks.add(fh);
-		}
+		// TODO: 1.21.11 port - Capabilities.FluidHandler.BLOCK replaced by Capabilities.Fluid.BLOCK
+		// which returns ResourceHandler<FluidResource>. Adjacent-tank discovery is disabled here.
 	}
 
 	public void removeSpecialItems(Level level) {

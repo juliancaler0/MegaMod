@@ -8,7 +8,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -20,7 +19,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 
-public class ConcussiveExplosion extends Explosion {
+/**
+ * TODO: 1.21.11 port - {@code net.minecraft.world.level.Explosion} became an interface and the
+ * old block-destroying helpers were removed. This class used to extend Explosion and override
+ * its block/particle hooks. It has been rewritten as a standalone helper that replicates the
+ * old behaviour for entity knockback/damage while skipping the block-destroying half.
+ */
+public class ConcussiveExplosion {
 	private final Level level;
 	private final Vec3 pos;
 	protected final Entity exploder;
@@ -29,20 +34,17 @@ public class ConcussiveExplosion extends Explosion {
 	private final Player shootingEntity;
 
 	public ConcussiveExplosion(Level level, @Nullable Entity entity, @Nullable Player player, Vec3 pos, float size, boolean isFlaming) {
-		super(level, entity, null, null, pos.x(), pos.y(), pos.z(), size, isFlaming,
-				BlockInteraction.DESTROY, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.GENERIC_EXPLODE);
 		this.level = level;
-		exploder = entity;
-		shootingEntity = player;
+		this.exploder = entity;
+		this.shootingEntity = player;
 		this.pos = pos;
-		explosionSize = size;
-		playerKnockbackMap = Maps.newHashMap();
+		this.explosionSize = size;
+		this.playerKnockbackMap = Maps.newHashMap();
 	}
 
 	/**
-	 * Does the first part of the explosion (destroy blocks)
+	 * Does the first part of the explosion (damage + knockback, no block destruction in 1.21.11 port).
 	 */
-	@Override
 	public void explode() {
 		float var1 = explosionSize;
 
@@ -75,7 +77,8 @@ public class ConcussiveExplosion extends Explosion {
 				d5 /= var33;
 				d7 /= var33;
 				d9 /= var33;
-				double var32 = getSeenPercent(var30, entity);
+				// TODO: 1.21.11 port - no Explosion.getSeenPercent fallback available, use a flat 1.0
+				double var32 = 1.0D;
 				double d10 = (1.0D - var13) * var32;
 				entity.hurt(entity.damageSources().thrown(exploder, shootingEntity), (int) ((d10 * d10 + d10) * 6.0D * (explosionSize * 2) + 3.0D));
 				entity.setDeltaMovement(entity.getDeltaMovement().add(d5 * d10, d7 * d10, d9 * d10));
@@ -88,9 +91,8 @@ public class ConcussiveExplosion extends Explosion {
 	}
 
 	/**
-	 * Does the second part of the explosion (sounds, particles, drop spawn)
+	 * Does the second part of the explosion (sounds, particles).
 	 */
-	@Override
 	public void finalizeExplosion(boolean spawnParticles) {
 		level.playSound(null, BlockPos.containing(pos.x(), pos.y(), pos.z()), SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, (1.0F + RandHelper.getRandomMinusOneToOne(level.random) * 0.2F) * 0.7F);
 
@@ -101,7 +103,6 @@ public class ConcussiveExplosion extends Explosion {
 		}
 	}
 
-	@Override
 	public Map<Player, Vec3> getHitPlayers() {
 		return playerKnockbackMap;
 	}
@@ -115,7 +116,7 @@ public class ConcussiveExplosion extends Explosion {
 		@Override
 		protected boolean affectEntity(Entity entity) {
 			return (super.affectEntity(entity) && !(entity instanceof Player))
-					|| (entity instanceof Player player && exploder != null && exploder.getCustomName() != null && exploder.getCustomName().getString().contains((player).getGameProfile().getName()));
+					|| (entity instanceof Player player && exploder != null && exploder.getCustomName() != null && exploder.getCustomName().getString().contains((player).getGameProfile().name()));
 		}
 	}
 

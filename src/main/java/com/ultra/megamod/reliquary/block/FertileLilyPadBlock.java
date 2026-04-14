@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.vehicle.AbstractBoat;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -150,9 +150,9 @@ public class FertileLilyPadBlock extends BushBlock implements ICreativeTabItemGe
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entityIn) {
-		super.entityInside(state, level, pos, entityIn);
-		if (entityIn instanceof Boat) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entityIn, net.minecraft.world.entity.InsideBlockEffectApplier effectApplier, boolean intersecting) {
+		super.entityInside(state, level, pos, entityIn, effectApplier, intersecting);
+		if (entityIn instanceof AbstractBoat) {
 			level.destroyBlock(pos, true);
 		}
 	}
@@ -163,8 +163,9 @@ public class FertileLilyPadBlock extends BushBlock implements ICreativeTabItemGe
 	}
 
 	@Override
-	protected MapCodec<? extends BushBlock> codec() {
-		return CODEC;
+	@SuppressWarnings({"unchecked", "rawtypes"}) // BushBlock#codec returns MapCodec<BushBlock> in 1.21.11
+	public MapCodec<BushBlock> codec() {
+		return (MapCodec) CODEC;
 	}
 
 	@Override

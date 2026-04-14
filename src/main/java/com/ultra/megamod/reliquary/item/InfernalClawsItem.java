@@ -39,8 +39,8 @@ public class InfernalClawsItem extends ItemBase {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.RED);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.RED);
 	}
 
 	@Override

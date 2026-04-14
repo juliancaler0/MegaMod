@@ -27,7 +27,8 @@ public class HolyHandGrenade extends ThrowableProjectile implements ItemSupplier
 	}
 
 	public HolyHandGrenade(Level level, Player player, String customName) {
-		super(ModEntities.HOLY_HAND_GRENADE.get(), player, level);
+		super(ModEntities.HOLY_HAND_GRENADE.get(), player.getX(), player.getEyeY() - 0.1, player.getZ(), level);
+		setOwner(player);
 		playerThrower = player;
 		setCustomName(Component.literal(customName));
 	}
@@ -54,7 +55,7 @@ public class HolyHandGrenade extends ThrowableProjectile implements ItemSupplier
 		super.tick();
 		if (count == 2) {
 			for (int particles = 0; particles < random.nextInt(2) + 1; particles++) {
-				level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, ARGB.ARGB32.opaque( 0)), getX() + level().random.nextDouble(), getY() + level().random.nextDouble(), getZ() + level().random.nextDouble(), 0D, 0D, 0D);
+				level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFF000000), getX() + level().random.nextDouble(), getY() + level().random.nextDouble(), getZ() + level().random.nextDouble(), 0D, 0D, 0D);
 			}
 			count = 0;
 		} else {

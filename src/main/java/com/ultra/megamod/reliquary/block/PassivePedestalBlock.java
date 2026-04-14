@@ -95,12 +95,12 @@ public class PassivePedestalBlock extends Block implements EntityBlock, ICreativ
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor level, BlockPos currentPos, BlockPos facingPos) {
+	protected BlockState updateShape(BlockState state, net.minecraft.world.level.LevelReader level, net.minecraft.world.level.ScheduledTickAccess scheduledTicks, BlockPos currentPos, Direction facing, BlockPos facingPos, BlockState facingState, net.minecraft.util.RandomSource random) {
 		if (facing != Direction.DOWN && Boolean.TRUE.equals(state.getValue(WATERLOGGED))) {
-			level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+			scheduledTicks.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
 		}
 
-		return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+		return super.updateShape(state, level, scheduledTicks, currentPos, facing, facingPos, facingState, random);
 	}
 
 	@Override
@@ -129,17 +129,18 @@ public class PassivePedestalBlock extends Block implements EntityBlock, ICreativ
 			return InteractionResult.SUCCESS;
 		}
 
-		return WorldHelper.getBlockEntity(level, pos, PassivePedestalBlockEntity.class).map(pedestal ->
+		return WorldHelper.getBlockEntity(level, pos, PassivePedestalBlockEntity.class).<InteractionResult>map(pedestal ->
 				InventoryHelper.executeOnItemHandlerAt(level, pos, state, pedestal, itemHandler ->
-						InventoryHelper.tryAddingPlayerCurrentItem(player, itemHandler, InteractionHand.MAIN_HAND) ? InteractionResult.SUCCESS : InteractionResult.CONSUME, InteractionResult.CONSUME
+						(InteractionResult)(InventoryHelper.tryAddingPlayerCurrentItem(player, itemHandler, InteractionHand.MAIN_HAND) ? InteractionResult.SUCCESS : InteractionResult.CONSUME), InteractionResult.CONSUME
 				)
 		).orElse(InteractionResult.FAIL);
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean isMoving) {
+		// TODO: 1.21.11 port - onRemove was replaced by affectNeighborsAfterRemoval.
 		WorldHelper.getBlockEntity(level, pos, PassivePedestalBlockEntity.class).ifPresent(pedestal -> pedestal.dropPedestalInventory(level));
-		super.onRemove(state, level, pos, newState, isMoving);
+		super.affectNeighborsAfterRemoval(state, level, pos, isMoving);
 	}
 
 	@Override

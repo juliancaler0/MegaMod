@@ -48,14 +48,14 @@ public class KrakenShellItem extends ItemBase {
 	// checks to see if the player is in water. If so, give them some minor
 	// buffs.
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.getGameTime() % 3 != 0) {
 			return;
 		}
 
 		if (entity instanceof Player player && player.isInWater()) {
-			player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 5, 0, true, false));
-			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 5, 0, true, false));
+			player.addEffect(new MobEffectInstance(MobEffects.HASTE, 5, 0, true, false));
+			player.addEffect(new MobEffectInstance(MobEffects.SPEED, 5, 0, true, false));
 			player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, false));
 		}
 	}

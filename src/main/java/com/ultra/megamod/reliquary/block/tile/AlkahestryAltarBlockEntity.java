@@ -23,7 +23,10 @@ public class AlkahestryAltarBlockEntity extends BlockEntityBase {
 	}
 
 	public void serverTick(Level level, BlockPos pos) {
-		if (level.isClientSide() || !isActive || level.isNight() || !level.canSeeSky(pos.above())) {
+		// TODO: 1.21.11 port - Level#isNight() removed; derive from day time (13000..23000 = night).
+		long tod = level.getDayTime() % 24000L;
+		boolean isNight = tod >= 13000L && tod <= 23000L;
+		if (level.isClientSide() || !isActive || isNight || !level.canSeeSky(pos.above())) {
 			return;
 		}
 		if (cycleTime > 0) {

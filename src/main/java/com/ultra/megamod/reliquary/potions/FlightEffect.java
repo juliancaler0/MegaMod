@@ -29,7 +29,7 @@ public class FlightEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+	public boolean applyEffectTick(net.minecraft.server.level.ServerLevel serverLevel, LivingEntity livingEntity, int amplifier) {
 		if (livingEntity.level().isClientSide()) {
 			return true;
 		}

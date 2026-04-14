@@ -59,8 +59,8 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.DARK_GREEN);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.DARK_GREEN);
 	}
 
 	@Override

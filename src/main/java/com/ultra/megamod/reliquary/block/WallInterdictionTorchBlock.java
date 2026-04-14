@@ -44,7 +44,7 @@ public class WallInterdictionTorchBlock extends InterdictionTorchBlock {
 		double verticalModifier = 0.22D;
 		double horizontalModifier = 0.27D;
 		Direction oppositeFacing = state.getValue(HORIZONTAL_FACING).getOpposite();
-		level.addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, ARGB.ARGB32.opaque( 0)), xOffset + horizontalModifier * oppositeFacing.getStepX(), yOffset + verticalModifier, zOffset + horizontalModifier * oppositeFacing.getStepZ(), 0.0D, 0.0D, 0.0D);
+		level.addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFF000000), xOffset + horizontalModifier * oppositeFacing.getStepX(), yOffset + verticalModifier, zOffset + horizontalModifier * oppositeFacing.getStepZ(), 0.0D, 0.0D, 0.0D);
 		level.addParticle(ParticleTypes.FLAME, xOffset + horizontalModifier * oppositeFacing.getStepX(), yOffset + verticalModifier, zOffset + horizontalModifier * oppositeFacing.getStepZ(), 0.0D, 0.0D, 0.0D);
 	}
 

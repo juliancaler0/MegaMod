@@ -72,7 +72,9 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	@Override
 	public void onWornTick(ItemStack stack, LivingEntity player) {
-		inventoryTick(stack, player.level(), player, 0, false);
+		if (player.level() instanceof net.minecraft.server.level.ServerLevel sl) {
+			inventoryTick(stack, sl, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+		}
 	}
 
 	@Override
@@ -95,7 +97,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 2 != 0) {
 			return;
 		}
@@ -131,7 +133,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	private boolean canPickupItem(ItemEntity item, List<BlockPos> disablePositions, boolean isInPedestal) {
 		CompoundTag data = item.getPersistentData();
-		if (data.getBoolean(PREVENT_REMOTE_MOVEMENT) && (!isInPedestal || !data.getBoolean(ALLOW_MACHINE_MOVEMENT))) {
+		if (data.getBooleanOr(PREVENT_REMOTE_MOVEMENT, false) && (!isInPedestal || !data.getBooleanOr(ALLOW_MACHINE_MOVEMENT, false))) {
 			return false;
 		}
 		if (isInDisabledRange(item, disablePositions)) {
@@ -183,7 +185,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	private boolean checkForRoom(ItemStack stackToPickup, Player player) {
 		int remaining = stackToPickup.getCount();
-		for (ItemStack inventoryStack : player.getInventory().getItems()) {
+		for (ItemStack inventoryStack : player.getInventory().getNonEquipmentItems()) {
 			if (inventoryStack.isEmpty()) {
 				return true;
 			}
@@ -281,7 +283,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 	private void pickupXp(IPedestal pedestal, Level level, BlockPos pos) {
 		List<ExperienceOrb> xpOrbs = level.getEntitiesOfClass(ExperienceOrb.class, new AABB(pos).inflate(getStandardPullDistance()));
 		for (ExperienceOrb xpOrb : xpOrbs) {
-			int amountToTransfer = XpHelper.experienceToLiquid(xpOrb.value);
+			int amountToTransfer = XpHelper.experienceToLiquid(xpOrb.getValue());
 			int amountAdded = pedestal.fillConnectedTank(new FluidStack(ModFluids.XP_STILL.get(), amountToTransfer));
 
 			if (amountAdded > 0) {

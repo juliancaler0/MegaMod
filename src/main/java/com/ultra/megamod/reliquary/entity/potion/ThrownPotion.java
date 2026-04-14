@@ -3,7 +3,6 @@ package com.ultra.megamod.reliquary.entity.potion;
 import net.minecraft.core.Position;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +17,8 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -43,7 +44,8 @@ public class ThrownPotion extends ThrowableProjectile implements ItemSupplier {
 	}
 
 	public ThrownPotion(Level level, LivingEntity entity, ItemStack potion) {
-		super(ModEntities.THROWN_POTION.get(), entity, level);
+		super(ModEntities.THROWN_POTION.get(), entity.getX(), entity.getEyeY() - 0.1, entity.getZ(), level);
+		setOwner(entity);
 		setItem(potion);
 	}
 
@@ -130,15 +132,15 @@ public class ThrownPotion extends ThrowableProjectile implements ItemSupplier {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag nbt) {
-		super.addAdditionalSaveData(nbt);
-		nbt.put("item", getItem().save(this.registryAccess(), new CompoundTag()));
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.store("item", ItemStack.CODEC, getItem());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag nbt) {
-		super.readAdditionalSaveData(nbt);
-		setItem(ItemStack.parse(this.registryAccess(), nbt.getCompound("Item")).orElseGet(() -> new ItemStack(ModItems.POTION.get())));
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		setItem(input.read("item", ItemStack.CODEC).orElseGet(() -> new ItemStack(ModItems.POTION.get())));
 	}
 
 	@Override
@@ -155,4 +157,3 @@ public class ThrownPotion extends ThrowableProjectile implements ItemSupplier {
 		entityData.set(ITEM, stack);
 	}
 }
-

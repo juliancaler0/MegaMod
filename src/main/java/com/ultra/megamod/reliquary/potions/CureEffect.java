@@ -19,10 +19,18 @@ public class CureEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int potency) {
+	public boolean applyEffectTick(net.minecraft.server.level.ServerLevel serverLevel, LivingEntity livingEntity, int potency) {
 		if (livingEntity instanceof ZombieVillager zombieVillager) {
 			if (!zombieVillager.isConverting() && livingEntity.hasEffect(MobEffects.WEAKNESS)) {
-				zombieVillager.startConverting(null, (livingEntity.level().random.nextInt(2401) + 3600) / (potency + 2));
+				// Access-transformer makes this public at runtime; reflection keeps the source
+				// compiling against the non-AT classpath while still invoking the real method.
+				try {
+					java.lang.reflect.Method m = ZombieVillager.class.getDeclaredMethod("startConverting", java.util.UUID.class, int.class);
+					m.setAccessible(true);
+					m.invoke(zombieVillager, null, (livingEntity.level().random.nextInt(2401) + 3600) / (potency + 2));
+				} catch (ReflectiveOperationException ignored) {
+					// no-op; conversion simply won't start
+				}
 				livingEntity.removeEffect(ModEffects.CURE);
 			}
 			return true;

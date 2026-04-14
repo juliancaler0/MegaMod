@@ -6,12 +6,15 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
 import com.ultra.megamod.reliquary.crafting.conditions.PotionsEnabledCondition;
@@ -77,12 +80,13 @@ public class PotionEffectsRecipeBuilder {
 	}
 
 	public void save(RecipeOutput recipeOutput, Identifier id) {
+		ResourceKey<Recipe<?>> key = ResourceKey.create(Registries.RECIPE, id);
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-				.rewards(AdvancementRewards.Builder.recipe(id))
+				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(key))
+				.rewards(AdvancementRewards.Builder.recipe(key))
 				.requirements(AdvancementRequirements.Strategy.OR);
 		criteria.forEach(advancementBuilder::addCriterion);
-		recipeOutput.withConditions(new PotionsEnabledCondition()).accept(id,
+		recipeOutput.withConditions(new PotionsEnabledCondition()).accept(key,
 				new PotionEffectsRecipe(
 						Objects.requireNonNullElse(group, ""),
 						ensureValid(id),

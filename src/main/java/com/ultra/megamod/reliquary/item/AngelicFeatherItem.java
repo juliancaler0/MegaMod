@@ -45,7 +45,7 @@ public class AngelicFeatherItem extends ItemBase implements ICuriosItem {
 
 	// minor jump buff
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		int potency = this instanceof PhoenixDownItem ? Config.COMMON.items.phoenixDown.leapingPotency.get() : Config.COMMON.items.angelicFeather.leapingPotency.get();
 		if (potency == 0) {
 			return;
@@ -62,6 +62,8 @@ public class AngelicFeatherItem extends ItemBase implements ICuriosItem {
 
 	@Override
 	public void onWornTick(ItemStack stack, LivingEntity player) {
-		inventoryTick(stack, player.level(), player, 0, false);
+		if (player.level() instanceof net.minecraft.server.level.ServerLevel sl) {
+			inventoryTick(stack, sl, player, net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+		}
 	}
 }

@@ -32,7 +32,8 @@ public abstract class ThrownPotionBase extends ThrowableProjectile implements It
 	}
 
 	<T extends ThrownPotionBase> ThrownPotionBase(EntityType<T> entityType, Level level, Player player, ItemStack thrownStack) {
-		super(entityType, player, level);
+		super(entityType, player.getX(), player.getEyeY() - 0.1, player.getZ(), level);
+		setOwner(player);
 		setItem(thrownStack);
 	}
 

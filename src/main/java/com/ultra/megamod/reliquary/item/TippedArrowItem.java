@@ -5,9 +5,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.entity.TippedArrow;
 import com.ultra.megamod.reliquary.item.util.IPotionItem;
@@ -18,7 +20,6 @@ import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 import com.ultra.megamod.reliquary.util.potions.PotionMap;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class TippedArrowItem extends ArrowItem implements IPotionItem, ICreativeTabItemGenerator {
@@ -48,7 +49,7 @@ public class TippedArrowItem extends ArrowItem implements IPotionItem, ICreative
 	}
 
 	@Override
-	public void appendHoverText(ItemStack arrow, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack arrow, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
 		TooltipBuilder.of(tooltip, context).potionEffects(arrow);
 	}
 

@@ -6,7 +6,6 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.item.ItemStack;
 import com.ultra.megamod.reliquary.Reliquary;
-import com.ultra.megamod.reliquary.client.gui.hud.CharmPane;
 
 public record MobCharmDamagePayload(ItemStack mobCharm, int slot) implements CustomPacketPayload {
 	public static final Type<MobCharmDamagePayload> TYPE = new Type<>(Reliquary.getRL("mob_charm_damage"));
@@ -18,7 +17,8 @@ public record MobCharmDamagePayload(ItemStack mobCharm, int slot) implements Cus
 			MobCharmDamagePayload::new);
 
 	public static void handlePayload(MobCharmDamagePayload payload) {
-		CharmPane.addCharmToDraw(payload.mobCharm, payload.slot);
+		// TODO: 1.21.11 port - client.gui.hud.CharmPane was pruned; no-op until the
+		// charm HUD is reintroduced.
 	}
 
 	@Override

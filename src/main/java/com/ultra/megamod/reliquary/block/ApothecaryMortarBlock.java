@@ -137,8 +137,11 @@ public class ApothecaryMortarBlock extends Block implements EntityBlock, ICreati
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean isMoving) {
+		// TODO: 1.21.11 port - onRemove(BlockState,Level,...) was replaced by
+		// affectNeighborsAfterRemoval(BlockState,ServerLevel,...). We drop mortar contents here
+		// so that breaking behaviour is preserved.
 		WorldHelper.getBlockEntity(level, pos, ApothecaryMortarBlockEntity.class).ifPresent(mortar -> mortar.dropItems(level));
-		super.onRemove(state, level, pos, newState, isMoving);
+		super.affectNeighborsAfterRemoval(state, level, pos, isMoving);
 	}
 }

@@ -12,9 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.InvWrapper;
 import net.neoforged.neoforge.items.wrapper.PlayerMainInvWrapper;
+import net.minecraft.world.Container;
 import com.ultra.megamod.reliquary.item.ToggleableItem;
 
 import javax.annotation.Nullable;
@@ -99,8 +100,8 @@ public class InventoryHelper {
 		int itemCount = 0;
 
 		List<Map.Entry<Integer, Integer>> slotCounts = new ArrayList<>();
-		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
-			ItemStack slotStack = player.getInventory().getItems().get(slot);
+		for (int slot = 0; slot < player.getInventory().getNonEquipmentItems().size(); slot++) {
+			ItemStack slotStack = player.getInventory().getNonEquipmentItems().get(slot);
 			if (ItemStack.isSameItemSameComponents(slotStack, itemStack)) {
 				int stackSize = slotStack.getCount();
 				itemCount += stackSize;
@@ -181,12 +182,21 @@ public class InventoryHelper {
 
 	@Nullable
 	public static IItemHandler getInventoryAtPos(Level level, BlockPos pos, @Nullable Direction side) {
-		return level.getCapability(Capabilities.ItemHandler.BLOCK, pos, side);
+		// TODO: 1.21.11 port - the Capabilities.ItemHandler lookup was replaced by
+		// Capabilities.Item (ResourceHandler<ItemResource>). For now fall back to
+		// direct Container wrapping of block entities that implement Container.
+		BlockEntity be = level.getBlockEntity(pos);
+		if (be instanceof Container container) {
+			return new InvWrapper(container);
+		}
+		return null;
 	}
 
 	@Nullable
 	public static IItemHandler getItemHandlerFrom(Player player) {
-		return player.getCapability(Capabilities.ItemHandler.ENTITY);
+		// TODO: 1.21.11 port - no longer have entity item handler capability; expose the
+		// main player inventory as a minimal stand-in.
+		return new PlayerMainInvWrapper(player.getInventory());
 	}
 
 	public static IItemHandler getMainInventoryItemHandlerFrom(Player player) {
@@ -205,7 +215,9 @@ public class InventoryHelper {
 	}
 
 	private static <T> T executeOnItemHandlerAt(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, @Nullable Direction side, Function<IItemHandler, T> run, @Nullable T defaultReturnValue) {
-		IItemHandler itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, state, blockEntity, side);
+		// TODO: 1.21.11 port - Capabilities.ItemHandler removed; fall back to direct Container wrapping.
+		BlockEntity be = blockEntity != null ? blockEntity : level.getBlockEntity(pos);
+		IItemHandler itemHandler = (be instanceof Container container) ? new InvWrapper(container) : null;
 
 		if (itemHandler != null) {
 			return run.apply(itemHandler);
@@ -329,7 +341,7 @@ public class InventoryHelper {
 	}
 
 	public static void addItemToPlayerInventory(Player player, ItemStack stack) {
-		for (int i = 0; i < player.getInventory().getItems().size(); ++i) {
+		for (int i = 0; i < player.getInventory().getNonEquipmentItems().size(); ++i) {
 			if (player.getInventory().getItem(i).isEmpty()) {
 				player.getInventory().setItem(i, stack);
 				return;

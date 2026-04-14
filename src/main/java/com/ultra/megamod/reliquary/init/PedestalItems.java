@@ -3,7 +3,6 @@ package com.ultra.megamod.reliquary.init;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ShearsItem;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.block.PoweredBlock;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import com.ultra.megamod.reliquary.item.HarvestRodItem;
@@ -16,7 +15,9 @@ public class PedestalItems {
 	private PedestalItems() {}
 
 	public static void init() {
-		PedestalRegistry.registerItemWrapper(SwordItem.class, PedestalMeleeWeaponWrapper::new);
+		// TODO: 1.21.11 port - SwordItem class was removed; the "is a sword" check is now
+		// data-component based (Items' TOOL / WEAPON components). Sword pedestal wrapper
+		// registration is skipped until we find the right analog.
 		PedestalRegistry.registerItemWrapper(BucketItem.class, PedestalBucketWrapper::new);
 		PedestalRegistry.registerItemWrapper(ShearsItem.class, PedestalShearsWrapper::new);
 		PedestalRegistry.registerItemWrapper(RendingGaleItem.class, PedestalRendingGaleWrapper::new);

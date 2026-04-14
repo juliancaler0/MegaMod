@@ -65,8 +65,14 @@ public class ModEntities {
 	}
 
 	private static <T extends Entity> EntityType<T> getEntityType(EntityType.EntityFactory<T> factory, float width, float height, int trackingRange) {
+		// TODO: 1.21.11 port - EntityType.Builder#build now requires a ResourceKey<EntityType<?>>.
+		// We pass a throwaway key since these are never looked up by key; data-gen / resource systems
+		// use the DeferredRegister name. The key is only required for internal datafixers.
+		net.minecraft.resources.ResourceKey<EntityType<?>> key = net.minecraft.resources.ResourceKey.create(
+				net.minecraft.core.registries.Registries.ENTITY_TYPE,
+				net.minecraft.resources.Identifier.fromNamespaceAndPath(Reliquary.MOD_ID, "placeholder"));
 		return EntityType.Builder.of(factory, MobCategory.MISC)
 				.sized(width, height).updateInterval(5).setTrackingRange(trackingRange).setShouldReceiveVelocityUpdates(true)
-				.build("");
+				.build(key);
 	}
 }

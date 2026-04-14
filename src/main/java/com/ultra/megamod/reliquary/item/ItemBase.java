@@ -1,16 +1,17 @@
 package com.ultra.megamod.reliquary.item;
 
-import net.minecraft.client.gui.screens.Screen;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import org.jetbrains.annotations.Nullable;
 import com.ultra.megamod.reliquary.util.TooltipBuilder;
 
-import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -44,14 +45,25 @@ public class ItemBase extends Item implements ICreativeTabItemGenerator {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
 		TooltipBuilder tooltipBuilder = TooltipBuilder.of(tooltip, context).itemTooltip(this);
 
 		if (hasMoreInformation(stack)) {
 			tooltipBuilder.showMoreInfo();
-			if (Screen.hasShiftDown()) {
+			if (isShiftDown()) {
 				addMoreInformation(stack, context.registries(), tooltipBuilder);
 			}
+		}
+	}
+
+	/** TODO: 1.21.11 port - Screen#hasShiftDown was removed; query InputConstants directly. */
+	protected static boolean isShiftDown() {
+		try {
+			com.mojang.blaze3d.platform.Window window = Minecraft.getInstance().getWindow();
+			return InputConstants.isKeyDown(window, InputConstants.KEY_LSHIFT)
+					|| InputConstants.isKeyDown(window, InputConstants.KEY_RSHIFT);
+		} catch (Throwable ignored) {
+			return false;
 		}
 	}
 
@@ -65,8 +77,7 @@ public class ItemBase extends Item implements ICreativeTabItemGenerator {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return Component.translatable(getDescriptionId(stack));
+	public Component getName(ItemStack stack) {
+		return Component.translatable(getDescriptionId());
 	}
 }
-

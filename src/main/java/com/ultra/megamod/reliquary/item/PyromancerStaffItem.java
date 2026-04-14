@@ -55,12 +55,12 @@ public class PyromancerStaffItem extends ChargeableItem implements IScrollableIt
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.RED);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.RED);
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean f) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % EFFECT_COOLDOWN != 0) {
 			return;
 		}

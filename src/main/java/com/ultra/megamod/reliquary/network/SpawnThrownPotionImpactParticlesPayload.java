@@ -43,10 +43,16 @@ public record SpawnThrownPotionImpactParticlesPayload(int color, double posX, do
 			double ySpeed = 0.01D + rand.nextDouble() * 0.5D;
 			double zSpeed = Math.sin(angle) * var39;
 
-			Particle particle = mc.particleEngine.createParticle(ParticleTypes.EFFECT, payload.posX + xSpeed * 0.1D, payload.posY + 0.3D, payload.posZ + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
+			// TODO: 1.21.11 port - Particle#setColor removed; tint via ColorParticleOption(ENTITY_EFFECT, argb).
+			float var32 = 0.75F + rand.nextFloat() * 0.25F;
+			int argb = 0xFF000000
+					| (((int) Math.min(255, red * var32 * 255)) << 16)
+					| (((int) Math.min(255, green * var32 * 255)) << 8)
+					| ((int) Math.min(255, blue * var32 * 255));
+			Particle particle = mc.particleEngine.createParticle(
+					net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, argb),
+					payload.posX + xSpeed * 0.1D, payload.posY + 0.3D, payload.posZ + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
 			if (particle != null) {
-				float var32 = 0.75F + rand.nextFloat() * 0.25F;
-				particle.setColor(red * var32, green * var32, blue * var32);
 				particle.setPower((float) var39);
 			}
 		}

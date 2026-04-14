@@ -33,7 +33,6 @@ import com.ultra.megamod.reliquary.crafting.*;
 import com.ultra.megamod.reliquary.crafting.conditions.*;
 import com.ultra.megamod.reliquary.data.ChestLootEnabledCondition;
 import com.ultra.megamod.reliquary.data.EntityLootEnabledCondition;
-import com.ultra.megamod.reliquary.data.ReliquaryLootModifierProvider;
 import com.ultra.megamod.reliquary.entity.shot.*;
 import com.ultra.megamod.reliquary.item.*;
 import com.ultra.megamod.reliquary.item.PotionItem;
@@ -198,7 +197,8 @@ public class ModItems {
 	public static final Supplier<RecipeSerializer<?>> POTION_EFFECTS_SERIALIZER = RECIPE_SERIALIZERS.register("potion_effects", PotionEffectsRecipe.Serializer::new);
 	public static final Supplier<LootItemConditionType> CHEST_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("chest_loot_enabled", () -> new LootItemConditionType(ChestLootEnabledCondition.CODEC));
 	public static final Supplier<LootItemConditionType> ENTITY_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("entity_loot_enabled", () -> new LootItemConditionType(EntityLootEnabledCondition.CODEC));
-	public static final Supplier<MapCodec<ReliquaryLootModifierProvider.InjectLootModifier>> INJECT_LOOT = LOOT_MODIFIERS.register("inject_loot", () -> ReliquaryLootModifierProvider.InjectLootModifier.CODEC);
+	// TODO: 1.21.11 port - ReliquaryLootModifierProvider was stripped during the prune;
+	// INJECT_LOOT registration removed until we port the loot modifier back.
 
 	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Reliquary.MOD_ID);
 	public static final ItemCapability<HarvestRodCache, @Nullable Void> HARVEST_ROD_CACHE_CAPABILITY = ItemCapability.createVoid(Reliquary.getRL("harvest_rod_cache"), HarvestRodCache.class);
@@ -251,9 +251,9 @@ public class ModItems {
 		modBus.addListener(ModItems::registerCapabilities);
 		NeoForge.EVENT_BUS.addListener(ModItems::onResourceReload);
 
-		if (FMLEnvironment.getDist() == net.neoforged.api.distmarker.Dist.CLIENT) {
-			ModItemsClient.init(modBus);
-		}
+		// TODO: 1.21.11 port - ModItemsClient referenced removed client packages
+		// (client.gui, client.render). Client-side registrations are disabled until
+		// the client layer is reintroduced.
 	}
 
 	private static void onResourceReload(AddServerReloadListenersEvent event) {

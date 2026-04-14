@@ -102,8 +102,8 @@ public class PedestalBlock extends PassivePedestalBlock {
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, net.minecraft.world.level.redstone.Orientation orientation, boolean isMoving) {
+		super.neighborChanged(state, level, pos, blockIn, orientation, isMoving);
 
 		//noinspection ConstantConditions
 		((PedestalBlockEntity) level.getBlockEntity(pos)).neighborUpdate(level);
@@ -120,7 +120,7 @@ public class PedestalBlock extends PassivePedestalBlock {
 			double sideOffset = 4 / 16F + rand.nextDouble() * 2.0D / 16.0D;
 			double alongTheSideOffset = rand.nextDouble() * 6 / 16D;
 
-			Vec3i normal = dir.getNormal();
+			Vec3i normal = dir.getUnitVec3i();
 
 			level.addParticle(DustParticleOptions.REDSTONE, xMiddle + normal.getX() * sideOffset + normal.getZ() * alongTheSideOffset, y, zMiddle + normal.getZ() * sideOffset + normal.getX() * alongTheSideOffset, 0.0D, 0.0D, 0.0D);
 		}
@@ -151,12 +151,10 @@ public class PedestalBlock extends PassivePedestalBlock {
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (newState.getBlock() == this) {
-			return;
-		}
+	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean isMoving) {
+		// TODO: 1.21.11 port - onRemove replaced by affectNeighborsAfterRemoval(ServerLevel).
 		PedestalRegistry.unregisterPosition(level.dimension().registry(), pos);
 		WorldHelper.getBlockEntity(level, pos, PedestalBlockEntity.class).ifPresent(pedestal -> pedestal.removeAndSpawnItem(level));
-		super.onRemove(state, level, pos, newState, isMoving);
+		super.affectNeighborsAfterRemoval(state, level, pos, isMoving);
 	}
 }

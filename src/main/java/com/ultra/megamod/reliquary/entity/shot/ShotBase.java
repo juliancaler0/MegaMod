@@ -4,7 +4,8 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -48,7 +49,7 @@ public abstract class ShotBase extends Projectile {
 	protected <T extends ShotBase> ShotBase(EntityType<T> entityType, Level level, Player player, InteractionHand hand) {
 		this(entityType, level);
 		setOwner(player);
-		moveTo(player.getX(), player.getY() + player.getEyeHeight(), player.getZ(), player.getYRot(), player.getXRot());
+		snapTo(player.getX(), player.getY() + player.getEyeHeight(), player.getZ(), player.getYRot(), player.getXRot());
 		setPos(
 				getX() - Mth.cos(getYRot() / 180.0F * (float) Math.PI) * (hand == InteractionHand.MAIN_HAND ? 1 : -1) * 0.16F,
 				getY() - 0.2D,
@@ -96,7 +97,10 @@ public abstract class ShotBase extends Projectile {
 	}
 
 	@Override
-	public void lerpMotion(double motionX, double motionY, double motionZ) {
+	public void lerpMotion(Vec3 motion) {
+		double motionX = motion.x;
+		double motionY = motion.y;
+		double motionZ = motion.z;
 		setDeltaMovement(motionX, motionY, motionZ);
 
 		if (xRotO == 0.0F && yRotO == 0.0F) {
@@ -105,8 +109,13 @@ public abstract class ShotBase extends Projectile {
 			setXRot((float) (Math.atan2(motionY, var7) * 180.0D / Math.PI));
 			yRotO = getYRot();
 			xRotO = getXRot();
-			moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
+			snapTo(getX(), getY(), getZ(), getYRot(), getXRot());
 		}
+	}
+
+	/** Convenience pass-through for the old 3-double lerpMotion signature. */
+	public void lerpMotion(double motionX, double motionY, double motionZ) {
+		lerpMotion(new Vec3(motionX, motionY, motionZ));
 	}
 
 	/**
@@ -221,13 +230,15 @@ public abstract class ShotBase extends Projectile {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag compound) {
-		potionContents = PotionHelper.getPotionContentsFromCompoundTag(compound);
+	protected void readAdditionalSaveData(ValueInput input) {
+		potionContents = input.read("Potion", PotionContents.CODEC).orElse(PotionContents.EMPTY);
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag compound) {
-		PotionHelper.addPotionContentsToCompoundTag(compound, potionContents);
+	protected void addAdditionalSaveData(ValueOutput output) {
+		if (potionContents.hasEffects()) {
+			output.store("Potion", PotionContents.CODEC, potionContents);
+		}
 	}
 
 	@Override

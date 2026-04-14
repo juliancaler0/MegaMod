@@ -41,7 +41,7 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0) {
 			return;
 		}

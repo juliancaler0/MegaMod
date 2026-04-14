@@ -38,10 +38,10 @@ public class MobCharmFragmentItem extends ItemBase {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
+	public Component getName(ItemStack stack) {
 		Identifier entityEggRegistryName = getEntityRegistryName(stack);
 		return BuiltInRegistries.ENTITY_TYPE.getOptional(entityEggRegistryName)
-				.map(entityType -> Component.translatable(getDescriptionId(), entityType.getDescription().getString()).withStyle(ChatFormatting.GREEN))
+				.<Component>map(entityType -> Component.translatable(getDescriptionId(), entityType.getDescription().getString()).withStyle(ChatFormatting.GREEN))
 				.orElseGet(() -> super.getName(stack));
 	}
 }

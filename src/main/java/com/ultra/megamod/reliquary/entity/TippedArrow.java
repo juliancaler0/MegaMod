@@ -3,7 +3,8 @@ package com.ultra.megamod.reliquary.entity;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -55,14 +56,14 @@ public class TippedArrow extends AbstractArrow {
 		super.tick();
 
 		if (level().isClientSide()) {
-			if (inGround) {
+			if (isInGround()) {
 				if (inGroundTime % 5 == 0) {
 					spawnPotionParticles(1);
 				}
 			} else {
 				spawnPotionParticles(2);
 			}
-		} else if (inGround && inGroundTime != 0 && potionContents.hasEffects() && inGroundTime >= 600) {
+		} else if (isInGround() && inGroundTime != 0 && potionContents.hasEffects() && inGroundTime >= 600) {
 			level().broadcastEntityEvent(this, (byte) 0);
 			potionContents = PotionContents.EMPTY;
 			entityData.set(COLOR, 0);
@@ -84,15 +85,17 @@ public class TippedArrow extends AbstractArrow {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		PotionHelper.addPotionContentsToCompoundTag(compound, potionContents);
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		if (potionContents.hasEffects()) {
+			output.store("Potion", PotionContents.CODEC, potionContents);
+		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		potionContents = PotionHelper.getPotionContentsFromCompoundTag(compound);
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		potionContents = input.read("Potion", PotionContents.CODEC).orElse(PotionContents.EMPTY);
 
 		if (potionContents.hasEffects()) {
 			entityData.set(COLOR, potionContents.getColor());

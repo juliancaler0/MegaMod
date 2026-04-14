@@ -35,7 +35,7 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import com.ultra.megamod.reliquary.block.ApothecaryCauldronBlock;
-import com.ultra.megamod.reliquary.client.init.ModParticles;
+// TODO: 1.21.11 port - client.init.ModParticles was pruned; vanilla fallbacks used below.
 import com.ultra.megamod.reliquary.init.ModBlocks;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.PotionEssenceItem;
@@ -112,10 +112,10 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 		float green = (((color >> 8) & 255) / 256F);
 		float blue = ((color & 255) / 256F);
 
-		level.addParticle(ColorParticleOption.create(ModParticles.CAULDRON_BUBBLE.get(), red, green, blue), pos.getX() + 0.5D + xOffset, pos.getY() + 0.01D + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0D, 0D, 0D);
+		level.addParticle(ColorParticleOption.create(net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT, red, green, blue), pos.getX() + 0.5D + xOffset, pos.getY() + 0.01D + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0D, 0D, 0D);
 
 		if (level.random.nextInt(6) == 0) {
-			level.addParticle(ColorParticleOption.create(ModParticles.CAULDRON_STEAM.get(), red, green, blue), pos.getX() + 0.5D + xOffset, pos.getY() + 0.01D + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0D, 0.05D + 0.02F * getRenderLiquidLevel(), 0D);
+			level.addParticle(ColorParticleOption.create(net.minecraft.core.particles.ParticleTypes.ENTITY_EFFECT, red, green, blue), pos.getX() + 0.5D + xOffset, pos.getY() + 0.01D + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0D, 0.05D + 0.02F * getRenderLiquidLevel(), 0D);
 		}
 	}
 
@@ -139,7 +139,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 		}
 		float xOffset = (level.random.nextFloat() - 0.5F) / 1.66F;
 		float zOffset = (level.random.nextFloat() - 0.5F) / 1.66F;
-		level.addParticle(ParticleTypes.DRAGON_BREATH, pos.getX() + 0.5D + xOffset, pos.getY() + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0.0D, 0.1D, 0.0D);
+		level.addParticle(net.minecraft.core.particles.PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0F), pos.getX() + 0.5D + xOffset, pos.getY() + getRenderLiquidLevel(), pos.getZ() + 0.5D + zOffset, 0.0D, 0.1D, 0.0D);
 	}
 
 	private void spawnGlowstoneParticles(Level level, BlockPos pos) {
@@ -297,7 +297,9 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 		Set<Block> heatSources = new HashSet<>();
 
         Config.COMMON.blocks.apothecaryCauldron.heatSources.get()
-				.forEach(blockName -> heatSources.add(BuiltInRegistries.BLOCK.get(Identifier.parse(blockName))));
+				.forEach(blockName -> BuiltInRegistries.BLOCK.get(Identifier.parse(blockName))
+						.map(net.minecraft.core.Holder::value)
+						.ifPresent(heatSources::add));
 		//defaults that can't be removed.
 		heatSources.add(Blocks.LAVA);
 		heatSources.add(Blocks.FIRE);
@@ -454,10 +456,10 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 				player.setItemInHand(hand, new ItemStack(Items.BUCKET));
 			}
 		} else {
-			IFluidHandlerItem fluidHandlerCapability = itemStack.getCapability(Capabilities.FluidHandler.ITEM);
-			if (fluidHandlerCapability == null || !drainWater(player, fluidHandlerCapability)) {
-				return InteractionResult.CONSUME;
-			}
+			// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM
+			// which exposes ResourceHandler<FluidResource>. Non-bucket fluid containers are
+			// unsupported until the new API is wired in.
+			return InteractionResult.CONSUME;
 		}
 
 		setLiquidLevel(3);
@@ -489,7 +491,6 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 		}
 	}
 
-	@Override
 	public boolean getDataChanged() {
 		boolean ret = dataChanged;
 		dataChanged = false;

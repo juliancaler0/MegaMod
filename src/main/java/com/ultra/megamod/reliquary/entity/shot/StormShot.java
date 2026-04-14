@@ -45,9 +45,9 @@ public class StormShot extends ShotBase {
 			BlockHitResult blockResult = (BlockHitResult) result;
 			BlockPos pos = blockResult.getBlockPos().relative(blockResult.getDirection());
 			if (level() instanceof ServerLevel && level().isRainingAt(pos) && level().getLevelData().isRaining() && level().getLevelData().isThundering()) {
-				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level());
+				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level(), net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
 				if (bolt != null) {
-					bolt.moveTo(pos.getX(), pos.getY(), pos.getZ());
+					bolt.snapTo(pos.getX(), pos.getY(), pos.getZ());
 					level().addFreshEntity(bolt);
 				}
 			}
@@ -76,9 +76,9 @@ public class StormShot extends ShotBase {
 	@Override
 	void doDamage(LivingEntity entity) {
 		if (level() instanceof ServerLevel serverLevel && level().isRainingAt(entity.blockPosition()) && level().getLevelData().isRaining() && level().getLevelData().isThundering()) {
-			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level());
+			LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(level(), net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
 			if (bolt != null) {
-				bolt.moveTo(entity.getX(), entity.getY(), entity.getZ());
+				bolt.snapTo(entity.getX(), entity.getY(), entity.getZ());
 				level().addFreshEntity(bolt);
 				if (entity instanceof Creeper) {
 					entity.thunderHit(serverLevel, bolt);

@@ -91,7 +91,7 @@ public class ReliquaryFakePlayer extends FakePlayer {
 
 
 	@Override
-	protected void onEffectRemoved(MobEffectInstance effect) {
+	protected void onEffectsRemoved(java.util.Collection<MobEffectInstance> effects) {
 		//noop
 	}
 

@@ -65,7 +65,9 @@ public class PedestalFluidHandler implements IFluidHandler {
 		if (fluidContainer.isEmpty()) {
 			return Optional.empty();
 		}
-		IFluidHandler fh = fluidContainer.getCapability(Capabilities.FluidHandler.ITEM);
+		// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM
+		// which returns ResourceHandler<FluidResource>. Pass-through disabled until ported.
+		IFluidHandler fh = null;
 		return Optional.ofNullable(mapValue.apply(fh));
 	}
 }

@@ -6,14 +6,17 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
@@ -38,7 +41,7 @@ public class MobCharmRecipeBuilder {
 	}
 
 	public MobCharmRecipeBuilder define(Character symbol, TagKey<Item> tag) {
-		return define(symbol, Ingredient.of(tag));
+		return define(symbol, Ingredient.of(net.minecraft.core.registries.BuiltInRegistries.ITEM.getOrThrow(tag).stream().map(h -> h.value()).toArray(Item[]::new)));
 	}
 
 	public MobCharmRecipeBuilder define(Character symbol, ItemLike item) {
@@ -77,12 +80,13 @@ public class MobCharmRecipeBuilder {
 
 	public void save(RecipeOutput recipeOutput) {
 		Identifier id = Reliquary.getRL("mob_charm");
+		ResourceKey<Recipe<?>> rkey = ResourceKey.create(Registries.RECIPE, id);
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-				.rewards(AdvancementRewards.Builder.recipe(id))
+				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(rkey))
+				.rewards(AdvancementRewards.Builder.recipe(rkey))
 				.requirements(AdvancementRequirements.Strategy.OR);
 		criteria.forEach(advancementBuilder::addCriterion);
-		recipeOutput.accept(id, new MobCharmRecipe(new ShapedRecipe(group == null ? "" : group, CraftingBookCategory.MISC, ensureValid(id), new ItemStack(ModItems.MOB_CHARM.get()))), null);
+		recipeOutput.accept(rkey, new MobCharmRecipe(new ShapedRecipe(group == null ? "" : group, CraftingBookCategory.MISC, ensureValid(id), new ItemStack(ModItems.MOB_CHARM.get()))), null);
 	}
 
 	private ShapedRecipePattern ensureValid(Identifier id) {

@@ -1,5 +1,6 @@
 package com.ultra.megamod.reliquary.util;
 
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +15,11 @@ public class PlayerInventoryProvider {
 	public static final String OFFHAND_INVENTORY = "offhand";
 	public static final String ARMOR_INVENTORY = "armor";
 
+	// Ordered to match EquipmentSlot armor slot indices used by vanilla.
+	private static final EquipmentSlot[] ARMOR_SLOTS = new EquipmentSlot[] {
+			EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD
+	};
+
 	private final Map<String, PlayerInventoryHandler> playerInventoryHandlers = new LinkedHashMap<>();
 	private final List<String> renderedHandlers = new ArrayList<>();
 
@@ -21,7 +27,7 @@ public class PlayerInventoryProvider {
 	private static final PlayerInventoryProvider clientProvider = new PlayerInventoryProvider();
 
 	public static PlayerInventoryProvider get() {
-		if (FMLEnvironment.dist == Dist.CLIENT) {
+		if (FMLEnvironment.getDist() == Dist.CLIENT) {
 			return clientProvider;
 		} else {
 			return serverProvider;
@@ -29,12 +35,18 @@ public class PlayerInventoryProvider {
 	}
 
 	private PlayerInventoryProvider() {
-		addPlayerInventoryHandler(MAIN_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().getItems().size(),
-				(player, identifier, slot) -> player.getInventory().getItems().get(slot), (player, identifier, slot, stack) -> player.getInventory().setItem(slot, stack), false);
-		addPlayerInventoryHandler(OFFHAND_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().offhand.size(),
-				(player, identifier, slot) -> player.getInventory().offhand.get(slot), (player, identifier, slot, stack) -> player.getInventory().offhand.set(slot, stack), false);
-		addPlayerInventoryHandler(ARMOR_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().armor.size(),
-				(player, identifier, slot) -> player.getInventory().armor.get(slot), (player, identifier, slot, stack) -> player.getInventory().armor.set(slot, stack), true);
+		addPlayerInventoryHandler(MAIN_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER,
+				(player, identifier) -> player.getInventory().getNonEquipmentItems().size(),
+				(player, identifier, slot) -> player.getInventory().getNonEquipmentItems().get(slot),
+				(player, identifier, slot, stack) -> player.getInventory().setItem(slot, stack), false);
+		addPlayerInventoryHandler(OFFHAND_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER,
+				(player, identifier) -> 1,
+				(player, identifier, slot) -> player.getItemBySlot(EquipmentSlot.OFFHAND),
+				(player, identifier, slot, stack) -> player.setItemSlot(EquipmentSlot.OFFHAND, stack), false);
+		addPlayerInventoryHandler(ARMOR_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER,
+				(player, identifier) -> ARMOR_SLOTS.length,
+				(player, identifier, slot) -> player.getItemBySlot(ARMOR_SLOTS[Math.max(0, Math.min(ARMOR_SLOTS.length - 1, slot))]),
+				(player, identifier, slot, stack) -> player.setItemSlot(ARMOR_SLOTS[Math.max(0, Math.min(ARMOR_SLOTS.length - 1, slot))], stack), true);
 	}
 
 	public void addPlayerInventoryHandler(String name, Function<Player, Set<String>> identifiersGetter, PlayerInventoryHandler.SlotCountGetter slotCountGetter, PlayerInventoryHandler.SlotStackGetter slotStackGetter, PlayerInventoryHandler.SlotStackSetter slotStackSetter, boolean rendered) {

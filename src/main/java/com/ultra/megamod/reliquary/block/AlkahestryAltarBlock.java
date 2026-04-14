@@ -125,11 +125,11 @@ public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativ
 	}
 
 	private int getSlotWithRedstoneDust(Player player) {
-		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
-			if (player.getInventory().getItems().get(slot).isEmpty()) {
+		for (int slot = 0; slot < player.getInventory().getNonEquipmentItems().size(); slot++) {
+			if (player.getInventory().getNonEquipmentItems().get(slot).isEmpty()) {
 				continue;
 			}
-			if (player.getInventory().getItems().get(slot).getItem() == Items.REDSTONE) {
+			if (player.getInventory().getNonEquipmentItems().get(slot).getItem() == Items.REDSTONE) {
 				return slot;
 			}
 		}

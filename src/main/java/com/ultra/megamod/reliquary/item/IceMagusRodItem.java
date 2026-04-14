@@ -21,7 +21,8 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 
 public class IceMagusRodItem extends ChargeableItem {
-	public static final DustParticleOptions ICE_PARTICLE = new DustParticleOptions(new Vector3f(99 / 255F, 196 / 255F, 253 / 255F), 1);
+	// TODO: 1.21.11 port - DustParticleOptions ctor switched from Vector3f to packed int ARGB.
+	public static final DustParticleOptions ICE_PARTICLE = new DustParticleOptions(0xFF63C4FD, 1);
 
 	public IceMagusRodItem() {
 		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
@@ -97,7 +98,7 @@ public class IceMagusRodItem extends ChargeableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack rod, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack rod, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}

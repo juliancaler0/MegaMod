@@ -4,14 +4,17 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.ItemLike;
 
@@ -41,12 +44,13 @@ public class SpawnEggRecipeBuilder {
 
 	public void build(RecipeOutput recipeOutput, Identifier id) {
 		ensureValid(id);
+		ResourceKey<Recipe<?>> key = ResourceKey.create(Registries.RECIPE, id);
 		Advancement.Builder advancementBuilder = recipeOutput.advancement()
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-				.rewards(AdvancementRewards.Builder.recipe(id))
+				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(key))
+				.rewards(AdvancementRewards.Builder.recipe(key))
 				.requirements(AdvancementRequirements.Strategy.OR);
 		criteria.forEach(advancementBuilder::addCriterion);
-		recipeOutput.accept(id, new FragmentToSpawnEggRecipe(new ShapelessRecipe("", CraftingBookCategory.MISC, new ItemStack(Items.CHICKEN_SPAWN_EGG), ingredients)), advancementBuilder.build(id.withPrefix("recipes/")));
+		recipeOutput.accept(key, new FragmentToSpawnEggRecipe(new ShapelessRecipe("", CraftingBookCategory.MISC, new ItemStack(Items.CHICKEN_SPAWN_EGG), ingredients)), advancementBuilder.build(id.withPrefix("recipes/")));
 	}
 
 	private void ensureValid(Identifier id) {

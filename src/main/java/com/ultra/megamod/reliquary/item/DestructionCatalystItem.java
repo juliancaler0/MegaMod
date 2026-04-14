@@ -62,7 +62,7 @@ public class DestructionCatalystItem extends ChargeableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack catalyst, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack catalyst, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}

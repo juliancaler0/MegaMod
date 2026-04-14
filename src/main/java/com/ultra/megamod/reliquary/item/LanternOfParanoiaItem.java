@@ -51,8 +51,8 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.YELLOW);
+	public net.minecraft.network.chat.Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.YELLOW);
 	}
 
 	public int getRange() {
@@ -60,7 +60,7 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, net.minecraft.server.level.ServerLevel level, Entity entity, net.minecraft.world.entity.EquipmentSlot slot) {
 		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || !isEnabled(stack) || isInCooldown(stack, level)) {
 			return;
 		}
@@ -172,11 +172,14 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 	}
 
 	private Optional<Block> getTorchBlock(String registryName) {
-		Block block = BuiltInRegistries.BLOCK.get(Identifier.parse(registryName));
+		Block block = BuiltInRegistries.BLOCK.get(Identifier.parse(registryName))
+				.map(net.minecraft.core.Holder::value)
+				.orElse(Blocks.AIR);
 		if (block == Blocks.AIR) {
 			return Optional.empty();
 		}
-		return Optional.of(TORCH_BLOCKS.computeIfAbsent(registryName, rn -> BuiltInRegistries.BLOCK.get(Identifier.parse(rn))));
+		return Optional.of(TORCH_BLOCKS.computeIfAbsent(registryName, rn ->
+				BuiltInRegistries.BLOCK.get(Identifier.parse(rn)).map(net.minecraft.core.Holder::value).orElse(Blocks.AIR)));
 	}
 
 	@Nullable

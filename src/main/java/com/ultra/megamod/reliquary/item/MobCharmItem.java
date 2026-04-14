@@ -11,8 +11,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.NeoForge;
@@ -50,16 +52,16 @@ public class MobCharmItem extends ItemBase {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
 		BuiltInRegistries.ENTITY_TYPE.getOptional(getEntityEggRegistryName(stack)).ifPresent(entityType ->
-				tooltip.add(Component.translatable(getDescriptionId() + ".tooltip", entityType.getDescription().getString()).withStyle(ChatFormatting.GRAY))
+				tooltip.accept(Component.translatable(getDescriptionId() + ".tooltip", entityType.getDescription().getString()).withStyle(ChatFormatting.GRAY))
 		);
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
+	public Component getName(ItemStack stack) {
 		return BuiltInRegistries.ENTITY_TYPE.getOptional(getEntityEggRegistryName(stack))
-				.map(entityType -> Component.translatable(getDescriptionId(), entityType.getDescription().getString()).withStyle(ChatFormatting.GREEN))
+				.<Component>map(entityType -> Component.translatable(getDescriptionId(), entityType.getDescription().getString()).withStyle(ChatFormatting.GREEN))
 				.orElseGet(() -> super.getName(stack));
 	}
 
@@ -126,7 +128,7 @@ public class MobCharmItem extends ItemBase {
 
 	private void damageMobCharmInPedestal(Player player, Identifier entityRegistryName) {
 		List<BlockPos> pedestalPositions = PedestalRegistry.getPositionsInRange(player.level().dimension().registry(), player.blockPosition(), Config.COMMON.items.mobCharm.pedestalRange.get());
-		Level level = player.getCommandSenderWorld();
+		Level level = player.level();
 
 		for (BlockPos pos : pedestalPositions) {
 			WorldHelper.getBlockEntity(level, pos, PedestalBlockEntity.class).ifPresent(pedestal -> damageMobCharmInPedestal(player, entityRegistryName, pedestal));
@@ -163,7 +165,7 @@ public class MobCharmItem extends ItemBase {
 	private boolean pedestalWithCharmInRange(Player player, MobCharmDefinition charmDefinition) {
 		List<BlockPos> pedestalPositions = PedestalRegistry.getPositionsInRange(player.level().dimension().registry(), player.blockPosition(), Config.COMMON.items.mobCharm.pedestalRange.get());
 
-		Level level = player.getCommandSenderWorld();
+		Level level = player.level();
 
 		for (BlockPos pos : pedestalPositions) {
 			if (WorldHelper.getBlockEntity(level, pos, PedestalBlockEntity.class).map(pedestal -> hasCharm(charmDefinition.getRegistryName(), pedestal)).orElse(false)) {
@@ -268,10 +270,7 @@ public class MobCharmItem extends ItemBase {
 		}
 	}
 
-	@Override
-	public boolean isEnchantable(ItemStack p_41456_) {
-		return false;
-	}
+	// TODO: 1.21.11 port - Item#isEnchantable removed; set via Properties#enchantable(0).
 
 	@Override
 	public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {

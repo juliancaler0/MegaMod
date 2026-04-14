@@ -26,20 +26,6 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
-// Temporarily exclude unfinished subsystems from compilation.
-// (reliquary port sits on the feature/reliquary-port branch; files exist in the
-//  worktree but are not ready for main-branch compilation)
-sourceSets.main.java {
-    exclude("com/ultra/megamod/reliquary/**")
-}
-
-// Belt-and-suspenders: moddev's compileJava sometimes re-resolves source trees
-// outside of the sourceSet filter. Re-apply at compile-task level so the
-// reliquary tree is skipped even when the sourceSet filter is bypassed.
-tasks.named('compileJava', JavaCompile) {
-    exclude("com/ultra/megamod/reliquary/**")
-}
-
 repositories {
     // PlayerAnimationLib by ZigyTheBird (required for BetterCombat animations)
     maven {
@@ -228,5 +214,13 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+// TEMP: classpath export task for javac (safe to remove)
+task _printRelCP {
+    doLast {
+        def cp = sourceSets.main.compileClasspath.files*.absolutePath.join(';')
+        new File("${project.rootDir}/.gradle/reliquary_cp.txt").text = cp
     }
 }

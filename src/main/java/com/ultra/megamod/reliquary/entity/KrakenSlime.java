@@ -24,7 +24,7 @@ public class KrakenSlime extends ThrowableItemProjectile {
 	}
 
 	public KrakenSlime(Level level, Player player) {
-		super(ModEntities.KRAKEN_SLIME.get(), player, level);
+		super(ModEntities.KRAKEN_SLIME.get(), player, level, new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.SLIME_BALL));
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class KrakenSlime extends ThrowableItemProjectile {
 			return;
 		}
 
-		if (getY() > level().getMaxBuildHeight() || getY() <= 0) {
+		if (getY() > level().getMaxY() || getY() <= level().getMinY()) {
 			discard();
 		}
 	}

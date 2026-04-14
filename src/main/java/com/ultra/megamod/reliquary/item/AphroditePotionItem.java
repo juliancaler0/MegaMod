@@ -21,15 +21,7 @@ public class AphroditePotionItem extends ItemBase implements ProjectileItem {
 		super(new Properties(), Config.COMMON.disable.disablePotions);
 	}
 
-	@Override
-	public boolean hasCraftingRemainingItem(ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack stack) {
-		return new ItemStack(ModItems.EMPTY_POTION_VIAL.get());
-	}
+	// TODO: 1.21.11 port - Item#getCraftingRemainingItem removed; set via Properties#craftRemainder.
 
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {

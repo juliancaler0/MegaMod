@@ -87,7 +87,7 @@ public class PedestalShearsWrapper implements IPedestalActionItemWrapper {
 			}
 		} else {
 			BlockState blockState = level.getBlockState(blockPosBeingSheared);
-			if (stack.getItem().canAttackBlock(blockState, level, blockPosBeingSheared, fakePlayer)) {
+			if (true) { // TODO: 1.21.11 port - Item#canAttackBlock removed; unconditionally attempt.
 				if (blockState.getBlock() instanceof BeehiveBlock) {
 					shearBeehive(level, blockPosBeingSheared, blockState, stack);
 				} else {
@@ -117,7 +117,9 @@ public class PedestalShearsWrapper implements IPedestalActionItemWrapper {
 		int honeyLevel = blockState.getValue(BeehiveBlock.HONEY_LEVEL);
 		if (honeyLevel >= 5) {
 			level.playSound(null, pos, SoundEvents.BEEHIVE_SHEAR, SoundSource.BLOCKS, 1.0F, 1.0F);
-			BeehiveBlock.dropHoneycomb(level, pos);
+			if (level instanceof ServerLevel dropLevel) {
+				BeehiveBlock.dropHoneycomb(dropLevel, stack, blockState, level.getBlockEntity(pos), null, pos);
+			}
 			((BeehiveBlock) blockState.getBlock()).releaseBeesAndResetHoneyLevel(level, blockState, pos, null, BeehiveBlockEntity.BeeReleaseStatus.BEE_RELEASED);
 			if (level instanceof ServerLevel serverLevel) {
 				stack.hurtAndBreak(1, serverLevel, null, item -> {

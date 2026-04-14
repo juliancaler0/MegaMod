@@ -1,7 +1,7 @@
 package com.ultra.megamod.reliquary.item;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -21,8 +21,8 @@ public class SerpentStaffItem extends ItemBase {
 	}
 
 	@Override
-	public MutableComponent getName(ItemStack stack) {
-		return super.getName(stack).withStyle(ChatFormatting.DARK_GREEN);
+	public Component getName(ItemStack stack) {
+		return super.getName(stack).copy().withStyle(ChatFormatting.DARK_GREEN);
 	}
 
 	@Override
@@ -54,17 +54,23 @@ public class SerpentStaffItem extends ItemBase {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack serpentStaff, Level level, LivingEntity livingEntity, int timeLeft) {
+	public boolean releaseUsing(ItemStack serpentStaff, Level level, LivingEntity livingEntity, int timeLeft) {
 		if (!livingEntity.level().isClientSide() && timeLeft + 2 >= serpentStaff.getUseDuration(livingEntity) && livingEntity instanceof Player player) {
 			shootKrakenSlime(serpentStaff, player);
+			return true;
 		}
+		return false;
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
 		//drain effect
 		int drain = player.level().random.nextInt(4);
-		if (entity.hurt(player.damageSources().playerAttack(player), drain)) {
+		boolean hurt = false;
+		if (player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
+			hurt = entity.hurtServer(serverLevel, player.damageSources().playerAttack(player), drain);
+		}
+		if (hurt) {
 			player.heal(drain);
 			stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 		}
