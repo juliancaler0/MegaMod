@@ -32,8 +32,13 @@ import java.util.function.Consumer;
  * Jewelry item with rolled rarity and random bonus attributes.
  * Keeps the base attributes set at registration (e.g., +4% arcane power for Topaz Ring)
  * and adds 1-3 random bonus stats from a jewelry-specific pool on first inventory tick.
+ * <p>
+ * Extends {@link com.ultra.megamod.lib.accessories.api.core.AccessoryItem} so each instance
+ * auto-registers with the lib/accessories system. Slot membership is driven by the
+ * {@code megamod:rings}/{@code megamod:necklaces} item tags, which are chained into the
+ * {@code accessories:ring}/{@code accessories:necklace} validator tags.
  */
-public class RpgJewelryItem extends Item {
+public class RpgJewelryItem extends com.ultra.megamod.lib.accessories.api.core.AccessoryItem {
     private static final String KEY_JEWELRY_INITIALIZED = "jewelry_stats_initialized";
     private static final String KEY_JEWELRY_RARITY = "jewelry_rarity";
     private static final String KEY_JEWELRY_BONUSES = "jewelry_rolled_bonuses";

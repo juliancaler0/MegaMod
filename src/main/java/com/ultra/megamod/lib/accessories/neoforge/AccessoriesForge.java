@@ -185,6 +185,10 @@ public class AccessoriesForge {
             NeoForge.EVENT_BUS.<OnDatapackSyncEvent>addListener(EventPriority.HIGHEST, syncEvent -> syncEvent.getRelevantPlayers().forEach(playerConsumer::accept));
         });
 
+        event.enqueueWork(() -> {
+            var registered = com.ultra.megamod.lib.accessories.api.core.AccessoryRegistry.getAllAccessories();
+            LOGGER.info("AccessoryRegistry: registered {} accessory items at mod init", registered.size());
+        });
     }
 
     public void registerCommands(RegisterCommandsEvent event) {
