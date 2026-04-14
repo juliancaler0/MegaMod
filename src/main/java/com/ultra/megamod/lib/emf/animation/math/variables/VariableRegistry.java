@@ -225,6 +225,29 @@ public final class VariableRegistry {
                 "entity_model_features.config.variable_explanation." + variableName);
     }
 
+    // --- Phase F: public API surface for mod-registered variables ----
+
+    /**
+     * Mod-compat overload that records a caller-supplied explanation string
+     * instead of the default translation-key convention. Used by
+     * {@code EMFApi.registerSingletonAnimationVariable}.
+     */
+    public void registerSimpleBoolVariable(String variableName, String explanationKeyOrText,
+                                           BooleanSupplier boolGetter) {
+        registerSimpleBoolVariable(variableName, boolGetter);
+        if (explanationKeyOrText != null) {
+            singletonVariableExplanationTranslationKeys.put(variableName, explanationKeyOrText);
+        }
+    }
+
+    public void registerSimpleFloatVariable(String variableName, String explanationKeyOrText,
+                                            MathValue.ResultSupplier supplier) {
+        registerSimpleFloatVariable(variableName, supplier);
+        if (explanationKeyOrText != null) {
+            singletonVariableExplanationTranslationKeys.put(variableName, explanationKeyOrText);
+        }
+    }
+
     public MathComponent getVariable(String variableName, boolean isNegative, EmfParseContext parseCtx) {
         try {
             String variableWithNegative = isNegative ? "-" + variableName : variableName;

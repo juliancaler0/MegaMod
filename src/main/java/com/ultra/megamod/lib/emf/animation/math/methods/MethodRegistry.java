@@ -200,6 +200,44 @@ public final class MethodRegistry {
         });
     }
 
+    // --- Phase F: public API surface for mod-registered methods ----------
+
+    /**
+     * Public mod-compat entry point for registering a single-argument animation function.
+     * Used by {@code EMFApi.registerAnimationFunction}.
+     */
+    public void registerSimpleMethodFactory(String methodName, String explanationKey, Function<Float, Float> function) {
+        register(methodName, explanationKey != null ? explanationKey : emfTranslationKey(methodName),
+                FunctionMethods.makeFactory(methodName, function));
+    }
+
+    public void registerSimpleMethodFactory(String methodName, String explanationKey, BiFunction<Float, Float, Float> function) {
+        register(methodName, explanationKey != null ? explanationKey : emfTranslationKey(methodName),
+                BiFunctionMethods.makeFactory(methodName, function));
+    }
+
+    public void registerSimpleMethodFactory(String methodName, String explanationKey, TriFunction<Float, Float, Float, Float> function) {
+        register(methodName, explanationKey != null ? explanationKey : emfTranslationKey(methodName),
+                TriFunctionMethods.makeFactory(methodName, function));
+    }
+
+    public void registerSimpleMultiMethodFactory(String methodName, String explanationKey, Function<List<Float>, Float> function) {
+        register(methodName, explanationKey != null ? explanationKey : emfTranslationKey(methodName),
+                MultiFunctionMethods.makeFactory(methodName, function));
+    }
+
+    /** Public variant of the method-factory registrar for mod-compat code. */
+    public void registerAndWrapMethodFactory(String methodName, String explanationKey, MethodFactory factory) {
+        final String displayName = methodName;
+        register(methodName, explanationKey != null ? explanationKey : emfTranslationKey(methodName), (a, b, c) -> {
+            try {
+                return factory.getMethod(a, b, c);
+            } catch (Exception e) {
+                throw new EMFMathException("Failed to create " + displayName + "() method, because: " + e);
+            }
+        });
+    }
+
     public boolean containsMethod(String methodName) {
         return methodFactories.containsKey(methodName);
     }

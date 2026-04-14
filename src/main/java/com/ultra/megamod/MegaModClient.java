@@ -176,10 +176,19 @@ public class MegaModClient {
         });
 
         // EMF Phase E: eagerly init the model manager on client setup so the
-        // first .jem load doesn't race with reload listener registration
+        // first .jem load doesn't race with reload listener registration.
+        // EMF Phase F: also construct the config handler, install the texture
+        // redirector, and register the debug HUD + config keybind.
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent emfInit) -> {
-            emfInit.enqueueWork(() -> com.ultra.megamod.lib.emf.runtime.EmfModelManager.getInstance());
+            emfInit.enqueueWork(() -> {
+                com.ultra.megamod.lib.emf.runtime.EmfModelManager.getInstance();
+                com.ultra.megamod.lib.emf.EMF.config();
+                com.ultra.megamod.lib.emf.runtime.EmfTextureRedirect.install();
+                com.ultra.megamod.lib.emf.api.EMFApi.registerBuiltins();
+            });
         });
+        modEventBus.addListener(com.ultra.megamod.lib.emf.config.screen.EMFConfigKeybind::onRegisterKeyMappings);
+        modEventBus.addListener(com.ultra.megamod.lib.emf.debug.EMFDebugHud::onRegisterGuiLayers);
 
         // ETF Phase C: config keybind registration + emissive feature layer on players
         modEventBus.addListener(com.ultra.megamod.lib.etf.config.screen.ETFConfigKeybind::onRegisterKeyMappings);
