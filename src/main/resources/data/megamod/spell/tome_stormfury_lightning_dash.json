@@ -2,7 +2,13 @@
   "school": "megamod:lightning",
   "range": 10.0,
   "tier": 3,
-  "active": {},
+  "active": {
+    "cast": {
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"

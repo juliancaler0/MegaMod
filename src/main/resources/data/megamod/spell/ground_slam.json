@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
@@ -8,17 +8,20 @@
     "cast": {
       "duration": 1.0,
       "animation": {
-        "id": "spell_engine:weapon_slam_jump"
+        "id": "megamod:weapon_slam_jump"
       },
       "animation_pitch": false,
       "start_sound": {
-        "id": "spell_engine:weapon_hammer_swing"
+        "id": "megamod:weapon_hammer_swing"
       }
     }
   },
   "release": {
     "animation": {
-      "id": "spell_engine:weapon_slam_end"
+      "id": "megamod:weapon_slam_end"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
     }
   },
   "target": {
@@ -44,7 +47,7 @@
     "radius": 3.0,
     "particles": [
       {
-        "particle_id": "spell_engine:smoke_medium",
+        "particle_id": "megamod:smoke_medium",
         "origin": "FEET",
         "shape": "CIRCLE",
         "count": 25.0,
@@ -53,7 +56,7 @@
         "pre_spawn_travel": 1.0
       },
       {
-        "particle_id": "spell_engine:smoke_medium",
+        "particle_id": "megamod:smoke_medium",
         "origin": "FEET",
         "shape": "CIRCLE",
         "count": 25.0,
@@ -62,7 +65,7 @@
         "pre_spawn_travel": 2.0
       },
       {
-        "particle_id": "spell_engine:smoke_medium",
+        "particle_id": "megamod:smoke_medium",
         "origin": "FEET",
         "shape": "CIRCLE",
         "count": 25.0,
@@ -72,7 +75,7 @@
       }
     ],
     "sound": {
-      "id": "spell_engine:weapon_ground_slam"
+      "id": "megamod:weapon_ground_slam"
     }
   },
   "cost": {

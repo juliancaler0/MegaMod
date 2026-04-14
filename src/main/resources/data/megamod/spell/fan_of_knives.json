@@ -1,15 +1,21 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 15.0,
   "tier": 1,
   "learn": {},
-  "active": {},
+  "active": {
+    "cast": {
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
   "release": {
     "animation": {
-      "id": "spell_engine:weapon_dual_throw"
+      "id": "megamod:weapon_dual_throw"
     },
     "sound": {
-      "id": "spell_engine:weapon_dagger_throw"
+      "id": "megamod:weapon_dagger_throw"
     }
   },
   "target": {
@@ -67,7 +73,7 @@
         }
       },
       "sound": {
-        "id": "spell_engine:weapon_dagger_impact"
+        "id": "megamod:weapon_dagger_impact"
       }
     }
   ],

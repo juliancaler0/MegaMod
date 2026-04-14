@@ -5,13 +5,19 @@
   "tier": 1,
   "active": {
     "cast": {
-      "duration": 0.2
+      "duration": 0.2,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
     }
   },
   "release": {
     "sound": {
       "id": "minecraft:entity.blaze.shoot",
       "volume": 0.7
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

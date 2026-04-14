@@ -31,5 +31,13 @@
         "volume": 0.7
       }
     }
-  ]
+  ],
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "megamod:generic_healing_release"
+    }
+  }
 }

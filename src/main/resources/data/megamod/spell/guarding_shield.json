@@ -21,7 +21,13 @@
         "max_speed": 0.0,
         "color_rgba": 1724710911
       }
-    ]
+    ],
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
+    }
   },
   "target": {
     "type": "AREA",

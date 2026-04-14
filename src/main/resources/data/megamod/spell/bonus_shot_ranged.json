@@ -23,7 +23,13 @@
         "min_speed": 0.2,
         "max_speed": 0.7
       }
-    ]
+    ],
+    "animation": {
+      "id": "megamod:one_handed_projectile_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.evoker.cast_spell"
+    }
   },
   "target": {
     "type": "AIM",

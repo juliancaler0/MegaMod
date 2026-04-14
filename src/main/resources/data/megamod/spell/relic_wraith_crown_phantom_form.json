@@ -5,13 +5,19 @@
   "tier": 3,
   "active": {
     "cast": {
-      "duration": 0.0
+      "duration": 0.0,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
     }
   },
   "release": {
     "sound": {
       "id": "minecraft:entity.wither.shoot",
       "volume": 0.7
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

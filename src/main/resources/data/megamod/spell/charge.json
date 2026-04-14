@@ -3,7 +3,13 @@
   "range": 0.0,
   "tier": 4,
   "learn": {},
-  "active": {},
+  "active": {
+    "cast": {
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
   "release": {
     "animation": {
       "id": "megamod:one_handed_area_release"

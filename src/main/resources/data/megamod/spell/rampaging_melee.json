@@ -34,6 +34,9 @@
   "release": {
     "sound": {
       "id": "megamod:arsenal_rampaging_activate"
+    },
+    "animation": {
+      "id": "megamod:one_handed_healing_release"
     }
   },
   "target": {

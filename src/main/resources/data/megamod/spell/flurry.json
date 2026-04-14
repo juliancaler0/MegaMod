@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
@@ -9,7 +9,7 @@
       "duration": 1.25,
       "channel_ticks": 3,
       "animation": {
-        "id": "spell_engine:weapon_flurry_2h_charge",
+        "id": "megamod:weapon_flurry_2h_charge",
         "speed": 1.5
       },
       "animation_pitch": false
@@ -32,14 +32,14 @@
             "arc": 120.0
           },
           "animation": {
-            "id": "spell_engine:weapon_flurry_2h_slash_1",
+            "id": "megamod:weapon_flurry_2h_slash_1",
             "speed": 0.8
           },
           "swing_sound": {
-            "id": "spell_engine:weapon_claymore_swing"
+            "id": "megamod:weapon_claymore_swing"
           },
           "impact_sound": {
-            "id": "spell_engine:weapon_claymore_impact"
+            "id": "megamod:weapon_claymore_impact"
           }
         },
         {
@@ -51,14 +51,14 @@
             "arc": 120.0
           },
           "animation": {
-            "id": "spell_engine:weapon_flurry_2h_slash_2",
+            "id": "megamod:weapon_flurry_2h_slash_2",
             "speed": 0.8
           },
           "swing_sound": {
-            "id": "spell_engine:weapon_claymore_swing"
+            "id": "megamod:weapon_claymore_swing"
           },
           "impact_sound": {
-            "id": "spell_engine:weapon_claymore_impact"
+            "id": "megamod:weapon_claymore_impact"
           }
         }
       ]
@@ -69,6 +69,14 @@
       "group": "weapon",
       "duration": 12.0,
       "proportional": true
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

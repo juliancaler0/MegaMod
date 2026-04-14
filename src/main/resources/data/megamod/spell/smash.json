@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
@@ -8,7 +8,7 @@
     "cast": {
       "duration": 0.5,
       "animation": {
-        "id": "spell_engine:weapon_mace_uppercut_start",
+        "id": "megamod:weapon_mace_uppercut_start",
         "speed": 1.5
       },
       "animation_pitch": false
@@ -16,7 +16,10 @@
   },
   "release": {
     "sound": {
-      "id": "spell_engine:weapon_cleave"
+      "id": "megamod:weapon_cleave"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {
@@ -35,7 +38,7 @@
             "arc": 90.0
           },
           "animation": {
-            "id": "spell_engine:weapon_mace_uppercut_end"
+            "id": "megamod:weapon_mace_uppercut_end"
           }
         }
       ]
@@ -60,7 +63,7 @@
         }
       },
       "sound": {
-        "id": "spell_engine:weapon_mace_smash_impact"
+        "id": "megamod:weapon_mace_smash_impact"
       }
     }
   ],

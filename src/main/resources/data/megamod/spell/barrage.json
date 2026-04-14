@@ -18,6 +18,9 @@
   "release": {
     "animation": {
       "id": "megamod:archery_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.evoker.cast_spell"
     }
   },
   "target": {

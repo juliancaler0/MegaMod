@@ -1,10 +1,16 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
   "learn": {},
-  "active": {},
+  "active": {
+    "cast": {
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
   "target": {
     "type": "NONE"
   },
@@ -21,10 +27,10 @@
             "arc": 90.0
           },
           "animation": {
-            "id": "spell_engine:weapon_twinstrike_slash_1"
+            "id": "megamod:weapon_twinstrike_slash_1"
           },
           "swing_sound": {
-            "id": "spell_engine:weapon_sword_swing"
+            "id": "megamod:weapon_sword_swing"
           }
         },
         {
@@ -37,10 +43,10 @@
             "arc": 90.0
           },
           "animation": {
-            "id": "spell_engine:weapon_twinstrike_slash_2"
+            "id": "megamod:weapon_twinstrike_slash_2"
           },
           "swing_sound": {
-            "id": "spell_engine:weapon_sword_swing"
+            "id": "megamod:weapon_sword_swing"
           }
         }
       ]
@@ -51,6 +57,14 @@
       "group": "weapon",
       "attempt_duration": 1.0,
       "duration": 8.0
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

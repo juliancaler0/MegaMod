@@ -40,5 +40,13 @@
         "id": "megamod:arsenal_spike_impact"
       }
     }
-  ]
+  ],
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
+    }
+  }
 }

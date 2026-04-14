@@ -13,6 +13,9 @@
   "release": {
     "sound": {
       "id": "minecraft:entity.enderman.teleport"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

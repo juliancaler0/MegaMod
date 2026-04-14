@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
@@ -9,18 +9,18 @@
       "duration": 8.0,
       "channel_ticks": 20,
       "animation": {
-        "id": "spell_engine:two_handed_spin_static"
+        "id": "megamod:two_handed_spin_static"
       },
       "animation_pitch": false,
       "animation_spin": -18.0,
       "movement_speed": 1.1,
       "sound": {
-        "id": "spell_engine:whirlwind",
+        "id": "megamod:whirlwind",
         "randomness": 0.0
       },
       "particles": [
         {
-          "particle_id": "spell_engine:smoke_medium",
+          "particle_id": "megamod:smoke_medium",
           "origin": "FEET",
           "shape": "WIDE_PIPE",
           "count": 1.0,
@@ -41,7 +41,7 @@
   "release": {
     "particles": [
       {
-        "particle_id": "spell_engine:smoke_medium",
+        "particle_id": "megamod:smoke_medium",
         "origin": "FEET",
         "shape": "CIRCLE",
         "count": 25.0,
@@ -51,7 +51,10 @@
       }
     ],
     "sound": {
-      "id": "spell_engine:weapon_throw"
+      "id": "megamod:weapon_throw"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

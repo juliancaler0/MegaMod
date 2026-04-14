@@ -99,5 +99,13 @@
       "duration": 1.0,
       "hosting_item": false
     }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_projectile_release"
+    },
+    "sound": {
+      "id": "megamod:generic_arcane_release"
+    }
   }
 }

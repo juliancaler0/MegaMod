@@ -13,6 +13,9 @@
   "release": {
     "sound": {
       "id": "minecraft:block.beacon.activate"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

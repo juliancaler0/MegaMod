@@ -1,21 +1,24 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "range_mechanic": "MELEE",
   "tier": 1,
   "learn": {},
   "active": {
     "cast": {
-      "animation_pitch": false
+      "animation_pitch": false,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
     }
   },
   "release": {
     "animation": {
-      "id": "spell_engine:weapon_cleave"
+      "id": "megamod:weapon_cleave"
     },
     "particles_scaled_with_ranged": [
       {
-        "particle_id": "spell_engine:area_swirl",
+        "particle_id": "megamod:area_swirl",
         "origin": "CENTER",
         "shape": "SPHERE",
         "count": 1.0,
@@ -24,7 +27,7 @@
         "follow_entity": true
       },
       {
-        "particle_id": "spell_engine:smoke_medium",
+        "particle_id": "megamod:smoke_medium",
         "origin": "FEET",
         "shape": "CIRCLE",
         "count": 25.0,
@@ -34,7 +37,7 @@
       }
     ],
     "sound": {
-      "id": "spell_engine:weapon_cleave"
+      "id": "megamod:weapon_cleave"
     }
   },
   "target": {

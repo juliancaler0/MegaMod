@@ -30,6 +30,9 @@
     ],
     "sound": {
       "id": "megamod:arsenal_swirling"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

@@ -71,5 +71,13 @@
         "id": "megamod:arsenal_shockwave_impact"
       }
     }
-  ]
+  ],
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_projectile_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
+    }
+  }
 }

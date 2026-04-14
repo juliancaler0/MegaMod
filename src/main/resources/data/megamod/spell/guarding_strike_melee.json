@@ -46,6 +46,9 @@
     ],
     "sound": {
       "id": "megamod:arsenal_guardian_strike_release"
+    },
+    "animation": {
+      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

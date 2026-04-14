@@ -98,5 +98,13 @@
       "duration": 2.0,
       "hosting_item": false
     }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "megamod:generic_frost_release"
+    }
   }
 }
