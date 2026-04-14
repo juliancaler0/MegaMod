@@ -89,6 +89,11 @@ public class SpellEngineClient {
     public static void init() {
         hudConfig.refresh();
 
+        // Install the client-side spell-network payload handlers into the
+        // common-side proxy (see SpellEngineClientHandler). Must run before
+        // any play-to-client packet can be dispatched.
+        SpellEngineClientHandlerImpl.install();
+
         ClientNetwork.initializeHandlers();
 
         BlockEntityRenderers.register(SpellBindingBlockEntity.ENTITY_TYPE, SpellBindingBlockEntityRenderer::new);
@@ -111,8 +116,17 @@ public class SpellEngineClient {
      * Register entity renderers. Call from MegaModClient via modEventBus.addListener.
      */
     public static void onRegisterEntityRenderers(net.neoforged.neoforge.client.event.EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(SpellProjectile.ENTITY_TYPE, SpellProjectileRenderer::new);
-        event.registerEntityRenderer(SpellCloud.ENTITY_TYPE, SpellCloudRenderer::new);
+        // Resolve the EntityType from its DeferredRegister holder at call time. The
+        // static ENTITY_TYPE fields on SpellProjectile/SpellCloud are back-filled during
+        // FMLCommonSetupEvent, but that's not guaranteed to complete before
+        // RegisterRenderers fires — reading the static field here would pass null as the
+        // map key and fail the whole entity-renderer map build ("null key in entry").
+        event.registerEntityRenderer(
+                com.ultra.megamod.lib.spellengine.SpellEngineNeoForge.SPELL_PROJECTILE.get(),
+                SpellProjectileRenderer::new);
+        event.registerEntityRenderer(
+                com.ultra.megamod.lib.spellengine.SpellEngineNeoForge.SPELL_CLOUD.get(),
+                SpellCloudRenderer::new);
     }
 
     // --- Phase A.2: HUD overlay wiring ---------------------------------

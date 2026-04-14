@@ -1,1 +1,11 @@
-{ "model": { "type": "minecraft:model", "model": "reliquary:item/mob_charm" } }
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "reliquary:item/mob_charm",
+    "tints": [
+      { "type": "minecraft:constant", "value": -1 },
+      { "type": "reliquary:spawn_egg", "layer": 0, "default": -1 },
+      { "type": "reliquary:spawn_egg", "layer": 1, "default": -1 }
+    ]
+  }
+}

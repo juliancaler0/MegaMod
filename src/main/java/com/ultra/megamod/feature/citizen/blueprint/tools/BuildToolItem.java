@@ -32,6 +32,13 @@ public class BuildToolItem extends Item {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    /**
+     * Client-side screen opener. Populated by BlueprintClientProxy on the client
+     * so the server never loads any {@code net.minecraft.client} classes.
+     * Argument may be {@code null} when used in air.
+     */
+    public static Consumer<BlockPos> OPEN_BUILD_SCREEN = pos -> {};
+
     private static final String NBT_BLUEPRINT_NAME = "megamod:blueprint_name";
     private static final String NBT_BLUEPRINT_PACK = "megamod:blueprint_pack";
 
@@ -116,17 +123,13 @@ public class BuildToolItem extends Item {
     }
 
     /**
-     * Opens the BuildToolScreen on the client.
-     * Separated so the client screen class is only loaded on the client side.
+     * Opens the BuildToolScreen on the client via the proxy populated by
+     * BlueprintClientProxy. On the dedicated server the default no-op is used.
      *
      * @param placementPos the position to place at, or null if used in air
      */
     private void openBuildScreen(BlockPos placementPos) {
-        com.ultra.megamod.feature.citizen.blueprint.packs.StructurePacks.discoverPacks(
-                net.minecraft.client.Minecraft.getInstance().gameDirectory.toPath()
-                        .resolve("blueprints").resolve("megamod"));
-        net.minecraft.client.Minecraft.getInstance().setScreen(
-                new com.ultra.megamod.feature.citizen.blueprint.screen.BuildToolScreen(placementPos));
+        OPEN_BUILD_SCREEN.accept(placementPos);
     }
 
     // ---- Tooltip ----

@@ -16,11 +16,11 @@ import com.ultra.megamod.reliquary.util.EntityHelper;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
 
 public class AngelheartVialItem extends ItemBase {
-	public AngelheartVialItem() {
+	public AngelheartVialItem(Properties properties) {
 		// Port note (1.21.11): the old getCraftingRemainingItem override (returning an empty
 		// potion vial) was replaced by the Properties#craftRemainder hook. EMPTY_POTION_VIAL is
 		// registered before this item in ModItems so its get() is safe here.
-		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
+		super(properties.craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
 
 		CommonEventHandler.registerPlayerDeathHandler(new IPlayerDeathHandler() {
 			@Override

@@ -24,8 +24,8 @@ public class WitchHatItem extends Item implements ICreativeTabItemGenerator {
 	private static final ResourceKey<EquipmentAsset> WITCH_HAT_ASSET =
 			ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(Reliquary.MOD_ID, "witch_hat"));
 
-	public WitchHatItem() {
-		super(new Properties()
+	public WitchHatItem(Properties properties) {
+		super(properties
 				.stacksTo(1)
 				.component(DataComponents.EQUIPPABLE,
 						Equippable.builder(EquipmentSlot.HEAD)

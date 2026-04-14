@@ -53,8 +53,8 @@ public class PedestalBlock extends PassivePedestalBlock {
 			Block.box(4, 3, 4, 12, 4, 12)
 	).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-	public PedestalBlock() {
-		super();
+	public PedestalBlock(Properties properties) {
+		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(ENABLED, false));
 	}
 

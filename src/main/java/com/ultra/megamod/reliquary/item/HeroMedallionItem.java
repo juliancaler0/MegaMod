@@ -41,8 +41,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HeroMedallionItem extends ToggleableItem implements IPedestalActionItem, IScrollableItem, ICuriosItem {
-	public HeroMedallionItem() {
-		super(new Properties().durability(0).rarity(Rarity.EPIC));
+	public HeroMedallionItem(Properties properties) {
+		super(properties.durability(0).rarity(Rarity.EPIC));
 	}
 
 	@Override

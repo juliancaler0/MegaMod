@@ -14,10 +14,6 @@ import java.util.function.Consumer;
 
 public class BlockItemBase extends BlockItem implements ICreativeTabItemGenerator {
 
-	public BlockItemBase(Block block) {
-		this(block, new Properties());
-	}
-
 	@Override
 	public void addCreativeTabItems(Consumer<ItemStack> itemConsumer) {
 		if (getBlock() instanceof ICreativeTabItemGenerator creativeTabItemGenerator) {

@@ -16,8 +16,8 @@ import com.ultra.megamod.reliquary.entity.HolyHandGrenade;
 
 public class HolyHandGrenadeItem extends ItemBase implements ProjectileItem {
 
-	public HolyHandGrenadeItem() {
-		super(new Properties().rarity(Rarity.RARE));
+	public HolyHandGrenadeItem(Properties properties) {
+		super(properties.rarity(Rarity.RARE));
 	}
 
 	@Override

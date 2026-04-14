@@ -42,8 +42,8 @@ import com.ultra.megamod.reliquary.util.*;
 import javax.annotation.Nullable;
 
 public class VoidTearItem extends ChargeableItem implements IScrollableItem {
-	public VoidTearItem() {
-		super(new Properties());
+	public VoidTearItem(Properties properties) {
+		super(properties);
 		NeoForge.EVENT_BUS.addListener(this::onItemPickup);
 	}
 

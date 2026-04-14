@@ -1,0 +1,8 @@
+{
+  "values": [
+    { "id": "megamod:acolyte_wand", "required": false },
+    { "id": "megamod:holy_wand", "required": false },
+    { "id": "megamod:diamond_holy_wand", "required": false },
+    { "id": "megamod:netherite_holy_wand", "required": false }
+  ]
+}

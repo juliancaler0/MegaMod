@@ -10,8 +10,8 @@ import com.ultra.megamod.reliquary.item.ICreativeTabItemGenerator;
 import java.util.function.Consumer;
 
 public class InterdictionTorchItem extends StandingAndWallBlockItem implements ICreativeTabItemGenerator {
-	public InterdictionTorchItem() {
-		super(ModBlocks.INTERDICTION_TORCH.get(), ModBlocks.WALL_INTERDICTION_TORCH.get(), Direction.DOWN, new Item.Properties());
+	public InterdictionTorchItem(Item.Properties properties) {
+		super(ModBlocks.INTERDICTION_TORCH.get(), ModBlocks.WALL_INTERDICTION_TORCH.get(), Direction.DOWN, properties);
 	}
 
 	@Override

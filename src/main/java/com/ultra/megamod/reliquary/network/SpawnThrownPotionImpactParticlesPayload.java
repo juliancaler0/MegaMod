@@ -1,14 +1,12 @@
 package com.ultra.megamod.reliquary.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.util.RandomSource;
 import com.ultra.megamod.reliquary.Reliquary;
+
+import java.util.function.Consumer;
 
 public record SpawnThrownPotionImpactParticlesPayload(int color, double posX, double posY,
 													  double posZ) implements CustomPacketPayload {
@@ -24,42 +22,15 @@ public record SpawnThrownPotionImpactParticlesPayload(int color, double posX, do
 			SpawnThrownPotionImpactParticlesPayload::posZ,
 			SpawnThrownPotionImpactParticlesPayload::new);
 
+	/**
+	 * Populated by the client-side proxy to spawn the thrown-potion impact
+	 * particle burst. Defaults to a no-op so the dedicated server can register
+	 * the payload without loading {@code net.minecraft.client.*}.
+	 */
+	public static Consumer<SpawnThrownPotionImpactParticlesPayload> CLIENT_HANDLER = payload -> {};
+
 	public static void handlePayload(SpawnThrownPotionImpactParticlesPayload payload) {
-		Minecraft mc = Minecraft.getInstance();
-		if (mc.level == null) {
-			return;
-		}
-
-		RandomSource rand = mc.level.random;
-
-		float red = (((payload.color >> 16) & 255) / 256F);
-		float green = (((payload.color >> 8) & 255) / 256F);
-		float blue = ((payload.color & 255) / 256F);
-
-		for (int i = 0; i < 100; ++i) {
-			double var39 = rand.nextDouble() * 4.0D;
-			double angle = rand.nextDouble() * Math.PI * 2.0D;
-			double xSpeed = Math.cos(angle) * var39;
-			double ySpeed = 0.01D + rand.nextDouble() * 0.5D;
-			double zSpeed = Math.sin(angle) * var39;
-
-			// Port note (1.21.11): Particle#setColor(float,float,float) was removed. We construct
-			// a ColorParticleOption over ENTITY_EFFECT that carries an ARGB int; the renderer
-			// picks up the tint from the options object itself. The original per-particle
-			// "0.75 + 0.25 * rand" brightness multiplier is preserved via the argb pack below,
-			// so the splash colour matches the thrown-potion's declared tint colour as before.
-			float var32 = 0.75F + rand.nextFloat() * 0.25F;
-			int argb = 0xFF000000
-					| (((int) Math.min(255, red * var32 * 255)) << 16)
-					| (((int) Math.min(255, green * var32 * 255)) << 8)
-					| ((int) Math.min(255, blue * var32 * 255));
-			Particle particle = mc.particleEngine.createParticle(
-					net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, argb),
-					payload.posX + xSpeed * 0.1D, payload.posY + 0.3D, payload.posZ + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
-			if (particle != null) {
-				particle.setPower((float) var39);
-			}
-		}
+		CLIENT_HANDLER.accept(payload);
 	}
 
 	@Override

@@ -18,8 +18,8 @@ import java.util.function.Consumer;
 
 public class PotionEssenceItem extends ItemBase implements IPotionItem {
 
-	public PotionEssenceItem() {
-		super(new Properties());
+	public PotionEssenceItem(Properties properties) {
+		super(properties);
 	}
 
 	@Override

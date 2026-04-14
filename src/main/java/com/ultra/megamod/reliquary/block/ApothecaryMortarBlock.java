@@ -48,8 +48,8 @@ public class ApothecaryMortarBlock extends Block implements EntityBlock, ICreati
 			Block.box(5, 3.5, 4, 11, 6.5, 5)
 	).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-	public ApothecaryMortarBlock() {
-		super(Properties.of().mapColor(MapColor.STONE).strength(1.5F, 2.0F));
+	public ApothecaryMortarBlock(Properties properties) {
+		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
 	}
 

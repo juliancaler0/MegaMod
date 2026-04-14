@@ -20,8 +20,8 @@ import com.ultra.megamod.reliquary.util.PlayerInventoryProvider;
 
 public class PhoenixDownItem extends AngelicFeatherItem {
 
-	public PhoenixDownItem() {
-		super();
+	public PhoenixDownItem(Properties properties) {
+		super(properties);
 
 		CommonEventHandler.registerPlayerHurtHandler(new IPlayerHurtHandler() {
 			@Override

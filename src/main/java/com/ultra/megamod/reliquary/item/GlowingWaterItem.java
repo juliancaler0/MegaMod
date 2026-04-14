@@ -15,10 +15,10 @@ import com.ultra.megamod.reliquary.entity.GlowingWater;
 import com.ultra.megamod.reliquary.init.ModItems;
 
 public class GlowingWaterItem extends ItemBase implements ProjectileItem {
-	public GlowingWaterItem() {
+	public GlowingWaterItem(Properties properties) {
 		// Port note (1.21.11): the old getCraftingRemainingItem override (returning an empty
 		// potion vial) was replaced by the Properties#craftRemainder hook.
-		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
+		super(properties.craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
 	}
 
 	@Override

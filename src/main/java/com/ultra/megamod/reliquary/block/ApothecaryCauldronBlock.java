@@ -58,8 +58,8 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 			Block.box(0, 14, 14, 16, 16, 16)
 	).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-	public ApothecaryCauldronBlock() {
-		super(Properties.of().mapColor(MapColor.METAL).strength(1.5F, 5.0F).noOcclusion());
+	public ApothecaryCauldronBlock(Properties properties) {
+		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(LEVEL, 0));
 	}
 

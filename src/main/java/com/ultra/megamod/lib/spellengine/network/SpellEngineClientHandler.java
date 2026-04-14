@@ -1,96 +1,56 @@
 package com.ultra.megamod.lib.spellengine.network;
 
-import com.ultra.megamod.lib.spellengine.api.spell.registry.SpellRegistry;
-import com.ultra.megamod.lib.spellengine.client.animation.AnimatablePlayer;
-import com.ultra.megamod.lib.spellengine.client.gui.HudMessages;
-import com.ultra.megamod.lib.spellengine.fx.ParticleHelper;
-import com.ultra.megamod.lib.spellengine.internals.casting.SpellCasterClient;
-import com.ultra.megamod.lib.spellengine.internals.casting.SpellCasterEntity;
-import com.ultra.megamod.lib.spellengine.internals.container.SpellContainerSource;
-import net.minecraft.client.Minecraft;
-import net.minecraft.locale.Language;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+
+import java.util.function.BiConsumer;
 
 /**
  * Client-side handlers for SpellEngine packets.
- * These are called from the registrar in ServerNetwork.registerPayloadHandlers.
+ * <p>
+ * These are referenced by method-reference from the common-side
+ * {@link ServerNetwork#registerPayloadHandlers} during
+ * {@code RegisterPayloadHandlersEvent}, which fires on the dedicated server too.
+ * To keep the server's classloader away from {@code net.minecraft.client.*}
+ * types (rejected by {@code NeoForgeDevDistCleaner}), this class holds static
+ * {@code BiConsumer} fields defaulted to no-ops. The real client logic lives
+ * in {@code SpellEngineClientHandlerImpl} and is installed from
+ * {@code SpellEngineClient.init()}.
  */
 public class SpellEngineClientHandler {
 
+    public static BiConsumer<Packets.ParticleBatches, IPayloadContext> PARTICLE_BATCHES = (p, c) -> {};
+    public static BiConsumer<Packets.SpellAnimation, IPayloadContext> SPELL_ANIMATION = (p, c) -> {};
+    public static BiConsumer<Packets.SpellCooldown, IPayloadContext> SPELL_COOLDOWN = (p, c) -> {};
+    public static BiConsumer<Packets.SpellMessage, IPayloadContext> SPELL_MESSAGE = (p, c) -> {};
+    public static BiConsumer<Packets.SpellCooldownSync, IPayloadContext> SPELL_COOLDOWN_SYNC = (p, c) -> {};
+    public static BiConsumer<Packets.SpellContainerSync, IPayloadContext> SPELL_CONTAINER_SYNC = (p, c) -> {};
+    public static BiConsumer<Packets.AttackAvailable, IPayloadContext> ATTACK_AVAILABLE = (p, c) -> {};
+
     public static void handleParticleBatches(Packets.ParticleBatches packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        var level = client.level;
-        if (level == null) return;
-        var instructions = ParticleHelper.convertToInstructions(level, packet);
-        client.execute(() -> {
-            for (var instruction : instructions) {
-                instruction.perform(level);
-            }
-        });
+        PARTICLE_BATCHES.accept(packet, context);
     }
 
     public static void handleSpellAnimation(Packets.SpellAnimation packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            if (client.level == null) return;
-            var entity = client.level.getEntity(packet.playerId());
-            if (entity instanceof Player player) {
-                ((AnimatablePlayer) player).playSpellAnimation(packet.animationType(), packet.name(), packet.speed());
-            }
-        });
+        SPELL_ANIMATION.accept(packet, context);
     }
 
     public static void handleSpellCooldown(Packets.SpellCooldown packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            if (client.level == null) return;
-            var registry = SpellRegistry.from(client.level);
-            var spell = registry.get(packet.spellId());
-            if (spell.isEmpty()) return;
-            ((SpellCasterEntity) client.player).getCooldownManager().set(spell.get(), packet.duration());
-        });
+        SPELL_COOLDOWN.accept(packet, context);
     }
 
     public static void handleSpellMessage(Packets.SpellMessage packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            var translation = Language.getInstance().getOrDefault(packet.translationKey());
-            HudMessages.INSTANCE.error(translation);
-        });
+        SPELL_MESSAGE.accept(packet, context);
     }
 
     public static void handleSpellCooldownSync(Packets.SpellCooldownSync packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            var cooldownManager = ((SpellCasterEntity) client.player).getCooldownManager();
-            var cooldownsBefore = cooldownManager.spellsOnCooldown();
-            cooldownManager.acceptSync(packet.baseTick(), packet.cooldowns());
-            var cooldownsAfter = cooldownManager.spellsOnCooldown();
-            HudMessages.INSTANCE.onCooldownsChanged(cooldownsBefore, cooldownsAfter);
-        });
+        SPELL_COOLDOWN_SYNC.accept(packet, context);
     }
 
     public static void handleSpellContainerSync(Packets.SpellContainerSync packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            var player = client.player;
-            if (player != null) {
-                var containers = ((SpellContainerSource.Owner) player).serverSideSpellContainers();
-                containers.clear();
-                containers.putAll(packet.containers());
-            }
-            SpellContainerSource.setDirty(client.player, SpellContainerSource.MAIN_HAND);
-        });
+        SPELL_CONTAINER_SYNC.accept(packet, context);
     }
 
     public static void handleAttackAvailable(Packets.AttackAvailable packet, IPayloadContext context) {
-        var client = Minecraft.getInstance();
-        client.execute(() -> {
-            var player = client.player;
-            if (player instanceof SpellCasterClient caster) {
-                caster.onAttacksAvailable(packet.attacks());
-            }
-        });
+        ATTACK_AVAILABLE.accept(packet, context);
     }
 }

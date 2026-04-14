@@ -18,8 +18,8 @@ import com.ultra.megamod.reliquary.entity.LyssaHook;
 import com.ultra.megamod.reliquary.init.ModDataComponents;
 
 public class RodOfLyssaItem extends ItemBase {
-	public RodOfLyssaItem() {
-		super(new Properties().stacksTo(1));
+	public RodOfLyssaItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	public static int getHookEntityId(ItemStack stack) {

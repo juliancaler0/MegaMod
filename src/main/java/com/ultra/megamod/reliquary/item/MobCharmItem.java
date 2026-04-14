@@ -39,11 +39,11 @@ import java.util.function.Consumer;
 
 public class MobCharmItem extends ItemBase {
 	private final CharmInventoryHandler charmInventoryHandler = new CharmInventoryHandler();
-	public MobCharmItem() {
-		// Port note (1.21.11): Item#isEnchantable was removed; we pass enchantable(0) to reject
-		// the item from the enchanting table. supportsEnchantment below also rejects per-
-		// enchantment lookups, which together matches the old "not enchantable" behaviour.
-		super(new Properties().stacksTo(1).durability(10).enchantable(0));
+	public MobCharmItem(Properties properties) {
+		// Port note (1.21.11): Item.Properties#enchantable requires a positive value; omitting
+		// the call (default) matches the pre-1.21.11 "isEnchantable = false" behaviour.
+		// supportsEnchantment below also rejects per-enchantment lookups for belt-and-braces.
+		super(properties.stacksTo(1).durability(10));
 		NeoForge.EVENT_BUS.addListener(this::onEntityTargetedEvent);
 		NeoForge.EVENT_BUS.addListener(this::onLivingUpdate);
 		NeoForge.EVENT_BUS.addListener(this::onLivingDeath);

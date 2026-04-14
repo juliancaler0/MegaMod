@@ -32,8 +32,8 @@ import java.util.function.Consumer;
 public class InterdictionTorchBlock extends TorchBlock implements ICreativeTabItemGenerator {
 	protected static final int TICK_RATE = 1;
 
-	public InterdictionTorchBlock() {
-		super(ParticleTypes.FLAME, Properties.of().strength(0).lightLevel(value -> 15).randomTicks().sound(SoundType.WOOD).noCollision());
+	public InterdictionTorchBlock(Properties properties) {
+		super(ParticleTypes.FLAME, properties);
 	}
 
 	@Override

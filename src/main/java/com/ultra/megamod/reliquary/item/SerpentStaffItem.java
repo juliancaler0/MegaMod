@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.entity.KrakenSlime;
 
 public class SerpentStaffItem extends ItemBase {
-	public SerpentStaffItem() {
-		super(new Properties().durability(200));
+	public SerpentStaffItem(Properties properties) {
+		super(properties.durability(200));
 	}
 
 	@Override

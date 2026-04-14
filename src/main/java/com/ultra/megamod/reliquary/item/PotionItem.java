@@ -14,6 +14,10 @@ import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 
 public class PotionItem extends PotionItemBase {
+	public PotionItem(Properties properties) {
+		super(properties);
+	}
+
 	@Override
 	public ItemUseAnimation getUseAnimation(ItemStack stack) {
 		return ItemUseAnimation.DRINK;

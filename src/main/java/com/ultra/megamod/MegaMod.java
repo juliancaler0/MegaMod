@@ -129,6 +129,10 @@ public class MegaMod {
         // are registered before Weapon items reference them at init time.
         com.ultra.megamod.lib.spellengine.SpellEngineNeoForge.init(modEventBus);
         com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry.init(modEventBus);
+        // Register the SpellEngine universal spell-book + scroll items (needed for
+        // megamod:spell_books / megamod:grindable / megamod:spell_book_mergeable
+        // tags and the spell_infinity enchantment to resolve on datapack load).
+        com.ultra.megamod.lib.spellengine.item.SpellEngineItems.register();
         com.ultra.megamod.feature.combat.archers.ArchersMod.init(modEventBus);
         com.ultra.megamod.feature.combat.arsenal.ArsenalMod.init(modEventBus);
         // Activate class-mod SpellEngine-factory registrations for Wizards + Paladins.

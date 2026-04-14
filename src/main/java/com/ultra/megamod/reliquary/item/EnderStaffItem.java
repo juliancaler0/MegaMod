@@ -41,8 +41,8 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 
 public class EnderStaffItem extends ChargeableItem implements IScrollableItem {
-	public EnderStaffItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public EnderStaffItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	private int getEnderStaffPearlCost() {

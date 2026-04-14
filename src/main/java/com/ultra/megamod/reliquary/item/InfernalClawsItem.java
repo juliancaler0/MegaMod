@@ -13,8 +13,8 @@ import com.ultra.megamod.reliquary.reference.Config;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
 
 public class InfernalClawsItem extends ItemBase {
-	public InfernalClawsItem() {
-		super(new Properties().stacksTo(1));
+	public InfernalClawsItem(Properties properties) {
+		super(properties.stacksTo(1));
 
 		CommonEventHandler.registerPlayerHurtHandler(new IPlayerHurtHandler() {
 			@Override

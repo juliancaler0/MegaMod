@@ -1,0 +1,11 @@
+{
+  "values": [
+    { "id": "megamod:wand_novice", "required": false },
+    { "id": "megamod:wand_arcane", "required": false },
+    { "id": "megamod:wand_fire", "required": false },
+    { "id": "megamod:wand_frost", "required": false },
+    { "id": "megamod:wand_netherite_arcane", "required": false },
+    { "id": "megamod:wand_netherite_fire", "required": false },
+    { "id": "megamod:wand_netherite_frost", "required": false }
+  ]
+}

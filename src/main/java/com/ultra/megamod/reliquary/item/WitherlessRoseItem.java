@@ -15,8 +15,8 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
 
 public class WitherlessRoseItem extends ItemBase {
-	public WitherlessRoseItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public WitherlessRoseItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 		NeoForge.EVENT_BUS.addListener(this::preventWither);
 		NeoForge.EVENT_BUS.addListener(this::preventWitherAttack);
 	}

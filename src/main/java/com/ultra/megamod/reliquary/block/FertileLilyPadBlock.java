@@ -37,11 +37,7 @@ public class FertileLilyPadBlock extends BushBlock implements ICreativeTabItemGe
 	private static final Map<ResourceKey<Level>, Set<BlockPos>> dimensionPositionsTicked = new HashMap<>();
 	private static final VoxelShape AABB = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 1.5D, 15.0D);
 
-	public FertileLilyPadBlock() {
-		super(Properties.of().mapColor(MapColor.PLANT));
-	}
-
-	private FertileLilyPadBlock(Properties properties) {
+	public FertileLilyPadBlock(Properties properties) {
 		super(properties);
 	}
 

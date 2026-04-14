@@ -67,4 +67,10 @@ public class SpellPowerMechanics {
     public static final Entry CRITICAL_DAMAGE = entry("sp_critical_damage", PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE * 10, 0x66ffcc)
             .innateModifier(AttributeModifier.Operation.ADD_MULTIPLIED_BASE, ((float) SpellPowerMod.safeConfig().base_spell_critical_damage_percentage) / 100F);
     public static final Entry HASTE = entry("sp_haste", PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE * 10, 0xcc99ff);
+
+    // Upstream SpellPower exposed this attribute as `spell_power:haste`; the spell_power_haste.json
+    // enchantment datapack file references it as `megamod:haste`. Register it with the upstream
+    // defaults (base 100, min 100, max 1000) so datapack load resolves the reference.
+    // Source: Ref Code/Combat and Weapons/SpellPower-1.21.1/common/src/main/java/net/spell_power/api/SpellPowerMechanics.java:75
+    public static final Entry HASTE_UNPREFIXED = entry("haste", PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE, PERCENT_ATTRIBUTE_BASELINE * 10, 0xcc99ff);
 }

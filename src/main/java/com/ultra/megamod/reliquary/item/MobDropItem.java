@@ -10,6 +10,10 @@ import com.ultra.megamod.reliquary.reference.Config;
 import java.util.function.Consumer;
 
 public class MobDropItem extends ItemBase {
+	public MobDropItem(Properties properties) {
+		super(properties);
+	}
+
 	@Override
 	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
 		if (Boolean.TRUE.equals(Config.COMMON.mobDropsEnabled.get())) {

@@ -36,8 +36,8 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 	private static final int COOLDOWN = 10;
 	public static final int TORCH_SLOT = 0;
 
-	public SojournerStaffItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public SojournerStaffItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

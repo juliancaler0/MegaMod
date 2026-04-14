@@ -46,8 +46,8 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 
 	private static final Map<String, Block> TORCH_BLOCKS = new HashMap<>();
 
-	public LanternOfParanoiaItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public LanternOfParanoiaItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

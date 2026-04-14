@@ -37,8 +37,8 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 
 public class InfernalChaliceItem extends ToggleableItem {
-	public InfernalChaliceItem() {
-		super(new Properties().stacksTo(1));
+	public InfernalChaliceItem(Properties properties) {
+		super(properties.stacksTo(1));
 
 		CommonEventHandler.registerPlayerHurtHandler(new IPlayerHurtHandler() {
 			@Override

@@ -17,10 +17,10 @@ import com.ultra.megamod.reliquary.reference.Config;
 
 public class AphroditePotionItem extends ItemBase implements ProjectileItem {
 
-	public AphroditePotionItem() {
+	public AphroditePotionItem(Properties properties) {
 		// Port note (1.21.11): the old getCraftingRemainingItem override (returning an empty
 		// potion vial) was replaced by the Properties#craftRemainder hook.
-		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()), Config.COMMON.disable.disablePotions);
+		super(properties.craftRemainder(ModItems.EMPTY_POTION_VIAL.get()), Config.COMMON.disable.disablePotions);
 	}
 
 	@Override

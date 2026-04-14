@@ -23,8 +23,8 @@ import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class TippedArrowItem extends ArrowItem implements IPotionItem, ICreativeTabItemGenerator {
-	public TippedArrowItem() {
-		super(new Properties());
+	public TippedArrowItem(Properties properties) {
+		super(properties);
 	}
 
 	@Override

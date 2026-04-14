@@ -18,8 +18,8 @@ import com.ultra.megamod.reliquary.reference.Config;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
 
 public class AngelicFeatherItem extends ItemBase implements ICuriosItem {
-	public AngelicFeatherItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public AngelicFeatherItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 		CommonEventHandler.registerPlayerHurtHandler(new IPlayerHurtHandler() {
 			@Override
 			public boolean canApply(Player player, LivingIncomingDamageEvent event) {

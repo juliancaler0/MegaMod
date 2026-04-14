@@ -1,69 +1,29 @@
 package com.ultra.megamod.reliquary.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import com.ultra.megamod.reliquary.Reliquary;
-import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.util.StreamCodecHelper;
 
+import java.util.function.Consumer;
+
 public record SpawnAngelheartVialParticlesPayload(Vec3 position) implements CustomPacketPayload {
-	public static final Type<SpawnAngelheartVialParticlesPayload> TYPE = new Type<>(Reliquary.getRL("angelheart_vial_particles"));
+	public static final Type<SpawnAngelheartVialParticlesPayload> TYPE = new Type<>(com.ultra.megamod.reliquary.Reliquary.getRL("angelheart_vial_particles"));
 	public static final StreamCodec<FriendlyByteBuf, SpawnAngelheartVialParticlesPayload> STREAM_CODEC = StreamCodec.composite(
 			StreamCodecHelper.VEC_3_STREAM_CODEC,
 			SpawnAngelheartVialParticlesPayload::position,
 			SpawnAngelheartVialParticlesPayload::new);
 
+	/**
+	 * Populated by the client-side proxy to spawn the angelheart-vial item +
+	 * magenta spell particle burst. Defaults to a no-op so the dedicated server
+	 * can register the payload without loading {@code net.minecraft.client.*}.
+	 */
+	public static Consumer<SpawnAngelheartVialParticlesPayload> CLIENT_HANDLER = payload -> {};
+
 	public static void handlePayload(SpawnAngelheartVialParticlesPayload payload) {
-		LocalPlayer player = Minecraft.getInstance().player;
-		if (player == null) {
-			return;
-		}
-
-		double x = payload.position.x;
-		double y = payload.position.y;
-		double z = payload.position.z;
-		RandomSource random = player.level().random;
-		ItemParticleOption itemParticleData = new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(ModItems.ANGELHEART_VIAL.get()));
-		for (int i = 0; i < 8; ++i) {
-			player.level().addParticle(itemParticleData, x, y, z, random.nextGaussian() * 0.15D, random.nextDouble() * 0.2D, random.nextGaussian() * 0.15D);
-		}
-
-		float red = 1.0F;
-		float green = 0.0F;
-		float blue = 1.0F;
-
-		for (int i = 0; i < 100; ++i) {
-			double distance = random.nextDouble() * 4.0D;
-			double angle = random.nextDouble() * Math.PI * 2.0D;
-			double xSpeed = Math.cos(angle) * distance;
-			double ySpeed = 0.01D + random.nextDouble() * 0.5D;
-			double zSpeed = Math.sin(angle) * distance;
-			// Port note (1.21.11): the old Particle#setColor(float,float,float) sink was removed,
-			// and ParticleTypes.EFFECT switched to a typed SpellParticleOption. We instead spawn
-			// a ColorParticleOption over ENTITY_EFFECT which carries an ARGB int and renders at
-			// the same "wispy cloud" visual as the old ParticleTypes.EFFECT. The original red=1,
-			// green=0, blue=1 (magenta) tint is preserved via the argb pack below.
-			float colorMultiplier = 0.75F + random.nextFloat() * 0.25F;
-			int argb = 0xFF000000
-					| (((int) Math.min(255, red * colorMultiplier * 255)) << 16)
-					| (((int) Math.min(255, green * colorMultiplier * 255)) << 8)
-					| ((int) Math.min(255, blue * colorMultiplier * 255));
-			net.minecraft.client.particle.Particle particle = Minecraft.getInstance().particleEngine.createParticle(
-					net.minecraft.core.particles.ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, argb),
-					x + xSpeed * 0.1D, y + 0.3D, z + zSpeed * 0.1D, xSpeed, ySpeed, zSpeed);
-			if (particle != null) {
-				particle.setPower((float) distance);
-			}
-		}
+		CLIENT_HANDLER.accept(payload);
 	}
 
 	@Override

@@ -14,6 +14,10 @@ import net.minecraft.world.level.Level;
 import com.ultra.megamod.reliquary.entity.potion.ThrownPotion;
 
 public class ThrownPotionItem extends PotionItemBase implements ProjectileItem {
+	public ThrownPotionItem(Properties properties) {
+		super(properties);
+	}
+
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);

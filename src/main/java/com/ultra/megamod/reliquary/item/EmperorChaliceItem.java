@@ -30,8 +30,8 @@ import javax.annotation.Nullable;
 
 public class EmperorChaliceItem extends ToggleableItem {
 
-	public EmperorChaliceItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public EmperorChaliceItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 		NeoForge.EVENT_BUS.addListener(this::onBlockRightClick);
 	}
 

@@ -42,6 +42,13 @@ public class ShapeToolItem extends Item {
     private static final Logger LOGGER = LogUtils.getLogger();
 
     /**
+     * Client-side screen opener. Populated by BlueprintClientProxy on the client
+     * so the server never loads any {@code net.minecraft.client} classes.
+     * Argument may be {@code null} when used in air.
+     */
+    public static Consumer<BlockPos> OPEN_SHAPE_SCREEN = pos -> {};
+
+    /**
      * The last shape generated from the ShapeToolScreen.
      * Set by {@link #setLastShape(com.ultra.megamod.feature.citizen.blueprint.Blueprint)} after generation.
      * Cleared after placement.
@@ -231,14 +238,13 @@ public class ShapeToolItem extends Item {
     }
 
     /**
-     * Opens the ShapeToolScreen on the client.
-     * Separated so the client screen class is only loaded on the client side.
+     * Opens the ShapeToolScreen on the client via the proxy populated by
+     * BlueprintClientProxy. On the dedicated server the default no-op is used.
      *
      * @param placementPos the position to center the shape at, or null if used in air
      */
     private void openShapeScreen(BlockPos placementPos) {
-        net.minecraft.client.Minecraft.getInstance().setScreen(
-                new com.ultra.megamod.feature.citizen.blueprint.screen.ShapeToolScreen(placementPos));
+        OPEN_SHAPE_SCREEN.accept(placementPos);
     }
 
     /**

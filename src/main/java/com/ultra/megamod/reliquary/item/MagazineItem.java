@@ -1,7 +1,7 @@
 package com.ultra.megamod.reliquary.item;
 
 public class MagazineItem extends BulletItem {
-	public MagazineItem(boolean addPotionBulletsInItemGroup, int color) {
-		super(false, addPotionBulletsInItemGroup, color);
+	public MagazineItem(Properties properties, boolean addPotionBulletsInItemGroup, int color) {
+		super(properties, false, addPotionBulletsInItemGroup, color);
 	}
 }

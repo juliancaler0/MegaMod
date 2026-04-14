@@ -33,6 +33,10 @@ public class MultiPistonBlock extends Block implements EntityBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
+    /** Client-side screen opener — populated by {@code MultiPistonClientProxy} on the client.
+     *  Leaving it as a no-op on the dedicated server keeps this class free of client imports. */
+    public static java.util.function.Consumer<BlockPos> OPEN_CONFIG_SCREEN = pos -> {};
+
     public MultiPistonBlock(BlockBehaviour.Properties props) {
         super(props);
         this.registerDefaultState(this.stateDefinition.any()
@@ -76,8 +80,8 @@ public class MultiPistonBlock extends Block implements EntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide()) {
-            // Open the configuration screen on the client
-            net.minecraft.client.Minecraft.getInstance().setScreen(new MultiPistonScreen(pos));
+            // Open the configuration screen via the client proxy (registered on client-side init).
+            OPEN_CONFIG_SCREEN.accept(pos);
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.CONSUME;

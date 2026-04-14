@@ -40,8 +40,8 @@ import java.util.List;
 public class RendingGaleItem extends ChargeableItem implements IScrollableItem {
 	private static final int NO_DAMAGE_ELYTRA_TICKS = 3;
 
-	public RendingGaleItem() {
-		super(new Properties().stacksTo(1));
+	public RendingGaleItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	@Override

@@ -21,8 +21,8 @@ public class BulletItem extends ItemBase implements IPotionItem {
 	private final boolean addPotionBulletsInItemGroup;
 	private final int color;
 
-	public BulletItem(boolean hasTooltip, boolean addPotionBulletsInItemGroup, int color) {
-		super(new Properties());
+	public BulletItem(Properties properties, boolean hasTooltip, boolean addPotionBulletsInItemGroup, int color) {
+		super(properties);
 		this.hasTooltip = hasTooltip;
 		this.addPotionBulletsInItemGroup = addPotionBulletsInItemGroup;
 		this.color = color;

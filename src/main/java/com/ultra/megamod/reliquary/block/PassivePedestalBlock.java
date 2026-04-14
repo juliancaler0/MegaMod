@@ -55,8 +55,8 @@ public class PassivePedestalBlock extends Block implements EntityBlock, ICreativ
 			Block.box(5, 2, 5, 11, 8, 11)
 	).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
-	public PassivePedestalBlock() {
-		super(Properties.of().mapColor(MapColor.STONE).strength(1.5F, 2.0F).forceSolidOn());
+	public PassivePedestalBlock(Properties properties) {
+		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 

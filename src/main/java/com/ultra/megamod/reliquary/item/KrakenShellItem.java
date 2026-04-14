@@ -15,8 +15,8 @@ import com.ultra.megamod.reliquary.reference.Config;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
 
 public class KrakenShellItem extends ItemBase {
-	public KrakenShellItem() {
-		super(new Properties().stacksTo(1));
+	public KrakenShellItem(Properties properties) {
+		super(properties.stacksTo(1));
 
 		CommonEventHandler.registerPlayerHurtHandler(new IPlayerHurtHandler() {
 			@Override

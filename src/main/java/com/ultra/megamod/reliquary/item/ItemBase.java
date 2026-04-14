@@ -18,14 +18,6 @@ import java.util.function.Supplier;
 public class ItemBase extends Item implements ICreativeTabItemGenerator {
 	private final Supplier<Boolean> isDisabled;
 
-	public ItemBase() {
-		this(new Properties(), () -> false);
-	}
-
-	public ItemBase(Supplier<Boolean> isDisabled) {
-		this(new Properties(), isDisabled);
-	}
-
 	public ItemBase(Properties properties) {
 		this(properties, () -> false);
 	}

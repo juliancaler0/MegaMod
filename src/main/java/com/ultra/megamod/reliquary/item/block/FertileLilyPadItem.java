@@ -12,8 +12,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import com.ultra.megamod.reliquary.init.ModBlocks;
 
 public class FertileLilyPadItem extends BlockItemBase {
-	public FertileLilyPadItem() {
-		super(ModBlocks.FERTILE_LILY_PAD.get(), new Properties().rarity(Rarity.EPIC));
+	public FertileLilyPadItem(Properties properties) {
+		super(ModBlocks.FERTILE_LILY_PAD.get(), properties.rarity(Rarity.EPIC));
 	}
 
 	@Override

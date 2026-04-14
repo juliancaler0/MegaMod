@@ -32,8 +32,8 @@ public class InfernalTearItem extends ToggleableItem {
 	private static final int COOLDOWN = 4;
 	private static final int NOTHING_FOUND_COOLDOWN = COOLDOWN * 5;
 
-	public InfernalTearItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public InfernalTearItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

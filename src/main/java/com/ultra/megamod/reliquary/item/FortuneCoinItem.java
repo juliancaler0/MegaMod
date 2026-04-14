@@ -54,8 +54,8 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 		boolean canPickup(ItemEntity itemEntity);
 	}
 
-	public FortuneCoinItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public FortuneCoinItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

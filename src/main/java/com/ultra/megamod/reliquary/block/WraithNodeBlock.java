@@ -15,8 +15,8 @@ import java.util.function.Consumer;
 public class WraithNodeBlock extends Block implements ICreativeTabItemGenerator {
 	private static final VoxelShape SHAPE = box(2, 0, 2, 14, 12, 14);
 
-	public WraithNodeBlock() {
-		super(Properties.of().mapColor(MapColor.STONE).strength(1.5F, 5.0F).noOcclusion());
+	public WraithNodeBlock(Properties properties) {
+		super(properties);
 	}
 
 	@Override

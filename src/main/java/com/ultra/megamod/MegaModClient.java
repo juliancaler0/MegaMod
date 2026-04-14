@@ -237,6 +237,22 @@ public class MegaModClient {
         // Reliquary port — client wiring (particles, renderers, HUD, key handlers)
         com.ultra.megamod.reliquary.Reliquary.initClient(modEventBus, container);
 
+        // MultiPiston client-side screen opener wiring (bypasses the common
+        // class referencing Minecraft/Screen directly — keeps the dedicated
+        // server's classloader happy).
+        com.ultra.megamod.feature.citizen.multipiston.MultiPistonClientProxy.init();
+
+        // Blueprint tool client-side screen opener wiring (same proxy pattern
+        // as MultiPiston — keeps Screen/Minecraft references out of the
+        // common bytecode loaded by the dedicated server).
+        com.ultra.megamod.feature.citizen.blueprint.BlueprintClientProxy.init();
+
+        // Class selection screen opener — route ClassSelectionPayload through
+        // a client-only proxy so the common payload class never links against
+        // Minecraft / Screen (would be rejected by NeoForgeDevDistCleaner on
+        // the dedicated server).
+        com.ultra.megamod.feature.combat.client.ClassSelectionClientProxy.init();
+
         // Renderer and pipeline registrations
         modEventBus.addListener(MegaModClient::onRegisterRenderers);
         modEventBus.addListener(MegaModClient::onRegisterLayerDefinitions);

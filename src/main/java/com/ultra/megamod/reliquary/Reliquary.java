@@ -59,11 +59,18 @@ public final class Reliquary {
 	}
 
 	public static void initClient(IEventBus modBus, ModContainer container) {
-		// Client-layer particle DeferredRegister binds to the mod bus here so
-		// particle types register before content reload. All other client-side
-		// wiring (renderer + HUD + color + keybind + witch-hat extension) is
-		// scheduled through ClientEventHandler.registerHandlers.
-		com.ultra.megamod.reliquary.client.init.ModParticles.registerListeners(modBus);
+		// Client-side wiring (renderer + HUD + color + keybind + witch-hat extension
+		// AND particle DeferredRegister) is scheduled through
+		// ClientEventHandler.registerHandlers below. The redundant call that used to
+		// live here has been removed to avoid the "Cannot register DeferredRegister
+		// to more than one event bus" crash on client startup.
+		// Install S2C payload client handlers through a proxy so the payload
+		// classes themselves don't reference net.minecraft.client.* types (the
+		// dedicated server's NeoForgeDevDistCleaner rejects those during
+		// RegisterPayloadHandlersEvent). This MUST run before the common-side
+		// payload registration dispatches any packets, but installing defaults
+		// is safe to do at client init time.
+		com.ultra.megamod.reliquary.client.ReliquaryClientPayloadProxy.init();
 		ClientEventHandler.registerHandlers(container);
 	}
 

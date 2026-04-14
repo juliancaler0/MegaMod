@@ -25,11 +25,12 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 
 public class AlkahestryTomeItem extends ChargeableItem {
-	public AlkahestryTomeItem() {
-		// Port note (1.21.11): Item#isEnchantable was removed in favour of Properties#enchantable.
-		// Passing 0 matches the old "not enchantable" behaviour at the item level. The
-		// supportsEnchantment override below still rejects any specific enchantment too.
-		super(new Properties().rarity(Rarity.EPIC).stacksTo(1).durability(10).enchantable(0).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
+	public AlkahestryTomeItem(Properties properties) {
+		// Port note (1.21.11): Item.Properties#enchantable requires a positive value; the
+		// absence of the call means "not enchantable" (default), which matches the pre-1.21.11
+		// "isEnchantable = false" behaviour. supportsEnchantment below still rejects individual
+		// enchantments if one slips through anyway.
+		super(properties.rarity(Rarity.EPIC).stacksTo(1).durability(10).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
 	}
 
 	@Override

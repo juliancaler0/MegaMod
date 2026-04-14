@@ -26,8 +26,8 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class MobCharmBeltItem extends ItemBase implements ICuriosItem {
-	public MobCharmBeltItem() {
-		super(new Properties().stacksTo(1));
+	public MobCharmBeltItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	@Override

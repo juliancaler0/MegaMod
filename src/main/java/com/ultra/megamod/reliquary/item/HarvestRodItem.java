@@ -54,8 +54,8 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	private static final int AOE_START_COOLDOWN = 10;
 	public static final int BONEMEAL_SLOT = 0;
 
-	public HarvestRodItem() {
-		super(new Properties().stacksTo(1));
+	public HarvestRodItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	@Override

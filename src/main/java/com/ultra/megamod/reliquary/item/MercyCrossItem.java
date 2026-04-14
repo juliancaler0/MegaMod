@@ -28,8 +28,8 @@ import java.util.function.Consumer;
  * listener. Tiers → ToolMaterial.
  */
 public class MercyCrossItem extends Item implements ICreativeTabItemGenerator {
-	public MercyCrossItem() {
-		super(new Properties()
+	public MercyCrossItem(Properties properties) {
+		super(properties
 				.stacksTo(1)
 				.durability(64)
 				.rarity(Rarity.EPIC)

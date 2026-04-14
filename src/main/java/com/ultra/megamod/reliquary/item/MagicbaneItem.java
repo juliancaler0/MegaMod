@@ -40,8 +40,8 @@ import java.util.function.Consumer;
 public class MagicbaneItem extends Item implements ICreativeTabItemGenerator {
 	private static final Identifier MAGICBANE_ENCHANTMENTS_BONUS_ID = Reliquary.getRL("magicbane_enchantments_bonus");
 
-	public MagicbaneItem() {
-		super(new Properties()
+	public MagicbaneItem(Properties properties) {
+		super(properties
 				.durability(16)
 				.rarity(Rarity.EPIC)
 				.sword(ToolMaterial.GOLD, 4.0f, -2.4f));

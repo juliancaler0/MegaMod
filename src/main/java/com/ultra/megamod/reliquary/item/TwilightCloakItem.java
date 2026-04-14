@@ -20,8 +20,8 @@ import com.ultra.megamod.reliquary.util.MobHelper;
 import javax.annotation.Nullable;
 
 public class TwilightCloakItem extends ToggleableItem implements ICuriosItem {
-	public TwilightCloakItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public TwilightCloakItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 		NeoForge.EVENT_BUS.addListener(this::onEntityTargetedEvent);
 		NeoForge.EVENT_BUS.addListener(this::onLivingUpdate);
 	}

@@ -38,8 +38,8 @@ import java.util.function.Consumer;
 public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativeTabItemGenerator {
 	private static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-	public AlkahestryAltarBlock() {
-		super(Properties.of().mapColor(MapColor.STONE).strength(1.5F, 5.0F));
+	public AlkahestryAltarBlock(Properties properties) {
+		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(ACTIVE, false));
 	}
 

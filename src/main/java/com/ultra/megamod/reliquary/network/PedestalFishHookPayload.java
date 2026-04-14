@@ -1,16 +1,13 @@
 package com.ultra.megamod.reliquary.network;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import com.ultra.megamod.reliquary.Reliquary;
-import com.ultra.megamod.reliquary.api.IPedestal;
-import com.ultra.megamod.reliquary.client.render.PedestalFishHookRenderer;
-import com.ultra.megamod.reliquary.util.WorldHelper;
+
+import java.util.function.Consumer;
 
 public record PedestalFishHookPayload(BlockPos pedestalPos, double hookX, double hookY,
 									  double hookZ) implements CustomPacketPayload {
@@ -26,15 +23,16 @@ public record PedestalFishHookPayload(BlockPos pedestalPos, double hookX, double
 			PedestalFishHookPayload::hookZ,
 			PedestalFishHookPayload::new);
 
+	/**
+	 * Populated by the client-side proxy to route the payload into
+	 * {@code PedestalFishHookRenderer} without dragging {@code net.minecraft.client.*}
+	 * onto the common classloader (which would break dedicated-server startup).
+	 * Defaults to a no-op so the server can safely register the payload.
+	 */
+	public static Consumer<PedestalFishHookPayload> CLIENT_HANDLER = payload -> {};
+
 	public static void handlePayload(PedestalFishHookPayload payload) {
-		ClientLevel level = Minecraft.getInstance().level;
-		WorldHelper.getBlockEntity(level, payload.pedestalPos, IPedestal.class).ifPresent(pedestal -> {
-			PedestalFishHookRenderer.HookRenderingData data = null;
-			if (payload.hookY > 0) {
-				data = new PedestalFishHookRenderer.HookRenderingData(payload.hookX, payload.hookY, payload.hookZ);
-			}
-			pedestal.setItemData(data);
-		});
+		CLIENT_HANDLER.accept(payload);
 	}
 
 	@Override

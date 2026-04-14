@@ -133,7 +133,11 @@ public final class ClientEventHandler {
 		modBus.addListener(ModBlockColors::registerBlockColors);
 		// NB: item tint registration moved from RegisterColorHandlersEvent.Item
 		// (removed in 1.21.11) to data-driven ItemTintSource entries under
-		// assets/reliquary/items/<name>.json — see ModItemColors javadoc.
+		// assets/reliquary/items/<name>.json — see ModItemColors javadoc. The
+		// custom tint-source types (spawn-egg palette for mob charms/fragments,
+		// void-tear contents mirror) need to be registered so the item JSONs
+		// can reference them by id.
+		modBus.addListener(ClientEventHandler::registerItemTintSources);
 		modBus.addListener(ClientEventHandler::registerOverlay);
 		modBus.addListener(ClientEventHandler::registerClientExtensions);
 		modBus.addListener(ClientEventHandler::registerMenuScreens);
@@ -149,6 +153,17 @@ public final class ClientEventHandler {
 				com.ultra.megamod.reliquary.client.gui.AlkahestryTomeScreen::new);
 		event.register(ModItems.MOB_CHAR_BELT_MENU_TYPE.get(),
 				com.ultra.megamod.reliquary.client.gui.MobCharmBeltScreen::new);
+	}
+
+	/**
+	 * Register custom {@code ItemTintSource} types used by Reliquary items.
+	 * The data-driven {@code assets/reliquary/items/<name>.json} models
+	 * reference these by id (e.g. {@code reliquary:spawn_egg}) to pull the
+	 * mob-specific palette onto charms/fragments.
+	 */
+	private static void registerItemTintSources(net.neoforged.neoforge.client.event.RegisterColorHandlersEvent.ItemTintSources event) {
+		event.register(com.ultra.megamod.reliquary.client.color.SpawnEggTintSource.ID,
+				com.ultra.megamod.reliquary.client.color.SpawnEggTintSource.MAP_CODEC);
 	}
 
 	private static void registerLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {

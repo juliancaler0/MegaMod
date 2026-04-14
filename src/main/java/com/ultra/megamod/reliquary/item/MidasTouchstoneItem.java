@@ -23,8 +23,8 @@ import java.util.List;
 
 public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 
-	public MidasTouchstoneItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public MidasTouchstoneItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	private static boolean isRepairableByMidas(ItemStack stack) {

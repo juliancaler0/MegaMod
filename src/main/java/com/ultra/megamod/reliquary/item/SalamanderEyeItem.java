@@ -21,8 +21,8 @@ import com.ultra.megamod.reliquary.util.RandHelper;
 import java.util.List;
 
 public class SalamanderEyeItem extends ItemBase {
-	public SalamanderEyeItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public SalamanderEyeItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

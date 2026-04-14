@@ -11,7 +11,7 @@
           "base": 0.1,
           "per_level_above_first": 0.1
         },
-        "attribute": "megamod:critical_damage",
+        "attribute": "megamod:sp_critical_damage",
         "id": "megamod:enchantment",
         "operation": "add_multiplied_base"
       }

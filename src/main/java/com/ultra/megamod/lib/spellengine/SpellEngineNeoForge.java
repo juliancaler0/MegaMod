@@ -6,11 +6,15 @@ import com.ultra.megamod.lib.spellengine.api.spell.registry.SpellRegistry;
 import com.ultra.megamod.lib.spellengine.entity.SpellCloud;
 import com.ultra.megamod.lib.spellengine.entity.SpellProjectile;
 import com.ultra.megamod.lib.spellengine.network.ServerNetwork;
+import com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingBlock;
+import com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
@@ -65,6 +69,26 @@ public final class SpellEngineNeoForge {
                     .updateInterval(20)
                     .build(SPELL_CLOUD_KEY));
 
+    // --- Blocks / BlockEntities ----------------------------------------
+    //
+    // Port note (1.21.11): SpellBindingBlock.INSTANCE and SpellBindingBlockEntity.ENTITY_TYPE are
+    // created as eager static singletons (legacy SpellEngine pattern). In 1.21.11 every block
+    // instance comes with an "intrusive holder" that MUST be registered before mod-loading ends,
+    // or startup fails with "Some intrusive holders were not registered". We pass the existing
+    // static instances through a DeferredRegister so they get bound into the real registries.
+
+    public static final DeferredRegister<Block> BLOCKS =
+            DeferredRegister.create(Registries.BLOCK, MegaMod.MODID);
+
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
+            DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MegaMod.MODID);
+
+    public static final Supplier<SpellBindingBlock> SPELL_BINDING_BLOCK =
+            BLOCKS.register("spell_binding", () -> SpellBindingBlock.INSTANCE);
+
+    public static final Supplier<BlockEntityType<SpellBindingBlockEntity>> SPELL_BINDING_BE_TYPE =
+            BLOCK_ENTITY_TYPES.register("spell_binding", () -> SpellBindingBlockEntity.ENTITY_TYPE);
+
     // --- Public init ----------------------------------------------------
 
     /**
@@ -76,6 +100,8 @@ public final class SpellEngineNeoForge {
         SpellDataComponents.init();
 
         ENTITY_TYPES.register(modEventBus);
+        BLOCKS.register(modEventBus);
+        BLOCK_ENTITY_TYPES.register(modEventBus);
         modEventBus.addListener(SpellEngineNeoForge::onNewDataPackRegistry);
         modEventBus.addListener(SpellEngineNeoForge::onCommonSetup);
 

@@ -12,7 +12,7 @@
           "base": 0.04,
           "per_level_above_first": 0.04
         },
-        "attribute": "megamod:critical_chance",
+        "attribute": "megamod:sp_critical_chance",
         "id": "megamod:enchantment.spell_critical_chance",
         "operation": "add_multiplied_base"
       }

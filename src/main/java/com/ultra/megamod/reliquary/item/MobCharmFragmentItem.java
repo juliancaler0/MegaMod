@@ -12,8 +12,8 @@ import com.ultra.megamod.reliquary.init.ModDataComponents;
 import java.util.function.Consumer;
 
 public class MobCharmFragmentItem extends ItemBase {
-	public MobCharmFragmentItem() {
-		super(new Properties());
+	public MobCharmFragmentItem(Properties properties) {
+		super(properties);
 	}
 
 	@Override

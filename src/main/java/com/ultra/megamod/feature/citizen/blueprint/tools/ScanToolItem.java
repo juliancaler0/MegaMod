@@ -33,6 +33,12 @@ public class ScanToolItem extends Item {
 
     private static final Logger LOGGER = LogUtils.getLogger();
 
+    /**
+     * Client-side screen opener. Populated by BlueprintClientProxy on the client
+     * so the server never loads any {@code net.minecraft.client} classes.
+     */
+    public static Consumer<ScanToolData> OPEN_SCAN_SCREEN = data -> {};
+
     public ScanToolItem() {
         this(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
     }
@@ -138,13 +144,11 @@ public class ScanToolItem extends Item {
     }
 
     /**
-     * Opens the ScanToolScreen on the client.
-     * Separated into its own method so the class reference is only loaded on the client.
+     * Opens the ScanToolScreen on the client via the proxy populated by
+     * BlueprintClientProxy. On the dedicated server the default no-op is used.
      */
     private void openScanScreen(ScanToolData data) {
-        ScanToolData.Slot slot = data.getCurrentSlotData();
-        net.minecraft.client.Minecraft.getInstance().setScreen(
-                new com.ultra.megamod.feature.citizen.blueprint.screen.ScanToolScreen(slot.getPos1(), slot.getPos2()));
+        OPEN_SCAN_SCREEN.accept(data);
     }
 
     // ---- Inventory Tick (display scan slot when sneaking) ----

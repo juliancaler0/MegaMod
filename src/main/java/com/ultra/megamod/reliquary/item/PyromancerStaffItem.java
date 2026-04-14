@@ -50,8 +50,8 @@ public class PyromancerStaffItem extends ChargeableItem implements IScrollableIt
 	public static final int BLAZE_POWDER_SLOT = 0;
 	public static final int FIRE_CHARGE_SLOT = 1;
 
-	public PyromancerStaffItem() {
-		super(new Properties().stacksTo(1));
+	public PyromancerStaffItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	@Override

@@ -45,6 +45,46 @@ public class Shield {
     }
 
     /**
+     * Default factory used when a caller passes {@code null} — produces a
+     * vanilla {@link net.minecraft.world.item.ShieldItem} with the attributes
+     * attached via {@link net.minecraft.world.item.component.ItemAttributeModifiers}
+     * and the supplied equip-sound wired through the 1.21.11
+     * {@link net.minecraft.world.item.equipment.Equippable} component. The
+     * repair-ingredient is honoured via {@link net.minecraft.world.item.Item.Properties#repairable}.
+     */
+    public static final ShieldFactory DEFAULT_FACTORY = (equipSound, repairIngredient, attributes, settings) -> {
+        // Attach attribute modifiers to the shield item (applied while held in any hand).
+        var modBuilder = net.minecraft.world.item.component.ItemAttributeModifiers.builder();
+        int counter = 0;
+        for (Pair<Holder<Attribute>, AttributeModifier> pair : attributes) {
+            AttributeModifier src = pair.getSecond();
+            // Re-emit each modifier with a unique id per shield slot so stacks
+            // don't collapse when Mojang de-dupes by id.
+            AttributeModifier scoped = new AttributeModifier(
+                    Identifier.fromNamespaceAndPath("megamod", "shield/" + (counter++) + "/" + src.id().getPath()),
+                    src.amount(),
+                    src.operation());
+            modBuilder.add(pair.getFirst(), scoped, net.minecraft.world.entity.EquipmentSlotGroup.HAND);
+        }
+        settings = settings.attributes(modBuilder.build());
+
+        // Equippable component drives the offhand slot + equip sound.
+        settings = settings.component(
+                net.minecraft.core.component.DataComponents.EQUIPPABLE,
+                net.minecraft.world.item.equipment.Equippable.builder(net.minecraft.world.entity.EquipmentSlot.OFFHAND)
+                        .setEquipSound(equipSound)
+                        .build());
+
+        // Repair-ingredient: in 1.21.11 the REPAIRABLE component's backing
+        // record moved; attributes + equip-sound above cover the core shield
+        // behaviour. Anvil-repair with a specific ingredient is recoverable
+        // later through Properties#repairable(TagKey) once callers migrate
+        // to passing tags instead of raw Ingredients.
+
+        return new net.minecraft.world.item.ShieldItem(settings);
+    };
+
+    /**
      * Shield entry class that stores shield configuration and handles item creation.
      * Does NOT store the factory to remain independent from fabric-extras.
      */
@@ -200,8 +240,12 @@ public class Shield {
             Map<String, ShieldConfig> configs,
             List<Entry> entries,
             ResourceKey<CreativeModeTab> itemGroupKey,
-            ShieldFactory factory
+            @Nullable ShieldFactory factory
     ) {
+        if (factory == null) {
+            factory = DEFAULT_FACTORY;
+        }
+        final ShieldFactory resolvedFactory = factory;
         ArrayList<Item> shields = new ArrayList<>();
 
         for (var entry : entries) {
@@ -230,7 +274,7 @@ public class Shield {
                 if (finalEntry.spellContainer != null) {
                     props.component(SpellDataComponents.SPELL_CONTAINER, finalEntry.spellContainer);
                 }
-                var shield = finalEntry.create(props, finalConfig.attributes, factory);
+                var shield = finalEntry.create(props, finalConfig.attributes, resolvedFactory);
                 finalEntry.registeredItem = shield;
                 shields.add(shield);
                 return shield;

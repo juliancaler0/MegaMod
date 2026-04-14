@@ -51,8 +51,8 @@ import java.util.function.Consumer;
  * ItemUseAnimation; {@code use(...)} now returns {@link InteractionResult}.
  */
 public class ShearsOfWinterItem extends Item implements ICreativeTabItemGenerator {
-	public ShearsOfWinterItem() {
-		super(new Properties()
+	public ShearsOfWinterItem(Properties properties) {
+		super(properties
 				.durability(2000)
 				.component(DataComponents.TOOL, ShearsItem.createToolProperties()));
 	}

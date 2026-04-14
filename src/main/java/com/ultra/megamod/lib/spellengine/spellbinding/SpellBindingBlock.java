@@ -32,8 +32,15 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class SpellBindingBlock extends BaseEntityBlock {
-    public static SpellBindingBlock INSTANCE = new SpellBindingBlock(BlockBehaviour.Properties.of().destroyTime(4F).noOcclusion());
-    public static final BlockItem ITEM = new BlockItem(INSTANCE, new Item.Properties());
+    // Port note (1.21.11): Block.<init> now hard-requires Properties#id (set via setId). We attach
+    // the registry key to both the block Properties and the BlockItem Properties up front so these
+    // static instances can be created before DeferredRegister processes the mod event bus. The IDs
+    // must match what gets registered via RPGItemRegistry/BLOCK deferred-register in SpellEngineItems.
+    public static SpellBindingBlock INSTANCE = new SpellBindingBlock(BlockBehaviour.Properties.of()
+            .setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.BLOCK, SpellBinding.ID))
+            .destroyTime(4F).noOcclusion());
+    public static final BlockItem ITEM = new BlockItem(INSTANCE, new Item.Properties()
+            .setId(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.ITEM, SpellBinding.ID)));
 
     protected static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
     public static final List<BlockPos> BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-2, 0, -2, 2, 1, 2).filter(pos -> Math.abs(pos.getX()) == 2 || Math.abs(pos.getZ()) == 2).map(BlockPos::immutable).toList();

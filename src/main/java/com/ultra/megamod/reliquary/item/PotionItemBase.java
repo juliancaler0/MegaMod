@@ -18,12 +18,12 @@ import com.ultra.megamod.reliquary.util.potions.PotionMap;
 import java.util.function.Consumer;
 
 public class PotionItemBase extends ItemBase implements IPotionItem {
-	public PotionItemBase() {
+	public PotionItemBase(Properties properties) {
 		// Port note (1.21.11): the old hasCraftingRemainingItem/getCraftingRemainingItem pair was
 		// replaced by Properties#craftRemainder. All three PotionItemBase subclasses (POTION,
 		// SPLASH_POTION, LINGERING_POTION) want an empty vial back, so we apply it here in the
 		// shared base constructor.
-		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
+		super(properties.craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
 	}
 
 	@Override

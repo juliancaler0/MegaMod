@@ -25,8 +25,8 @@ public class IceMagusRodItem extends ChargeableItem {
 	// matching the original reliquary ICE_PARTICLE tint (Vector3f(0.387,0.772,0.992)).
 	public static final DustParticleOptions ICE_PARTICLE = new DustParticleOptions(0xFF63C4FD, 1);
 
-	public IceMagusRodItem() {
-		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
+	public IceMagusRodItem(Properties properties) {
+		super(properties.stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

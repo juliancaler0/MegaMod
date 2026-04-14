@@ -21,8 +21,8 @@ import java.util.Set;
 
 @SuppressWarnings("java:S110")
 public class GlacialStaffItem extends IceMagusRodItem {
-	public GlacialStaffItem() {
-		super();
+	public GlacialStaffItem(Properties properties) {
+		super(properties);
 	}
 
 	@Override

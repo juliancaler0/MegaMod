@@ -16,10 +16,10 @@ import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.reference.Config;
 
 public class FertilePotionItem extends ItemBase implements ProjectileItem {
-	public FertilePotionItem() {
+	public FertilePotionItem(Properties properties) {
 		// Port note (1.21.11): the old getCraftingRemainingItem override (returning an empty
 		// potion vial) was replaced by the Properties#craftRemainder hook.
-		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()), Config.COMMON.disable.disablePotions);
+		super(properties.craftRemainder(ModItems.EMPTY_POTION_VIAL.get()), Config.COMMON.disable.disablePotions);
 	}
 
 	@Override

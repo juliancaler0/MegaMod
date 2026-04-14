@@ -49,8 +49,8 @@ public class HandgunItem extends ItemBase {
 		magazineBulletItems.put(magazineRegistryName, getBulletItem);
 	}
 
-	public HandgunItem() {
-		super(new Properties().stacksTo(1), Config.COMMON.disable.disableHandgun);
+	public HandgunItem(Properties properties) {
+		super(properties.stacksTo(1), Config.COMMON.disable.disableHandgun);
 	}
 
 	private short getBulletCount(ItemStack handgun) {

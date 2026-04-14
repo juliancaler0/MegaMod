@@ -150,7 +150,10 @@ public class Packets {
     }
 
     public record SpellAnimation(int playerId, SpellCast.Animation animationType, String name, float speed) implements CustomPacketPayload {
-        public static Identifier ID = Identifier.fromNamespaceAndPath("megamod", "spell_animation");
+        // Port note: renamed from "spell_animation" to "spellengine_animation" to avoid
+        // colliding with the MegaMod combat system's SpellAnimationPayload which owns the
+        // plain "spell_animation" identifier for its own wire format.
+        public static Identifier ID = Identifier.fromNamespaceAndPath("megamod", "spellengine_animation");
         public static final CustomPacketPayload.Type<SpellAnimation> PACKET_ID = new CustomPacketPayload.Type<>(ID);
         public static final StreamCodec<RegistryFriendlyByteBuf, SpellAnimation> CODEC = StreamCodec.of(SpellAnimation::write, SpellAnimation::read);
         @Override

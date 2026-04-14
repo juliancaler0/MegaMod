@@ -24,8 +24,8 @@ import javax.annotation.Nullable;
 
 public class DestructionCatalystItem extends ChargeableItem {
 
-	public DestructionCatalystItem() {
-		super(new Properties().stacksTo(1));
+	public DestructionCatalystItem(Properties properties) {
+		super(properties.stacksTo(1));
 	}
 
 	@Override
