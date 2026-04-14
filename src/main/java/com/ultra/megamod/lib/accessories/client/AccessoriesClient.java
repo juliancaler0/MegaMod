@@ -79,7 +79,9 @@ public class AccessoriesClient {
     public static final KeyMapping.Category KEY_CATEGORY = KeyMapping.Category.register(Accessories.of("main"));
 
     public static final KeyMapping OPEN_SCREEN = new KeyMapping(MODID + ".key.open_accessories_screen", GLFW.GLFW_KEY_H, KEY_CATEGORY);
-    public static final KeyMapping OPEN_OTHERS_SCREEN = new KeyMapping(MODID + ".key.open_others_accessories_screen", GLFW.GLFW_KEY_H, KEY_CATEGORY);
+    // Keep unbound by default to avoid the duplicate-H conflict that causes vanilla to
+    // auto-unbind both entries. Users can rebind this in the controls screen.
+    public static final KeyMapping OPEN_OTHERS_SCREEN = new KeyMapping(MODID + ".key.open_others_accessories_screen", GLFW.GLFW_KEY_UNKNOWN, KEY_CATEGORY);
 
     //public static final ShaderProgram BLIT_SHADER_KEY = new ShaderProgram(Accessories.of("core/fish"), DefaultVertexFormat.BLIT_SCREEN, ShaderDefines.EMPTY);
 

@@ -89,7 +89,9 @@ public class AccessoriesClientForge {
     }
 
     public void initKeybindings(RegisterKeyMappingsEvent event) {
+        event.registerCategory(AccessoriesClient.KEY_CATEGORY);
         event.register(AccessoriesClient.OPEN_SCREEN);
+        event.register(AccessoriesClient.OPEN_OTHERS_SCREEN);
     }
 
     public static void clientTick(ClientTickEvent.Pre event) {

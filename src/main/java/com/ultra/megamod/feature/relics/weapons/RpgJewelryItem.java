@@ -3,6 +3,8 @@ package com.ultra.megamod.feature.relics.weapons;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import com.ultra.megamod.feature.relics.data.WeaponRarity;
 import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
+import com.ultra.megamod.lib.accessories.api.attributes.AccessoryAttributeBuilder;
+import com.ultra.megamod.lib.accessories.api.slot.SlotReference;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
@@ -67,6 +69,25 @@ public class RpgJewelryItem extends com.ultra.megamod.lib.accessories.api.core.A
 
     public AccessorySlotType getSlotType() {
         return slotType;
+    }
+
+    /**
+     * Bridges vanilla {@link DataComponents#ATTRIBUTE_MODIFIERS} into the lib's
+     * accessory attribute system. Without this, rings/necklaces equipped in
+     * lib/accessories slots don't apply any of their rolled stats — vanilla only
+     * consults ATTRIBUTE_MODIFIERS when an item is in a native equipment slot.
+     */
+    @Override
+    public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
+        super.getDynamicModifiers(stack, reference, builder);
+
+        var mods = stack.get(DataComponents.ATTRIBUTE_MODIFIERS);
+        if (mods == null) return;
+
+        for (var entry : mods.modifiers()) {
+            AttributeModifier mod = entry.modifier();
+            builder.addStackable(entry.attribute(), mod.id(), mod.amount(), mod.operation());
+        }
     }
 
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
