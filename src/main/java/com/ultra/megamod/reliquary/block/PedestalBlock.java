@@ -152,7 +152,10 @@ public class PedestalBlock extends PassivePedestalBlock {
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean isMoving) {
-		// TODO: 1.21.11 port - onRemove replaced by affectNeighborsAfterRemoval(ServerLevel).
+		// Port note (1.21.11): Block#onRemove(BlockState,Level,...) was replaced by
+		// affectNeighborsAfterRemoval(BlockState,ServerLevel,BlockPos,boolean). We unregister the
+		// pedestal from its dimension index and drop the held item via the pedestal's standard
+		// removeAndSpawnItem hook (which in turn uses Containers.dropContents equivalents).
 		PedestalRegistry.unregisterPosition(level.dimension().registry(), pos);
 		WorldHelper.getBlockEntity(level, pos, PedestalBlockEntity.class).ifPresent(pedestal -> pedestal.removeAndSpawnItem(level));
 		super.affectNeighborsAfterRemoval(state, level, pos, isMoving);

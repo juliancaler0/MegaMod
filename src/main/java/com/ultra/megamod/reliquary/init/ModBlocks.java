@@ -20,6 +20,7 @@ import com.ultra.megamod.reliquary.block.tile.*;
 import com.ultra.megamod.reliquary.item.block.BlockItemBase;
 import com.ultra.megamod.reliquary.item.block.FertileLilyPadItem;
 import com.ultra.megamod.reliquary.item.block.InterdictionTorchItem;
+import com.ultra.megamod.reliquary.util.LegacyCapabilityAdapters;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -86,7 +87,10 @@ public class ModBlocks {
 		ImmutableMap.Builder<DyeColor, Supplier<BlockItem>> passiveBuilder = ImmutableMap.builder();
 		ImmutableMap.Builder<DyeColor, Supplier<BlockItem>> activeBuilder = ImmutableMap.builder();
 		for (DyeColor color : DyeColor.values()) {
-			// TODO: 1.21.11 port - Item#getDescriptionId() became final; name override alone is kept.
+			// Port note (1.21.11): Item#getDescriptionId() is now final, so per-DyeColor
+			// description ids are no longer possible. We collapse every colour variant's display
+			// name onto the shared "block.reliquary.passive_pedestal" / ".pedestal" keys via the
+			// getName override below — same aggregated tooltip behaviour as the original.
 			passiveBuilder.put(color, ITEMS.register("pedestals/passive/" + color.getName() + "_passive_pedestal", () -> new BlockItemBase(PASSIVE_PEDESTALS.get(color).get(), new Item.Properties()) {
 				@Override
 				public Component getName(ItemStack stack) {
@@ -113,14 +117,34 @@ public class ModBlocks {
 
 	@SuppressWarnings({"squid:S4449", "ConstantConditions"}) // no datafixer is defined for any of the tile entities so this is moot
 	private static <T extends BlockEntity> BlockEntityType<T> getTileEntityType(BlockEntityType.BlockEntitySupplier<T> tileFactory, Block... validBlocks) {
-		// TODO: 1.21.11 port - BlockEntityType.Builder removed; direct constructor used instead.
+		// Port note (1.21.11): BlockEntityType.Builder#of(...).build(...) was removed; the
+		// BlockEntityType public constructor now takes (supplier, validBlocks...) directly and
+		// the DataFixer argument is no longer required (vanilla handles that internally).
 		return new BlockEntityType<>(tileFactory, validBlocks);
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		// TODO: 1.21.11 port - Capabilities.ItemHandler / Capabilities.FluidHandler were
-		// replaced by the new ResourceHandler-based Capabilities.Item / Capabilities.Fluid.
-		// Block-entity capability registration is disabled until the pedestal/cauldron
-		// handlers are rewritten against the new resource handlers.
+		// Passive pedestal: item inventory capability (single-slot item holder).
+		event.registerBlockEntity(
+				Capabilities.Item.BLOCK,
+				PASSIVE_PEDESTAL_TILE_TYPE.get(),
+				(be, side) -> LegacyCapabilityAdapters.asItemResourceHandler(be.getItemHandler()));
+
+		// Active pedestal: item inventory (own + optional sub-inventory from held item)
+		// and pass-through fluid handler.
+		event.registerBlockEntity(
+				Capabilities.Item.BLOCK,
+				PEDESTAL_TILE_TYPE.get(),
+				(be, side) -> LegacyCapabilityAdapters.asItemResourceHandler(be.getItemHandler()));
+		event.registerBlockEntity(
+				Capabilities.Fluid.BLOCK,
+				PEDESTAL_TILE_TYPE.get(),
+				(be, side) -> LegacyCapabilityAdapters.asFluidResourceHandler(be.getFluidHandler()));
+
+		// Apothecary mortar: item inventory (grinding slots).
+		event.registerBlockEntity(
+				Capabilities.Item.BLOCK,
+				APOTHECARY_MORTAR_TILE_TYPE.get(),
+				(be, side) -> LegacyCapabilityAdapters.asItemResourceHandler(be.getItems()));
 	}
 }

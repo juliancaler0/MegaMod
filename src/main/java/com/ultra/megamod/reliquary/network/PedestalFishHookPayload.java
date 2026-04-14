@@ -22,8 +22,9 @@ public record PedestalFishHookPayload(BlockPos pedestalPos, double hookX, double
 			PedestalFishHookPayload::new);
 
 	public static void handlePayload(PedestalFishHookPayload payload) {
-		// TODO: 1.21.11 port - client.render.PedestalFishHookRenderer was pruned; no-op
-		// until the client renderer is reintroduced.
+		// TODO: wire to PedestalFishHookRenderer.getInstance().renderHookAt(payload.pedestalPos,
+		// payload.hookX, payload.hookY, payload.hookZ) once the client-layer agent restores
+		// com.ultra.megamod.reliquary.client.render.PedestalFishHookRenderer.
 	}
 
 	@Override

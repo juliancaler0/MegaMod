@@ -56,7 +56,11 @@ public class ItemBase extends Item implements ICreativeTabItemGenerator {
 		}
 	}
 
-	/** TODO: 1.21.11 port - Screen#hasShiftDown was removed; query InputConstants directly. */
+	/**
+	 * Port note (1.21.11): Screen#hasShiftDown was removed. We query InputConstants directly
+	 * against the active window's GLFW handle — same check Screen used internally. The guard
+	 * handles dedicated-server tooltip rendering where no window is attached.
+	 */
 	protected static boolean isShiftDown() {
 		try {
 			com.mojang.blaze3d.platform.Window window = Minecraft.getInstance().getWindow();

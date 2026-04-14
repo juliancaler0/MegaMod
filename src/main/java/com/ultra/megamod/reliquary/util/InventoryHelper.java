@@ -182,9 +182,10 @@ public class InventoryHelper {
 
 	@Nullable
 	public static IItemHandler getInventoryAtPos(Level level, BlockPos pos, @Nullable Direction side) {
-		// TODO: 1.21.11 port - the Capabilities.ItemHandler lookup was replaced by
-		// Capabilities.Item (ResourceHandler<ItemResource>). For now fall back to
-		// direct Container wrapping of block entities that implement Container.
+		IItemHandler handler = LegacyCapabilityAdapters.getBlockItemHandler(level, pos, side);
+		if (handler != null) {
+			return handler;
+		}
 		BlockEntity be = level.getBlockEntity(pos);
 		if (be instanceof Container container) {
 			return new InvWrapper(container);
@@ -194,8 +195,10 @@ public class InventoryHelper {
 
 	@Nullable
 	public static IItemHandler getItemHandlerFrom(Player player) {
-		// TODO: 1.21.11 port - no longer have entity item handler capability; expose the
-		// main player inventory as a minimal stand-in.
+		var handler = player.getCapability(net.neoforged.neoforge.capabilities.Capabilities.Item.ENTITY);
+		if (handler != null) {
+			return IItemHandler.of(handler);
+		}
 		return new PlayerMainInvWrapper(player.getInventory());
 	}
 
@@ -215,9 +218,13 @@ public class InventoryHelper {
 	}
 
 	private static <T> T executeOnItemHandlerAt(Level level, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, @Nullable Direction side, Function<IItemHandler, T> run, @Nullable T defaultReturnValue) {
-		// TODO: 1.21.11 port - Capabilities.ItemHandler removed; fall back to direct Container wrapping.
-		BlockEntity be = blockEntity != null ? blockEntity : level.getBlockEntity(pos);
-		IItemHandler itemHandler = (be instanceof Container container) ? new InvWrapper(container) : null;
+		IItemHandler itemHandler = LegacyCapabilityAdapters.getBlockItemHandler(level, pos, side);
+		if (itemHandler == null) {
+			BlockEntity be = blockEntity != null ? blockEntity : level.getBlockEntity(pos);
+			if (be instanceof Container container) {
+				itemHandler = new InvWrapper(container);
+			}
+		}
 
 		if (itemHandler != null) {
 			return run.apply(itemHandler);

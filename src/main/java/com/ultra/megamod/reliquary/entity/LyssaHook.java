@@ -235,7 +235,11 @@ public class LyssaHook extends FishingHook {
 			return true;
 		}
 
-		// TODO: 1.21.11 port - handDropChances / armorDropChances arrays replaced by DropChances record.
+		// Port note (1.21.11): the old handDropChances / armorDropChances float[] arrays were
+		// folded into the DropChances record (accessed via Mob#getDropChances()). The record's
+		// byEquipment(slot) returns the per-slot drop chance; any non-negative value means the
+		// slot is eligible for dropping on death, which is the same semantics as the original
+		// "drop chance > -1" check.
 		return mob.getDropChances().byEquipment(slot) > -1;
 	}
 }

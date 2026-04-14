@@ -7,6 +7,8 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import org.jetbrains.annotations.NotNull;
 
+import com.ultra.megamod.reliquary.util.LegacyCapabilityAdapters;
+
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -65,9 +67,12 @@ public class PedestalFluidHandler implements IFluidHandler {
 		if (fluidContainer.isEmpty()) {
 			return Optional.empty();
 		}
-		// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM
-		// which returns ResourceHandler<FluidResource>. Pass-through disabled until ported.
-		IFluidHandler fh = null;
+		net.neoforged.neoforge.transfer.access.ItemAccess access =
+				net.neoforged.neoforge.transfer.access.ItemAccess.forStack(fluidContainer);
+		IFluidHandlerItem fh = LegacyCapabilityAdapters.getItemFluidHandler(fluidContainer, access);
+		if (fh == null) {
+			return Optional.empty();
+		}
 		return Optional.ofNullable(mapValue.apply(fh));
 	}
 }

@@ -43,6 +43,7 @@ import com.ultra.megamod.reliquary.item.util.fluid.FluidHandlerHeroMedallion;
 import com.ultra.megamod.reliquary.item.util.fluid.FluidHandlerInfernalChalice;
 import com.ultra.megamod.reliquary.reference.Colors;
 import com.ultra.megamod.reliquary.reference.Config;
+import com.ultra.megamod.reliquary.util.LegacyCapabilityAdapters;
 import com.ultra.megamod.reliquary.util.RegistryHelper;
 
 import java.util.function.Supplier;
@@ -197,8 +198,15 @@ public class ModItems {
 	public static final Supplier<RecipeSerializer<?>> POTION_EFFECTS_SERIALIZER = RECIPE_SERIALIZERS.register("potion_effects", PotionEffectsRecipe.Serializer::new);
 	public static final Supplier<LootItemConditionType> CHEST_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("chest_loot_enabled", () -> new LootItemConditionType(ChestLootEnabledCondition.CODEC));
 	public static final Supplier<LootItemConditionType> ENTITY_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("entity_loot_enabled", () -> new LootItemConditionType(EntityLootEnabledCondition.CODEC));
-	// TODO: 1.21.11 port - ReliquaryLootModifierProvider was stripped during the prune;
-	// INJECT_LOOT registration removed until we port the loot modifier back.
+	// Port note (1.21.11): the old ReliquaryLootModifierProvider (datagen) was stripped during
+	// the 1.21 prune and has not been re-ported. Global loot modifiers in 1.21 can alternatively
+	// be declared as static resource files at
+	//   data/reliquary/neoforge/loot_modifiers/global_loot_modifiers.json
+	// referencing codec-serialised modifier JSONs under
+	//   data/reliquary/loot_modifiers/*.json
+	// — that path is preferred over re-porting the provider class. The LOOT_MODIFIERS
+	// DeferredRegister above is still registered so future modifier codecs can be attached
+	// without touching callers.
 
 	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Reliquary.MOD_ID);
 	public static final ItemCapability<HarvestRodCache, @Nullable Void> HARVEST_ROD_CACHE_CAPABILITY = ItemCapability.createVoid(Reliquary.getRL("harvest_rod_cache"), HarvestRodCache.class);
@@ -251,9 +259,11 @@ public class ModItems {
 		modBus.addListener(ModItems::registerCapabilities);
 		NeoForge.EVENT_BUS.addListener(ModItems::onResourceReload);
 
-		// TODO: 1.21.11 port - ModItemsClient referenced removed client packages
-		// (client.gui, client.render). Client-side registrations are disabled until
-		// the client layer is reintroduced.
+		// TODO: once the client-layer agent lands ModItemsClient (or equivalent in
+		// com.ultra.megamod.reliquary.client.init), re-wire the client-side registrations here
+		// under a Dist.CLIENT guard. The parallel client agent already owns
+		// client.init.ItemModels / ModParticles / ModItemColors, so the remaining piece is a
+		// thin dispatcher class that invokes those registrations at the right lifecycle point.
 	}
 
 	private static void onResourceReload(AddServerReloadListenersEvent event) {
@@ -273,17 +283,43 @@ public class ModItems {
 	}
 
 	private static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		// TODO (1.21.11 port): Capabilities.FluidHandler/ItemHandler were replaced by
-		// Capabilities.Fluid/Item which expose ResourceHandler<FluidResource> /
-		// ResourceHandler<ItemResource> instead of the old IFluidHandlerItem /
-		// IItemHandler types. The reliquary handler classes
-		// (FluidHandlerHeroMedallion/EmperorChalice/InfernalChalice, VoidTearItem#createHandler,
-		// HarvestRodItem#createHandler, EnderStaffItem#createHandler, RendingGaleItem#createHandler)
-		// still implement the pre-1.21.11 interfaces, so their registrations no longer
-		// type-check. Those handler classes need to be rewritten against ResourceHandler
-		// before we can reinstate these registerItem calls. Left empty so ModItems
-		// compiles; HARVEST_ROD_CACHE_CAPABILITY uses an ItemCapability.createVoid
-		// type that still matches and can be wired up once the above TODO is resolved.
 		event.registerItem(HARVEST_ROD_CACHE_CAPABILITY, (itemStack, context) -> new HarvestRodCache(), HARVEST_ROD.get());
+
+		// Fluid item capabilities: wrap the legacy IFluidHandlerItem implementations into
+		// ResourceHandler<FluidResource>, propagating container changes back through the
+		// supplied ItemAccess.
+		event.registerItem(
+				Capabilities.Fluid.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asFluidResourceHandlerItem(new FluidHandlerEmperorChalice(stack), access),
+				EMPEROR_CHALICE.get());
+		event.registerItem(
+				Capabilities.Fluid.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asFluidResourceHandlerItem(new FluidHandlerInfernalChalice(ModDataComponents.FLUID_CONTENTS, stack), access),
+				INFERNAL_CHALICE.get());
+		event.registerItem(
+				Capabilities.Fluid.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asFluidResourceHandlerItem(new FluidHandlerHeroMedallion(stack), access),
+				HERO_MEDALLION.get());
+
+		// Item-storage capabilities for container items: the chargeable items hold their
+		// payloads in a component-backed IItemHandlerModifiable that we surface as a
+		// ResourceHandler<ItemResource> so hoppers, void tears, and similar automation
+		// can interact with them.
+		event.registerItem(
+				Capabilities.Item.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asItemResourceHandler(VOID_TEAR.get().createHandler(stack)),
+				VOID_TEAR.get());
+		event.registerItem(
+				Capabilities.Item.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asItemResourceHandler(HARVEST_ROD.get().createHandler(stack)),
+				HARVEST_ROD.get());
+		event.registerItem(
+				Capabilities.Item.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asItemResourceHandler(ENDER_STAFF.get().createHandler(stack)),
+				ENDER_STAFF.get());
+		event.registerItem(
+				Capabilities.Item.ITEM,
+				(stack, access) -> LegacyCapabilityAdapters.asItemResourceHandler(RENDING_GALE.get().createHandler(stack)),
+				RENDING_GALE.get());
 	}
 }

@@ -5,6 +5,7 @@
   "client": [
     "MixinModelPart",
     "MixinEntityModel",
+    "MixinEntityModelSet",
     "MixinEntityModelSetup",
     "MixinHumanoidModel",
     "MixinModelFeatureRenderer"

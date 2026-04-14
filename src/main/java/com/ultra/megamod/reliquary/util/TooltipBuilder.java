@@ -36,8 +36,10 @@ public class TooltipBuilder {
 	}
 
 	public void potionEffects(PotionContents potionContents) {
-		// TODO: 1.21.11 port - PotionContents#addPotionTooltip is now static and takes the
-		// effect list directly.
+		// Port note (1.21.11): the old instance-method PotionContents#addPotionTooltip was
+		// replaced by the static overload that takes the resolved effect list directly and the
+		// Consumer<Component> sink. We drive it from PotionContents#getAllEffects() which
+		// preserves the original "display every effect this bottle will apply" behaviour.
 		PotionContents.addPotionTooltip(potionContents.getAllEffects(), tooltip, 1f, context.tickRate());
 	}
 
@@ -112,7 +114,12 @@ public class TooltipBuilder {
 		return this;
 	}
 
-	/** TODO: 1.21.11 port - Screen#hasShiftDown was removed; query InputConstants directly. */
+	/**
+	 * Port note (1.21.11): net.minecraft.client.gui.screens.Screen#hasShiftDown was removed. We
+	 * query InputConstants directly against the active window's GLFW handle, which is the same
+	 * check Screen used internally. The try/catch guard handles the rare case (dedicated-server
+	 * tooltip rendering in some test harnesses) where no window is attached.
+	 */
 	private static boolean isShiftDown() {
 		try {
 			com.mojang.blaze3d.platform.Window window = Minecraft.getInstance().getWindow();

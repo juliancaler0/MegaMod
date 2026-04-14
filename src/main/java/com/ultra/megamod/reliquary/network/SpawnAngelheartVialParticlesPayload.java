@@ -47,9 +47,11 @@ public record SpawnAngelheartVialParticlesPayload(Vec3 position) implements Cust
 			double xSpeed = Math.cos(angle) * distance;
 			double ySpeed = 0.01D + random.nextDouble() * 0.5D;
 			double zSpeed = Math.sin(angle) * distance;
-			// TODO: 1.21.11 port - ParticleTypes.EFFECT is ParticleType<SpellParticleOption>;
-			// we need a SpellParticleOption instance with colour packed in. Particle#setColor was
-			// removed, so colour tinting is now inherent to the options object.
+			// Port note (1.21.11): the old Particle#setColor(float,float,float) sink was removed,
+			// and ParticleTypes.EFFECT switched to a typed SpellParticleOption. We instead spawn
+			// a ColorParticleOption over ENTITY_EFFECT which carries an ARGB int and renders at
+			// the same "wispy cloud" visual as the old ParticleTypes.EFFECT. The original red=1,
+			// green=0, blue=1 (magenta) tint is preserved via the argb pack below.
 			float colorMultiplier = 0.75F + random.nextFloat() * 0.25F;
 			int argb = 0xFF000000
 					| (((int) Math.min(255, red * colorMultiplier * 255)) << 16)

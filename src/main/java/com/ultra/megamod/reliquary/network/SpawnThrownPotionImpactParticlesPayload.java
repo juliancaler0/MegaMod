@@ -43,7 +43,11 @@ public record SpawnThrownPotionImpactParticlesPayload(int color, double posX, do
 			double ySpeed = 0.01D + rand.nextDouble() * 0.5D;
 			double zSpeed = Math.sin(angle) * var39;
 
-			// TODO: 1.21.11 port - Particle#setColor removed; tint via ColorParticleOption(ENTITY_EFFECT, argb).
+			// Port note (1.21.11): Particle#setColor(float,float,float) was removed. We construct
+			// a ColorParticleOption over ENTITY_EFFECT that carries an ARGB int; the renderer
+			// picks up the tint from the options object itself. The original per-particle
+			// "0.75 + 0.25 * rand" brightness multiplier is preserved via the argb pack below,
+			// so the splash colour matches the thrown-potion's declared tint colour as before.
 			float var32 = 0.75F + rand.nextFloat() * 0.25F;
 			int argb = 0xFF000000
 					| (((int) Math.min(255, red * var32 * 255)) << 16)

@@ -17,8 +17,8 @@ public record MobCharmDamagePayload(ItemStack mobCharm, int slot) implements Cus
 			MobCharmDamagePayload::new);
 
 	public static void handlePayload(MobCharmDamagePayload payload) {
-		// TODO: 1.21.11 port - client.gui.hud.CharmPane was pruned; no-op until the
-		// charm HUD is reintroduced.
+		// TODO: wire to CharmPane.getInstance().damage(payload.mobCharm, payload.slot) once the
+		// client-layer agent restores com.ultra.megamod.reliquary.client.gui.hud.CharmPane.
 	}
 
 	@Override

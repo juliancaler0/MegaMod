@@ -25,6 +25,7 @@ import com.ultra.megamod.reliquary.pedestal.PedestalRegistry;
 import com.ultra.megamod.reliquary.util.CombinedItemHandler;
 import com.ultra.megamod.reliquary.util.FakePlayerFactory;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
+import com.ultra.megamod.reliquary.util.LegacyCapabilityAdapters;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -140,8 +141,15 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 			return;
 		}
 
-		// TODO: 1.21.11 port - Capabilities.ItemHandler.ITEM was removed; item-based
-		// sub-inventory capabilities are disabled until the new ResourceHandler API is wired.
+		// Item-based sub-inventory: if the held item exposes an item capability (e.g. a
+		// backpack-like container) surface it via the combined handler.
+		net.neoforged.neoforge.transfer.access.ItemAccess itemAccess =
+				net.neoforged.neoforge.transfer.access.ItemAccess.forStack(item);
+		net.neoforged.neoforge.transfer.ResourceHandler<net.neoforged.neoforge.transfer.item.ItemResource> itemCap =
+				item.getCapability(net.neoforged.neoforge.capabilities.Capabilities.Item.ITEM, itemAccess);
+		if (itemCap != null) {
+			itemHandler = IItemHandler.of(itemCap);
+		}
 
 		if (item.getItem() instanceof IPedestalActionItem pedestalActionItem) {
 			tickable = true;
@@ -161,8 +169,7 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 		}
 
 
-		// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM.
-		IFluidHandlerItem itemFluidHandler = null;
+		IFluidHandlerItem itemFluidHandler = LegacyCapabilityAdapters.getItemFluidHandler(item, itemAccess);
 		if (itemFluidHandler != null) {
 			fluidContainer = item;
 		}
@@ -358,8 +365,13 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 	}
 
 	private void addIfTank(List<IFluidHandler> adjacentTanks, BlockPos tankPos, Direction tankDirection) {
-		// TODO: 1.21.11 port - Capabilities.FluidHandler.BLOCK replaced by Capabilities.Fluid.BLOCK
-		// which returns ResourceHandler<FluidResource>. Adjacent-tank discovery is disabled here.
+		if (level == null) {
+			return;
+		}
+		IFluidHandler adjacent = LegacyCapabilityAdapters.getBlockFluidHandler(level, tankPos, tankDirection);
+		if (adjacent != null) {
+			adjacentTanks.add(adjacent);
+		}
 	}
 
 	public void removeSpecialItems(Level level) {

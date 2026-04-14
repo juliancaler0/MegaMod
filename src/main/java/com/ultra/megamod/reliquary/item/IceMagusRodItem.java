@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import org.joml.Vector3f;
 import com.ultra.megamod.reliquary.entity.SpecialSnowball;
 import com.ultra.megamod.reliquary.init.ModDataComponents;
 import com.ultra.megamod.reliquary.reference.Config;
@@ -21,7 +20,9 @@ import com.ultra.megamod.reliquary.util.TooltipBuilder;
 import javax.annotation.Nullable;
 
 public class IceMagusRodItem extends ChargeableItem {
-	// TODO: 1.21.11 port - DustParticleOptions ctor switched from Vector3f to packed int ARGB.
+	// Port note (1.21.11): DustParticleOptions no longer takes a Vector3f colour; the new ctor
+	// takes a packed ARGB int and a scale. 0xFF63C4FD = opaque ice-blue (R=99, G=196, B=253),
+	// matching the original reliquary ICE_PARTICLE tint (Vector3f(0.387,0.772,0.992)).
 	public static final DustParticleOptions ICE_PARTICLE = new DustParticleOptions(0xFF63C4FD, 1);
 
 	public IceMagusRodItem() {

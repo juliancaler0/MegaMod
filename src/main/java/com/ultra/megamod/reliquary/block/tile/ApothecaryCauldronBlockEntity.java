@@ -35,12 +35,16 @@ import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 import net.neoforged.neoforge.fluids.capability.IFluidHandlerItem;
 import com.ultra.megamod.reliquary.block.ApothecaryCauldronBlock;
-// TODO: 1.21.11 port - client.init.ModParticles was pruned; vanilla fallbacks used below.
+// Port note (1.21.11): the custom client.init.ModParticles bundle was collapsed down to vanilla
+// particle types (ColorParticleOption over ENTITY_EFFECT, DustParticleOptions, ParticleTypes.*).
+// All particle spawns below use stock vanilla options so the cauldron visuals stay on the client
+// side without a dedicated particle registry.
 import com.ultra.megamod.reliquary.init.ModBlocks;
 import com.ultra.megamod.reliquary.init.ModItems;
 import com.ultra.megamod.reliquary.item.PotionEssenceItem;
 import com.ultra.megamod.reliquary.reference.Config;
 import com.ultra.megamod.reliquary.util.InventoryHelper;
+import com.ultra.megamod.reliquary.util.LegacyCapabilityAdapters;
 import com.ultra.megamod.reliquary.util.potions.PotionHelper;
 
 import java.util.HashSet;
@@ -456,10 +460,12 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 				player.setItemInHand(hand, new ItemStack(Items.BUCKET));
 			}
 		} else {
-			// TODO: 1.21.11 port - Capabilities.FluidHandler.ITEM replaced by Capabilities.Fluid.ITEM
-			// which exposes ResourceHandler<FluidResource>. Non-bucket fluid containers are
-			// unsupported until the new API is wired in.
-			return InteractionResult.CONSUME;
+			net.neoforged.neoforge.transfer.access.ItemAccess access =
+					net.neoforged.neoforge.transfer.access.ItemAccess.forPlayerInteraction(player, hand);
+			IFluidHandlerItem fluidHandler = LegacyCapabilityAdapters.getItemFluidHandler(itemStack, access);
+			if (fluidHandler == null || Boolean.FALSE.equals(drainWater(player, fluidHandler))) {
+				return InteractionResult.CONSUME;
+			}
 		}
 
 		setLiquidLevel(3);

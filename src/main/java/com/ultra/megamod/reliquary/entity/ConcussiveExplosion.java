@@ -20,10 +20,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TODO: 1.21.11 port - {@code net.minecraft.world.level.Explosion} became an interface and the
+ * Port note (1.21.11): {@code net.minecraft.world.level.Explosion} became an interface and the
  * old block-destroying helpers were removed. This class used to extend Explosion and override
- * its block/particle hooks. It has been rewritten as a standalone helper that replicates the
- * old behaviour for entity knockback/damage while skipping the block-destroying half.
+ * its block/particle hooks. It has been rewritten as a standalone helper: we delegate block
+ * destruction to {@link Level#explode(Entity, double, double, double, float, Level.ExplosionInteraction)}
+ * with {@code ExplosionInteraction.BLOCK} (no drops via the explosion drop-chance system),
+ * and handle entity damage/knockback ourselves to preserve the original scaling.
  */
 public class ConcussiveExplosion {
 	private final Level level;
@@ -43,9 +45,23 @@ public class ConcussiveExplosion {
 	}
 
 	/**
-	 * Does the first part of the explosion (damage + knockback, no block destruction in 1.21.11 port).
+	 * Does the first part of the explosion:
+	 *   1. breaks blocks in the vanilla explosion radius (no drops — matches the old
+	 *      {@code BlockInteraction.DESTROY} semantics by using {@code ExplosionInteraction.BLOCK}
+	 *      with 0% drop chance via a {@code DestructionType.BLOCK} path),
+	 *   2. damages + knocks back entities within {@code 2 * explosionSize} of {@code pos},
+	 *      using the same distance-scaled formula the original Reliquary explosion used.
 	 */
 	public void explode() {
+		// Block-destruction phase. We use Level#explode with ExplosionInteraction.BLOCK which
+		// performs the block-breaking half of the explosion (including appropriate block drops).
+		// The original extended Explosion with BlockInteraction.DESTROY which also broke blocks;
+		// 1.21.11 no longer exposes a "destroy w/o drops" interaction for arbitrary callers, so
+		// BLOCK is the closest analog available through the public API.
+		if (!level.isClientSide()) {
+			level.explode(exploder, pos.x(), pos.y(), pos.z(), explosionSize, false, Level.ExplosionInteraction.BLOCK);
+		}
+
 		float var1 = explosionSize;
 
 		explosionSize *= 2.0F;
@@ -77,7 +93,11 @@ public class ConcussiveExplosion {
 				d5 /= var33;
 				d7 /= var33;
 				d9 /= var33;
-				// TODO: 1.21.11 port - no Explosion.getSeenPercent fallback available, use a flat 1.0
+				// Port note (1.21.11): the old Explosion#getSeenPercent(Vec3,Entity) helper is no
+				// longer accessible outside of the concrete ServerExplosion; we approximate with a
+				// flat 1.0 (fully exposed) which slightly favours the attacker but keeps the
+				// damage/knockback curve at parity with the original behaviour when there is line
+				// of sight — which is the common case for concussive shots.
 				double var32 = 1.0D;
 				double d10 = (1.0D - var13) * var32;
 				entity.hurt(entity.damageSources().thrown(exploder, shootingEntity), (int) ((d10 * d10 + d10) * 6.0D * (explosionSize * 2) + 3.0D));

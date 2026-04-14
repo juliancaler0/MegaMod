@@ -26,7 +26,10 @@ import javax.annotation.Nullable;
 
 public class AlkahestryTomeItem extends ChargeableItem {
 	public AlkahestryTomeItem() {
-		super(new Properties().rarity(Rarity.EPIC).stacksTo(1).durability(10).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
+		// Port note (1.21.11): Item#isEnchantable was removed in favour of Properties#enchantable.
+		// Passing 0 matches the old "not enchantable" behaviour at the item level. The
+		// supportsEnchantment override below still rejects any specific enchantment too.
+		super(new Properties().rarity(Rarity.EPIC).stacksTo(1).durability(10).enchantable(0).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
 	}
 
 	@Override
@@ -53,8 +56,6 @@ public class AlkahestryTomeItem extends ChargeableItem {
 		}
 		return InteractionResult.SUCCESS;
 	}
-
-	// TODO: 1.21.11 port - Item#isEnchantable was removed; use Properties#enchantable(0) at registration.
 
 	@Override
 	public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {

@@ -2,6 +2,7 @@ package com.ultra.megamod.reliquary.pedestal;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,10 @@ public class PedestalRegistry {
 
 	private final Map<Class<? extends Item>, Supplier<? extends IPedestalItemWrapper>> itemWrappers = new HashMap<>();
 	private final Map<Class<? extends Block>, Supplier<? extends IPedestalItemWrapper>> blockWrappers = new HashMap<>();
+	// Port note (1.21.11): the old SwordItem / PickaxeItem etc. subclass hierarchy was collapsed
+	// into data-driven components in 1.21, so we also allow tag-based registration. This lets us
+	// keep the old "any sword" wrapper hook alive via ItemTags.SWORDS (or similar).
+	private final Map<TagKey<Item>, Supplier<? extends IPedestalItemWrapper>> tagWrappers = new LinkedHashMap<>();
 
 	public static void registerItemWrapper(Class<? extends Item> itemClass, Supplier<? extends IPedestalItemWrapper> wrapperClass) {
 		INSTANCE.itemWrappers.put(itemClass, wrapperClass);
@@ -25,6 +30,10 @@ public class PedestalRegistry {
 
 	public static void registerItemBlockWrapper(Class<? extends Block> blockClass, Supplier<? extends IPedestalItemWrapper> wrapperClass) {
 		INSTANCE.blockWrappers.put(blockClass, wrapperClass);
+	}
+
+	public static void registerItemTagWrapper(TagKey<Item> itemTag, Supplier<? extends IPedestalItemWrapper> wrapperClass) {
+		INSTANCE.tagWrappers.put(itemTag, wrapperClass);
 	}
 
 	public static Optional<IPedestalItemWrapper> getItemWrapper(ItemStack item) {
@@ -37,6 +46,12 @@ public class PedestalRegistry {
 		for (Class<? extends Block> blockClass : INSTANCE.blockWrappers.keySet()) {
 			if (item.getItem() instanceof BlockItem blockItem && blockClass.isInstance(blockItem.getBlock())) {
 				return Optional.of(INSTANCE.blockWrappers.get(blockClass).get());
+			}
+		}
+
+		for (Map.Entry<TagKey<Item>, Supplier<? extends IPedestalItemWrapper>> entry : INSTANCE.tagWrappers.entrySet()) {
+			if (item.is(entry.getKey())) {
+				return Optional.of(entry.getValue().get());
 			}
 		}
 

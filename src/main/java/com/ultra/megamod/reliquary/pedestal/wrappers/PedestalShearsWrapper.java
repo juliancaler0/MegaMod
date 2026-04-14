@@ -87,7 +87,15 @@ public class PedestalShearsWrapper implements IPedestalActionItemWrapper {
 			}
 		} else {
 			BlockState blockState = level.getBlockState(blockPosBeingSheared);
-			if (true) { // TODO: 1.21.11 port - Item#canAttackBlock removed; unconditionally attempt.
+			// Port note (1.21.11): Item#canAttackBlock(BlockState,Level,BlockPos,Player) was
+			// removed. In vanilla that check only rejected blocks that required the correct tool
+			// when the attacker was in creative — for a non-creative FakePlayer it always
+			// returned true. We replicate the "can this shears attack this block" predicate by
+			// allowing the attempt when the block doesn't require a special tool for drops, or
+			// when the held stack is actually the correct tool (shears on leaves/wool/etc.).
+			boolean canAttack = !blockState.requiresCorrectToolForDrops()
+					|| stack.isCorrectToolForDrops(blockState);
+			if (canAttack) {
 				if (blockState.getBlock() instanceof BeehiveBlock) {
 					shearBeehive(level, blockPosBeingSheared, blockState, stack);
 				} else {

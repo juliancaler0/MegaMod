@@ -19,11 +19,12 @@ import java.util.function.Consumer;
 
 public class PotionItemBase extends ItemBase implements IPotionItem {
 	public PotionItemBase() {
-		super(new Properties());
+		// Port note (1.21.11): the old hasCraftingRemainingItem/getCraftingRemainingItem pair was
+		// replaced by Properties#craftRemainder. All three PotionItemBase subclasses (POTION,
+		// SPLASH_POTION, LINGERING_POTION) want an empty vial back, so we apply it here in the
+		// shared base constructor.
+		super(new Properties().craftRemainder(ModItems.EMPTY_POTION_VIAL.get()));
 	}
-
-	// TODO: 1.21.11 port - hasCraftingRemainingItem/getCraftingRemainingItem were removed;
-	// use Properties#craftRemainder(Item) at item registration instead.
 
 	@Override
 	public void appendHoverText(ItemStack potion, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {

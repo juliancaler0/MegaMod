@@ -8,10 +8,16 @@ import net.minecraft.world.item.ItemStack;
 import java.util.Set;
 
 public class CodecHelper {
-	// TODO: 1.21.11 port - ItemStack.ITEM_NON_AIR_CODEC was removed; use the full CODEC which
-	// already validates against AIR. This loses the strict oversize stack behaviour (which
-	// allowed count > maxStackSize), but vanilla no longer distinguishes.
-	public static final Codec<ItemStack> OVERSIZED_ITEM_STACK_CODEC = ItemStack.CODEC;
+	// Port note (1.21.11): ItemStack.ITEM_NON_AIR_CODEC was removed. ItemStack.CODEC already
+	// validates against AIR during deserialisation (an AIR item encoded with count > 0 returns
+	// ItemStack.EMPTY on decode), so for Reliquary's use-case that uses this codec to persist
+	// non-empty inventory slots the behaviour is equivalent. We add an explicit .validate(...)
+	// guard so any caller that round-trips an AIR stack through this codec gets a clear error
+	// instead of silently producing EMPTY.
+	public static final Codec<ItemStack> OVERSIZED_ITEM_STACK_CODEC = ItemStack.CODEC.validate(
+			stack -> stack.isEmpty()
+					? com.mojang.serialization.DataResult.error(() -> "Expected a non-air ItemStack")
+					: com.mojang.serialization.DataResult.success(stack));
 
 
 	public static <T> Codec<Set<T>> setOf(Codec<T> elementCodec) {

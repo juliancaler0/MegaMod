@@ -251,7 +251,6 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 			return InteractionResult.PASS;
 		}
 
-		// TODO: 1.21.11 port - Capabilities.ItemHandler.BLOCK replaced by Capabilities.Item.BLOCK (ResourceHandler).
 		IItemHandler handler = InventoryHelper.getInventoryAtPos(level, pos, null);
 		if (handler != null) {
 			return processItemHandlerInteraction(player, hand, level, voidTear, handler);

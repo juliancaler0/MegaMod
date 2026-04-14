@@ -59,6 +59,11 @@ public final class Reliquary {
 	}
 
 	public static void initClient(IEventBus modBus, ModContainer container) {
+		// Client-layer particle DeferredRegister binds to the mod bus here so
+		// particle types register before content reload. All other client-side
+		// wiring (renderer + HUD + color + keybind + witch-hat extension) is
+		// scheduled through ClientEventHandler.registerHandlers.
+		com.ultra.megamod.reliquary.client.init.ModParticles.registerListeners(modBus);
 		ClientEventHandler.registerHandlers(container);
 	}
 

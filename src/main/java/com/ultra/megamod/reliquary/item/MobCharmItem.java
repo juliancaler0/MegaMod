@@ -40,7 +40,10 @@ import java.util.function.Consumer;
 public class MobCharmItem extends ItemBase {
 	private final CharmInventoryHandler charmInventoryHandler = new CharmInventoryHandler();
 	public MobCharmItem() {
-		super(new Properties().stacksTo(1).durability(10));
+		// Port note (1.21.11): Item#isEnchantable was removed; we pass enchantable(0) to reject
+		// the item from the enchanting table. supportsEnchantment below also rejects per-
+		// enchantment lookups, which together matches the old "not enchantable" behaviour.
+		super(new Properties().stacksTo(1).durability(10).enchantable(0));
 		NeoForge.EVENT_BUS.addListener(this::onEntityTargetedEvent);
 		NeoForge.EVENT_BUS.addListener(this::onLivingUpdate);
 		NeoForge.EVENT_BUS.addListener(this::onLivingDeath);
@@ -269,8 +272,6 @@ public class MobCharmItem extends ItemBase {
 			return false;
 		}
 	}
-
-	// TODO: 1.21.11 port - Item#isEnchantable removed; set via Properties#enchantable(0).
 
 	@Override
 	public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {

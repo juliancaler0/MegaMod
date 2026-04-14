@@ -138,7 +138,9 @@ public class PassivePedestalBlock extends Block implements EntityBlock, ICreativ
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, net.minecraft.server.level.ServerLevel level, BlockPos pos, boolean isMoving) {
-		// TODO: 1.21.11 port - onRemove was replaced by affectNeighborsAfterRemoval.
+		// Port note (1.21.11): Block#onRemove was replaced by affectNeighborsAfterRemoval. The
+		// pedestal block-entity's dropPedestalInventory already drops each slot's contents to the
+		// world (equivalent to Containers.dropContents), preserving the old break-drop behaviour.
 		WorldHelper.getBlockEntity(level, pos, PassivePedestalBlockEntity.class).ifPresent(pedestal -> pedestal.dropPedestalInventory(level));
 		super.affectNeighborsAfterRemoval(state, level, pos, isMoving);
 	}

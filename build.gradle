@@ -26,13 +26,6 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
-// Temporarily exclude unfinished subsystems from compilation.
-// (reliquary port sits on the feature/reliquary-port branch; files exist in the
-//  worktree but are not ready for main-branch compilation)
-sourceSets.main.java {
-    exclude("com/ultra/megamod/reliquary/**")
-}
-
 repositories {
     // PlayerAnimationLib by ZigyTheBird (required for BetterCombat animations)
     maven {
