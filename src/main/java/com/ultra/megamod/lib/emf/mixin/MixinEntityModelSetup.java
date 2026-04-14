@@ -2,37 +2,44 @@ package com.ultra.megamod.lib.emf.mixin;
 
 import com.ultra.megamod.lib.emf.runtime.EmfModelBinder;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.model.Model;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Generic {@code EntityModel.setupAnim} hook.
+ * Generic {@code Model.setupAnim} hook.
  * <p>
- * Catches every entity model that doesn't override the base signature — ground
- * coverage for the long tail of non-humanoid mobs (foliaath, naga, frostmaw,
- * wolves, horses, etc.). For humanoids, {@link MixinHumanoidModel} already
- * applies the pack transforms after the more specific setupAnim; this mixin
- * handles the base-class path.
+ * Catches every model that doesn't override the base signature with its own
+ * typed setupAnim. {@code Model.setupAnim(S)} is the base method that every
+ * {@link EntityModel} subclass overrides with a typed variant (e.g.
+ * {@code WolfModel.setupAnim(WolfRenderState)}). The JVM then creates a bridge
+ * {@code setupAnim(Object)} that dispatches to the typed override.
  * <p>
- * The injection fires at TAIL (after vanilla's default pose) and applies EMF
- * compiled animations on top. No effect if the pack ships no {@code .jem} for
- * the current entity — the binder returns {@code null} and the apply call is a
- * no-op.
+ * This mixin runs TAIL on the bridge method (effectively: after any concrete
+ * subclass has applied its pose). Because {@link Model} also covers block-entity
+ * models, we gate to {@code EntityModel} subclasses only via the instanceof check
+ * below so we don't attempt to apply pack animations to chest / book models.
  * <p>
- * {@code require = 0} because a subclass that overrides the whole method will
- * legitimately never hit this HEAD/TAIL pair.
+ * For {@link net.minecraft.client.model.HumanoidModel}, {@link MixinHumanoidModel}
+ * provides an additional dedicated TAIL hook so humanoid-only pose tweaks (arm
+ * pose states, swim amount interpolation) are in the bone map before EMF writes
+ * its own values.
+ * <p>
+ * {@code require = 0} because the bridge method only exists at runtime after
+ * type erasure; mixin may not always find it via the declared target, but
+ * {@link MixinHumanoidModel} covers the humanoid path independently.
  */
-@Mixin(EntityModel.class)
+@Mixin(Model.class)
 public abstract class MixinEntityModelSetup {
 
-    @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;)V",
+    @Inject(method = "setupAnim(Ljava/lang/Object;)V",
             at = @At("TAIL"),
             require = 0)
-    private void emf$applyCompiledAnimations(EntityRenderState state, CallbackInfo ci) {
-        EntityModel<?> self = (EntityModel<?>) (Object) this;
-        EmfModelBinder.applyForCurrent(self, self.root());
+    private void emf$applyCompiledAnimations(Object state, CallbackInfo ci) {
+        Object self = this;
+        if (!(self instanceof EntityModel<?> entityModel)) return;
+        EmfModelBinder.applyForCurrent(entityModel, entityModel.root());
     }
 }

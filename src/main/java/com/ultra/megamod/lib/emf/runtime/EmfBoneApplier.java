@@ -27,6 +27,13 @@ import java.util.Map;
  * </ol>
  * This is the last mile of the pipeline — once this runs, the vanilla renderer
  * draws the bone transforms Fresh Animations packed into the {@code .jem}.
+ * <p>
+ * Re-entrant note: multiple mixin paths (typed {@code setupAnim} TAIL, then
+ * {@code ModelFeatureRenderer.renderModel} AFTER-setupAnim) can fire back-to-back
+ * for the same entity. Since {@code expression -> bone field} is a pure function
+ * of the frame context, re-applying is idempotent and correct; the extra work is
+ * measured in hundreds of float writes per entity per re-entry, which is below
+ * the noise floor for a first pass.
  */
 public final class EmfBoneApplier {
 

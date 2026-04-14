@@ -6,7 +6,8 @@
     "MixinModelPart",
     "MixinEntityModel",
     "MixinEntityModelSetup",
-    "MixinHumanoidModel"
+    "MixinHumanoidModel",
+    "MixinModelFeatureRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
