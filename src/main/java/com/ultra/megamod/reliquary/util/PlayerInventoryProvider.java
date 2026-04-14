@@ -29,8 +29,8 @@ public class PlayerInventoryProvider {
 	}
 
 	private PlayerInventoryProvider() {
-		addPlayerInventoryHandler(MAIN_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().items.size(),
-				(player, identifier, slot) -> player.getInventory().items.get(slot), (player, identifier, slot, stack) -> player.getInventory().setItem(slot, stack), false);
+		addPlayerInventoryHandler(MAIN_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().getItems().size(),
+				(player, identifier, slot) -> player.getInventory().getItems().get(slot), (player, identifier, slot, stack) -> player.getInventory().setItem(slot, stack), false);
 		addPlayerInventoryHandler(OFFHAND_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().offhand.size(),
 				(player, identifier, slot) -> player.getInventory().offhand.get(slot), (player, identifier, slot, stack) -> player.getInventory().offhand.set(slot, stack), false);
 		addPlayerInventoryHandler(ARMOR_INVENTORY, player -> PlayerInventoryHandler.SINGLE_IDENTIFIER, (player, identifier) -> player.getInventory().armor.size(),

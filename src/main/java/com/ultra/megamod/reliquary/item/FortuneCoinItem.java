@@ -60,7 +60,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	@Override
 	public void onEquipped(String identifier, LivingEntity player) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 0.1F, 0.5F * (RandHelper.getRandomMinusOneToOne(player.level().random) * 0.7F + 2.2F));
 		}
 	}
@@ -96,7 +96,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 2 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 2 != 0) {
 			return;
 		}
 		if (!isEnabled(stack)) {
@@ -183,7 +183,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	private boolean checkForRoom(ItemStack stackToPickup, Player player) {
 		int remaining = stackToPickup.getCount();
-		for (ItemStack inventoryStack : player.getInventory().items) {
+		for (ItemStack inventoryStack : player.getInventory().getItems()) {
 			if (inventoryStack.isEmpty()) {
 				return true;
 			}
@@ -244,7 +244,7 @@ public class FortuneCoinItem extends ItemBase implements IPedestalActionItem, IC
 
 	@Override
 	public void update(ItemStack stack, Level level, IPedestal pedestal) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 

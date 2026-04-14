@@ -30,7 +30,7 @@ public class FlightEffect extends MobEffect {
 
 	@Override
 	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-		if (livingEntity.level().isClientSide) {
+		if (livingEntity.level().isClientSide()) {
 			return true;
 		}
 

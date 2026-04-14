@@ -71,7 +71,7 @@ public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativ
 	@Nullable
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return null;
 		}
 
@@ -101,14 +101,14 @@ public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativ
 				return InteractionResult.SUCCESS;
 			}
 			playSoundAndSpawnParticles(level, pos, altar);
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				return InteractionResult.SUCCESS;
 			}
 			player.getInventory().removeItem(slot, 1);
 			altar.addRedstone(level, pos);
 		} else if (heldItem.getItem() instanceof AlkahestryTomeItem && AlkahestryTomeItem.getCharge(heldItem) > 0) {
 			playSoundAndSpawnParticles(level, pos, altar);
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				return InteractionResult.SUCCESS;
 			}
 			ModItems.ALKAHESTRY_TOME.get().useCharge(heldItem, 1);
@@ -125,11 +125,11 @@ public class AlkahestryAltarBlock extends Block implements EntityBlock, ICreativ
 	}
 
 	private int getSlotWithRedstoneDust(Player player) {
-		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
-			if (player.getInventory().items.get(slot).isEmpty()) {
+		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
+			if (player.getInventory().getItems().get(slot).isEmpty()) {
 				continue;
 			}
-			if (player.getInventory().items.get(slot).getItem() == Items.REDSTONE) {
+			if (player.getInventory().getItems().get(slot).getItem() == Items.REDSTONE) {
 				return slot;
 			}
 		}

@@ -54,7 +54,7 @@ public class TippedArrow extends AbstractArrow {
 	public void tick() {
 		super.tick();
 
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			if (inGround) {
 				if (inGroundTime % 5 == 0) {
 					spawnPotionParticles(1);

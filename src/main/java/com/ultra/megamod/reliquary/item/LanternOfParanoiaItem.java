@@ -61,7 +61,7 @@ public class LanternOfParanoiaItem extends ToggleableItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || !isEnabled(stack) || isInCooldown(stack, level)) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || !isEnabled(stack) || isInCooldown(stack, level)) {
 			return;
 		}
 		if (getPositionsInRange(player).anyMatch(pos -> tryToPlaceAtPos(stack, level, player, pos))) {

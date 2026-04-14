@@ -165,7 +165,7 @@ public class HandgunItem extends ItemBase {
 
 	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack handgun, int remainingUseDuration) {
-		if (livingEntity.level().isClientSide || !(livingEntity instanceof Player player)) {
+		if (livingEntity.level().isClientSide() || !(livingEntity instanceof Player player)) {
 			return;
 		}
 
@@ -202,12 +202,12 @@ public class HandgunItem extends ItemBase {
 		setCooldown(handgun, player.level().getGameTime() + 12);
 
 		getMagazineSlot(player).ifPresent(slot -> {
-			ItemStack magazine = player.getInventory().items.get(slot);
+			ItemStack magazine = player.getInventory().getItems().get(slot);
 			setMagazineType(handgun, magazine);
 			setPotionEffects(handgun, magazine.getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY));
 			magazine.shrink(1);
 			if (magazine.isEmpty()) {
-				player.getInventory().items.set(slot, ItemStack.EMPTY);
+				player.getInventory().getItems().set(slot, ItemStack.EMPTY);
 			}
 			player.swing(player.getUsedItemHand());
 			spawnEmptyMagazine(player);
@@ -250,7 +250,7 @@ public class HandgunItem extends ItemBase {
 	}
 
 	private void fireBullet(ItemStack handgun, Level level, Player player, InteractionHand hand) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			getMagazineType(handgun).filter(magazineShotFactories::containsKey).ifPresent(magazineType -> {
 				spawnShotEntity(handgun, level, player, hand, magazineType);
 				level.playSound(null, player.blockPosition(), ModSounds.HANDGUN_SHOT.get(), SoundSource.PLAYERS, 0.5F, 1.2F);
@@ -303,7 +303,7 @@ public class HandgunItem extends ItemBase {
 	}
 
 	private boolean hasFilledMagazine(Player player) {
-		for (ItemStack stack : player.getInventory().items) {
+		for (ItemStack stack : player.getInventory().getItems()) {
 			if (stack == null) {
 				continue;
 			}
@@ -315,8 +315,8 @@ public class HandgunItem extends ItemBase {
 	}
 
 	private Optional<Integer> getMagazineSlot(Player player) {
-		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
-			Item item = player.getInventory().items.get(slot).getItem();
+		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
+			Item item = player.getInventory().getItems().get(slot).getItem();
 			if (item instanceof MagazineItem && item != ModItems.EMPTY_MAGAZINE.get()) {
 				return Optional.of(slot);
 			}

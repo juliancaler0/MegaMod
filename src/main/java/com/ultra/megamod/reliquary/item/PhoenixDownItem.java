@@ -76,7 +76,7 @@ public class PhoenixDownItem extends AngelicFeatherItem {
 
 				// give the player temporary resistance to other damages.
 				if (Boolean.TRUE.equals(Config.COMMON.items.phoenixDown.giveTemporaryDamageResistance.get())) {
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 200, 1));
+					player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 200, 1));
 				}
 
 				// give the player temporary regeneration.

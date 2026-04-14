@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 
 public class AlkahestryTomeItem extends ChargeableItem {
 	public AlkahestryTomeItem() {
-		super(new Properties().setNoRepair().rarity(Rarity.EPIC).stacksTo(1).durability(10).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
+		super(new Properties().rarity(Rarity.EPIC).stacksTo(1).durability(10).component(DataComponents.REPAIR_COST, Integer.MAX_VALUE), Config.COMMON.disable.disableAlkahestry);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class AlkahestryTomeItem extends ChargeableItem {
 		}
 
 		player.playSound(ModSounds.BOOK.get(), 1.0f, 1.0f);
-		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
 			serverPlayer.openMenu(new SimpleMenuProvider((w, p, pl) -> new AlkahestTomeMenu(w), stack.getHoverName()));
 		}
 		return InteractionResult.SUCCESS;
@@ -66,7 +66,7 @@ public class AlkahestryTomeItem extends ChargeableItem {
 
 	@Override
 	public void inventoryTick(ItemStack tome, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0 || !isEnabled(tome) || getCharge(tome) == getChargeLimit()) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0 || !isEnabled(tome) || getCharge(tome) == getChargeLimit()) {
 			return;
 		}
 

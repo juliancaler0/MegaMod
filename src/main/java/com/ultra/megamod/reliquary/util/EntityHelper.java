@@ -8,9 +8,9 @@ public class EntityHelper {
 		player.removeEffect(MobEffects.WITHER);
 		player.removeEffect(MobEffects.HUNGER);
 		player.removeEffect(MobEffects.POISON);
-		player.removeEffect(MobEffects.CONFUSION);
+		player.removeEffect(MobEffects.NAUSEA);
 		player.removeEffect(MobEffects.DIG_SLOWDOWN);
-		player.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+		player.removeEffect(MobEffects.SLOWNESS);
 		player.removeEffect(MobEffects.BLINDNESS);
 		player.removeEffect(MobEffects.WEAKNESS);
 	}

@@ -8,7 +8,6 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import com.ultra.megamod.reliquary.client.init.ModParticles;
 import com.ultra.megamod.reliquary.crafting.AlkahestryRecipeRegistry;
 import com.ultra.megamod.reliquary.handler.ClientEventHandler;
 import com.ultra.megamod.reliquary.handler.CommonEventHandler;
@@ -61,7 +60,6 @@ public final class Reliquary {
 
 	public static void initClient(IEventBus modBus, ModContainer container) {
 		ClientEventHandler.registerHandlers(container);
-		ModParticles.registerListeners(modBus);
 	}
 
 	public static void setup(FMLCommonSetupEvent event) {

@@ -1,15 +1,15 @@
 package com.ultra.megamod.reliquary.block.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import com.ultra.megamod.reliquary.init.ModBlocks;
@@ -77,17 +77,17 @@ public class ApothecaryMortarBlockEntity extends BlockEntityBase {
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
-		items.deserializeNBT(registries, tag.getCompound("items"));
-		pestleUsedCounter = tag.getShort("pestleUsed");
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		items.deserialize(input.childOrEmpty("items"));
+		pestleUsedCounter = input.getShortOr("pestleUsed", (short) 0);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-		super.saveAdditional(compound, registries);
-		compound.putShort("pestleUsed", (short) pestleUsedCounter);
-		compound.put("items", items.serializeNBT(registries));
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putShort("pestleUsed", (short) pestleUsedCounter);
+		items.serialize(output.child("items"));
 	}
 
 	// gets the contents of the tile entity as an array of inventory
@@ -121,7 +121,7 @@ public class ApothecaryMortarBlockEntity extends BlockEntityBase {
 				if (items.getStackInSlot(clearSlot).isEmpty()) {
 					continue;
 				}
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					ItemEntity itemEntity = new ItemEntity(level, getBlockPos().getX() + 0.5D, getBlockPos().getY() + 0.5D, getBlockPos().getZ() + 0.5D, items.getStackInSlot(clearSlot).copy());
 					level.addFreshEntity(itemEntity);
 				}
@@ -133,7 +133,7 @@ public class ApothecaryMortarBlockEntity extends BlockEntityBase {
 			}
 			pestleUsedCounter = 0;
 			finishCoolDown = level.getGameTime() + 20; // 1 second cooldown before essence can be put in to prevent insta insert of it
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				return true;
 			}
 			ItemStack resultItem = new ItemStack(ModItems.POTION_ESSENCE.get());

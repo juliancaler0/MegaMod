@@ -31,7 +31,7 @@ public class InfernalTearItem extends ToggleableItem {
 	private static final int NOTHING_FOUND_COOLDOWN = COOLDOWN * 5;
 
 	public InfernalTearItem() {
-		super(new Properties().stacksTo(1).setNoRepair().rarity(Rarity.EPIC));
+		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class InfernalTearItem extends ToggleableItem {
 
 	@Override
 	public void inventoryTick(ItemStack tear, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0 || !isEnabled(tear) || isInCooldown(tear, level)) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0 || !isEnabled(tear) || isInCooldown(tear, level)) {
 			return;
 		}
 

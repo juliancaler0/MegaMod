@@ -55,7 +55,7 @@ public class MidasTouchstoneItem extends ChargeableItem implements ICuriosItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int i, boolean f) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 

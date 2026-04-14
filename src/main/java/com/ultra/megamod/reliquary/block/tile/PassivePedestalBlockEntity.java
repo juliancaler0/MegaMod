@@ -1,13 +1,13 @@
 package com.ultra.megamod.reliquary.block.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import com.ultra.megamod.reliquary.init.ModBlocks;
@@ -18,7 +18,7 @@ public class PassivePedestalBlockEntity extends BlockEntityBase {
 	private final ItemStackHandler itemHandler = new ItemStackHandler(1) {
 		@Override
 		protected void onContentsChanged(int slot) {
-			if (level != null && !level.isClientSide) {
+			if (level != null && !level.isClientSide()) {
 				setChangedAndNotifyBlock();
 			}
 		}
@@ -95,7 +95,7 @@ public class PassivePedestalBlockEntity extends BlockEntityBase {
 	public void removeAndSpawnItem(Level level) {
 		ItemStack item = itemHandler.getStackInSlot(0);
 		if (!item.isEmpty()) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				setChanged();
 				ItemEntity itemEntity = new ItemEntity(level, worldPosition.getX() + 0.5D, worldPosition.getY() + 1D, worldPosition.getZ() + 0.5D, item);
 				level.addFreshEntity(itemEntity);
@@ -115,18 +115,18 @@ public class PassivePedestalBlockEntity extends BlockEntityBase {
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
-		itemHandler.setStackInSlot(0, tag.contains("item") ? ItemStack.parse(registries, tag.getCompound("item")).orElse(ItemStack.EMPTY) : ItemStack.EMPTY);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		itemHandler.setStackInSlot(0, input.read("item", ItemStack.CODEC).orElse(ItemStack.EMPTY));
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-		super.saveAdditional(compound, registries);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
 
 		ItemStack item = getItem();
 		if (!item.isEmpty()) {
-			compound.put("item", item.save(registries));
+			output.store("item", ItemStack.CODEC, item);
 		}
 	}
 }

@@ -121,7 +121,7 @@ public abstract class ShotBase extends Projectile {
 			discard();
 		}
 
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			spawnPotionParticles();
 		}
 		Vec3 motionVec = getDeltaMovement();
@@ -412,7 +412,7 @@ public abstract class ShotBase extends Projectile {
 			seekVector = seekVector.normalize();
 			setDeltaMovement(seekVector.multiply(0.4D, 0.4D, 0.4D));
 
-			if (level().isClientSide) {
+			if (level().isClientSide()) {
 				lerpMotion(getDeltaMovement().x(), getDeltaMovement().y(), getDeltaMovement().z());
 			}
 		}
@@ -440,7 +440,7 @@ public abstract class ShotBase extends Projectile {
 	 * @param livingEntity the entity being struck
 	 */
 	protected void onImpact(LivingEntity livingEntity) {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			if (livingEntity != getOwner() || ticksInAir > 3) {
 				doDamage(livingEntity);
 			}

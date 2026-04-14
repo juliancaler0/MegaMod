@@ -42,7 +42,7 @@ public class MobCharmBeltItem extends ItemBase implements ICuriosItem {
 
 	@Override
 	public void onEquipped(String identifier, LivingEntity player) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			player.playSound(SoundEvents.ARMOR_EQUIP_LEATHER.value(), 1F, 1F);
 		}
 	}
@@ -55,7 +55,7 @@ public class MobCharmBeltItem extends ItemBase implements ICuriosItem {
 			return InteractionResult.PASS;
 		}
 
-		if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
+		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
 			serverPlayer.openMenu(new SimpleMenuProvider((w, p, pl) -> new MobCharmBeltMenu(w, p, stack), stack.getHoverName()), buf -> buf.writeBoolean(hand == InteractionHand.MAIN_HAND));
 		}
 

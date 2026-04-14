@@ -1,16 +1,14 @@
 package com.ultra.megamod.reliquary.block.tile;
 
+import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.LongTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.fluids.FluidStack;
@@ -58,41 +56,34 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
 
-		switchedOn = tag.getBoolean("SwitchedOn");
-		powered = tag.getBoolean("Powered");
-
-		ListTag onLocations = tag.getList("OnSwitches", 4);
+		switchedOn = input.getBooleanOr("SwitchedOn", false);
+		powered = input.getBooleanOr("Powered", false);
 
 		onSwitches.clear();
-
-		for (Tag onLocation : onLocations) {
-			onSwitches.add(((LongTag) onLocation).getAsLong());
-		}
+		input.listOrEmpty("OnSwitches", Codec.LONG).forEach(onSwitches::add);
 
 		updateSpecialItems();
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-		super.saveAdditional(compound, registries);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
 
-		compound.putBoolean("SwitchedOn", switchedOn);
-		compound.putBoolean("Powered", powered);
+		output.putBoolean("SwitchedOn", switchedOn);
+		output.putBoolean("Powered", powered);
 
-		ListTag onLocations = new ListTag();
-
+		ValueOutput.TypedOutputList<Long> onLocations = output.list("OnSwitches", Codec.LONG);
 		for (Long onSwitch : onSwitches) {
-			onLocations.add(LongTag.valueOf(onSwitch));
+			onLocations.add(onSwitch);
 		}
-		compound.put("OnSwitches", onLocations);
 	}
 
 	@Override
 	public void onChunkUnloaded() {
-		if (level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide()) {
 			PedestalRegistry.unregisterPosition(level.dimension().registry(), worldPosition);
 		}
 
@@ -101,7 +92,7 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 
 	@Override
 	public void onLoad() {
-		if (level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide()) {
 			PedestalRegistry.registerPosition(level.dimension().registry(), worldPosition);
 		}
 
@@ -193,7 +184,7 @@ public class PedestalBlockEntity extends PassivePedestalBlockEntity implements I
 	}
 
 	public void serverTick(Level level) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 

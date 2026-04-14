@@ -36,7 +36,7 @@ public class PotionItem extends PotionItemBase {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-		if (!(entity instanceof Player player) || level.isClientSide) {
+		if (!(entity instanceof Player player) || level.isClientSide()) {
 			return stack;
 		}
 

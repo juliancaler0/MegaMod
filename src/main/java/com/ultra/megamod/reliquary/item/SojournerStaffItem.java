@@ -42,7 +42,7 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % COOLDOWN != 0) {
 			return;
 		}
 
@@ -53,7 +53,7 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 
 	@Override
 	public InteractionResult onMouseScrolled(ItemStack stack, Player player, double scrollDelta) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return InteractionResult.PASS;
 		}
 		cycleTorchMode(stack, scrollDelta > 0);
@@ -143,7 +143,7 @@ public class SojournerStaffItem extends ChargeableItem implements IScrollableIte
 
 		BlockPos placeBlockAt = context.getLevel().getBlockState(pos).canBeReplaced() ? pos : pos.relative(face);
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
 		ItemStack torch = getCurrentTorch(stack);

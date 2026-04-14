@@ -56,7 +56,7 @@ public class GlowingWater extends ThrowableProjectile implements ItemSupplier {
 	 */
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			spawnParticles();
 			AABB bb = getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
 			List<Mob> eList = level().getEntitiesOfClass(Mob.class, bb);

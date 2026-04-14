@@ -30,13 +30,13 @@ public class KrakenSlime extends ThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult result) {
 		Entity thrower = getOwner();
-		if (level().isClientSide || result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() == thrower) {
+		if (level().isClientSide() || result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() == thrower) {
 			return;
 		}
 
 		if (result.getType() == HitResult.Type.ENTITY && ((EntityHitResult) result).getEntity() instanceof Mob living) {
 			living.hurt(damageSources().thrown(this, thrower), 5.0f);
-			living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 20, 2));
+			living.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 20 * 20, 2));
 			living.addEffect(new MobEffectInstance(ModEffects.PACIFICATION, 15 * 20));
 		}
 
@@ -73,7 +73,7 @@ public class KrakenSlime extends ThrowableItemProjectile {
 			level().addParticle(ParticleTypes.ITEM_SLIME, getX() - motionX * amplifier, getY() - motionY * amplifier, getZ() - motionZ * amplifier, motionX, motionY, motionZ);
 		}
 
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			return;
 		}
 

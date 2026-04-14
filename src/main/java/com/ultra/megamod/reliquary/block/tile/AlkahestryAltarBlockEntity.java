@@ -1,11 +1,11 @@
 package com.ultra.megamod.reliquary.block.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import com.ultra.megamod.reliquary.block.AlkahestryAltarBlock;
 import com.ultra.megamod.reliquary.init.ModBlocks;
 import com.ultra.megamod.reliquary.reference.Config;
@@ -23,7 +23,7 @@ public class AlkahestryAltarBlockEntity extends BlockEntityBase {
 	}
 
 	public void serverTick(Level level, BlockPos pos) {
-		if (level.isClientSide || !isActive || level.isNight() || !level.canSeeSky(pos.above())) {
+		if (level.isClientSide() || !isActive || level.isNight() || !level.canSeeSky(pos.above())) {
 			return;
 		}
 		if (cycleTime > 0) {
@@ -49,19 +49,19 @@ public class AlkahestryAltarBlockEntity extends BlockEntityBase {
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
-		cycleTime = tag.getShort("cycleTime");
-		redstoneCount = tag.getShort("redstoneCount");
-		isActive = tag.getBoolean("isActive");
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		cycleTime = input.getShortOr("cycleTime", (short) 0);
+		redstoneCount = input.getShortOr("redstoneCount", (short) 0);
+		isActive = input.getBooleanOr("isActive", false);
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.saveAdditional(tag, registries);
-		tag.putShort("cycleTime", (short) cycleTime);
-		tag.putShort("redstoneCount", (short) redstoneCount);
-		tag.putBoolean("isActive", isActive);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putShort("cycleTime", (short) cycleTime);
+		output.putShort("redstoneCount", (short) redstoneCount);
+		output.putBoolean("isActive", isActive);
 	}
 
 	public void addRedstone(Level level, BlockPos pos) {

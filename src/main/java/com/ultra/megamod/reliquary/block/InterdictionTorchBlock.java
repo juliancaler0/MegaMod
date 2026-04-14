@@ -56,7 +56,7 @@ public class InterdictionTorchBlock extends TorchBlock implements ICreativeTabIt
 	public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		super.tick(state, level, pos, random);
 		level.scheduleTick(pos, this, TICK_RATE);
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return;
 		}
 		int radius = Config.COMMON.blocks.interdictionTorch.pushRadius.get();

@@ -28,13 +28,13 @@ public class GlacialStaffItem extends IceMagusRodItem {
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity e) {
 		if (e instanceof LivingEntity livingBase && getSnowballs(stack) >= getSnowballCost()) {
-			MobEffectInstance slow = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 30, 0);
+			MobEffectInstance slow = new MobEffectInstance(MobEffects.SLOWNESS, 30, 0);
 
 			//if the creature is slowed already, refresh the duration and increase the amplifier by 1.
 			//5 hits is all it takes to max out the amplitude.
-			MobEffectInstance slownessEffect = livingBase.getEffect(MobEffects.MOVEMENT_SLOWDOWN);
+			MobEffectInstance slownessEffect = livingBase.getEffect(MobEffects.SLOWNESS);
 			if (slownessEffect != null) {
-				slow = new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, Math.min(slownessEffect.getDuration() + 30, 300),
+				slow = new MobEffectInstance(MobEffects.SLOWNESS, Math.min(slownessEffect.getDuration() + 30, 300),
 						Math.min(slownessEffect.getAmplifier() + 1, 4));
 			}
 
@@ -71,7 +71,7 @@ public class GlacialStaffItem extends IceMagusRodItem {
 	}
 
 	private void meltBlocks(ItemStack staff, Level level, Player player) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			BlockPos playerPos = player.blockPosition();
 			for (BlockPos pos : getBlockLocations(staff)) {
 				if (!level.isLoaded(pos)) {

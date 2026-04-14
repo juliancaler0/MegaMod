@@ -38,7 +38,7 @@ import java.util.function.Consumer;
 public class MobCharmItem extends ItemBase {
 	private final CharmInventoryHandler charmInventoryHandler = new CharmInventoryHandler();
 	public MobCharmItem() {
-		super(new Properties().stacksTo(1).durability(10).setNoRepair());
+		super(new Properties().stacksTo(1).durability(10));
 		NeoForge.EVENT_BUS.addListener(this::onEntityTargetedEvent);
 		NeoForge.EVENT_BUS.addListener(this::onLivingUpdate);
 		NeoForge.EVENT_BUS.addListener(this::onLivingDeath);

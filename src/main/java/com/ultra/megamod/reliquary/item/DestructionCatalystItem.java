@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 public class DestructionCatalystItem extends ChargeableItem {
 
 	public DestructionCatalystItem() {
-		super(new Properties().stacksTo(1).setNoRepair());
+		super(new Properties().stacksTo(1));
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class DestructionCatalystItem extends ChargeableItem {
 
 	@Override
 	public void inventoryTick(ItemStack catalyst, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 

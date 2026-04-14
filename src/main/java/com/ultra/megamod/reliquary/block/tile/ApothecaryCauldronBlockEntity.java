@@ -1,15 +1,12 @@
 package com.ultra.megamod.reliquary.block.tile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -31,6 +28,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.IFluidHandler;
@@ -69,7 +68,7 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 			if (potionContents.hasEffects() && hasNetherwart && cookTime < getTotalCookTime()) {
 				cookTime++;
 			}
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				spawnParticles(level, pos);
 			}
 		}
@@ -182,29 +181,31 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
-		setLiquidLevel(tag.getShort("liquidLevel"));
-		glowstoneCount = tag.getInt("glowstoneCount");
-		hasNetherwart = tag.getBoolean("hasNetherwart");
-		hasGunpowder = tag.getBoolean("hasGunpowder");
-		hasDragonBreath = tag.getBoolean("hasDragonBreath");
-		redstoneCount = tag.getInt("redstoneCount");
-		cookTime = tag.getInt("cookTime");
-		potionContents = PotionHelper.getPotionContentsFromCompoundTag(tag);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		setLiquidLevel(input.getShortOr("liquidLevel", (short) 0));
+		glowstoneCount = input.getIntOr("glowstoneCount", 0);
+		hasNetherwart = input.getBooleanOr("hasNetherwart", false);
+		hasGunpowder = input.getBooleanOr("hasGunpowder", false);
+		hasDragonBreath = input.getBooleanOr("hasDragonBreath", false);
+		redstoneCount = input.getIntOr("redstoneCount", 0);
+		cookTime = input.getIntOr("cookTime", 0);
+		potionContents = input.read(PotionHelper.EFFECTS_TAG, DataComponents.POTION_CONTENTS.codec()).orElse(PotionContents.EMPTY);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider registries) {
-		super.saveAdditional(compound, registries);
-		compound.putInt("liquidLevel", getLiquidLevel());
-		compound.putInt("cookTime", cookTime);
-		compound.putInt("redstoneCount", redstoneCount);
-		compound.putInt("glowstoneCount", glowstoneCount);
-		compound.putBoolean("hasGunpowder", hasGunpowder);
-		compound.putBoolean("hasDragonBreath", hasDragonBreath);
-		compound.putBoolean("hasNetherwart", hasNetherwart);
-		PotionHelper.addPotionContentsToCompoundTag(compound, potionContents);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putInt("liquidLevel", getLiquidLevel());
+		output.putInt("cookTime", cookTime);
+		output.putInt("redstoneCount", redstoneCount);
+		output.putInt("glowstoneCount", glowstoneCount);
+		output.putBoolean("hasGunpowder", hasGunpowder);
+		output.putBoolean("hasDragonBreath", hasDragonBreath);
+		output.putBoolean("hasNetherwart", hasNetherwart);
+		if (potionContents.hasEffects()) {
+			output.store(PotionHelper.EFFECTS_TAG, DataComponents.POTION_CONTENTS.codec(), potionContents);
+		}
 	}
 
 	private boolean finishedCooking() {
@@ -496,8 +497,8 @@ public class ApothecaryCauldronBlockEntity extends BlockEntityBase {
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider registries) {
-		super.onDataPacket(net, packet, registries);
+	public void onDataPacket(Connection net, ValueInput valueInput) {
+		super.onDataPacket(net, valueInput);
 		dataChanged = true;
 	}
 }

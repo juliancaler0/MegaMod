@@ -54,7 +54,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	public static final int BONEMEAL_SLOT = 0;
 
 	public HarvestRodItem() {
-		super(new Properties().stacksTo(1).setNoRepair());
+		super(new Properties().stacksTo(1));
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 
@@ -190,13 +190,13 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 	private void consumePlantables(ItemStack harvestRod, Player player) {
 		int leftToInsert = 16;
 
-		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
-			ItemStack currentStack = player.getInventory().items.get(slot);
+		for (int slot = 0; slot < player.getInventory().getItems().size(); slot++) {
+			ItemStack currentStack = player.getInventory().getItems().get(slot);
 			if (isPlantable(currentStack)) {
 				int countInserted = incrementPlantable(harvestRod, currentStack, leftToInsert);
 				leftToInsert -= countInserted;
 				currentStack.shrink(countInserted);
-				player.getInventory().items.set(slot, currentStack.isEmpty() ? ItemStack.EMPTY : currentStack);
+				player.getInventory().getItems().set(slot, currentStack.isEmpty() ? ItemStack.EMPTY : currentStack);
 				if (leftToInsert == 0) {
 					break;
 				}
@@ -210,7 +210,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return true;
 		}
 
@@ -247,7 +247,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 			return false;
 		}
 
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			for (int particles = 0; particles <= 8; particles++) {
 				player.level().levelEvent(player, 2001, pos, Block.getId(blockState));
 			}
@@ -331,7 +331,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public void releaseUsing(ItemStack harvestRod, Level level, LivingEntity entity, int timeLeft) {
-		if (entity.level().isClientSide || !(entity instanceof Player player)) {
+		if (entity.level().isClientSide() || !(entity instanceof Player player)) {
 			return;
 		}
 
@@ -438,7 +438,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack harvestRod, int remainingUseDuration) {
-		if (livingEntity.level().isClientSide || !(livingEntity instanceof Player player)) {
+		if (livingEntity.level().isClientSide() || !(livingEntity instanceof Player player)) {
 			return;
 		}
 
@@ -535,7 +535,7 @@ public class HarvestRodItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public InteractionResult onMouseScrolled(ItemStack stack, Player player, double scrollDelta) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return InteractionResult.PASS;
 		}
 		cycleMode(stack, scrollDelta > 0);

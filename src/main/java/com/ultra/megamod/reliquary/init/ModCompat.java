@@ -1,35 +1,18 @@
 package com.ultra.megamod.reliquary.init;
 
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
-import com.ultra.megamod.reliquary.compat.accessories.AccessoriesCompat;
-import com.ultra.megamod.reliquary.reference.Compatibility;
-import com.ultra.megamod.reliquary.util.LogHelper;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+/**
+ * Stub — all external-mod compat surfaces (Curios, Jade, JEI, Botania,
+ * TConstruct, Accessories) were pruned because MegaMod either bundles
+ * its own fork (Accessories) or doesn't load the mod at runtime. If
+ * any of these are re-introduced as true dependencies, reinstate the
+ * appropriate compat file under reliquary.compat.*.
+ */
+public final class ModCompat {
+	private ModCompat() {}
 
-public class ModCompat {
-    private ModCompat() {
-    }
-
-    private static final Map<String, Supplier<Consumer<IEventBus>>> compatFactories = new HashMap<>();
-
-    static {
-        compatFactories.put(Compatibility.ModIds.ACCESSORIES, () -> AccessoriesCompat::new);
-    }
-
-    public static void initCompats(IEventBus modBus) {
-        for (Map.Entry<String, Supplier<Consumer<IEventBus>>> entry : compatFactories.entrySet()) {
-            if (ModList.get().isLoaded(entry.getKey())) {
-                try {
-                    entry.getValue().get().accept(modBus);
-                } catch (Exception e) {
-                    LogHelper.error("Error instantiating compatibility ", e);
-                }
-            }
-        }
-    }
+	public static void initCompats(IEventBus modBus) {
+		// no-op: see class javadoc
+	}
 }

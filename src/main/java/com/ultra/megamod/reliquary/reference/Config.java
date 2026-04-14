@@ -13,7 +13,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.*;
 import org.apache.commons.lang3.tuple.Pair;
-import com.ultra.megamod.reliquary.client.gui.hud.HUDPosition;
+import com.ultra.megamod.reliquary.api.client.HUDPosition;
 
 import javax.annotation.Nullable;
 import java.util.*;

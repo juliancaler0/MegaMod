@@ -88,7 +88,7 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			ApothecaryCauldronBlockEntity cauldron = (ApothecaryCauldronBlockEntity) level.getBlockEntity(pos);
 			if (cauldron != null) {
 				cauldron.handleCollidingEntity(level, pos, entity);
@@ -98,7 +98,7 @@ public class ApothecaryCauldronBlock extends Block implements EntityBlock, ICrea
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack heldItem, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return !heldItem.isEmpty() ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
 		} else {
 			if (heldItem.isEmpty()) {

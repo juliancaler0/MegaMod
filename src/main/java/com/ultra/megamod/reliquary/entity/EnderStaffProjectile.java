@@ -92,7 +92,7 @@ public class EnderStaffProjectile extends ThrowableProjectile implements ItemSup
 			level().addParticle(ParticleTypes.PORTAL, getX(), getY() + random.nextDouble() * 2D, getZ(), random.nextGaussian(), 0.0D, random.nextGaussian());
 		}
 
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			thrower.fallDistance = 0.0F;
 
 			int x = (int) Math.round(getX());

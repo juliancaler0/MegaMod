@@ -120,7 +120,7 @@ public class ConcussiveExplosion extends Explosion {
 	}
 
 	public static void customBusterExplosion(Entity par1Entity, double x, double y, double z, float par8) {
-		if (par1Entity.level().isClientSide) {
+		if (par1Entity.level().isClientSide()) {
 			return;
 		}
 		par1Entity.level().explode(par1Entity, x, y, z, par8, false, Level.ExplosionInteraction.BLOCK);

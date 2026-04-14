@@ -24,7 +24,7 @@ public class IceMagusRodItem extends ChargeableItem {
 	public static final DustParticleOptions ICE_PARTICLE = new DustParticleOptions(new Vector3f(99 / 255F, 196 / 255F, 253 / 255F), 1);
 
 	public IceMagusRodItem() {
-		super(new Properties().stacksTo(1).setNoRepair().rarity(Rarity.EPIC));
+		super(new Properties().stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class IceMagusRodItem extends ChargeableItem {
 
 	@Override
 	public void inventoryTick(ItemStack rod, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 10 != 0) {
 			return;
 		}
 		if (isEnabled(rod)) {

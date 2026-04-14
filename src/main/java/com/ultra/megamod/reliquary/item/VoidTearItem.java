@@ -86,7 +86,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack voidTear = player.getItemInHand(hand);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			BlockHitResult rayTraceResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.NONE);
 
 			//not letting logic go through if player was sneak clicking inventory or was trying to place a block
@@ -170,7 +170,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public void inventoryTick(ItemStack voidTear, Level level, Entity entity, int slotNumber, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 5 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || level.getGameTime() % 5 != 0) {
 			return;
 		}
 		if (isEnabled(voidTear)) {
@@ -254,7 +254,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
 		if (handler != null) {
 			return processItemHandlerInteraction(player, hand, level, voidTear, handler);
-		} else if (!level.isClientSide && hasPlaceableBlock(voidTear) && getItemQuantity(voidTear) > 0) {
+		} else if (!level.isClientSide() && hasPlaceableBlock(voidTear) && getItemQuantity(voidTear) > 0) {
 			ItemStack containerItem = getTearContents(voidTear);
 			BlockItem itemBlock = (BlockItem) containerItem.getItem();
 
@@ -268,7 +268,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 	}
 
 	private InteractionResult processItemHandlerInteraction(Player player, InteractionHand hand, Level level, ItemStack voidTear, IItemHandler itemHandler) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (isEmpty(voidTear)) {
 				return onItemUseFirstEmpty(voidTear, itemHandler, player, hand);
 			}
@@ -404,7 +404,7 @@ public class VoidTearItem extends ChargeableItem implements IScrollableItem {
 
 	@Override
 	public InteractionResult onMouseScrolled(ItemStack voidTear, Player player, double scrollDelta) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return InteractionResult.PASS;
 		}
 		cycleMode(voidTear, scrollDelta > 0);

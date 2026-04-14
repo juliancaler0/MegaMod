@@ -40,7 +40,7 @@ import java.util.List;
 
 public class HeroMedallionItem extends ToggleableItem implements IPedestalActionItem, IScrollableItem, ICuriosItem {
 	public HeroMedallionItem() {
-		super(new Properties().durability(0).setNoRepair().rarity(Rarity.EPIC));
+		super(new Properties().durability(0).rarity(Rarity.EPIC));
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class HeroMedallionItem extends ToggleableItem implements IPedestalAction
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
-		if (level.isClientSide || !(entity instanceof Player player) || player.isSpectator() || !isEnabled(stack) || level.getGameTime() % 10 != 0) {
+		if (level.isClientSide() || !(entity instanceof Player player) || player.isSpectator() || !isEnabled(stack) || level.getGameTime() % 10 != 0) {
 			return;
 		}
 		if ((!player.isUsingItem() || player.getUseItem() != stack)) {
@@ -140,7 +140,7 @@ public class HeroMedallionItem extends ToggleableItem implements IPedestalAction
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
 		if (player.isShiftKeyDown()) {
@@ -175,7 +175,7 @@ public class HeroMedallionItem extends ToggleableItem implements IPedestalAction
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
-		if (livingEntity.level().isClientSide || isEnabled(stack) || !(livingEntity instanceof Player) || getUseDuration(stack, livingEntity) - timeLeft > 10) {
+		if (livingEntity.level().isClientSide() || isEnabled(stack) || !(livingEntity instanceof Player) || getUseDuration(stack, livingEntity) - timeLeft > 10) {
 			return;
 		}
 
@@ -258,7 +258,7 @@ public class HeroMedallionItem extends ToggleableItem implements IPedestalAction
 
 	@Override
 	public InteractionResult onMouseScrolled(ItemStack stack, Player player, double scrollDelta) {
-		if (player.level().isClientSide) {
+		if (player.level().isClientSide()) {
 			return InteractionResult.PASS;
 		}
 

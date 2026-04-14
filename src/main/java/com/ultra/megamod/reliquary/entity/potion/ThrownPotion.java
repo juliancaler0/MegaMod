@@ -62,7 +62,7 @@ public class ThrownPotion extends ThrowableProjectile implements ItemSupplier {
 	 */
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			ItemStack potion = getItem();
 			if (!(potion.getItem() instanceof IPotionItem)) {
 				return;
@@ -116,7 +116,7 @@ public class ThrownPotion extends ThrowableProjectile implements ItemSupplier {
 	}
 
 	private void spawnParticles(int color) {
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			return;
 		}
 

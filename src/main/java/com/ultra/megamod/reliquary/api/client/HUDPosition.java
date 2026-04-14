@@ -1,5 +1,10 @@
-package com.ultra.megamod.reliquary.client.gui.hud;
+package com.ultra.megamod.reliquary.api.client;
 
+/**
+ * Enum moved out of the pruned client.gui.hud package so the config
+ * layer (which persists HUD placement preferences) still compiles. The
+ * actual HUD renderer that consumes these positions is a follow-up port.
+ */
 public enum HUDPosition {
 	BOTTOM_LEFT,
 	LEFT,

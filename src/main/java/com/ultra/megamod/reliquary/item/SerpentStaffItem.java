@@ -17,7 +17,7 @@ import com.ultra.megamod.reliquary.entity.KrakenSlime;
 
 public class SerpentStaffItem extends ItemBase {
 	public SerpentStaffItem() {
-		super(new Properties().durability(200).setNoRepair());
+		super(new Properties().durability(200));
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class SerpentStaffItem extends ItemBase {
 
 	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack serpentStaff, int remainingUseDuration) {
-		if (livingEntity.level().isClientSide || !(livingEntity instanceof Player player) || remainingUseDuration % 3 != 0) {
+		if (livingEntity.level().isClientSide() || !(livingEntity instanceof Player player) || remainingUseDuration % 3 != 0) {
 			return;
 		}
 
@@ -55,7 +55,7 @@ public class SerpentStaffItem extends ItemBase {
 
 	@Override
 	public void releaseUsing(ItemStack serpentStaff, Level level, LivingEntity livingEntity, int timeLeft) {
-		if (!livingEntity.level().isClientSide && timeLeft + 2 >= serpentStaff.getUseDuration(livingEntity) && livingEntity instanceof Player player) {
+		if (!livingEntity.level().isClientSide() && timeLeft + 2 >= serpentStaff.getUseDuration(livingEntity) && livingEntity instanceof Player player) {
 			shootKrakenSlime(serpentStaff, player);
 		}
 	}
