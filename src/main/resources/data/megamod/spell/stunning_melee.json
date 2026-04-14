@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -26,7 +26,7 @@
         }
       },
       "sound": {
-        "id": "spell_engine:stun_generic"
+        "id": "megamod:stun_generic"
       }
     }
   ],

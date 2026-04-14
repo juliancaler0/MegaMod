@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_ranged",
+  "school": "megamod:physical_ranged",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -33,7 +33,7 @@
         "client_data": {
           "particles": [
             {
-              "particle_id": "spell_engine:smoke_large",
+              "particle_id": "megamod:smoke_large",
               "origin": "FEET",
               "shape": "PILLAR",
               "count": 1.0,
@@ -42,7 +42,7 @@
               "color_rgba": 2583652010
             },
             {
-              "particle_id": "spell_engine:smoke_large",
+              "particle_id": "megamod:smoke_large",
               "origin": "FEET",
               "shape": "PILLAR",
               "count": 1.0,
@@ -75,7 +75,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:smoke_large",
+          "particle_id": "megamod:smoke_large",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 0.5,
@@ -84,7 +84,7 @@
           "color_rgba": 870134698
         },
         {
-          "particle_id": "spell_engine:magic_skull_decelerate",
+          "particle_id": "megamod:magic_skull_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 3.0,

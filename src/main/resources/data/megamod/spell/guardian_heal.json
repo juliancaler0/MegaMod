@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -38,7 +38,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:area_circle_1",
+          "particle_id": "megamod:area_circle_1",
           "origin": "FEET",
           "shape": "LINE_VERTICAL",
           "count": 1.0,
@@ -50,7 +50,7 @@
           "max_age": 0.4
         },
         {
-          "particle_id": "spell_engine:area_effect_714",
+          "particle_id": "megamod:area_effect_714",
           "origin": "GROUND",
           "shape": "SPHERE",
           "count": 1.0,

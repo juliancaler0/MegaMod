@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -40,7 +40,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:sign_hourglass",
+          "particle_id": "megamod:sign_hourglass",
           "origin": "CENTER",
           "shape": "LINE_VERTICAL",
           "count": 1.0,
@@ -51,7 +51,7 @@
           "follow_entity": true
         },
         {
-          "particle_id": "spell_engine:magic_spark_decelerate",
+          "particle_id": "megamod:magic_spark_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 40.0,

@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 2.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -18,7 +18,7 @@
   "release": {
     "particles_scaled_with_ranged": [
       {
-        "particle_id": "spell_engine:area_effect_658",
+        "particle_id": "megamod:area_effect_658",
         "origin": "GROUND",
         "shape": "SPHERE",
         "count": 1.0,
@@ -44,7 +44,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_spark_decelerate",
+          "particle_id": "megamod:magic_spark_decelerate",
           "origin": "FEET",
           "shape": "WIDE_PIPE",
           "count": 20.0,
@@ -53,7 +53,7 @@
           "color_rgba": 4294954239
         },
         {
-          "particle_id": "spell_engine:area_circle_1",
+          "particle_id": "megamod:area_circle_1",
           "origin": "FEET",
           "shape": "LINE_VERTICAL",
           "count": 1.0,
@@ -65,7 +65,7 @@
           "max_age": 0.8
         },
         {
-          "particle_id": "spell_engine:magic_holy_decelerate",
+          "particle_id": "megamod:magic_holy_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 15.0,

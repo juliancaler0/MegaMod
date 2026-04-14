@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_melee",
+  "school": "megamod:physical_melee",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -27,7 +27,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:smoke_medium",
+          "particle_id": "megamod:smoke_medium",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 25.0,

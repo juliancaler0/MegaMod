@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:frost",
+  "school": "megamod:frost",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -31,7 +31,7 @@
             "vertical_range_multiplier": 0.3
           },
           "sound": {
-            "id": "spell_engine:generic_fire_impact_2"
+            "id": "megamod:generic_fire_impact_2"
           }
         },
         "time_to_live_seconds": 5.0,
@@ -40,7 +40,7 @@
           "light_level": 6,
           "particles": [
             {
-              "particle_id": "spell_engine:snowflake",
+              "particle_id": "megamod:snowflake",
               "origin": "FEET",
               "shape": "PILLAR",
               "count": 2.0,
@@ -51,7 +51,7 @@
           "particle_spawn_interval": 12,
           "interval_particles": [
             {
-              "particle_id": "spell_engine:area_effect_480",
+              "particle_id": "megamod:area_effect_480",
               "origin": "GROUND",
               "shape": "SPHERE",
               "count": 1.0,
@@ -63,7 +63,7 @@
         },
         "spawn": {
           "sound": {
-            "id": "spell_engine:generic_fire_ignite"
+            "id": "megamod:generic_fire_ignite"
           }
         }
       }
@@ -80,7 +80,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:snowflake",
+          "particle_id": "megamod:snowflake",
           "origin": "FEET",
           "shape": "PILLAR",
           "count": 20.0,
@@ -89,7 +89,7 @@
         }
       ],
       "sound": {
-        "id": "spell_engine:stun_generic"
+        "id": "megamod:stun_generic"
       }
     }
   ],

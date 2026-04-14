@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_ranged",
+  "school": "megamod:physical_ranged",
   "range": 64.0,
   "tier": 4,
   "learn": {},

@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:physical_ranged",
+  "school": "megamod:physical_ranged",
   "range": 0.0,
   "tier": 8,
   "type": "PASSIVE",
@@ -87,7 +87,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_spark_decelerate",
+          "particle_id": "megamod:magic_spark_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 10.0,
