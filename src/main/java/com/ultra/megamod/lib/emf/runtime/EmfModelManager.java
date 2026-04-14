@@ -76,6 +76,9 @@ public final class EmfModelManager {
             local.byEntityTypeKey.clear();
             local.missing.clear();
         }
+        // Phase F: invalidate the per-entity UUID variant cache too — new pack state means
+        // every entity re-picks its variant on the next render frame.
+        EmfEntityVariantCache.getInstance().clear();
     }
 
     /**

@@ -88,12 +88,30 @@ public final class EmfModelBinder {
     /**
      * Derives the {@code entityTypeKey} (e.g. {@code "creeper"}) from the ETF state.
      * Returns {@code null} if no entity is currently known.
+     * <p>
+     * Phase F: respects {@link EmfTransientTypeCapture} — for entities whose
+     * renderer-init recorded a transient type override (boats, spectral arrows,
+     * etc.) that key wins over the raw entity-type registry path.
      */
     @Nullable
     public static String deriveEntityTypeKey(@Nullable ETFEntityRenderState state) {
         if (state == null) return null;
         EntityType<?> type = state.entityType();
         if (type == null) return null;
+
+        // Transient type override: if the manager recorded one during this renderer's
+        // setup, prefer it (matches upstream behaviour).
+        String transientKey = EmfModelManager.getInstance().currentSpecifiedModelLoading;
+        if (transientKey != null && !transientKey.isEmpty()
+                && !transientKey.startsWith("emf$")) {
+            return transientKey;
+        }
+        // Fall back to our helper-derived transient key; for boats and spectral arrows
+        // this returns the jem-file-friendly form (e.g. "dark_oak_boat").
+        String helperKey = EmfTransientTypeCapture.keyForEntityType(type);
+        if (helperKey != null && !helperKey.isEmpty()) {
+            return helperKey;
+        }
 
         Identifier id = forgeKeyOf(type);
         if (id == null) return null;

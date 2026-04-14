@@ -73,11 +73,32 @@ public abstract class ETFUtils2 {
     }
 
     /**
+     * Optional base-identifier redirector installed by downstream consumers (EMF uses
+     * this to prefer the {@code .jem texture} override when present). When non-null the
+     * resolver is called <em>before</em> the ETF variator; the variator then operates on
+     * the redirected identifier so {@code name2.png}, {@code name3.png}, etc. are still
+     * resolved relative to the pack-provided base.
+     * <p>
+     * Upstream EMF mutates the base identifier directly; we use an install hook to keep
+     * ETF decoupled from EMF — {@code lib/emf} installs this on its own init, and ETF
+     * remains standalone-usable.
+     */
+    @Nullable
+    public static java.util.function.BiFunction<
+            Identifier,
+            com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState,
+            Identifier> baseTextureRedirector = null;
+
+    /**
      * Texture-swap entry point for the {@code RenderTypes.*} static-factory injector.
      * <p>
      * Returns either {@code identifier} unchanged (no matching entity, or render-layer
      * modification is currently disabled) or the resolved variant identifier from the
      * current entity's variator.
+     * <p>
+     * Phase F: if {@link #baseTextureRedirector} is installed, it is consulted first
+     * so EMF's {@code .jem texture} override can replace the base identifier before
+     * the ETF variator picks a variant suffix off it.
      */
     @NotNull
     public static Identifier getETFVariantNotNullForInjector(@NotNull Identifier identifier) {
@@ -87,13 +108,23 @@ public abstract class ETFUtils2 {
                 || !com.ultra.megamod.lib.etf.features.ETFRenderContext.isAllowedToRenderLayerTextureModify()) {
             return identifier;
         }
+        // Phase F: apply EMF base redirect (the .jem texture field) before variator lookup.
+        Identifier effective = identifier;
+        if (baseTextureRedirector != null) {
+            try {
+                Identifier redirected = baseTextureRedirector.apply(identifier, current);
+                if (redirected != null) effective = redirected;
+            } catch (Throwable t) {
+                // Never let a third-party redirector crash the render pipeline.
+            }
+        }
         com.ultra.megamod.lib.etf.features.texture_handlers.ETFTexture variant =
-                com.ultra.megamod.lib.etf.features.ETFManager.getInstance().getETFTextureVariant(identifier, current);
+                com.ultra.megamod.lib.etf.features.ETFManager.getInstance().getETFTextureVariant(effective, current);
         // Phase C: publish the current ETFTexture so the ModelPart emissive overlay mixin
         // can add emissive/enchant passes after the base render completes.
         com.ultra.megamod.lib.etf.features.ETFRenderContext.setCurrentTexture(variant);
         Identifier modified = variant.getTextureIdentifier(current);
-        return modified == null ? identifier : modified;
+        return modified == null ? effective : modified;
     }
 
     @NotNull

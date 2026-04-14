@@ -58,10 +58,25 @@ public final class EmfVariantSelector {
      * Returns the variant-suffixed {@link Identifier} for {@code state}. If no variant
      * applies, returns the base model. If the selector couldn't be built, callers
      * should pass through to the base model themselves.
+     * <p>
+     * Phase F: consults {@link com.ultra.megamod.lib.emf.runtime.EmfEntityVariantCache}
+     * so an entity with a given UUID gets the same variant until the configured
+     * update-frequency window elapses.
      */
     public Identifier selectJem(ETFEntityRenderState state) {
         if (state == null) return baseJem;
+
+        com.ultra.megamod.lib.emf.runtime.EmfEntityVariantCache cache =
+                com.ultra.megamod.lib.emf.runtime.EmfEntityVariantCache.getInstance();
+        java.util.UUID uuid = state.uuid();
+
+        Integer cached = cache.getCachedSuffix(uuid, baseJem);
+        if (cached != null && !cache.shouldReEvaluate(uuid, baseJem)) {
+            return cached <= 1 ? baseJem : withSuffix(baseJem, cached);
+        }
+
         int suffix = provider.getSuffixForETFEntity(state);
+        cache.putSuffix(uuid, baseJem, suffix);
         if (suffix <= 1) return baseJem;
         return withSuffix(baseJem, suffix);
     }
