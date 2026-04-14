@@ -30,9 +30,11 @@ public class MobCharmBeltScreen extends BaseScreen<MobCharmBeltMenu> {
 		int j = topPos;
 
 		// 1.21.11 blit signature expects (pipeline, id, dstX, dstY, uOffset, vOffset, uWidth, vHeight, texWidth, texHeight).
-		// The belt atlas is 192 wide so the mob-charm slot frame at u=176 fits.
+		// mob_charm_belt.png is 256x256 — the original layout only uses the 175x221 top-left
+		// region plus the 16x16 slot-frame at (176, 0). Passing the true atlas size keeps UV
+		// math correct (earlier port passed 192x256 which sheared the layout).
 		com.mojang.blaze3d.pipeline.RenderPipeline pipe = net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
-		guiGraphics.blit(pipe, BELT_TEX, i, j - 27, 0, 0, WIDTH, HEIGHT, 192, 256);
+		guiGraphics.blit(pipe, BELT_TEX, i, j - 27, 0, 0, WIDTH, HEIGHT, 256, 256);
 
 		int centerX = i + 88;
 		int centerY = j + 40;
@@ -65,7 +67,7 @@ public class MobCharmBeltScreen extends BaseScreen<MobCharmBeltMenu> {
 			int x = centerX - offsetX - 8;
 			int y = centerY - offsetY - 8;
 
-			guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, BELT_TEX, x, y, 176, 0, 16, 16, 192, 256);
+			guiGraphics.blit(net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED, BELT_TEX, x, y, 176, 0, 16, 16, 256, 256);
 
 			menu.slots.get(i - 1).x = x - centerX + 88;
 			menu.slots.get(i - 1).y = y - centerY + 40;

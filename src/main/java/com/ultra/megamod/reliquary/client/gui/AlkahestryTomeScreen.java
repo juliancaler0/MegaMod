@@ -35,11 +35,14 @@ public class AlkahestryTomeScreen extends BaseScreen<AlkahestTomeMenu> {
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
 		// 1.21.11 blit signature: (RenderPipeline, Identifier, dstX, dstY, uOffset, vOffset, uWidth, vHeight, texWidth, texHeight).
-		// The book texture atlas is 146 wide / 190 tall to accommodate the two 10x10 corner ornaments at v=180.
+		// book.png is 256x256; the book art lives in the top-left 146x179 region and the two
+		// 10x10 corner ornaments sit at (0,180) and (10,180). Passing the true atlas size here
+		// keeps the UV math correct (earlier port passed 146x190 which made the GUI render as
+		// a garbled magenta strip).
 		com.mojang.blaze3d.pipeline.RenderPipeline pipe = net.minecraft.client.renderer.RenderPipelines.GUI_TEXTURED;
-		guiGraphics.blit(pipe, BOOK_TEX, (width - 146) / 2, (height - 179) / 2, 0, 0, 146, 179, 146, 190);
-		guiGraphics.blit(pipe, BOOK_TEX, ((width - 16) / 2) + 19, ((height - 179) / 2) + 148, 0, 180, 10, 10, 146, 190);
-		guiGraphics.blit(pipe, BOOK_TEX, ((width - 16) / 2) - 14, ((height - 179) / 2) + 148, 10, 180, 10, 10, 146, 190);
+		guiGraphics.blit(pipe, BOOK_TEX, (width - 146) / 2, (height - 179) / 2, 0, 0, 146, 179, 256, 256);
+		guiGraphics.blit(pipe, BOOK_TEX, ((width - 16) / 2) + 19, ((height - 179) / 2) + 148, 0, 180, 10, 10, 256, 256);
+		guiGraphics.blit(pipe, BOOK_TEX, ((width - 16) / 2) - 14, ((height - 179) / 2) + 148, 10, 180, 10, 10, 256, 256);
 
 		drawItemStack(guiGraphics, new ItemStack(ModItems.ALKAHESTRY_TOME.get()), (width - 16) / 2, ((height - 179) / 2) + 145);
 		ClientLevel level = Minecraft.getInstance().level;
