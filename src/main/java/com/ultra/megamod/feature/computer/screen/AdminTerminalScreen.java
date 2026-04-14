@@ -78,7 +78,7 @@ public class AdminTerminalScreen
 extends Screen {
     private final Screen parent;
     private final Minecraft mc = Minecraft.getInstance();
-    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Corruption", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "World Edit", "\u2315 Search"};
+    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Corruption", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "World Edit", "Spells", "\u2315 Search"};
     private int currentTab = 0;
     private int tabScroll = 0; // vertical scroll offset for sidebar tabs (in pixels)
     private static final String WELCOME_TEXT = "Welcome back, NeverNotch...";
@@ -238,6 +238,7 @@ extends Screen {
     private SystemHealthPanel systemHealthPanel;
     private com.ultra.megamod.feature.computer.screen.panels.AdminSearchPanel adminSearchPanel;
     private com.ultra.megamod.feature.computer.screen.panels.WorldEditPanel worldEditPanel;
+    private com.ultra.megamod.feature.computer.screen.panels.SpellsAdminPanel spellsPanel;
 
     // Corruption panel
     private CorruptionAdminPanel corruptionPanel;
@@ -340,6 +341,7 @@ extends Screen {
         this.systemHealthPanel = new SystemHealthPanel(this.font);
         this.adminSearchPanel = new com.ultra.megamod.feature.computer.screen.panels.AdminSearchPanel();
         this.worldEditPanel = new com.ultra.megamod.feature.computer.screen.panels.WorldEditPanel(this.font);
+        this.spellsPanel = new com.ultra.megamod.feature.computer.screen.panels.SpellsAdminPanel(this.font);
     }
 
     private void switchTab(int tab) {
@@ -399,6 +401,7 @@ extends Screen {
         if (tab == 25 && this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.requestData();
         if (tab == 26 && this.alchemyAdminPanel != null) this.alchemyAdminPanel.requestData();
         if (tab == 27 && this.systemHealthPanel != null) this.systemHealthPanel.requestData();
+        if (tab == 36 && this.spellsPanel != null) this.spellsPanel.requestInitialData();
     }
 
     private void applyTabVisibility() {
@@ -772,6 +775,9 @@ extends Screen {
             } else if ("admin_search_results".equals(responseType) && this.adminSearchPanel != null) {
                 this.adminSearchPanel.handleResponse(response.jsonData());
                 ComputerDataPayload.lastResponse = null;
+            } else if (responseType.startsWith("spells_") && this.spellsPanel != null) {
+                this.spellsPanel.handleResponse(responseType, response.jsonData());
+                ComputerDataPayload.lastResponse = null;
             } else if ("admin_result".equals(responseType) || "broadcast_result".equals(responseType) || "warp_result".equals(responseType)) {
                 try {
                     JsonObject obj = JsonParser.parseString(response.jsonData()).getAsJsonObject();
@@ -792,8 +798,9 @@ extends Screen {
         if (this.currentTab == 25 && this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.tick();
         if (this.currentTab == 26 && this.alchemyAdminPanel != null) this.alchemyAdminPanel.tick();
         if (this.currentTab == 27 && this.systemHealthPanel != null) this.systemHealthPanel.tick();
-        if (this.currentTab == 36 && this.adminSearchPanel != null) this.adminSearchPanel.tick();
+        if (this.currentTab == 37 && this.adminSearchPanel != null) this.adminSearchPanel.tick();
         if (this.currentTab == 35 && this.worldEditPanel != null) this.worldEditPanel.tick();
+        if (this.currentTab == 36 && this.spellsPanel != null) this.spellsPanel.tick();
         // Performance auto-refresh when on Dashboard
         if (this.currentTab == 0 && this.animationComplete) {
             this.perfRefreshCounter++;
@@ -946,7 +953,8 @@ extends Screen {
             case 33: { if (this.mobShowcasePanel != null) { this.mobShowcasePanel.setActiveView(1); this.mobShowcasePanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
             case 34: { this.renderCombatConfig(g, mouseX, mouseY); break; }
             case 35: { if (this.worldEditPanel != null) { this.worldEditPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 36: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 36: { if (this.spellsPanel != null) { this.spellsPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 37: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
         }
         super.render(g, mouseX, mouseY, partialTick);
     }
@@ -1137,41 +1145,15 @@ extends Screen {
                 boolean dmgDnHover = mouseX >= dmgBtnX + 15 && mouseX < dmgBtnX + 28 && mouseY >= innerY - 1 && mouseY < innerY + 12;
                 darkIconBtn(g, dmgBtnX + 15, innerY - 1, 13, "-", 0xFFD29922, dmgDnHover);
                 this.actionRects.add(new ActionRect(dmgBtnX + 15, innerY - 1, 13, 13, "__research_set_base_dmg__:" + entry.slot + ":" + String.format("%.1f", dmgDn)));
-                // Weapon skills
+                // Weapon skills — deprecated (SpellEngine now owns weapon casting).
+                // Spells & their cooldowns are edited via the Spells tab -> Container Editor.
                 if (!entry.weaponSkills.isEmpty()) {
                     innerY += 13;
-                    g.drawString(this.font, "Skills:", cx + 24, innerY, 0xFFA371F7, false);
+                    g.drawString(this.font, "Weapon Skills (legacy — see Spells tab)", cx + 24, innerY, 0xFF6E7681, false);
                     innerY += 12;
                     for (ResearchWeaponSkill ws : entry.weaponSkills) {
-                        boolean isModified = ws.cooldown != ws.defaultCooldown;
-                        String cdLabel = isModified ? " (CD:" + String.format("%.1f", ws.cooldownSec) + "s*)" : " (CD:" + String.format("%.1f", ws.cooldownSec) + "s)";
-                        g.drawString(this.font, "  " + ws.name + cdLabel, cx + 24, innerY, 0xFFC9D1D9, false);
-
-                        // Cooldown +/- buttons (step: 20 ticks = 1s)
-                        int wcdBtnX = cx + cw - 80;
-                        int cdUp = ws.cooldown + 20;
-                        int cdDn = Math.max(0, ws.cooldown - 20);
-
-                        boolean wcdUpHover = mouseX >= wcdBtnX && mouseX < wcdBtnX + 13 && mouseY >= innerY - 1 && mouseY < innerY + 12;
-                        this.darkIconBtn(g, wcdBtnX, innerY - 1, 13, "+", 0xFF3FB950, wcdUpHover);
-                        this.actionRects.add(new ActionRect(wcdBtnX, innerY - 1, 13, 13, "__research_set_weapon_cd__:" + entry.slot + ":" + ws.name + ":" + cdUp));
-
-                        boolean wcdDnHover = mouseX >= wcdBtnX + 15 && mouseX < wcdBtnX + 28 && mouseY >= innerY - 1 && mouseY < innerY + 12;
-                        this.darkIconBtn(g, wcdBtnX + 15, innerY - 1, 13, "-", 0xFFF85149, wcdDnHover);
-                        this.actionRects.add(new ActionRect(wcdBtnX + 15, innerY - 1, 13, 13, "__research_set_weapon_cd__:" + entry.slot + ":" + ws.name + ":" + cdDn));
-
-                        // Reset button (back to default)
-                        if (isModified) {
-                            boolean wcdRstHover = mouseX >= wcdBtnX + 32 && mouseX < wcdBtnX + 55 && mouseY >= innerY - 1 && mouseY < innerY + 12;
-                            darkBtn(g, wcdBtnX + 32, innerY - 1, 23, 12, wcdRstHover);
-                            g.drawString(this.font, "Rst", wcdBtnX + 35, innerY + 1, 0xFFD29922, false);
-                            this.actionRects.add(new ActionRect(wcdBtnX + 32, innerY - 1, 23, 12, "__research_set_weapon_cd__:" + entry.slot + ":" + ws.name + ":" + ws.defaultCooldown));
-                        }
-
+                        g.drawString(this.font, "  " + ws.name + " (CD: " + String.format("%.1f", ws.cooldownSec) + "s)", cx + 24, innerY, 0xFF6E7681, false);
                         innerY += 10;
-                        String descTrunc = ws.desc.length() > 50 ? ws.desc.substring(0, 50) + "..." : ws.desc;
-                        g.drawString(this.font, "    " + descTrunc, cx + 24, innerY, 0xFF8B949E, false);
-                        innerY += 12;
                     }
                 }
                 innerY += 11;
@@ -1524,52 +1506,10 @@ extends Screen {
             }
             innerY += 16;
 
-            // Weapon Skill Editor - add/swap/remove combat skills on this item
-            if (entry.hasWeaponStats) {
-                darkDivider(g, cx + 24, innerY, cw - 48);
-                innerY += 4;
-                g.drawString(this.font, "Set Skill 1:", cx + 24, innerY, 0xFF58A6FF, false);
-                // Reset to default button
-                int rstBtnX = cx + cw - 80;
-                boolean rstHover = mouseX >= rstBtnX && mouseX < rstBtnX + 75 && mouseY >= innerY - 1 && mouseY < innerY + 12;
-                darkBtn(g, rstBtnX, innerY - 1, 75, 13, rstHover);
-                g.drawString(this.font, "Reset Def.", rstBtnX + 10, innerY + 1, 0xFFD29922, false);
-                this.actionRects.add(new ActionRect(rstBtnX, innerY - 1, 75, 13, "__research_clear_weapon_skills__:" + entry.slot));
-                innerY += 13;
-                // S1 row - flowing layout with all available skills from registry
-                java.util.List<String> allSkills = new java.util.ArrayList<>(com.ultra.megamod.feature.relics.weapons.RpgWeaponRegistry.getAllSkillNames());
-                java.util.Collections.sort(allSkills);
-                int skx = cx + 24;
-                for (String skillName : allSkills) {
-                    String shortLabel = skillName.length() > 12 ? skillName.substring(0, 11) + "." : skillName;
-                    int skW = this.font.width(shortLabel) + 4;
-                    if (skx + skW > cx + cw - 4) { skx = cx + 24; innerY += 12; }
-                    boolean skHover = mouseX >= skx && mouseX < skx + skW && mouseY >= innerY && mouseY < innerY + 11;
-                    darkBtn(g, skx, innerY, skW, 11, skHover);
-                    g.drawString(this.font, shortLabel, skx + 2, innerY + 2, 0xFFE6EDF3, false);
-                    this.actionRects.add(new ActionRect(skx, innerY, skW, 11, "research_set_weapon_skill:" + entry.slot + ":0:" + skillName));
-                    skx += skW + 1;
-                }
-                innerY += 14;
-
-                g.drawString(this.font, "Set Skill 2:", cx + 24, innerY, 0xFFD29922, false);
-                innerY += 12;
-                skx = cx + 24;
-                for (String skillName : allSkills) {
-                    String shortLabel = skillName.length() > 12 ? skillName.substring(0, 11) + "." : skillName;
-                    int skW = this.font.width(shortLabel) + 4;
-                    if (skx + skW > cx + cw - 4) { skx = cx + 24; innerY += 12; }
-                    boolean skHover = mouseX >= skx && mouseX < skx + skW && mouseY >= innerY && mouseY < innerY + 11;
-                    darkBtn(g, skx, innerY, skW, 11, skHover);
-                    g.drawString(this.font, shortLabel, skx + 2, innerY + 2, 0xFFE6EDF3, false);
-                    this.actionRects.add(new ActionRect(skx, innerY, skW, 11, "research_set_weapon_skill:" + entry.slot + ":1:" + skillName));
-                    skx += skW + 1;
-                }
-                innerY += 14;
-            } else {
-                darkDivider(g, cx + 24, innerY, cw - 48);
-                innerY += 4;
-            }
+            // Weapon Skill Editor removed in Phase F — weapon casts are SpellEngine-driven now.
+            // To bind/unbind spells on this weapon use the Spells tab -> Container Editor.
+            darkDivider(g, cx + 24, innerY, cw - 48);
+            innerY += 4;
 
             drawY += rowH;
         }
@@ -3112,7 +3052,7 @@ extends Screen {
         y += lh + 2;
         this.drawActionButton(g, x, y, 100, 16, "Discover All", mouseX, mouseY, "__admin_quick__:discover_all");
         this.drawActionButton(g, x + 104, y, 110, 16, "Clear Discoveries", mouseX, mouseY, "__admin_quick__:clear_discoveries");
-        this.drawActionButton(g, x + 218, y, 110, 16, "Reset Cooldowns", mouseX, mouseY, "__admin_quick__:clear_cooldowns");
+        // "Reset Cooldowns" moved to the dedicated Spells tab (Cooldown Override view).
         y += 20;
         this.drawActionButton(g, x, y, 120, 16, "Disband All Parties", mouseX, mouseY, "__admin_quick__:disband_parties");
         g.drawString(this.font, "(Uses your own UUID for player-targeted actions)", x, y + 20, 0xFF8B949E, false);
@@ -4028,8 +3968,9 @@ extends Screen {
         if (this.currentTab == 25 && this.marketplaceAdminPanel != null && this.marketplaceAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 26 && this.alchemyAdminPanel != null && this.alchemyAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 27 && this.systemHealthPanel != null && this.systemHealthPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
-        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
+        if (this.currentTab == 37 && this.adminSearchPanel != null && this.adminSearchPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
+        if (this.currentTab == 36 && this.spellsPanel != null && this.spellsPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         return super.mouseClicked(event, consumed);
     }
 
@@ -4186,9 +4127,7 @@ extends Screen {
                 case "clear_discoveries":
                     ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("admin_clear_discoveries", myUuid), (CustomPacketPayload[])new CustomPacketPayload[0]);
                     break;
-                case "clear_cooldowns":
-                    ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("admin_clear_cooldowns", myUuid), (CustomPacketPayload[])new CustomPacketPayload[0]);
-                    break;
+                // "clear_cooldowns" removed in Phase F — Spells tab owns cooldowns now.
                 case "disband_parties":
                     ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("admin_disband_all_parties", ""), (CustomPacketPayload[])new CustomPacketPayload[0]);
                     break;
@@ -4544,16 +4483,7 @@ extends Screen {
             ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("request_inventory", ""), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
-        if (command.startsWith("research_set_weapon_skill:")) {
-            String data = command.substring(25);
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_set_weapon_skill", data), (CustomPacketPayload[])new CustomPacketPayload[0]);
-            return;
-        }
-        if (command.startsWith("__research_clear_weapon_skills__:")) {
-            String slot = command.substring(32);
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_clear_weapon_skills", slot), (CustomPacketPayload[])new CustomPacketPayload[0]);
-            return;
-        }
+        // research_set_weapon_skill / __research_clear_weapon_skills__ removed in Phase F.
         if (command.startsWith("research_reroll:")) {
             String slot = command.substring(16);
             ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_reroll", slot), (CustomPacketPayload[])new CustomPacketPayload[0]);
@@ -4614,11 +4544,7 @@ extends Screen {
             ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_set_ability_cooldown", data), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
-        if (command.startsWith("__research_set_weapon_cd__:")) {
-            String data = command.substring(27);
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_set_weapon_cooldown", data), (CustomPacketPayload[])new CustomPacketPayload[0]);
-            return;
-        }
+        // __research_set_weapon_cd__ removed in Phase F.
         if (command.startsWith("__research_remove_bonus__:")) {
             String data = command.substring(26);
             ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("research_remove_bonus", data), (CustomPacketPayload[])new CustomPacketPayload[0]);
@@ -4891,7 +4817,7 @@ extends Screen {
         if (this.currentTab == 20 && this.adminModulesPanel != null && this.adminModulesPanel.keyPressed(keyCode, 0, 0)) return true;
         if (this.currentTab == 21 && this.warpPanel != null && this.warpPanel.keyPressed(keyCode, 0, 0)) return true;
         // TODO: citizensPanel removed - if (this.currentTab == 22 && this.citizensPanel != null && this.citizensPanel.keyPressed(keyCode, 0, 0)) return true;
-        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.keyPressed(keyCode, 0, 0)) return true;
+        if (this.currentTab == 37 && this.adminSearchPanel != null && this.adminSearchPanel.keyPressed(keyCode, 0, 0)) return true;
         if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.keyPressed(keyCode, 0, 0)) return true;
         if (keyCode == 256) {
             if (this.mc != null) {
@@ -5005,7 +4931,8 @@ extends Screen {
             case 26: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 27: { if (this.systemHealthPanel != null) this.systemHealthPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 35: { if (this.worldEditPanel != null) this.worldEditPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 36: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 36: { if (this.spellsPanel != null) this.spellsPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 37: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
@@ -5016,7 +4943,7 @@ extends Screen {
         if (this.currentTab == 20 && this.adminModulesPanel != null && this.adminModulesPanel.charTyped(ch, event.modifiers())) return true;
         if (this.currentTab == 21 && this.warpPanel != null && this.warpPanel.charTyped(ch, event.modifiers())) return true;
         // TODO: citizensPanel removed - if (this.currentTab == 22 && this.citizensPanel != null && this.citizensPanel.charTyped(ch, event.modifiers())) return true;
-        if (this.currentTab == 36 && this.adminSearchPanel != null && this.adminSearchPanel.charTyped(ch, event.modifiers())) return true;
+        if (this.currentTab == 37 && this.adminSearchPanel != null && this.adminSearchPanel.charTyped(ch, event.modifiers())) return true;
         if (this.currentTab == 35 && this.worldEditPanel != null && this.worldEditPanel.charTyped(ch, event.modifiers())) return true;
         return super.charTyped(event);
     }

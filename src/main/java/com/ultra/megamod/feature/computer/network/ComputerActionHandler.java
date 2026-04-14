@@ -77,7 +77,7 @@ public class ComputerActionHandler {
                     || action.startsWith("vanish_") || action.startsWith("alias_")
                     || action.startsWith("deathlog_") || action.startsWith("loot_")
                     || action.startsWith("undo_") || action.startsWith("cleanup_")
-                    || action.startsWith("warp_")
+                    || action.startsWith("warp_") || action.startsWith("spells_")
                     || action.equals("execute_command")
                     || action.equals("skill_add_xp") || action.equals("skill_add_points")
                     || action.equals("skill_set_level") || action.equals("skill_reset_tree")
@@ -144,6 +144,7 @@ public class ComputerActionHandler {
         if (com.ultra.megamod.feature.computer.network.handlers.PrestigeShopHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.AdminSearchHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.WorldEditHandler.handle(player, action, jsonData, level, eco)) return;
+        if (com.ultra.megamod.feature.computer.network.handlers.SpellsAdminHandler.handle(player, action, jsonData, level, eco)) return;
         switch (action) {
             case "execute_command": {
                 String result = AdminSystem.executeCommand(player, jsonData);
@@ -446,22 +447,9 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendResponse(player, "admin_result", "{\"msg\":\"Cleared all discoveries\"}", eco);
                 break;
             }
-            case "admin_clear_cooldowns": {
-                UUID targetId = UUID.fromString(jsonData);
-                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
-                if (target != null) {
-                    for (int i = 0; i < target.getInventory().getContainerSize(); i++) {
-                        ItemStack stack = target.getInventory().getItem(i);
-                        if (!stack.isEmpty()) {
-                            com.ultra.megamod.feature.relics.ability.AbilityCooldownManager.clearAllCooldowns(stack);
-                        }
-                    }
-                    ComputerActionHandler.sendResponse(player, "admin_result", "{\"msg\":\"Cleared all ability cooldowns\"}", eco);
-                } else {
-                    ComputerActionHandler.sendResponse(player, "admin_result", "{\"msg\":\"Player not online\"}", eco);
-                }
-                break;
-            }
+            // admin_clear_cooldowns removed in Phase F — the legacy AbilityCooldownManager
+            // is being retired in favor of SpellEngine's SpellCooldownManager. Use the
+            // new Spells tab -> Cooldown Override panel instead.
             case "admin_view_parties": {
                 StringBuilder sb = new StringBuilder("{\"parties\":[");
                 var allParties = com.ultra.megamod.feature.computer.network.handlers.PartyHandler.getAllParties();
@@ -1734,88 +1722,10 @@ public class ComputerActionHandler {
                 }
                 break;
             }
-            case "research_set_weapon_cooldown": {
-                // format: slot:skillName:ticks
-                int firstColon = jsonData.indexOf(':');
-                int secondColon = jsonData.indexOf(':', firstColon + 1);
-                int slot = Integer.parseInt(jsonData.substring(0, firstColon));
-                String skillName = jsonData.substring(firstColon + 1, secondColon);
-                int ticks = Integer.parseInt(jsonData.substring(secondColon + 1));
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty()) {
-                    com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.setWeaponCooldownOverride(stack, skillName, Math.max(0, ticks));
-                    float seconds = ticks / 20.0f;
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"" + skillName + " cooldown = " + String.format("%.1f", seconds) + "s (" + ticks + "t)\"}", eco);
-                }
-                break;
-            }
-            case "research_set_weapon_skill": {
-                // Format: slot:skillIndex:skillName (e.g. "0:0:Chain Lightning")
-                try {
-                    int fc = jsonData.indexOf(':');
-                    int sc = jsonData.indexOf(':', fc + 1);
-                    int slot = Integer.parseInt(jsonData.substring(0, fc));
-                    int skillIdx = Integer.parseInt(jsonData.substring(fc + 1, sc));
-                    String newSkillName = jsonData.substring(sc + 1);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        // Get current effective skills, modify the specified index
-                        java.util.List<com.ultra.megamod.feature.relics.weapons.RpgWeaponItem.WeaponSkill> current =
-                            com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.getEffectiveSkills(stack);
-                        java.util.ArrayList<String> names = new java.util.ArrayList<>();
-                        for (com.ultra.megamod.feature.relics.weapons.RpgWeaponItem.WeaponSkill s : current) {
-                            names.add(s.name());
-                        }
-                        // Expand list if needed
-                        while (names.size() <= skillIdx) names.add("");
-                        names.set(skillIdx, newSkillName);
-                        // Remove empty trailing entries
-                        while (!names.isEmpty() && names.get(names.size() - 1).isEmpty()) names.remove(names.size() - 1);
-                        com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.setSkillOverrides(stack, names);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Skill " + (skillIdx + 1) + " set to " + newSkillName + "\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Error setting skill\"}", eco);
-                }
-                break;
-            }
-            case "research_remove_weapon_skill": {
-                // Format: slot:skillIndex
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 2) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    int skillIdx = Integer.parseInt(parts[1]);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        java.util.List<com.ultra.megamod.feature.relics.weapons.RpgWeaponItem.WeaponSkill> current =
-                            com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.getEffectiveSkills(stack);
-                        java.util.ArrayList<String> names = new java.util.ArrayList<>();
-                        for (int si = 0; si < current.size(); si++) {
-                            if (si != skillIdx) names.add(current.get(si).name());
-                        }
-                        if (names.isEmpty()) {
-                            com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.setSkillOverrides(stack, null);
-                        } else {
-                            com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.setSkillOverrides(stack, names);
-                        }
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Skill removed\"}", eco);
-                    }
-                } catch (Exception e) {}
-                break;
-            }
-            case "research_clear_weapon_skills": {
-                // Format: slot
-                try {
-                    int slot = Integer.parseInt(jsonData);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.setSkillOverrides(stack, null);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Skills reset to default\"}", eco);
-                    }
-                } catch (Exception e) {}
-                break;
-            }
+            // NOTE: research_set_weapon_cooldown / research_set_weapon_skill /
+            //       research_remove_weapon_skill / research_clear_weapon_skills
+            // were deprecated during Phase F (SpellEngine port). Manual weapon-skill
+            // overrides are gone — use the Spells tab -> Container Editor instead.
             case "research_add_enchant": {
                 // Format: slot:namespace:enchantmentPath:level
                 try {
