@@ -48,6 +48,9 @@
   "cost": {
     "cooldown": {
       "duration": 10.0
+    },
+    "item": {
+      "id": "megamod:lightning_rune"
     }
   }
 }

@@ -41,6 +41,9 @@
     "exhaust": 0.15,
     "cooldown": {
       "duration": 9.6
+    },
+    "item": {
+      "id": "megamod:lightning_rune"
     }
   }
 }

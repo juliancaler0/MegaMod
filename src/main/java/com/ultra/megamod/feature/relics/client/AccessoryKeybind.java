@@ -37,7 +37,8 @@ public class AccessoryKeybind {
 
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         event.registerCategory(MEGAMOD_CATEGORY);
-        OPEN_ACCESSORIES = new KeyMapping("key.megamod.accessories", 86, MEGAMOD_CATEGORY);
+        // GLFW_KEY_H = 72. Default: press H to open accessories.
+        OPEN_ACCESSORIES = new KeyMapping("key.megamod.accessories", org.lwjgl.glfw.GLFW.GLFW_KEY_H, MEGAMOD_CATEGORY);
         event.register(OPEN_ACCESSORIES);
     }
 

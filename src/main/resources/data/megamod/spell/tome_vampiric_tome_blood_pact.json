@@ -37,6 +37,9 @@
   "cost": {
     "cooldown": {
       "duration": 8.0
+    },
+    "item": {
+      "id": "megamod:soul_rune"
     }
   }
 }

@@ -51,6 +51,9 @@
     "exhaust": 0.15,
     "cooldown": {
       "duration": 52.0
+    },
+    "item": {
+      "id": "megamod:soul_rune"
     }
   }
 }
