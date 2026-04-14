@@ -1,0 +1,21 @@
+{
+  "type": "reliquary:potion_effects",
+  "pattern": [
+    "BBB",
+    "BMB",
+    "BBB"
+  ],
+  "key": {
+    "B": {
+      "item": "reliquary:bullets/sand_bullet"
+    },
+    "M": {
+      "item": "reliquary:empty_magazine"
+    }
+  },
+  "result": {
+    "id": "reliquary:magazines/sand_magazine",
+    "count": 1
+  },
+  "duration_factor": 1.0
+}

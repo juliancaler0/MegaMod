@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GNG",
+    "ICI",
+    "NMN"
+  ],
+  "key": {
+    "G": {
+      "item": "reliquary:catalyzing_gland"
+    },
+    "N": {
+      "item": "reliquary:nebulous_heart"
+    },
+    "I": {
+      "item": "reliquary:infernal_claw"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    },
+    "M": {
+      "item": "reliquary:molten_core"
+    }
+  },
+  "result": {
+    "id": "reliquary:apothecary_cauldron",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:potions_enabled"
+    }
+  ]
+}

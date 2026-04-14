@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "reliquary:kraken_shell_fragment"
+    },
+    {
+      "item": "reliquary:kraken_shell_fragment"
+    },
+    {
+      "item": "reliquary:kraken_shell_fragment"
+    },
+    {
+      "item": "reliquary:nebulous_heart"
+    }
+  ],
+  "result": {
+    "id": "reliquary:kraken_shell",
+    "count": 1
+  }
+}

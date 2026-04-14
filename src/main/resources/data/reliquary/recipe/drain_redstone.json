@@ -1,0 +1,8 @@
+{
+  "type": "reliquary:alkahestry_drain",
+  "charge": 1,
+  "result": {
+    "id": "minecraft:redstone",
+    "count": 1
+  }
+}

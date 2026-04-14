@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "STS",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "reliquary:zombie_heart"
+    },
+    "S": {
+      "item": "minecraft:rotten_flesh"
+    },
+    "T": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result": {
+    "id": "reliquary:mob_charm_fragment",
+    "count": 1,
+    "components": {
+      "reliquary:entity_registry_name": "minecraft:zombie"
+    }
+  }
+}

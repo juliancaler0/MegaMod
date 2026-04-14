@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " BE",
+    "NVB",
+    "SN "
+  ],
+  "key": {
+    "B": {
+      "item": "reliquary:bat_wing"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "V": {
+      "item": "reliquary:void_tear"
+    },
+    "N": {
+      "item": "reliquary:nebulous_heart"
+    }
+  },
+  "result": {
+    "id": "reliquary:ender_staff",
+    "count": 1
+  }
+}

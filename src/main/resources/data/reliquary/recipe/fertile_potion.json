@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GBG",
+    "GFG",
+    "CGY"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "F": {
+      "item": "reliquary:fertile_essence"
+    },
+    "C": {
+      "tag": "c:dyes/green"
+    },
+    "Y": {
+      "tag": "c:dyes/yellow"
+    }
+  },
+  "result": {
+    "id": "reliquary:fertile_potion",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:potions_enabled"
+    }
+  ]
+}

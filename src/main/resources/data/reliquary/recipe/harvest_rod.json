@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " RF",
+    "VTR",
+    "SV "
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:rose_bush"
+    },
+    "F": {
+      "item": "reliquary:fertile_essence"
+    },
+    "V": {
+      "item": "minecraft:vine"
+    },
+    "T": {
+      "item": "reliquary:void_tear"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "id": "reliquary:harvest_rod",
+    "count": 1
+  }
+}

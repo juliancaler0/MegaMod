@@ -1,0 +1,8 @@
+{
+  "type": "reliquary:alkahestry_crafting",
+  "ingredient": {
+    "item": "minecraft:charcoal"
+  },
+  "charge": 5,
+  "result_count": 4
+}

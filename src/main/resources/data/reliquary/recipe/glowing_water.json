@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GBG",
+    "GDG",
+    "NGP"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "D": {
+      "tag": "c:dusts/glowstone"
+    },
+    "P": {
+      "tag": "c:gunpowders"
+    },
+    "N": {
+      "tag": "c:crops/nether_wart"
+    }
+  },
+  "result": {
+    "id": "reliquary:glowing_water",
+    "count": 1
+  }
+}

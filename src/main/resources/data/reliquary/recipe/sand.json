@@ -1,0 +1,8 @@
+{
+  "type": "reliquary:alkahestry_crafting",
+  "ingredient": {
+    "tag": "c:sands"
+  },
+  "charge": 33,
+  "result_count": 4
+}

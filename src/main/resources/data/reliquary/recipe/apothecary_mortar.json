@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GNG",
+    "NGN",
+    "NNN"
+  ],
+  "key": {
+    "G": {
+      "item": "reliquary:catalyzing_gland"
+    },
+    "N": {
+      "item": "minecraft:quartz_block"
+    }
+  },
+  "result": {
+    "id": "reliquary:apothecary_mortar",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:potions_enabled"
+    }
+  ]
+}

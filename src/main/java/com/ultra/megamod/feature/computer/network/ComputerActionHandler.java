@@ -137,6 +137,7 @@ public class ComputerActionHandler {
         if (com.ultra.megamod.feature.computer.network.handlers.CorruptionAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.CorruptionHandler.handle(player, action, jsonData, level, eco)) return;
         // AlchemyHandler / AlchemyAdminHandler deleted — Reliquary apothecary replaces them.
+        if (com.ultra.megamod.feature.computer.network.handlers.ReliquaryAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.EconomyAnalyticsHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.MarketplaceAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.SystemHealthHandler.handle(player, action, jsonData, level, eco)) return;

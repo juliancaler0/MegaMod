@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "WGR",
+    "GLG",
+    "SGZ"
+  ],
+  "key": {
+    "W": {
+      "item": "reliquary:withered_rib"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "R": {
+      "item": "reliquary:rib_bone"
+    },
+    "L": {
+      "tag": "c:leathers"
+    },
+    "S": {
+      "item": "minecraft:wither_skeleton_skull"
+    },
+    "Z": {
+      "item": "reliquary:zombie_heart"
+    }
+  },
+  "result": {
+    "id": "reliquary:mercy_cross",
+    "count": 1
+  }
+}

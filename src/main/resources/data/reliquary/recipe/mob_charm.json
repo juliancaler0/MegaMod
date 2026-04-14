@@ -1,0 +1,29 @@
+{
+  "type": "reliquary:mob_charm",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    "FLF",
+    "FSF",
+    "F F"
+  ],
+  "key": {
+    "F": {
+      "item": "reliquary:mob_charm_fragment"
+    },
+    "L": {
+      "tag": "c:leathers"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "result": {
+    "id": "reliquary:mob_charm",
+    "count": 1
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "reliquary:potion_effects",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:potions_enabled"
+    }
+  ],
+  "pattern": [
+    "AAA",
+    "APA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:arrow"
+    },
+    "P": {
+      "item": "reliquary:lingering_potion"
+    }
+  },
+  "result": {
+    "id": "reliquary:tipped_arrow",
+    "count": 8
+  },
+  "duration_factor": 0.125
+}

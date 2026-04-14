@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "combat",
+  "ingredients": [
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:bullets/neutral_bullet"
+    },
+    {
+      "item": "reliquary:zombie_heart"
+    }
+  ],
+  "result": {
+    "id": "reliquary:bullets/exorcism_bullet",
+    "count": 8
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:handgun_enabled"
+    }
+  ]
+}

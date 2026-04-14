@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/emerald"
+    },
+    {
+      "tag": "c:ingots/gold"
+    },
+    {
+      "item": "minecraft:bucket"
+    },
+    {
+      "item": "reliquary:void_tear"
+    }
+  ],
+  "result": {
+    "id": "reliquary:emperor_chalice",
+    "count": 1
+  }
+}

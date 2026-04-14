@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "W W",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "reliquary:witch_hat"
+    }
+  },
+  "result": {
+    "id": "minecraft:glass_bottle",
+    "count": 6
+  }
+}

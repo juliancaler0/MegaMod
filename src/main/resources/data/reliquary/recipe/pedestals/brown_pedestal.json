@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "D D",
+    " P ",
+    "D D"
+  ],
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "P": {
+      "item": "reliquary:pedestals/passive/brown_passive_pedestal"
+    }
+  },
+  "result": {
+    "id": "reliquary:pedestals/brown_pedestal",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:pedestal_enabled"
+    }
+  ]
+}

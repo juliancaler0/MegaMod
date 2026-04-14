@@ -1,0 +1,8 @@
+{
+  "type": "reliquary:alkahestry_crafting",
+  "ingredient": {
+    "item": "minecraft:soul_sand"
+  },
+  "charge": 9,
+  "result_count": 8
+}

@@ -226,12 +226,14 @@ public class DiscoveryManager {
         set.add("corruption_spread"); set.add("corruption_defense"); set.add("corruption_purge");
         set.add("corruption_rewards"); set.add("corruption_mobs"); set.add("corruption_colony");
         set.add("corruption_commands");
-        // Alchemy
-        set.add("alchemy_overview"); set.add("alchemy_cauldron"); set.add("alchemy_grindstone");
-        set.add("alchemy_reagents"); set.add("alchemy_recipes"); set.add("alchemy_tier1");
-        set.add("alchemy_tier2"); set.add("alchemy_tier3"); set.add("alchemy_tier4");
-        set.add("alchemy_tier5"); set.add("alchemy_effects"); set.add("alchemy_skill_req");
-        set.add("alchemy_discovery"); set.add("alchemy_tips");
+        // Reliquary (replaces removed MegaMod Alchemy)
+        set.add("reliquary_overview"); set.add("reliquary_apothecary_cauldron");
+        set.add("reliquary_apothecary_mortar"); set.add("reliquary_brewing_reagents");
+        set.add("reliquary_custom_effects"); set.add("reliquary_alkahestry_altar");
+        set.add("reliquary_alkahestry_tome_usage"); set.add("reliquary_alkahestry_recipes");
+        set.add("reliquary_pedestals"); set.add("reliquary_mob_charm_belt");
+        set.add("reliquary_toggles"); set.add("reliquary_vs_megamod_alchemy");
+        set.add("reliquary_admin_commands"); set.add("reliquary_handgun");
         // Classes
         set.add("class_overview"); set.add("class_paladin"); set.add("class_warrior");
         set.add("class_wizard"); set.add("class_rogue"); set.add("class_ranger");

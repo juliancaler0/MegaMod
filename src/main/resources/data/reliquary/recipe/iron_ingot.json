@@ -1,0 +1,8 @@
+{
+  "type": "reliquary:alkahestry_crafting",
+  "ingredient": {
+    "tag": "c:ingots/iron"
+  },
+  "charge": 2,
+  "result_count": 32
+}

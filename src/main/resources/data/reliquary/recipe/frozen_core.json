@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GPG",
+    "GSG",
+    "GSG"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:pumpkin"
+    },
+    "S": {
+      "item": "minecraft:snow"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "result": {
+    "id": "reliquary:frozen_core",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:mob_drops_craftable"
+    }
+  ]
+}

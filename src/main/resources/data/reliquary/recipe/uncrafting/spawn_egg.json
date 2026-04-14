@@ -1,0 +1,27 @@
+{
+  "type": "reliquary:fragment_to_spawn_egg",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:spawn_egg_enabled"
+    },
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "reliquary:mob_charm_fragment"
+    },
+    {
+      "item": "reliquary:mob_charm_fragment"
+    },
+    {
+      "item": "minecraft:egg"
+    }
+  ],
+  "result": {
+    "id": "minecraft:chicken_spawn_egg",
+    "count": 1
+  }
+}

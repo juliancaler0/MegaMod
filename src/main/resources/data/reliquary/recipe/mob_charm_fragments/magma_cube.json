@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "SSS",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "reliquary:molten_core"
+    },
+    "S": {
+      "item": "minecraft:magma_cream"
+    }
+  },
+  "result": {
+    "id": "reliquary:mob_charm_fragment",
+    "count": 1,
+    "components": {
+      "reliquary:entity_registry_name": "minecraft:magma_cube"
+    }
+  }
+}

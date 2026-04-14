@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GBG",
+    "GFG",
+    "RGC"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "B": {
+      "item": "minecraft:water_bucket"
+    },
+    "F": {
+      "item": "reliquary:fertile_essence"
+    },
+    "R": {
+      "tag": "c:dyes/red"
+    },
+    "C": {
+      "item": "minecraft:cocoa_beans"
+    }
+  },
+  "result": {
+    "id": "reliquary:aphrodite_potion",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:potions_enabled"
+    }
+  ]
+}

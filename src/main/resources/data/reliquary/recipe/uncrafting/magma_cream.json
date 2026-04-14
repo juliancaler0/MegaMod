@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "reliquary:molten_core"
+    }
+  ],
+  "result": {
+    "id": "minecraft:magma_cream",
+    "count": 3
+  }
+}

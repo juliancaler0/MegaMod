@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "reliquary:angelheart_vial"
+    },
+    {
+      "item": "reliquary:angelheart_vial"
+    },
+    {
+      "item": "reliquary:angelheart_vial"
+    },
+    {
+      "item": "reliquary:angelic_feather"
+    }
+  ],
+  "result": {
+    "id": "reliquary:phoenix_down",
+    "count": 1
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NG",
+    "IN"
+  ],
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "N": {
+      "item": "reliquary:nebulous_heart"
+    }
+  },
+  "result": {
+    "id": "reliquary:magicbane",
+    "count": 1
+  }
+}

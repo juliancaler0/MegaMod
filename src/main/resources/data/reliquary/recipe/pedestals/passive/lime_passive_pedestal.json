@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " C ",
+    "GQG",
+    "SSS"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:lime_carpet"
+    },
+    "G": {
+      "tag": "c:nuggets/gold"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    },
+    "S": {
+      "item": "minecraft:quartz_slab"
+    }
+  },
+  "result": {
+    "id": "reliquary:pedestals/passive/lime_passive_pedestal",
+    "count": 1
+  },
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:passive_pedestal_enabled"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:feathers"
+    },
+    {
+      "item": "reliquary:nebulous_heart"
+    },
+    {
+      "item": "reliquary:bat_wing"
+    },
+    {
+      "item": "reliquary:fertile_essence"
+    }
+  ],
+  "result": {
+    "id": "reliquary:angelic_feather",
+    "count": 1
+  }
+}

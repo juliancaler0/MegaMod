@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "reliquary:guardian_spike"
+    },
+    {
+      "item": "reliquary:guardian_spike"
+    }
+  ],
+  "result": {
+    "id": "minecraft:prismarine_crystals",
+    "count": 10
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ICI",
+    "BCB",
+    "BCB"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "item": "minecraft:black_wool"
+    },
+    "C": {
+      "item": "reliquary:crimson_cloth"
+    }
+  },
+  "result": {
+    "id": "reliquary:twilight_cloak",
+    "count": 1
+  }
+}

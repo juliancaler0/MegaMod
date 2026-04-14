@@ -1,0 +1,7 @@
+{
+  "type": "reliquary:alkahestry_charging",
+  "ingredient": {
+    "item": "minecraft:redstone"
+  },
+  "charge": 1
+}

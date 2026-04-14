@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "STS",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "reliquary:chelicerae"
+    },
+    "S": {
+      "tag": "c:strings"
+    },
+    "T": {
+      "item": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:poison"
+        }
+      }
+    }
+  },
+  "result": {
+    "id": "reliquary:mob_charm_fragment",
+    "count": 1,
+    "components": {
+      "reliquary:entity_registry_name": "minecraft:cave_spider"
+    }
+  }
+}

@@ -2967,5 +2967,138 @@
       "megamod:wizard_robes_equip_2",
       "megamod:wizard_robes_equip_3"
     ]
+  },
+  "anchor_slam": {
+    "sounds": [
+      "megamod:anchor_slam-01"
+    ]
+  },
+  "axe_slash": {
+    "sounds": [
+      "megamod:axe_slash-01"
+    ]
+  },
+  "claymore_swing": {
+    "sounds": [
+      "megamod:claymore_swing-01"
+    ]
+  },
+  "claymore_stab": {
+    "sounds": [
+      "megamod:claymore_stab-01"
+    ]
+  },
+  "claymore_slam": {
+    "sounds": [
+      {
+        "name": "megamod:claymore_slam-01",
+        "pitch": 0.87
+      }
+    ]
+  },
+  "dagger_slash": {
+    "sounds": [
+      "megamod:dagger_slash-01"
+    ]
+  },
+  "double_axe_swing": {
+    "sounds": [
+      "megamod:double_axe_swing-01"
+    ]
+  },
+  "fist_punch": {
+    "sounds": [
+      "megamod:fist_punch-01"
+    ]
+  },
+  "glaive_slash_quick": {
+    "sounds": [
+      "megamod:glaive_slash-01"
+    ]
+  },
+  "glaive_slash_slow": {
+    "sounds": [
+      "megamod:glaive_slash-02"
+    ]
+  },
+  "hammer_slam": {
+    "sounds": [
+      "megamod:hammer_slam-01"
+    ]
+  },
+  "katana_slash": {
+    "sounds": [
+      "megamod:katana_slash-01"
+    ]
+  },
+  "mace_slam": {
+    "sounds": [
+      "megamod:mace_slam-01"
+    ]
+  },
+  "mace_slash": {
+    "sounds": [
+      "megamod:mace_slash-01"
+    ]
+  },
+  "pickaxe_swing": {
+    "sounds": [
+      "megamod:pickaxe_swing-01"
+    ]
+  },
+  "rapier_slash": {
+    "sounds": [
+      "megamod:rapier_slash-01"
+    ]
+  },
+  "rapier_stab": {
+    "sounds": [
+      "megamod:rapier_stab-01"
+    ]
+  },
+  "scythe_slash": {
+    "sounds": [
+      "megamod:scythe_slash-01"
+    ]
+  },
+  "spear_stab": {
+    "sounds": [
+      "megamod:spear_stab-01"
+    ]
+  },
+  "staff_slam": {
+    "sounds": [
+      "megamod:staff_slam-01"
+    ]
+  },
+  "staff_slash": {
+    "sounds": [
+      "megamod:staff_slash-01"
+    ]
+  },
+  "staff_spin": {
+    "sounds": [
+      "megamod:staff_spin-01"
+    ]
+  },
+  "staff_stab": {
+    "sounds": [
+      "megamod:staff_stab-01"
+    ]
+  },
+  "sickle_slash": {
+    "sounds": [
+      "megamod:sickle_slash-01"
+    ]
+  },
+  "sword_slash": {
+    "sounds": [
+      "megamod:sword_slash-01"
+    ]
+  },
+  "wand_swing": {
+    "sounds": [
+      "megamod:wand_swing-01"
+    ]
   }
 }
