@@ -1,8 +1,0 @@
-{
-  "type": "reliquary:alkahestry_crafting",
-  "ingredient": {
-    "tag": "c:sandstone/blocks"
-  },
-  "charge": 9,
-  "result_count": 4
-}

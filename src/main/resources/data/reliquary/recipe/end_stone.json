@@ -1,8 +1,0 @@
-{
-  "type": "reliquary:alkahestry_crafting",
-  "ingredient": {
-    "tag": "c:end_stones"
-  },
-  "charge": 17,
-  "result_count": 8
-}

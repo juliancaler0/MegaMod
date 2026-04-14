@@ -1,8 +1,0 @@
-{
-  "type": "reliquary:alkahestry_crafting",
-  "ingredient": {
-    "tag": "c:nether_stars"
-  },
-  "charge": 2,
-  "result_count": 256
-}

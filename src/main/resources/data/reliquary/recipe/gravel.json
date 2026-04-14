@@ -1,8 +1,0 @@
-{
-  "type": "reliquary:alkahestry_crafting",
-  "ingredient": {
-    "tag": "c:gravels"
-  },
-  "charge": 17,
-  "result_count": 4
-}

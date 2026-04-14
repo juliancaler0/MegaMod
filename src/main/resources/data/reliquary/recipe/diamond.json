@@ -1,8 +1,0 @@
-{
-  "type": "reliquary:alkahestry_crafting",
-  "ingredient": {
-    "tag": "c:gems/diamond"
-  },
-  "charge": 2,
-  "result_count": 64
-}

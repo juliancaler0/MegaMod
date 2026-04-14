@@ -1,7 +1,0 @@
-{
-  "type": "reliquary:alkahestry_charging",
-  "ingredient": {
-    "item": "minecraft:glowstone_dust"
-  },
-  "charge": 1
-}
