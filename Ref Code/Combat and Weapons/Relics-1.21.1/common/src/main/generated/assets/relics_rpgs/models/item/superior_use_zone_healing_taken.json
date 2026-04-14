@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "relics_rpgs:item/superior_use_zone_healing_taken"
+  }
+}

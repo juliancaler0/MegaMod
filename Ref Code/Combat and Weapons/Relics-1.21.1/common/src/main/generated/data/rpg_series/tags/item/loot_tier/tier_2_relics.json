@@ -1,0 +1,48 @@
+{
+  "values": [
+    {
+      "id": "relics_rpgs:medium_proc_spell_haste",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_spell_power",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_defense",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_attack_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_evasion",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_frost_power",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_ranged_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_healing_power",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_arcane_power",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_attack_speed",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:medium_proc_fire_power",
+      "required": false
+    }
+  ]
+}

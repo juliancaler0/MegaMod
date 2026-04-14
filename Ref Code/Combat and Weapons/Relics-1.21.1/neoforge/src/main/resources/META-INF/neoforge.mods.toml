@@ -1,0 +1,44 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "relics_rpgs"
+version = "${version}"
+displayName = "Relics (RPG Series)"
+authors = "Daedelus"
+description = '''
+Unleash your true potential with powerful trinkets!
+'''
+logoFile = "icon.png"
+
+[[dependencies.relics_rpgs]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.relics_rpgs]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft_compat_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.relics_rpgs]]
+modId = "spell_engine"
+type = "required"
+versionRange = "[${spell_engine_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.relics_rpgs]]
+modId = "ranged_weapon_api"
+type = "required"
+versionRange = "[${ranged_weapon_api_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "relics_rpgs.mixins.json"

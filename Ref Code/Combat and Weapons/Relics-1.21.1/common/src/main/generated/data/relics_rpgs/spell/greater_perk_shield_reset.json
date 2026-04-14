@@ -1,0 +1,48 @@
+{
+  "school": "spell_power:healing",
+  "range": 0.0,
+  "tier": 7,
+  "tooltip": {
+    "show_header": false,
+    "name": {
+      "show_in_compact": false,
+      "show_in_details": false
+    },
+    "description": {
+      "color": "dark_green"
+    }
+  },
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "target_override": "CASTER",
+        "type": "ROLL"
+      }
+    ]
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "CUSTOM",
+        "custom": {
+          "handler": "relics_rpgs:shield_reset"
+        }
+      },
+      "particles": [
+        {
+          "particle_id": "spell_engine:magic_spark_decelerate",
+          "origin": "CENTER",
+          "shape": "SPHERE",
+          "count": 20.0,
+          "min_speed": 0.4,
+          "max_speed": 0.4,
+          "color_rgba": 1724710911
+        }
+      ],
+      "sound": {
+        "id": "relics_rpgs:defense_activate_1"
+      }
+    }
+  ]
+}

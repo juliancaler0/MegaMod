@@ -1,0 +1,51 @@
+{
+  "school": "spell_power:arcane",
+  "secondary_archetype": "ANY",
+  "range": 0.0,
+  "tier": 7,
+  "tooltip": {
+    "show_header": false,
+    "name": {
+      "show_in_compact": false,
+      "show_in_details": false
+    },
+    "description": {
+      "color": "dark_green"
+    }
+  },
+  "active": {},
+  "release": {
+    "animation": {
+      "id": "spell_engine:one_handed_healing_release"
+    },
+    "particles": [
+      {
+        "particle_id": "spell_engine:magic_spark_decelerate",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 25.0,
+        "min_speed": 0.14,
+        "max_speed": 0.15,
+        "color_rgba": 4294954239
+      }
+    ],
+    "sound": {
+      "id": "relics_rpgs:spell_haste_activate_1"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "relics_rpgs:lesser_spell_haste"
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 60.0
+    }
+  }
+}

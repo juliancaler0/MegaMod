@@ -1,0 +1,127 @@
+{
+  "bloodlust_activate": {
+    "sounds": [
+      "relics_rpgs:bloodlust_activate"
+    ]
+  },
+  "bow_string_activate": {
+    "sounds": [
+      "relics_rpgs:bow_string_activate"
+    ]
+  },
+  "defense_activate_1": {
+    "sounds": [
+      "relics_rpgs:defense_activate_1"
+    ]
+  },
+  "defense_activate_2": {
+    "sounds": [
+      "relics_rpgs:defense_activate_2"
+    ]
+  },
+  "eagle_boost": {
+    "sounds": [
+      "relics_rpgs:eagle_boost"
+    ]
+  },
+  "healing_zone_activate": {
+    "sounds": [
+      "relics_rpgs:healing_zone_activate"
+    ]
+  },
+  "heart_of_beast_activate": {
+    "sounds": [
+      "relics_rpgs:heart_of_beast_activate"
+    ]
+  },
+  "holy_water_impact": {
+    "sounds": [
+      "relics_rpgs:holy_water_impact"
+    ]
+  },
+  "hook_activate": {
+    "sounds": [
+      "relics_rpgs:hook_activate"
+    ]
+  },
+  "horn_activate": {
+    "sounds": [
+      "relics_rpgs:horn_activate"
+    ]
+  },
+  "intellect_buff": {
+    "sounds": [
+      "relics_rpgs:intellect_buff"
+    ]
+  },
+  "levitate_generic": {
+    "sounds": [
+      "relics_rpgs:levitate_generic"
+    ]
+  },
+  "lightning_impact_small": {
+    "sounds": [
+      "relics_rpgs:lightning_impact_small"
+    ]
+  },
+  "magic_zone_presence": {
+    "sounds": [
+      "relics_rpgs:magic_zone_presence"
+    ]
+  },
+  "medal_use": {
+    "sounds": [
+      "relics_rpgs:medal_use"
+    ]
+  },
+  "melee_activate_1": {
+    "sounds": [
+      "relics_rpgs:melee_activate_1"
+    ]
+  },
+  "monkey_activate": {
+    "sounds": [
+      "relics_rpgs:monkey_activate"
+    ]
+  },
+  "potion_generic": {
+    "sounds": [
+      "relics_rpgs:potion_generic"
+    ]
+  },
+  "sharpen": {
+    "sounds": [
+      "relics_rpgs:sharpen"
+    ]
+  },
+  "spell_haste_activate_1": {
+    "sounds": [
+      "relics_rpgs:spell_haste_activate_1"
+    ]
+  },
+  "spell_haste_activate_2": {
+    "sounds": [
+      "relics_rpgs:spell_haste_activate_2"
+    ]
+  },
+  "spell_power_activate_2": {
+    "sounds": [
+      "relics_rpgs:spell_power_activate_2"
+    ]
+  },
+  "spell_power_activate_3": {
+    "sounds": [
+      "relics_rpgs:spell_power_activate_3"
+    ]
+  },
+  "spell_zone_activate": {
+    "sounds": [
+      "relics_rpgs:spell_zone_activate"
+    ]
+  },
+  "stun_generic": {
+    "sounds": [
+      "relics_rpgs:stun_generic"
+    ]
+  }
+}

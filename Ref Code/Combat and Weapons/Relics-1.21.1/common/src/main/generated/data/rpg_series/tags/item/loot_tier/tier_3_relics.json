@@ -1,0 +1,56 @@
+{
+  "values": [
+    {
+      "id": "relics_rpgs:greater_perk_defense_block",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_healing_taken",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_melee_stun",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_heal_cleanse",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_roll_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_heal_danger",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_shield_reset",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_spell_stun",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_proc_spell_trance",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_proc_physical_trance",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_evasion_attack",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_proc_defense_danger",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:greater_perk_ranged_levitate",
+      "required": false
+    }
+  ]
+}

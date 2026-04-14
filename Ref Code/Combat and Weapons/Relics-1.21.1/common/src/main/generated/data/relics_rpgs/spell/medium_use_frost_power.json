@@ -1,0 +1,59 @@
+{
+  "school": "spell_power:frost",
+  "secondary_archetype": "ANY",
+  "range": 0.0,
+  "tier": 7,
+  "tooltip": {
+    "show_header": false,
+    "name": {
+      "show_in_compact": false,
+      "show_in_details": false
+    },
+    "description": {
+      "color": "dark_green"
+    }
+  },
+  "active": {},
+  "release": {
+    "animation": {
+      "id": "spell_engine:dual_handed_weapon_charge"
+    },
+    "particles": [
+      {
+        "particle_id": "spell_engine:snowflake",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 15.0,
+        "min_speed": 0.14,
+        "max_speed": 0.15
+      },
+      {
+        "particle_id": "spell_engine:magic_spark_decelerate",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 25.0,
+        "min_speed": 0.24,
+        "max_speed": 0.25,
+        "color_rgba": 1724710911
+      }
+    ],
+    "sound": {
+      "id": "relics_rpgs:intellect_buff"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "relics_rpgs:medium_frost_power"
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 60.0
+    }
+  }
+}
