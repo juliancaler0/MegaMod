@@ -17,7 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeaponSkills {
-    public static String NAMESPACE = RPGSeriesCore.NAMESPACE;
+    // Weapon-skill spell IDs resolve under megamod: so they load from data/megamod/spell/*.json
+    // (the JSONs were copied verbatim from SpellEngine's generated rpg_series/spell corpus and
+    // namespace-rewritten). The legacy rpg_series namespace is preserved elsewhere for tag lookups.
+    public static String NAMESPACE = com.ultra.megamod.MegaMod.MODID;
     public record Entry(Identifier id, Spell spell, String title, String description,
                         @Nullable SpellTooltip.DescriptionMutator mutator) { }
     public static final List<Entry> entries = new ArrayList<>();
