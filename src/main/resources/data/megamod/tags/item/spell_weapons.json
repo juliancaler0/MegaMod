@@ -2,5 +2,6 @@
   "values": [
     "#megamod:staves",
     "#megamod:wands"
-  ]
+  ],
+  "replace": false
 }

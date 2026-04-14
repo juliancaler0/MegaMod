@@ -7,6 +7,8 @@
     "megamod:paladin_libram",
     "megamod:archery_manual",
     "megamod:rogue_manual",
-    "megamod:warrior_codex"
-  ]
+    "megamod:warrior_codex",
+    "megamod:spell_book"
+  ],
+  "replace": false
 }

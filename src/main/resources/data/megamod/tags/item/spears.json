@@ -17,5 +17,6 @@
       "id": "megamod:aether_spear",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

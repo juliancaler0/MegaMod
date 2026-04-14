@@ -24,5 +24,6 @@
       "id": "megamod:cooldown_heal",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

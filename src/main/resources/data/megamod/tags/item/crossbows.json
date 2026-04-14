@@ -20,5 +20,6 @@
       "id": "megamod:aether_heavy_crossbow",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

@@ -1,0 +1,17 @@
+{
+  "values": [
+    {
+      "id": "megamod:arcane_missile",
+      "required": false
+    },
+    {
+      "id": "megamod:arcane_beam",
+      "required": false
+    },
+    {
+      "id": "megamod:arcane_blink",
+      "required": false
+    }
+  ],
+  "replace": false
+}

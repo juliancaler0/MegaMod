@@ -1,0 +1,21 @@
+{
+  "values": [
+    {
+      "id": "megamod:flash_heal",
+      "required": false
+    },
+    {
+      "id": "megamod:divine_protection",
+      "required": false
+    },
+    {
+      "id": "megamod:judgement",
+      "required": false
+    },
+    {
+      "id": "megamod:battle_banner",
+      "required": false
+    }
+  ],
+  "replace": false
+}

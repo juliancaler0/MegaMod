@@ -1,12 +1,12 @@
 {
   "values": [
     "megamod:generic",
-
     "megamod:arcane",
     "megamod:fire",
     "megamod:frost",
     "megamod:healing",
     "megamod:lightning",
     "megamod:soul"
-  ]
+  ],
+  "replace": false
 }

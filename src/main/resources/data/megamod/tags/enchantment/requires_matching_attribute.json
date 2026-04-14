@@ -3,5 +3,6 @@
     "megamod:sunfire",
     "megamod:soulfrost",
     "megamod:energize"
-  ]
+  ],
+  "replace": false
 }

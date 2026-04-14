@@ -1,0 +1,17 @@
+{
+  "values": [
+    {
+      "id": "megamod:frost_nova",
+      "required": false
+    },
+    {
+      "id": "megamod:frost_shield",
+      "required": false
+    },
+    {
+      "id": "megamod:frost_blizzard",
+      "required": false
+    }
+  ],
+  "replace": false
+}

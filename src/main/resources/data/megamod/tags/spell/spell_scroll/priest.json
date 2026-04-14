@@ -1,0 +1,17 @@
+{
+  "values": [
+    {
+      "id": "megamod:holy_beam",
+      "required": false
+    },
+    {
+      "id": "megamod:circle_of_healing",
+      "required": false
+    },
+    {
+      "id": "megamod:barrier",
+      "required": false
+    }
+  ],
+  "replace": false
+}

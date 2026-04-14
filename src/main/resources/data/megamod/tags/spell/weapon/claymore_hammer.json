@@ -7,6 +7,15 @@
     {
       "id": "megamod:ground_slam",
       "required": false
+    },
+    {
+      "id": "rpg_series:flurry",
+      "required": false
+    },
+    {
+      "id": "rpg_series:ground_slam",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

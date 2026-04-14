@@ -7,6 +7,15 @@
     {
       "id": "megamod:whirlwind",
       "required": false
+    },
+    {
+      "id": "rpg_series:ground_slam",
+      "required": false
+    },
+    {
+      "id": "rpg_series:whirlwind",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

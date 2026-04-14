@@ -4,5 +4,6 @@
       "id": "#c:bosses",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

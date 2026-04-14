@@ -8,5 +8,6 @@
       "id": "#megamod:weapon/frost_staff",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

@@ -32,5 +32,6 @@
       "id": "megamod:chain_reaction_spell",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

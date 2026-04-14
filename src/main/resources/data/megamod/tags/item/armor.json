@@ -11,6 +11,10 @@
     "megamod:netherite_ranger_armor_chest",
     "megamod:netherite_ranger_armor_boots",
     "megamod:netherite_ranger_armor_head",
-    "megamod:netherite_ranger_armor_legs"
-  ]
+    "megamod:netherite_ranger_armor_legs",
+    "megamod:archer_armor_feet",
+    "megamod:ranger_armor_feet",
+    "megamod:netherite_ranger_armor_feet"
+  ],
+  "replace": false
 }

@@ -1,5 +1,6 @@
 {
   "values": [
     "#megamod:enchantable/spell_power_specialized"
-  ]
+  ],
+  "replace": false
 }

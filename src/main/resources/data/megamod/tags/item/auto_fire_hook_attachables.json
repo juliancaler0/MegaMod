@@ -5,5 +5,6 @@
     "#megamod:bows",
     "#megamod:crossbows",
     "#rpg_series:archetype/ranged_damage_weapon"
-  ]
+  ],
+  "replace": false
 }

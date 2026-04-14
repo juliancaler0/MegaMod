@@ -12,5 +12,6 @@
       "id": "megamod:large_quiver",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

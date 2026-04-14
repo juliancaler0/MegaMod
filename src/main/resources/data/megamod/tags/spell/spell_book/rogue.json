@@ -16,5 +16,6 @@
       "id": "megamod:vanish",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

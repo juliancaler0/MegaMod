@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "megamod:frostbolt",
+      "required": false
+    }
+  ],
+  "replace": false
+}

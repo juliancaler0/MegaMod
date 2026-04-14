@@ -12,5 +12,6 @@
       "id": "megamod:large_rune_pouch",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

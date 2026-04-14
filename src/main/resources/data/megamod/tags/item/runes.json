@@ -1,1 +1,17 @@
-{"replace":false,"values":["megamod:arcane_rune","megamod:fire_rune","megamod:frost_rune","megamod:healing_rune","megamod:lightning_rune","megamod:soul_rune"]}
+{
+  "replace": false,
+  "values": [
+    "megamod:arcane_rune",
+    "megamod:fire_rune",
+    "megamod:frost_rune",
+    "megamod:healing_rune",
+    "megamod:lightning_rune",
+    "megamod:soul_rune",
+    "megamod:arcane_stone",
+    "megamod:fire_stone",
+    "megamod:frost_stone",
+    "megamod:healing_stone",
+    "megamod:lightning_stone",
+    "megamod:soul_stone"
+  ]
+}

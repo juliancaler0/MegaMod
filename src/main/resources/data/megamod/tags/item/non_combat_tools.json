@@ -32,5 +32,6 @@
       "id": "#c:tools/mining_tool",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

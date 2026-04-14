@@ -4,5 +4,6 @@
     "megamod:judgement",
     "megamod:divine_protection",
     "megamod:battle_banner"
-  ]
+  ],
+  "replace": false
 }

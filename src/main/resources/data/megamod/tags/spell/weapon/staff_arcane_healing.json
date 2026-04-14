@@ -8,5 +8,6 @@
       "id": "#megamod:weapon/holy_staff",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

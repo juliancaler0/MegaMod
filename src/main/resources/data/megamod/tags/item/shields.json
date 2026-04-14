@@ -16,5 +16,6 @@
       "id": "megamod:aether_kite_shield",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

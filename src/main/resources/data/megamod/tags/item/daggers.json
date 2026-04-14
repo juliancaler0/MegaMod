@@ -1,1 +1,22 @@
-{"replace":false,"values":["megamod:flint_dagger","megamod:iron_dagger","megamod:golden_dagger","megamod:diamond_dagger","megamod:netherite_dagger"]}
+{
+  "replace": false,
+  "values": [
+    "megamod:flint_dagger",
+    "megamod:iron_dagger",
+    "megamod:golden_dagger",
+    "megamod:diamond_dagger",
+    "megamod:netherite_dagger",
+    {
+      "id": "megamod:aeternium_dagger",
+      "required": false
+    },
+    {
+      "id": "megamod:ruby_dagger",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_dagger",
+      "required": false
+    }
+  ]
+}

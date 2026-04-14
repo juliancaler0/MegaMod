@@ -24,5 +24,6 @@
       "id": "megamod:rampaging_ranged",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

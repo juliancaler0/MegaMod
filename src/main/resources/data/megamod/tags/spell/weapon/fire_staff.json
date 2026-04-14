@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "megamod:fire_blast",
+      "required": false
+    }
+  ],
+  "replace": false
+}

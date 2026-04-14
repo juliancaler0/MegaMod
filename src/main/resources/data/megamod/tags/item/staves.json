@@ -10,6 +10,30 @@
     {
       "id": "megamod:aether_holy_staff",
       "required": false
+    },
+    "megamod:staff_wizard",
+    "megamod:staff_arcane",
+    "megamod:staff_fire",
+    "megamod:staff_frost",
+    "megamod:staff_netherite_arcane",
+    "megamod:staff_netherite_fire",
+    "megamod:staff_netherite_frost",
+    {
+      "id": "megamod:staff_crystal_arcane",
+      "required": false
+    },
+    {
+      "id": "megamod:staff_ruby_fire",
+      "required": false
+    },
+    {
+      "id": "megamod:staff_smaragdant_frost",
+      "required": false
+    },
+    {
+      "id": "megamod:aether_wizard_staff",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

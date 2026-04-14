@@ -8,5 +8,6 @@
       "id": "#megamod:weapon/fire_staff",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

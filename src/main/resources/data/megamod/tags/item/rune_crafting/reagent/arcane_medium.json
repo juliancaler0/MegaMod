@@ -3,5 +3,6 @@
     "minecraft:ender_pearl",
     "minecraft:amethyst_block",
     "minecraft:amethyst_cluster"
-  ]
+  ],
+  "replace": false
 }

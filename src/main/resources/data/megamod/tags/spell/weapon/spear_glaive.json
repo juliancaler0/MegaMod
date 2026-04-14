@@ -7,6 +7,15 @@
     {
       "id": "megamod:thrust",
       "required": false
+    },
+    {
+      "id": "rpg_series:impale",
+      "required": false
+    },
+    {
+      "id": "rpg_series:thrust",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

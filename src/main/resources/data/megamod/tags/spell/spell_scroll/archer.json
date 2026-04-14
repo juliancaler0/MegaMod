@@ -16,5 +16,6 @@
       "id": "megamod:magic_arrow",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

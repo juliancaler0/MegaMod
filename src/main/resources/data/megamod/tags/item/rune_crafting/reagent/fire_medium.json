@@ -1,5 +1,6 @@
 {
   "values": [
     "minecraft:blaze_powder"
-  ]
+  ],
+  "replace": false
 }

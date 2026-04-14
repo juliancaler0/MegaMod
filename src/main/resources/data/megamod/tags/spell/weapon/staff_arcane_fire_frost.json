@@ -4,5 +4,6 @@
       "id": "#megamod:weapon/wizard_staff",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

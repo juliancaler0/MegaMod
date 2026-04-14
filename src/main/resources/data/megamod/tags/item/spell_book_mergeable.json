@@ -1,5 +1,7 @@
 {
   "values": [
-    "#megamod:spell_books"
-  ]
+    "#megamod:spell_books",
+    "megamod:spell_scroll"
+  ],
+  "replace": false
 }

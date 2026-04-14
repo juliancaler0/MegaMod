@@ -52,5 +52,6 @@
       "id": "megamod:shockwave_melee",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

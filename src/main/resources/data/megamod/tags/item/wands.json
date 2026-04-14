@@ -3,6 +3,14 @@
     "megamod:acolyte_wand",
     "megamod:holy_wand",
     "megamod:diamond_holy_wand",
-    "megamod:netherite_holy_wand"
-  ]
+    "megamod:netherite_holy_wand",
+    "megamod:wand_novice",
+    "megamod:wand_arcane",
+    "megamod:wand_fire",
+    "megamod:wand_frost",
+    "megamod:wand_netherite_arcane",
+    "megamod:wand_netherite_fire",
+    "megamod:wand_netherite_frost"
+  ],
+  "replace": false
 }

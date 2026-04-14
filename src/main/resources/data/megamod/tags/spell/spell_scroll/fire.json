@@ -1,0 +1,17 @@
+{
+  "values": [
+    {
+      "id": "megamod:fire_breath",
+      "required": false
+    },
+    {
+      "id": "megamod:fire_meteor",
+      "required": false
+    },
+    {
+      "id": "megamod:fire_wall",
+      "required": false
+    }
+  ],
+  "replace": false
+}

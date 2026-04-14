@@ -17,5 +17,6 @@
       "id": "megamod:aether_longbow",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

@@ -2,5 +2,6 @@
   "values": [
     "minecraft:honeycomb",
     "minecraft:gold_ingot"
-  ]
+  ],
+  "replace": false
 }

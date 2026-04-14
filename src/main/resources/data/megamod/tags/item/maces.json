@@ -16,5 +16,6 @@
       "id": "megamod:aether_mace",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

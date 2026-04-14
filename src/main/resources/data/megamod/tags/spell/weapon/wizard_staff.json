@@ -1,0 +1,17 @@
+{
+  "values": [
+    {
+      "id": "megamod:arcane_blast",
+      "required": false
+    },
+    {
+      "id": "megamod:fire_blast",
+      "required": false
+    },
+    {
+      "id": "megamod:frostbolt",
+      "required": false
+    }
+  ],
+  "replace": false
+}

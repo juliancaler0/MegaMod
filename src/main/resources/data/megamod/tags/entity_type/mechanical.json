@@ -2,5 +2,6 @@
   "values": [
     "minecraft:iron_golem",
     "minecraft:snow_golem"
-  ]
+  ],
+  "replace": false
 }

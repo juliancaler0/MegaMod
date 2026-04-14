@@ -12,5 +12,6 @@
       "id": "megamod:spiked_shield",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

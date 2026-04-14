@@ -7,6 +7,15 @@
     {
       "id": "megamod:cleave",
       "required": false
+    },
+    {
+      "id": "rpg_series:swipe",
+      "required": false
+    },
+    {
+      "id": "rpg_series:cleave",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

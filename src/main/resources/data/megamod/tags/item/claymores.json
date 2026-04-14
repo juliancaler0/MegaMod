@@ -17,5 +17,6 @@
       "id": "megamod:aether_claymore",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }

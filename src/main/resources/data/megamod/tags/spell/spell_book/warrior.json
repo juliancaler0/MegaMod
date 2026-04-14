@@ -11,6 +11,11 @@
     {
       "id": "megamod:charge",
       "required": false
+    },
+    {
+      "id": "megamod:throw",
+      "required": false
     }
-  ]
+  ],
+  "replace": false
 }

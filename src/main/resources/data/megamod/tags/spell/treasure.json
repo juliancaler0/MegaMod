@@ -12,5 +12,6 @@
       "id": "#megamod:spell_scroll/warrior",
       "required": false
     }
-  ]
+  ],
+  "replace": false
 }
