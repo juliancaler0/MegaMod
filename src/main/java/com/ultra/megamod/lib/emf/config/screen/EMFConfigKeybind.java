@@ -33,6 +33,7 @@ public class EMFConfigKeybind {
         Minecraft mc = Minecraft.getInstance();
         TICK++;
         com.ultra.megamod.lib.emf.runtime.EmfEntityVariantCache.getInstance().setTick(TICK);
+        com.ultra.megamod.lib.emf.runtime.EmfFrameCounter.tick();
         if (mc.player == null || mc.screen != null) return;
         while (OPEN_CONFIG.consumeClick()) {
             mc.setScreen(new EMFConfigScreen(null));

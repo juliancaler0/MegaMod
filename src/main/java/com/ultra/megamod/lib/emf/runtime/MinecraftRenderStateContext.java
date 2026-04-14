@@ -58,7 +58,7 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
             case "age", "entity_age" -> age();
             case "death_time" -> deathTime();
             case "limb_swing", "limb_swing_speed" -> limbSwingSpeed();
-            case "limb_swing_amount" -> limbSwingAmount();
+            case "limb_swing_amount", "limb_speed" -> limbSwingAmount();
             case "swim_amount" -> swimAmount();
             case "speed" -> speed();
             case "player_yaw", "yaw", "head_yaw" -> headYaw();
@@ -67,6 +67,25 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
             case "id" -> entityId();
             case "scale" -> scale();
             case "age_scale" -> ageScale();
+            // Phase F: additional built-in variables resolved from live game state.
+            case "pos_x" -> posX();
+            case "pos_y" -> posY();
+            case "pos_z" -> posZ();
+            case "player_pos_x" -> playerPosX();
+            case "player_pos_y" -> playerPosY();
+            case "player_pos_z" -> playerPosZ();
+            case "player_rot_x" -> playerRotX();
+            case "player_rot_y" -> playerRotY();
+            case "rot_x" -> headPitch();
+            case "rot_y" -> headYaw();
+            case "time" -> time();
+            case "day_time" -> dayTime();
+            case "day_count" -> dayCount();
+            case "frame_time" -> frameTime();
+            case "frame_counter" -> frameCounter();
+            case "partial_ticks" -> partialTicks();
+            case "dimension" -> dimensionIndex();
+            case "distance" -> distance();
             default -> 0f;
         };
     }
@@ -91,6 +110,15 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
             case "is_auto_spin_attack" -> isAutoSpinAttack();
             case "has_red_overlay" -> hasRedOverlay();
             case "is_using_item" -> isUsingItem();
+            // Phase F: render-context flags that upstream exposes as simple globals.
+            case "is_in_hand" -> EmfRenderContextFlags.setInHand;
+            case "is_in_item_frame" -> EmfRenderContextFlags.setInItemFrame;
+            case "is_on_head" -> EmfRenderContextFlags.setIsOnHead;
+            case "is_in_gui" -> EmfRenderContextFlags.setIsInGui;
+            case "is_first_person_hand" -> EmfRenderContextFlags.isFirstPersonHand;
+            case "is_in_ground" -> EmfRenderContextFlags.is_in_ground_override;
+            case "is_paused" -> uuid != null
+                    && com.ultra.megamod.lib.emf.api.EMFApi.isEntityAnimationPaused(uuid);
             default -> false;
         };
     }
@@ -251,6 +279,149 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
     private boolean isUsingItem() {
         if (vanilla instanceof HumanoidRenderState humanoid) return humanoid.isUsingItem;
         return false;
+    }
+
+    // --- Phase F: extended float resolvers --------------------------------
+
+    private float posX() {
+        if (vanilla != null) return (float) vanilla.x;
+        return 0f;
+    }
+
+    private float posY() {
+        if (vanilla != null) return (float) vanilla.y;
+        return 0f;
+    }
+
+    private float posZ() {
+        if (vanilla != null) return (float) vanilla.z;
+        return 0f;
+    }
+
+    private float playerPosX() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) return (float) mc.player.getX();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float playerPosY() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) return (float) mc.player.getY();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float playerPosZ() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) return (float) mc.player.getZ();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float playerRotX() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) return mc.player.getXRot();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float playerRotY() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null) return mc.player.getYRot();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float time() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.level != null) return (float) (mc.level.getGameTime() % 24000L);
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float dayTime() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.level != null) return (float) (mc.level.getDayTime() % 24000L);
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float dayCount() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.level != null) return (float) (mc.level.getDayTime() / 24000L);
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float frameTime() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            return mc.getDeltaTracker().getRealtimeDeltaTicks();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    // Frame counter: upstream uses a monotonically-incrementing per-render counter.
+    // Vanilla 1.21.11 doesn't expose a direct getter, so we track it ourselves via
+    // the client-tick listener in EMFConfigKeybind and read the last-tick value.
+    private float frameCounter() {
+        return (float) EmfFrameCounter.current();
+    }
+
+    private float partialTicks() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            return mc.getDeltaTracker().getGameTimeDeltaTicks();
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float dimensionIndex() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.level != null) {
+                var dim = mc.level.dimension();
+                if (dim == net.minecraft.world.level.Level.OVERWORLD) return 0f;
+                if (dim == net.minecraft.world.level.Level.NETHER) return -1f;
+                if (dim == net.minecraft.world.level.Level.END) return 1f;
+                return 2f;
+            }
+        } catch (Throwable ignored) {
+        }
+        return 0f;
+    }
+
+    private float distance() {
+        try {
+            var mc = net.minecraft.client.Minecraft.getInstance();
+            if (mc.player != null && vanilla != null) {
+                double dx = vanilla.x - mc.player.getX();
+                double dy = vanilla.y - mc.player.getY();
+                double dz = vanilla.z - mc.player.getZ();
+                return (float) Math.sqrt(dx * dx + dy * dy + dz * dz);
+            }
+        } catch (Throwable ignored) {
+        }
+        return 0f;
     }
 
     public EntityType<?> entityType() {
