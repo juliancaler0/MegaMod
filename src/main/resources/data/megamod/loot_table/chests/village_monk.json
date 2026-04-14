@@ -103,7 +103,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:priest_robe_boots"
+          "name": "megamod:priest_robe_feet"
         },
         {
           "type": "minecraft:item",
@@ -119,7 +119,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:paladin_armor_boots"
+          "name": "megamod:paladin_armor_feet"
         },
         {
           "type": "minecraft:item",

@@ -46,21 +46,21 @@ public class PaladinsClientMod {
                 ClassArmorRegistry.PALADIN_ARMOR_HEAD.get(),
                 ClassArmorRegistry.PALADIN_ARMOR_CHEST.get(),
                 ClassArmorRegistry.PALADIN_ARMOR_LEGS.get(),
-                ClassArmorRegistry.PALADIN_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.PALADIN_ARMOR_FEET.get(),
                 PaladinArmorRenderer::paladin);
 
         registerArmorRenderer(
                 ClassArmorRegistry.CRUSADER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.CRUSADER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.CRUSADER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.CRUSADER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.CRUSADER_ARMOR_FEET.get(),
                 PaladinArmorRenderer::crusader);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_CRUSADER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_CRUSADER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_CRUSADER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_CRUSADER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_CRUSADER_ARMOR_FEET.get(),
                 PaladinArmorRenderer::netheriteCrusader);
 
         // Priest robe sets
@@ -68,21 +68,21 @@ public class PaladinsClientMod {
                 ClassArmorRegistry.PRIEST_ROBE_HEAD.get(),
                 ClassArmorRegistry.PRIEST_ROBE_CHEST.get(),
                 ClassArmorRegistry.PRIEST_ROBE_LEGS.get(),
-                ClassArmorRegistry.PRIEST_ROBE_BOOTS.get(),
+                ClassArmorRegistry.PRIEST_ROBE_FEET.get(),
                 PriestArmorRenderer::priest);
 
         registerArmorRenderer(
                 ClassArmorRegistry.PRIOR_ROBE_HEAD.get(),
                 ClassArmorRegistry.PRIOR_ROBE_CHEST.get(),
                 ClassArmorRegistry.PRIOR_ROBE_LEGS.get(),
-                ClassArmorRegistry.PRIOR_ROBE_BOOTS.get(),
+                ClassArmorRegistry.PRIOR_ROBE_FEET.get(),
                 PriestArmorRenderer::prior);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_PRIOR_ROBE_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_PRIOR_ROBE_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_PRIOR_ROBE_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_PRIOR_ROBE_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_PRIOR_ROBE_FEET.get(),
                 PriestArmorRenderer::netheritePrior);
     }
 

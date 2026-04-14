@@ -40,74 +40,11 @@ public class ClassWeaponRegistry {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MegaMod.MODID);
 
     // ═══════════════════════════════════════════════════════════════
-    // DAGGERS (Rogue) — fast, low damage  [legacy path — awaits rogues SpellEngine port]
+    // Rogue/Warrior weapons (DAGGERS, SICKLES, DOUBLE AXES, GLAIVES) — now
+    // registered by RoguesMod.registerItems via SpellEngine Weapons factory
+    // with weapon-skill SpellContainer components. Legacy ClassWeaponRegistry
+    // field references fall through to {@link Lookup} shims further below.
     // ═══════════════════════════════════════════════════════════════
-    public static final DeferredItem<RpgWeaponItem> FLINT_DAGGER = ITEMS.registerItem("flint_dagger",
-        props -> new RpgWeaponItem("Flint Dagger", 3.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> IRON_DAGGER = ITEMS.registerItem("iron_dagger",
-        props -> new RpgWeaponItem("Iron Dagger", 4.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> GOLDEN_DAGGER = ITEMS.registerItem("golden_dagger",
-        props -> new RpgWeaponItem("Golden Dagger", 3.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> DIAMOND_DAGGER = ITEMS.registerItem("diamond_dagger",
-        props -> new RpgWeaponItem("Diamond Dagger", 5.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> NETHERITE_DAGGER = ITEMS.registerItem("netherite_dagger",
-        props -> new RpgWeaponItem("Netherite Dagger", 6.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-
-    // ═══════════════════════════════════════════════════════════════
-    // SICKLES (Rogue)
-    // ═══════════════════════════════════════════════════════════════
-    public static final DeferredItem<RpgWeaponItem> GOLDEN_SICKLE = ITEMS.registerItem("golden_sickle",
-        props -> new RpgWeaponItem("Golden Sickle", 3.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> IRON_SICKLE = ITEMS.registerItem("iron_sickle",
-        props -> new RpgWeaponItem("Iron Sickle", 4.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> DIAMOND_SICKLE = ITEMS.registerItem("diamond_sickle",
-        props -> new RpgWeaponItem("Diamond Sickle", 5.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> NETHERITE_SICKLE = ITEMS.registerItem("netherite_sickle",
-        props -> new RpgWeaponItem("Netherite Sickle", 6.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-
-    // ═══════════════════════════════════════════════════════════════
-    // DOUBLE AXES (Warrior)
-    // ═══════════════════════════════════════════════════════════════
-    public static final DeferredItem<RpgWeaponItem> STONE_DOUBLE_AXE = ITEMS.registerItem("stone_double_axe",
-        props -> new RpgWeaponItem("Stone Double Axe", 5.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> GOLDEN_DOUBLE_AXE = ITEMS.registerItem("golden_double_axe",
-        props -> new RpgWeaponItem("Golden Double Axe", 4.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> IRON_DOUBLE_AXE = ITEMS.registerItem("iron_double_axe",
-        props -> new RpgWeaponItem("Iron Double Axe", 7.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> DIAMOND_DOUBLE_AXE = ITEMS.registerItem("diamond_double_axe",
-        props -> new RpgWeaponItem("Diamond Double Axe", 9.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> NETHERITE_DOUBLE_AXE = ITEMS.registerItem("netherite_double_axe",
-        props -> new RpgWeaponItem("Netherite Double Axe", 11.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-
-    // ═══════════════════════════════════════════════════════════════
-    // GLAIVES (Warrior)
-    // ═══════════════════════════════════════════════════════════════
-    public static final DeferredItem<RpgWeaponItem> GOLDEN_GLAIVE = ITEMS.registerItem("golden_glaive",
-        props -> new RpgWeaponItem("Golden Glaive", 5.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> IRON_GLAIVE = ITEMS.registerItem("iron_glaive",
-        props -> new RpgWeaponItem("Iron Glaive", 6.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> DIAMOND_GLAIVE = ITEMS.registerItem("diamond_glaive",
-        props -> new RpgWeaponItem("Diamond Glaive", 8.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
-    public static final DeferredItem<RpgWeaponItem> NETHERITE_GLAIVE = ITEMS.registerItem("netherite_glaive",
-        props -> new RpgWeaponItem("Netherite Glaive", 10.0f, (Item.Properties) props, List.of()),
-        () -> new Item.Properties().stacksTo(1));
 
     // ═══════════════════════════════════════════════════════════════
     // SPEARS (Ranger)
@@ -247,6 +184,32 @@ public class ClassWeaponRegistry {
     public static final Lookup GOLDEN_KITE_SHIELD = item("golden_kite_shield");
     public static final Lookup DIAMOND_KITE_SHIELD = item("diamond_kite_shield");
     public static final Lookup NETHERITE_KITE_SHIELD = item("netherite_kite_shield");
+
+    // Rogue daggers (registered by RoguesMod.registerItems via RogueWeapons)
+    public static final Lookup FLINT_DAGGER = item("flint_dagger");
+    public static final Lookup IRON_DAGGER = item("iron_dagger");
+    public static final Lookup GOLDEN_DAGGER = item("golden_dagger");
+    public static final Lookup DIAMOND_DAGGER = item("diamond_dagger");
+    public static final Lookup NETHERITE_DAGGER = item("netherite_dagger");
+
+    // Rogue sickles
+    public static final Lookup IRON_SICKLE = item("iron_sickle");
+    public static final Lookup GOLDEN_SICKLE = item("golden_sickle");
+    public static final Lookup DIAMOND_SICKLE = item("diamond_sickle");
+    public static final Lookup NETHERITE_SICKLE = item("netherite_sickle");
+
+    // Warrior double axes
+    public static final Lookup STONE_DOUBLE_AXE = item("stone_double_axe");
+    public static final Lookup IRON_DOUBLE_AXE = item("iron_double_axe");
+    public static final Lookup GOLDEN_DOUBLE_AXE = item("golden_double_axe");
+    public static final Lookup DIAMOND_DOUBLE_AXE = item("diamond_double_axe");
+    public static final Lookup NETHERITE_DOUBLE_AXE = item("netherite_double_axe");
+
+    // Warrior glaives
+    public static final Lookup IRON_GLAIVE = item("iron_glaive");
+    public static final Lookup GOLDEN_GLAIVE = item("golden_glaive");
+    public static final Lookup DIAMOND_GLAIVE = item("diamond_glaive");
+    public static final Lookup NETHERITE_GLAIVE = item("netherite_glaive");
 
     public static void init(IEventBus modBus) {
         ITEMS.register(modBus);

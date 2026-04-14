@@ -236,7 +236,9 @@ public class MegaModClient {
 
         // Reliquary port — client wiring (currently a stub; renderers / HUD
         // panes / particle providers pending a 1.21.11 client-layer port)
-        com.ultra.megamod.reliquary.Reliquary.initClient(modEventBus, container);
+        // NOTE: Excluded from compilation on this branch (see build.gradle) — tracked
+        // on feature/reliquary-port.
+        // com.ultra.megamod.reliquary.Reliquary.initClient(modEventBus, container);
 
         // Renderer and pipeline registrations
         modEventBus.addListener(MegaModClient::onRegisterRenderers);

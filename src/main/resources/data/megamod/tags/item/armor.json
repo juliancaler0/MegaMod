@@ -1,20 +1,17 @@
 {
   "values": [
     "megamod:archer_armor_chest",
-    "megamod:archer_armor_boots",
+    "megamod:archer_armor_feet",
     "megamod:archer_armor_head",
     "megamod:archer_armor_legs",
     "megamod:ranger_armor_chest",
-    "megamod:ranger_armor_boots",
+    "megamod:ranger_armor_feet",
     "megamod:ranger_armor_head",
     "megamod:ranger_armor_legs",
     "megamod:netherite_ranger_armor_chest",
-    "megamod:netherite_ranger_armor_boots",
+    "megamod:netherite_ranger_armor_feet",
     "megamod:netherite_ranger_armor_head",
-    "megamod:netherite_ranger_armor_legs",
-    "megamod:archer_armor_feet",
-    "megamod:ranger_armor_feet",
-    "megamod:netherite_ranger_armor_feet"
+    "megamod:netherite_ranger_armor_legs"
   ],
   "replace": false
 }

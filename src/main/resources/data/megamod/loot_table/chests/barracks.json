@@ -103,7 +103,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:rogue_armor_boots"
+          "name": "megamod:rogue_armor_feet"
         },
         {
           "type": "minecraft:item",
@@ -119,7 +119,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "megamod:warrior_armor_boots"
+          "name": "megamod:warrior_armor_feet"
         },
         {
           "type": "minecraft:item",

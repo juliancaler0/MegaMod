@@ -2,6 +2,11 @@ package com.ultra.megamod.feature.combat.rogues;
 
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.combat.rogues.config.TweaksConfig;
+import com.ultra.megamod.feature.combat.rogues.item.Group;
+import com.ultra.megamod.feature.combat.rogues.item.RogueWeapons;
+import com.ultra.megamod.feature.combat.rogues.item.armor.Armors;
+import com.ultra.megamod.lib.spellengine.api.config.ConfigFile;
+import net.neoforged.bus.api.IEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,44 +14,48 @@ import org.slf4j.LoggerFactory;
  * Rogues & Warriors content module.
  * Ported from the Rogues mod (Fabric) to NeoForge for MegaMod.
  *
- * Items, armor, effects, spells, sounds, and villager trades are registered
- * through the existing MegaMod combat registries (ClassWeaponRegistry,
- * ClassArmorRegistry, SpellEffects, SpellRegistry, CombatVillagerRegistry).
+ * <p>Weapons (daggers, sickles, glaives, double-axes) and armor sets
+ * (rogue/assassin/warrior/berserker + netherite variants) are registered
+ * through SpellEngine's Weapon/Armor factory pipeline so they carry
+ * {@code SpellContainer} components. Weapon-skill spells (FAN_OF_KNIVES,
+ * SWIPE, THRUST, HEAVY_STRIKE) fire on right-click; set-bonus MODIFIER
+ * spells on armor feed attribute buffs through the SpellEngine attribute
+ * resolver.</p>
  *
- * This class holds shared config values referenced by rogues-specific code
- * (mixins, stealth handling, etc.) and performs module initialization.
+ * <p>Legacy {@code ClassWeaponRegistry.XYZ} / {@code ClassArmorRegistry.XYZ}
+ * references now resolve via {@code Lookup} shims to the SpellEngine-owned
+ * items.</p>
  */
 public class RoguesMod {
 
     private static final Logger LOGGER = LoggerFactory.getLogger("RoguesMod");
 
     public static final String NAMESPACE = MegaMod.MODID;
+    public static final String ID = MegaMod.MODID;
 
     /** Tweaks configuration - controls stealth behavior. */
     public static final TweaksConfig tweaksConfig = new TweaksConfig();
 
+    /** SpellEngine equipment config (weapons + armor sets). */
+    public static final ConfigFile.Equipment itemConfig = new ConfigFile.Equipment();
+
     private static boolean initialized = false;
 
     /**
-     * Initialize the Rogues & Warriors module.
-     * Called from MegaMod main constructor after all registries are set up.
-     *
-     * This handles:
-     * - Config initialization
-     * - Strength effect rebalance (if configured)
-     * - Logging module readiness
-     *
-     * Item/armor/effect/villager registration is handled by:
-     * - ClassWeaponRegistry (daggers, sickles, double axes, glaives)
-     * - ClassArmorRegistry (rogue, assassin, warrior, berserker armor sets)
-     * - SpellEffects (stealth, charge, shock, shatter, demoralize, etc.)
-     * - CombatVillagerRegistry (arms merchant profession and trades)
-     * - RuneWorkbenchRegistry (arms workbench block)
-     * - SpellItemRegistry (rogue manual, warrior codex spell books)
-     *
-     * Spell definitions are loaded from data/megamod/spell/ JSONs:
-     * - Rogue: slice_and_dice, shock_powder, shadow_step, vanish
-     * - Warrior: shattering_throw, shout, charge
+     * Register rogue weapons + armor + creative tab via SpellEngine factories.
+     * Called from {@link MegaMod} alongside {@code WizardsMod.registerItems} /
+     * {@code PaladinsMod.registerItems} so all SpellEngine-backed items register
+     * before {@code RPGItemRegistry.init}.
+     */
+    public static void registerItems(IEventBus modEventBus) {
+        Group.init(modEventBus);
+        RogueWeapons.init(modEventBus);
+        Armors.init(modEventBus);
+    }
+
+    /**
+     * Logical init. Keep after {@link #registerItems(IEventBus)} — fired in
+     * {@link MegaMod}'s constructor to log readiness.
      */
     public static void init() {
         if (initialized) return;

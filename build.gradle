@@ -26,6 +26,13 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
+// Temporarily exclude unfinished subsystems from compilation.
+// (reliquary port sits on the feature/reliquary-port branch; files exist in the
+//  worktree but are not ready for main-branch compilation)
+sourceSets.main.java {
+    exclude("com/ultra/megamod/reliquary/**")
+}
+
 repositories {
     // PlayerAnimationLib by ZigyTheBird (required for BetterCombat animations)
     maven {
@@ -43,6 +50,30 @@ repositories {
     maven {
         name = "Modrinth Maven"
         url = "https://api.modrinth.com/maven"
+    }
+    // JEI (mezz) — compile-only API for the Reliquary JEI compat shim.
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "BlameJared Maven (JEI)"
+                url = "https://maven.blamejared.com/"
+            }
+        }
+        filter {
+            includeGroup "mezz.jei"
+        }
+    }
+    // Curios — compile-only API for the Reliquary Curios compat shim.
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Illusive Soulworks Maven (Curios)"
+                url = "https://maven.theillusivec4.top/"
+            }
+        }
+        filter {
+            includeGroup "top.theillusivec4.curios"
+        }
     }
     // Local libs directory for jars that can't be resolved from Maven
     flatDir {
@@ -161,6 +192,23 @@ dependencies {
 
     // PlayerAnimationLib is ported directly as source code in lib/playeranim/
     // (Maven server is down, so we port from Ref Code instead of using dependency)
+
+    // ──────────────────────────────────────────────────────────────
+    // Reliquary external-mod compat shims — these are compile-only so
+    // the compat classes in com.ultra.megamod.reliquary.compat.* can
+    // type-check against the real APIs. At runtime these compat
+    // modules are gated behind ModList.isLoaded(...) checks inside
+    // reliquary.init.ModCompat, so the mods do not need to be present
+    // for MegaMod to run.
+    //
+    // Only JEI and Curios have 1.21.11 releases at the time of this
+    // port. Accessories is bundled as a source-level fork under
+    // com.ultra.megamod.lib.accessories, so its compat targets that
+    // package directly. Jade / Botania / TConstruct compat modules
+    // are deferred as stubs until a 1.21.11 release is available.
+    compileOnly "mezz.jei:jei-1.21.11-common-api:27.4.0.22"
+    compileOnly "mezz.jei:jei-1.21.11-neoforge-api:27.4.0.22"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:14.0.0+1.21.11:api"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

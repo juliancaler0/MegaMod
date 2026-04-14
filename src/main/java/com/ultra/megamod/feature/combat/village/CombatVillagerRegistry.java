@@ -142,9 +142,9 @@ public class CombatVillagerRegistry {
 
         // Level 3: Paladin & Priest armor (head, boots)
         event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PALADIN_ARMOR_HEAD.get(), 1, 15, 12, 13));
-        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PALADIN_ARMOR_BOOTS.get(), 1, 15, 12, 13));
+        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PALADIN_ARMOR_FEET.get(), 1, 15, 12, 13));
         event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PRIEST_ROBE_HEAD.get(), 1, 15, 12, 13));
-        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PRIEST_ROBE_BOOTS.get(), 1, 15, 12, 13));
+        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.PRIEST_ROBE_FEET.get(), 1, 15, 12, 13));
 
         // Level 4: Paladin & Priest armor (chest, legs)
         event.getTrades().get(4).add(sellItem(ClassArmorRegistry.PALADIN_ARMOR_CHEST.get(), 1, 20, 12, 15));
@@ -199,7 +199,7 @@ public class CombatVillagerRegistry {
         event.getTrades().get(2).add(buyItem(Items.STRING, 6, 12, 12, 3));
 
         // Level 3
-        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.ARCHER_ARMOR_BOOTS.get(), 1, 15, 18, 10));
+        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.ARCHER_ARMOR_FEET.get(), 1, 15, 18, 10));
         event.getTrades().get(3).add(sellItem(ClassArmorRegistry.ARCHER_ARMOR_LEGS.get(), 1, 15, 18, 10));
         event.getTrades().get(3).add(buyItem(Items.REDSTONE, 12, 12, 12, 8));
 
@@ -231,7 +231,7 @@ public class CombatVillagerRegistry {
 
         // Level 3: Wizard robes (head, boots)
         event.getTrades().get(3).add(sellItem(ClassArmorRegistry.WIZARD_ROBE_HEAD.get(), 1, 15, 12, 16));
-        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.WIZARD_ROBE_BOOTS.get(), 1, 15, 12, 16));
+        event.getTrades().get(3).add(sellItem(ClassArmorRegistry.WIZARD_ROBE_FEET.get(), 1, 15, 12, 16));
 
         // Level 4: Wizard robes (chest, legs)
         event.getTrades().get(4).add(sellItem(ClassArmorRegistry.WIZARD_ROBE_CHEST.get(), 1, 20, 12, 16));

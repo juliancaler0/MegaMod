@@ -37,49 +37,49 @@ public class WizardsClientInit {
                 ClassArmorRegistry.WIZARD_ROBE_HEAD.get(),
                 ClassArmorRegistry.WIZARD_ROBE_CHEST.get(),
                 ClassArmorRegistry.WIZARD_ROBE_LEGS.get(),
-                ClassArmorRegistry.WIZARD_ROBE_BOOTS.get(),
+                ClassArmorRegistry.WIZARD_ROBE_FEET.get(),
                 WizardArmorRenderer::wizard);
 
         registerArmorRenderer(
                 ClassArmorRegistry.ARCANE_ROBE_HEAD.get(),
                 ClassArmorRegistry.ARCANE_ROBE_CHEST.get(),
                 ClassArmorRegistry.ARCANE_ROBE_LEGS.get(),
-                ClassArmorRegistry.ARCANE_ROBE_BOOTS.get(),
+                ClassArmorRegistry.ARCANE_ROBE_FEET.get(),
                 WizardArmorRenderer::arcane);
 
         registerArmorRenderer(
                 ClassArmorRegistry.FIRE_ROBE_HEAD.get(),
                 ClassArmorRegistry.FIRE_ROBE_CHEST.get(),
                 ClassArmorRegistry.FIRE_ROBE_LEGS.get(),
-                ClassArmorRegistry.FIRE_ROBE_BOOTS.get(),
+                ClassArmorRegistry.FIRE_ROBE_FEET.get(),
                 WizardArmorRenderer::fire);
 
         registerArmorRenderer(
                 ClassArmorRegistry.FROST_ROBE_HEAD.get(),
                 ClassArmorRegistry.FROST_ROBE_CHEST.get(),
                 ClassArmorRegistry.FROST_ROBE_LEGS.get(),
-                ClassArmorRegistry.FROST_ROBE_BOOTS.get(),
+                ClassArmorRegistry.FROST_ROBE_FEET.get(),
                 WizardArmorRenderer::frost);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_ARCANE_ROBE_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_ARCANE_ROBE_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_ARCANE_ROBE_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_ARCANE_ROBE_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_ARCANE_ROBE_FEET.get(),
                 WizardArmorRenderer::netheriteArcane);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_FIRE_ROBE_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_FIRE_ROBE_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_FIRE_ROBE_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_FIRE_ROBE_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_FIRE_ROBE_FEET.get(),
                 WizardArmorRenderer::netheriteFire);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_FROST_ROBE_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_FROST_ROBE_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_FROST_ROBE_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_FROST_ROBE_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_FROST_ROBE_FEET.get(),
                 WizardArmorRenderer::netheriteFrost);
     }
 

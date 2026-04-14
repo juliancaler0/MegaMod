@@ -291,43 +291,43 @@ public final class SkillLockDefinitions {
                 SkillBranch.RANGER, null),
 
         // --- Class Armor (Wizard) ---
-        new UseLock("Wizard Robes", Set.of("wizard_robe_head", "wizard_robe_chest", "wizard_robe_legs", "wizard_robe_boots",
-                "arcane_robe_head", "arcane_robe_chest", "arcane_robe_legs", "arcane_robe_boots",
-                "fire_robe_head", "fire_robe_chest", "fire_robe_legs", "fire_robe_boots",
-                "frost_robe_head", "frost_robe_chest", "frost_robe_legs", "frost_robe_boots",
-                "netherite_arcane_robe_head", "netherite_arcane_robe_chest", "netherite_arcane_robe_legs", "netherite_arcane_robe_boots",
-                "netherite_fire_robe_head", "netherite_fire_robe_chest", "netherite_fire_robe_legs", "netherite_fire_robe_boots",
-                "netherite_frost_robe_head", "netherite_frost_robe_chest", "netherite_frost_robe_legs", "netherite_frost_robe_boots"),
+        new UseLock("Wizard Robes", Set.of("wizard_robe_head", "wizard_robe_chest", "wizard_robe_legs", "wizard_robe_feet",
+                "arcane_robe_head", "arcane_robe_chest", "arcane_robe_legs", "arcane_robe_feet",
+                "fire_robe_head", "fire_robe_chest", "fire_robe_legs", "fire_robe_feet",
+                "frost_robe_head", "frost_robe_chest", "frost_robe_legs", "frost_robe_feet",
+                "netherite_arcane_robe_head", "netherite_arcane_robe_chest", "netherite_arcane_robe_legs", "netherite_arcane_robe_feet",
+                "netherite_fire_robe_head", "netherite_fire_robe_chest", "netherite_fire_robe_legs", "netherite_fire_robe_feet",
+                "netherite_frost_robe_head", "netherite_frost_robe_chest", "netherite_frost_robe_legs", "netherite_frost_robe_feet"),
                 SkillBranch.WIZARD, null),
 
         // --- Class Armor (Paladin / Warrior) ---
-        new UseLock("Paladin Armor", Set.of("paladin_armor_head", "paladin_armor_chest", "paladin_armor_legs", "paladin_armor_boots",
-                "crusader_armor_head", "crusader_armor_chest", "crusader_armor_legs", "crusader_armor_boots",
-                "netherite_crusader_armor_head", "netherite_crusader_armor_chest", "netherite_crusader_armor_legs", "netherite_crusader_armor_boots"),
+        new UseLock("Paladin Armor", Set.of("paladin_armor_head", "paladin_armor_chest", "paladin_armor_legs", "paladin_armor_feet",
+                "crusader_armor_head", "crusader_armor_chest", "crusader_armor_legs", "crusader_armor_feet",
+                "netherite_crusader_armor_head", "netherite_crusader_armor_chest", "netherite_crusader_armor_legs", "netherite_crusader_armor_feet"),
                 SkillBranch.PALADIN, SkillBranch.WARRIOR),
 
         // --- Class Armor (Priest / Paladin) ---
-        new UseLock("Priest Robes", Set.of("priest_robe_head", "priest_robe_chest", "priest_robe_legs", "priest_robe_boots",
-                "prior_robe_head", "prior_robe_chest", "prior_robe_legs", "prior_robe_boots",
-                "netherite_prior_robe_head", "netherite_prior_robe_chest", "netherite_prior_robe_legs", "netherite_prior_robe_boots"),
+        new UseLock("Priest Robes", Set.of("priest_robe_head", "priest_robe_chest", "priest_robe_legs", "priest_robe_feet",
+                "prior_robe_head", "prior_robe_chest", "prior_robe_legs", "prior_robe_feet",
+                "netherite_prior_robe_head", "netherite_prior_robe_chest", "netherite_prior_robe_legs", "netherite_prior_robe_feet"),
                 SkillBranch.PALADIN, null),
 
         // --- Class Armor (Rogue) ---
-        new UseLock("Rogue Armor", Set.of("rogue_armor_head", "rogue_armor_chest", "rogue_armor_legs", "rogue_armor_boots",
-                "assassin_armor_head", "assassin_armor_chest", "assassin_armor_legs", "assassin_armor_boots",
-                "netherite_assassin_armor_head", "netherite_assassin_armor_chest", "netherite_assassin_armor_legs", "netherite_assassin_armor_boots"),
+        new UseLock("Rogue Armor", Set.of("rogue_armor_head", "rogue_armor_chest", "rogue_armor_legs", "rogue_armor_feet",
+                "assassin_armor_head", "assassin_armor_chest", "assassin_armor_legs", "assassin_armor_feet",
+                "netherite_assassin_armor_head", "netherite_assassin_armor_chest", "netherite_assassin_armor_legs", "netherite_assassin_armor_feet"),
                 SkillBranch.ROGUE, SkillBranch.WARRIOR),
 
         // --- Class Armor (Warrior) ---
-        new UseLock("Warrior Armor", Set.of("warrior_armor_head", "warrior_armor_chest", "warrior_armor_legs", "warrior_armor_boots",
-                "berserker_armor_head", "berserker_armor_chest", "berserker_armor_legs", "berserker_armor_boots",
-                "netherite_berserker_armor_head", "netherite_berserker_armor_chest", "netherite_berserker_armor_legs", "netherite_berserker_armor_boots"),
+        new UseLock("Warrior Armor", Set.of("warrior_armor_head", "warrior_armor_chest", "warrior_armor_legs", "warrior_armor_feet",
+                "berserker_armor_head", "berserker_armor_chest", "berserker_armor_legs", "berserker_armor_feet",
+                "netherite_berserker_armor_head", "netherite_berserker_armor_chest", "netherite_berserker_armor_legs", "netherite_berserker_armor_feet"),
                 SkillBranch.WARRIOR, SkillBranch.ROGUE),
 
         // --- Class Armor (Ranger) ---
-        new UseLock("Archer Armor", Set.of("archer_armor_head", "archer_armor_chest", "archer_armor_legs", "archer_armor_boots",
-                "ranger_armor_head", "ranger_armor_chest", "ranger_armor_legs", "ranger_armor_boots",
-                "netherite_ranger_armor_head", "netherite_ranger_armor_chest", "netherite_ranger_armor_legs", "netherite_ranger_armor_boots"),
+        new UseLock("Archer Armor", Set.of("archer_armor_head", "archer_armor_chest", "archer_armor_legs", "archer_armor_feet",
+                "ranger_armor_head", "ranger_armor_chest", "ranger_armor_legs", "ranger_armor_feet",
+                "netherite_ranger_armor_head", "netherite_ranger_armor_chest", "netherite_ranger_armor_legs", "netherite_ranger_armor_feet"),
                 SkillBranch.RANGER, null),
 
         // --- Resource Dimension ---

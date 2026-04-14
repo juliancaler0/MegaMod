@@ -24,21 +24,21 @@ public class RoguesClientMod {
                 ClassArmorRegistry.ROGUE_ARMOR_HEAD.get(),
                 ClassArmorRegistry.ROGUE_ARMOR_CHEST.get(),
                 ClassArmorRegistry.ROGUE_ARMOR_LEGS.get(),
-                ClassArmorRegistry.ROGUE_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.ROGUE_ARMOR_FEET.get(),
                 RogueArmorRenderer::rogue);
 
         registerArmorRenderer(
                 ClassArmorRegistry.ASSASSIN_ARMOR_HEAD.get(),
                 ClassArmorRegistry.ASSASSIN_ARMOR_CHEST.get(),
                 ClassArmorRegistry.ASSASSIN_ARMOR_LEGS.get(),
-                ClassArmorRegistry.ASSASSIN_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.ASSASSIN_ARMOR_FEET.get(),
                 RogueArmorRenderer::assassin);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_ASSASSIN_ARMOR_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_ASSASSIN_ARMOR_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_ASSASSIN_ARMOR_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_ASSASSIN_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_ASSASSIN_ARMOR_FEET.get(),
                 RogueArmorRenderer::netheriteAssassin);
 
         // Warrior armor sets
@@ -46,21 +46,21 @@ public class RoguesClientMod {
                 ClassArmorRegistry.WARRIOR_ARMOR_HEAD.get(),
                 ClassArmorRegistry.WARRIOR_ARMOR_CHEST.get(),
                 ClassArmorRegistry.WARRIOR_ARMOR_LEGS.get(),
-                ClassArmorRegistry.WARRIOR_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.WARRIOR_ARMOR_FEET.get(),
                 WarriorArmorRenderer::warrior);
 
         registerArmorRenderer(
                 ClassArmorRegistry.BERSERKER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.BERSERKER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.BERSERKER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.BERSERKER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.BERSERKER_ARMOR_FEET.get(),
                 WarriorArmorRenderer::berserker);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_BERSERKER_ARMOR_FEET.get(),
                 WarriorArmorRenderer::netheriteBerserker);
 
         // Geomancer armor — class-armor visuals chosen per slot:

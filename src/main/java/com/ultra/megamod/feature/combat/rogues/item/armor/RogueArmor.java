@@ -1,16 +1,16 @@
 package com.ultra.megamod.feature.combat.rogues.item.armor;
 
-import com.ultra.megamod.feature.relics.weapons.RpgArmorItem;
+import com.ultra.megamod.lib.spellengine.rpg_series.item.Armor;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.equipment.ArmorMaterial;
 
 /**
- * Rogue armor item type marker.
- * Ported from net.rogues.item.armor.RogueArmor.
- *
- * In the Fabric source, this extended Armor.CustomItem (SpellEngine RPG Series).
- * In MegaMod, rogue armor uses {@link RpgArmorItem} registered through ClassArmorRegistry.
- * This class is retained as a type marker for identification.
+ * Rogue armor item type — extends SpellEngine's {@link Armor.CustomItem} so armor-slot
+ * bonus MODIFIER spells (evasion, haste, crit chance, etc.) are picked up by the
+ * equipment attribute resolver.
  */
-public class RogueArmor {
-    // Marker class - actual armor items are registered in ClassArmorRegistry
-    // as RpgArmorItem with ROGUE_ARMOR_ASSET, ASSASSIN_ARMOR_ASSET, etc.
+public class RogueArmor extends Armor.CustomItem {
+    public RogueArmor(ArmorMaterial material, EquipmentSlot slot, Properties settings) {
+        super(material, slot, settings);
+    }
 }

@@ -37,21 +37,21 @@ public class ArchersClientMod {
                 ClassArmorRegistry.ARCHER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.ARCHER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.ARCHER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.ARCHER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.ARCHER_ARMOR_FEET.get(),
                 ArcherArmorRenderer::archer);
 
         registerArmorRenderer(
                 ClassArmorRegistry.RANGER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.RANGER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.RANGER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.RANGER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.RANGER_ARMOR_FEET.get(),
                 ArcherArmorRenderer::ranger);
 
         registerArmorRenderer(
                 ClassArmorRegistry.NETHERITE_RANGER_ARMOR_HEAD.get(),
                 ClassArmorRegistry.NETHERITE_RANGER_ARMOR_CHEST.get(),
                 ClassArmorRegistry.NETHERITE_RANGER_ARMOR_LEGS.get(),
-                ClassArmorRegistry.NETHERITE_RANGER_ARMOR_BOOTS.get(),
+                ClassArmorRegistry.NETHERITE_RANGER_ARMOR_FEET.get(),
                 ArcherArmorRenderer::netheriteRanger);
 
         List<Identifier> quiverModels = Quivers.entries.stream()

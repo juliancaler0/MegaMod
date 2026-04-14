@@ -43,23 +43,19 @@ public class WizardsMod {
     }
 
     /**
-     * Register the wizard creative tab and weapons.
+     * Register the wizard creative tab, weapons, and robe armor sets.
      * Must run after {@link com.ultra.megamod.lib.spellengine.SpellEngineNeoForge#init(IEventBus)}
      * so SpellDataComponents are registered, but before {@code RPGItemRegistry.init}.
      *
-     * <p><b>Note on armor:</b> Wizard robes currently remain registered through
-     * {@code ClassArmorRegistry} (using the legacy {@code RpgArmorItem} with
-     * {@code _boots} piece naming). Migrating them to SpellEngine's
-     * {@link Armors} factory registration (which emits {@code _feet} piece IDs)
-     * would break ~30 advancement / loot-table / recipe / shop references; the
-     * legacy {@code EquipmentSetManager} also already provides comparable set
-     * bonuses. Spell-set {@code MODIFIER} bonuses that specifically require the
-     * SpellEngine armor pipeline are tracked as follow-up work.</p>
+     * <p>Armor sets are registered via SpellEngine's {@link Armors} factory pipeline,
+     * which emits {@code _feet} piece IDs. The matching legacy {@code _boots} entries
+     * have been removed from {@code ClassArmorRegistry} (replaced with {@code Lookup}
+     * shims) so the two pipelines no longer collide.</p>
      */
     public static void registerItems(IEventBus modEventBus) {
         Group.init(modEventBus);
         WizardBooks.register();
         WizardWeapons.init(modEventBus);
-        // Armors.init(modEventBus); // see note above — kept in ClassArmorRegistry for now
+        Armors.init(modEventBus);
     }
 }

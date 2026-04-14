@@ -5,7 +5,7 @@
   "experience": 0.1,
   "group": "disassemble",
   "ingredient": {
-    "item": "megamod:frost_robe_boots"
+    "item": "megamod:frost_robe_feet"
   },
   "result": {
     "id": "minecraft:prismarine_shard"

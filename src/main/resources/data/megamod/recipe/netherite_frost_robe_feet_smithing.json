@@ -4,11 +4,11 @@
     "item": "minecraft:netherite_ingot"
   },
   "base": {
-    "item": "megamod:frost_robe_boots"
+    "item": "megamod:frost_robe_feet"
   },
   "result": {
     "count": 1,
-    "id": "megamod:netherite_frost_robe_boots"
+    "id": "megamod:netherite_frost_robe_feet"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

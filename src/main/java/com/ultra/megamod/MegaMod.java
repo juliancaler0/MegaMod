@@ -138,6 +138,7 @@ public class MegaMod {
         // {@code ClassWeaponRegistry} below to avoid duplicate registrations.
         com.ultra.megamod.feature.combat.wizards.WizardsMod.registerItems(modEventBus);
         com.ultra.megamod.feature.combat.paladins.PaladinsMod.registerItems(modEventBus);
+        com.ultra.megamod.feature.combat.rogues.RoguesMod.registerItems(modEventBus);
         com.ultra.megamod.feature.combat.rogues.RoguesMod.init();
         com.ultra.megamod.feature.combat.spell.SpellItemRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.runes.RuneRegistry.init(modEventBus);
@@ -167,7 +168,9 @@ public class MegaMod {
         // Reliquary port — relic items, pedestals, alkahestry, potion essences, handgun.
         // Uses "reliquary" namespace for IDs so the copied asset/data tree resolves
         // without rewriting 400+ JSON references.
-        com.ultra.megamod.reliquary.Reliquary.initCommon(modEventBus, modContainer);
+        // NOTE: Excluded from compilation on this branch (see build.gradle) — tracked
+        // on feature/reliquary-port.
+        // com.ultra.megamod.reliquary.Reliquary.initCommon(modEventBus, modContainer);
 
         LOGGER.info("MegaMod loading - all systems enabled");
     }
