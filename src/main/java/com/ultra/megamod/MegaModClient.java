@@ -150,6 +150,21 @@ public class MegaModClient {
         // Particle provider registration
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleProviders::registerParticleProviders);
 
+        // === SpellEngine library client wiring (Phase A.3) ===
+        // Register SE-port SpellProjectile / SpellCloud entity renderers, SpellBinding menu screens,
+        // and SpellEngine particle providers. SpellEngineClient.init() performs the remaining client
+        // initialization (HUD config refresh, effect particle spawners, RPG series client setup)
+        // during FMLClientSetupEvent once registries are bound.
+        modEventBus.addListener(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::onRegisterEntityRenderers);
+        modEventBus.addListener(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::onRegisterMenuScreens);
+        modEventBus.addListener(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::registerParticleProviders);
+        // Phase A.2: register SpellEngine HUD overlay (cast bar + spell hotbar widgets)
+        // and the SpellEngine keybindings (9 spell hotbar keys + alt-bypass key).
+        modEventBus.addListener(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::onRegisterGuiLayers);
+        modEventBus.addListener(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::onRegisterKeyMappings);
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent seClientSetup) ->
+                seClientSetup.enqueueWork(com.ultra.megamod.lib.spellengine.client.SpellEngineClient::init));
+
         // Initialize PlayerAnimationLib (registers factory, sound keyframe handler)
         com.ultra.megamod.lib.playeranim.minecraft.PlayerAnimLibMod.init();
 

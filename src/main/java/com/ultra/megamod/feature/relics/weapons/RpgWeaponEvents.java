@@ -190,7 +190,7 @@ public class RpgWeaponEvents {
             case "megamod:whisperwind" -> RpgWeaponEvents.executeWhisperwind(player, skill, level);
             case "megamod:soulchain" -> RpgWeaponEvents.executeSoulchain(player, skill, level);
             case "megamod:soka_singing_blade" -> RpgWeaponEvents.executeSokaSingingBlade(player, skill, level);
-            default -> ArsenalWeaponEvents.executeSkill(player, weaponName, skill, level);
+            default -> false;
         };
     }
 

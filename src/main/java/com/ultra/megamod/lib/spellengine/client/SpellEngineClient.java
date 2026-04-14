@@ -115,6 +115,40 @@ public class SpellEngineClient {
         event.registerEntityRenderer(SpellCloud.ENTITY_TYPE, SpellCloudRenderer::new);
     }
 
+    // --- Phase A.2: HUD overlay wiring ---------------------------------
+    // Registers a GUI layer beneath the chat overlay that draws the
+    // SpellHotBarWidget, cast bar, target indicator, and error banner from
+    // HudRenderHelper each frame. Mirrors the reference NeoForgeClientMod.
+    public static final net.minecraft.resources.Identifier SPELL_HUD_LAYER_ID =
+            net.minecraft.resources.Identifier.fromNamespaceAndPath(
+                    com.ultra.megamod.MegaMod.MODID, "spell_engine_hud");
+
+    /**
+     * Register the SpellEngine HUD overlay. Call from MegaModClient via
+     * {@code modEventBus.addListener(SpellEngineClient::onRegisterGuiLayers)}.
+     */
+    public static void onRegisterGuiLayers(
+            net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
+        event.registerBelow(
+                net.neoforged.neoforge.client.gui.VanillaGuiLayers.CHAT,
+                SPELL_HUD_LAYER_ID,
+                (guiGraphics, deltaTracker) -> {
+                    var mc = net.minecraft.client.Minecraft.getInstance();
+                    if (mc.options.hideGui) { return; }
+                    com.ultra.megamod.lib.spellengine.client.gui.HudRenderHelper.render(
+                            guiGraphics, deltaTracker.getRealtimeDeltaTicks());
+                });
+    }
+
+    /**
+     * Register the SpellEngine keybindings. Call from MegaModClient via
+     * {@code modEventBus.addListener(SpellEngineClient::onRegisterKeyMappings)}.
+     */
+    public static void onRegisterKeyMappings(
+            net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) {
+        com.ultra.megamod.lib.spellengine.client.input.Keybindings.onRegisterKeyMappings(event);
+    }
+
     public static void injectRangedWeaponModelPredicates() {
         for (var entry : BuiltInRegistries.ITEM.entrySet()) {
             var item = entry.getValue();

@@ -33,6 +33,13 @@ sourceSets.main.java {
     exclude("com/ultra/megamod/reliquary/**")
 }
 
+// Belt-and-suspenders: moddev's compileJava sometimes re-resolves source trees
+// outside of the sourceSet filter. Re-apply at compile-task level so the
+// reliquary tree is skipped even when the sourceSet filter is bypassed.
+tasks.named('compileJava', JavaCompile) {
+    exclude("com/ultra/megamod/reliquary/**")
+}
+
 repositories {
     // PlayerAnimationLib by ZigyTheBird (required for BetterCombat animations)
     maven {

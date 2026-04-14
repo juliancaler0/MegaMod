@@ -47,6 +47,20 @@ public class Keybindings {
     public static KeyMapping spell_hotbar_8 = hotbarKey(8);
     public static KeyMapping spell_hotbar_9 = hotbarKey(9);
 
+    /**
+     * NeoForge integration: register all SpellEngine keybindings on the
+     * {@link net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent}.
+     *
+     * Call from MegaModClient via:
+     *   modEventBus.addListener(Keybindings::onRegisterKeyMappings);
+     */
+    public static void onRegisterKeyMappings(
+            net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) {
+        for (var keybinding : mutableAll) {
+            event.register(keybinding);
+        }
+    }
+
     public static class Wrapped {
         public static List<WrappedKeybinding> all() {
             return List.of(
