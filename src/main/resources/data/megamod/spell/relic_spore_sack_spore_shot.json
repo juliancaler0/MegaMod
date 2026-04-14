@@ -1,0 +1,61 @@
+{
+  "school": "megamod:physical_ranged",
+  "range": 12.0,
+  "group": "relic",
+  "tier": 1,
+  "active": {
+    "cast": {
+      "duration": 0.2
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.arrow.shoot",
+      "volume": 0.7
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {}
+  },
+  "deliver": {
+    "type": "PROJECTILE",
+    "projectile": {
+      "launch_properties": {
+        "velocity": 1.5
+      },
+      "projectile": {
+        "client_data": {
+          "light_level": 6
+        }
+      }
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.7,
+          "knockback": 0.6
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "minecraft:poison",
+          "duration": 6.0,
+          "amplifier": 0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.15,
+    "cooldown": {
+      "duration": 6.0
+    }
+  }
+}

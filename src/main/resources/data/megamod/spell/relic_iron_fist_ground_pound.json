@@ -1,0 +1,44 @@
+{
+  "school": "megamod:arcane",
+  "range": 6.0,
+  "group": "relic",
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.2
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.evoker.cast_spell",
+      "volume": 0.7
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "horizontal_range_multiplier": 1.0,
+      "vertical_range_multiplier": 0.6
+    }
+  },
+  "deliver": {
+    "type": "DIRECT"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.4,
+          "knockback": 0.6
+        }
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.15,
+    "cooldown": {
+      "duration": 10.4
+    }
+  }
+}

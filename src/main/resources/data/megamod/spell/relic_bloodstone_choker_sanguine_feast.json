@@ -1,0 +1,40 @@
+{
+  "school": "megamod:physical_ranged",
+  "range": 12.0,
+  "group": "relic",
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.2
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.arrow.shoot",
+      "volume": 0.7
+    }
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "deliver": {
+    "type": "DIRECT"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.4,
+          "knockback": 0.6
+        }
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.15,
+    "cooldown": {
+      "duration": 52.0
+    }
+  }
+}

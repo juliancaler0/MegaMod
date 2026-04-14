@@ -1,0 +1,59 @@
+{
+  "school": "megamod:fire",
+  "range": 12.0,
+  "group": "relic",
+  "tier": 1,
+  "active": {
+    "cast": {
+      "duration": 0.2
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.blaze.shoot",
+      "volume": 0.7
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {}
+  },
+  "deliver": {
+    "type": "PROJECTILE",
+    "projectile": {
+      "launch_properties": {
+        "velocity": 1.5
+      },
+      "projectile": {
+        "client_data": {
+          "light_level": 6
+        }
+      }
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 0.7,
+          "knockback": 0.6
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "FIRE",
+        "fire": {
+          "duration": 4.0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.15,
+    "cooldown": {
+      "duration": 6.6000000000000005
+    }
+  }
+}

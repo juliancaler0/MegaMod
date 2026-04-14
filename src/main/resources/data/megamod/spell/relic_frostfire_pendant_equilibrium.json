@@ -1,0 +1,34 @@
+{
+  "school": "megamod:fire",
+  "range": 8.0,
+  "tier": 1,
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "type": "DAMAGE_TAKEN",
+        "stage": "PRE",
+        "chance": 0.25
+      }
+    ]
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "deliver": {
+    "type": "DIRECT"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "minecraft:resistance",
+          "duration": 20.0,
+          "amplifier": 1
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "school": "megamod:frost",
+  "range": 12.0,
+  "group": "relic",
+  "tier": 1,
+  "active": {
+    "cast": {
+      "duration": 0.2
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:block.glass.break",
+      "volume": 0.7
+    }
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "deliver": {
+    "type": "DIRECT"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "HEAL",
+        "heal": {
+          "spell_power_coefficient": 1.0
+        }
+      },
+      "sound": {
+        "id": "minecraft:entity.experience_orb.pickup",
+        "volume": 0.7
+      }
+    }
+  ],
+  "cost": {
+    "exhaust": 0.15,
+    "cooldown": {
+      "duration": 8.0
+    }
+  }
+}
