@@ -88,6 +88,32 @@ public class RogueWeapons {
     // MARK: Register
 
     public static void register(Map<String, WeaponConfig> configs) {
+        // Compat-mod T4 rogue/warrior weapons — always added since
+        // ignore_items_required_mods = true (we don't ship BetterNether/BetterEnd/Aether items).
+        if (RoguesMod.tweaksConfig.ignore_items_required_mods) {
+            // BetterNether Ruby tier
+            add(Weapons.daggerWithSkill(NAMESPACE, "ruby_dagger", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.sickleWithSkill(NAMESPACE, "ruby_sickle", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.doubleAxeWithSkill(NAMESPACE, "ruby_double_axe", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.glaiveWithSkill(NAMESPACE, "ruby_glaive", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+
+            // BetterEnd Aeternium tier
+            add(Weapons.daggerWithSkill(NAMESPACE, "aeternium_dagger", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.sickleWithSkill(NAMESPACE, "aeternium_sickle", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.doubleAxeWithSkill(NAMESPACE, "aeternium_double_axe", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+            add(Weapons.glaiveWithSkill(NAMESPACE, "aeternium_glaive", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT)));
+
+            // Aether tier
+            add(Weapons.daggerWithSkill(NAMESPACE, "aether_dagger", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT))
+                    .loot(Equipment.LootProperties.of("aether")));
+            add(Weapons.sickleWithSkill(NAMESPACE, "aether_sickle", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT))
+                    .loot(Equipment.LootProperties.of("aether")));
+            add(Weapons.doubleAxeWithSkill(NAMESPACE, "aether_double_axe", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT))
+                    .loot(Equipment.LootProperties.of("aether")));
+            add(Weapons.glaiveWithSkill(NAMESPACE, "aether_glaive", Equipment.Tier.TIER_4, () -> Ingredient.of(Items.NETHERITE_INGOT))
+                    .loot(Equipment.LootProperties.of("aether")));
+        }
+
         Weapon.register(configs, entries, Group.KEY);
     }
 
