@@ -1,0 +1,44 @@
+{
+  "school": "megamod:fire",
+  "range": 5.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.5,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:block.beacon.activate"
+    }
+  },
+  "target": {
+    "type": "AREA"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.1
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "FIRE",
+        "fire": {
+          "duration": 3.0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 6.0
+    }
+  }
+}

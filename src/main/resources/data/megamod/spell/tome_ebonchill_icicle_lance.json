@@ -1,0 +1,49 @@
+{
+  "school": "megamod:frost",
+  "range": 12.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.5,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:item.trident.throw"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {
+      "required": true
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.6
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "slowness",
+          "duration": 2.0,
+          "amplifier": 2
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 5.0
+    }
+  }
+}

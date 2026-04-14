@@ -1,0 +1,49 @@
+{
+  "school": "megamod:soul",
+  "range": 12.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 1.0,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.wither.hurt"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {
+      "required": true,
+      "sticky": true
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.8
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "HEAL",
+        "apply_to_caster": true,
+        "heal": {
+          "spell_power_coefficient": 0.9
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 4.0
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "school": "megamod:arcane",
+  "range": 12.0,
+  "tier": 5,
+  "active": {
+    "cast": {
+      "duration": 1.0,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.wither.spawn"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "distance_dropoff": "SQUARED",
+      "horizontal_range_multiplier": 1.2
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 2.0,
+          "knockback": -1.5
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 12.0
+    }
+  }
+}

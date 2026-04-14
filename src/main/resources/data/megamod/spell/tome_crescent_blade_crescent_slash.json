@@ -1,0 +1,40 @@
+{
+  "school": "megamod:arcane",
+  "range": 4.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.3,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.player.attack.sweep"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "angle_degrees": 120.0
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.2,
+          "knockback": 0.5
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 3.0
+    }
+  }
+}

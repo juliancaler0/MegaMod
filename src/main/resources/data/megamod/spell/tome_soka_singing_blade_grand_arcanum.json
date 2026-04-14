@@ -1,0 +1,78 @@
+{
+  "school": "megamod:arcane",
+  "range": 10.0,
+  "tier": 8,
+  "active": {
+    "cast": {
+      "duration": 3.0,
+      "channel_ticks": 20,
+      "animation": {
+        "id": "megamod:two_handed_channeling"
+      }
+    }
+  },
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.generic.explode"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "distance_dropoff": "SQUARED",
+      "horizontal_range_multiplier": 1.0
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 4.0,
+          "knockback": 1.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "resistance",
+          "duration": 8.0,
+          "amplifier": 2
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "regeneration",
+          "duration": 8.0,
+          "amplifier": 1
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "speed",
+          "duration": 8.0,
+          "amplifier": 2
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 20.0
+    }
+  }
+}

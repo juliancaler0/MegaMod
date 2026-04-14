@@ -1,0 +1,40 @@
+{
+  "school": "megamod:soul",
+  "range": 10.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.3,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.phantom.bite"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {
+      "required": true
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.2,
+          "knockback": -1.5
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 4.0
+    }
+  }
+}

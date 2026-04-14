@@ -1,0 +1,64 @@
+{
+  "school": "megamod:arcane",
+  "range": 8.0,
+  "tier": 8,
+  "active": {
+    "cast": {
+      "duration": 0.75,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:block.beacon.activate"
+    }
+  },
+  "target": {
+    "type": "AIM",
+    "aim": {
+      "required": true,
+      "sticky": true
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 3.5
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "glowing",
+          "duration": 5.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "weakness",
+          "duration": 5.0
+        }
+      }
+    }
+  ],
+  "area_impact": {
+    "radius": 8.0,
+    "area": {
+      "distance_dropoff": "SQUARED"
+    }
+  },
+  "cost": {
+    "cooldown": {
+      "duration": 30.0
+    }
+  }
+}

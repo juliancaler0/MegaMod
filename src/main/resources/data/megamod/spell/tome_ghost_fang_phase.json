@@ -1,0 +1,44 @@
+{
+  "school": "megamod:soul",
+  "range": 0.0,
+  "tier": 5,
+  "active": {},
+  "release": {
+    "animation": {
+      "id": "megamod:one_handed_area_release"
+    },
+    "sound": {
+      "id": "minecraft:entity.phantom.ambient"
+    }
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "invisibility",
+          "duration": 2.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "IMMUNITY",
+        "apply_to_caster": true,
+        "immunity": {
+          "effect_any_harmful": true,
+          "duration_ticks": 40
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 15.0
+    }
+  }
+}

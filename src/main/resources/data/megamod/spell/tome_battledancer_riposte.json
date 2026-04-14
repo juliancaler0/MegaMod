@@ -1,0 +1,39 @@
+{
+  "school": "megamod:arcane",
+  "range": 0.0,
+  "tier": 5,
+  "active": {
+    "cast": {
+      "duration": 0.3,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:item.shield.block"
+    }
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "resistance",
+          "duration": 3.0,
+          "amplifier": 3
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 12.0
+    }
+  }
+}

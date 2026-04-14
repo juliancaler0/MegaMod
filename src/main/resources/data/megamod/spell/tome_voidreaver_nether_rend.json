@@ -1,0 +1,40 @@
+{
+  "school": "megamod:arcane",
+  "range": 4.0,
+  "tier": 4,
+  "active": {
+    "cast": {
+      "duration": 0.5,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.enderman.teleport"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "angle_degrees": 120.0
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "bypass_iframes": true,
+          "spell_power_coefficient": 1.5
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 5.0
+    }
+  }
+}

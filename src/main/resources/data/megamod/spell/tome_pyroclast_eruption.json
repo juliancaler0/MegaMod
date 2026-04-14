@@ -1,0 +1,48 @@
+{
+  "school": "megamod:fire",
+  "range": 6.0,
+  "tier": 5,
+  "active": {
+    "cast": {
+      "duration": 1.0,
+      "animation": {
+        "id": "megamod:one_handed_sky_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.generic.explode"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "distance_dropoff": "SQUARED"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 2.2,
+          "knockback": 1.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "FIRE",
+        "fire": {
+          "duration": 5.0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 13.0
+    }
+  }
+}

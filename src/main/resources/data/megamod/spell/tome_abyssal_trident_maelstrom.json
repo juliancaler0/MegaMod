@@ -1,0 +1,50 @@
+{
+  "school": "megamod:frost",
+  "range": 8.0,
+  "tier": 5,
+  "active": {
+    "cast": {
+      "duration": 1.0,
+      "animation": {
+        "id": "megamod:one_handed_area_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.generic.splash"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "distance_dropoff": "SQUARED"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.8,
+          "knockback": -1.0
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "slowness",
+          "duration": 3.0,
+          "amplifier": 2
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 12.0
+    }
+  }
+}

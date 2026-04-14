@@ -1,0 +1,41 @@
+{
+  "school": "megamod:frost",
+  "range": 8.0,
+  "tier": 3,
+  "active": {
+    "cast": {
+      "duration": 0.5,
+      "animation": {
+        "id": "megamod:one_handed_projectile_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:entity.generic.splash"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "angle_degrees": 60.0,
+      "horizontal_range_multiplier": 1.0
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.2,
+          "knockback": 1.8
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 4.0
+    }
+  }
+}

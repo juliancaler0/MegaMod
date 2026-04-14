@@ -1,0 +1,49 @@
+{
+  "school": "megamod:healing",
+  "range": 6.0,
+  "tier": 4,
+  "active": {
+    "cast": {
+      "duration": 0.75,
+      "animation": {
+        "id": "megamod:one_handed_sky_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:block.grass.break"
+    }
+  },
+  "target": {
+    "type": "AREA",
+    "area": {
+      "distance_dropoff": "SQUARED"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "DAMAGE",
+        "damage": {
+          "spell_power_coefficient": 1.4
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "poison",
+          "duration": 5.0,
+          "amplifier": 1
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 9.0
+    }
+  }
+}

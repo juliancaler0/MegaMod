@@ -1,0 +1,50 @@
+{
+  "school": "megamod:healing",
+  "range": 0.0,
+  "tier": 4,
+  "active": {
+    "cast": {
+      "duration": 0.5,
+      "animation": {
+        "id": "megamod:one_handed_healing_charge"
+      }
+    }
+  },
+  "release": {
+    "sound": {
+      "id": "minecraft:block.beacon.power_select"
+    }
+  },
+  "target": {
+    "type": "CASTER"
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "absorption",
+          "duration": 8.0,
+          "amplifier": 2
+        }
+      }
+    },
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "apply_to_caster": true,
+        "status_effect": {
+          "effect_id": "resistance",
+          "duration": 8.0,
+          "amplifier": 1
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 10.0
+    }
+  }
+}
