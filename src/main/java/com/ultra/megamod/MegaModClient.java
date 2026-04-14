@@ -163,12 +163,22 @@ public class MegaModClient {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "etf"),
                     com.ultra.megamod.lib.etf.ETFReloadListener.INSTANCE);
+            // EMF Phase E: clear compiled .jem cache on resource-pack reload
+            event.addListener(
+                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "emf"),
+                    com.ultra.megamod.lib.emf.EmfReloadListener.INSTANCE);
         });
 
         // ETF Phase B: eagerly init the manager on client setup so it populates
         // KNOWN_RESOURCEPACK_ORDER before the first render frame
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent etfInit) -> {
             etfInit.enqueueWork(() -> com.ultra.megamod.lib.etf.features.ETFManager.getInstance());
+        });
+
+        // EMF Phase E: eagerly init the model manager on client setup so the
+        // first .jem load doesn't race with reload listener registration
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent emfInit) -> {
+            emfInit.enqueueWork(() -> com.ultra.megamod.lib.emf.runtime.EmfModelManager.getInstance());
         });
 
         // ETF Phase C: config keybind registration + emissive feature layer on players
