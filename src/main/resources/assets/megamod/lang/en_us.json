@@ -1643,6 +1643,7 @@
   "advancements.rpg_series.trade_with_archery_artisan.title": "Archery Sale",
   "advancements.rpg_series.trade_with_archery_artisan.description": "Purchase an item from an Archery Artisan Villager",
   "itemGroup.megamod.paladins": "Paladins & Priests",
+  "itemGroup.megamod.wizards": "Wizards",
   "item.megamod.spell_book/paladin": "Paladin Libram",
   "item.megamod.spell_book/priest": "Holy Book",
   "item.megamod.spell_scroll/paladin": "Paladin Spell Scroll",
