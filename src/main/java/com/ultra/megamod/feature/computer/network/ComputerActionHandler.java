@@ -1194,24 +1194,8 @@ public class ComputerActionHandler {
                             sb.append("}");
                         }
                         sb.append("]");
-                        // Weapon skills (check custom overrides first, then default)
-                        sb.append(",\"weaponSkills\":[");
-                        {
-                            java.util.List<com.ultra.megamod.feature.relics.weapons.RpgWeaponItem.WeaponSkill> effectiveSkills =
-                                com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.getEffectiveSkills(stack);
-                            boolean firstSkill = true;
-                            for (com.ultra.megamod.feature.relics.weapons.RpgWeaponItem.WeaponSkill ws : effectiveSkills) {
-                                if (!firstSkill) sb.append(",");
-                                firstSkill = false;
-                                int effectiveCd = com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents.getEffectiveWeaponCooldown(stack, ws);
-                                sb.append("{\"name\":\"").append(ws.name().replace("\"", "\\\"")).append("\"");
-                                sb.append(",\"desc\":\"").append(ws.description().replace("\"", "\\\"")).append("\"");
-                                sb.append(",\"cooldown\":").append(effectiveCd);
-                                sb.append(",\"cooldownSec\":").append(String.format("%.1f", effectiveCd / 20.0f));
-                                sb.append(",\"defaultCooldown\":").append(ws.cooldownTicks()).append("}");
-                            }
-                        }
-                        sb.append("]");
+                        // Phase H: manual RPG weapon skills removed — tomes cast via SpellEngine.
+                        sb.append(",\"weaponSkills\":[]");
                     }
                     sb.append(",\"isRelicItem\":").append(stack.getItem() instanceof RelicItem);
                     sb.append(",\"hasRelicData\":").append(hasRelic);

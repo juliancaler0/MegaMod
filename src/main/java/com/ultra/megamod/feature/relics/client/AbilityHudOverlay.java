@@ -2,7 +2,6 @@ package com.ultra.megamod.feature.relics.client;
 
 import com.ultra.megamod.feature.relics.network.AbilityCooldownSyncPayload;
 import com.ultra.megamod.feature.relics.network.AccessoryPayload;
-import com.ultra.megamod.feature.relics.network.WeaponAbilitySyncPayload;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,12 +90,10 @@ public class AbilityHudOverlay {
         }
 
         List<UnifiedAbilityBar.AccessoryAbilityEntry> accessories = UnifiedAbilityBar.getAccessoryEntries();
-        List<UnifiedAbilityBar.WeaponAbilityEntry> weapons = UnifiedAbilityBar.getWeaponEntries();
         boolean hasAcc = !accessories.isEmpty();
-        boolean hasWpn = !weapons.isEmpty();
 
         // Detect ability set changes to trigger hint
-        int currentHash = weapons.hashCode() * 31 + accessories.hashCode();
+        int currentHash = accessories.hashCode();
         if (currentHash != lastAbilityHash) {
             lastAbilityHash = currentHash;
             hintShowStartTime = System.currentTimeMillis();
@@ -104,78 +101,19 @@ public class AbilityHudOverlay {
 
         Map<String, Integer> relicCd = AbilityCooldownSyncPayload.clientCooldowns;
         if (relicCd == null) relicCd = Map.of();
-        Map<String, Integer> weaponCd = WeaponAbilitySyncPayload.clientWeaponCooldowns;
-        if (weaponCd == null) weaponCd = Map.of();
         updateMaxCooldowns(relicCd);
-        updateMaxCooldowns(weaponCd);
 
         int screenW = g.guiWidth();
         int screenH = g.guiHeight();
-
-        // ===== WEAPON HUD (centered horizontal, above hotbar) =====
-        if (hasWpn) {
-            renderWeaponBar(g, mc, weapons, relicCd, weaponCd, screenW, screenH);
-        }
 
         // ===== LEFT EQUIPMENT BAR (vertical: armor + shield + accessories) =====
         renderLeftEquipmentBar(g, mc, accessories, relicCd, screenW, screenH);
 
         // ===== FADING HINT TEXT =====
-        renderHints(g, mc, hasWpn, hasAcc, screenW, screenH);
+        renderHints(g, mc, hasAcc, screenW, screenH);
 
         // ===== CAST NOTIFICATION (below compass at top) =====
         renderCastNotification(g, mc, screenW);
-    }
-
-    // ========================================================================
-    // WEAPON BAR — horizontal, centered above hotbar
-    // ========================================================================
-
-    private static void renderWeaponBar(GuiGraphics g, Minecraft mc,
-                                         List<UnifiedAbilityBar.WeaponAbilityEntry> weapons,
-                                         Map<String, Integer> relicCd,
-                                         Map<String, Integer> weaponCd,
-                                         int screenW, int screenH) {
-        int hotbarTop = screenH - 22;
-        int wpnCount = weapons.size();
-        int wpnZoneW = wpnCount * BOX_SIZE + (wpnCount - 1) * BOX_GAP;
-        int barX = (screenW - wpnZoneW) / 2;
-        int barY = hotbarTop - 38 - BOX_SIZE;
-
-        int selectedWpn = UnifiedAbilityBar.getSelectedWeaponAbilityIndex();
-        int selectedBoxX = -1;
-        String selectedDisplay = null;
-        String selectedAbility = null;
-        int selectedCd = 0;
-
-        for (int i = 0; i < wpnCount; i++) {
-            UnifiedAbilityBar.WeaponAbilityEntry entry = weapons.get(i);
-            boolean selected = (i == selectedWpn);
-            int bx = barX + i * (BOX_SIZE + BOX_GAP);
-
-            int cd = relicCd.getOrDefault(entry.abilityName(), 0);
-            if (cd <= 0 && entry.isRpgSkill()) {
-                cd = weaponCd.getOrDefault(entry.abilityName(), 0);
-            }
-
-            drawAbilityBox(g, mc, bx, barY, selected, null, cd, entry.abilityName());
-
-            // Small type label in top-right corner
-            String label = entry.isRpgSkill() ? "S" : "A";
-            g.drawString(mc.font, label, bx + BOX_SIZE - mc.font.width(label) - 2, barY + 2, 0x55FFFFFF, false);
-
-            if (selected) {
-                selectedBoxX = bx;
-                selectedDisplay = entry.displayName();
-                selectedAbility = entry.abilityName();
-                selectedCd = cd;
-            }
-        }
-
-        // Tooltip above selected weapon
-        if (selectedBoxX >= 0 && selectedDisplay != null) {
-            drawWeaponTooltip(g, mc, selectedBoxX, barY, selectedDisplay, selectedAbility, selectedCd);
-        }
     }
 
     // ========================================================================
@@ -299,21 +237,14 @@ public class AbilityHudOverlay {
     // ========================================================================
 
     private static void renderHints(GuiGraphics g, Minecraft mc,
-                                     boolean hasWpn, boolean hasAcc,
+                                     boolean hasAcc,
                                      int screenW, int screenH) {
-        if (!hasWpn && !hasAcc) return;
+        if (!hasAcc) return;
 
         long elapsed = System.currentTimeMillis() - hintShowStartTime;
         if (hintShowStartTime <= 0 || elapsed >= HINT_DISPLAY_MS + HINT_FADE_MS) return;
 
-        String hint;
-        if (hasWpn && hasAcc) {
-            hint = "[RClick] Wpn  [R+Scroll] Wpn Cycle  [R] Relic  [G+Scroll] Select  [G] Flip";
-        } else if (hasWpn) {
-            hint = "[RClick] Cast  [R+Scroll] Switch";
-        } else {
-            hint = "[R] Cast  [G+Scroll] Select  [G] Flip";
-        }
+        String hint = "[R] Cast  [G+Scroll] Select  [G] Flip";
 
         int alpha;
         if (elapsed < HINT_DISPLAY_MS) {
@@ -480,37 +411,6 @@ public class AbilityHudOverlay {
             int pageW = mc.font.width(pageStr);
             g.drawString(mc.font, pageStr, tooltipX + panelW - pageW - 4, textY, TOOLTIP_TYPE, false);
         }
-    }
-
-    /** Tooltip above the selected weapon box (horizontal bar). */
-    private static void drawWeaponTooltip(GuiGraphics g, Minecraft mc,
-                                           int boxX, int barY,
-                                           String displayName, String abilityName, int cd) {
-        String line1 = displayName;
-        String line2 = cd > 0 ? "CD: " + (int) Math.ceil((double) cd / 20.0) + "s" : "[RClick]";
-
-        int maxW = Math.max(mc.font.width(line1), mc.font.width(line2));
-        int panelW = maxW + 10;
-        int panelH = 6 + 2 * 10;
-
-        int tooltipX = boxX + BOX_SIZE / 2 - panelW / 2;
-        int tooltipY = barY - panelH - 4;
-        int screenW = g.guiWidth();
-        if (tooltipX < 2) tooltipX = 2;
-        if (tooltipX + panelW > screenW - 2) tooltipX = screenW - 2 - panelW;
-        if (tooltipY < 2) tooltipY = 2;
-
-        g.fill(tooltipX - 1, tooltipY - 1, tooltipX + panelW + 1, tooltipY + panelH + 1, TOOLTIP_BORDER);
-        g.fill(tooltipX, tooltipY, tooltipX + panelW, tooltipY + panelH, TOOLTIP_BG);
-
-        int textX = tooltipX + 4;
-        int textY = tooltipY + 4;
-
-        g.drawString(mc.font, line1, textX, textY, TOOLTIP_NAME, false);
-        textY += 10;
-
-        int line2Color = cd > 0 ? COOLDOWN_TEXT : TOOLTIP_KEYBIND;
-        g.drawString(mc.font, line2, textX, textY, line2Color, false);
     }
 
     // ========================================================================

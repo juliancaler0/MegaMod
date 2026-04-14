@@ -114,7 +114,6 @@ public class InputHandler
 
 		while(ENTER_SHOULDER_SURFING.consumeClick())
 		{
-			org.slf4j.LoggerFactory.getLogger("ShoulderSurfing").info("ENTER_SHOULDER_SURFING key fired");
 			this.instance.changePerspective(Perspective.SHOULDER_SURFING);
 		}
 

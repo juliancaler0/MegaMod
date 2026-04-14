@@ -1002,7 +1002,7 @@ extends Screen {
         if (entry.hasWeaponStats) {
             // Dynamic skill picker: divider + S1 header + S1 grid + S2 header + S2 grid
             int skillCount = 0;
-            try { skillCount = com.ultra.megamod.feature.relics.weapons.RpgWeaponRegistry.getAllSkillNames().size(); } catch (Exception e) {}
+            // Phase H: manual weapon skill registry removed; tomes now cast via SpellEngine.
             int rowsPerSlot = Math.max(1, (int) Math.ceil(skillCount / 6.0)); // ~6 skills per row
             h += 4 + 13 + rowsPerSlot * 12 + 14 + 12 + rowsPerSlot * 12 + 14; // divider + S1 header + S1 rows + gap + S2 header + S2 rows + gap
         } else {

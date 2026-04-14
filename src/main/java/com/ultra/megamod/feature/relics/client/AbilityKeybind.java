@@ -1,44 +1,36 @@
 package com.ultra.megamod.feature.relics.client;
 
 import com.ultra.megamod.feature.combat.spell.SpellBookCastPayload;
-import com.ultra.megamod.feature.combat.spell.SpellBookItem;
 import com.ultra.megamod.feature.combat.spell.client.SpellBookHudOverlay;
 import com.ultra.megamod.feature.combat.spell.client.SpellBookSelection;
-import com.ultra.megamod.feature.relics.RelicItem;
-import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import com.ultra.megamod.feature.relics.network.AbilityCastPayload;
-import com.ultra.megamod.feature.relics.weapons.RpgWeaponItem;
-import com.ultra.megamod.feature.relics.weapons.RpgWeaponRegistry;
+import com.ultra.megamod.feature.relics.RelicSpellAssignments;
+import com.ultra.megamod.feature.relics.network.RelicSpellCastPayload;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 /**
  * Unified ability keybind handler.
  *
- * RIGHT-CLICK: Cast selected ability on held weapon (RelicItem NONE / RpgWeaponItem)
+ * <p>Phase H: weapon right-click casting, weapon ability scrolling, and the legacy
+ * AbilityCastPayload path are gone — all weapon casts (tomes, Arsenal uniques,
+ * wands, staves) now go through SpellEngine's own active-cast controller.
  *
  * R key (ABILITY_CAST):
- *   - Hold R + Scroll = cycle through weapon abilities (visual selection for right-click)
- *   - Tap R = cast selected accessory/relic ability (never weapon — right-click handles weapons)
+ *   - Tap R = cast selected accessory/relic ability (via SpellEngine)
+ *     or cycle the spell book if one is held in the offhand.
  *
  * G key (ACCESSORY_KEY):
- *   - Hold G + Scroll = cycle through equipped accessories
+ *   - Hold G + Scroll = cycle through equipped accessories (or spell book spells)
  *   - Tap G = flip between abilities on selected accessory
  */
 @EventBusSubscriber(modid="megamod", value={Dist.CLIENT})
@@ -49,7 +41,6 @@ public class AbilityKeybind {
     // State tracking for hold+scroll vs tap detection
     private static boolean rWasDown = false;
     private static boolean gWasDown = false;
-    private static boolean rScrolledThisCycle = false;
     private static boolean gScrolledThisCycle = false;
 
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
@@ -60,65 +51,7 @@ public class AbilityKeybind {
     }
 
     // ============================
-    // RIGHT-CLICK: Cast held weapon ability
-    // ============================
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
-        if (!event.getEntity().level().isClientSide()) return;
-        if (event.getHand() != InteractionHand.MAIN_HAND) return;
-
-        ItemStack held = event.getItemStack();
-        if (held.isEmpty()) return;
-
-        boolean isAbility = isAbilityWeapon(held.getItem());
-        boolean hasEntries = UnifiedAbilityBar.hasWeaponAbilities();
-        com.ultra.megamod.MegaMod.LOGGER.info("[AbilityKeybind] right-click: item={} isAbilityWeapon={} hasWeaponAbilities={} entries={}",
-                BuiltInRegistries.ITEM.getKey(held.getItem()), isAbility, hasEntries,
-                UnifiedAbilityBar.getWeaponEntries().size());
-
-        // Only intercept for ability weapons
-        if (!isAbility) return;
-        if (!hasEntries) {
-            // Force rebuild in case clientTick hasn't caught up
-            UnifiedAbilityBar.rebuildWeaponAbilities(held);
-            if (!UnifiedAbilityBar.hasWeaponAbilities()) {
-                com.ultra.megamod.MegaMod.LOGGER.warn("[AbilityKeybind] Still no weapon abilities after forced rebuild — skipping");
-                return;
-            }
-        }
-
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.player == null) return;
-
-        // Send cast payload for the currently selected weapon ability
-        int selectedIdx = UnifiedAbilityBar.getSelectedWeaponAbilityIndex();
-        java.util.List<UnifiedAbilityBar.WeaponAbilityEntry> wpnEntries = UnifiedAbilityBar.getWeaponEntries();
-        String selectedName = (selectedIdx < wpnEntries.size()) ? wpnEntries.get(selectedIdx).displayName() : "?";
-        com.ultra.megamod.MegaMod.LOGGER.info("[AbilityKeybind] casting idx={} name={}", selectedIdx, selectedName);
-        if (selectedIdx < wpnEntries.size()) {
-            AbilityHudOverlay.showCastNotification(selectedName);
-        }
-        AbilityCastPayload payload = new AbilityCastPayload("MAINHAND", "__byindex__", selectedIdx);
-        ClientPacketDistributor.sendToServer((CustomPacketPayload)payload, (CustomPacketPayload[])new CustomPacketPayload[0]);
-
-        // Cancel the event so the item's use() doesn't also fire
-        event.setCanceled(true);
-        event.setCancellationResult(InteractionResult.SUCCESS);
-    }
-
-    private static boolean isAbilityWeapon(Item item) {
-        if (item instanceof RelicItem relicItem && relicItem.getSlotType() == AccessorySlotType.NONE) {
-            return true;
-        }
-        if (item instanceof RpgWeaponItem) {
-            return true;
-        }
-        return RpgWeaponRegistry.isRpgWeapon(BuiltInRegistries.ITEM.getKey(item).toString());
-    }
-
-    // ============================
-    // R KEY: Cast / cycle weapon abilities
+    // R KEY: Cast accessory ability
     // G KEY: Select / flip accessory abilities
     // ============================
 
@@ -134,7 +67,7 @@ public class AbilityKeybind {
         // Update UnifiedAbilityBar (held-item change detection)
         UnifiedAbilityBar.clientTick();
 
-        // --- R key: cast weapon/accessory ability ---
+        // --- R key: cast accessory ability ---
         if (ABILITY_CAST != null) {
             boolean rDown = ABILITY_CAST.isDown();
 
@@ -146,17 +79,13 @@ public class AbilityKeybind {
                 } else {
                     // Key is now held — track for release detection
                     rWasDown = true;
-                    rScrolledThisCycle = false;
                 }
             }
 
             // Detect release after hold
             if (rWasDown && !rDown) {
-                if (!rScrolledThisCycle) {
-                    sendCast();
-                }
+                sendCast();
                 rWasDown = false;
-                rScrolledThisCycle = false;
             }
 
             // Consume any additional queued clicks
@@ -206,16 +135,6 @@ public class AbilityKeybind {
 
         int direction = event.getScrollDeltaY() > 0 ? -1 : 1;
 
-        // R held + scroll = cycle weapon abilities
-        if (ABILITY_CAST != null && ABILITY_CAST.isDown()) {
-            if (UnifiedAbilityBar.hasWeaponAbilities()) {
-                UnifiedAbilityBar.onScrollWithR(direction);
-                rScrolledThisCycle = true;
-                event.setCanceled(true);
-            }
-            return;
-        }
-
         // G held + scroll = cycle spells (if book active) or cycle accessories
         if (ACCESSORY_KEY != null && ACCESSORY_KEY.isDown()) {
             if (SpellBookHudOverlay.isSpellBookActive()) {
@@ -235,14 +154,12 @@ public class AbilityKeybind {
                 gScrolledThisCycle = true;
                 event.setCanceled(true);
             }
-            return;
         }
     }
 
     /**
-     * Send relic ability cast to server.
-     * R key always casts relic/accessory abilities. Weapon casting is handled by right-click.
-     * If a SpellBookItem is in the offhand, R casts the selected spell from the book instead.
+     * Send relic ability cast to server via SpellEngine's RelicSpellCastPayload.
+     * If a SpellBookItem is held in the offhand, R casts the selected spell from the book instead.
      */
     private static void sendCast() {
         Minecraft mc = Minecraft.getInstance();
@@ -273,16 +190,16 @@ public class AbilityKeybind {
                 return;
             }
             int abilityIdx = UnifiedAbilityBar.getSelectedAbilityIndex(selected.slotName());
-            String abilityName = abilityIdx < selected.castableAbilities().size()
-                    ? selected.castableAbilities().get(abilityIdx) : selected.relicName();
-            // Send the resolved ability name directly so the server doesn't re-index
-            // (client and server filter differently — client skips PASSIVE only,
-            //  server also skips level-locked, causing index mismatch)
-            AbilityCastPayload payload = new AbilityCastPayload(selected.slotName(), abilityName, abilityIdx);
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)payload, (CustomPacketPayload[])new CustomPacketPayload[0]);
-            AbilityHudOverlay.showCastNotification(abilityName);
-            mc.player.swing(InteractionHand.MAIN_HAND);
-            return;
+            if (!selected.castableAbilities().isEmpty()) {
+                String spellId = selected.castableAbilities().get(
+                        Math.min(abilityIdx, selected.castableAbilities().size() - 1));
+                RelicSpellCastPayload payload = new RelicSpellCastPayload(spellId);
+                ClientPacketDistributor.sendToServer((CustomPacketPayload)payload, (CustomPacketPayload[])new CustomPacketPayload[0]);
+                RelicSpellAssignments.SpellMeta meta = RelicSpellAssignments.metaFor(spellId);
+                AbilityHudOverlay.showCastNotification(meta != null ? meta.abilityName() : spellId);
+                mc.player.swing(InteractionHand.MAIN_HAND);
+                return;
+            }
         }
 
         mc.player.displayClientMessage(Component.literal("\u00a76[\u00a7eMegaMod\u00a76] \u00a77No relics equipped."), true);

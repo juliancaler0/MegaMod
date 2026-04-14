@@ -17,9 +17,6 @@ import com.ultra.megamod.feature.relics.network.AbilityCooldownSyncPayload;
 import com.ultra.megamod.feature.relics.network.WeaponAbilitySyncPayload;
 import com.ultra.megamod.feature.combat.spell.SpellAbilityBridge;
 import com.ultra.megamod.feature.combat.spell.SpellExecutor;
-import com.ultra.megamod.feature.relics.weapons.RpgWeaponEvents;
-import com.ultra.megamod.feature.relics.weapons.RpgWeaponItem;
-import com.ultra.megamod.feature.relics.weapons.RpgWeaponRegistry;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -163,9 +160,9 @@ public class AbilitySystem {
                 }
             }
 
-            // === RPG Weapon cooldown sync ===
+            // === Weapon spell cooldown sync (SpellAbilityBridge-mapped wands/staves) ===
+            // Phase H: manual RPG weapon skills removed; only SpellEngine-mapped spell cooldowns sync here.
             String heldRegistryName = BuiltInRegistries.ITEM.getKey(held.getItem()).toString();
-            List<RpgWeaponItem.WeaponSkill> rpgSkills = RpgWeaponRegistry.getSkillsForWeapon(heldRegistryName);
 
             if (gameTime % 5L == 0L) {
                 // Send relic cooldown sync — also send when cooldowns clear so client removes stale display
@@ -179,23 +176,13 @@ public class AbilitySystem {
                     PacketDistributor.sendToPlayer((ServerPlayer)player, (CustomPacketPayload)payload, (CustomPacketPayload[])new CustomPacketPayload[0]);
                 }
 
-                // Send RPG weapon cooldown sync (includes spell cooldowns from SpellAbilityBridge)
+                // Sync spell cooldowns for weapons mapped via SpellAbilityBridge (wands/staves tooltip HUD).
                 String spellId = SpellAbilityBridge.getSpellForWeapon(heldRegistryName);
-                boolean hasWeaponAbilities = !rpgSkills.isEmpty() || spellId != null;
-                if (hasWeaponAbilities) {
+                if (spellId != null) {
                     CompoundTag weaponCdTag = new CompoundTag();
-                    for (RpgWeaponItem.WeaponSkill skill : rpgSkills) {
-                        int remaining = RpgWeaponEvents.getCooldownRemaining(player, heldRegistryName, skill.name());
-                        if (remaining > 0) {
-                            weaponCdTag.putInt(skill.name(), remaining);
-                        }
-                    }
-                    // Also sync spell cooldowns for weapons mapped via SpellAbilityBridge
-                    if (spellId != null) {
-                        float spellCdRemaining = SpellExecutor.getCooldownRemaining(player.getUUID(), spellId);
-                        if (spellCdRemaining > 0) {
-                            weaponCdTag.putInt(spellId, (int)(spellCdRemaining * 20)); // convert seconds to ticks
-                        }
+                    float spellCdRemaining = SpellExecutor.getCooldownRemaining(player.getUUID(), spellId);
+                    if (spellCdRemaining > 0) {
+                        weaponCdTag.putInt(spellId, (int)(spellCdRemaining * 20)); // seconds -> ticks
                     }
                     if (!weaponCdTag.isEmpty()) {
                         PLAYERS_WITH_WEAPON_CDS.add(playerId);
@@ -205,6 +192,9 @@ public class AbilitySystem {
                         WeaponAbilitySyncPayload weaponPayload = new WeaponAbilitySyncPayload(new CompoundTag());
                         PacketDistributor.sendToPlayer((ServerPlayer)player, (CustomPacketPayload)weaponPayload, (CustomPacketPayload[])new CustomPacketPayload[0]);
                     }
+                } else if (PLAYERS_WITH_WEAPON_CDS.remove(playerId)) {
+                    WeaponAbilitySyncPayload weaponPayload = new WeaponAbilitySyncPayload(new CompoundTag());
+                    PacketDistributor.sendToPlayer((ServerPlayer)player, (CustomPacketPayload)weaponPayload, (CustomPacketPayload[])new CustomPacketPayload[0]);
                 }
             }
         }

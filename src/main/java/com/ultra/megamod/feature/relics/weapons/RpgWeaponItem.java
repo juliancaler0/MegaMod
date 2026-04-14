@@ -17,16 +17,11 @@
  */
 package com.ultra.megamod.feature.relics.weapons;
 
-import com.ultra.megamod.feature.combat.spell.SpellAbilityBridge;
-import com.ultra.megamod.feature.combat.spell.SpellDefinition;
-import com.ultra.megamod.feature.combat.spell.SpellRegistry;
 import com.ultra.megamod.feature.relics.data.WeaponRarity;
 import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
 import java.util.List;
 import java.util.function.Consumer;
 import javax.annotation.Nullable;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -104,42 +99,8 @@ extends Item {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
         WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
-        String registryName = BuiltInRegistries.ITEM.getKey(this).toString();
-
-        // ── Manual Skills (right-click to cast) ──
-        if (!this.skills.isEmpty()) {
-            tooltip.accept(Component.empty());
-            tooltip.accept(Component.literal("Skills (Right-Click):").withStyle(ChatFormatting.GOLD));
-            for (int i = 0; i < this.skills.size(); i++) {
-                WeaponSkill skill = this.skills.get(i);
-                String prefix = (i == 0) ? "  \u2022 " : "  \u2022 ";
-                tooltip.accept(Component.literal(prefix + skill.name() + "  \u00A78(" + skill.cooldownSeconds() + "s CD)")
-                        .withStyle(ChatFormatting.YELLOW));
-                tooltip.accept(Component.literal("    " + skill.description()).withStyle(ChatFormatting.GRAY));
-            }
-            if (this.skills.size() > 1) {
-                tooltip.accept(Component.literal("  R + Scroll to change active skill").withStyle(ChatFormatting.DARK_GRAY));
-            }
-        }
-
-        // ── Class weapon spells (wand/staff etc.) ──
-        List<String> spellIds = SpellAbilityBridge.getSpellsForWeapon(registryName);
-        if (!spellIds.isEmpty() && this.skills.isEmpty()) {
-            tooltip.accept(Component.empty());
-            tooltip.accept(Component.literal("Spells (Right-Click):").withStyle(ChatFormatting.LIGHT_PURPLE));
-            for (String spellId : spellIds) {
-                SpellDefinition spell = SpellRegistry.get(spellId);
-                if (spell != null) {
-                    String cooldownStr = spell.cooldownSeconds() > 0 ? " \u00A78(" + String.format("%.1f", spell.cooldownSeconds()) + "s CD)" : "";
-                    tooltip.accept(Component.literal("  \u2022 " + spell.name() + cooldownStr).withStyle(ChatFormatting.AQUA));
-                    tooltip.accept(Component.literal("    " + spell.school().displayName + " spell").withStyle(ChatFormatting.GRAY));
-                }
-            }
-            if (spellIds.size() > 1) {
-                tooltip.accept(Component.literal("  R + Scroll to cycle spells").withStyle(ChatFormatting.DARK_GRAY));
-            }
-        }
-
+        // Phase H: manual "Skills (Right-Click)" and SpellAbilityBridge tooltip blocks removed —
+        // tomes/Arsenal/wands now show spell info via SpellEngine's own tooltip renderer.
     }
 
     public boolean isFoil(ItemStack stack) {
