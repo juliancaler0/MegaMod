@@ -140,6 +140,15 @@ public class SpellSchools {
         if (id.getNamespace().equals("minecraft")) {
             id = Identifier.fromNamespaceAndPath(DEFAULT_NAMESPACE, id.getPath());
         }
+        // Legacy-namespace bridge: bulk-copied spell JSONs reference schools as
+        // `spell_power:<path>` (from upstream SpellEngine), but in MegaMod the
+        // schools are registered under the `megamod` namespace. Map those IDs
+        // to the megamod-namespaced equivalent so spell loading succeeds.
+        if (id.getNamespace().equals("spell_power") || id.getNamespace().equals("spell_engine")) {
+            var bridged = Identifier.fromNamespaceAndPath(DEFAULT_NAMESPACE, id.getPath());
+            var school = REGISTRY.get(bridged);
+            if (school != null) return school;
+        }
         return REGISTRY.get(id);
     }
 }

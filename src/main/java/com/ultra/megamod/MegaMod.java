@@ -123,6 +123,11 @@ public class MegaMod {
         com.ultra.megamod.feature.combat.jewelry.JewelrySounds.SOUND_EVENTS.register(modEventBus);
         com.ultra.megamod.feature.combat.items.ArcherItemRegistry.init(modEventBus);
         com.ultra.megamod.lib.spellengine.api.effect.Effects.init(modEventBus);
+        // SpellEngine bootstrap: registers data-pack registry for Spell, entity types,
+        // network handlers, and wires common init during FMLCommonSetup.
+        // Must run before RPGItemRegistry so SpellDataComponents (SPELL_CONTAINER etc.)
+        // are registered before Weapon items reference them at init time.
+        com.ultra.megamod.lib.spellengine.SpellEngineNeoForge.init(modEventBus);
         com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.archers.ArchersMod.init(modEventBus);
         com.ultra.megamod.feature.combat.arsenal.ArsenalMod.init(modEventBus);
