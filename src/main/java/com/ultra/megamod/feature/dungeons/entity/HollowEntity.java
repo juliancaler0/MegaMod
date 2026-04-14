@@ -77,6 +77,9 @@ public class HollowEntity extends Monster {
         if (hit && target instanceof LivingEntity living) {
             // Apply Blindness II on hit for 40 ticks
             living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 40, 1, false, true));
+            // Hollow's disorienting presence inverts movement briefly
+            living.addEffect(new MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.CONFUSION, 40, 0, false, true));
         }
         return hit;
     }

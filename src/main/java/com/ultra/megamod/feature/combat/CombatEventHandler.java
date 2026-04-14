@@ -117,9 +117,6 @@ public class CombatEventHandler {
                 // EquipmentSetManager may not be initialized yet
             }
 
-            // Clean up passive trigger cooldowns
-            com.ultra.megamod.feature.combat.passive.PassiveTriggerManager.cleanupCooldowns(
-                    player.level().getGameTime());
         }
 
         // Spawn visual particles for active spell effects (every 10 ticks)

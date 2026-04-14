@@ -91,20 +91,14 @@ public class ArrowQuiverAbility {
         int arrowCount = (int)stats[0];
         double damage = stats[1];
         ServerLevel level = player.level();
-        double angleStep = Math.PI * 2 / (double)arrowCount;
-        double spawnHeight = player.getY() + 10.0;
-        double radius = 3.0;
-        for (int i = 0; i < arrowCount; ++i) {
-            double angle = angleStep * (double)i;
-            double x = player.getX() + Math.cos(angle) * radius;
-            double z = player.getZ() + Math.sin(angle) * radius;
-            Arrow arrow = new Arrow((Level)level, x, spawnHeight, z, ItemStack.EMPTY, ItemStack.EMPTY);
-            arrow.setOwner((Entity)player);
-            arrow.setBaseDamage(damage);
-            arrow.shoot(0.0, -1.0, 0.0, 1.5f, 2.0f);
-            arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
-            level.addFreshEntity((Entity)arrow);
-        }
+
+        // Spawn a lingering ArrowRainEntity that sprays arrows downward within a radius
+        // over a duration. Uses arrowCount as the total volley size -> duration.
+        com.ultra.megamod.feature.relics.entity.ArrowRainEntity rain =
+            new com.ultra.megamod.feature.relics.entity.ArrowRainEntity(
+                level, player.getX(), player.getY(), player.getZ(),
+                player.getId(), arrowCount, 3.0F, (float) damage);
+        level.addFreshEntity(rain);
     }
 }
 

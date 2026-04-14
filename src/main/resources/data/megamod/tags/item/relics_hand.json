@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:chrono_glove",
+    "megamod:ender_hand",
+    "megamod:rage_glove",
+    "megamod:thornweave_glove",
+    "megamod:wool_mitten",
+    "megamod:arcane_gauntlet",
+    "megamod:iron_fist",
+    "megamod:plague_grasp",
+    "megamod:sunforged_bracer"
+  ]
+}

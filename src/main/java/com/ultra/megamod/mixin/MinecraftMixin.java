@@ -89,18 +89,11 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
         var mainHand = player.getMainHandItem();
         WeaponAttributes attrs = WeaponAttributeRegistry.getAttributes(mainHand);
 
-        // DEBUG: Log every attack attempt
-        com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] startAttack called. Item: " + mainHand.getItem()
-                + " | HasAttrs: " + (attrs != null)
-                + " | HasAttacks: " + (attrs != null && attrs.attacks() != null ? attrs.attacks().length : 0));
-
         if (attrs != null && attrs.attacks() != null && attrs.attacks().length > 0) {
             if (megamod$isTargetingMineableBlock() || megamod$isHarvesting) {
                 megamod$isHarvesting = true;
-                com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Mining block, skipping combat");
                 return;
             }
-            com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Starting upswing!");
             megamod$startUpswing(attrs);
             cir.setReturnValue(false);
             cir.cancel();
@@ -182,17 +175,18 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
 
     @Unique
     private void megamod$startUpswing(WeaponAttributes attributes) {
-        if (player == null || player.isPassenger()) {
-            com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Exit: player={} passenger={}", player, player != null && player.isPassenger());
-            return;
-        }
+        if (player == null || player.isPassenger()) return;
 
         var attackHand = megamod$getCurrentHand();
         if (attackHand == null) return;
         float upswingRate = (float) attackHand.upswingRate();
-        // Vanilla cooldown check prevents hold-to-attack spam; required for proper combo pacing.
-        if (megamod$currentUpswingTicks() > 0 || player.isUsingItem()
-                || player.getAttackStrengthScale(0) < (1.0 - upswingRate)) {
+        // The scale check is only meaningful after a prior swing has reset the attack
+        // ticker — otherwise swapping to a slower weapon (low ticker, long delay) leaves
+        // scale permanently below the threshold and blocks every click.
+        boolean hasRecentAttack = megamod$lastAttacked < 200;
+        boolean scaleBlocks = hasRecentAttack
+                && player.getAttackStrengthScale(0) < (1.0 - upswingRate);
+        if (megamod$currentUpswingTicks() > 0 || player.isUsingItem() || scaleBlocks) {
             return;
         }
 
@@ -209,10 +203,8 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
 
         // Play animation via PlayerAnimator
         String animationName = attackHand.attack().animation();
-        com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Upswing started! Anim: " + animationName + " | cooldown: " + attackCooldownTicks + " | upswing: " + upswingTicks);
         if (animationName == null || animationName.isEmpty()) {
             animationName = megamod$fallbackAnimationName(attackHand, attributes);
-            com.ultra.megamod.MegaMod.LOGGER.info("[BetterCombat] Using fallback animation: " + animationName);
         }
         boolean isOffHand = attackHand.isOffHand();
         var animatedHand = AnimatedHand.from(isOffHand, attributes.twoHanded());
@@ -250,8 +242,6 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
         var hand = weaponSwing.attackHand();
         if (hand == null) return;
         var attack = hand.attack();
-        var upswingRate = hand.upswingRate();
-        if (player.getAttackStrengthScale(0) < (1.0 - upswingRate)) return;
 
         // Client-side target detection using TargetFinder
         var cursorTarget = getCursorTarget();

@@ -59,6 +59,8 @@ public class MegaMod {
         VillagerTradeRefresh.init(modEventBus);
         MuseumRegistry.init(modEventBus);
         RelicRegistry.init(modEventBus);
+        com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.init(modEventBus);
+        com.ultra.megamod.feature.relics.entity.RelicEntityRegistry.init(modEventBus);
         MegaModAttributes.init(modEventBus);
         DimensionRegistry.init(modEventBus);
         DungeonRegistry.init(modEventBus);
@@ -109,6 +111,7 @@ public class MegaMod {
         com.ultra.megamod.lib.accessories.neoforge.AccessoriesForge.init(modEventBus);
         com.ultra.megamod.lib.spellpower.SpellPowerMod.init(modEventBus);
         com.ultra.megamod.lib.rangedweapon.RangedWeaponMod.init();
+        com.ultra.megamod.lib.rangedweapon.RangedWeaponEvents.register();
         com.ultra.megamod.lib.azurelib.NeoForgeAzureLibMod.register(modEventBus);
         com.ultra.megamod.feature.combat.paladins.PaladinsMod.init(modEventBus);
         com.ultra.megamod.feature.combat.wizards.WizardsMod.init(modEventBus);

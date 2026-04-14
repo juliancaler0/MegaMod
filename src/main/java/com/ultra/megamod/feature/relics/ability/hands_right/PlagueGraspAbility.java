@@ -82,6 +82,9 @@ public class PlagueGraspAbility {
         }
         if (target != null) {
             target.addEffect(new MobEffectInstance(MobEffects.WITHER, duration, 1, false, true, true));
+            // Ported ANTI_HEAL — target can't be healed for the duration of the curse
+            target.addEffect(new MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.ANTI_HEAL, duration, 0, false, true, true));
             // Smoke line to target
             Vec3 from = player.getEyePosition();
             Vec3 to = target.position().add(0, target.getBbHeight() * 0.5, 0);
@@ -112,6 +115,8 @@ public class PlagueGraspAbility {
             if (dot > 0.33) { // roughly 70-degree half-angle cone (sweepAngle ~2PI/3)
                 target.hurt(level.damageSources().magic(), damage);
                 target.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 1, false, true, true));
+                target.addEffect(new MobEffectInstance(
+                    com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.ANTI_HEAL, 100, 0, false, true, true));
                 level.sendParticles((ParticleOptions) ParticleTypes.ITEM_SLIME,
                     target.getX(), target.getY() + 0.5, target.getZ(), 6, 0.3, 0.4, 0.3, 0.02);
             }

@@ -1,10 +1,14 @@
 package com.ultra.megamod.feature.combat.runes;
 
 import com.ultra.megamod.MegaMod;
-import net.minecraft.world.item.BundleItem;
+import com.ultra.megamod.feature.combat.runes.pouch.RunePouchItem;
+import com.ultra.megamod.feature.combat.runes.pouch.RunePouchType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -46,19 +50,46 @@ public class RuneRegistry {
     // ══════════════════════════════════════════════
 
     public static final DeferredItem<Item> SMALL_RUNE_POUCH = ITEMS.registerItem("small_rune_pouch",
-            props -> new BundleItem((Item.Properties) props),
+            props -> new RunePouchItem((Item.Properties) props, RunePouchType.SMALL),
             () -> new Item.Properties().stacksTo(1));
 
     public static final DeferredItem<Item> MEDIUM_RUNE_POUCH = ITEMS.registerItem("medium_rune_pouch",
-            props -> new BundleItem((Item.Properties) props),
+            props -> new RunePouchItem((Item.Properties) props, RunePouchType.MEDIUM),
             () -> new Item.Properties().stacksTo(1));
 
     public static final DeferredItem<Item> LARGE_RUNE_POUCH = ITEMS.registerItem("large_rune_pouch",
-            props -> new BundleItem((Item.Properties) props),
+            props -> new RunePouchItem((Item.Properties) props, RunePouchType.LARGE),
             () -> new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON));
+
+    // ══════════════════════════════════════════════
+    // Menu type — client opens the pouch GUI via this
+    // ══════════════════════════════════════════════
+
+    public static final DeferredRegister<MenuType<?>> MENUS =
+            DeferredRegister.create(Registries.MENU, MegaMod.MODID);
+
+    public static final DeferredHolder<MenuType<?>, MenuType<com.ultra.megamod.feature.combat.runes.pouch.RunePouchMenu>> RUNE_POUCH_MENU =
+            MENUS.register("rune_pouch", () ->
+                    net.neoforged.neoforge.common.extensions.IMenuTypeExtension.create(
+                            (id, inv, buf) -> {
+                                int size = buf.readVarInt();
+                                boolean mainHand = buf.readBoolean();
+                                var pouchStack = mainHand ? inv.player.getMainHandItem() : inv.player.getOffhandItem();
+                                return com.ultra.megamod.feature.combat.runes.pouch.RunePouchMenu.create(id, inv, size, pouchStack);
+                            }));
 
     public static void init(IEventBus modBus) {
         ITEMS.register(modBus);
+        MENUS.register(modBus);
+        // Wire TYPE on the menu class so the constructor knows which type to supertype-register
+        modBus.addListener((net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent e) -> {
+            com.ultra.megamod.feature.combat.runes.pouch.RunePouchMenu.TYPE = RUNE_POUCH_MENU.get();
+        });
+    }
+
+    /** Client-side: register the pouch screen factory. Invoked from MegaModClient. */
+    public static void onRegisterMenuScreens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event) {
+        event.register(RUNE_POUCH_MENU.get(), com.ultra.megamod.feature.combat.runes.pouch.RunePouchScreen::new);
     }
 
     /**
@@ -88,44 +119,18 @@ public class RuneRegistry {
         Item runeItem = getRuneForSchool(schoolName);
         if (runeItem == null) return true; // No rune requirement for this school
 
-        java.util.function.Predicate<net.minecraft.world.item.ItemStack> runeTest = stack -> stack.is(runeItem);
-
-        // Phase 1: Count available runes across inventory + pouches
-        int found = 0;
-
-        // Check rune pouches first (BundleItems in inventory)
-        var pouchSources = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
-        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            var stack = player.getInventory().getItem(i);
-            if (stack.getItem() instanceof BundleItem) {
-                int inPouch = countInBundle(stack, runeTest);
-                if (inPouch > 0) {
-                    pouchSources.add(stack);
-                    found += inPouch;
-                }
-            }
-        }
-
-        // Then check loose runes in inventory
-        for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-            var stack = player.getInventory().getItem(i);
-            if (stack.is(runeItem)) {
-                found += stack.getCount();
-            }
-        }
-
-        if (found < count) return false;
-
-        // Phase 2: Consume from pouches first, then loose inventory
         int remaining = count;
 
-        // Consume from pouches
-        for (var pouchStack : pouchSources) {
-            if (remaining <= 0) break;
-            remaining -= takeFromBundle(pouchStack, runeTest, remaining);
+        // Check rune pouches first (RunePouchItems in inventory)
+        for (int i = 0; i < player.getInventory().getContainerSize() && remaining > 0; i++) {
+            var stack = player.getInventory().getItem(i);
+            if (stack.getItem() instanceof com.ultra.megamod.feature.combat.runes.pouch.RunePouchItem) {
+                remaining -= com.ultra.megamod.feature.combat.runes.pouch.RunePouchStorage
+                        .consumeFromPouch(stack, runeItem, remaining);
+            }
         }
 
-        // Consume from loose inventory
+        // Then loose runes in inventory
         for (int i = 0; i < player.getInventory().getContainerSize() && remaining > 0; i++) {
             var stack = player.getInventory().getItem(i);
             if (stack.is(runeItem)) {
@@ -134,55 +139,7 @@ public class RuneRegistry {
                 remaining -= toRemove;
             }
         }
-        return true;
-    }
 
-    /**
-     * Count how many items matching the predicate are inside a BundleItem stack.
-     */
-    private static int countInBundle(net.minecraft.world.item.ItemStack containerStack,
-                                      java.util.function.Predicate<net.minecraft.world.item.ItemStack> predicate) {
-        var bundle = containerStack.get(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS);
-        if (bundle == null) return 0;
-        int total = 0;
-        for (var item : bundle.items()) {
-            if (predicate.test(item)) {
-                total += item.getCount();
-            }
-        }
-        return total;
-    }
-
-    /**
-     * Remove up to {@code amount} matching items from inside a BundleItem stack.
-     * @return number of items actually removed
-     */
-    private static int takeFromBundle(net.minecraft.world.item.ItemStack containerStack,
-                                       java.util.function.Predicate<net.minecraft.world.item.ItemStack> predicate,
-                                       int amount) {
-        var bundle = containerStack.get(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS);
-        if (bundle == null) return 0;
-        int taken = 0;
-        int toTake = amount;
-        var putBack = new java.util.ArrayList<net.minecraft.world.item.ItemStack>();
-        for (var storedStack : bundle.items()) {
-            if (predicate.test(storedStack) && toTake > 0) {
-                int decrementable = Math.min(storedStack.getCount(), toTake);
-                storedStack.shrink(decrementable);
-                toTake -= decrementable;
-                taken += decrementable;
-            }
-            if (!storedStack.isEmpty()) {
-                putBack.add(storedStack);
-            }
-        }
-        // Rebuild the bundle contents
-        var freshBundle = new net.minecraft.world.item.component.BundleContents.Mutable(
-                net.minecraft.world.item.component.BundleContents.EMPTY);
-        for (var stackToAdd : putBack.reversed()) {
-            freshBundle.tryInsert(stackToAdd);
-        }
-        containerStack.set(net.minecraft.core.component.DataComponents.BUNDLE_CONTENTS, freshBundle.toImmutable());
-        return taken;
+        return remaining <= 0;
     }
 }

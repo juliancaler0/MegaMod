@@ -1,0 +1,32 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "reliquary:charm_enabled"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": {
+      "item": "reliquary:rib_bone"
+    },
+    "S": {
+      "item": "minecraft:bone"
+    },
+    "T": {
+      "item": "minecraft:flint"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "STS",
+    "PPP"
+  ],
+  "result": {
+    "components": {
+      "reliquary:entity_name": "minecraft:skeleton"
+    },
+    "count": 1,
+    "id": "reliquary:mob_charm_fragment"
+  }
+}

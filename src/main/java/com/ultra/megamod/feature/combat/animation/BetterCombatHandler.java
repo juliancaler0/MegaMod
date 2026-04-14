@@ -6,7 +6,6 @@ import com.ultra.megamod.feature.citizen.entity.mc.MCEntityCitizen;
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.Attack;
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.HitboxShape;
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.SwingDirection;
-import com.ultra.megamod.feature.combat.passive.PassiveTriggerManager;
 import com.ultra.megamod.feature.computer.network.handlers.PartyHandler;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
@@ -132,14 +131,6 @@ public class BetterCombatHandler {
                     com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper.getAttackCooldownTicksCapped(player),
                     (float) selectedAttack.upswing());
             net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, animPayload);
-
-            // Trigger passive effects
-            if (payload.entityIds().length > 0 && player.level() instanceof net.minecraft.server.level.ServerLevel serverLevel) {
-                var firstTarget = player.level().getEntity(payload.entityIds()[0]);
-                if (firstTarget instanceof net.minecraft.world.entity.LivingEntity firstLiving) {
-                    com.ultra.megamod.feature.combat.passive.PassiveTriggerManager.onMeleeHit(player, firstLiving, serverLevel);
-                }
-            }
 
             // Movement speed penalty
             com.ultra.megamod.feature.attributes.AttributeHelper.addModifier(
@@ -277,10 +268,6 @@ public class BetterCombatHandler {
                 );
             }
 
-            // Fire passive weapon triggers (Arsenal on-hit effects)
-            if (primaryTarget instanceof LivingEntity primaryLiving && player.level() instanceof net.minecraft.server.level.ServerLevel sLevel) {
-                PassiveTriggerManager.onMeleeHit(player, primaryLiving, sLevel);
-            }
         }
 
         // 9. Find additional sweeping targets in the directional hitbox

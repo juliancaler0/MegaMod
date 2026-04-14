@@ -55,6 +55,12 @@ public class StructureChestLootModifier extends LootModifier {
             generatedLoot.add(jewelry);
         }
 
+        // Runes roll independently too — they're spell reagents players need regularly
+        ItemStack rune = WorldLootIntegration.tryGenerateStructureChestRune(lootTableId, random, luck);
+        if (rune != null) {
+            generatedLoot.add(rune);
+        }
+
         return generatedLoot;
     }
 

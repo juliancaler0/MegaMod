@@ -78,7 +78,20 @@
     "bettercombat.client.ClientPlayNetworkHandlerMixin",
     "bettercombat.client.ItemStackTooltipMixin",
     "archers.client.autofire.ArchersLivingEntityMixin",
-    "archers.client.autofire.ArchersMinecraftClientMixin"
+    "archers.client.autofire.ArchersMinecraftClientMixin",
+    "shouldersurfing.ClientInputAccessor",
+    "shouldersurfing.GameRendererAccessor",
+    "shouldersurfing.GuiAccessor",
+    "shouldersurfing.MixinOptions",
+    "shouldersurfing.MixinMouseHandler",
+    "shouldersurfing.MixinCamera",
+    "shouldersurfing.MixinLocalPlayer",
+    "shouldersurfing.MixinAbstractClientPlayer",
+    "shouldersurfing.MixinGui",
+    "shouldersurfing.MixinEntityBoundSoundInstance",
+    "shouldersurfing.MixinClientLevel",
+    "shouldersurfing.MixinClientPacketListener",
+    "shouldersurfing.MixinEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

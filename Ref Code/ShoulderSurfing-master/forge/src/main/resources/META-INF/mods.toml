@@ -1,0 +1,30 @@
+modLoader = "javafml"
+loaderVersion = "[62,)"
+license = "MIT"
+
+[[mods]]
+modId = "${modId}"
+version = "${minecraftVersion}-${modVersion}"
+displayName = "${modName}"
+authors = "${modAuthor}"
+credits = "${modContributors}"
+description = "${modDescription}"
+logoFile = "logo.png"
+displayURL = "${modUrl}"
+
+[modproperties.${modId}]
+incompatibleMods = ["betterthirdperson", "customcameraview", "nimble", "valkyrienskies"]
+
+[[dependencies.${modId}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[26.1,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.${modId}]]
+modId = "forgeconfigapiport"
+mandatory = true
+versionRange = "[26.1,)"
+ordering = "NONE"
+side = "CLIENT"

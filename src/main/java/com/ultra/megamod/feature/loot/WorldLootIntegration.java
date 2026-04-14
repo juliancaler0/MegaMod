@@ -299,6 +299,59 @@ public class WorldLootIntegration {
         return JEWELRY_NETHERITE;
     }
 
+    // ======================== RUNE POOLS ========================
+
+    private static List<Item> RUNE_POOL;
+    private static List<Item> getRunePool() {
+        if (RUNE_POOL == null) {
+            RUNE_POOL = List.of(
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.ARCANE_RUNE.get(),
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.FIRE_RUNE.get(),
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.FROST_RUNE.get(),
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.HEALING_RUNE.get(),
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.LIGHTNING_RUNE.get(),
+                    com.ultra.megamod.feature.combat.runes.RuneRegistry.SOUL_RUNE.get()
+            );
+        }
+        return RUNE_POOL;
+    }
+
+    /**
+     * Injects spell runes into structure chests. Runes are consumed as spell reagents
+     * for tier 2+ spells so they should drop at modest rates across all structures.
+     */
+    public static ItemStack tryGenerateStructureChestRune(String lootTablePath, RandomSource random, double luck) {
+        double baseChance;
+        int min, max;
+
+        if (lootTablePath.contains("end_city") || lootTablePath.contains("bastion")
+                || lootTablePath.contains("stronghold") || lootTablePath.contains("ancient_city")) {
+            baseChance = 0.35;
+            min = 2; max = 5;
+        } else if (lootTablePath.contains("desert_pyramid") || lootTablePath.contains("jungle_temple")
+                || lootTablePath.contains("woodland_mansion") || lootTablePath.contains("nether_bridge")
+                || lootTablePath.contains("ruined_portal")) {
+            baseChance = 0.28;
+            min = 1; max = 3;
+        } else if (lootTablePath.contains("village") || lootTablePath.contains("pillager_outpost")
+                || lootTablePath.contains("shipwreck") || lootTablePath.contains("igloo")
+                || lootTablePath.contains("buried_treasure") || lootTablePath.contains("underwater_ruin")
+                || lootTablePath.contains("abandoned_mineshaft")) {
+            baseChance = 0.20;
+            min = 1; max = 2;
+        } else {
+            return null;
+        }
+
+        double finalChance = Math.min(0.60, baseChance + luck * LUCK_CHANCE_BONUS);
+        if (random.nextDouble() >= finalChance) return null;
+
+        var pool = getRunePool();
+        Item runeItem = pool.get(random.nextInt(pool.size()));
+        int count = min + random.nextInt(max - min + 1);
+        return new ItemStack(runeItem, count);
+    }
+
     /**
      * Independent jewelry drop roll for vanilla structure chests. Called alongside
      * the relic roll from {@link StructureChestLootModifier}. Jewelry is obtainable

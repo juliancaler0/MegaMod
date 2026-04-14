@@ -96,6 +96,21 @@ public class FrostfirePendantAbility {
             entity.setRemainingFireTicks(40);
         }
 
+        // Volley of solid snowballs at each target — applies Stun on hit
+        for (LivingEntity entity : entities) {
+            com.ultra.megamod.feature.relics.entity.SolidSnowballEntity ball =
+                new com.ultra.megamod.feature.relics.entity.SolidSnowballEntity(
+                    com.ultra.megamod.feature.relics.entity.RelicEntityRegistry.SOLID_SNOWBALL.get(), level);
+            ball.setOwner(player);
+            ball.setPos(player.getX(), player.getEyeY(), player.getZ());
+            Vec3 toward = entity.position().add(0, entity.getBbHeight() * 0.5, 0).subtract(player.getEyePosition());
+            double n = toward.length();
+            if (n > 0.01) {
+                ball.setDeltaMovement(toward.scale(1.5 / n));
+            }
+            level.addFreshEntity(ball);
+        }
+
         double cx = player.getX();
         double cy = player.getY() + 0.2;
         double cz = player.getZ();

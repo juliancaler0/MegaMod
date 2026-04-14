@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#megamod:rings"
+    "#megamod:rings",
+    "#megamod:relics_ring"
   ]
 }

@@ -63,6 +63,12 @@ public class ThunderhornAbility {
         WeaponEffects.shockwave(level, (ParticleOptions) ParticleTypes.END_ROD,
                 cx, cy + 1.0, cz, radius * 0.6, 2, 12, 1);
 
+        // Spawn a damage+knockback shockwave ring entity that expands outward
+        com.ultra.megamod.feature.relics.entity.ShockwaveEntity wave =
+            new com.ultra.megamod.feature.relics.entity.ShockwaveEntity(
+                level, cx, cy, cz, player.getId(), 4.0F, (float) radius);
+        level.addFreshEntity(wave);
+
         level.playSound(null, cx, cy, cz,
                 SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 2.0f, 0.6f);
     }

@@ -78,9 +78,31 @@ public class SpaceDissectorAbility {
             return;
         }
         ServerLevel level = (ServerLevel) player.level();
+        double originX = player.getX();
+        double originY = player.getY() + 1.0;
+        double originZ = player.getZ();
+
         player.teleportTo(level, markedX, markedY, markedZ, Set.of(), player.getYRot(), player.getXRot(), false);
         player.displayClientMessage(Component.literal("Warped to marked position!"), true);
         level.playSound(null, markedX, markedY, markedZ, SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0f, 1.0f);
+
+        // Spawn a piercing DissectionEntity along the warp path that damages
+        // and bleeds any entity caught in the teleport line.
+        com.ultra.megamod.feature.relics.entity.DissectionEntity blade =
+            new com.ultra.megamod.feature.relics.entity.DissectionEntity(
+                com.ultra.megamod.feature.relics.entity.RelicEntityRegistry.DISSECTION.get(), level);
+        blade.setOwner(player);
+        blade.setPos(originX, originY, originZ);
+        double vx = markedX - originX;
+        double vy = markedY - originY;
+        double vz = markedZ - originZ;
+        double norm = Math.sqrt(vx * vx + vy * vy + vz * vz);
+        if (norm > 0.01) {
+            double speed = Math.min(2.0, norm / 8.0);
+            blade.setDeltaMovement(vx / norm * speed, vy / norm * speed, vz / norm * speed);
+        }
+        blade.setParams(6.0F, 100);
+        level.addFreshEntity(blade);
     }
 }
 

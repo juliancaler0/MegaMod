@@ -25,6 +25,7 @@ package com.ultra.megamod.feature.relics.ability.usable;
 import com.ultra.megamod.feature.relics.ability.AbilityCastHandler;
 import com.ultra.megamod.feature.relics.data.RelicAbility;
 import com.ultra.megamod.feature.relics.data.RelicStat;
+import com.ultra.megamod.feature.relics.entity.SporeEntity;
 import java.util.Comparator;
 import java.util.List;
 import net.minecraft.core.particles.ParticleOptions;
@@ -98,6 +99,11 @@ public class SporeSackAbility {
         cloud.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 1, false, true, false));
         cloud.setCustomParticle((ParticleOptions)ParticleTypes.SPORE_BLOSSOM_AIR);
         level.addFreshEntity(cloud);
+
+        // Also spawn a SporeEntity for Confusion debuff + ambient particles
+        SporeEntity spore = new SporeEntity(level, targetPos.x, targetPos.y, targetPos.z,
+            player.getId(), 1.0F, durationSeconds * 20);
+        level.addFreshEntity(spore);
         level.playSound(null, targetPos.x, targetPos.y, targetPos.z, SoundEvents.PUFFER_FISH_BLOW_OUT, SoundSource.PLAYERS, 1.5f, 0.6f);
     }
 }

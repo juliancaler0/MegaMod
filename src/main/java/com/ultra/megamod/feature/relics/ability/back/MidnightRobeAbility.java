@@ -50,6 +50,9 @@ public class MidnightRobeAbility {
         int lightLevel = level.getMaxLocalRawBrightness(pos = player.blockPosition());
         if (lightLevel <= lightThreshold) {
             player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 30, 0, false, false, true));
+            // Ported VANISHING — fully suppresses render client-side on top of invis
+            player.addEffect(new MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.VANISHING, 30, 0, false, false, true));
         }
     }
 

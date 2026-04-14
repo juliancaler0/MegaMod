@@ -214,9 +214,9 @@ public class SlotTypeLoader extends ManagedEndecDataLoader<SlotType, SlotTypeLoa
                         m.get("icon") != null ? Identifier.CODEC.parse(ops, m.get("icon")).result().orElse(null) : null,
                         m.get("order") != null ? com.mojang.serialization.Codec.INT.parse(ops, m.get("order")).result().orElse(null) : null,
                         m.get("amount") != null ? com.mojang.serialization.Codec.INT.parse(ops, m.get("amount")).result().orElse(null) : null,
-                        m.get("operation") != null ? com.mojang.serialization.Codec.STRING.parse(ops, m.get("operation")).result().map(OperationType::valueOf).orElse(null) : null,
+                        m.get("operation") != null ? com.mojang.serialization.Codec.STRING.parse(ops, m.get("operation")).result().map(s -> OperationType.valueOf(s.toUpperCase(java.util.Locale.ROOT))).orElse(null) : null,
                         m.get("validators") != null ? Identifier.CODEC.listOf().parse(ops, m.get("validators")).result().map(java.util.LinkedHashSet::new).map(s -> (Set<Identifier>) s).orElse(null) : null,
-                        m.get("dropRule") != null ? com.mojang.serialization.Codec.STRING.parse(ops, m.get("dropRule")).result().map(DropRule::valueOf).orElse(null) : null
+                        m.get("dropRule") != null ? com.mojang.serialization.Codec.STRING.parse(ops, m.get("dropRule")).result().map(s -> DropRule.valueOf(s.toUpperCase(java.util.Locale.ROOT))).orElse(null) : null
                     ), input
                 ));
             }

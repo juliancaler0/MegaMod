@@ -74,6 +74,9 @@ public class NagaEntity extends Monster {
         if (hit && target instanceof LivingEntity living) {
             // Apply Poison II for 80 ticks on hit
             living.addEffect(new MobEffectInstance(MobEffects.POISON, 80, 1, false, true));
+            // Venom paralyzes briefly — prevents the target from kiting
+            living.addEffect(new MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.PARALYSIS, 20, 0, false, true));
             // Lunge toward target on hit
             Vec3 direction = target.position().subtract(this.position()).normalize();
             this.setDeltaMovement(direction.x * 0.8, 0.25, direction.z * 0.8);

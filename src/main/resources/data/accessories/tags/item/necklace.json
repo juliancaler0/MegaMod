@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#megamod:necklaces"
+    "#megamod:necklaces",
+    "#megamod:relics_necklace"
   ]
 }

@@ -79,6 +79,9 @@ public class UndeadKnightEntity extends Monster {
             target.push(knockback.x, 0.3, knockback.z);
             // Apply Mining Fatigue on hit
             living.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 100, 0, false, true));
+            // Heavy cleave causes Bleeding
+            living.addEffect(new MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.BLEEDING, 120, 0, false, true));
         }
         return hit;
     }

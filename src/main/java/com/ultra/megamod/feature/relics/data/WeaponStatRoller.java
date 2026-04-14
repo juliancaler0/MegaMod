@@ -85,7 +85,23 @@ public class WeaponStatRoller {
     public static void rollAndApply(ItemStack stack, float baseDamage, WeaponRarity rarity, RandomSource random, boolean isShield) {
         // Shields use ANY slot group for bonuses so stats apply from offhand too
         EquipmentSlotGroup bonusGroup = isShield ? EquipmentSlotGroup.ANY : EquipmentSlotGroup.MAINHAND;
-        float finalDamage = baseDamage * rarity.getDamageMultiplier();
+
+        // Override legacy hardcoded baseDamage with category-balanced DPS baseline.
+        // Goal: at common rarity, all weapon categories sit near ~10 DPS with slow weapons
+        // getting a small edge. Dagger at 2.4 × 4 = 9.6 DPS; Hammer at 0.8 × 14 = 11.2 DPS.
+        // Rarity multiplies on top, so a mythic dagger (1.75×) beats a common hammer but
+        // loses to a mythic hammer.
+        String itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                .getKey(stack.getItem()).toString();
+        float balancedBase = WeaponCategoryDamage.getBaseDamage(itemId);
+        // For Arsenal uniques (unique_*) we always trust the category baseline — their
+        // legacy hand-authored damages were imbalanced (daggers hit like hammers).
+        // For classic relics (vampiric_tome, static_seeker, etc.) keep whichever is higher
+        // so lore-heavy legendaries stay distinctive.
+        String pathLower = itemId.substring(itemId.indexOf(':') + 1);
+        boolean isArsenalUnique = pathLower.startsWith("unique_");
+        float effectiveBase = isArsenalUnique ? balancedBase : Math.max(baseDamage, balancedBase);
+        float finalDamage = effectiveBase * rarity.getDamageMultiplier();
         int bonusCount = rarity.rollBonusCount(random);
         ArrayList<BonusStat> available = new ArrayList<BonusStat>(BONUS_POOL);
         Collections.shuffle(available, new Random(random.nextLong()));
@@ -100,8 +116,6 @@ public class WeaponStatRoller {
         if (!isShield) {
             Optional<Holder<Attribute>> attackSpeedAttr = WeaponStatRoller.resolveAttribute("minecraft:attack_speed");
             if (attackSpeedAttr.isPresent()) {
-                String itemId = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                        .getKey(stack.getItem()).toString();
                 double targetSpeed = WeaponCategorySpeed.getTargetAttackSpeed(itemId);
                 double delta = WeaponCategorySpeed.toModifierDelta(targetSpeed);
                 AttributeModifier baseSpeedMod = new AttributeModifier(

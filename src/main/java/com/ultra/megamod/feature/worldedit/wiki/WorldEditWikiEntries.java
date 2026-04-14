@@ -95,8 +95,6 @@ public final class WorldEditWikiEntries {
             "Applies a grass/dirt/stone layering to every column in the selection.");
         add("Region", "/we_regen", "/we_regen",
             "Placeholder — MegaMod does not currently regenerate chunks.");
-        add("Region", "/we_deform", "/we_deform <expr>",
-            "Legacy WorldEdit expression language (not ported; shows a notice).");
 
         // --- Clipboard ---
         add("Clipboard", "/we_copy", "/we_copy",
@@ -232,6 +230,61 @@ public final class WorldEditWikiEntries {
         add("Biome", "/we_setbiome", "/we_setbiome <id>",
             "Biome mutation support varies by Minecraft version; see notes.");
         add("Biome", "/we_biomelist", "/we_biomelist", "Lists known biomes in this world.");
+
+        // --- Schematic alias ---
+        add("Schematic", "/we_schematic", "/we_schematic <save|load|list|delete> [name]",
+            "Long-form alias for /we_schem.",
+            "/we_schematic save my_castle");
+
+        // --- Presets ---
+        add("Presets", "/we_clear", "/we_clear",
+            "Sets the entire selection to air. Same as /we_set air.",
+            "/we_clear");
+        add("Presets", "/we_flatten", "/we_flatten [pattern]",
+            "Keeps only the bottom layer of the selection (filled with the pattern, default grass_block); everything above becomes air. Useful for quickly preparing a build site.",
+            "/we_flatten",
+            "/we_flatten stone",
+            "/we_flatten 70%grass_block,30%dirt");
+        add("Presets", "/we_hill", "/we_hill [maxHeight] [pattern]",
+            "Sculpts a natural-looking hill inside the selection footprint using a cosine falloff plus per-column noise. Interior is dirt, surface is the pattern (default grass_block). maxHeight defaults to 8.",
+            "/we_hill",
+            "/we_hill 12",
+            "/we_hill 20 grass_block",
+            "/we_hill 6 sand");
+        add("Presets", "/we_terraform", "/we_terraform [pattern]",
+            "Clears the entire selection then overlays the pattern on the new floor. Equivalent to /we_clear plus /we_overlay <pattern>.",
+            "/we_terraform grass_block",
+            "/we_terraform sandstone");
+
+        // --- Block IDs reference ---
+        addRef("Building basics",
+            "stone, cobblestone, smooth_stone, granite, andesite, diorite, deepslate, polished_deepslate, mossy_cobblestone, calcite, tuff");
+        addRef("Wood logs / planks",
+            "oak_log, oak_planks, spruce_log, spruce_planks, birch_log, jungle_log, acacia_log, dark_oak_log, mangrove_log, cherry_log, crimson_stem, warped_stem");
+        addRef("Dirt / grass / sand",
+            "grass_block, dirt, coarse_dirt, podzol, mycelium, rooted_dirt, mud, packed_mud, sand, red_sand, gravel, clay");
+        addRef("Concrete / wool (color prefix)",
+            "white_concrete, orange_concrete, ... (16 vanilla colors). Same prefixes work for: wool, terracotta, glazed_terracotta, stained_glass, candle, bed, banner, carpet, shulker_box");
+        addRef("Glass",
+            "glass, tinted_glass, glass_pane, white_stained_glass (...all colors)");
+        addRef("Metals / minerals",
+            "iron_block, gold_block, diamond_block, emerald_block, netherite_block, copper_block, raw_iron_block, raw_gold_block, raw_copper_block, redstone_block, lapis_block");
+        addRef("Lights",
+            "torch, lantern, soul_torch, soul_lantern, glowstone, sea_lantern, shroomlight, ochre_froglight, verdant_froglight, pearlescent_froglight, redstone_lamp, jack_o_lantern");
+        addRef("Liquids / utility",
+            "water, lava, ice, packed_ice, blue_ice, snow_block, snow, air, cave_air, void_air, barrier, structure_void");
+        addRef("Plants / decoration",
+            "oak_leaves, grass (small plant), tall_grass, fern, large_fern, dandelion, poppy, sunflower, vine, lily_pad, sea_pickle, kelp, cactus, sugar_cane, bamboo");
+        addRef("Nether",
+            "netherrack, nether_bricks, soul_sand, soul_soil, glowstone, magma_block, blackstone, basalt, polished_basalt, smooth_basalt, crying_obsidian");
+        addRef("End",
+            "end_stone, end_stone_bricks, purpur_block, end_rod, chorus_plant, chorus_flower, dragon_egg, obsidian");
+        addRef("Pattern + mask syntax",
+            "Single block: stone. Weighted mix: 50pct_stone,50pct_cobblestone (use percent signs). Namespaced: minecraft:dirt. Percentages must sum to 100. Masks: hash-existing (any non-air), bang-stone (anything except stone), pipe = OR, ampersand = AND, dollar-plains = biome.");
+    }
+
+    private static void addRef(String name, String examples) {
+        ENTRIES.add(new Entry("Block IDs", name, "(reference)", examples, new String[0]));
     }
 
     private static void add(String cat, String name, String syntax, String desc, String... examples) {

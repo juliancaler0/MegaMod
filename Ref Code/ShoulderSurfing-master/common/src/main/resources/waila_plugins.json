@@ -1,0 +1,8 @@
+{
+	"shouldersurfing:plugin": {
+		"entrypoints": {
+			"client": "com.github.exopandora.shouldersurfing.integration.ShoulderSurfingWthitPlugin"
+		},
+		"side": "client"
+	}
+}

@@ -34,8 +34,8 @@ public class WorldEditPanel {
     private static final int BUTTON_BG = 0xFF21262D;
     private static final int BUTTON_HOVER = 0xFF2E3540;
 
-    private static final String[] CATEGORIES = {"All", "Selection", "Region", "Clipboard", "Schematic",
-        "Generation", "History", "Brush", "Tool", "Utility", "Navigation", "Chunk", "Biome"};
+    private static final String[] CATEGORIES = {"All", "Presets", "Selection", "Region", "Clipboard", "Schematic",
+        "Generation", "History", "Brush", "Tool", "Utility", "Navigation", "Chunk", "Biome", "Block IDs"};
 
     private final Font font;
     private boolean weMode = false;

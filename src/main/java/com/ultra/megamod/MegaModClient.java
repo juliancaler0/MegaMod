@@ -49,6 +49,7 @@ public class MegaModClient {
     public MegaModClient(IEventBus modEventBus, ModContainer container) {
         container.registerExtensionPoint(IConfigScreenFactory.class, (IConfigScreenFactory) ConfigurationScreen::new);
         AmbientSoundsFeature.init(modEventBus);
+        com.ultra.megamod.feature.shouldersurfing.ShoulderSurfingClientEvents.init(modEventBus, container);
         com.ultra.megamod.lib.accessories.neoforge.client.AccessoriesClientForge.init(modEventBus);
 
         // Register PlayerAnimationLib spell animation layers (per-player event)
@@ -129,6 +130,7 @@ public class MegaModClient {
         modEventBus.addListener(com.ultra.megamod.feature.backpacks.BackpackRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.alchemy.AlchemyRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.combat.runes.RuneWorkbenchRegistry::onRegisterMenuScreens);
+        modEventBus.addListener(com.ultra.megamod.feature.combat.runes.RuneRegistry::onRegisterMenuScreens);
         modEventBus.addListener(com.ultra.megamod.feature.citizen.ornament.OrnamentRegistry::onRegisterMenuScreens);
         // Colony entity renderers (raiders)
         modEventBus.addListener(com.ultra.megamod.feature.citizen.raid.RaiderRenderers::onRegisterRenderers);
@@ -214,6 +216,9 @@ public class MegaModClient {
         // MC Citizen renderer (unified citizen entity)
         event.registerEntityRenderer(com.ultra.megamod.feature.citizen.CitizenRegistry.MC_CITIZEN.get(),
                 com.ultra.megamod.feature.citizen.entity.mc.client.MCCitizenRenderer::new);
+
+        // Relic projectile/effect entities
+        com.ultra.megamod.feature.relics.entity.RelicEntityRenderers.registerAll(event);
     }
 }
 

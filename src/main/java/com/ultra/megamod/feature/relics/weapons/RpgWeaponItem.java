@@ -104,33 +104,42 @@ extends Item {
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
         WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
+        String registryName = BuiltInRegistries.ITEM.getKey(this).toString();
+
+        // ── Manual Skills (right-click to cast) ──
         if (!this.skills.isEmpty()) {
-            tooltip.accept((Component)Component.empty());
-            tooltip.accept((Component)Component.literal((String)"Skills:").withStyle(ChatFormatting.GOLD));
-            for (WeaponSkill skill : this.skills) {
-                tooltip.accept((Component)Component.literal((String)("  " + skill.name() + " (" + skill.cooldownSeconds() + "s)")).withStyle(ChatFormatting.YELLOW));
-                tooltip.accept((Component)Component.literal((String)("    " + skill.description())).withStyle(ChatFormatting.GRAY));
+            tooltip.accept(Component.empty());
+            tooltip.accept(Component.literal("Skills (Right-Click):").withStyle(ChatFormatting.GOLD));
+            for (int i = 0; i < this.skills.size(); i++) {
+                WeaponSkill skill = this.skills.get(i);
+                String prefix = (i == 0) ? "  \u2022 " : "  \u2022 ";
+                tooltip.accept(Component.literal(prefix + skill.name() + "  \u00A78(" + skill.cooldownSeconds() + "s CD)")
+                        .withStyle(ChatFormatting.YELLOW));
+                tooltip.accept(Component.literal("    " + skill.description()).withStyle(ChatFormatting.GRAY));
             }
-        } else {
-            // Show mapped spells from SpellAbilityBridge for class weapons (wands, staves, etc.)
-            String registryName = BuiltInRegistries.ITEM.getKey(this).toString();
-            List<String> spellIds = SpellAbilityBridge.getSpellsForWeapon(registryName);
-            if (!spellIds.isEmpty()) {
-                tooltip.accept((Component)Component.empty());
-                tooltip.accept((Component)Component.literal("Spells (Right-Click):").withStyle(ChatFormatting.LIGHT_PURPLE));
-                for (String spellId : spellIds) {
-                    SpellDefinition spell = SpellRegistry.get(spellId);
-                    if (spell != null) {
-                        String cooldownStr = spell.cooldownSeconds() > 0 ? " (" + String.format("%.1f", spell.cooldownSeconds()) + "s)" : "";
-                        tooltip.accept((Component)Component.literal("  " + spell.name() + cooldownStr).withStyle(ChatFormatting.AQUA));
-                        tooltip.accept((Component)Component.literal("    " + spell.school().displayName + " spell").withStyle(ChatFormatting.GRAY));
-                    }
-                }
-                if (spellIds.size() > 1) {
-                    tooltip.accept((Component)Component.literal("  R+Scroll to cycle spells").withStyle(ChatFormatting.DARK_GRAY));
-                }
+            if (this.skills.size() > 1) {
+                tooltip.accept(Component.literal("  R + Scroll to change active skill").withStyle(ChatFormatting.DARK_GRAY));
             }
         }
+
+        // ── Class weapon spells (wand/staff etc.) ──
+        List<String> spellIds = SpellAbilityBridge.getSpellsForWeapon(registryName);
+        if (!spellIds.isEmpty() && this.skills.isEmpty()) {
+            tooltip.accept(Component.empty());
+            tooltip.accept(Component.literal("Spells (Right-Click):").withStyle(ChatFormatting.LIGHT_PURPLE));
+            for (String spellId : spellIds) {
+                SpellDefinition spell = SpellRegistry.get(spellId);
+                if (spell != null) {
+                    String cooldownStr = spell.cooldownSeconds() > 0 ? " \u00A78(" + String.format("%.1f", spell.cooldownSeconds()) + "s CD)" : "";
+                    tooltip.accept(Component.literal("  \u2022 " + spell.name() + cooldownStr).withStyle(ChatFormatting.AQUA));
+                    tooltip.accept(Component.literal("    " + spell.school().displayName + " spell").withStyle(ChatFormatting.GRAY));
+                }
+            }
+            if (spellIds.size() > 1) {
+                tooltip.accept(Component.literal("  R + Scroll to cycle spells").withStyle(ChatFormatting.DARK_GRAY));
+            }
+        }
+
     }
 
     public boolean isFoil(ItemStack stack) {

@@ -28,6 +28,10 @@ import java.util.List;
 public class RpgWeaponSkillHandler {
 
     public static void handleCast(ServerPlayer player, ItemStack stack, int skillIndex) {
+        String registryName = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+        com.ultra.megamod.MegaMod.LOGGER.info("[RpgWeaponSkill] handleCast: weapon={} skillIdx={}",
+                registryName, skillIndex);
+
         // Enforce skill locks -- locked weapons cannot use abilities
         if (!SkillLockManager.canUseItem(player, stack)) {
             player.displayClientMessage(
@@ -36,18 +40,18 @@ public class RpgWeaponSkillHandler {
             return;
         }
 
-        String registryName = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
-
         // Check for custom skill overrides on the item first, then fall back to registry
         List<RpgWeaponItem.WeaponSkill> skills = RpgWeaponEvents.getEffectiveSkills(stack);
         if (skills.isEmpty()) {
             skills = RpgWeaponRegistry.getSkillsForWeapon(registryName);
         }
+        com.ultra.megamod.MegaMod.LOGGER.info("[RpgWeaponSkill] skills.size()={}", skills.size());
 
         // If the weapon has built-in skills, use the original flow
         if (!skills.isEmpty()) {
             if (skillIndex < 0 || skillIndex >= skills.size()) return;
             RpgWeaponItem.WeaponSkill skill = skills.get(skillIndex);
+            com.ultra.megamod.MegaMod.LOGGER.info("[RpgWeaponSkill] firing skill={}", skill.name());
             RpgWeaponEvents.executeSkillPublic(player, registryName, skill, stack);
             return;
         }

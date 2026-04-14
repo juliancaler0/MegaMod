@@ -19,6 +19,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -62,7 +63,7 @@ public class AbilityKeybind {
     // RIGHT-CLICK: Cast held weapon ability
     // ============================
 
-    @SubscribeEvent
+    @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (!event.getEntity().level().isClientSide()) return;
         if (event.getHand() != InteractionHand.MAIN_HAND) return;
@@ -70,9 +71,22 @@ public class AbilityKeybind {
         ItemStack held = event.getItemStack();
         if (held.isEmpty()) return;
 
+        boolean isAbility = isAbilityWeapon(held.getItem());
+        boolean hasEntries = UnifiedAbilityBar.hasWeaponAbilities();
+        com.ultra.megamod.MegaMod.LOGGER.info("[AbilityKeybind] right-click: item={} isAbilityWeapon={} hasWeaponAbilities={} entries={}",
+                BuiltInRegistries.ITEM.getKey(held.getItem()), isAbility, hasEntries,
+                UnifiedAbilityBar.getWeaponEntries().size());
+
         // Only intercept for ability weapons
-        if (!isAbilityWeapon(held.getItem())) return;
-        if (!UnifiedAbilityBar.hasWeaponAbilities()) return;
+        if (!isAbility) return;
+        if (!hasEntries) {
+            // Force rebuild in case clientTick hasn't caught up
+            UnifiedAbilityBar.rebuildWeaponAbilities(held);
+            if (!UnifiedAbilityBar.hasWeaponAbilities()) {
+                com.ultra.megamod.MegaMod.LOGGER.warn("[AbilityKeybind] Still no weapon abilities after forced rebuild — skipping");
+                return;
+            }
+        }
 
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) return;
@@ -80,8 +94,10 @@ public class AbilityKeybind {
         // Send cast payload for the currently selected weapon ability
         int selectedIdx = UnifiedAbilityBar.getSelectedWeaponAbilityIndex();
         java.util.List<UnifiedAbilityBar.WeaponAbilityEntry> wpnEntries = UnifiedAbilityBar.getWeaponEntries();
+        String selectedName = (selectedIdx < wpnEntries.size()) ? wpnEntries.get(selectedIdx).displayName() : "?";
+        com.ultra.megamod.MegaMod.LOGGER.info("[AbilityKeybind] casting idx={} name={}", selectedIdx, selectedName);
         if (selectedIdx < wpnEntries.size()) {
-            AbilityHudOverlay.showCastNotification(wpnEntries.get(selectedIdx).displayName());
+            AbilityHudOverlay.showCastNotification(selectedName);
         }
         AbilityCastPayload payload = new AbilityCastPayload("MAINHAND", "__byindex__", selectedIdx);
         ClientPacketDistributor.sendToServer((CustomPacketPayload)payload, (CustomPacketPayload[])new CustomPacketPayload[0]);

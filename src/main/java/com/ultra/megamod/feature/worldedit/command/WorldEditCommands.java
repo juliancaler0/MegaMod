@@ -31,5 +31,6 @@ public final class WorldEditCommands {
         ChunkCommands.register(disp);
         BiomeCommands.register(disp);
         SchematicCommands.register(disp);
+        PresetCommands.register(disp);
     }
 }

@@ -1,0 +1,66 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "reliquary:withered_rib",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "reliquary:slime_pearl",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "reliquary:molten_core",
+          "weight": 8
+        },
+        {
+          "type": "minecraft:item",
+          "name": "reliquary:void_tear"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "reliquary:salamander_eye"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "reliquary:interdiction_torch"
+        },
+        {
+          "type": "minecraft:empty",
+          "weight": 61
+        }
+      ],
+      "name": "main",
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "reliquary:inject/chests/nether_bridge"
+}

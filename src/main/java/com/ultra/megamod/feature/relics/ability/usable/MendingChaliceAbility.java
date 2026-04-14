@@ -71,6 +71,12 @@ public class MendingChaliceAbility {
             ally.heal(heal);
             level.sendParticles((ParticleOptions) ParticleTypes.HEART,
                     ally.getX(), ally.getY() + 2.0, ally.getZ(), 3, 0.3, 0.2, 0.3, 0.0);
+
+            // Spawn a life-essence orb that drifts to the ally for a trickle-heal
+            com.ultra.megamod.feature.relics.entity.LifeEssenceEntity orb =
+                new com.ultra.megamod.feature.relics.entity.LifeEssenceEntity(
+                    level, cx, cy + 1.0, cz, ally.getId(), heal * 0.25F);
+            level.addFreshEntity(orb);
         }
 
         WeaponEffects.shockwave(level, (ParticleOptions) ParticleTypes.END_ROD,

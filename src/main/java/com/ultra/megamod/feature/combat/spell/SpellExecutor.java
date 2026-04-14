@@ -75,6 +75,10 @@ public class SpellExecutor {
             }
         }
 
+        // Broadcast a delivery-appropriate release animation to nearby clients so every
+        // spell has a visible cast pose (not just beams).
+        broadcastReleaseAnimation(player, spell);
+
         // Execute based on delivery type
         switch (spell.delivery()) {
             case DIRECT -> executeDirect(player, spell, level);
@@ -568,5 +572,66 @@ public class SpellExecutor {
      */
     public static void clearAllCooldowns() {
         cooldowns.clear();
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // Release animation broadcaster — picks a pose that fits the spell
+    // ═══════════════════════════════════════════════════════════════
+
+    /**
+     * Fires a brief release/cast animation on nearby clients (including the caster)
+     * so every spell shows a hand pose + cast flare, not just beams. Mapping is by
+     * delivery type first, then spell school as a tiebreaker.
+     */
+    private static void broadcastReleaseAnimation(ServerPlayer player, SpellDefinition spell) {
+        String animationName = pickReleaseAnimation(spell);
+        if (animationName == null) return;
+        com.ultra.megamod.feature.combat.animation.SpellAnimationPayload payload =
+                new com.ultra.megamod.feature.combat.animation.SpellAnimationPayload(
+                        player.getId(),
+                        1, // animType 1 = RELEASE (one-shot)
+                        animationName,
+                        1.0f,  // speed
+                        false);
+        net.neoforged.neoforge.network.PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, payload);
+    }
+
+    private static String pickReleaseAnimation(SpellDefinition spell) {
+        // Cure/heal spells → upward healing pose
+        String school = spell.school() != null ? spell.school().name().toLowerCase() : "";
+        if (school.contains("healing") || school.contains("holy")) {
+            return "one_handed_healing_release";
+        }
+
+        // Delivery-driven animation
+        switch (spell.delivery()) {
+            case PROJECTILE -> {
+                // Side-throw for arcane/fire/frost/lightning
+                return "one_handed_projectile_release";
+            }
+            case BEAM -> {
+                return "one_handed_projectile_release";
+            }
+            case AREA, CLOUD -> {
+                return "off_hand_area_release";
+            }
+            case TELEPORT -> {
+                return "one_handed_shout_release";
+            }
+            case DIRECT -> {
+                if (school.contains("holy") || school.contains("healing")) return "one_handed_healing_release";
+                return "one_handed_projectile_release";
+            }
+            case MELEE -> {
+                return "off_hand_area_release";
+            }
+            case ARROW -> {
+                return "archery_release";
+            }
+            case SPAWN -> {
+                return "one_handed_area_release";
+            }
+        }
+        return null;
     }
 }

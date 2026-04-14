@@ -24,8 +24,15 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
+/**
+ * Base relic class. As of Phase 2 migration, extends {@link com.ultra.megamod.lib.accessories.api.core.AccessoryItem}
+ * so each relic auto-registers with the lib/accessories system. Slot membership is driven by the
+ * {@code megamod:relics_*} item tags, which are included in the matching {@code accessories:*} validator tags.
+ * The {@link #slotType} field is retained so legacy ability-cast code can still reason about slot identity.
+ * Items with {@link AccessorySlotType#NONE} (held weapons) are still registered but live outside any accessory slot.
+ */
 public class RelicItem
-extends Item {
+extends com.ultra.megamod.lib.accessories.api.core.AccessoryItem {
     private final String relicName;
     private final AccessorySlotType slotType;
     private final List<RelicAbility> abilities;

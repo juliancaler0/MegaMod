@@ -49,6 +49,15 @@ public class SpellPowerMod {
 
         // Register attribute modification event to add attributes to LivingEntity
         modEventBus.addListener(SpellPowerMod::onAttributeModification);
+
+        // Wire attribute migration on player login — NeoForge game event bus (not mod bus)
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
+                net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent.class,
+                event -> {
+                    if (event.getEntity() instanceof ServerPlayer sp) {
+                        migrateAttributes(sp);
+                    }
+                });
     }
 
     /**

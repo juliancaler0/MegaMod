@@ -92,6 +92,9 @@ public class StormbandAbility {
             Vec3 to = target.position().add(0, target.getBbHeight() / 2.0, 0);
             WeaponEffects.line(level, (ParticleOptions) ParticleTypes.ELECTRIC_SPARK, from, to, 10, 2, 0.05);
             target.hurt(level.damageSources().magic(), (float) damage);
+            // Lightning paralyzes the target briefly
+            target.addEffect(new net.minecraft.world.effect.MobEffectInstance(
+                com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.PARALYSIS, 30, 0, false, true, true));
             from = to;
         }
 

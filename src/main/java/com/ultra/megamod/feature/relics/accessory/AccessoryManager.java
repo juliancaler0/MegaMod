@@ -40,6 +40,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.storage.LevelResource;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 
 public class AccessoryManager {
     private static AccessoryManager INSTANCE;
@@ -68,11 +69,31 @@ public class AccessoryManager {
     }
 
     public ItemStack getEquipped(UUID playerId, AccessorySlotType slot) {
+        // Phase 2 bridge: route all reads through the lib/accessories capability so
+        // relics equipped via the unified accessories GUI are visible to the ability system.
+        if (slot != AccessorySlotType.NONE) {
+            ItemStack libStack = bridgeLookup(playerId, slot);
+            if (!libStack.isEmpty()) return libStack;
+        }
+        // Fallback for legacy save data + for NONE slot (weapons held in hand)
         Map<AccessorySlotType, ItemStack> slots = this.playerAccessories.get(playerId);
         if (slots == null) {
             return ItemStack.EMPTY;
         }
         return slots.getOrDefault(slot, ItemStack.EMPTY);
+    }
+
+    /** Resolves the player by UUID from the active server and asks the lib capability. */
+    private ItemStack bridgeLookup(UUID playerId, AccessorySlotType slot) {
+        try {
+            var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+            if (server == null) return ItemStack.EMPTY;
+            var player = server.getPlayerList().getPlayer(playerId);
+            if (player == null) return ItemStack.EMPTY;
+            return LibAccessoryLookup.getEquipped(player, slot);
+        } catch (Throwable t) {
+            return ItemStack.EMPTY;
+        }
     }
 
     public void setEquipped(UUID playerId, AccessorySlotType slot, ItemStack stack) {
@@ -99,11 +120,35 @@ public class AccessoryManager {
     }
 
     public Map<AccessorySlotType, ItemStack> getAllEquipped(UUID playerId) {
-        Map<AccessorySlotType, ItemStack> slots = this.playerAccessories.get(playerId);
-        if (slots == null) {
-            return Map.of();
+        // Phase 2 bridge: merge lib-equipped relics with any legacy entries so nothing is missed
+        // while save data is in transition.
+        EnumMap<AccessorySlotType, ItemStack> merged = new EnumMap<>(AccessorySlotType.class);
+
+        // 1) lib/accessories (authoritative source of truth for newly equipped items)
+        try {
+            var server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+            if (server != null) {
+                var player = server.getPlayerList().getPlayer(playerId);
+                if (player != null) {
+                    for (AccessorySlotType slot : AccessorySlotType.values()) {
+                        if (slot == AccessorySlotType.NONE) continue;
+                        ItemStack stack = LibAccessoryLookup.getEquipped(player, slot);
+                        if (!stack.isEmpty()) merged.put(slot, stack);
+                    }
+                }
+            }
+        } catch (Throwable ignored) {}
+
+        // 2) legacy map — fills in anything the lib doesn't have (e.g. old saves not yet migrated)
+        Map<AccessorySlotType, ItemStack> legacy = this.playerAccessories.get(playerId);
+        if (legacy != null) {
+            for (var entry : legacy.entrySet()) {
+                if (!entry.getValue().isEmpty()) {
+                    merged.putIfAbsent(entry.getKey(), entry.getValue());
+                }
+            }
         }
-        return slots.entrySet().stream().filter(e -> !((ItemStack)e.getValue()).isEmpty()).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return merged;
     }
 
     public void loadFromDisk(ServerLevel level) {

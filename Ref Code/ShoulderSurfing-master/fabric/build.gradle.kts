@@ -1,0 +1,91 @@
+plugins {
+    id("multiloader-modloader")
+    alias(libs.plugins.fabricloom)
+}
+
+val modId: String by project
+val modName: String by project
+val modAuthor: String by project
+val modContributors: String by project
+val modVersion: String by project
+val modDescription: String by project
+val modUrl: String by project
+val jarName: String by project
+val fabricCompatibleMinecraftVersions: String by project
+
+base {
+    archivesName.set("$jarName-Fabric")
+}
+
+dependencies {
+    minecraft(libs.minecraft.fabric)
+    
+    implementation(libs.fabric.loader)
+    implementation(libs.fabric.api)
+    implementation(libs.forgeconfigapiport.fabric) {
+        exclude(group = libs.fabric.loader.get().group)
+        exclude(group = libs.fabric.api.get().group)
+    }
+    compileOnly(libs.wthit.fabric)
+    compileOnly(libs.jade.fabric)
+    compileOnly(libs.cobblemon.fabric)
+}
+
+loom {
+    runs {
+        configureEach {
+            runDir(rootProject.layout.projectDirectory.dir("run").asFile.relativeTo(layout.projectDirectory.asFile).path)
+            ideConfigGenerated(true)
+        }
+        named("client") {
+            client()
+            configName = "$modName Fabric Client"
+            programArgs("--username", "Dev")
+        }
+        named("server") {
+            server()
+            configName = "$modName Fabric Server"
+        }
+    }
+}
+
+tasks.withType<ProcessResources> {
+    val contributors = modContributors.replace(", ", """", """")
+    val properties = mapOf(
+        "modVersion" to modVersion,
+        "modId" to modId,
+        "modName" to modName,
+        "modAuthor" to modAuthor,
+        "modContributors" to contributors,
+        "modDescription" to modDescription,
+        "modUrl" to modUrl,
+        "minecraftVersion" to libs.versions.minecraft.get()
+    )
+    
+    inputs.properties(properties)
+    
+    filesMatching(listOf("pack.mcmeta", "fabric.mod.json", "**/lang/*.json")) {
+        expand(properties)
+    }
+}
+
+publishMods {
+    displayName = "$jarName-Fabric-${libs.versions.minecraft.get()}-$modVersion"
+    version = "${project.version}+fabric"
+    file = tasks.named<Jar>("jar").get().archiveFile
+    modLoaders.add("fabric")
+    
+    val compatibleVersions = fabricCompatibleMinecraftVersions.split(",")
+    
+    curseforge {
+        minecraftVersions.set(compatibleVersions)
+        requires("fabric-api", "forge-config-api-port")
+        incompatible("better-third-person", "nimble-fabric", "valkyrien-skies")
+    }
+    
+    modrinth {
+        minecraftVersions.set(compatibleVersions)
+        requires("fabric-api", "forge-config-api-port")
+        incompatible("better-third-person", "nimble", "valkyrien-skies")
+    }
+}

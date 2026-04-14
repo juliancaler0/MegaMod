@@ -1898,5 +1898,26 @@
   "item.megamod.we_brush": "WorldEdit Brush",
   "item.megamod.we_super_pickaxe": "Super Pickaxe",
   "item.megamod.we_info_tool": "WorldEdit Info Tool",
-  "item.megamod.we_tree_planter": "Tree Planter"
+  "item.megamod.we_tree_planter": "Tree Planter",
+
+  "key.categories.shouldersurfing": "Shoulder Surfing",
+  "key.shouldersurfing.adjust_camera_left": "Adjust Camera Left",
+  "key.shouldersurfing.adjust_camera_right": "Adjust Camera Right",
+  "key.shouldersurfing.adjust_camera_in": "Adjust Camera In",
+  "key.shouldersurfing.adjust_camera_out": "Adjust Camera Out",
+  "key.shouldersurfing.adjust_camera_up": "Adjust Camera Up",
+  "key.shouldersurfing.adjust_camera_down": "Adjust Camera Down",
+  "key.shouldersurfing.swap_shoulder": "Swap Shoulder",
+  "key.shouldersurfing.toggle_first_person": "Toggle First Person",
+  "key.shouldersurfing.toggle_third_person_front": "Toggle Third Person (Front)",
+  "key.shouldersurfing.toggle_third_person_back": "Toggle Third Person (Back)",
+  "key.shouldersurfing.free_look": "Free Look",
+  "key.shouldersurfing.toggle_camera_coupling": "Toggle Camera Coupling",
+  "key.shouldersurfing.toggle_x_offset_presets": "Toggle X-Offset Presets",
+  "key.shouldersurfing.toggle_y_offset_presets": "Toggle Y-Offset Presets",
+  "key.shouldersurfing.toggle_z_offset_presets": "Toggle Z-Offset Presets",
+  "key.shouldersurfing.enter_first_person": "Enter First Person",
+  "key.shouldersurfing.enter_third_person_front": "Enter Third Person (Front)",
+  "key.shouldersurfing.enter_third_person_back": "Enter Third Person (Back)",
+  "key.shouldersurfing.enter_shoulder_surfing": "Enter Shoulder Surfing"
 }

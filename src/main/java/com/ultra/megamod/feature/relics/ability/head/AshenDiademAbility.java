@@ -94,6 +94,21 @@ public class AshenDiademAbility {
         // Fire pillar at center
         WeaponEffects.column(level, ParticleTypes.FLAME, player.getX(), player.getY(), player.getZ(),
             4.0, 10, 3, 0.2);
+
+        // Rain down 4 burning stalactites around the blast zone
+        for (int i = 0; i < 4; i++) {
+            double angle = i * Math.PI / 2.0;
+            double sx = player.getX() + Math.cos(angle) * radius * 0.6;
+            double sz = player.getZ() + Math.sin(angle) * radius * 0.6;
+            com.ultra.megamod.feature.relics.entity.StalactiteEntity stal =
+                new com.ultra.megamod.feature.relics.entity.StalactiteEntity(
+                    com.ultra.megamod.feature.relics.entity.RelicEntityRegistry.STALACTITE.get(), level);
+            stal.setOwner(player);
+            stal.setPos(sx, player.getY() + 8.0, sz);
+            stal.setDeltaMovement(0, -0.8, 0);
+            stal.setDamage(damage);
+            level.addFreshEntity(stal);
+        }
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
             SoundEvents.GENERIC_EXPLODE, SoundSource.PLAYERS, 1.5f, 0.6f);
     }

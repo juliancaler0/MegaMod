@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "megamod:amphibian_boot",
+    "megamod:aqua_walker",
+    "megamod:ice_breaker",
+    "megamod:ice_skates",
+    "megamod:magma_walker",
+    "megamod:roller_skates",
+    "megamod:sandwalker_treads",
+    "megamod:stormstrider_boots"
+  ]
+}
