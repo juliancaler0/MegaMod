@@ -7,6 +7,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.Equippable;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.component.DataComponents;
@@ -196,27 +197,50 @@ public class Armor {
                                    Equipment.LootProperties lootProperties, @Nullable ItemSettingsTweaker settingsTweaker) {
 
             // Deferred item creation — factories accept registry-provided Item.Properties
-            // (with ResourceKey already set, as required by NeoForge 1.21.11)
+            // (with ResourceKey already set, as required by NeoForge 1.21.11).
+            // Each piece also receives an EQUIPPABLE data component (required in 1.21.2+ to
+            // allow placing the item in an armor slot). The asset key and equip sound come
+            // from the ArmorMaterial so the layer renderer picks the right texture/model.
             Function<Item.Properties, Item> headFac = (props) -> {
                 props.durability(getMaxDamage(EquipmentSlot.HEAD, durability));
+                props.component(DataComponents.EQUIPPABLE,
+                        Equippable.builder(EquipmentSlot.HEAD)
+                                .setAsset(material.assetId())
+                                .setEquipSound(material.equipSound())
+                                .build());
                 if (settingsTweaker != null) settingsTweaker.helmet.accept(props);
                 if (lootProperties.tier() >= 3) props.fireResistant();
                 return factory.create(material, EquipmentSlot.HEAD, props);
             };
             Function<Item.Properties, Item> chestFac = (props) -> {
                 props.durability(getMaxDamage(EquipmentSlot.CHEST, durability));
+                props.component(DataComponents.EQUIPPABLE,
+                        Equippable.builder(EquipmentSlot.CHEST)
+                                .setAsset(material.assetId())
+                                .setEquipSound(material.equipSound())
+                                .build());
                 if (settingsTweaker != null) settingsTweaker.chestplate.accept(props);
                 if (lootProperties.tier() >= 3) props.fireResistant();
                 return factory.create(material, EquipmentSlot.CHEST, props);
             };
             Function<Item.Properties, Item> legsFac = (props) -> {
                 props.durability(getMaxDamage(EquipmentSlot.LEGS, durability));
+                props.component(DataComponents.EQUIPPABLE,
+                        Equippable.builder(EquipmentSlot.LEGS)
+                                .setAsset(material.assetId())
+                                .setEquipSound(material.equipSound())
+                                .build());
                 if (settingsTweaker != null) settingsTweaker.leggings.accept(props);
                 if (lootProperties.tier() >= 3) props.fireResistant();
                 return factory.create(material, EquipmentSlot.LEGS, props);
             };
             Function<Item.Properties, Item> feetFac = (props) -> {
                 props.durability(getMaxDamage(EquipmentSlot.FEET, durability));
+                props.component(DataComponents.EQUIPPABLE,
+                        Equippable.builder(EquipmentSlot.FEET)
+                                .setAsset(material.assetId())
+                                .setEquipSound(material.equipSound())
+                                .build());
                 if (settingsTweaker != null) settingsTweaker.boots.accept(props);
                 if (lootProperties.tier() >= 3) props.fireResistant();
                 return factory.create(material, EquipmentSlot.FEET, props);

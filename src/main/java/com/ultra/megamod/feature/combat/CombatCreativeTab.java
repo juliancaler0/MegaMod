@@ -6,10 +6,16 @@ import com.ultra.megamod.feature.combat.items.ClassWeaponRegistry;
 import com.ultra.megamod.feature.combat.items.JewelryRegistry;
 import com.ultra.megamod.feature.combat.runes.RuneRegistry;
 import com.ultra.megamod.feature.combat.spell.SpellItemRegistry;
+import com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.equipment.Equippable;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 /**
@@ -38,9 +44,19 @@ public class CombatCreativeTab {
             ClassWeaponRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
             // Archer items (quivers, auto-fire hook)
             ArcherItemRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
+            // SpellEngine-registered weapons & shields (Paladin, Wizard, Rogue, Arsenal)
+            RPGItemRegistry.ITEMS.getEntries().forEach(e -> {
+                Item item = e.get();
+                if (!isArmorPiece(item)) event.accept(item);
+            });
         } else if (tab.equals(ARMOR)) {
-            // Class armor (paladin, warrior, wizard, rogue, ranger sets)
+            // Class armor (archer, ranger)
             ClassArmorRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
+            // SpellEngine-registered armor (Paladin/Priest/Crusader, Wizard robes, Rogue/Warrior)
+            RPGItemRegistry.ITEMS.getEntries().forEach(e -> {
+                Item item = e.get();
+                if (isArmorPiece(item)) event.accept(item);
+            });
         } else if (tab.equals(RELICS)) {
             // Jewelry (gems, rings, necklaces)
             JewelryRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
@@ -49,5 +65,16 @@ public class CombatCreativeTab {
             SpellItemRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
             RuneRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
         }
+    }
+
+    /** True when the item's EQUIPPABLE component targets an armor slot. */
+    private static boolean isArmorPiece(Item item) {
+        Equippable eq = new ItemStack(item).get(DataComponents.EQUIPPABLE);
+        if (eq == null) return false;
+        EquipmentSlot slot = eq.slot();
+        return slot == EquipmentSlot.HEAD
+                || slot == EquipmentSlot.CHEST
+                || slot == EquipmentSlot.LEGS
+                || slot == EquipmentSlot.FEET;
     }
 }
