@@ -79,6 +79,9 @@ public final class EmfModelManager {
         // Phase F: invalidate the per-entity UUID variant cache too — new pack state means
         // every entity re-picks its variant on the next render frame.
         EmfEntityVariantCache.getInstance().clear();
+        // Phase F: drop per-entity user variables so old values from a previous pack
+        // don't leak into expressions compiled from the new pack.
+        EmfPerEntityVariables.clearAll();
     }
 
     /**

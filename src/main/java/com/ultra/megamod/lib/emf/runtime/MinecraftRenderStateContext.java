@@ -86,8 +86,64 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
             case "partial_ticks" -> partialTicks();
             case "dimension" -> dimensionIndex();
             case "distance" -> distance();
+            case "rule_index" -> ruleIndex();
             default -> 0f;
         };
+    }
+
+    private float ruleIndex() {
+        if (uuid == null) return 0f;
+        try {
+            int idx = com.ultra.megamod.lib.etf.features.ETFManager.getInstance()
+                    .LAST_RULE_INDEX_OF_ENTITY.getInt(uuid);
+            return idx < 0 ? 0f : idx;
+        } catch (Throwable ignored) {
+            return 0f;
+        }
+    }
+
+    /**
+     * Best-effort {@code nbt(key, query)} implementation. Walks the entity's
+     * tag tree looking for a numeric value. Silently returns 0 on mismatch.
+     * Matches OptiFine's tolerant syntax: separators may be any of space,
+     * colon, dot, or slash.
+     */
+    @Override
+    public float evaluateNbt(String expression) {
+        if (expression == null || expression.isEmpty() || etfState == null) return 0f;
+        net.minecraft.nbt.CompoundTag root;
+        try {
+            root = etfState.nbt();
+        } catch (Throwable t) {
+            return 0f;
+        }
+        if (root == null) return 0f;
+
+        String q = expression.replace(':', ' ').replace('.', ' ').replace('/', ' ').trim();
+        String[] parts = q.split("\\s+");
+        if (parts.length == 0) return 0f;
+
+        net.minecraft.nbt.Tag cursor = root;
+        for (String p : parts) {
+            if (p.isEmpty()) continue;
+            if (cursor instanceof net.minecraft.nbt.CompoundTag ct) {
+                cursor = ct.get(p);
+                if (cursor == null) return 0f;
+            } else {
+                return 0f;
+            }
+        }
+        if (cursor instanceof net.minecraft.nbt.NumericTag nt) {
+            return nt.floatValue();
+        }
+        if (cursor instanceof net.minecraft.nbt.StringTag st) {
+            try {
+                return Float.parseFloat(st.value());
+            } catch (NumberFormatException nfe) {
+                return 0f;
+            }
+        }
+        return 0f;
     }
 
     @Override
@@ -125,13 +181,32 @@ public final class MinecraftRenderStateContext implements EmfVariableContext {
 
     @Override
     public float getEntityVariable(String name) {
+        // Try the frame-local map first, then fall back to the per-entity
+        // persistent map so values written on a prior frame are still visible.
         Float f = entityVariables.get(name);
-        return f == null ? 0f : f;
+        if (f != null) return f;
+        if (uuid != null) {
+            return EmfPerEntityVariables.getEntity(uuid, name);
+        }
+        return 0f;
     }
 
     @Override
     public void setEntityVariable(String name, float value) {
         entityVariables.put(name, value);
+        if (uuid != null) {
+            EmfPerEntityVariables.setEntity(uuid, name, value);
+        }
+    }
+
+    @Override
+    public float getGlobalVariable(String name) {
+        return EmfPerEntityVariables.getGlobal(name);
+    }
+
+    @Override
+    public void setGlobalVariable(String name, float value) {
+        EmfPerEntityVariables.setGlobal(name, value);
     }
 
     // --- Float accessors --------------------------------------------------
