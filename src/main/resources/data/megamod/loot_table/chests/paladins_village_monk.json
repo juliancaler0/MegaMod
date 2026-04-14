@@ -76,7 +76,7 @@
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "megamod:healing_stone",
+          "name": "megamod:healing_rune",
           "functions": [
             {
               "function": "minecraft:set_count",

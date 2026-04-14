@@ -1149,7 +1149,7 @@ extends Screen {
                 // Spells & their cooldowns are edited via the Spells tab -> Container Editor.
                 if (!entry.weaponSkills.isEmpty()) {
                     innerY += 13;
-                    g.drawString(this.font, "Weapon Skills (legacy — see Spells tab)", cx + 24, innerY, 0xFF6E7681, false);
+                    g.drawString(this.font, "Weapon Spells (legacy — see Spells tab)", cx + 24, innerY, 0xFF6E7681, false);
                     innerY += 12;
                     for (ResearchWeaponSkill ws : entry.weaponSkills) {
                         g.drawString(this.font, "  " + ws.name + " (CD: " + String.format("%.1f", ws.cooldownSec) + "s)", cx + 24, innerY, 0xFF6E7681, false);

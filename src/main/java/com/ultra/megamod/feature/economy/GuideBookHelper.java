@@ -106,7 +106,7 @@ public class GuideBookHelper {
             .append(gold("Scroll"))
             .append(text("\n  Cycle weapon\n  abilities\n\n"))
             .append(gold("Right-Click"))
-            .append(text(" weapon\n  Cast weapon skill"))
+            .append(text(" weapon\n  Cast weapon spell"))
         ));
 
         // ==========================================
@@ -168,7 +168,7 @@ public class GuideBookHelper {
         // ==========================================
         pages.add(page(Component.empty()
             .append(header("RPG Weapons"))
-            .append(text("\n\n20+ weapon types with\nbuilt-in castable\nskills:\n\n"))
+            .append(text("\n\n20+ weapon types with\nbuilt-in castable\nspells:\n\n"))
             .append(gold("Katana"))
             .append(text(" - Dash strike\n"))
             .append(gold("Hammer"))

@@ -13,17 +13,18 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-@EventBusSubscriber(modid="megamod")
+// Phase-H note: accessory state is now owned by lib/accessories (AccessoriesCapability).
+// This class is retained for backward compatibility with legacy save-data loading but
+// its event listeners are disabled — the @EventBusSubscriber is gone, and each handler
+// below is no longer annotated with @SubscribeEvent. Calling these methods directly
+// from migration code is still OK; double-firing on death etc. is no longer possible.
 public class AccessoryEvents {
-    @SubscribeEvent
     public static void onServerTick(ServerTickEvent.Post event) {
         ServerLevel overworld = event.getServer().overworld();
         if (overworld.getGameTime() % 1200L != 0L) {
@@ -32,14 +33,14 @@ public class AccessoryEvents {
         AccessoryManager.get(overworld).saveToDisk(overworld);
     }
 
-    @SubscribeEvent
+
     public static void onServerStopping(ServerStoppingEvent event) {
         ServerLevel overworld = event.getServer().overworld();
         AccessoryManager.get(overworld).saveToDisk(overworld);
         AccessoryManager.reset();
     }
 
-    @SubscribeEvent
+
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
         if (!(player instanceof ServerPlayer)) {
@@ -54,7 +55,7 @@ public class AccessoryEvents {
         AccessoryEvents.syncToClient(player2);
     }
 
-    @SubscribeEvent
+
     public static void onPlayerDeath(LivingDeathEvent event) {
         LivingEntity livingEntity = event.getEntity();
         if (!(livingEntity instanceof ServerPlayer)) {
@@ -79,7 +80,7 @@ public class AccessoryEvents {
         }
     }
 
-    @SubscribeEvent
+
     public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         Player player = event.getEntity();
         if (!(player instanceof ServerPlayer)) {

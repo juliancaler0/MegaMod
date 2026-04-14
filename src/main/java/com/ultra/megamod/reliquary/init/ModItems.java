@@ -33,6 +33,7 @@ import com.ultra.megamod.reliquary.crafting.*;
 import com.ultra.megamod.reliquary.crafting.conditions.*;
 import com.ultra.megamod.reliquary.data.ChestLootEnabledCondition;
 import com.ultra.megamod.reliquary.data.EntityLootEnabledCondition;
+import com.ultra.megamod.reliquary.data.InjectLootModifier;
 import com.ultra.megamod.reliquary.entity.shot.*;
 import com.ultra.megamod.reliquary.item.*;
 import com.ultra.megamod.reliquary.item.PotionItem;
@@ -198,15 +199,16 @@ public class ModItems {
 	public static final Supplier<RecipeSerializer<?>> POTION_EFFECTS_SERIALIZER = RECIPE_SERIALIZERS.register("potion_effects", PotionEffectsRecipe.Serializer::new);
 	public static final Supplier<LootItemConditionType> CHEST_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("chest_loot_enabled", () -> new LootItemConditionType(ChestLootEnabledCondition.CODEC));
 	public static final Supplier<LootItemConditionType> ENTITY_LOOT_ENABLED_CONDITION = LOOT_CONDITION_TYPES.register("entity_loot_enabled", () -> new LootItemConditionType(EntityLootEnabledCondition.CODEC));
-	// Port note (1.21.11): the old ReliquaryLootModifierProvider (datagen) was stripped during
-	// the 1.21 prune and has not been re-ported. Global loot modifiers in 1.21 can alternatively
-	// be declared as static resource files at
-	//   data/reliquary/neoforge/loot_modifiers/global_loot_modifiers.json
-	// referencing codec-serialised modifier JSONs under
-	//   data/reliquary/loot_modifiers/*.json
-	// — that path is preferred over re-porting the provider class. The LOOT_MODIFIERS
-	// DeferredRegister above is still registered so future modifier codecs can be attached
-	// without touching callers.
+
+	// Port note (1.21.11): Reliquary's original datagen provider
+	// (ReliquaryLootModifierProvider) declared this modifier as a static inner
+	// class. In the port it has been promoted to a top-level class at
+	// com.ultra.megamod.reliquary.data.InjectLootModifier and driven entirely
+	// from static JSON under data/reliquary/loot_modifier/entities/*.json —
+	// re-ported from the reference generated resources. The vanilla mob
+	// drops (zombie heart, rib bone, etc.) come from these modifiers merging
+	// reliquary:inject/entities/<mob> into the mob's vanilla loot roll.
+	public static final Supplier<MapCodec<InjectLootModifier>> INJECT_LOOT = LOOT_MODIFIERS.register("inject_loot", () -> InjectLootModifier.CODEC);
 
 	private static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, Reliquary.MOD_ID);
 	public static final ItemCapability<HarvestRodCache, @Nullable Void> HARVEST_ROD_CACHE_CAPABILITY = ItemCapability.createVoid(Reliquary.getRL("harvest_rod_cache"), HarvestRodCache.class);

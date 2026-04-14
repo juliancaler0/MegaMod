@@ -46,6 +46,30 @@ public class AlkahestryTomeItem extends ChargeableItem {
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		super.use(level, player, hand);
+
+		// Admin-only "duplicate anything" path: when an admin right-clicks the
+		// Tome with any non-Tome item in the OTHER hand, produce a full stack of
+		// the other item (64 or the item's max stack size) with no charge cost.
+		// Sneak + right-click = duplicate a single unit instead of a full stack.
+		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer
+				&& com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(serverPlayer)) {
+			InteractionHand otherHand = (hand == InteractionHand.MAIN_HAND) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+			ItemStack target = player.getItemInHand(otherHand);
+			if (!target.isEmpty() && !(target.getItem() instanceof AlkahestryTomeItem)) {
+				int count = player.isShiftKeyDown() ? 1 : target.getMaxStackSize();
+				ItemStack dup = target.copyWithCount(count);
+				if (!player.getInventory().add(dup)) {
+					player.drop(dup, false);
+				}
+				player.playSound(ModSounds.BOOK.get(), 1.0f, 1.4f);
+				serverPlayer.displayClientMessage(
+						net.minecraft.network.chat.Component.literal("[Admin Tome] Duplicated " + count + "x ")
+								.append(target.getHoverName()),
+						true);
+				return InteractionResult.SUCCESS;
+			}
+		}
+
 		if (player.isShiftKeyDown()) {
 			return InteractionResult.SUCCESS;
 		}

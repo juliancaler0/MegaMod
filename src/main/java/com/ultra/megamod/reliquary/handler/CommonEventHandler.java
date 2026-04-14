@@ -18,10 +18,12 @@ import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import com.ultra.megamod.reliquary.block.PassivePedestalBlock;
 import com.ultra.megamod.reliquary.init.ModItems;
+import com.ultra.megamod.reliquary.item.HarvestRodItem;
 import com.ultra.megamod.reliquary.item.RendingGaleItem;
 import com.ultra.megamod.reliquary.pedestal.PedestalRegistry;
 import com.ultra.megamod.reliquary.util.FakePlayerFactory;
@@ -56,7 +58,34 @@ public class CommonEventHandler {
 		eventBus.addListener(CommonEventHandler::beforePlayerDeath);
 		eventBus.addListener(CommonEventHandler::onDimensionUnload);
 		eventBus.addListener(CommonEventHandler::onPlayerTick);
+		eventBus.addListener(CommonEventHandler::onHarvestRodBreakBlock);
 		eventBus.addListener(PedestalRegistry::serverStopping);
+	}
+
+	// 1.21.11 port: Item#canAttackBlock was removed, so the Harvest Rod's
+	// "breaking one crop breaks all crops in range" behaviour is routed through
+	// BlockEvent.BreakEvent instead. Triggers only when the player is currently
+	// holding the Harvest Rod in either hand.
+	public static void onHarvestRodBreakBlock(BlockEvent.BreakEvent event) {
+		Player player = event.getPlayer();
+		if (player == null || player.level().isClientSide()) {
+			return;
+		}
+		ItemStack main = player.getMainHandItem();
+		ItemStack off = player.getOffhandItem();
+		ItemStack rod;
+		if (main.getItem() == ModItems.HARVEST_ROD.get()) {
+			rod = main;
+		} else if (off.getItem() == ModItems.HARVEST_ROD.get()) {
+			rod = off;
+		} else {
+			return;
+		}
+		HarvestRodItem harvestRod = (HarvestRodItem) rod.getItem();
+		// Delegate to the existing AoE break routine. It will break all crops in the
+		// configured radius around the broken block and return !broken; we don't cancel
+		// the triggering break, we just fan out the rest.
+		harvestRod.canAttackBlock(event.getState(), (net.minecraft.world.level.Level) event.getLevel(), event.getPos(), player);
 	}
 
 	public static void preventMendingAndUnbreaking(AnvilUpdateEvent event) {
