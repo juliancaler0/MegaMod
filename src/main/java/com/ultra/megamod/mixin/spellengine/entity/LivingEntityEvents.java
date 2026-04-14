@@ -44,12 +44,8 @@ public abstract class LivingEntityEvents {
                 var args = new CombatEvents.EntityDamageTaken.Args(entity, source, amount);
                 CombatEvents.ENTITY_DAMAGE_TAKEN.invoke(listener -> listener.onDamageTaken(args));
             }
-            if (entity instanceof Player player) {
-                if (CombatEvents.PLAYER_DAMAGE_TAKEN.isListened()) {
-                    var args = new CombatEvents.PlayerDamageTaken.Args(player, source, amount);
-                    CombatEvents.PLAYER_DAMAGE_TAKEN.invoke(listener -> listener.onPlayerDamageTaken(args));
-                }
-            }
+            // PLAYER_DAMAGE_TAKEN is now dispatched by TriggerEventHandlers via
+            // LivingDamageEvent.Post (Phase A.4) to avoid double-firing.
         }
     }
 
@@ -80,12 +76,8 @@ public abstract class LivingEntityEvents {
             var args = new CombatEvents.EntityShieldBlock.Args(instance, source, damageAmount);
             CombatEvents.ENTITY_SHIELD_BLOCK.invoke(listener -> listener.onShieldBlock(args));
         }
-        if (instance instanceof Player player) {
-            if (CombatEvents.PLAYER_SHIELD_BLOCK.isListened()) {
-                var args = new CombatEvents.PlayerShieldBlock.Args(player, source, damageAmount);
-                CombatEvents.PLAYER_SHIELD_BLOCK.invoke(listener -> listener.onShieldBlock(args));
-            }
-        }
+        // PLAYER_SHIELD_BLOCK is now dispatched by TriggerEventHandlers via
+        // LivingShieldBlockEvent (Phase A.4) to avoid double-firing.
         original.call(instance, level, attacker);
     }
 }

@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.Holder;
 import com.ultra.megamod.lib.spellengine.api.entity.SpellEngineAttributes;
 import com.ultra.megamod.lib.spellengine.api.event.CombatEvents;
@@ -43,12 +42,8 @@ public abstract class LivingEntityHealthImpacting {
             var args = new CombatEvents.EntityDamageTaken.Args(instance, source, amount);
             CombatEvents.ENTITY_DAMAGE_INCOMING.invoke(listener -> listener.onDamageTaken(args));
         }
-        if (instance instanceof Player player) {
-            if (CombatEvents.PLAYER_DAMAGE_INCOMING.isListened()) {
-                var args = new CombatEvents.PlayerDamageTaken.Args(player, source, amount);
-                CombatEvents.PLAYER_DAMAGE_INCOMING.invoke(listener -> listener.onPlayerDamageTaken(args));
-            }
-        }
+        // PLAYER_DAMAGE_INCOMING is now dispatched by TriggerEventHandlers via
+        // LivingIncomingDamageEvent (Phase A.4) to avoid double-firing.
 
         original.call(instance, level, source, amount);
     }
