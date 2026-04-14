@@ -97,6 +97,9 @@ public final class SpellEngineNeoForge {
     private static void onCommonSetup(FMLCommonSetupEvent event) {
         // Wire the common init (listeners on the library's internal Event objects).
         event.enqueueWork(SpellEngineMod::init);
+        // Phase G.1: level-gate for relic abilities hooks SpellEvents.CASTING_ATTEMPT
+        // after SpellEngineMod.init() so its predicate runs on every cast attempt.
+        event.enqueueWork(com.ultra.megamod.feature.relics.RelicLevelGate::init);
 
         // Once entity types are resolved, back-fill the static ENTITY_TYPE fields on the
         // legacy SpellProjectile / SpellCloud classes so `new SpellProjectile(level, owner)`

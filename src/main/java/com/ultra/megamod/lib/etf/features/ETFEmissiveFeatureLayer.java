@@ -99,18 +99,41 @@ public class ETFEmissiveFeatureLayer<S extends LivingEntityRenderState, M extend
     }
 
     /**
-     * Hooked on {@link EntityRenderersEvent.AddLayers} to install the emissive feature
-     * layer on every player renderer. (A complete upstream-parity implementation would
-     * install it on every {@code LivingEntityRenderer}, but NeoForge only exposes player
-     * layer registration via a typed API; non-player entities pick up emissives via the
-     * internal mixin pipeline that was already ported in Phase B.)
+     * Installs the emissive feature layer on every entity renderer that supports it.
+     * Covers both players (via {@code getSkins}/{@code getPlayerRenderer}) and every
+     * {@code LivingEntityRenderer} registered for a vanilla {@link net.minecraft.world.entity.EntityType}
+     * (via {@code getEntityTypes}/{@code getRenderer}).
+     * <p>
+     * Needed so resource packs that declare emissive textures for non-player entities
+     * (drowned, enderman, blaze, endermite, warden, TRAS's custom entity variants, etc.)
+     * actually render the glow pass.
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
     public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        // Players — both default (steve) and slim (alex) variants.
         for (net.minecraft.world.entity.player.PlayerModelType skin : event.getSkins()) {
             var renderer = event.getPlayerRenderer(skin);
             if (renderer != null) {
-                renderer.addLayer(new ETFEmissiveFeatureLayer(renderer));
+                try {
+                    renderer.addLayer(new ETFEmissiveFeatureLayer(renderer));
+                } catch (Throwable t) {
+                    com.ultra.megamod.lib.etf.utils.ETFUtils2.logWarn(
+                            "ETF emissive install (player " + skin + ") failed: " + t.getMessage());
+                }
+            }
+        }
+
+        // Every other LivingEntity renderer registered at layer-add time. The event
+        // exposes the populated entity-type set via getEntityTypes().
+        for (net.minecraft.world.entity.EntityType<?> type : event.getEntityTypes()) {
+            try {
+                var r = event.getRenderer(type);
+                if (r instanceof net.minecraft.client.renderer.entity.LivingEntityRenderer living) {
+                    living.addLayer(new ETFEmissiveFeatureLayer(living));
+                }
+            } catch (Throwable t) {
+                // Some renderers (ender dragon, painting) throw here; silent-skip — they
+                // have their own dedicated texture pipelines.
             }
         }
     }

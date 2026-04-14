@@ -234,6 +234,10 @@ public class MegaModClient {
             event3.enqueueWork(() -> com.ultra.megamod.feature.combat.arsenal.client.ArsenalClientMod.init());
         });
 
+        // Reliquary port — client wiring (currently a stub; renderers / HUD
+        // panes / particle providers pending a 1.21.11 client-layer port)
+        com.ultra.megamod.reliquary.Reliquary.initClient(modEventBus, container);
+
         // Renderer and pipeline registrations
         modEventBus.addListener(MegaModClient::onRegisterRenderers);
         modEventBus.addListener(MegaModClient::onRegisterLayerDefinitions);

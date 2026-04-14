@@ -35,7 +35,11 @@ public abstract class MathValue implements MathComponent {
     public static boolean toBoolean(float value) {
         if (value == FALSE) return false;
         if (value == TRUE) return true;
-        throw new IllegalArgumentException("Value [" + value + "] is not a boolean");
+        // Lenient coercion — matches upstream behaviour for user-space variables
+        // (varb.*) which may have been assigned a plain 0 / 1 before being read back
+        // as boolean. Fresh Animations relies on this for e.g. var.in_air bootstrap.
+        if (Float.isNaN(value)) return false;
+        return value != 0.0f;
     }
 
     public static float validateBoolean(float value) {

@@ -100,7 +100,21 @@ public class FeatureToggleManager {
         new FeatureDefinition("alchemy", "Alchemy System", "Combat", "Custom potion brewing with reagent grinding and cauldron mechanics"),
         new FeatureDefinition("tree_felling", "Tree Felling", "Farming", "Chop whole trees with an axe (requires Crop Master or Herbalist T3+)"),
         new FeatureDefinition("world_loot", "World Loot Drops", "Exploration", "Relics and weapons drop from mobs, fishing, and structure chests"),
-        new FeatureDefinition("builder_admin_bypass", "Builder Admin Bypass", "Admin", "Admin builders skip material requirements — place blocks without needing items in the town chest")
+        new FeatureDefinition("builder_admin_bypass", "Builder Admin Bypass", "Admin", "Admin builders skip material requirements — place blocks without needing items in the town chest"),
+
+        // ── Reliquary port ─────────────────────────────────────────
+        new FeatureDefinition("reliquary", "Reliquary Port", "Reliquary", "Master switch — when off, all Reliquary items / blocks / handlers are inert (registrations remain)"),
+        new FeatureDefinition("reliquary_handgun", "Handgun + Magazines", "Reliquary", "Magazine-loaded ranged weapon with bullet types (neutral / blaze / ender / sand / etc.)"),
+        new FeatureDefinition("reliquary_pedestals", "Pedestals", "Reliquary", "16 colored pedestals that auto-use the placed item (fishing rod, shears, harvest rod, melee, etc.)"),
+        new FeatureDefinition("reliquary_alkahestry", "Alkahestry", "Reliquary", "Alkahestry tome + altar — convert charge into items"),
+        new FeatureDefinition("reliquary_apothecary", "Apothecary", "Reliquary", "Mortar + cauldron — grind reagents into essences and brew them into custom potions"),
+        new FeatureDefinition("reliquary_potions_replace_alchemy", "Potions Replace MegaMod Alchemy", "Reliquary", "When on, Reliquary apothecary potions take precedence over MegaMod's alchemy cauldron output"),
+        new FeatureDefinition("reliquary_relics", "Relic Items", "Reliquary", "Active-use relics (Hero Medallion, Fortune Coin, Twilight Cloak, Lantern of Paranoia, Salamander Eye, Phoenix Down, etc.)"),
+        new FeatureDefinition("reliquary_mob_charms", "Mob Charms", "Reliquary", "Crafted charms that suppress hostility from a specific mob; charm belt holds many"),
+        new FeatureDefinition("reliquary_void_tear", "Void Tear", "Reliquary", "Bottomless single-item storage that auto-restocks the inventory"),
+        new FeatureDefinition("reliquary_fragment_drops", "Mob Fragment Drops", "Reliquary", "Mobs drop charm fragments on death — needed to craft mob charms"),
+        new FeatureDefinition("reliquary_witherless_rose", "Witherless Rose Drops", "Reliquary", "Wither boss drops Witherless Rose"),
+        new FeatureDefinition("reliquary_chest_loot", "Reliquary Chest Loot", "Reliquary", "Reliquary loot pools injected into vanilla chest tables (dungeons, mineshafts, strongholds, etc.)")
     );
 
     private static final Map<String, FeatureDefinition> FEATURE_MAP = new LinkedHashMap<>();

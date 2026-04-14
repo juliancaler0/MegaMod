@@ -25,6 +25,11 @@ public final class EMFUtils {
         EMF.LOGGER.error(message);
     }
 
+    /** True when verbose model-creation logging is enabled in EMF config. */
+    public static boolean shouldLogModelCreation() {
+        return EMF.logModelCreationData;
+    }
+
     /**
      * Returns {@code id} if it doesn't collide with {@code existing}; otherwise appends
      * {@code _2}, {@code _3}, ... until a fresh id is found.

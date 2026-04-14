@@ -163,6 +163,12 @@ public class MegaMod {
         com.ultra.megamod.lib.spellengine.api.effect.SpellEngineSyncAttachments.init(modEventBus);
         // WorldEdit port — admin-gated in-game world editor
         com.ultra.megamod.feature.worldedit.WorldEditRegistry.init(modEventBus);
+
+        // Reliquary port — relic items, pedestals, alkahestry, potion essences, handgun.
+        // Uses "reliquary" namespace for IDs so the copied asset/data tree resolves
+        // without rewriting 400+ JSON references.
+        com.ultra.megamod.reliquary.Reliquary.initCommon(modEventBus, modContainer);
+
         LOGGER.info("MegaMod loading - all systems enabled");
     }
 }

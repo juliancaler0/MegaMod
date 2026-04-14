@@ -76,4 +76,36 @@ public final class Reliquary {
 	public static Identifier getRL(String regName) {
 		return Identifier.fromNamespaceAndPath(MOD_ID, regName);
 	}
+
+	// ── Admin toggle bridge ──────────────────────────────────────────
+	// Reliquary subsystems consult these gates to honor the FeatureToggleManager
+	// flags exposed in the admin Toggles tab. Defaults to enabled; if no
+	// ServerLevel context is available (early init, client-only paths) we err
+	// on the side of "enabled" so the port doesn't silently no-op.
+
+	private static boolean isToggleOn(String featureId) {
+		try {
+			net.minecraft.server.MinecraftServer server = net.neoforged.neoforge.server.ServerLifecycleHooks.getCurrentServer();
+			if (server == null) {
+				return true;
+			}
+			net.minecraft.server.level.ServerLevel overworld = server.overworld();
+			return com.ultra.megamod.feature.toggles.FeatureToggleManager.get(overworld).isEnabled(featureId);
+		} catch (Throwable ignored) {
+			return true;
+		}
+	}
+
+	public static boolean isEnabled() { return isToggleOn("reliquary"); }
+	public static boolean isHandgunEnabled() { return isEnabled() && isToggleOn("reliquary_handgun"); }
+	public static boolean isPedestalsEnabled() { return isEnabled() && isToggleOn("reliquary_pedestals"); }
+	public static boolean isAlkahestryEnabled() { return isEnabled() && isToggleOn("reliquary_alkahestry"); }
+	public static boolean isApothecaryEnabled() { return isEnabled() && isToggleOn("reliquary_apothecary"); }
+	public static boolean isPotionsReplaceAlchemyEnabled() { return isEnabled() && isToggleOn("reliquary_potions_replace_alchemy"); }
+	public static boolean isRelicsEnabled() { return isEnabled() && isToggleOn("reliquary_relics"); }
+	public static boolean isMobCharmsEnabled() { return isEnabled() && isToggleOn("reliquary_mob_charms"); }
+	public static boolean isVoidTearEnabled() { return isEnabled() && isToggleOn("reliquary_void_tear"); }
+	public static boolean isFragmentDropsEnabled() { return isEnabled() && isToggleOn("reliquary_fragment_drops"); }
+	public static boolean isWitherlessRoseEnabled() { return isEnabled() && isToggleOn("reliquary_witherless_rose"); }
+	public static boolean isChestLootEnabled() { return isEnabled() && isToggleOn("reliquary_chest_loot"); }
 }
