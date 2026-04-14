@@ -3,7 +3,6 @@ package com.ultra.megamod.feature.relics.network;
 import com.ultra.megamod.feature.attributes.network.CombatTextPayload;
 import com.ultra.megamod.feature.relics.network.AbilityCooldownSyncPayload;
 import com.ultra.megamod.feature.relics.network.AccessoryPayload;
-import com.ultra.megamod.feature.relics.network.AccessoryQuickEquipPayload;
 import com.ultra.megamod.feature.relics.network.OpenRelicScreenPayload;
 import com.ultra.megamod.feature.relics.network.RelicExchangePayload;
 import com.ultra.megamod.feature.relics.network.RelicTweakPayload;
@@ -15,9 +14,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 public class RelicNetwork {
     public static void registerPayloads(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar("megamod");
-        registrar.playToServer(AccessoryPayload.AccessoryEquipPayload.TYPE, AccessoryPayload.AccessoryEquipPayload.STREAM_CODEC, AccessoryPayload.AccessoryEquipPayload::handleOnServer);
         registrar.playToClient(AccessoryPayload.AccessorySyncPayload.TYPE, AccessoryPayload.AccessorySyncPayload.STREAM_CODEC, AccessoryPayload.AccessorySyncPayload::handleOnClient);
-        registrar.playToServer(AccessoryQuickEquipPayload.TYPE, AccessoryQuickEquipPayload.STREAM_CODEC, AccessoryQuickEquipPayload::handleOnServer);
         // Phase G.1: relic accessory abilities route through SpellEngine via this payload.
         registrar.playToServer(RelicSpellCastPayload.TYPE, RelicSpellCastPayload.STREAM_CODEC, RelicSpellCastPayload::handleOnServer);
         registrar.playToClient(AbilityCooldownSyncPayload.TYPE, AbilityCooldownSyncPayload.STREAM_CODEC, AbilityCooldownSyncPayload::handleOnClient);

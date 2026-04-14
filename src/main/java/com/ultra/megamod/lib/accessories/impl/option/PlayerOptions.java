@@ -8,7 +8,7 @@ import java.util.Set;
 public class PlayerOptions {
 
     public static PlayerOption<PlayerEquipControl> EQUIP_CONTROL = new PlayerOption<>("equip_control", Endec.forEnum(PlayerEquipControl.class), PlayerEquipControl.MUST_NOT_CROUCH);
-    public static PlayerOption<Boolean> SHOW_UNUSED_SLOTS = new PlayerOption<>("unused_slots", Endec.BOOLEAN, false);
+    public static PlayerOption<Boolean> SHOW_UNUSED_SLOTS = new PlayerOption<>("unused_slots", Endec.BOOLEAN, true);
     public static PlayerOption<Boolean> SHOW_UNIQUE_SLOTS = new PlayerOption<>("unique_slots", Endec.BOOLEAN, true);
     public static PlayerOption<Boolean> SHOW_COSMETIC_SLOTS = new PlayerOption<>("cosmetic", Endec.BOOLEAN, false);
 

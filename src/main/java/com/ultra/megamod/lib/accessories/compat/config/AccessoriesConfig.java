@@ -87,7 +87,7 @@ public class AccessoriesConfig {
         private boolean prioritizeCreativeScreen = false;
         private boolean keybindIgnoresOtherTargets = false;
         private boolean backButtonClosesScreen = false;
-        private boolean showUnusedSlots = false;
+        private boolean showUnusedSlots = true;
         private boolean allowSlotScrolling = true;
         private boolean isDarkMode = false;
         private boolean showEquippedStackSlotType = true;
