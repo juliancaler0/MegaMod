@@ -7,7 +7,7 @@ import com.ultra.megamod.feature.relics.ability.belt.HunterBeltAbility;
 import com.ultra.megamod.feature.relics.ability.feet.IceBreakerAbility;
 import com.ultra.megamod.feature.relics.ability.hands.RageGloveAbility;
 import com.ultra.megamod.feature.relics.ability.necklace.ReflectionNecklaceAbility;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import com.ultra.megamod.feature.relics.data.RelicAbility;
 import com.ultra.megamod.feature.relics.data.RelicAttributeBonus;
@@ -99,7 +99,6 @@ public class AbilitySystem {
     public static void onServerTick(ServerTickEvent.Post event) {
         ServerLevel overworld = event.getServer().overworld();
         long gameTime = overworld.getGameTime();
-        AccessoryManager manager = AccessoryManager.get(overworld);
         for (ServerPlayer player : event.getServer().getPlayerList().getPlayers()) {
             UUID playerId = player.getUUID();
             Long invulnExpiry = INVULN_EXPIRY.get(playerId);
@@ -107,8 +106,7 @@ public class AbilitySystem {
                 player.setInvulnerable(false);
                 INVULN_EXPIRY.remove(playerId);
             }
-            Map<AccessorySlotType, ItemStack> equipped = manager.getAllEquipped(playerId);
-            boolean anyChanged = false;
+            Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(player);
             CompoundTag cooldownTag = new CompoundTag();
             for (Map.Entry<AccessorySlotType, ItemStack> entry : equipped.entrySet()) {
                 Item item;
@@ -120,7 +118,6 @@ public class AbilitySystem {
                 CompoundTag cooldownsBefore = AbilityCooldownManager.getAllCooldowns(stack);
                 if (!cooldownsBefore.isEmpty()) {
                     AbilityCooldownManager.tickCooldowns(stack);
-                    anyChanged = true;
                 }
                 List<RelicAbility> abilities = relicItem.getAbilities();
                 for (RelicAbility ability : abilities) {
@@ -135,12 +132,11 @@ public class AbilitySystem {
                     if ((cd = AbilityCooldownManager.getCooldown(stack, ability.name())) <= 0) continue;
                     cooldownTag.putInt(ability.name(), cd);
                 }
-                // Apply relic attribute bonuses every 20 ticks
+                // Apply relic attribute bonuses every 20 ticks. The stack ref is live from the
+                // lib container, so in-place NBT mutations (cooldowns, etc.) are already visible.
                 if (gameTime % 20L == 0L) {
                     applyAttributeBonuses(player, stack, entry.getKey());
                 }
-                if (!anyChanged) continue;
-                manager.setEquipped(playerId, entry.getKey(), stack);
             }
 
             // Also include held RelicItem weapon cooldowns in the same sync
@@ -237,12 +233,9 @@ public class AbilitySystem {
         LivingEntity victim = event.getEntity();
         if (victim.level().isClientSide()) return;
 
-        ServerLevel overworld = victim.level().getServer().overworld();
-        AccessoryManager manager = AccessoryManager.get(overworld);
-
         // === VICTIM RELIC ABILITIES (triggered when the relic wearer takes damage) ===
         if (victim instanceof ServerPlayer victimPlayer) {
-            Map<AccessorySlotType, ItemStack> equipped = manager.getAllEquipped(victimPlayer.getUUID());
+            Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(victimPlayer);
             for (Map.Entry<AccessorySlotType, ItemStack> entry : equipped.entrySet()) {
                 ItemStack stack = entry.getValue();
                 if (stack.isEmpty() || !(stack.getItem() instanceof RelicItem relicItem)) continue;
@@ -261,14 +254,14 @@ public class AbilitySystem {
                     }
                 }
 
-                // Reflection Necklace - Absorb: store portion of damage
+                // Reflection Necklace - Absorb: store portion of damage.
+                // The stack reference is live from the lib container, so the NBT mutation
+                // done by executeAbsorbOnHit is already reflected in storage — no write-back needed.
                 if ("Reflection Necklace".equals(relicName)) {
                     for (RelicAbility ability : victimAbilities) {
                         if (!"Absorb".equals(ability.name()) || !RelicData.isAbilityUnlocked(level, ability, victimAbilities)) continue;
                         double[] stats = computePassiveStats(stack, ability);
                         ReflectionNecklaceAbility.executeAbsorbOnHit(victimPlayer, stack, event.getOriginalDamage(), stats);
-                        // Update the stack in the manager after NBT change
-                        manager.setEquipped(victimPlayer.getUUID(), entry.getKey(), stack);
                     }
                 }
             }
@@ -276,7 +269,7 @@ public class AbilitySystem {
 
         // === ATTACKER RELIC ABILITIES (triggered when the relic wearer deals damage) ===
         if (event.getSource().getEntity() instanceof ServerPlayer attackerPlayer) {
-            Map<AccessorySlotType, ItemStack> equipped = manager.getAllEquipped(attackerPlayer.getUUID());
+            Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(attackerPlayer);
             for (Map.Entry<AccessorySlotType, ItemStack> entry : equipped.entrySet()) {
                 ItemStack stack = entry.getValue();
                 if (stack.isEmpty() || !(stack.getItem() instanceof RelicItem relicItem)) continue;

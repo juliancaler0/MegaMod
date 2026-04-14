@@ -12,7 +12,7 @@ import com.ultra.megamod.feature.museum.MuseumData;
 import com.ultra.megamod.feature.casino.CasinoManager;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTask;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTaskType;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import com.ultra.megamod.feature.skills.SkillManager;
 import com.ultra.megamod.feature.skills.SkillTreeType;
@@ -171,8 +171,9 @@ public class QuestTaskEvaluator {
     // ─── Equipped accessories ───
 
     private static int countEquippedAccessories(UUID uuid, ServerLevel level) {
-        AccessoryManager am = AccessoryManager.get(level);
-        Map<AccessorySlotType, ItemStack> equipped = am.getAllEquipped(uuid);
+        ServerPlayer player = level.getServer().getPlayerList().getPlayer(uuid);
+        if (player == null) return 0;
+        Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(player);
         int count = 0;
         for (ItemStack stack : equipped.values()) {
             if (stack != null && !stack.isEmpty()) count++;

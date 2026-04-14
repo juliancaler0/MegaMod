@@ -34,7 +34,7 @@ import com.ultra.megamod.feature.dungeons.boss.DungeonBossEntity;
 import com.ultra.megamod.feature.dungeons.insurance.InsuranceManager;
 import com.ultra.megamod.feature.dungeons.items.SoulAnchorItem;
 import com.ultra.megamod.feature.dungeons.network.DungeonSyncPayload;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.level.block.Block;
@@ -250,7 +250,8 @@ public class DungeonEvents {
             String accName = slotName.substring(10);
             try {
                 AccessorySlotType slotType = AccessorySlotType.valueOf(accName);
-                AccessoryManager.get(overworld).setEquipped(player.getUUID(), slotType, stack);
+                LibAccessoryLookup.setEquipped(player, slotType, stack);
+                LibAccessoryLookup.syncToClient(player);
             } catch (IllegalArgumentException ignored) {}
         }
     }

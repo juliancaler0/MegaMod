@@ -1,8 +1,7 @@
 package com.ultra.megamod.feature.relics.network;
 
 import com.ultra.megamod.feature.relics.RelicItem;
-import com.ultra.megamod.feature.relics.accessory.AccessoryEvents;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +10,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -96,17 +94,15 @@ public class AccessoryPayload {
                 if (slot == AccessorySlotType.NONE) {
                     return;
                 }
-                ServerLevel overworld = player.level().getServer().overworld();
-                AccessoryManager manager = AccessoryManager.get(overworld);
                 if (payload.unequip()) {
-                    ItemStack removed = manager.removeEquipped(player.getUUID(), slot);
+                    ItemStack removed = LibAccessoryLookup.removeEquipped(player, slot);
                     if (!removed.isEmpty() && !player.getInventory().add(removed)) {
                         player.spawnAtLocation(player.level(), removed);
                     }
                 } else {
                     ItemStack heldItem = player.getMainHandItem();
                     if (heldItem.isEmpty()) {
-                        AccessoryEvents.syncToClient(player);
+                        LibAccessoryLookup.syncToClient(player);
                         player.inventoryMenu.broadcastChanges();
                         return;
                     }
@@ -117,7 +113,7 @@ public class AccessoryPayload {
                     } else if (heldItemType instanceof com.ultra.megamod.feature.dungeons.item.UmvuthanaMaskItem) {
                         relicSlot = AccessorySlotType.FACE;
                     } else {
-                        AccessoryEvents.syncToClient(player);
+                        LibAccessoryLookup.syncToClient(player);
                         player.inventoryMenu.broadcastChanges();
                         return;
                     }
@@ -130,7 +126,7 @@ public class AccessoryPayload {
                         compatible = (targetSlot == AccessorySlotType.RING_LEFT || targetSlot == AccessorySlotType.RING_RIGHT);
                     }
                     if (!compatible) {
-                        AccessoryEvents.syncToClient(player);
+                        LibAccessoryLookup.syncToClient(player);
                         player.inventoryMenu.broadcastChanges();
                         return;
                     }
@@ -139,9 +135,9 @@ public class AccessoryPayload {
                     ItemStack mainHand = player.getMainHandItem();
                     mainHand.shrink(1);
                     player.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND, mainHand);
-                    manager.setEquipped(player.getUUID(), targetSlot, toEquip);
+                    LibAccessoryLookup.setEquipped(player, targetSlot, toEquip);
                 }
-                AccessoryEvents.syncToClient(player);
+                LibAccessoryLookup.syncToClient(player);
                 player.inventoryMenu.broadcastChanges();
             });
         }

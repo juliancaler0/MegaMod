@@ -20,7 +20,7 @@ import com.ultra.megamod.feature.economy.EconomyManager;
 import com.ultra.megamod.feature.economy.shop.MegaShop;
 import com.ultra.megamod.feature.multiplayer.PlayerStatistics;
 import com.ultra.megamod.feature.museum.MuseumData;
-import com.ultra.megamod.feature.relics.accessory.AccessoryManager;
+import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
 import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
 import com.ultra.megamod.feature.relics.data.WeaponRarity;
@@ -807,16 +807,17 @@ public class ComputerActionHandler {
                 sb.append("}");
                 sb.append(",\"skillPoints\":").append(skills.getAvailablePoints(targetId));
                 try {
-                    AccessoryManager acc = AccessoryManager.get(level);
                     sb.append(",\"relics\":{");
-                    Map<AccessorySlotType, ItemStack> equipped = acc.getAllEquipped(targetId);
-                    first = true;
-                    for (Map.Entry<AccessorySlotType, ItemStack> e : equipped.entrySet()) {
-                        if (e.getValue().isEmpty()) continue;
-                        if (!first) sb.append(",");
-                        first = false;
-                        sb.append("\"").append(e.getKey().name()).append("\":\"")
-                          .append(BuiltInRegistries.ITEM.getKey(e.getValue().getItem()).toString()).append("\"");
+                    if (target != null) {
+                        Map<AccessorySlotType, ItemStack> equipped = LibAccessoryLookup.getAllEquipped(target);
+                        first = true;
+                        for (Map.Entry<AccessorySlotType, ItemStack> e : equipped.entrySet()) {
+                            if (e.getValue().isEmpty()) continue;
+                            if (!first) sb.append(",");
+                            first = false;
+                            sb.append("\"").append(e.getKey().name()).append("\":\"")
+                              .append(BuiltInRegistries.ITEM.getKey(e.getValue().getItem()).toString()).append("\"");
+                        }
                     }
                     sb.append("}");
                 } catch (Exception e) {
@@ -2125,11 +2126,11 @@ public class ComputerActionHandler {
             case "admin_clear_accessories": {
                 ServerPlayer target = jsonData.isEmpty() ? player : level.getServer().getPlayerList().getPlayerByName(jsonData);
                 if (target == null) target = player;
-                AccessoryManager am = AccessoryManager.get(level);
                 for (AccessorySlotType slot : AccessorySlotType.values()) {
-                    am.removeEquipped(target.getUUID(), slot);
+                    if (slot == AccessorySlotType.NONE) continue;
+                    LibAccessoryLookup.removeEquipped(target, slot);
                 }
-                am.saveToDisk(level);
+                LibAccessoryLookup.syncToClient(target);
                 sendResponse(player, "admin_result", "{\"msg\":\"Cleared all accessories for " + target.getGameProfile().name() + "\"}", eco);
                 break;
             }
