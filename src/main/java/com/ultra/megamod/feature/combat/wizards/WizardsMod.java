@@ -7,7 +7,7 @@ import com.ultra.megamod.feature.combat.wizards.content.WizardBooks;
 import com.ultra.megamod.feature.combat.wizards.content.WizardSounds;
 import com.ultra.megamod.feature.combat.wizards.item.Group;
 import com.ultra.megamod.feature.combat.wizards.item.WizardWeapons;
-import com.ultra.megamod.feature.combat.wizards.item.armor.Armors;
+import com.ultra.megamod.feature.combat.wizards.item.armor.Armors; // kept for Group creative-tab icon reference
 import com.ultra.megamod.lib.spellengine.api.config.ConfigFile;
 import net.neoforged.bus.api.IEventBus;
 
@@ -43,14 +43,23 @@ public class WizardsMod {
     }
 
     /**
-     * Register the wizard creative tab, weapons, and armor.
+     * Register the wizard creative tab and weapons.
      * Must run after {@link com.ultra.megamod.lib.spellengine.SpellEngineNeoForge#init(IEventBus)}
      * so SpellDataComponents are registered, but before {@code RPGItemRegistry.init}.
+     *
+     * <p><b>Note on armor:</b> Wizard robes currently remain registered through
+     * {@code ClassArmorRegistry} (using the legacy {@code RpgArmorItem} with
+     * {@code _boots} piece naming). Migrating them to SpellEngine's
+     * {@link Armors} factory registration (which emits {@code _feet} piece IDs)
+     * would break ~30 advancement / loot-table / recipe / shop references; the
+     * legacy {@code EquipmentSetManager} also already provides comparable set
+     * bonuses. Spell-set {@code MODIFIER} bonuses that specifically require the
+     * SpellEngine armor pipeline are tracked as follow-up work.</p>
      */
     public static void registerItems(IEventBus modEventBus) {
         Group.init(modEventBus);
         WizardBooks.register();
         WizardWeapons.init(modEventBus);
-        Armors.init(modEventBus);
+        // Armors.init(modEventBus); // see note above — kept in ClassArmorRegistry for now
     }
 }

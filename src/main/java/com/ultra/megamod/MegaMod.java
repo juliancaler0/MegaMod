@@ -131,6 +131,13 @@ public class MegaMod {
         com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.archers.ArchersMod.init(modEventBus);
         com.ultra.megamod.feature.combat.arsenal.ArsenalMod.init(modEventBus);
+        // Activate class-mod SpellEngine-factory registrations for Wizards + Paladins.
+        // These register wand/staff/claymore/hammer/mace/holy_wand/holy_staff/kite_shield items
+        // with SpellContainer components so right-click casting, passive triggers, and
+        // equipment-set MODIFIER spells fire. The matching IDs are removed from
+        // {@code ClassWeaponRegistry} below to avoid duplicate registrations.
+        com.ultra.megamod.feature.combat.wizards.WizardsMod.registerItems(modEventBus);
+        com.ultra.megamod.feature.combat.paladins.PaladinsMod.registerItems(modEventBus);
         com.ultra.megamod.feature.combat.rogues.RoguesMod.init();
         com.ultra.megamod.feature.combat.spell.SpellItemRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.runes.RuneRegistry.init(modEventBus);

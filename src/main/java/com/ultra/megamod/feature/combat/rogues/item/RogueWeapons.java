@@ -8,8 +8,11 @@ import net.neoforged.neoforge.registries.DeferredItem;
  * Convenience references to Rogues & Warriors weapon items.
  * Ported from net.rogues.item.RogueWeapons.
  *
- * All weapons are registered through {@link ClassWeaponRegistry} using NeoForge
- * DeferredRegister. This class provides typed aliases for rogues-specific code.
+ * Rogue/Warrior weapons are still registered through {@link ClassWeaponRegistry}
+ * via NeoForge DeferredRegister (with plain {@code RpgWeaponItem}, not yet
+ * SpellEngine-backed). Wand/staff/claymore/etc. entries migrated to SpellEngine
+ * are exposed via {@code ClassWeaponRegistry.Lookup} shims, but rogue/warrior
+ * weapons remain on the legacy path for now.
  */
 public class RogueWeapons {
 

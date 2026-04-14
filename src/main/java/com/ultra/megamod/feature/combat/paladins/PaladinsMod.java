@@ -45,12 +45,22 @@ public class PaladinsMod {
 
     /**
      * Register items - call after deferred registers are set up.
+     *
+     * <p><b>Note on armor:</b> Paladin / priest armor sets currently remain
+     * registered through {@code ClassArmorRegistry} using the legacy
+     * {@code RpgArmorItem} with {@code _boots} piece naming. Migrating them
+     * to SpellEngine's {@link Armors} factory registration (which emits
+     * {@code _feet} piece IDs) would break advancements, loot tables, and
+     * shop references; the legacy {@code EquipmentSetManager} already
+     * provides comparable set bonuses. SpellEngine MODIFIER bonuses that
+     * specifically require the SpellEngine armor pipeline are tracked as
+     * follow-up work.</p>
      */
     public static void registerItems(IEventBus modEventBus) {
         Group.init(modEventBus);
         PaladinBooks.register();
         PaladinWeapons.init(modEventBus);
         PaladinShields.init(modEventBus);
-        Armors.init(modEventBus);
+        // Armors.init(modEventBus); // see note above — kept in ClassArmorRegistry for now
     }
 }
