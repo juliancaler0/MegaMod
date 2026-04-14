@@ -1919,5 +1919,18 @@
   "key.shouldersurfing.enter_first_person": "Enter First Person",
   "key.shouldersurfing.enter_third_person_front": "Enter Third Person (Front)",
   "key.shouldersurfing.enter_third_person_back": "Enter Third Person (Back)",
-  "key.shouldersurfing.enter_shoulder_surfing": "Enter Shoulder Surfing"
+  "key.shouldersurfing.enter_shoulder_surfing": "Enter Shoulder Surfing",
+
+  "key.megamod.etf_config": "Open ETF Config",
+  "config.entity_texture_features.title": "ETF - Entity Texture Features",
+
+  "key.megamod.emf_config": "Open EMF Config",
+  "config.entity_model_features.title": "EMF - Entity Model Features",
+  "emf.debug.title": "EMF Debug",
+  "emf.debug.models_cached": "Models cached",
+  "emf.debug.entity": "Entity",
+  "emf.debug.jem": ".jem",
+  "emf.debug.tex_override": "Texture override",
+  "emf.debug.bones_animated": "Bones animated",
+  "emf.debug.variant": "Variant"
 }

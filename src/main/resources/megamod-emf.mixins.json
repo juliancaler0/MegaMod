@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "com.ultra.megamod.lib.emf.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MixinModelPart",
+    "MixinEntityModel",
+    "MixinEntityModelSetup",
+    "MixinHumanoidModel",
+    "MixinModelFeatureRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
