@@ -62,6 +62,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.ErrorScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -275,80 +276,128 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
             return;
         }
 
-        // Configure base panel geometry BEFORE super.init so centering math is correct
-        this.imageWidth = 220;
-        this.imageHeight = 220;
+        // Panel geometry must be configured BEFORE super.init() so the centering
+        // math done by AbstractContainerScreen lands on the right origin.
+        // Layout (see layoutSlotsFallback for exact offsets):
+        //   - 2-wide accessory column on the left (base + cosmetic per slot type)
+        //   - armor column | entity preview | cosmetic-armor column in the center
+        //   - player inventory + crafting grid on the bottom
+        this.imageWidth = 240;
+        this.imageHeight = 216;
 
         super.init();
 
-        // The OWO UI layer is stubbed in this port - after super.init() runs the
-        // OWO build() method all slots have been pushed to -300,-300 (off-screen).
-        // Lay out a simple native grid here so the menu is actually usable.
+        // OWO's build() pushes all slots to (-300, -300). Lay the slots out
+        // natively to match the stock Accessories target layout.
         layoutSlotsFallback();
     }
+
+    /** Accessory-column geometry (panel-relative). */
+    private static final int ACC_COL_X = 8;      // left edge of the 2-wide accessory column
+    private static final int ACC_COL_Y = 18;     // top of the accessory column
+    private static final int ACC_ROW_STRIDE = 18;
+
+    /** Armor-column geometry (left of player preview). */
+    private static final int ARMOR_COL_X = 76;
+    private static final int ARMOR_COL_Y = 18;
+
+    /** Cosmetic-armor column geometry (right of player preview). */
+    private static final int COSMETIC_ARMOR_COL_X = 140;
+    private static final int COSMETIC_ARMOR_COL_Y = 18;
+
+    /** Entity preview panel geometry (between armor columns). */
+    private static final int ENTITY_X = 96;
+    private static final int ENTITY_Y = 14;
+    private static final int ENTITY_W = 62;
+    private static final int ENTITY_H = 92;
+
+    /** Player inventory geometry. */
+    private static final int INV_X = 8;
+    private static final int INV_Y = 120;
+    private static final int HOTBAR_Y = 178;
+
+    /** Crafting grid geometry (bottom-right corner). */
+    private static final int CRAFT_X = 170;
+    private static final int CRAFT_Y = 130;
+    private static final int RESULT_X = 218;
+    private static final int RESULT_Y = 148;
+
+    /** Offhand slot geometry. */
+    private static final int OFFHAND_X = 170;
+    private static final int OFFHAND_Y = 178;
 
     private void layoutSlotsFallback() {
         var slots = this.getMenu().slots;
         if (slots.isEmpty()) return;
 
-        // Panel-relative layout. Vanilla slot stride is 18 px.
-        final int invLeft = 30;              // hotbar / inventory left
-        final int invTopMain = 134;          // main inventory top
-        final int invTopHotbar = 192;        // hotbar top
-        final int accLeft = 30;              // accessories grid left
-        final int accTop = 12;               // accessories grid top
-        final int armorLeft = 180;           // armor column (equipment) left
-        final int armorTop = 12;
+        var menu = this.getMenu();
+        // startingAccessoriesSlot() returns the first armor-pair index (42 in a
+        // vanilla player setup); accessories start after the armor block.
+        int armorStart = menu.startingAccessoriesSlot();
+        int accStart = armorStart + menu.addedArmorSlots();
 
-        int accessoriesStart = this.getMenu().startingAccessoriesSlot();
-
-        // Player main inventory: slots 0..26
-        for (int i = 0; i < 27 && i < slots.size(); i++) {
+        // ---- Vanilla crafting result + 2x2 grid (slots 0-4) ----
+        if (slots.size() > 0) { var s = slots.get(0); s.x = RESULT_X; s.y = RESULT_Y; }
+        for (int i = 1; i < 5 && i < slots.size(); i++) {
             var s = slots.get(i);
-            int row = i / 9, col = i % 9;
-            s.x = invLeft + col * 18;
-            s.y = invTopMain + row * 18;
-        }
-        // Hotbar: slots 27..35
-        for (int i = 27; i < 36 && i < slots.size(); i++) {
-            var s = slots.get(i);
-            int col = i - 27;
-            s.x = invLeft + col * 18;
-            s.y = invTopHotbar;
-        }
-        // Offhand: slot 36
-        if (slots.size() > 36) {
-            var s = slots.get(36);
-            s.x = invLeft - 20;
-            s.y = invTopHotbar;
+            int col = (i - 1) % 2;
+            int row = (i - 1) / 2;
+            s.x = CRAFT_X + col * 18;
+            s.y = CRAFT_Y + row * 18;
         }
 
-        // Armor/cosmetic slot pairs: [37 .. accessoriesStart-1] alternating armor/cosmetic
+        // ---- Player main inventory (slots 5-31, 3x9) ----
+        for (int i = 5; i < 32 && i < slots.size(); i++) {
+            var s = slots.get(i);
+            int idx = i - 5;
+            int row = idx / 9;
+            int col = idx % 9;
+            s.x = INV_X + col * 18;
+            s.y = INV_Y + row * 18;
+        }
+
+        // ---- Hotbar (slots 32-40) ----
+        for (int i = 32; i < 41 && i < slots.size(); i++) {
+            var s = slots.get(i);
+            int col = i - 32;
+            s.x = INV_X + col * 18;
+            s.y = HOTBAR_Y;
+        }
+
+        // ---- Offhand (slot 41) ----
+        if (slots.size() > 41) {
+            var s = slots.get(41);
+            s.x = OFFHAND_X;
+            s.y = OFFHAND_Y;
+        }
+
+        // ---- Armor/cosmetic pairs (slots 42 .. accStart-1) ----
+        // Laid out as: armor on the left column, cosmetic on the right column.
+        // Added in head->feet order in the menu constructor (reversed twice).
         int armorRow = 0;
-        for (int i = 37; i < accessoriesStart && i < slots.size(); i += 2) {
+        for (int i = armorStart; i + 1 < accStart && i + 1 < slots.size(); i += 2) {
             var armor = slots.get(i);
-            armor.x = armorLeft;
-            armor.y = armorTop + armorRow * 18;
-            if (i + 1 < slots.size()) {
-                var cosmetic = slots.get(i + 1);
-                cosmetic.x = armorLeft + 20;
-                cosmetic.y = armorTop + armorRow * 18;
-            }
+            var cosmetic = slots.get(i + 1);
+            armor.x = ARMOR_COL_X;
+            armor.y = ARMOR_COL_Y + armorRow * 18;
+            cosmetic.x = COSMETIC_ARMOR_COL_X;
+            cosmetic.y = COSMETIC_ARMOR_COL_Y + armorRow * 18;
             armorRow++;
         }
 
-        // Accessory slot pairs: cosmetic / base alternating
-        int accIdx = 0;
-        for (int i = accessoriesStart; i + 1 < slots.size(); i += 2) {
+        // ---- Accessory cosmetic/base pairs (slots accStart .. end) ----
+        // Menu adds them as (cosmetic, base). Target layout shows them as a
+        // single 2-wide column on the far left: base on column 0 (x=ACC_COL_X),
+        // cosmetic on column 1 (x=ACC_COL_X+18), one row per slot type.
+        int accRow = 0;
+        for (int i = accStart; i + 1 < slots.size(); i += 2) {
             var cosmetic = slots.get(i);
             var base = slots.get(i + 1);
-            int row = accIdx / 6;
-            int col = accIdx % 6;
-            base.x = accLeft + col * 18;
-            base.y = accTop + row * 18;
-            cosmetic.x = accLeft + col * 18;
-            cosmetic.y = accTop + row * 18 + 120; // push cosmetics below, hidden region
-            accIdx++;
+            base.x = ACC_COL_X;
+            base.y = ACC_COL_Y + accRow * ACC_ROW_STRIDE;
+            cosmetic.x = ACC_COL_X + 18;
+            cosmetic.y = ACC_COL_Y + accRow * ACC_ROW_STRIDE;
+            accRow++;
         }
     }
 
@@ -819,21 +868,115 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        // BaseOwoHandledScreen provides no-op renderBg, no super call needed
+        // BaseOwoHandledScreen provides no-op renderBg, no super call needed.
+        // Draw the panel chrome to match the stock Accessories layout.
+        int x = this.leftPos;
+        int y = this.topPos;
+        int w = this.imageWidth;
+        int h = this.imageHeight;
 
-        // Solid panel backdrop so the fallback-laid-out slots have visible chrome
-        // until the OWO UI layer is ported. Without this, nothing renders at all.
-        {
-            int x = this.leftPos;
-            int y = this.topPos;
-            int w = this.imageWidth;
-            int h = this.imageHeight;
-            guiGraphics.fill(x, y, x + w, y + h, 0xFF2B2B2B);
-            guiGraphics.fill(x + 1, y + 1, x + w - 1, y + h - 1, 0xFF3C3C3C);
-            guiGraphics.fill(x + 28, y + 10, x + 28 + 6 * 18 + 4, y + 10 + 3 * 18 + 4, 0xFF1F1F1F);
-            guiGraphics.fill(x + 178, y + 10, x + 178 + 2 * 18 + 4, y + 10 + 4 * 18 + 4, 0xFF1F1F1F);
-            guiGraphics.fill(x + 28, y + 132, x + 28 + 9 * 18 + 4, y + 132 + 4 * 18 + 12, 0xFF1F1F1F);
+        // Outer panel frame (dark border, light inner).
+        final int FRAME_DARK = 0xFF373737;
+        final int FRAME_MID = 0xFF8B8B8B;
+        final int FRAME_LIGHT = 0xFFC6C6C6;
+        final int PANEL_BG = 0xFFC6C6C6;
+        final int SLOT_DARK = 0xFF8B8B8B;
+
+        // Background panel
+        guiGraphics.fill(x, y, x + w, y + h, FRAME_DARK);
+        guiGraphics.fill(x + 1, y + 1, x + w - 1, y + h - 1, PANEL_BG);
+
+        // --- Accessory column sub-panel (left, 2-wide) ---
+        int accPanelX = x + ACC_COL_X - 4;
+        int accPanelY = y + ACC_COL_Y - 4;
+        int accRows = accessoryRowCount();
+        int accPanelW = 2 * 18 + 8;
+        int accPanelH = Math.max(1, accRows) * ACC_ROW_STRIDE + 8;
+        drawInsetFrame(guiGraphics, accPanelX, accPanelY, accPanelW, accPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        // Darken each slot cell so the slot icons read on the light panel.
+        for (int r = 0; r < accRows; r++) {
+            int sx = x + ACC_COL_X;
+            int sy = y + ACC_COL_Y + r * ACC_ROW_STRIDE;
+            guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+            guiGraphics.fill(sx + 18, sy, sx + 18 + 16, sy + 16, SLOT_DARK);
         }
+
+        // --- Armor-column sub-panel (left of entity) ---
+        int armorRows = this.getMenu().addedArmorSlots() / 2;
+        if (armorRows > 0) {
+            int armorPanelX = x + ARMOR_COL_X - 4;
+            int armorPanelY = y + ARMOR_COL_Y - 4;
+            int armorPanelH = armorRows * 18 + 8;
+            drawInsetFrame(guiGraphics, armorPanelX, armorPanelY, 16 + 8, armorPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+            for (int r = 0; r < armorRows; r++) {
+                int sx = x + ARMOR_COL_X;
+                int sy = y + ARMOR_COL_Y + r * 18;
+                guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+            }
+
+            // --- Cosmetic-armor column sub-panel (right of entity) ---
+            int cosPanelX = x + COSMETIC_ARMOR_COL_X - 4;
+            int cosPanelY = y + COSMETIC_ARMOR_COL_Y - 4;
+            drawInsetFrame(guiGraphics, cosPanelX, cosPanelY, 16 + 8, armorPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+            for (int r = 0; r < armorRows; r++) {
+                int sx = x + COSMETIC_ARMOR_COL_X;
+                int sy = y + COSMETIC_ARMOR_COL_Y + r * 18;
+                guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+            }
+        }
+
+        // --- Entity preview frame ---
+        int ex = x + ENTITY_X;
+        int ey = y + ENTITY_Y;
+        drawInsetFrame(guiGraphics, ex - 2, ey - 2, ENTITY_W + 4, ENTITY_H + 4, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        guiGraphics.fill(ex, ey, ex + ENTITY_W, ey + ENTITY_H, 0xFF5F5F5F);
+
+        // Render player preview (mouse-follow like the vanilla inventory).
+        var preview = this.getMenu().targetEntityDefaulted();
+        if (preview != null) {
+            int x1 = ex + 2;
+            int y1 = ey + 2;
+            int x2 = ex + ENTITY_W - 2;
+            int y2 = ey + ENTITY_H - 6;
+            int scale = Math.max(24, (y2 - y1) / 2);
+            InventoryScreen.renderEntityInInventoryFollowsMouse(
+                    guiGraphics, x1, y1, x2, y2, scale,
+                    (float) (x1 + (x2 - x1) / 2f - mouseX),
+                    (float) (y1 + (y2 - y1) / 2f - 50 - mouseY),
+                    partialTick,
+                    preview
+            );
+        }
+
+        // --- Inventory sub-panel ---
+        int invPanelX = x + INV_X - 4;
+        int invPanelY = y + INV_Y - 4;
+        int invPanelW = 9 * 18 + 8;
+        int invPanelH = 4 * 18 + 8 + 4; // 3 rows main + 1 hotbar + spacer
+        drawInsetFrame(guiGraphics, invPanelX, invPanelY, invPanelW, invPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 9; c++) {
+                int sx = x + INV_X + c * 18;
+                int sy = y + INV_Y + r * 18;
+                guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+            }
+        }
+        for (int c = 0; c < 9; c++) {
+            int sx = x + INV_X + c * 18;
+            int sy = y + HOTBAR_Y;
+            guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+        }
+
+        // --- Crafting grid + result + offhand backdrops ---
+        for (int r = 0; r < 2; r++) {
+            for (int c = 0; c < 2; c++) {
+                int sx = x + CRAFT_X + c * 18;
+                int sy = y + CRAFT_Y + r * 18;
+                guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+            }
+        }
+        guiGraphics.fill(x + RESULT_X, y + RESULT_Y, x + RESULT_X + 16, y + RESULT_Y + 16, SLOT_DARK);
+        guiGraphics.fill(x + OFFHAND_X, y + OFFHAND_Y, x + OFFHAND_X + 16, y + OFFHAND_Y + 16, SLOT_DARK);
 
         //--
 
@@ -854,6 +997,28 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                     linesToAccessoryPositions.add(new Line3d(start, vec3));}
             }
         }
+    }
+
+    /** Count of accessory slot pairs visible in the menu (one row per pair). */
+    private int accessoryRowCount() {
+        var menu = this.getMenu();
+        int accStart = menu.startingAccessoriesSlot() + menu.addedArmorSlots();
+        int remaining = menu.slots.size() - accStart;
+        return Math.max(1, remaining / 2);
+    }
+
+    /** Paints a 1px vanilla-style inset frame (dark top/left, light bottom/right, mid border). */
+    private static void drawInsetFrame(GuiGraphics g, int x, int y, int w, int h, int outer, int light, int mid) {
+        // Outer dark border
+        g.fill(x, y, x + w, y + 1, outer);
+        g.fill(x, y + h - 1, x + w, y + h, outer);
+        g.fill(x, y, x + 1, y + h, outer);
+        g.fill(x + w - 1, y, x + w, y + h, outer);
+        // Inner highlight on top/left, shadow on bottom/right for the inset look
+        g.fill(x + 1, y + 1, x + w - 1, y + 2, mid);
+        g.fill(x + 1, y + 1, x + 2, y + h - 1, mid);
+        g.fill(x + 2, y + h - 2, x + w - 1, y + h - 1, light);
+        g.fill(x + w - 2, y + 2, x + w - 1, y + h - 1, light);
     }
 
     @Override
