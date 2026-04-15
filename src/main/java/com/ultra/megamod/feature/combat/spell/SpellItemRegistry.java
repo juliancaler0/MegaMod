@@ -1,6 +1,8 @@
 package com.ultra.megamod.feature.combat.spell;
 
 import com.ultra.megamod.MegaMod;
+import com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents;
+import com.ultra.megamod.lib.spellengine.api.spell.container.SpellContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
@@ -10,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Registry for spell books (offhand items granting spell access).
@@ -44,44 +47,85 @@ public class SpellItemRegistry {
 
     public static final DeferredItem<SpellBookItem> ARCANE_SPELL_BOOK = ITEMS.registerItem("arcane_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "ARCANE", "Arcane", 0xFF7E3BFF),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "ARCANE", null));
 
     public static final DeferredItem<SpellBookItem> FIRE_SPELL_BOOK = ITEMS.registerItem("fire_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "FIRE", "Fire", 0xFFFF6B1A),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "FIRE", null));
 
     public static final DeferredItem<SpellBookItem> FROST_SPELL_BOOK = ITEMS.registerItem("frost_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "FROST", "Frost", 0xFF4DA6FF),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "FROST", null));
 
     public static final DeferredItem<SpellBookItem> HEALING_SPELL_BOOK = ITEMS.registerItem("healing_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "HEALING", "Healing", 0xFFCCFF00),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "HEALING", null));
 
     // Class-parity spell books (match source mod naming for port compatibility)
     public static final DeferredItem<SpellBookItem> ARCHER_SPELL_BOOK = ITEMS.registerItem("archer_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "RANGED", "Archer", 0xFF2D8B2D),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "RANGED", "RANGER"));
 
     public static final DeferredItem<SpellBookItem> ROGUE_SPELL_BOOK = ITEMS.registerItem("rogue_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "SHADOW", "Rogue", 0xFF4D004D),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "SHADOW", "ROGUE"));
 
     public static final DeferredItem<SpellBookItem> WARRIOR_SPELL_BOOK = ITEMS.registerItem("warrior_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "MELEE", "Warrior", 0xFF8B0000),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "MELEE", "WARRIOR"));
 
     public static final DeferredItem<SpellBookItem> PALADIN_SPELL_BOOK = ITEMS.registerItem("paladin_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "HOLY", "Paladin", 0xFFFFD700),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "HOLY", "PALADIN"));
 
     public static final DeferredItem<SpellBookItem> PRIEST_SPELL_BOOK = ITEMS.registerItem("priest_spell_book",
         props -> new SpellBookItem((Item.Properties) props, "HEALING", "Priest", 0xFFFFFAF0),
-        () -> new Item.Properties().stacksTo(1));
+        () -> attachSpellContainer(new Item.Properties().stacksTo(1), "HEALING", "PRIEST"));
 
     public static void init(IEventBus modBus) {
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
+    }
+
+    // ─── Spell container attachment ───
+    //
+    // Bakes a SpellContainer data component onto each spell book so the offhand
+    // cast pipeline (SpellContainerSource#activeContainerOf, SpellHelper#performSpell,
+    // SpellHotbar ALT+hotbar) can resolve it. Mirrors TomeSpellAssignments#props
+    // but filters SpellRegistry by school/class at registration time. Safe because
+    // SpellRegistry.ALL_SPELLS is populated by static initializer, not data reload.
+    //
+    // Spell IDs are namespaced with "megamod:" so they match the datapack
+    // SpellRegistry lookup used by the hotbar / performSpell paths.
+    //
+    // Uses ContentType.MAGIC to match source tag-based books — any MAGIC source
+    // can resolve these spells, they aren't a private CONTAINED-only set.
+    private static Item.Properties attachSpellContainer(Item.Properties props,
+                                                        String school,
+                                                        String classFilter) {
+        List<String> spellIds;
+        if (classFilter != null) {
+            spellIds = SpellRegistry.ALL_SPELLS.values().stream()
+                    .filter(s -> classFilter.equalsIgnoreCase(s.classRequirement()))
+                    .map(s -> MegaMod.MODID + ":" + s.id())
+                    .collect(Collectors.toList());
+        } else {
+            spellIds = SpellRegistry.ALL_SPELLS.values().stream()
+                    .filter(s -> s.school().name().equalsIgnoreCase(school))
+                    .map(s -> MegaMod.MODID + ":" + s.id())
+                    .collect(Collectors.toList());
+        }
+
+        SpellContainer container = new SpellContainer(
+                SpellContainer.ContentType.MAGIC,
+                "",                          // access_param
+                "",                          // pool
+                "",                          // slot (no slot restriction — works in either hand)
+                Math.max(1, spellIds.size()),// max_spell_count
+                spellIds,
+                0                            // extra_tier_binding
+        );
+        return props.component(SpellDataComponents.SPELL_CONTAINER, container);
     }
 
     // ─── Loot tier helpers ───

@@ -70,9 +70,19 @@ public record SpellBookCastPayload(String spellId) implements CustomPacketPayloa
             // Look up the spell via the datapack-aware registry (contains all 278
             // JSON-loaded spells plus the Java-registered subset). The hotbar cast
             // path in lib/spellengine/network/ServerNetwork uses this same registry.
+            //
+            // SpellBookItem#getSpellIds() returns bare ids like "arcane_bolt". Bare
+            // Identifier.parse would resolve these to `minecraft:arcane_bolt`, which
+            // never matches the datapack entries registered under `megamod:`. Prepend
+            // the mod namespace when the payload carries a bare id, and still honor
+            // already-namespaced ids in case a caller opts to send them.
             Identifier spellIdentifier;
             try {
-                spellIdentifier = Identifier.parse(spellId);
+                if (spellId.indexOf(':') >= 0) {
+                    spellIdentifier = Identifier.parse(spellId);
+                } else {
+                    spellIdentifier = Identifier.fromNamespaceAndPath(MegaMod.MODID, spellId);
+                }
             } catch (Exception e) {
                 MegaMod.LOGGER.warn("SpellBookCastPayload: invalid spell id '{}'", spellId);
                 return;
