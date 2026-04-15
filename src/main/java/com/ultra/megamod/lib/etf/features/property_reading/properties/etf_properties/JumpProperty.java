@@ -8,7 +8,7 @@ import com.ultra.megamod.lib.etf.utils.ETFEntity;
 
 import java.util.Properties;
 
-import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 
 public class JumpProperty extends FloatRangeFromStringArrayProperty {
 

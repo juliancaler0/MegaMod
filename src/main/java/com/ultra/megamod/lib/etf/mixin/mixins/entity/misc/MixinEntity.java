@@ -1,6 +1,6 @@
 package com.ultra.megamod.lib.etf.mixin.mixins.entity.misc;
 
-import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.advancements.criterion.NbtPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

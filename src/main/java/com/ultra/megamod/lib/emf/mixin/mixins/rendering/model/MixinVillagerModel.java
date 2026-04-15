@@ -1,6 +1,6 @@
 package com.ultra.megamod.lib.emf.mixin.mixins.rendering.model;
 
-import net.minecraft.client.model.VillagerModel;
+import net.minecraft.client.model.npc.VillagerModel;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

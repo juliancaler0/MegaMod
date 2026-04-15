@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.entity.layers.MushroomCowMushroomLayer;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.cow.MushroomCow;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -185,7 +185,7 @@ public abstract class MixinMooshroomMushroomFeatureRenderer {
     private void etf$injected(CallbackInfo ci,
                               @Local(argsOnly = true) MushroomCowRenderState state
                               ) {
-        isRed = state.variant.equals(net.minecraft.world.entity.animal.MushroomCow.Variant.RED);
+        isRed = state.variant.equals(net.minecraft.world.entity.animal.cow.MushroomCow.Variant.RED);
         isBrown = state.variant.equals(MushroomCow.Variant.BROWN);
     }
 

@@ -3,13 +3,13 @@ package com.ultra.megamod.lib.emf.mixin.mixins.rendering.model;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.model.AdultAndBabyModelPair;
-import net.minecraft.client.model.ChickenModel;
+import net.minecraft.client.model.animal.chicken.ChickenModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.ChickenRenderState;
-import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.chicken.Chicken;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;

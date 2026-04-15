@@ -45,7 +45,7 @@ public class DimensionProperty extends StringArrayOrRegexProperty {
         Optional<ResourceKey<DimensionType>> dimKey = etfEntity.world().dimensionTypeRegistration().unwrapKey();
         if (dimKey.isEmpty()) return null;
 
-        Identifier key = dimKey.get().location();
+        Identifier key = dimKey.get().identifier();
         //noinspection ConstantValue
         if (key == null) return null;
 

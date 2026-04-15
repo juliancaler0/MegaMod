@@ -3,7 +3,7 @@ package com.ultra.megamod.lib.etf.mixin.mixins.entity.renderer.feature;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.model.WardenModel;
+import net.minecraft.client.model.monster.warden.WardenModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import org.spongepowered.asm.mixin.Final;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Properties;
 
-import net.minecraft.world.entity.npc.VillagerDataHolder;
+import net.minecraft.world.entity.npc.villager.VillagerDataHolder;
 
 public class ProfessionProperty extends StringArrayOrRegexProperty {
 

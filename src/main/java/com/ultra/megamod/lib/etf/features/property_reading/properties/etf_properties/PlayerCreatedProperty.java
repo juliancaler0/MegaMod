@@ -8,7 +8,7 @@ import com.ultra.megamod.lib.etf.utils.ETFEntity;
 
 import java.util.Properties;
 
-import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 
 public class PlayerCreatedProperty extends BooleanProperty {
 

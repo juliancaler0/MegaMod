@@ -5,9 +5,9 @@ import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.TropicalFish;
-import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.fish.TropicalFish;
+import net.minecraft.world.entity.animal.equine.Llama;
 import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeColor;

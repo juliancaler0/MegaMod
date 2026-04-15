@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.emf.mixin.mixins.rendering.feature;
 
 
-import net.minecraft.client.model.CreeperModel;
+import net.minecraft.client.model.monster.creeper.CreeperModel;
 import net.minecraft.client.renderer.entity.layers.CreeperPowerLayer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.monster.Creeper;

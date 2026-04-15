@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.emf.mixin.mixins.rendering.feature;
 
 
-import net.minecraft.client.model.WolfModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;

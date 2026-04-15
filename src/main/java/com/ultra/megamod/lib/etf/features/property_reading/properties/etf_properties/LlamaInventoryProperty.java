@@ -7,7 +7,7 @@ import com.ultra.megamod.lib.etf.utils.ETFEntity;
 
 import java.util.Properties;
 
-import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.entity.animal.equine.Llama;
 
 public class LlamaInventoryProperty extends SimpleIntegerArrayProperty {
 

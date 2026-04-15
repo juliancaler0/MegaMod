@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.renderer.entity.state.ArmadilloRenderState;
-import net.minecraft.client.model.ArmadilloModel;
+import net.minecraft.client.model.animal.armadillo.ArmadilloModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import com.ultra.megamod.lib.emf.models.parts.EMFModelPartVanilla;

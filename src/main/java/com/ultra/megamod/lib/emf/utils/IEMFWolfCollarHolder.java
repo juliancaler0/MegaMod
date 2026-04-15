@@ -1,6 +1,6 @@
 package com.ultra.megamod.lib.emf.utils;
 
-import net.minecraft.client.model.WolfModel;
+import net.minecraft.client.model.animal.wolf.WolfModel;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
 public interface

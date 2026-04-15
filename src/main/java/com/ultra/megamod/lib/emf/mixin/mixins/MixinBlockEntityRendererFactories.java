@@ -59,7 +59,7 @@ public class MixinBlockEntityRendererFactories {
                     EMFManager.getInstance().currentSpecifiedModelLoading = "trapped_chest";
                 //todo did deprecation start in 1.21.2?
                 else if (type.builtInRegistryHolder() != null && type.builtInRegistryHolder().unwrapKey().isPresent()) {
-                    Identifier id = type.builtInRegistryHolder().unwrapKey().get().location();
+                    Identifier id = type.builtInRegistryHolder().unwrapKey().get().identifier();
                     if (id.getNamespace().equals("minecraft")) {
                         EMFManager.getInstance().currentSpecifiedModelLoading = id.getPath();
                     } else {

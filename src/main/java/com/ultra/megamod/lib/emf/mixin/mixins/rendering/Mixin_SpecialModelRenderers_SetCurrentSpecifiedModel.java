@@ -69,7 +69,7 @@ public class Mixin_SpecialModelRenderers_SetCurrentSpecifiedModel {
             EMFManager.getInstance().currentSpecifiedModelLoading = "trapped_chest";
         else {
             try {
-                Identifier id = BuiltInRegistries.BLOCK.wrapAsHolder(state.getBlock()).unwrapKey().get().location();
+                Identifier id = BuiltInRegistries.BLOCK.wrapAsHolder(state.getBlock()).unwrapKey().get().identifier();
 
                 if (id.getNamespace().equals("minecraft")) {
                     EMFManager.getInstance().currentSpecifiedModelLoading = id.getPath();

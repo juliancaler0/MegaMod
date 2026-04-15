@@ -9,8 +9,8 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.CatVariant;
-import net.minecraft.world.entity.npc.VillagerType;
+import net.minecraft.world.entity.animal.feline.CatVariant;
+import net.minecraft.world.entity.npc.villager.VillagerType;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.SignBlock;
@@ -55,7 +55,7 @@ public class VariantProperty extends StringArrayOrRegexProperty {
         if (etfEntity instanceof Entity) {
             //todo 1.21.5? probably isn't needed anymore
 
-            return BuiltInRegistries.ENTITY_TYPE.getResourceKey(((Entity) etfEntity).getType()).map(key -> key.location().getPath()).orElse(null);
+            return BuiltInRegistries.ENTITY_TYPE.getResourceKey(((Entity) etfEntity).getType()).map(key -> key.identifier().getPath()).orElse(null);
 
         } else if (etfEntity instanceof BlockEntity) {
             //noinspection IfCanBeSwitch
@@ -86,7 +86,7 @@ public class VariantProperty extends StringArrayOrRegexProperty {
                 suffix = "_direction_" + skull.getBlockState().getValue(SkullBlock.ROTATION);
             }
 
-            return BuiltInRegistries.BLOCK_ENTITY_TYPE.getResourceKey(((BlockEntity) etfEntity).getType()).map(key -> key.location().getPath()).orElse(null) + suffix;
+            return BuiltInRegistries.BLOCK_ENTITY_TYPE.getResourceKey(((BlockEntity) etfEntity).getType()).map(key -> key.identifier().getPath()).orElse(null) + suffix;
         }
         return null;
     }

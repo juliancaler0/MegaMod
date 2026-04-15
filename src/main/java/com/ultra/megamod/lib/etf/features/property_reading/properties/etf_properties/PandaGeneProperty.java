@@ -8,7 +8,7 @@ import com.ultra.megamod.lib.etf.utils.ETFEntity;
 
 import java.util.Properties;
 
-import net.minecraft.world.entity.animal.Panda;
+import net.minecraft.world.entity.animal.panda.Panda;
 
 public class PandaGeneProperty extends StringArrayOrRegexProperty {
 
