@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Forcing nametags on ALL entities would cause Entity Culling to
  * render names for culled mobs that shouldn't be visible.
  */
-@Mixin(EntityRenderer.class)
+@Mixin(value = EntityRenderer.class, priority = 1100)
 public class EntityRendererMixin {
 
     /**

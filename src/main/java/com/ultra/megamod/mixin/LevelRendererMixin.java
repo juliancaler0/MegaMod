@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * entire render state, which is more compatible with Lithium/Radium chunk
  * optimizations and causes less of a lag spike.
  */
-@Mixin(LevelRenderer.class)
+@Mixin(value = LevelRenderer.class, priority = 1100)
 public class LevelRendererMixin {
 
     @Unique

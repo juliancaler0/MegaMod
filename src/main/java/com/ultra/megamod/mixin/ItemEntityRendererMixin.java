@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * In 1.21.11, rendering uses the extractRenderState + submit pipeline.
  * We inject into submit() to apply rotation transforms before vanilla rendering.
  */
-@Mixin(ItemEntityRenderer.class)
+@Mixin(value = ItemEntityRenderer.class, priority = 1100)
 public class ItemEntityRendererMixin {
 
     /**

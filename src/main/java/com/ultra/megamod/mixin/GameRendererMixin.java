@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Note: FOV modification (Zoom, CustomFOV) is handled via NeoForge's
  * ViewportEvent.ComputeFov in AdminModuleClientHooks instead of a mixin.
  */
-@Mixin(GameRenderer.class)
+@Mixin(value = GameRenderer.class, priority = 1100)
 public class GameRendererMixin {
 
     /**

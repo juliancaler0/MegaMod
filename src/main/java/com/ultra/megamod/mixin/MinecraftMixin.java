@@ -49,7 +49,7 @@ import java.util.List;
  * - Feint (cancel upswing) via keybind
  * - Mining detection with weapon whitelist/blacklist
  */
-@Mixin(Minecraft.class)
+@Mixin(value = Minecraft.class, priority = 1100)
 public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
 
     @Shadow @Nullable public LocalPlayer player;
