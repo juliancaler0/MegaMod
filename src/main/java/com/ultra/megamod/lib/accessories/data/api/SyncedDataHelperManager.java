@@ -80,7 +80,15 @@ public class SyncedDataHelperManager {
                     })
                     .toList();
 
-            channel.serverHandle(player).send(new SyncAllLoaderDataPacket(packets));
+            try {
+                channel.serverHandle(player).send(new SyncAllLoaderDataPacket(packets));
+            } catch (Throwable t) {
+                // A data loader with a null/invalid value in its server data will NPE
+                // inside the codec and blow up the connection. Log and continue so
+                // world creation/join proceeds — accessory client state may be stale
+                // until the offending loader is fixed, but the session survives.
+                LOGGER.error("SyncedDataHelperManager: failed to send SyncAllLoaderDataPacket to {} — continuing without sync", player.getName().getString(), t);
+            }
         });
     }
 
