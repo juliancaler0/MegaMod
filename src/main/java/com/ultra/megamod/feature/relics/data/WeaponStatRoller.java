@@ -215,6 +215,101 @@ public class WeaponStatRoller {
         return tag.getBooleanOr(KEY_WEAPON_IS_SHIELD, false);
     }
 
+    /**
+     * Rolls rarity + bonus attributes on top of a pre-baked base {@link ItemAttributeModifiers}
+     * instead of replacing it. Used by SpellEngine-factory weapons (class weapons + Arsenal
+     * uniques going through {@code Weapon.register}) that carry source-derived base stats
+     * baked into their {@code ATTRIBUTE_MODIFIERS} component (attack_damage, attack_speed,
+     * spell-school bonuses, etc.). Those base modifiers must be preserved; the roller only
+     * adds the RNG variance layer (rarity-scaled attack damage boost + random bonus stats
+     * + display rename + foil shimmer).
+     *
+     * <p>Source base entries are copied verbatim. We then add a rarity-scaled ADD_VALUE
+     * boost to attack_damage on top, plus 1..N random bonuses drawn from {@link #BONUS_POOL}.
+     * No category-baseline override happens here — the SpellEngine factory's per-tier values
+     * are already correctly balanced via {@code Weapons.create}.</p>
+     */
+    public static void rollAndApplyPreservingBase(ItemStack stack, ItemAttributeModifiers baseMods,
+                                                   RandomSource random, boolean isShield) {
+        WeaponRarity rarity = WeaponRarity.roll(random);
+        rollAndApplyPreservingBase(stack, baseMods, rarity, random, isShield);
+    }
+
+    public static void rollAndApplyPreservingBase(ItemStack stack, ItemAttributeModifiers baseMods,
+                                                   WeaponRarity rarity, RandomSource random, boolean isShield) {
+        EquipmentSlotGroup bonusGroup = isShield ? EquipmentSlotGroup.ANY : EquipmentSlotGroup.MAINHAND;
+        ItemAttributeModifiers.Builder modBuilder = ItemAttributeModifiers.builder();
+
+        // Preserve every source base modifier verbatim (attack_damage, attack_speed,
+        // spell-school spell power bonuses, etc.). Track the source attack damage so we can
+        // layer a rarity-scaled boost on top without clobbering the floor.
+        double sourceBaseDamage = 0.0;
+        for (ItemAttributeModifiers.Entry entry : baseMods.modifiers()) {
+            modBuilder.add(entry.attribute(), entry.modifier(), entry.slot());
+            if (entry.attribute().is(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)
+                    && entry.modifier().operation() == AttributeModifier.Operation.ADD_VALUE) {
+                sourceBaseDamage += entry.modifier().amount();
+            }
+        }
+
+        // Rarity-scaled attack-damage boost on top of source baseline.
+        // Common = 1.0× → 0 boost; Mythic uses (rarity.getDamageMultiplier - 1.0) so the
+        // total finalDamage matches the legacy roller's effective scaling.
+        double dmgBoost = sourceBaseDamage * (rarity.getDamageMultiplier() - 1.0);
+        if (dmgBoost > 0) {
+            Optional<Holder<Attribute>> attackDmgAttr = resolveAttribute("minecraft:attack_damage");
+            if (attackDmgAttr.isPresent()) {
+                AttributeModifier boost = new AttributeModifier(
+                        Identifier.fromNamespaceAndPath("megamod", "weapon_rarity_dmg_boost"),
+                        dmgBoost, AttributeModifier.Operation.ADD_VALUE);
+                modBuilder.add(attackDmgAttr.get(), boost, EquipmentSlotGroup.MAINHAND);
+            }
+        }
+
+        // Roll random bonus stats on top.
+        int bonusCount = rarity.rollBonusCount(random);
+        ArrayList<BonusStat> available = new ArrayList<>(BONUS_POOL);
+        Collections.shuffle(available, new Random(random.nextLong()));
+
+        CompoundTag bonusesTag = new CompoundTag();
+        int applied = 0;
+        for (int i = 0; i < available.size() && applied < bonusCount; ++i) {
+            BonusStat bonus = available.get(i);
+            // Skip raw attack_damage from bonus pool — we already layer the rarity boost above.
+            if (bonus.attributeId().equals("minecraft:attack_damage")) continue;
+            Optional<Holder<Attribute>> attrHolder = resolveAttribute(bonus.attributeId());
+            if (attrHolder.isEmpty()) continue;
+            double value = bonus.roll(random, rarity);
+            AttributeModifier modifier = new AttributeModifier(
+                    Identifier.fromNamespaceAndPath("megamod", "weapon_bonus_" + applied + "_" + random.nextInt(10000)),
+                    value, bonus.operation());
+            modBuilder.add(attrHolder.get(), modifier, bonusGroup);
+            CompoundTag bonusEntry = new CompoundTag();
+            bonusEntry.putString("name", bonus.displayName());
+            bonusEntry.putString("attr", bonus.attributeId());
+            bonusEntry.putDouble("value", value);
+            bonusEntry.putBoolean("percent", bonus.isPercent());
+            bonusEntry.putInt("op", bonus.operation().ordinal());
+            bonusesTag.put("bonus_" + applied, bonusEntry);
+            ++applied;
+        }
+        bonusesTag.putInt("count", applied);
+
+        stack.set(DataComponents.ATTRIBUTE_MODIFIERS, modBuilder.build());
+
+        CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
+        tag.putBoolean(KEY_WEAPON_INITIALIZED, true);
+        tag.putInt(KEY_WEAPON_RARITY, rarity.ordinal());
+        tag.putFloat(KEY_WEAPON_BASE_DAMAGE, (float) (sourceBaseDamage + dmgBoost));
+        tag.putBoolean(KEY_WEAPON_IS_SHIELD, isShield);
+        tag.put(KEY_ROLLED_BONUSES, bonusesTag);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
+        String baseName = Component.translatable(stack.getItem().getDescriptionId()).getString();
+        String displayName = rarity.getDisplayName() + " " + baseName;
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal(displayName).withStyle(rarity.getNameColor()));
+    }
+
     public static void rebuildModifiersFromTag(ItemStack stack) {
         if (!isWeaponInitialized(stack)) return;
         CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
