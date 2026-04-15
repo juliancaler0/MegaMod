@@ -12,19 +12,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingScreenHandler;
 
 /**
- * Spell Binding Table — a magical workstation found in village structures
- * (wizard towers, sanctuaries, etc.) or craftable by players.
- * <p>
- * Functions as an enchanting table for spell-related gear. When used near
- * bookshelves, it provides higher-level enchantments for spell books,
- * wands, staves, and robes.
+ * Spell Binding Table — craftable workstation for binding a chosen spell onto
+ * a weapon with a pool-based SpellContainer (e.g. Arsenal swirl uniques,
+ * Thalassian Sickle). Opens {@link SpellBindingScreenHandler} — the ported
+ * SpellEngine binding UI that costs XP + lapis per bind.
  * <p>
  * Also serves as the POI block for Wizard Merchant villagers.
  */
@@ -45,11 +43,11 @@ public class SpellBindingTableBlock extends Block {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
-        // Open enchanting interface (works with surrounding bookshelves)
+        // Open the ported SpellEngine Spell Binding UI (pool-picker for magic weapons).
         player.openMenu(new SimpleMenuProvider(
-                (containerId, playerInv, p) -> new EnchantmentMenu(containerId, playerInv,
+                (containerId, playerInv, p) -> new SpellBindingScreenHandler(containerId, playerInv,
                         ContainerLevelAccess.create(level, pos)),
-                Component.translatable("item.megamod.spell_binding_table")
+                Component.translatable("block.megamod.spell_binding_table")
         ));
 
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
