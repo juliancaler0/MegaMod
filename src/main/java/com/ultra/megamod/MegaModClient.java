@@ -68,7 +68,6 @@ public class MegaModClient {
         // Group 1: Background effects
         modEventBus.addListener(com.ultra.megamod.feature.hud.LowHealthVignette::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.dimensions.client.DimensionTransitionOverlay::onRegisterGuiLayers);
-        modEventBus.addListener(com.ultra.megamod.feature.corruption.client.CorruptionOverlay::onRegisterGuiLayers);
 
         // Group 2: World-space overlays
         modEventBus.addListener(MobHealthDisplay::onRegisterGuiLayers);

@@ -11,7 +11,6 @@ import com.ultra.megamod.feature.computer.network.handlers.BountyBoardHandler;
 import com.ultra.megamod.feature.computer.network.handlers.FriendsHandler;
 import com.ultra.megamod.feature.computer.network.handlers.PartyHandler;
 import com.ultra.megamod.feature.computer.network.handlers.TradeHandler;
-import com.ultra.megamod.feature.corruption.PurgeManager;
 import com.ultra.megamod.feature.marketplace.MarketplaceManager;
 import com.ultra.megamod.feature.moderation.ModerationManager;
 import net.minecraft.server.level.ServerLevel;
@@ -35,8 +34,6 @@ public class ComputerEvents {
         PartyHandler.onPlayerDisconnect(player, level);
         TradeHandler.onPlayerDisconnect(player);
         MarketplaceManager.get(level).onPlayerDisconnect(player, level);
-        // Purge system: remove disconnecting player from purge participants
-        PurgeManager.get(level.getServer().overworld()).removeParticipant(player.getUUID());
         // Citizen system cleanup (citizens persist in world, no cleanup needed for now)
     }
 

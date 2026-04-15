@@ -134,8 +134,6 @@ public class ComputerActionHandler {
         if (com.ultra.megamod.feature.citizen.network.handlers.PostBoxHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.casino.network.CasinoHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.casino.network.CasinoManagerHandler.handle(player, action, jsonData, level, eco)) return;
-        if (com.ultra.megamod.feature.computer.network.handlers.CorruptionAdminHandler.handle(player, action, jsonData, level, eco)) return;
-        if (com.ultra.megamod.feature.computer.network.handlers.CorruptionHandler.handle(player, action, jsonData, level, eco)) return;
         // AlchemyHandler / AlchemyAdminHandler deleted — Reliquary apothecary replaces them.
         if (com.ultra.megamod.feature.computer.network.handlers.ReliquaryAdminHandler.handle(player, action, jsonData, level, eco)) return;
         if (com.ultra.megamod.feature.computer.network.handlers.EconomyAnalyticsHandler.handle(player, action, jsonData, level, eco)) return;
@@ -2251,31 +2249,6 @@ public class ComputerActionHandler {
                 casMgr.setAlwaysWin(target.getUUID(), enabled, level);
                 casMgr.saveToDisk(level);
                 sendResponse(player, "admin_result", "{\"msg\":\"Casino always-win " + (enabled ? "ENABLED" : "DISABLED") + " for " + parts[0] + "\"}", eco);
-                break;
-            }
-            // ═══════════════════════════════════════════════════════════════
-            // CORRUPTION ADMIN
-            // ═══════════════════════════════════════════════════════════════
-            case "admin_purge_all_corruption": {
-                com.ultra.megamod.feature.corruption.CorruptionManager corr =
-                    com.ultra.megamod.feature.corruption.CorruptionManager.get(level);
-                int zoneCount = corr.getActiveZoneCount();
-                corr.clearAll();
-                corr.saveToDisk(level);
-                sendResponse(player, "admin_result", "{\"msg\":\"Purged all " + zoneCount + " corruption zones\"}", eco);
-                break;
-            }
-            case "admin_set_corruption_at_player": {
-                String[] parts = jsonData.split(" ", 2);
-                int tier = parts.length > 0 ? Integer.parseInt(parts[0]) : 1;
-                int radius = parts.length > 1 ? Integer.parseInt(parts[1]) : 5;
-                com.ultra.megamod.feature.corruption.CorruptionManager corr =
-                    com.ultra.megamod.feature.corruption.CorruptionManager.get(level);
-                var zone = corr.createZone((long) player.getBlockX(), (long) player.getBlockZ(),
-                    tier, "admin", level.getServer().getTickCount());
-                if (zone != null) corr.setZoneRadius(zone.zoneId, radius);
-                corr.saveToDisk(level);
-                sendResponse(player, "admin_result", "{\"msg\":\"Created T" + tier + " corruption zone (radius " + radius + ") at your location\"}", eco);
                 break;
             }
             // ═══════════════════════════════════════════════════════════════

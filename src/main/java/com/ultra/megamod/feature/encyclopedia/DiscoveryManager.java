@@ -221,11 +221,6 @@ public class DiscoveryManager {
         set.add("market_trading"); set.add("market_terminal"); set.add("market_dimension");
         set.add("market_escrow"); set.add("market_notifications"); set.add("market_my_listings");
         set.add("market_tips");
-        // Corruption
-        set.add("corruption_overview"); set.add("corruption_zones"); set.add("corruption_effects");
-        set.add("corruption_spread"); set.add("corruption_defense"); set.add("corruption_purge");
-        set.add("corruption_rewards"); set.add("corruption_mobs"); set.add("corruption_colony");
-        set.add("corruption_commands");
         // Reliquary (replaces removed MegaMod Alchemy)
         set.add("reliquary_overview"); set.add("reliquary_apothecary_cauldron");
         set.add("reliquary_apothecary_mortar"); set.add("reliquary_brewing_reagents");
