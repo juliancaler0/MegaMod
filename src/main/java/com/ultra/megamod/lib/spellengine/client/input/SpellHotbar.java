@@ -67,13 +67,25 @@ public class SpellHotbar {
             }
 
             var spellIds = mergedContainer.spell_ids();
-            var spellEntryList = spellIds.stream()
+            var resolved = spellIds.stream()
                     .map(idString -> {
                         var id = Identifier.parse(idString);
                         return SpellRegistry.from(player.level()).get(id).orElse(null);
                     })
                     .filter(Objects::nonNull)
                     .toList();
+            // R+scroll client selection: rotate the resolved list so the player-
+            // selected spell becomes index 0 (the one bound to the use-key slot).
+            int selected = SpellWeaponSelection.clampedIndex(resolved.size());
+            List<Holder<Spell>> spellEntryList;
+            if (selected == 0 || resolved.isEmpty()) {
+                spellEntryList = resolved;
+            } else {
+                var rotated = new ArrayList<Holder<Spell>>(resolved.size());
+                rotated.addAll(resolved.subList(selected, resolved.size()));
+                rotated.addAll(resolved.subList(0, selected));
+                spellEntryList = rotated;
+            }
 
             int keyBindingIndex = 0;
             for (Holder<Spell> spellEntry : spellEntryList) {

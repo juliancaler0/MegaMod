@@ -42,6 +42,7 @@ public class AbilityKeybind {
     private static boolean rWasDown = false;
     private static boolean gWasDown = false;
     private static boolean gScrolledThisCycle = false;
+    private static boolean rScrolledThisCycle = false;
 
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
         ABILITY_CAST = new KeyMapping("key.megamod.ability_cast", 82, AccessoryKeybind.MEGAMOD_CATEGORY);
@@ -79,13 +80,19 @@ public class AbilityKeybind {
                 } else {
                     // Key is now held — track for release detection
                     rWasDown = true;
+                    rScrolledThisCycle = false;
                 }
             }
 
             // Detect release after hold
             if (rWasDown && !rDown) {
-                sendCast();
+                // If the player scrolled while holding R, suppress the tap-cast —
+                // they were cycling weapon spells, not casting.
+                if (!rScrolledThisCycle) {
+                    sendCast();
+                }
                 rWasDown = false;
+                rScrolledThisCycle = false;
             }
 
             // Consume any additional queued clicks
@@ -134,6 +141,27 @@ public class AbilityKeybind {
         if (mc.player == null || mc.screen != null) return;
 
         int direction = event.getScrollDeltaY() > 0 ? -1 : 1;
+
+        // R held + scroll = cycle spells on held weapon's SpellContainer.
+        // SpellHotbar.update() reads SpellWeaponSelection to rotate the resolved
+        // spell list so index 0 (the useKey-bound slot) is the player's choice.
+        if (ABILITY_CAST != null && ABILITY_CAST.isDown()) {
+            var container = com.ultra.megamod.lib.spellengine.internals.container
+                    .SpellContainerSource.activeContainerOf(mc.player);
+            if (container != null && container.spell_ids() != null && container.spell_ids().size() > 1) {
+                int count = container.spell_ids().size();
+                if (direction > 0) {
+                    com.ultra.megamod.lib.spellengine.client.input.SpellWeaponSelection.cycleNext(count);
+                } else {
+                    com.ultra.megamod.lib.spellengine.client.input.SpellWeaponSelection.cyclePrev(count);
+                }
+                // Mark R as "used for scroll" so the release handler below doesn't
+                // fire an unintended sendCast() on release.
+                rScrolledThisCycle = true;
+                event.setCanceled(true);
+                return;
+            }
+        }
 
         // G held + scroll = cycle spells (if book active) or cycle accessories
         if (ACCESSORY_KEY != null && ACCESSORY_KEY.isDown()) {
