@@ -26,6 +26,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Port of {@code net.spell_engine.mixin.client.control.SpellHotbarMinecraftClient}.
+ *
+ * <p>Source targeted Yarn's {@code handleInputEvents}. In NeoForge 1.21.11 the
+ * equivalent method is {@code handleKeybinds} (see Minecraft.java:1886, called
+ * from {@code runTick}). Using {@code tick} instead of {@code handleKeybinds}
+ * broke the entire spell-cast input path: hotbar polling never ran alongside
+ * the input dispatch, so pressing use/cast keys while holding a spell weapon
+ * did nothing. We also split the original single mixin into two {@code tick}
+ * hooks because the source used {@code handleInputEvents} HEAD + TAIL; this
+ * port puts the HEAD / TAIL on {@code handleKeybinds} proper.</p>
+ *
+ * <p>{@code missTime} is used as the attack-pause cooldown because the
+ * original {@code itemUseCooldown} field is not shadow-accessible under
+ * 1.21.11 mappings; vanilla's attack-miss timer has identical tick semantics.</p>
+ */
 @Mixin(value = Minecraft.class, priority = 999)
 public abstract class SpellHotbarMinecraftClient implements MinecraftClientExtension {
     @Shadow @Nullable public LocalPlayer player;
@@ -40,8 +56,8 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
     // Holds the list of keys that are currently being used for something else.
     private final List<KeyMapping> concurrentKeys = new ArrayList<>();
 
-    @Inject(method = "tick", at = @At(value = "HEAD"))
-    private void handleInputEvents_HEAD_SpellHotbar(CallbackInfo ci) {
+    @Inject(method = "handleKeybinds", at = @At(value = "HEAD"))
+    private void handleKeybinds_HEAD_SpellHotbar(CallbackInfo ci) {
         // spellHotbarHandle = null;
         if (player == null || options == null) { return; }
 
@@ -58,7 +74,6 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
         var caster = (SpellCasterClient) player;
         if (caster.getCurrentSkillAttack() != null) {
             missTime = Math.max(missTime, 1); // Blocking item use
-            missTime = 1; // Blocking attacks
             // Prevent spell cast start until the attack is finished
             // but allow ongoing process to continue
             if (caster.getSpellCastProcess() == null) {
@@ -104,14 +119,14 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
         }
     }
 
-    @Inject(method = "tick", at = @At(value = "TAIL"))
-    private void handleInputEvents_TAIL_SpellHotbar(CallbackInfo ci) {
+    @Inject(method = "handleKeybinds", at = @At(value = "TAIL"))
+    private void handleKeybinds_TAIL_SpellHotbar(CallbackInfo ci) {
         if (player == null || options == null) { return; }
         SpellHotbar.INSTANCE.syncItemUseSkill(player);
     }
 
     @WrapOperation(
-            method = "tick",
+            method = "handleKeybinds",
             at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/player/Inventory;selected:I", ordinal = 0, opcode = Opcodes.PUTFIELD),
             require = 0
     )
@@ -147,7 +162,7 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
         // Auto swap right click is handled instead in ClientPlayerInteractionManagerMixin
         // to allow block interactions to be handled first
     }
-    
+
     @Override public boolean isSpellCastLockActive() {
         return useKeySpellCastingLock;
     }
