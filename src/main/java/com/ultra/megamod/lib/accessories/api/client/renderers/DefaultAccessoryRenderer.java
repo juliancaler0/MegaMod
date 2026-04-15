@@ -262,6 +262,15 @@ public class DefaultAccessoryRenderer implements AccessoryRenderer {
                         renderCall.accept(matrices);
                         matrices.popPose();
                     }
+                }),
+                Map.entry("charm", new RenderHelper() {
+                    @Override
+                    public <S extends LivingEntityRenderState> void render(ItemStack stack, SlotPath path, PoseStack matrices, HumanoidModel<? extends HumanoidRenderState> humanoidModel, S renderState, Consumer<PoseStack> renderCall) {
+                        // Pocketed on the torso — hide inside the body so the item doesn't clip through clothing.
+                        ModelTransformOps.transformToModelPart(matrices, renderState, humanoidModel, "body", 0, 0, 0);
+                        matrices.scale(0.3f, 0.3f, 0.3f);
+                        renderCall.accept(matrices);
+                    }
                 })
         );
 
