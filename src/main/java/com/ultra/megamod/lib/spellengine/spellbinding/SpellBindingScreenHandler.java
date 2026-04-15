@@ -161,7 +161,21 @@ public class SpellBindingScreenHandler extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return AbstractContainerMenu.stillValid(this.context, player, SpellBindingBlock.INSTANCE);
+        // MegaMod: this menu can be opened by TWO blocks:
+        //   - megamod:spell_binding          (ported SpellBindingBlock.INSTANCE - has BlockEntity)
+        //   - megamod:spell_binding_table    (custom wrapper SpellBindingTableBlock)
+        // AbstractContainerMenu.stillValid(context, player, Block) hard-checks the block at the
+        // context's BlockPos against the supplied Block and returns false otherwise, causing the
+        // menu to close on the next server tick. Accept either block to fix the "opens then
+        // immediately closes" bug on the custom wrapper table.
+        return this.context.evaluate((level, pos) -> {
+            var state = level.getBlockState(pos);
+            if (!state.is(SpellBindingBlock.INSTANCE)
+                    && !state.is(com.ultra.megamod.feature.combat.spell.SpellItemRegistry.SPELL_BINDING_TABLE_BLOCK.get())) {
+                return false;
+            }
+            return player.distanceToSqr((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) <= 64.0;
+        }, true);
     }
 
     @Override

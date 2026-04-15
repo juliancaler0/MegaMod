@@ -107,6 +107,39 @@ public final class SpellEngineNeoForge {
             MENUS.register("spell_choice",
                     () -> com.ultra.megamod.lib.spellengine.spellbinding.spellchoice.SpellChoiceScreenHandler.HANDLER_TYPE);
 
+    // --- Criterion triggers --------------------------------------------
+    //
+    // The four SpellEngine library criteria (SpellBindingCriteria, SpellBookCreationCriteria,
+    // SpellCastCriteria, EnchantmentSpecificCriteria) are static singletons on their
+    // classes and the advancement JSONs reference them via id
+    //   - megamod:spell_binding
+    //   - megamod:spell_book_creation
+    //   - megamod:spell_cast
+    //   - megamod:enchant_specific
+    // Without this DeferredRegister they are never placed into Registries.TRIGGER_TYPE, so
+    // advancement parsing fails ("Unknown registry key in trigger_type: megamod:spell_binding")
+    // and every .trigger() call silently no-ops. Mirrors SpellEngineMod#init's
+    // Criteria.register calls in the source Fabric mod.
+
+    public static final DeferredRegister<net.minecraft.advancements.CriterionTrigger<?>> TRIGGER_TYPES =
+            DeferredRegister.create(Registries.TRIGGER_TYPE, MegaMod.MODID);
+
+    public static final Supplier<com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingCriteria> SPELL_BINDING_CRITERION =
+            TRIGGER_TYPES.register("spell_binding",
+                    () -> com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingCriteria.INSTANCE);
+
+    public static final Supplier<com.ultra.megamod.lib.spellengine.spellbinding.SpellBookCreationCriteria> SPELL_BOOK_CREATION_CRITERION =
+            TRIGGER_TYPES.register("spell_book_creation",
+                    () -> com.ultra.megamod.lib.spellengine.spellbinding.SpellBookCreationCriteria.INSTANCE);
+
+    public static final Supplier<com.ultra.megamod.lib.spellengine.internals.criteria.SpellCastCriteria> SPELL_CAST_CRITERION =
+            TRIGGER_TYPES.register("spell_cast",
+                    () -> com.ultra.megamod.lib.spellengine.internals.criteria.SpellCastCriteria.INSTANCE);
+
+    public static final Supplier<com.ultra.megamod.lib.spellengine.internals.criteria.EnchantmentSpecificCriteria> ENCHANT_SPECIFIC_CRITERION =
+            TRIGGER_TYPES.register("enchant_specific",
+                    () -> com.ultra.megamod.lib.spellengine.internals.criteria.EnchantmentSpecificCriteria.INSTANCE);
+
     // --- Public init ----------------------------------------------------
 
     /**
@@ -121,6 +154,7 @@ public final class SpellEngineNeoForge {
         BLOCKS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         MENUS.register(modEventBus);
+        TRIGGER_TYPES.register(modEventBus);
         modEventBus.addListener(SpellEngineNeoForge::onNewDataPackRegistry);
         modEventBus.addListener(SpellEngineNeoForge::onCommonSetup);
 
