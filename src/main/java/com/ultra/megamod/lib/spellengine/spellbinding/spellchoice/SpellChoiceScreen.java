@@ -135,16 +135,22 @@ public class SpellChoiceScreen extends AbstractContainerScreen<SpellChoiceScreen
             if (icon.mouseOver(mouseX, mouseY) && icon.spell != null) {
                 ArrayList<Component> tooltip = new ArrayList<>();
                 tooltip.addAll(SpellTooltip.spellEntry(icon.spell.id, player, itemStack, true, 0));
-                // tooltip removed: context.drawTooltip(this.font, tooltip, mouseX, mouseY);
+                context.setTooltipForNextFrame(
+                        this.font,
+                        tooltip.stream().map(Component::getVisualOrderText).toList(),
+                        mouseX,
+                        mouseY);
                 break;
             }
         }
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button == 0) {  // Left click
+    public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean consumed) {
+        if (!consumed && event.button() == 0) {  // Left click
+            int mx = (int) event.x();
+            int my = (int) event.y();
             for (var icon : spellIcons) {
-                if (icon.mouseOver((int) mouseX, (int) mouseY)) {
+                if (icon.mouseOver(mx, my)) {
                     // Send selection to server
                     if (SpellChoiceScreen.this.minecraft.gameMode != null) {
                         SpellChoiceScreen.this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, icon.index);
@@ -154,7 +160,7 @@ public class SpellChoiceScreen extends AbstractContainerScreen<SpellChoiceScreen
                 }
             }
         }
-        return false;
+        return super.mouseClicked(event, consumed);
     }
 
     @Override

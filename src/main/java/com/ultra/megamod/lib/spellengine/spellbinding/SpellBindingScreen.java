@@ -90,34 +90,38 @@ public class SpellBindingScreen extends AbstractContainerScreen<SpellBindingScre
         this.consumableSlotIcon.tick(List.of(PLACEHOLDER_LAPIS, PLACEHOLDER_SCROLL));
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean consumed) {
         try {
-            var mode = menu.getMode();
+            if (!consumed && event.button() == 0) {
+                int mouseX = (int) event.x();
+                int mouseY = (int) event.y();
+                var mode = menu.getMode();
 
-            if (mode == SpellBinding.Mode.BOOK) {
-                // BOOK MODE: Check book clicks
-                for (var book : bookViewModels) {
-                    if (book.mouseOver((int) mouseX, (int) mouseY)) {
-                        this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, book.originalIndex());
-                        return true;
+                if (mode == SpellBinding.Mode.BOOK) {
+                    // BOOK MODE: Check book clicks
+                    for (var book : bookViewModels) {
+                        if (book.mouseOver(mouseX, mouseY)) {
+                            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, book.originalIndex());
+                            return true;
+                        }
                     }
-                }
-            } else {
-                // SPELL MODE: Check tier row icon clicks
-                for (var tierRow : tierRowViewModels) {
-                    if (!tierRow.shown() || !tierRow.mouseOver((int) mouseX, (int) mouseY)) {
-                        continue;
-                    }
+                } else {
+                    // SPELL MODE: Check tier row icon clicks
+                    for (var tierRow : tierRowViewModels) {
+                        if (!tierRow.shown() || !tierRow.mouseOver(mouseX, mouseY)) {
+                            continue;
+                        }
 
-                    for (var icon : tierRow.spellIcons()) {
-                        if (icon.mouseOver((int) mouseX, (int) mouseY)) {
-                            if (menu.allowUnbinding() && icon.binding().state == SpellBinding.State.ApplyState.ALREADY_APPLIED) {
-                                unbindDialog(icon);
+                        for (var icon : tierRow.spellIcons()) {
+                            if (icon.mouseOver(mouseX, mouseY)) {
+                                if (menu.allowUnbinding() && icon.binding().state == SpellBinding.State.ApplyState.ALREADY_APPLIED) {
+                                    unbindDialog(icon);
+                                    return true;
+                                }
+
+                                this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, icon.originalIndex());
                                 return true;
                             }
-
-                            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, icon.originalIndex());
-                            return true;
                         }
                     }
                 }
@@ -126,7 +130,7 @@ public class SpellBindingScreen extends AbstractContainerScreen<SpellBindingScre
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
-        return false;
+        return super.mouseClicked(event, consumed);
     }
 
     private void unbindDialog(SpellBindingWidgets.SpellIconViewModel icon) {
