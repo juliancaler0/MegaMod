@@ -141,7 +141,7 @@ public class ArcherSpells {
         spell.range = 0;
         spell.tier = 3;
 
-        spell.release.animation = PlayerAnimation.of("spell_engine:one_handed_area_release");
+        spell.release.animation = PlayerAnimation.of("megamod:one_handed_area_release");
 
         spell.deliver.type = Spell.Delivery.Type.CLOUD;
         var cloud = new Spell.Delivery.Cloud();
@@ -186,11 +186,11 @@ public class ArcherSpells {
         spell.tier = 3;
 
         spell.active.cast.duration = 0.5F;
-        spell.active.cast.animation = PlayerAnimation.of("spell_engine:archery_pull");
+        spell.active.cast.animation = PlayerAnimation.of("megamod:archery_pull");
         spell.active.cast.animates_ranged_weapon = true;
         spell.active.cast.sound = new Sound(ArcherSounds.BOW_PULL.id());
 
-        spell.release.animation = PlayerAnimation.of("spell_engine:archery_release");
+        spell.release.animation = PlayerAnimation.of("megamod:archery_release");
 
         spell.target.type = Spell.Target.Type.AIM;
         spell.target.aim = new Spell.Target.Aim();
@@ -221,7 +221,7 @@ public class ArcherSpells {
         spell.tier = 4;
 
         spell.active.cast.duration = 1F;
-        spell.active.cast.animation = PlayerAnimation.of("spell_engine:archery_pull");
+        spell.active.cast.animation = PlayerAnimation.of("megamod:archery_pull");
         spell.active.cast.animates_ranged_weapon = true;
         spell.active.cast.particles = new ParticleBatch[]{
                 new ParticleBatch(
@@ -236,7 +236,7 @@ public class ArcherSpells {
         };
         spell.active.cast.sound = new Sound(SpellEngineSounds.GENERIC_WIND_CHARGING.id());
 
-        spell.release.animation = PlayerAnimation.of("spell_engine:archery_release");
+        spell.release.animation = PlayerAnimation.of("megamod:archery_release");
         spell.release.sound = new Sound(ArcherSounds.MAGIC_ARROW_RELEASE.id());
         spell.release.particles = new ParticleBatch[]{
                 new ParticleBatch(
