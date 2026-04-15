@@ -89,6 +89,24 @@ public final class SpellEngineNeoForge {
     public static final Supplier<BlockEntityType<SpellBindingBlockEntity>> SPELL_BINDING_BE_TYPE =
             BLOCK_ENTITY_TYPES.register("spell_binding", () -> SpellBindingBlockEntity.ENTITY_TYPE);
 
+    // --- MenuTypes -----------------------------------------------------
+    //
+    // SpellBindingScreenHandler.HANDLER_TYPE and SpellChoiceScreenHandler.HANDLER_TYPE
+    // are eager static MenuType<?> instances (legacy SpellEngine pattern). They must
+    // be registered with Registries.MENU or player.openMenu throws
+    // "Can't find id for MenuType in Registry[minecraft:menu]".
+
+    public static final DeferredRegister<net.minecraft.world.inventory.MenuType<?>> MENUS =
+            DeferredRegister.create(net.minecraft.core.registries.Registries.MENU, MegaMod.MODID);
+
+    public static final Supplier<net.minecraft.world.inventory.MenuType<com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingScreenHandler>> SPELL_BINDING_MENU =
+            MENUS.register("spell_binding",
+                    () -> com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingScreenHandler.HANDLER_TYPE);
+
+    public static final Supplier<net.minecraft.world.inventory.MenuType<com.ultra.megamod.lib.spellengine.spellbinding.spellchoice.SpellChoiceScreenHandler>> SPELL_CHOICE_MENU =
+            MENUS.register("spell_choice",
+                    () -> com.ultra.megamod.lib.spellengine.spellbinding.spellchoice.SpellChoiceScreenHandler.HANDLER_TYPE);
+
     // --- Public init ----------------------------------------------------
 
     /**
@@ -102,6 +120,7 @@ public final class SpellEngineNeoForge {
         ENTITY_TYPES.register(modEventBus);
         BLOCKS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
+        MENUS.register(modEventBus);
         modEventBus.addListener(SpellEngineNeoForge::onNewDataPackRegistry);
         modEventBus.addListener(SpellEngineNeoForge::onCommonSetup);
 

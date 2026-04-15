@@ -245,12 +245,20 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     @Override
     public void onClose() {
-        var selectedGroups = this.getMenu().selectedGroups().stream()
-                .map(SlotGroup::name)
-                .collect(Collectors.toSet());
+        try {
+            var selectedGroups = this.getMenu().selectedGroups().stream()
+                    .map(SlotGroup::name)
+                    .collect(Collectors.toSet());
 
-        AccessoriesNetworking
-                .sendToServer(SyncOptionChange.of(PlayerOptions.FILTERED_GROUPS, selectedGroups));
+            AccessoriesNetworking
+                    .sendToServer(SyncOptionChange.of(PlayerOptions.FILTERED_GROUPS, selectedGroups));
+        } catch (Throwable t) {
+            // SyncOptionChange is intentionally un-registered on the channel right
+            // now (its endec's codec throws; see AccessoriesNetworking.init). ESC
+            // close would otherwise crash here with "record type SyncOptionChange
+            // was never registered on channel accessories:main". Swallow so the
+            // close flow survives until a real StructEndec exists for PlayerOption.
+        }
 
         super.onClose();
     }
