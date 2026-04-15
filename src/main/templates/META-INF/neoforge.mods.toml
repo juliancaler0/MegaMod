@@ -63,13 +63,12 @@ config="accessories.mixins.json"
 [[mixins]]
 config="spellengine.mixins.json"
 
-# Entity Texture Features (ETF) render mixins for resource-pack texture variants
-[[mixins]]
-config="megamod-etf.mixins.json"
-
-# Entity Model Features (EMF) render mixins — drives pack-supplied .jem animations
-[[mixins]]
-config="megamod-emf.mixins.json"
+# TODO EMF-ETF-PORT: re-enable in Phase 5 (full-parity mixin configs)
+# [[mixins]]
+# config="megamod-etf.mixins.json"
+#
+# [[mixins]]
+# config="megamod-emf.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg

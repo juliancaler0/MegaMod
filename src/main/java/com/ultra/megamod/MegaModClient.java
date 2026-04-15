@@ -175,42 +175,19 @@ public class MegaModClient {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "player_animations"),
                     new com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources());
-            // ETF Phase B: reset variator/texture/directory caches on resource-pack reload
-            event.addListener(
-                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "etf"),
-                    com.ultra.megamod.lib.etf.ETFReloadListener.INSTANCE);
-            // EMF Phase E: clear compiled .jem cache on resource-pack reload
-            event.addListener(
-                    net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "emf"),
-                    com.ultra.megamod.lib.emf.EmfReloadListener.INSTANCE);
+            // TODO EMF-ETF-PORT: re-wire in Phase 7 (reload listeners)
+            // ETF: reset variator/texture/directory caches on resource-pack reload
+            // EMF: clear compiled .jem cache on resource-pack reload
         });
 
-        // ETF Phase B: eagerly init the manager on client setup so it populates
-        // KNOWN_RESOURCEPACK_ORDER before the first render frame
-        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent etfInit) -> {
-            etfInit.enqueueWork(() -> com.ultra.megamod.lib.etf.features.ETFManager.getInstance());
-        });
+        // TODO EMF-ETF-PORT: re-wire in Phase 7 (manager eager init)
+        // ETF: ETFManager.getInstance() populates KNOWN_RESOURCEPACK_ORDER
+        // EMF: EMFManager.getInstance() + config + texture redirect + API register
 
-        // EMF Phase E: eagerly init the model manager on client setup so the
-        // first .jem load doesn't race with reload listener registration.
-        // EMF Phase F: also construct the config handler, install the texture
-        // redirector, and register the debug HUD + config keybind.
-        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent emfInit) -> {
-            emfInit.enqueueWork(() -> {
-                com.ultra.megamod.lib.emf.runtime.EmfModelManager.getInstance();
-                com.ultra.megamod.lib.emf.EMF.config();
-                com.ultra.megamod.lib.emf.runtime.EmfTextureRedirect.install();
-                com.ultra.megamod.lib.emf.api.EMFApi.registerBuiltins();
-            });
-        });
-        modEventBus.addListener(com.ultra.megamod.lib.emf.config.screen.EMFConfigKeybind::onRegisterKeyMappings);
-        modEventBus.addListener(com.ultra.megamod.lib.emf.debug.EMFDebugHud::onRegisterGuiLayers);
-
-        // ETF Phase C: config keybind registration + emissive feature layer on players
-        modEventBus.addListener(com.ultra.megamod.lib.etf.config.screen.ETFConfigKeybind::onRegisterKeyMappings);
-        modEventBus.addListener((net.neoforged.neoforge.client.event.EntityRenderersEvent.AddLayers e) ->
-                com.ultra.megamod.lib.etf.features.ETFEmissiveFeatureLayer.onAddLayers(e));
-        modEventBus.addListener(com.ultra.megamod.lib.etf.debug.ETFDebugHud::onRegisterGuiLayers);
+        // TODO EMF-ETF-PORT: re-wire in Phase 7 (keybinds + debug HUDs + emissive layer)
+        // EMFConfigKeybind / ETFConfigKeybind → onRegisterKeyMappings
+        // EMFDebugHud / ETFDebugHud → onRegisterGuiLayers
+        // ETFEmissiveFeatureLayer → onAddLayers (needs BackpackRenderContext fallback + mass entity-type sweep)
 
         // Initialize Archers client (armor renderers, effect renderers, tooltips)
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event2) -> {
