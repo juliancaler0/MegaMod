@@ -95,7 +95,6 @@ public class FeatureToggleManager {
         new FeatureDefinition("mob_variants", "Mob Variants", "Combat", "Elite and Champion mobs spawn in the world with modifiers"),
         new FeatureDefinition("bounty_hunting", "Bounty Hunting", "Combat", "Hunt named mobs for MegaCoin rewards"),
         new FeatureDefinition("arena", "Arena System", "Combat", "PvE wave arena and PvP combat with ELO ranking"),
-        new FeatureDefinition("corruption", "Corruption Spread", "World Events", "Hostile corruption zones that spread and can be purged"),
         new FeatureDefinition("marketplace", "Marketplace", "Economy", "Player-to-player WTS/WTB marketplace with trading terminals"),
         // MegaMod alchemy system deleted — see the "Reliquary" category for the apothecary replacement.
         new FeatureDefinition("tree_felling", "Tree Felling", "Farming", "Chop whole trees with an axe (requires Crop Master or Herbalist T3+)"),

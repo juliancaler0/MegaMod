@@ -1512,24 +1512,6 @@ public class QuestDefinitions {
             false
         ));
 
-        register(new QuestDef("ex_13", QuestCategory.EXPLORATION,
-            "Corruption Scout",
-            desc("Corruption zones are dangerous areas", "with powerful enemies. Approach", "one to understand the threat."),
-            13, prereqs("ex_05"),
-            new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Enter a corruption zone") },
-            new QuestReward[]{ coins(300), skillXp("COMBAT", 25) },
-            false
-        ));
-
-        register(new QuestDef("ex_14", QuestCategory.EXPLORATION,
-            "Zone Purifier",
-            desc("Purging a corruption zone clears", "the threat and restores the land."),
-            14, prereqs("ex_13"),
-            new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Purge a corruption zone") },
-            new QuestReward[]{ coins(500), skillXp("COMBAT", 40) },
-            false
-        ));
-
         register(new QuestDef("ex_15", QuestCategory.EXPLORATION,
             "Backpack Upgrade",
             desc("Install a module in your backpack.", "Options: Magnet, AutoPickup, Crafting,", "Feeding, Void Filter, Smelting, and more."),
@@ -1857,15 +1839,6 @@ public class QuestDefinitions {
             12, prereqs("ex_12"),
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Discover 100 encyclopedia entries") },
             new QuestReward[]{ coins(5000), skillXp("SURVIVAL", 100) },
-            false
-        ));
-
-        register(new QuestDef("ms_13", QuestCategory.MASTERY,
-            "Purge Master",
-            desc("Cleanse the world of corruption.", "Purge multiple zones to prove", "your dedication."),
-            13, prereqs("ex_14"),
-            new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Purge 5 corruption zones") },
-            new QuestReward[]{ coins(5000), skillXp("COMBAT", 100) },
             false
         ));
 

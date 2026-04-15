@@ -50,7 +50,7 @@ public class EncyclopediaScreen extends Screen {
     private int backX, backY, backW, backH;
 
     // Category tabs
-    private static final String[] CATEGORIES = {"Guide", "Relics", "Mobs", "Dungeons", "Skills", "Items", "Museum", "Controls", "Citizens", "Casino", "Backpacks", "Marketplace", "Corruption", "Reliquary"};
+    private static final String[] CATEGORIES = {"Guide", "Relics", "Mobs", "Dungeons", "Skills", "Items", "Museum", "Controls", "Citizens", "Casino", "Backpacks", "Marketplace", "Reliquary"};
     private static final int[] CATEGORY_COLORS = {
         0xFFFFFFFF, // Guide = white
         0xFFA371F7, // Relics = purple
@@ -64,10 +64,9 @@ public class EncyclopediaScreen extends Screen {
         0xFFD4AF37, // Casino = gold
         0xFF8B6914, // Backpacks = leather brown
         0xFF26C6DA, // Marketplace = teal
-        0xFFCC3333, // Corruption = dark red
         0xFF9C27B0  // Reliquary = purple/magenta
     };
-    private static final String[] CATEGORY_ICONS = {"\u2736", "\u2666", "\u2623", "\u2694", "\u2605", "\u2726", "\u2302", "\u2328", "\u2691", "\u2680", "\u25A3", "\u2696", "\u2620", "\u2697"};
+    private static final String[] CATEGORY_ICONS = {"\u2736", "\u2666", "\u2623", "\u2694", "\u2605", "\u2726", "\u2302", "\u2328", "\u2691", "\u2680", "\u25A3", "\u2696", "\u2697"};
 
     // Colors
     private static final int TEXT_NORMAL = 0xFFE6EDF3;
@@ -555,7 +554,6 @@ public class EncyclopediaScreen extends Screen {
         buildCasinoEntries();
         buildBackpackEntries();
         buildMarketplaceEntries();
-        buildCorruptionEntries();
         buildReliquaryEntries();
         // QoL feature wiki entries
         allEntries.add(new WikiEntry("guide_sorting", "Sorting System", "Guide", List.of("##Inventory Sorting", "", "Sort any container. Press O or click sort button.", "Cycles: Name, ID, Category, Count, Rarity.", "Merges partial stacks. Works on all containers.")));
@@ -1189,29 +1187,6 @@ public class EncyclopediaScreen extends Screen {
             "  Combine reagents in the Cauldron to brew",
             "  potions. Higher tier recipes need rarer",
             "  reagents. See the Alchemy tab for full list."
-        )));
-
-        allEntries.add(new WikiEntry("guide_corruption", "Corruption", "Guide", List.of(
-            "##Corruption System",
-            "",
-            "Dark zones that spread and corrupt the world.",
-            "",
-            "##How It Works",
-            "  Corruption zones spawn randomly and spread",
-            "  over time, converting blocks and spawning",
-            "  corrupted mobs.",
-            "",
-            "##Effects",
-            "  - Debuffs while inside corruption zones",
-            "  - Corrupted mobs are tougher and hostile",
-            "  - Blocks change to corrupted variants",
-            "",
-            "##Defense",
-            "  - Build purification blocks to slow spread",
-            "  - Complete corruption purges for MC rewards",
-            "  - Colony defenses can protect your territory",
-            "",
-            "See the Corruption tab for full details."
         )));
 
         allEntries.add(new WikiEntry("guide_marketplace", "Marketplace", "Guide", List.of(
@@ -8603,289 +8578,6 @@ public class EncyclopediaScreen extends Screen {
         )));
     }
 
-    // ---- CORRUPTION (10) ----
-
-    private void buildCorruptionEntries() {
-        allEntries.add(new WikiEntry("corruption_overview", "Corruption Overview", "Corruption", List.of(
-            "##World Corruption",
-            "",
-            "A dark force spreads across the world, corrupting",
-            "the land and spawning dangerous mobs. If left",
-            "unchecked, it will consume everything.",
-            "",
-            "##What Is Corruption?",
-            "  Corruption zones are hostile areas that:",
-            "  - Expand over time (radius grows)",
-            "  - Spawn powerful corrupted mobs",
-            "  - Apply debuffs to players inside",
-            "  - Have 4 tiers of increasing danger",
-            "",
-            "##How It Appears",
-            "  - Natural spawning: 10% chance per MC day",
-            "  - Spawns 200-500 blocks from online players",
-            "  - Never spawns near claimed faction territory",
-            "  - Maximum 8 active zones at once",
-            "  - Announced to all: '[Corruption] A dark",
-            "    corruption has appeared near [biome]!'",
-            "",
-            "##How to Fight It",
-            "  - Claim territory with your faction (pushes it back)",
-            "  - Station military recruits in the area",
-            "  - Launch a Purge to destroy the zone",
-            "  - See the Purge Events entry for details"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_zones", "Corruption Zones", "Corruption", List.of(
-            "##Zone Structure",
-            "",
-            "Each corruption zone has a center point and an",
-            "expanding radius. The zone is circular.",
-            "",
-            "##Zone Tiers (1-4)",
-            "  Tier 1: Max radius 64 blocks",
-            "    - Spreads every 10 minutes",
-            "    - Spawns zombies & skeletons",
-            "    - Mild debuffs",
-            "",
-            "  Tier 2: Max radius 80 blocks",
-            "    - Spreads every 7.5 minutes",
-            "    - Adds spiders & creepers",
-            "    - Moderate debuffs",
-            "",
-            "  Tier 3: Max radius 96 blocks",
-            "    - Spreads every 5 minutes",
-            "    - Adds witches, phantoms, strays",
-            "    - Severe debuffs (mining fatigue)",
-            "",
-            "  Tier 4: Max radius 128 blocks",
-            "    - Spreads every 2.5 minutes",
-            "    - Adds wither skeletons, evokers, ravagers",
-            "    - Extreme debuffs (darkness, wither)",
-            "",
-            "##Zone Sources",
-            "  Natural, dungeon failure, world events, or",
-            "  child zones spawned from tier 3+ parents"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_effects", "Corruption Effects", "Corruption", List.of(
-            "##Effects on Players",
-            "",
-            "While inside a corruption zone, players suffer",
-            "tier-based debuffs applied every 5 seconds:",
-            "",
-            "##All Tiers",
-            "  - Slowness I (reduced movement speed)",
-            "  - Ambient damage: 0.5 hearts every 5 seconds",
-            "",
-            "##Tier 3+",
-            "  - Mining Fatigue I (slower block breaking)",
-            "",
-            "##Tier 4",
-            "  - Darkness (reduced visibility)",
-            "  - Wither I (1 heart damage every 5 seconds)",
-            "",
-            "##Visual Indicators",
-            "  - Screen vignette effect (red tint)",
-            "  - Intensity scales with zone tier",
-            "  - HUD shows corruption tier when inside",
-            "",
-            "##Mob Buffs Inside Corruption",
-            "  - +25% HP per tier",
-            "  - +15% damage per tier",
-            "  - Corrupted mobs don't despawn naturally"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_spread", "How Corruption Spreads", "Corruption", List.of(
-            "##Spread Mechanics",
-            "",
-            "Corruption zones grow their radius over time.",
-            "",
-            "##Spread Rate (by tier)",
-            "  Tier 1: +1 block radius every 10 minutes",
-            "  Tier 2: +1 block radius every 7.5 minutes",
-            "  Tier 3: +1 block radius every 5 minutes",
-            "  Tier 4: +1 block radius every 2.5 minutes",
-            "",
-            "##Child Zone Spawning",
-            "  Tier 3+ zones have a 5% chance per tick cycle",
-            "  to spawn a new Tier 1 zone within 256 blocks.",
-            "  This is how corruption can cascade across the world.",
-            "",
-            "##Spread Blockers",
-            "  - Faction claimed chunks block spread completely",
-            "  - Each claimed chunk reduces effective radius by 8",
-            "  - Each military recruit reduces radius by 2 more",
-            "  - 3+ recruits in a claimed chunk = total immunity",
-            "",
-            "##Natural Spawning",
-            "  - 10% chance per Minecraft day",
-            "  - 200-500 blocks from a random online player",
-            "  - Never within 128 blocks of faction claims",
-            "  - Never within 64 blocks of existing corruption",
-            "  - Maximum 8 active zones in the world"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_defense", "Defending Against Corruption", "Corruption", List.of(
-            "##Colony Defense",
-            "",
-            "Your faction is your best defense against corruption.",
-            "",
-            "##Claim Territory",
-            "  Claimed chunks cannot be corrupted.",
-            "  Each claimed chunk within a zone's radius",
-            "  reduces the effective radius by 8 blocks.",
-            "  Claim more chunks = smaller corruption zone!",
-            "",
-            "##Station Military Recruits",
-            "  Each military recruit in the corruption zone",
-            "  reduces effective radius by an additional 2 blocks.",
-            "  Military jobs that count:",
-            "  - Recruit, Shieldman, Bowman",
-            "  - Crossbowman, Nomad, Horseman",
-            "  - Commander, Captain",
-            "",
-            "##Total Immunity",
-            "  A claimed chunk with 3+ military recruits",
-            "  is completely immune to corruption spread.",
-            "",
-            "##Strategic Tips",
-            "  - Claim chunks facing the corruption first",
-            "  - Station 3+ recruits per border chunk",
-            "  - Use Shieldmen for frontline defense",
-            "  - Launch a Purge to eliminate the zone entirely"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_purge", "Purge Events", "Corruption", List.of(
-            "##Launching a Purge",
-            "",
-            "A purge is a combat event to destroy a corruption",
-            "zone permanently.",
-            "",
-            "##How to Start",
-            "  - Be within 64 blocks of a corruption zone",
-            "  - Use /megamod corruption purge <zoneId>",
-            "",
-            "##How It Works",
-            "  1. Purge spawns waves of corrupted mobs",
-            "  2. Kill count required: 10 x tier x tier",
-            "     Tier 1: 10 kills, Tier 2: 40 kills",
-            "     Tier 3: 90 kills, Tier 4: 160 kills",
-            "  3. Mobs spawn in 3 waves (every ~100 seconds)",
-            "  4. All kills by participants within the zone count",
-            "  5. When kill target reached: zone is destroyed!",
-            "",
-            "##Duration",
-            "  5 minutes (6000 ticks) to complete the purge.",
-            "  If time runs out before enough kills:",
-            "  - Zone tier INCREASES by 1 (max tier 4)",
-            "  - Zone radius grows by 8 blocks",
-            "  - Failure is broadcast to all players",
-            "",
-            "##Faction recruits in the zone contribute kills too!"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_rewards", "Purge Rewards", "Corruption", List.of(
-            "##Rewards for Completing a Purge",
-            "",
-            "Everyone who participated gets rewarded!",
-            "",
-            "##MegaCoins",
-            "  Each participant receives: tier x 50 MC",
-            "  Tier 1: 50 MC, Tier 2: 100 MC",
-            "  Tier 3: 150 MC, Tier 4: 200 MC",
-            "",
-            "##Combat XP",
-            "  Bonus experience points for the Combat skill tree.",
-            "  Higher tier = more XP.",
-            "",
-            "##Corruption Shards",
-            "  Corrupted mobs drop Corruption Shards (25% chance).",
-            "  Breaking blocks in corruption also drops them (5%).",
-            "  These may be used in future crafting recipes.",
-            "",
-            "##Participation",
-            "  Anyone who scores at least 1 kill in the zone",
-            "  during the purge is counted as a participant.",
-            "  Faction recruits contribute kills but rewards",
-            "  go to their owning player."
-        )));
-
-        allEntries.add(new WikiEntry("corruption_mobs", "Corrupted Mobs", "Corruption", List.of(
-            "##Mob Types by Tier",
-            "",
-            "##Tier 1 (2-4 mobs per spawn cycle)",
-            "  - Zombies",
-            "  - Skeletons",
-            "",
-            "##Tier 2 (3-5 mobs)",
-            "  - All Tier 1 mobs",
-            "  - Spiders",
-            "  - Creepers",
-            "",
-            "##Tier 3 (4-7 mobs)",
-            "  - All Tier 2 mobs",
-            "  - Witches",
-            "  - Phantoms",
-            "  - Strays",
-            "",
-            "##Tier 4 (5-10 mobs)",
-            "  - All Tier 3 mobs",
-            "  - Wither Skeletons",
-            "  - Evokers",
-            "  - Ravagers",
-            "",
-            "##Corrupted Mob Buffs",
-            "  Per tier: +25% HP, +15% damage",
-            "  Tier 4 mobs have +100% HP and +60% damage!",
-            "  Corrupted mobs are persistent (no despawn).",
-            "  Mob spawns occur every 400 ticks (20 seconds)."
-        )));
-
-        allEntries.add(new WikiEntry("corruption_colony", "Colony vs Corruption", "Corruption", List.of(
-            "##Faction Territory Defense",
-            "",
-            "Corruption and colonies are natural enemies.",
-            "Your faction's claims actively push back corruption.",
-            "",
-            "##Defense Mechanics",
-            "  1. Claimed chunk in zone: -8 effective radius",
-            "  2. Military recruit in zone: -2 effective radius",
-            "  3. 3+ recruits in claimed chunk: total immunity",
-            "",
-            "##Example",
-            "  A Tier 2 zone with radius 40:",
-            "  - 3 claimed chunks in range: 40 - 24 = 16 radius",
-            "  - Plus 5 recruits: 16 - 10 = 6 radius",
-            "  - The corruption is nearly contained!",
-            "",
-            "##Colony Pushback (Every ~10 minutes)",
-            "  The system recalculates colony influence:",
-            "  - Claimed chunks reduce effective radius",
-            "  - Zones can be shrunk to nothing by claiming",
-            "",
-            "##Strategy",
-            "  - Claim aggressively toward corruption",
-            "  - Use cheap recruits (40 MC each) for defense",
-            "  - Coordinate with allies for shared defense",
-            "  - Purge before corruption reaches tier 3+"
-        )));
-
-        allEntries.add(new WikiEntry("corruption_commands", "Corruption Commands", "Corruption", List.of(
-            "##Available Commands",
-            "",
-            "  /megamod corruption status",
-            "    Shows nearby corruption zone info",
-            "",
-            "  /megamod corruption purge <zoneId>",
-            "    Start a purge event to destroy a zone",
-            "    (must be within 64 blocks of the zone)",
-            "",
-            "##Tips",
-            "  - Use 'status' to check zone tier & radius",
-            "  - Coordinate purge parties for higher tiers",
-            "  - Claim territory to passively shrink zones"
-        )));
-    }
 
     // ---- RELIQUARY ----
 

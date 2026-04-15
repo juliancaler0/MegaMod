@@ -297,15 +297,13 @@ public class GuideBookHelper {
         ));
 
         // ==========================================
-        // Page 15 - Marketplace & Corruption
+        // Page 15 - Marketplace & Bounty Board
         // ==========================================
         pages.add(page(Component.empty()
             .append(header("More Systems"))
             .append(text("\n\n"))
             .append(gold("Marketplace"))
             .append(text("\n  Player-to-player\n  trading via Terminal\n  block. Escrow system\n  for safe trades.\n\n"))
-            .append(gold("Corruption"))
-            .append(text("\n  Dark zones spread\n  across the world.\n  Defend with recruits\n  or launch a Purge\n  event to destroy\n  them!\n\n"))
             .append(gold("Bounty Board"))
             .append(text("\n  Hunt named mobs for\n  coin rewards daily."))
         ));
