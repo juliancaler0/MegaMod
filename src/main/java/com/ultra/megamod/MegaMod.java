@@ -82,7 +82,6 @@ public class MegaMod {
         com.ultra.megamod.feature.citizen.visitor.VisitorEntityRegistry.init(modEventBus);
         ResourceDimensionRegistry.init(modEventBus);
         com.ultra.megamod.feature.loot.LootModifierRegistry.init(modEventBus);
-        com.ultra.megamod.feature.corruption.CorruptionRegistry.init(modEventBus);
         com.ultra.megamod.feature.marketplace.MarketplaceRegistry.init(modEventBus);
         modEventBus.addListener(AtmNetwork::registerPayloads);
         modEventBus.addListener(RelicNetwork::registerPayloads);
@@ -96,7 +95,6 @@ public class MegaMod {
         modEventBus.addListener(InsuranceNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.arena.network.ArenaNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.furniture.QuestBoardNetwork::registerPayloads);
-        modEventBus.addListener(com.ultra.megamod.feature.corruption.network.CorruptionNetwork::registerPayloads);
         // MegaMod alchemy system deleted — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.network.ClassNetwork::registerPayloads);

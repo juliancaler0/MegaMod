@@ -49,7 +49,6 @@ import com.ultra.megamod.feature.computer.screen.panels.EconomyDashboardPanel;
 import com.ultra.megamod.feature.computer.screen.panels.MarketplaceAdminPanel;
 import com.ultra.megamod.feature.computer.screen.panels.AlchemyAdminPanel;
 import com.ultra.megamod.feature.computer.screen.panels.SystemHealthPanel;
-import com.ultra.megamod.feature.computer.screen.panels.CorruptionAdminPanel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -78,7 +77,7 @@ public class AdminTerminalScreen
 extends Screen {
     private final Screen parent;
     private final Minecraft mc = Minecraft.getInstance();
-    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Corruption", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "World Edit", "Spells", "\u2315 Search"};
+    private static final String[] TAB_NAMES = new String[]{"Dashboard", "Players", "World", "Items", "MegaMod", "Economy", "Skills", "Audit", "Item Editor", "Entities", "Terminal", "Museum Mgr", "Inv Viewer", "Dungeons", "Toggles", "Moderation", "Structures", "Scheduler", "Bot Control", "Showcase", "Modules", "Warps", "Citizens", "Casino", "Marketplace", "Alchemy", "System", "Deaths", "Cleanup", "Loot Tables", "Aliases", "Undo", "Furniture", "Combat", "World Edit", "Spells", "\u2315 Search"};
     private int currentTab = 0;
     private int tabScroll = 0; // vertical scroll offset for sidebar tabs (in pixels)
     private static final String WELCOME_TEXT = "Welcome back, NeverNotch...";
@@ -240,10 +239,6 @@ extends Screen {
     private com.ultra.megamod.feature.computer.screen.panels.WorldEditPanel worldEditPanel;
     private com.ultra.megamod.feature.computer.screen.panels.SpellsAdminPanel spellsPanel;
 
-    // Corruption panel
-    private CorruptionAdminPanel corruptionPanel;
-    private String corruptionJsonCache = "";
-    private int corruptionScrollY = 0;
 
     public AdminTerminalScreen(Screen parent) {
         super((Component)Component.literal((String)"Admin Panel"));
@@ -334,7 +329,6 @@ extends Screen {
         // this.citizensPanel = new com.ultra.megamod.feature.citizen.screen.panels.AdminCitizensPanel(this.font);
         // this.citizensPanel.init(this.contentLeft, this.contentTop, this.contentRight - this.contentLeft, this.contentBottom - this.contentTop);
         this.casinoPanel = new com.ultra.megamod.feature.casino.screen.panels.CasinoManagerPanel(this.font);
-        this.corruptionPanel = new CorruptionAdminPanel(this.font);
         this.economyDashboardPanel = new EconomyDashboardPanel(this.font);
         this.marketplaceAdminPanel = new MarketplaceAdminPanel(this.font);
         this.alchemyAdminPanel = new AlchemyAdminPanel(this.font);
@@ -397,11 +391,10 @@ extends Screen {
         if (tab == 21 && this.warpPanel != null) this.warpPanel.requestData();
         // TODO: citizensPanel removed - if (tab == 22 && this.citizensPanel != null) this.citizensPanel.requestData();
         if (tab == 23 && this.casinoPanel != null) this.casinoPanel.requestData();
-        if (tab == 24 && this.corruptionPanel != null) this.corruptionPanel.requestData();
-        if (tab == 25 && this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.requestData();
-        if (tab == 26 && this.alchemyAdminPanel != null) this.alchemyAdminPanel.requestData();
-        if (tab == 27 && this.systemHealthPanel != null) this.systemHealthPanel.requestData();
-        if (tab == 36 && this.spellsPanel != null) this.spellsPanel.requestInitialData();
+        if (tab == 24 && this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.requestData();
+        if (tab == 25 && this.alchemyAdminPanel != null) this.alchemyAdminPanel.requestData();
+        if (tab == 26 && this.systemHealthPanel != null) this.systemHealthPanel.requestData();
+        if (tab == 35 && this.spellsPanel != null) this.spellsPanel.requestInitialData();
     }
 
     private void applyTabVisibility() {
@@ -746,20 +739,6 @@ extends Screen {
                     if (obj.has("msg")) this.adminMessages.add(obj.get("msg").getAsString());
                 } catch (Exception ignored) {}
                 ComputerDataPayload.lastResponse = null;
-            } else if ("corruption_data".equals(responseType)) {
-                this.corruptionJsonCache = response.jsonData();
-                if (this.corruptionPanel != null) this.corruptionPanel.handleResponse(responseType, response.jsonData());
-                ComputerDataPayload.lastResponse = null;
-            } else if ("corruption_result".equals(responseType)) {
-                try {
-                    JsonObject obj = JsonParser.parseString(response.jsonData()).getAsJsonObject();
-                    if (obj.has("message")) this.adminMessages.add(obj.get("message").getAsString());
-                } catch (Exception ignored) {}
-                if (this.corruptionPanel != null) this.corruptionPanel.handleResponse(responseType, response.jsonData());
-                ComputerDataPayload.lastResponse = null;
-            } else if ("purge_data".equals(responseType)) {
-                if (this.corruptionPanel != null) this.corruptionPanel.handleResponse(responseType, response.jsonData());
-                ComputerDataPayload.lastResponse = null;
             } else if (responseType.startsWith("eco_") && this.economyDashboardPanel != null) {
                 this.economyDashboardPanel.handleResponse(responseType, response.jsonData());
                 ComputerDataPayload.lastResponse = null;
@@ -941,20 +920,19 @@ extends Screen {
             case 21: { if (this.warpPanel != null) { this.warpPanel.tick(); this.warpPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
             case 22: { /* TODO: citizensPanel removed */ break; }
             case 23: { if (this.casinoPanel != null) { this.casinoPanel.tick(); this.casinoPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 24: { if (this.corruptionPanel != null) { this.corruptionPanel.tick(); this.corruptionPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 25: { if (this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
-            case 26: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
-            case 27: { if (this.systemHealthPanel != null) this.systemHealthPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
-            case 28: { this.renderDeathLog(g, mouseX, mouseY); break; }
-            case 29: { this.renderCleanup(g, mouseX, mouseY); break; }
-            case 30: { this.renderLootTables(g, mouseX, mouseY); break; }
-            case 31: { this.renderAliases(g, mouseX, mouseY); break; }
-            case 32: { this.renderUndo(g, mouseX, mouseY); break; }
-            case 33: { if (this.mobShowcasePanel != null) { this.mobShowcasePanel.setActiveView(1); this.mobShowcasePanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 34: { this.renderCombatConfig(g, mouseX, mouseY); break; }
-            case 35: { if (this.worldEditPanel != null) { this.worldEditPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 36: { if (this.spellsPanel != null) { this.spellsPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
-            case 37: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 24: { if (this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
+            case 25: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
+            case 26: { if (this.systemHealthPanel != null) this.systemHealthPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); break; }
+            case 27: { this.renderDeathLog(g, mouseX, mouseY); break; }
+            case 28: { this.renderCleanup(g, mouseX, mouseY); break; }
+            case 29: { this.renderLootTables(g, mouseX, mouseY); break; }
+            case 30: { this.renderAliases(g, mouseX, mouseY); break; }
+            case 31: { this.renderUndo(g, mouseX, mouseY); break; }
+            case 32: { if (this.mobShowcasePanel != null) { this.mobShowcasePanel.setActiveView(1); this.mobShowcasePanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 33: { this.renderCombatConfig(g, mouseX, mouseY); break; }
+            case 34: { if (this.worldEditPanel != null) { this.worldEditPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 35: { if (this.spellsPanel != null) { this.spellsPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
+            case 36: { if (this.adminSearchPanel != null) { this.adminSearchPanel.render(g, mouseX, mouseY, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom); } break; }
         }
         super.render(g, mouseX, mouseY, partialTick);
     }
@@ -3962,8 +3940,6 @@ extends Screen {
         if (this.currentTab == 21 && this.warpPanel != null && this.warpPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         // TODO: citizensPanel removed - if (this.currentTab == 22 && this.citizensPanel != null && this.citizensPanel.mouseClicked(mx, my, 0)) return true;
         if (this.currentTab == 23 && this.casinoPanel != null && this.casinoPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
-        if (this.currentTab == 24 && this.corruptionPanel != null && this.corruptionPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
-        if (this.currentTab == 24 && this.handleCorruptionClick(mx, my)) return true;
         if (this.currentTab == 5 && this.economyDashboardPanel != null && this.economyDashboardPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 25 && this.marketplaceAdminPanel != null && this.marketplaceAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
         if (this.currentTab == 26 && this.alchemyAdminPanel != null && this.alchemyAdminPanel.mouseClicked(mx, my, 0, this.contentLeft, this.contentTop, this.contentRight, this.contentBottom)) return true;
@@ -4921,18 +4897,17 @@ extends Screen {
             case 17: { if (this.schedulerPanel != null) this.schedulerPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 18: { if (this.botControlPanel != null) this.botControlPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 19: { if (this.mobShowcasePanel != null) this.mobShowcasePanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 33: { if (this.mobShowcasePanel != null) this.mobShowcasePanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 32: { if (this.mobShowcasePanel != null) this.mobShowcasePanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 20: { if (this.adminModulesPanel != null) this.adminModulesPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 21: { if (this.warpPanel != null) this.warpPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
             case 22: { /* TODO: citizensPanel removed */ return true; }
             case 23: { return true; }
-            case 24: { if (this.corruptionPanel != null) this.corruptionPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 25: { if (this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 26: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 27: { if (this.systemHealthPanel != null) this.systemHealthPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 35: { if (this.worldEditPanel != null) this.worldEditPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 36: { if (this.spellsPanel != null) this.spellsPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
-            case 37: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 24: { if (this.marketplaceAdminPanel != null) this.marketplaceAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 25: { if (this.alchemyAdminPanel != null) this.alchemyAdminPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 26: { if (this.systemHealthPanel != null) this.systemHealthPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 34: { if (this.worldEditPanel != null) this.worldEditPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 35: { if (this.spellsPanel != null) this.spellsPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
+            case 36: { if (this.adminSearchPanel != null) this.adminSearchPanel.mouseScrolled(mouseX, mouseY, scrollX, scrollY); return true; }
         }
         return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
@@ -5439,7 +5414,8 @@ extends Screen {
     private record EntityEntry(int entityId, String type, String name, double x, double y, double z, float health, float maxHealth, float distance) {
     }
 
-    // ---- Corruption Tab (24) ----
+    // ---- Corruption Tab removed — system retired ----
+    /* Original corruption rendering code removed below. Keeping stub marker for search.
 
     private void renderCorruptionTab(GuiGraphics g, int mouseX, int mouseY) {
         int x = this.contentLeft + 6;
@@ -5602,6 +5578,7 @@ extends Screen {
             ClientPacketDistributor.sendToServer((CustomPacketPayload) new ComputerActionPayload("corruption_remove", zoneId), (CustomPacketPayload[]) new CustomPacketPayload[0]);
         }
     }
+    */
 
     // ═══════════════════════════════════════════════════════════════
     // Combat Config Tab (BetterCombat settings)
