@@ -165,6 +165,37 @@ public class SpellChoiceScreen extends AbstractContainerScreen<SpellChoiceScreen
 
     @Override
     protected void renderBg(GuiGraphics context, float delta, int mouseX, int mouseY) {
+        // Draw a vanilla-style dialog panel around the icons + title.
+        // Source uses HandledScreen's default dim background; here we explicitly
+        // paint a centered panel so the choice UI has chrome (user feedback).
+        if (!spellIcons.isEmpty()) {
+            int pad = 12;
+            int iconY = spellIcons.get(0).y;
+            int iconSize = spellIcons.get(0).size;
+            int leftIconX = spellIcons.get(0).x;
+            int rightIconX = spellIcons.get(spellIcons.size() - 1).x + spellIcons.get(spellIcons.size() - 1).size;
+
+            int panelLeft = Math.min(leftIconX - pad, this.width / 2 - 90);
+            int panelRight = Math.max(rightIconX + pad, this.width / 2 + 90);
+            int panelTop = (this.height / 2) - pad - 4;
+            int panelBottom = iconY + iconSize + pad;
+
+            // Drop shadow
+            context.fill(panelLeft + 2, panelTop + 2, panelRight + 2, panelBottom + 2, 0x80000000);
+            // Body
+            context.fill(panelLeft, panelTop, panelRight, panelBottom, 0xF0100010);
+            // Light inner border (1px inset)
+            context.fill(panelLeft + 1, panelTop + 1, panelRight - 1, panelTop + 2, 0xFF5A5A7A);
+            context.fill(panelLeft + 1, panelBottom - 2, panelRight - 1, panelBottom - 1, 0xFF28283C);
+            context.fill(panelLeft + 1, panelTop + 2, panelLeft + 2, panelBottom - 2, 0xFF5A5A7A);
+            context.fill(panelRight - 2, panelTop + 2, panelRight - 1, panelBottom - 2, 0xFF28283C);
+            // Outer border
+            context.fill(panelLeft, panelTop, panelRight, panelTop + 1, 0xFF000000);
+            context.fill(panelLeft, panelBottom - 1, panelRight, panelBottom, 0xFF000000);
+            context.fill(panelLeft, panelTop, panelLeft + 1, panelBottom, 0xFF000000);
+            context.fill(panelRight - 1, panelTop, panelRight, panelBottom, 0xFF000000);
+        }
+
         // Draw spell icons (following SpellBindingScreen pattern)
         for (var icon : spellIcons) {
             drawSpellIcon(context, icon, mouseX, mouseY);
