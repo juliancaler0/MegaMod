@@ -107,7 +107,12 @@ public class AccessoriesNeoforgeInternals extends AccessoriesInternals {
     @SuppressWarnings("unchecked")
     public <T extends AbstractContainerMenu, D> MenuType<T> registerMenuType(Identifier location, Endec<D> endec, TriFunction<Integer, Inventory, D, T> func) {
         return Registry.register(BuiltInRegistries.MENU, location, IMenuTypeExtension.create((i, arg, arg2) -> {
-            D data = (D) endec.decodeFully(SerializationContext.attributes(RegistriesAttribute.of(arg2.registryAccess())), (Object) null, (Object) arg2);
+            // Mirror writeClientSideData: read an NBT tag from the buf and decode it
+            // through the Endec's Codec. endec.decodeFully is a stub that throws.
+            var ops = net.minecraft.resources.RegistryOps.create(
+                    net.minecraft.nbt.NbtOps.INSTANCE, arg2.registryAccess());
+            net.minecraft.nbt.Tag tag = arg2.readNbt();
+            D data = endec.codec().parse(ops, tag).getOrThrow();
             return func.apply(i, arg, data);
         }));
     }
@@ -128,7 +133,16 @@ public class AccessoriesNeoforgeInternals extends AccessoriesInternals {
 
                     @Override
                     public void writeClientSideData(AbstractContainerMenu menu, RegistryFriendlyByteBuf buf) {
-                        AccessoriesMenuData.ENDEC.encodeFully(SerializationContext.attributes(RegistriesAttribute.of(buf.registryAccess())), (Object) null, AccessoriesMenuData.of(targetEntity, ((AccessoriesMenuBase) menu)));
+                        // The adapter Endec.encodeFully is a stub that throws — do the actual
+                        // serialization via the underlying Codec to NBT, then write NBT into
+                        // the buf. Client-side reader handles matching NBT decode.
+                        var data = AccessoriesMenuData.of(targetEntity, (AccessoriesMenuBase) menu);
+                        var ops = net.minecraft.resources.RegistryOps.create(
+                                net.minecraft.nbt.NbtOps.INSTANCE, buf.registryAccess());
+                        var tag = AccessoriesMenuData.ENDEC.codec()
+                                .encodeStart(ops, data)
+                                .getOrThrow();
+                        buf.writeNbt((net.minecraft.nbt.Tag) tag);
                     }
                 });
     }
