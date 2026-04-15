@@ -1,6 +1,5 @@
 package com.ultra.megamod.feature.skills.client;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager;
 import com.ultra.megamod.feature.computer.admin.AdminSystem;
 import com.ultra.megamod.feature.skills.SkillBranch;
 import com.ultra.megamod.feature.skills.SkillNode;

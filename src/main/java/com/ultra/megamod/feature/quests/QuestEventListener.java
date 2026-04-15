@@ -1,8 +1,6 @@
 package com.ultra.megamod.feature.quests;
 
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.feature.combat.PlayerClassManager;
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 import com.ultra.megamod.feature.computer.network.handlers.PartyHandler;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestDef;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTask;

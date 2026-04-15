@@ -359,74 +359,11 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendGameScoresData(player, eco, level);
                 break;
             }
-            case "admin_class_change": {
-                // Format: "targetUUID:CLASS_NAME" (e.g. "uuid:WIZARD")
-                String[] classParts = jsonData.split(":");
-                if (classParts.length < 2) {
-                    ComputerActionHandler.sendResponse(player, "admin_result", "{\"msg\":\"Invalid format. Use targetUUID:CLASS_NAME\"}", eco);
-                    break;
-                }
-                try {
-                    UUID classTargetId = UUID.fromString(classParts[0]);
-                    String className = classParts[1].toUpperCase().trim();
-                    com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass newClass =
-                            com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.valueOf(className);
-                    com.ultra.megamod.feature.combat.PlayerClassManager pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get(level);
-                    com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass oldClass = pcm.getPlayerClass(classTargetId);
-                    pcm.setClass(classTargetId, newClass);
-                    pcm.saveToDisk(level);
-
-                    // Notify target player if online
-                    ServerPlayer classTarget = level.getServer().getPlayerList().getPlayer(classTargetId);
-                    if (classTarget != null) {
-                        classTarget.sendSystemMessage(
-                                Component.literal("Your class has been changed to " + newClass.getDisplayName() + " by an admin.")
-                                        .withStyle(ChatFormatting.GOLD));
-                    }
-
-                    String targetName = classTarget != null ? classTarget.getGameProfile().name() : classTargetId.toString();
-                    ComputerActionHandler.sendResponse(player, "admin_result",
-                            "{\"msg\":\"Changed " + targetName + " class from " + oldClass.getDisplayName() + " to " + newClass.getDisplayName() + "\"}", eco);
-                } catch (IllegalArgumentException e) {
-                    ComputerActionHandler.sendResponse(player, "admin_result",
-                            "{\"msg\":\"Invalid class name. Valid: NONE, PALADIN, WARRIOR, WIZARD, ROGUE, RANGER\"}", eco);
-                }
-                break;
-            }
+            case "admin_class_change":
             case "admin_class_list": {
-                // Returns all online players with their current class
-                com.ultra.megamod.feature.combat.PlayerClassManager pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get(level);
-                StringBuilder clsb = new StringBuilder("[");
-                boolean firstPlayer = true;
-                for (ServerPlayer onlinePlayer : level.getServer().getPlayerList().getPlayers()) {
-                    if (!firstPlayer) clsb.append(",");
-                    firstPlayer = false;
-                    UUID pid = onlinePlayer.getUUID();
-                    com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass cls = pcm.getPlayerClass(pid);
-                    clsb.append("{\"uuid\":\"").append(pid)
-                         .append("\",\"name\":\"").append(onlinePlayer.getGameProfile().name())
-                         .append("\",\"class\":\"").append(cls.name())
-                         .append("\",\"displayClass\":\"").append(cls.getDisplayName())
-                         .append("\"}");
-                }
-                // Also include offline players from the full map
-                java.util.Map<UUID, com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass> allClasses = pcm.getAllClasses();
-                java.util.Set<UUID> onlineUuids = new java.util.HashSet<>();
-                for (ServerPlayer op : level.getServer().getPlayerList().getPlayers()) {
-                    onlineUuids.add(op.getUUID());
-                }
-                for (java.util.Map.Entry<UUID, com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass> entry : allClasses.entrySet()) {
-                    if (onlineUuids.contains(entry.getKey())) continue;
-                    if (!firstPlayer) clsb.append(",");
-                    firstPlayer = false;
-                    clsb.append("{\"uuid\":\"").append(entry.getKey())
-                         .append("\",\"name\":\"(offline)")
-                         .append("\",\"class\":\"").append(entry.getValue().name())
-                         .append("\",\"displayClass\":\"").append(entry.getValue().getDisplayName())
-                         .append("\"}");
-                }
-                clsb.append("]");
-                ComputerActionHandler.sendResponse(player, "admin_class_data", clsb.toString(), eco);
+                // Class-selection admin actions retired along with the class system.
+                ComputerActionHandler.sendResponse(player, "admin_result",
+                        "{\"msg\":\"Class system retired — these actions no longer apply.\"}", eco);
                 break;
             }
             case "admin_discover_all": {

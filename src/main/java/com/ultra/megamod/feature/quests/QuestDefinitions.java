@@ -1,6 +1,5 @@
 package com.ultra.megamod.feature.quests;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -94,7 +93,7 @@ public class QuestDefinitions {
      * Maps quest IDs to the PlayerClass required to complete them.
      * Quests not in this map have no class restriction.
      */
-    public static final Map<String, PlayerClass> CLASS_REQUIREMENTS = new LinkedHashMap<>();
+    public static final Map<String, String> CLASS_REQUIREMENTS = new LinkedHashMap<>();
 
     private static void register(QuestDef def) {
         ALL_QUESTS.put(def.id(), def);
@@ -127,7 +126,7 @@ public class QuestDefinitions {
     }
 
     /** Register a quest that requires a specific player class to complete. */
-    private static void registerClassQuest(QuestDef def, PlayerClass requiredClass) {
+    private static void registerClassQuest(QuestDef def, String requiredClass) {
         register(def);
         CLASS_REQUIREMENTS.put(def.id(), requiredClass);
     }
@@ -135,7 +134,7 @@ public class QuestDefinitions {
     /**
      * Returns the required PlayerClass for a quest, or null if unrestricted.
      */
-    public static PlayerClass getClassRequirement(String questId) {
+    public static String getClassRequirement(String questId) {
         return CLASS_REQUIREMENTS.get(questId);
     }
 
@@ -701,7 +700,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Equip a claymore or great hammer") },
             new QuestReward[]{ coins(300), skillXp("COMBAT", 30) },
             false
-        ), PlayerClass.PALADIN);
+        ), "PALADIN");
 
         registerClassQuest(new QuestDef("cp_02", QuestCategory.CLASS_QUESTS,
             "Shield Bearer",
@@ -710,7 +709,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Equip a kite shield") },
             new QuestReward[]{ coins(300), skillXp("COMBAT", 25) },
             false
-        ), PlayerClass.PALADIN);
+        ), "PALADIN");
 
         registerClassQuest(new QuestDef("cp_03", QuestCategory.CLASS_QUESTS,
             "First Aid",
@@ -719,7 +718,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Cast Heal on yourself") },
             new QuestReward[]{ coins(400), skillXp("ARCANE", 30) },
             false
-        ), PlayerClass.PALADIN);
+        ), "PALADIN");
 
         registerClassQuest(new QuestDef("cp_04", QuestCategory.CLASS_QUESTS,
             "Holy Crusade",
@@ -728,7 +727,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Complete a dungeon as Paladin") },
             new QuestReward[]{ coins(500), skillXp("COMBAT", 40) },
             true
-        ), PlayerClass.PALADIN);
+        ), "PALADIN");
 
         registerClassQuest(new QuestDef("cp_05", QuestCategory.CLASS_QUESTS,
             "Beacon of Light",
@@ -737,7 +736,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Cast Circle of Healing in a party") },
             new QuestReward[]{ coins(800), skillXp("ARCANE", 50) },
             true
-        ), PlayerClass.PALADIN);
+        ), "PALADIN");
 
         // ─── WARRIOR (cw_01 through cw_05) ───
 
@@ -748,7 +747,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Equip warrior armor") },
             new QuestReward[]{ coins(300), skillXp("COMBAT", 30) },
             false
-        ), PlayerClass.WARRIOR);
+        ), "WARRIOR");
 
         registerClassQuest(new QuestDef("cw_02", QuestCategory.CLASS_QUESTS,
             "Berserker's Fury",
@@ -757,7 +756,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Charge and Shout in combat") },
             new QuestReward[]{ coins(400), skillXp("COMBAT", 35) },
             false
-        ), PlayerClass.WARRIOR);
+        ), "WARRIOR");
 
         registerClassQuest(new QuestDef("cw_03", QuestCategory.CLASS_QUESTS,
             "Cleave Master",
@@ -766,7 +765,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Hit 3+ enemies with one sweeping attack") },
             new QuestReward[]{ coins(400), skillXp("COMBAT", 35) },
             false
-        ), PlayerClass.WARRIOR);
+        ), "WARRIOR");
 
         registerClassQuest(new QuestDef("cw_04", QuestCategory.CLASS_QUESTS,
             "Arena Champion",
@@ -775,7 +774,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Win an Arena bout") },
             new QuestReward[]{ coins(500), skillXp("COMBAT", 40) },
             false
-        ), PlayerClass.WARRIOR);
+        ), "WARRIOR");
 
         registerClassQuest(new QuestDef("cw_05", QuestCategory.CLASS_QUESTS,
             "Warlord",
@@ -784,7 +783,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.SKILL_LEVEL, "COMBAT", 25, "Reach Combat level 25") },
             new QuestReward[]{ coins(1000), skillXp("COMBAT", 60) },
             false
-        ), PlayerClass.WARRIOR);
+        ), "WARRIOR");
 
         // ─── WIZARD (cm_01 through cm_05) ───
 
@@ -795,7 +794,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Cast Arcane Bolt") },
             new QuestReward[]{ coins(300), skillXp("ARCANE", 30) },
             false
-        ), PlayerClass.WIZARD);
+        ), "WIZARD");
 
         registerClassQuest(new QuestDef("cm_02", QuestCategory.CLASS_QUESTS,
             "Elemental Student",
@@ -804,7 +803,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Cast a Fire and Frost spell") },
             new QuestReward[]{ coins(400), skillXp("ARCANE", 35) },
             false
-        ), PlayerClass.WIZARD);
+        ), "WIZARD");
 
         registerClassQuest(new QuestDef("cm_03", QuestCategory.CLASS_QUESTS,
             "Spell Combo",
@@ -813,7 +812,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Cast 3 different spells in one fight") },
             new QuestReward[]{ coins(400), skillXp("ARCANE", 35) },
             false
-        ), PlayerClass.WIZARD);
+        ), "WIZARD");
 
         registerClassQuest(new QuestDef("cm_04", QuestCategory.CLASS_QUESTS,
             "Arcane Scholar",
@@ -822,7 +821,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Acquire a Spell Book") },
             new QuestReward[]{ coins(500), skillXp("ARCANE", 40) },
             false
-        ), PlayerClass.WIZARD);
+        ), "WIZARD");
 
         registerClassQuest(new QuestDef("cm_05", QuestCategory.CLASS_QUESTS,
             "Archmage",
@@ -831,7 +830,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.SKILL_LEVEL, "ARCANE", 25, "Reach Arcane level 25") },
             new QuestReward[]{ coins(1000), skillXp("ARCANE", 60) },
             false
-        ), PlayerClass.WIZARD);
+        ), "WIZARD");
 
         // ─── ROGUE (cr_01 through cr_05) ───
 
@@ -842,7 +841,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Equip a dagger or sickle") },
             new QuestReward[]{ coins(300), skillXp("SURVIVAL", 30) },
             false
-        ), PlayerClass.ROGUE);
+        ), "ROGUE");
 
         registerClassQuest(new QuestDef("cr_02", QuestCategory.CLASS_QUESTS,
             "First Strike",
@@ -851,7 +850,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Vanish in combat") },
             new QuestReward[]{ coins(400), skillXp("SURVIVAL", 35) },
             false
-        ), PlayerClass.ROGUE);
+        ), "ROGUE");
 
         registerClassQuest(new QuestDef("cr_03", QuestCategory.CLASS_QUESTS,
             "Backstab",
@@ -860,7 +859,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Attack from stealth") },
             new QuestReward[]{ coins(400), skillXp("SURVIVAL", 35) },
             false
-        ), PlayerClass.ROGUE);
+        ), "ROGUE");
 
         registerClassQuest(new QuestDef("cr_04", QuestCategory.CLASS_QUESTS,
             "Shadow Dancer",
@@ -869,7 +868,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Shadow Step 5 times") },
             new QuestReward[]{ coins(500), skillXp("SURVIVAL", 40) },
             false
-        ), PlayerClass.ROGUE);
+        ), "ROGUE");
 
         registerClassQuest(new QuestDef("cr_05", QuestCategory.CLASS_QUESTS,
             "Master Assassin",
@@ -878,7 +877,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Complete a bounty hunt") },
             new QuestReward[]{ coins(1000), skillXp("SURVIVAL", 60) },
             false
-        ), PlayerClass.ROGUE);
+        ), "ROGUE");
 
         // ─── RANGER (ca_01 through ca_05) ───
 
@@ -889,7 +888,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Equip a bow or crossbow and a quiver") },
             new QuestReward[]{ coins(300), skillXp("SURVIVAL", 30) },
             false
-        ), PlayerClass.RANGER);
+        ), "RANGER");
 
         registerClassQuest(new QuestDef("ca_02", QuestCategory.CLASS_QUESTS,
             "Marked Prey",
@@ -898,7 +897,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Power Shot on an enemy") },
             new QuestReward[]{ coins(400), skillXp("SURVIVAL", 35) },
             false
-        ), PlayerClass.RANGER);
+        ), "RANGER");
 
         registerClassQuest(new QuestDef("ca_03", QuestCategory.CLASS_QUESTS,
             "Rain of Arrows",
@@ -907,7 +906,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Barrage") },
             new QuestReward[]{ coins(400), skillXp("SURVIVAL", 35) },
             false
-        ), PlayerClass.RANGER);
+        ), "RANGER");
 
         registerClassQuest(new QuestDef("ca_04", QuestCategory.CLASS_QUESTS,
             "Nature's Trap",
@@ -916,7 +915,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.CHECKMARK, 1, "Use Entangling Roots in a dungeon") },
             new QuestReward[]{ coins(500), skillXp("SURVIVAL", 40) },
             true
-        ), PlayerClass.RANGER);
+        ), "RANGER");
 
         registerClassQuest(new QuestDef("ca_05", QuestCategory.CLASS_QUESTS,
             "Grandmaster Archer",
@@ -925,7 +924,7 @@ public class QuestDefinitions {
             new QuestTask[]{ task(QuestTaskType.SKILL_LEVEL, "SURVIVAL", 25, "Reach Survival level 25") },
             new QuestReward[]{ coins(1000), skillXp("SURVIVAL", 60) },
             false
-        ), PlayerClass.RANGER);
+        ), "RANGER");
     }
 
     // ═══════════════════════════════════════════
