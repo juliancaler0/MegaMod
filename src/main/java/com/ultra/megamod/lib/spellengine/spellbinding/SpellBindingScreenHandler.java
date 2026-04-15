@@ -61,7 +61,15 @@ public class SpellBindingScreenHandler extends AbstractContainerMenu {
         this.addSlot(new Slot(this.inventory, 0, 15, 47) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return stack.getItem() == Items.BOOK || SpellContainerHelper.hasBindableContainer(stack);
+                // Books are allowed for BOOK creation mode.
+                if (stack.getItem() == Items.BOOK) return true;
+                // Weapons must have a bindable SpellContainer AND must NOT carry a
+                // fixed SpellChoice (Arsenal unique_* weapons use SpellChoice for their
+                // pre-determined spell set — binding-table would otherwise accept them
+                // but show an empty candidate list because offersFor() short-circuits
+                // when SpellChoices.from(stack) != null).
+                if (!SpellContainerHelper.hasBindableContainer(stack)) return false;
+                return com.ultra.megamod.lib.spellengine.spellbinding.spellchoice.SpellChoices.from(stack) == null;
             }
 
             @Override

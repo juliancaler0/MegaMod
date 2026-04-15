@@ -44,10 +44,12 @@ public class SpellBindingTableBlock extends Block {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
 
         // Open the ported SpellEngine Spell Binding UI (pool-picker for magic weapons).
+        // Title matches source ("Bind Spells") — short string fits the UI's tier-row extra area
+        // so it doesn't overlap the slot region (the long block name looked like a "search bar").
         player.openMenu(new SimpleMenuProvider(
                 (containerId, playerInv, p) -> new SpellBindingScreenHandler(containerId, playerInv,
                         ContainerLevelAccess.create(level, pos)),
-                Component.translatable("block.megamod.spell_binding_table")
+                Component.translatable("gui.spell_engine.spell_binding.title")
         ));
 
         level.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
