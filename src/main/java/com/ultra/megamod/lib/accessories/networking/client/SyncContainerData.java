@@ -27,7 +27,38 @@ import java.util.*;
  */
 public record SyncContainerData(int entityId, Map<String, NbtMapCarrier> updatedContainers, Map<SlotPath, ItemStack> dirtyStacks, Map<SlotPath, ItemStack> dirtyCosmeticStacks) {
 
-    private static final Endec<Map<SlotPath, ItemStack>> PATH_TO_STACK_ENDEC = Endec.map(SlotPath.ENDEC, CodecUtils.toEndec(ItemStack.OPTIONAL_CODEC));
+    // The upstream endec (Endec.map(SlotPath.ENDEC, …)) builds a Codec.unboundedMap
+    // whose key codec is the struct SlotPath.CODEC. NBT requires map keys to be
+    // strings — Codec.unboundedMap calls keyCodec.encodeStart then expects its
+    // output to be a StringTag; a CompoundTag blows up with "Not a string". That
+    // broke every equip attempt server→client sync with:
+    //   EncoderException: Failed to encode: Not a string SyncContainerData[…]
+    // Fix: keep SlotPath on the API side but serialize the map with string keys
+    // using SlotPath.createString / SlotPath.fromString.
+    private static final Endec<Map<SlotPath, ItemStack>> PATH_TO_STACK_ENDEC =
+            new Endec<>() {
+                @Override
+                public com.mojang.serialization.Codec<Map<SlotPath, ItemStack>> codec() {
+                    var valueCodec = ItemStack.OPTIONAL_CODEC;
+                    var stringKeyedMap = com.mojang.serialization.Codec.unboundedMap(
+                            com.mojang.serialization.Codec.STRING,
+                            valueCodec);
+                    return stringKeyedMap.xmap(
+                            m -> {
+                                var out = new HashMap<SlotPath, ItemStack>();
+                                m.forEach((k, v) -> {
+                                    var p = SlotPath.fromString(k);
+                                    if (p != null) out.put(p, v);
+                                });
+                                return out;
+                            },
+                            m -> {
+                                var out = new HashMap<String, ItemStack>();
+                                m.forEach((k, v) -> out.put(k.createString(), v));
+                                return out;
+                            });
+                }
+            };
 
     public static final StructEndec<SyncContainerData> ENDEC = StructEndecBuilder.of(
             Endec.VAR_INT.fieldOf("entityId", SyncContainerData::entityId),
