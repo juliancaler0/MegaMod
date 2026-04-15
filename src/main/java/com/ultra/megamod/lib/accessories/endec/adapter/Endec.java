@@ -39,8 +39,11 @@ public interface Endec<T> {
     }
 
     default <U> Endec<U> xmapWithContext(java.util.function.BiFunction<SerializationContext, T, U> to, java.util.function.BiFunction<SerializationContext, U, T> from) {
-        // Context is mostly unused in the NeoForge port - just delegate without context
-        return xmap(t -> to.apply(SerializationContext.empty(), t), u -> from.apply(SerializationContext.empty(), u));
+        // Mojang Codec has no native concept of SerializationContext attributes,
+        // so we thread the context via SerializationContext#current() which reads
+        // from a ThreadLocal stack pushed by NbtMapCarrier/MapCarrierEncodable
+        // sites before invoking Codec.parse / encodeStart.
+        return xmap(t -> to.apply(SerializationContext.current(), t), u -> from.apply(SerializationContext.current(), u));
     }
 
     default Endec<List<T>> listOf() {

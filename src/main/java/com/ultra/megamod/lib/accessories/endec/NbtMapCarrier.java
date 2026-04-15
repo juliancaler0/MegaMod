@@ -23,14 +23,27 @@ public record NbtMapCarrier(CompoundTag compoundTag) implements MapCarrier {
         if (!this.has(key)) return key.defaultValue();
         Tag tag = this.compoundTag().get(key.key());
         if (tag == null) return key.defaultValue();
-        return key.endec().codec().parse(NbtOps.INSTANCE, tag)
-            .result().orElse(key.defaultValue());
+        // Push ctx onto the ThreadLocal context stack so xmapWithContext decoders
+        // (e.g. AccessoriesHolderImpl#CONTAINERS_KEY which requires the entity
+        // attribute) can resolve it via SerializationContext.current().
+        ctx.push();
+        try {
+            return key.endec().codec().parse(NbtOps.INSTANCE, tag)
+                .result().orElse(key.defaultValue());
+        } finally {
+            SerializationContext.pop();
+        }
     }
 
     @Override
     public <T> void put(SerializationContext ctx, @NotNull KeyedEndec<T> key, @NotNull T value) {
-        key.endec().codec().encodeStart(NbtOps.INSTANCE, value)
-            .result().ifPresent(tag -> this.compoundTag().put(key.key(), tag));
+        ctx.push();
+        try {
+            key.endec().codec().encodeStart(NbtOps.INSTANCE, value)
+                .result().ifPresent(tag -> this.compoundTag().put(key.key(), tag));
+        } finally {
+            SerializationContext.pop();
+        }
     }
 
     @Override
