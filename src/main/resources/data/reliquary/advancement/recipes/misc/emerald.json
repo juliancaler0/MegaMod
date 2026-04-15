@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:emerald"
+        "recipe": "reliquary:alkahestry/crafting/emerald"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:emerald"
+      "reliquary:alkahestry/crafting/emerald"
     ]
   }
 }

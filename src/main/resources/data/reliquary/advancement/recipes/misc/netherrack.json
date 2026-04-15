@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:netherrack"
+        "recipe": "reliquary:alkahestry/crafting/netherrack"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:netherrack"
+      "reliquary:alkahestry/crafting/netherrack"
     ]
   }
 }

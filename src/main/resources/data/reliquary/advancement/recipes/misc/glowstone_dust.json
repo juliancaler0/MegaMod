@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:glowstone_dust"
+        "recipe": "reliquary:alkahestry/charging/glowstone_dust"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:glowstone_dust"
+      "reliquary:alkahestry/charging/glowstone_dust"
     ]
   }
 }

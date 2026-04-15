@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:lapis_lazuli"
+        "recipe": "reliquary:alkahestry/crafting/lapis_lazuli"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:lapis_lazuli"
+      "reliquary:alkahestry/crafting/lapis_lazuli"
     ]
   }
 }

@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:iron_ingot"
+        "recipe": "reliquary:alkahestry/crafting/iron_ingot"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:iron_ingot"
+      "reliquary:alkahestry/crafting/iron_ingot"
     ]
   }
 }

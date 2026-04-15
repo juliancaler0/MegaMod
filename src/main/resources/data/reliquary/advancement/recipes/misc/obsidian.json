@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:obsidian"
+        "recipe": "reliquary:alkahestry/crafting/obsidian"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:obsidian"
+      "reliquary:alkahestry/crafting/obsidian"
     ]
   }
 }

@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:soul_sand"
+        "recipe": "reliquary:alkahestry/crafting/soul_sand"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:soul_sand"
+      "reliquary:alkahestry/crafting/soul_sand"
     ]
   }
 }

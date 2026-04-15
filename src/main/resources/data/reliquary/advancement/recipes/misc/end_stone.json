@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:end_stone"
+        "recipe": "reliquary:alkahestry/crafting/end_stone"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:end_stone"
+      "reliquary:alkahestry/crafting/end_stone"
     ]
   }
 }

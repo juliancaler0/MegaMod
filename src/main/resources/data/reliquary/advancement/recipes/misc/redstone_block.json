@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:redstone_block"
+        "recipe": "reliquary:alkahestry/charging/redstone_block"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:redstone_block"
+      "reliquary:alkahestry/charging/redstone_block"
     ]
   }
 }

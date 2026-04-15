@@ -14,7 +14,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "reliquary:gold_ingot"
+        "recipe": "reliquary:alkahestry/crafting/gold_ingot"
       }
     }
   },
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "reliquary:gold_ingot"
+      "reliquary:alkahestry/crafting/gold_ingot"
     ]
   }
 }
