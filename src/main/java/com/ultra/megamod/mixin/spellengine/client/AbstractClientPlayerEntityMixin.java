@@ -110,7 +110,34 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
     }
 
     public void playSpellAnimation(SpellCast.Animation type, String name, float speed) {
-        // TODO: 1.21.11 - Animation playback disabled until playeranim API is updated
+        // Bridge SpellEngine animation packets/ticker into the MegaMod combat
+        // SpellAnimationManager (which owns the PlayerAnimator integration).
+        AbstractClientPlayer self = (AbstractClientPlayer) (Object) this;
+        com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.AnimationType target = switch (type) {
+            case CASTING -> com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.AnimationType.CASTING;
+            case RELEASE -> com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.AnimationType.RELEASE;
+            case MISC -> com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.AnimationType.MISC;
+        };
+
+        // Empty / null name = stop currently running animation of that channel
+        if (name == null || name.isEmpty()) {
+            com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.stopAnimation(self, target);
+            return;
+        }
+
+        // Resolve animation id. SpellEngine supplies either a bare path
+        // (e.g. "one_handed_projectile_charge") or a full "namespace:path".
+        Identifier animId;
+        try {
+            animId = name.contains(":") ? Identifier.parse(name)
+                    : Identifier.fromNamespaceAndPath("megamod", name);
+        } catch (Exception e) {
+            return;
+        }
+
+        boolean mirror = isLeftHanded_SpellEngine();
+        com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.playAnimation(
+                self, target, animId, Math.max(0.01f, speed), mirror);
     }
 
     private boolean isMounting_SpellEngine() {
