@@ -1,0 +1,86 @@
+package com.ultra.megamod.lib.etf.mixin.mixins.entity.renderer.feature;
+
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.ParrotOnShoulderLayer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Parrot;
+import net.minecraft.world.entity.player.Player;
+
+import net.minecraft.client.renderer.entity.state.ParrotRenderState;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import com.ultra.megamod.lib.etf.features.ETFRenderContext;
+import com.ultra.megamod.lib.etf.features.state.ETFEntityRenderState;
+import com.ultra.megamod.lib.etf.features.state.HoldsETFRenderState;
+import com.ultra.megamod.lib.etf.utils.ETFEntity;
+
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
+
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.world.entity.EntitySpawnReason;
+
+@Mixin(ParrotOnShoulderLayer.class)
+public abstract class MixinShoulderParrotFeatureRenderer extends RenderLayer<AvatarRenderState, PlayerModel> {
+
+
+
+    public MixinShoulderParrotFeatureRenderer() {super(null);}
+
+    @Inject(method = "submitOnShoulder", at = @At(value = "INVOKE", target =
+            "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/RenderType;IIILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"
+    ))
+    private void etf$modifySubmit(final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final int i, final AvatarRenderState avatarRenderState, final Parrot.Variant variant, final float f, final float g, final boolean bl, final CallbackInfo ci,
+                                  @Local ParrotRenderState parrotRenderState) {
+        var state =  ((HoldsETFRenderState) avatarRenderState).etf$getState();
+        if (state != null && state.entity() instanceof Player playerEntity) {
+            etf$setParrotAsCurrentEntity(playerEntity, parrotRenderState);
+        }
+    }
+
+    @Unique
+    private void etf$setParrotAsCurrentEntity(final Player playerEntity, final ParrotRenderState parrotRenderState) {
+        if (parrotRenderState != null) {
+            try {
+                var parrot = EntityType.PARROT.create(playerEntity.level(), EntitySpawnReason.COMMAND);
+//                if (optionalEntity instanceof Parrot parrot) {
+                    //todo do i even need to set variant?
+                    ETFRenderContext.setCurrentEntity(ETFEntityRenderState.forEntity((ETFEntity) parrot));
+                    ((HoldsETFRenderState) parrotRenderState).etf$initState((ETFEntity) parrot);
+//                }
+            } catch (final Exception ignored) {}
+        }
+    }
+
+    @Inject(method = "submitOnShoulder", at = @At(value = "RETURN"))
+    private void etf$resetEntity(CallbackInfo ci, @Local AvatarRenderState avatarRenderState) {
+        var state =  ((HoldsETFRenderState) avatarRenderState).etf$getState();
+        if (ETFRenderContext.getCurrentEntityState() != state) {
+            ETFRenderContext.setCurrentEntity(state);
+        }
+    }
+
+}
+
+

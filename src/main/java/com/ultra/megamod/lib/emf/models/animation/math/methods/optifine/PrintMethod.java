@@ -1,0 +1,63 @@
+package com.ultra.megamod.lib.emf.models.animation.math.methods.optifine;
+
+import net.minecraft.client.Minecraft;
+import com.ultra.megamod.lib.emf.EMFManager;
+import com.ultra.megamod.lib.emf.models.animation.EMFAnimation;
+import com.ultra.megamod.lib.emf.models.animation.math.EMFMathException;
+import com.ultra.megamod.lib.emf.models.animation.math.MathComponent;
+import com.ultra.megamod.lib.emf.models.animation.math.MathExpressionParser;
+import com.ultra.megamod.lib.emf.models.animation.math.MathMethod;
+import com.ultra.megamod.lib.emf.utils.EMFUtils;
+
+import java.util.List;
+
+public class PrintMethod extends MathMethod {
+
+    private int printCount = 0;
+
+    public PrintMethod(final List<String> args, final boolean isNegative, final EMFAnimation calculationInstance) throws EMFMathException {
+        super(isNegative, calculationInstance, args.size());
+
+        if (args.size() == 1) {
+            var expressionStr = args.get(0);
+            MathComponent x = MathExpressionParser.getOptimizedExpression(expressionStr, false, calculationInstance);
+            setSupplierAndOptimize(() -> {
+                float xVal = x.getResult();
+                if (!Minecraft.getInstance().isPaused() && !EMFManager.getInstance().isAnimationValidationPhase) {
+                    EMFUtils.log("print: [" + expressionStr + "] = " + xVal);
+                }
+                return xVal;
+            });
+            return;
+        }
+
+        String id = args.get(0);
+        MathComponent n = MathExpressionParser.getOptimizedExpression(args.get(1), false, calculationInstance);
+        MathComponent x = MathExpressionParser.getOptimizedExpression(args.get(2), false, calculationInstance);
+
+        setSupplierAndOptimize(() -> {
+            float xVal = x.getResult();
+            if (!Minecraft.getInstance().isPaused() && getPrintCount() % (int) n.getResult() == 0 && !EMFManager.getInstance().isAnimationValidationPhase) {
+                EMFUtils.log("print: [" + id + "] = " + xVal);
+            }
+            return xVal;
+        });
+
+    }
+
+    private int getPrintCount() {
+        printCount++;
+        return printCount;
+    }
+
+    @Override
+    protected boolean canOptimizeForConstantArgs() {
+        return false;
+    }
+
+    @Override
+    protected boolean hasCorrectArgCount(final int argCount) {
+        return argCount == 3 || argCount == 1;
+    }
+
+}
