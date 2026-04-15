@@ -4,10 +4,11 @@
     "megamod:fire_spell_book",
     "megamod:frost_spell_book",
     "megamod:healing_spell_book",
-    "megamod:paladin_libram",
-    "megamod:archery_manual",
-    "megamod:rogue_manual",
-    "megamod:warrior_codex",
+    "megamod:archer_spell_book",
+    "megamod:rogue_spell_book",
+    "megamod:warrior_spell_book",
+    "megamod:paladin_spell_book",
+    "megamod:priest_spell_book",
     "megamod:spell_book"
   ],
   "replace": false
