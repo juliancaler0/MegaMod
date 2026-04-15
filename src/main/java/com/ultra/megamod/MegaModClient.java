@@ -175,19 +175,20 @@ public class MegaModClient {
             event.addListener(
                     net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "player_animations"),
                     new com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources());
-            // TODO EMF-ETF-PORT: re-wire in Phase 7 (reload listeners)
-            // ETF: reset variator/texture/directory caches on resource-pack reload
-            // EMF: clear compiled .jem cache on resource-pack reload
+            // EMF/ETF cache invalidation is handled by upstream mixins
+            // (MixinResourceReloadStart/End for EMF, reloading.MixinResourceReload for ETF)
+            // so no explicit listener registration needed.
         });
 
-        // TODO EMF-ETF-PORT: re-wire in Phase 7 (manager eager init)
-        // ETF: ETFManager.getInstance() populates KNOWN_RESOURCEPACK_ORDER
-        // EMF: EMFManager.getInstance() + config + texture redirect + API register
-
-        // TODO EMF-ETF-PORT: re-wire in Phase 7 (keybinds + debug HUDs + emissive layer)
-        // EMFConfigKeybind / ETFConfigKeybind → onRegisterKeyMappings
-        // EMFDebugHud / ETFDebugHud → onRegisterGuiLayers
-        // ETFEmissiveFeatureLayer → onAddLayers (needs BackpackRenderContext fallback + mass entity-type sweep)
+        // EMF/ETF init — ETF first (EMF reads ETFEntityRenderState factory during init).
+        // Reload handling, keybinds, debug HUDs, and mod-compat detection are all
+        // wired internally by the upstream init methods.
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent emfEtfInit) -> {
+            emfEtfInit.enqueueWork(() -> {
+                com.ultra.megamod.lib.etf.ETF.start();
+                com.ultra.megamod.lib.emf.EMF.init();
+            });
+        });
 
         // Initialize Archers client (armor renderers, effect renderers, tooltips)
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event2) -> {
