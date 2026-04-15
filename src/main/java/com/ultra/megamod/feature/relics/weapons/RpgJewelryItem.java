@@ -81,6 +81,15 @@ public class RpgJewelryItem extends com.ultra.megamod.lib.accessories.api.core.A
     public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
         super.getDynamicModifiers(stack, reference, builder);
 
+        // If a stack reaches the equip path without having rolled yet (e.g. it
+        // went straight from /give into an accessory slot and inventoryTick
+        // hasn't fired yet), roll eagerly so the attributes we bridge below
+        // aren't empty on first equip.
+        if (!isInitialized(stack) && reference.entity() != null
+                && !reference.entity().level().isClientSide()) {
+            rollAndApply(stack, reference.entity().level().random);
+        }
+
         var mods = stack.get(DataComponents.ATTRIBUTE_MODIFIERS);
         if (mods == null) return;
 
@@ -93,6 +102,31 @@ public class RpgJewelryItem extends com.ultra.megamod.lib.accessories.api.core.A
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
         if (!isInitialized(stack)) {
             rollAndApply(stack, level.random);
+
+            // If this stack is currently in one of the entity's accessory slots,
+            // reset that slot's previousItem to EMPTY. rollAndApply mutates
+            // DataComponents.ATTRIBUTE_MODIFIERS, which the accessories mutation
+            // subscription copies into previousItem — this makes currentStack
+            // match previousItem so AccessoriesEventHandler never enters the
+            // equip branch and the rolled modifiers are never applied to the
+            // player. Clearing previousItem forces the equip branch to run next
+            // tick and the attributes finally reach the living entity's
+            // attribute map.
+            if (entity instanceof net.minecraft.world.entity.LivingEntity living
+                    && !level.isClientSide()) {
+                var capability = com.ultra.megamod.lib.accessories.api.AccessoriesCapability.get(living);
+                if (capability != null) {
+                    for (var container : capability.getContainers().values()) {
+                        var accessoriesCont = container.getAccessories();
+                        for (int i = 0; i < accessoriesCont.getContainerSize(); i++) {
+                            if (accessoriesCont.getItem(i) == stack) {
+                                accessoriesCont.setPreviousItem(i, ItemStack.EMPTY);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
