@@ -159,6 +159,120 @@ public class ArmorStatRoller {
         stack.set(DataComponents.CUSTOM_NAME, Component.literal(displayName).withStyle(rarity.getNameColor()));
     }
 
+    /**
+     * Rolls rarity + bonus attributes on top of a pre-baked base {@link ItemAttributeModifiers}
+     * instead of replacing it. Used by class armor that carries source-derived base stats
+     * (armor value + school attribute bonuses) baked into the Item.Properties at registration —
+     * those modifiers must be preserved, and the roller only adds the RNG variance layer
+     * (rarity scaling of armor value, plus random bonus attributes + display rename).
+     *
+     * <p>The base modifiers are copied verbatim, then the roller scales the base armor and
+     * toughness by a rarity multiplier (as an ADD_VALUE boost on top, to avoid clobbering
+     * source-baked entries), adds rarity-scaled knockback resistance, and appends 1..N
+     * random bonus stats drawn from {@link #ARMOR_BONUS_POOL}.</p>
+     */
+    public static void rollAndApplyPreservingBase(ItemStack stack, ItemAttributeModifiers baseMods,
+                                                   EquipmentSlot slot, RandomSource random) {
+        WeaponRarity rarity = WeaponRarity.roll(random);
+        int bonusCount = Math.max(1, rarity.rollBonusCount(random));
+
+        EquipmentSlotGroup group = switch (slot) {
+            case HEAD -> EquipmentSlotGroup.HEAD;
+            case CHEST -> EquipmentSlotGroup.CHEST;
+            case LEGS -> EquipmentSlotGroup.LEGS;
+            case FEET -> EquipmentSlotGroup.FEET;
+            default -> EquipmentSlotGroup.ARMOR;
+        };
+
+        ItemAttributeModifiers.Builder modBuilder = ItemAttributeModifiers.builder();
+
+        // Preserve source base stats as the floor.
+        double sourceBaseArmor = 0.0;
+        double sourceBaseToughness = 0.0;
+        for (ItemAttributeModifiers.Entry entry : baseMods.modifiers()) {
+            modBuilder.add(entry.attribute(), entry.modifier(), entry.slot());
+            if (entry.attribute().is(Attributes.ARMOR)
+                    && entry.modifier().operation() == AttributeModifier.Operation.ADD_VALUE) {
+                sourceBaseArmor += entry.modifier().amount();
+            } else if (entry.attribute().is(Attributes.ARMOR_TOUGHNESS)
+                    && entry.modifier().operation() == AttributeModifier.Operation.ADD_VALUE) {
+                sourceBaseToughness += entry.modifier().amount();
+            }
+        }
+
+        String slotSuffix = slot.getName();
+
+        // Rarity-scaled armor boost on top of source baseline
+        double armorBoost = sourceBaseArmor * (rarity.ordinal() * 0.15);
+        if (armorBoost > 0) {
+            modBuilder.add(Attributes.ARMOR, new AttributeModifier(
+                Identifier.fromNamespaceAndPath("megamod", "armor_rarity_boost_" + slotSuffix),
+                armorBoost, AttributeModifier.Operation.ADD_VALUE), group);
+        }
+        double toughnessBoost = sourceBaseToughness * (rarity.ordinal() * 0.15);
+        if (toughnessBoost > 0) {
+            modBuilder.add(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(
+                Identifier.fromNamespaceAndPath("megamod", "armor_toughness_rarity_boost_" + slotSuffix),
+                toughnessBoost, AttributeModifier.Operation.ADD_VALUE), group);
+        }
+
+        // Rarity-scaled knockback resistance layer
+        double kbResist = rarity.ordinal() * 0.025;
+        if (kbResist > 0) {
+            modBuilder.add(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(
+                Identifier.fromNamespaceAndPath("megamod", "armor_kb_resist_rarity_" + slotSuffix),
+                kbResist, AttributeModifier.Operation.ADD_VALUE), group);
+        }
+
+        // Roll random bonus stats
+        ArrayList<WeaponStatRoller.BonusStat> available = new ArrayList<>(ARMOR_BONUS_POOL);
+        Collections.shuffle(available, new Random(random.nextLong()));
+
+        CompoundTag bonusesTag = new CompoundTag();
+        int applied = 0;
+        for (int i = 0; i < available.size() && applied < bonusCount; i++) {
+            WeaponStatRoller.BonusStat bonus = available.get(i);
+            // Skip direct armor/toughness/KB resist bonus stats — we already layer those.
+            if (bonus.attributeId().equals("minecraft:armor")
+                    || bonus.attributeId().equals("minecraft:armor_toughness")
+                    || bonus.attributeId().equals("minecraft:knockback_resistance")) {
+                continue;
+            }
+            Optional<Holder<Attribute>> attrHolder = resolveAttribute(bonus.attributeId());
+            if (attrHolder.isEmpty()) continue;
+
+            double value = bonus.roll(random, rarity);
+            AttributeModifier modifier = new AttributeModifier(
+                Identifier.fromNamespaceAndPath("megamod", "armor_bonus_" + slotSuffix + "_" + applied + "_" + random.nextInt(10000)),
+                value, bonus.operation());
+            modBuilder.add(attrHolder.get(), modifier, group);
+
+            CompoundTag bonusEntry = new CompoundTag();
+            bonusEntry.putString("name", bonus.displayName());
+            bonusEntry.putString("attr", bonus.attributeId());
+            bonusEntry.putDouble("value", value);
+            bonusEntry.putBoolean("percent", bonus.isPercent());
+            bonusEntry.putInt("op", bonus.operation().ordinal());
+            bonusesTag.put("bonus_" + applied, bonusEntry);
+            applied++;
+        }
+        bonusesTag.putInt("count", applied);
+
+        stack.set(DataComponents.ATTRIBUTE_MODIFIERS, modBuilder.build());
+
+        CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
+        tag.putBoolean(KEY_ARMOR_INITIALIZED, true);
+        tag.putInt(KEY_ARMOR_RARITY, rarity.ordinal());
+        tag.putDouble(KEY_ARMOR_BASE, sourceBaseArmor + armorBoost);
+        tag.putDouble(KEY_ARMOR_TOUGHNESS_BASE, sourceBaseToughness + toughnessBoost);
+        tag.put(KEY_ROLLED_BONUSES, bonusesTag);
+        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
+        String baseName = Component.translatable(stack.getItem().getDescriptionId()).getString();
+        String displayName = rarity.getDisplayName() + " " + baseName;
+        stack.set(DataComponents.CUSTOM_NAME, Component.literal(displayName).withStyle(rarity.getNameColor()));
+    }
+
     public static double getStoredBaseArmor(ItemStack stack) {
         CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
         return tag.getDoubleOr(KEY_ARMOR_BASE, 0.0);

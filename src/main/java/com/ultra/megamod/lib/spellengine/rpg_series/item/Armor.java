@@ -1,8 +1,14 @@
 package com.ultra.megamod.lib.spellengine.rpg_series.item;
 
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
@@ -15,6 +21,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import com.ultra.megamod.lib.spellengine.api.config.ArmorSetConfig;
+import com.ultra.megamod.feature.relics.data.ArmorStatRoller;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -53,6 +60,37 @@ public class Armor {
 
         public Identifier getFirstLayerId() {
             return Identifier.fromNamespaceAndPath("megamod", "armor_layer");
+        }
+
+        /**
+         * On first server-side inventory tick, roll rarity and bonus attributes via
+         * {@link ArmorStatRoller}, layering them on top of the source-derived base
+         * modifiers baked into the item's {@code ATTRIBUTE_MODIFIERS} component.
+         */
+        @Override
+        public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot equipSlot) {
+            if (!ArmorStatRoller.isArmorInitialized(stack)) {
+                ItemAttributeModifiers base = stack.getOrDefault(DataComponents.ATTRIBUTE_MODIFIERS, this.attributeModifiers);
+                if (base == null) base = ItemAttributeModifiers.EMPTY;
+                ArmorStatRoller.rollAndApplyPreservingBase(stack, base, this.slot, level.random);
+            }
+        }
+
+        @Override
+        public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display,
+                                    Consumer<Component> tooltip, TooltipFlag flag) {
+            super.appendHoverText(stack, context, display, tooltip, flag);
+            ArmorStatRoller.appendArmorTooltip(stack, tooltip);
+        }
+
+        @Override
+        public boolean isFoil(ItemStack stack) {
+            if (ArmorStatRoller.isArmorInitialized(stack)) {
+                var rarity = ArmorStatRoller.getRarity(stack);
+                return rarity == com.ultra.megamod.feature.relics.data.WeaponRarity.MYTHIC
+                    || rarity == com.ultra.megamod.feature.relics.data.WeaponRarity.LEGENDARY;
+            }
+            return super.isFoil(stack);
         }
     }
 
@@ -128,35 +166,51 @@ public class Armor {
 
         @SuppressWarnings("unchecked")
         public void register(ResourceKey<CreativeModeTab> itemGroupKey) {
-            // Register each piece independently via RPGItemRegistry.registerItem().
-            // Each piece gets registry-provided Item.Properties with the ResourceKey set
-            // (required in NeoForge 1.21.11).
+            register(itemGroupKey, null);
+        }
+
+        /**
+         * Register each piece independently via RPGItemRegistry.registerItem().
+         * When {@code config} is non-null, bakes source-derived base attribute modifiers
+         * (armor value, toughness, knockback resistance, school spell-power bonuses) into
+         * the piece's {@link Item.Properties} via {@link DataComponents#ATTRIBUTE_MODIFIERS}
+         * BEFORE the item is constructed, and mirrors them onto the {@link CustomItem}'s
+         * {@code attributeModifiers} field for {@link ConfigurableAttributes} consumers.
+         */
+        @SuppressWarnings("unchecked")
+        public void register(ResourceKey<CreativeModeTab> itemGroupKey, @Nullable ArmorSetConfig config) {
             final var setRef = this;
 
-            if (headFactory != null) {
-                RPGItemRegistry.registerItem(this.name + "_head", (props) -> {
-                    setRef.head = (A) setRef.headFactory.apply(props);
-                    return setRef.head;
-                });
-            }
-            if (chestFactory != null) {
-                RPGItemRegistry.registerItem(this.name + "_chest", (props) -> {
-                    setRef.chest = (A) setRef.chestFactory.apply(props);
-                    return setRef.chest;
-                });
-            }
-            if (legsFactory != null) {
-                RPGItemRegistry.registerItem(this.name + "_legs", (props) -> {
-                    setRef.legs = (A) setRef.legsFactory.apply(props);
-                    return setRef.legs;
-                });
-            }
-            if (feetFactory != null) {
-                RPGItemRegistry.registerItem(this.name + "_feet", (props) -> {
-                    setRef.feet = (A) setRef.feetFactory.apply(props);
-                    return setRef.feet;
-                });
-            }
+            registerPiece(this.name + "_head", EquipmentSlot.HEAD, config, setRef.headFactory,
+                    (item) -> setRef.head = (A) item);
+            registerPiece(this.name + "_chest", EquipmentSlot.CHEST, config, setRef.chestFactory,
+                    (item) -> setRef.chest = (A) item);
+            registerPiece(this.name + "_legs", EquipmentSlot.LEGS, config, setRef.legsFactory,
+                    (item) -> setRef.legs = (A) item);
+            registerPiece(this.name + "_feet", EquipmentSlot.FEET, config, setRef.feetFactory,
+                    (item) -> setRef.feet = (A) item);
+        }
+
+        @SuppressWarnings("unchecked")
+        private void registerPiece(String itemName, EquipmentSlot slot, @Nullable ArmorSetConfig config,
+                                    Function<Item.Properties, A> factory, Consumer<Item> sink) {
+            if (factory == null) return;
+            RPGItemRegistry.registerItem(itemName, (props) -> {
+                ItemAttributeModifiers baseMods = ItemAttributeModifiers.EMPTY;
+                if (config != null) {
+                    baseMods = attributesFrom(config, slot);
+                    // Bake source base stats into the item's default component so unrolled
+                    // instances (and freshly generated ones, pre-inventoryTick) still grant
+                    // armor value + school bonuses.
+                    props.component(DataComponents.ATTRIBUTE_MODIFIERS, baseMods);
+                }
+                A item = factory.apply(props);
+                if (item instanceof CustomItem customItem && baseMods != ItemAttributeModifiers.EMPTY) {
+                    customItem.setAttributes(baseMods);
+                }
+                sink.accept(item);
+                return item;
+            });
         }
 
         public interface ItemFactory<T extends Item> {
@@ -282,8 +336,9 @@ public class Armor {
                 config = entry.defaults();
                 configs.put(entry.name(), config);
             }
-            // Register with deferred system - items will be created during registry event
-            entry.armorSet().register(itemGroupKey);
+            // Register with deferred system — pass the resolved config so the Set.register
+            // factory wrapper can bake source base stats into each piece's Item.Properties.
+            entry.armorSet().register(itemGroupKey, config);
         }
     }
 
