@@ -28,11 +28,27 @@ public class InventorySearchOverlay {
     private static EditBox searchBox = null;
     private static String searchText = "";
 
+    /**
+     * Skip the overlay on screens that manage their own widgets above the
+     * panel (title bar, tabs, etc.). The overlay positions its EditBox at
+     * {@code guiTop - 18} which collides with any screen that offsets its
+     * title above the standard inventory background.
+     */
+    private static boolean shouldSkip(AbstractContainerScreen<?> screen) {
+        if (screen instanceof CreativeModeInventoryScreen) return true;
+        // Spell Binding table offsets its title by -16 and crashes its title
+        // into our search box. Accessories uses a bespoke multi-panel layout
+        // with its own group-filter widgets. Both opt out.
+        String cls = screen.getClass().getName();
+        if (cls.equals("com.ultra.megamod.lib.spellengine.spellbinding.SpellBindingScreen")) return true;
+        if (cls.equals("com.ultra.megamod.lib.accessories.client.gui.AccessoriesScreen")) return true;
+        return false;
+    }
+
     @SubscribeEvent
     public static void onScreenInit(ScreenEvent.Init.Post event) {
         if (!(event.getScreen() instanceof AbstractContainerScreen<?> container)) return;
-        // Skip creative mode — it has its own search tab
-        if (container instanceof CreativeModeInventoryScreen) return;
+        if (shouldSkip(container)) return;
 
         Minecraft mc = Minecraft.getInstance();
         // Leave 22px on right for the sort button (16w + 2 padding + 4 gap)
@@ -55,7 +71,7 @@ public class InventorySearchOverlay {
     @SubscribeEvent
     public static void onScreenRender(ScreenEvent.Render.Post event) {
         if (!(event.getScreen() instanceof AbstractContainerScreen<?> container)) return;
-        if (container instanceof CreativeModeInventoryScreen) return;
+        if (shouldSkip(container)) return;
         if (searchBox == null || searchText.isEmpty()) return;
 
         GuiGraphics g = event.getGuiGraphics();
@@ -85,8 +101,8 @@ public class InventorySearchOverlay {
 
     @SubscribeEvent
     public static void onKeyPressed(ScreenEvent.KeyPressed.Pre event) {
-        if (!(event.getScreen() instanceof AbstractContainerScreen<?>)) return;
-        if (event.getScreen() instanceof CreativeModeInventoryScreen) return;
+        if (!(event.getScreen() instanceof AbstractContainerScreen<?> container)) return;
+        if (shouldSkip(container)) return;
         if (searchBox == null || !searchBox.isFocused()) return;
 
         // Don't let inventory-close key (E) close the screen while typing
@@ -99,8 +115,8 @@ public class InventorySearchOverlay {
 
     @SubscribeEvent
     public static void onCharTyped(ScreenEvent.CharacterTyped.Pre event) {
-        if (!(event.getScreen() instanceof AbstractContainerScreen<?>)) return;
-        if (event.getScreen() instanceof CreativeModeInventoryScreen) return;
+        if (!(event.getScreen() instanceof AbstractContainerScreen<?> container)) return;
+        if (shouldSkip(container)) return;
         if (searchBox == null || !searchBox.isFocused()) return;
         event.setCanceled(true);
         searchBox.charTyped(new CharacterEvent(event.getCodePoint(), event.getModifiers()));
