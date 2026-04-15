@@ -43,6 +43,12 @@ public class AccessoriesClientForge {
     }
 
     private AccessoriesClientForge(final IEventBus eventBus) {
+        // Populate the network channel's client-side handler registrations BEFORE
+        // RegisterPayloadHandlersEvent fires on the mod bus. initClient() only appends
+        // to internal lists; the server-side AccessoriesForge listener does the actual
+        // NeoForge payload binding for both sides.
+        AccessoriesNetworking.initClient();
+
         eventBus.addListener(this::registerMenuType);
         eventBus.addListener(this::onInitializeClient);
         eventBus.addListener(this::initKeybindings);
@@ -84,7 +90,8 @@ public class AccessoriesClientForge {
 
         AccessoriesClient.init();
 
-        AccessoriesNetworking.initClient();
+        // AccessoriesNetworking.initClient() moved to the constructor so its
+        // registrations are present before RegisterPayloadHandlersEvent fires.
         SyncedDataHelperManager.initClient(AccessoriesNetworking.CHANNEL);
     }
 

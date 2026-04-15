@@ -134,6 +134,13 @@ public class AccessoriesForge {
         Accessories.init();
         AccessoriesDataComponents.init(eventBus);
 
+        // Populate the network channel's registration list BEFORE RegisterPayloadHandlersEvent
+        // fires. init() only appends to an internal list on OwoNetChannel; the NeoForge
+        // registrar binding happens in the listener below.
+        AccessoriesNetworking.init();
+        eventBus.addListener((net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent event) ->
+                AccessoriesNetworking.CHANNEL.applyRegistrations(event));
+
         eventBus.addListener(this::registerStuff);
 
         eventBus.addListener(this::registerCapabilities);
@@ -179,7 +186,8 @@ public class AccessoriesForge {
     public void commonInit(FMLCommonSetupEvent event) {
         ServerInstanceHolder.setInstance(ServerLifecycleHooks::getCurrentServer);
 
-        AccessoriesNetworking.init();
+        // AccessoriesNetworking.init() moved to the mod constructor so its registrations
+        // are present before RegisterPayloadHandlersEvent fires.
 
         SyncedDataHelperManager.init(AccessoriesNetworking.CHANNEL, playerConsumer -> {
             NeoForge.EVENT_BUS.<OnDatapackSyncEvent>addListener(EventPriority.HIGHEST, syncEvent -> syncEvent.getRelevantPlayers().forEach(playerConsumer::accept));
