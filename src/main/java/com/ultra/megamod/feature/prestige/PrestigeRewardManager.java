@@ -195,20 +195,8 @@ public class PrestigeRewardManager {
         UUID uuid = player.getUUID();
         if (hasPurchased(uuid, rewardId)) return "Already purchased!";
 
-        // Check class requirement for class-specific rewards
-        String requiredClass = getClassRequirement(rewardId);
-        if (requiredClass != null) {
-            try {
-                ServerLevel overworld = player.level().getServer().overworld();
-                com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass playerClass =
-                    com.ultra.megamod.feature.combat.PlayerClassManager.get(overworld).getPlayerClass(uuid);
-                if (!playerClass.name().equals(requiredClass)) {
-                    return "This reward requires the " + requiredClass + " class!";
-                }
-            } catch (Exception e) {
-                return "Cannot verify class requirement.";
-            }
-        }
+        // Class-gated rewards retired with the class-selection system — all rewards
+        // are now purchasable by anyone who has the Mastery Marks.
 
         ServerLevel overworld = player.level().getServer().overworld();
         MasteryMarkManager marks = MasteryMarkManager.get(overworld);

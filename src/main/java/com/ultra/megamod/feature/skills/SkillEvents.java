@@ -803,41 +803,12 @@ public class SkillEvents {
     }
 
     /**
-     * Sends a spell unlock notification for the given tier.
-     * Plays enchanting table sound, shows title/subtitle, and lists newly unlocked spells in chat.
+     * Spell-unlock notifications used to be tied to the player's selected class.
+     * Retired with the class-selection system; the new skill tree port will
+     * handle spell progression on its own.
      */
     private static void notifySpellUnlocks(ServerPlayer player, ServerLevel level, int tier) {
-        // Determine which class the player has selected
-        com.ultra.megamod.feature.combat.PlayerClassManager pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get(level);
-        com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass playerClass = pcm.getPlayerClass(player.getUUID());
-        if (playerClass == com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.NONE) return;
-
-        // Collect spells at the given tier that match the player's class
-        String className = playerClass.name();
-        java.util.List<com.ultra.megamod.feature.combat.spell.SpellDefinition> newSpells = new java.util.ArrayList<>();
-        for (com.ultra.megamod.feature.combat.spell.SpellDefinition spell : com.ultra.megamod.feature.combat.spell.SpellRegistry.ALL_SPELLS.values()) {
-            if (spell.tier() == tier && className.equalsIgnoreCase(spell.classRequirement())) {
-                newSpells.add(spell);
-            }
-        }
-
-        if (newSpells.isEmpty()) return;
-
-        // Play enchanting table ambient sound
-        level.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0f, 1.0f);
-
-        // Show title/subtitle
-        player.connection.send(new ClientboundSetTitleTextPacket(
-                Component.literal("New Spells Unlocked!").withStyle(ChatFormatting.LIGHT_PURPLE)));
-        player.connection.send(new ClientboundSetSubtitleTextPacket(
-                Component.literal("Check your spell book").withStyle(ChatFormatting.GRAY)));
-
-        // Chat message listing the spells
-        player.sendSystemMessage(Component.literal("--- Tier " + tier + " Spells Unlocked ---").withStyle(ChatFormatting.LIGHT_PURPLE));
-        for (com.ultra.megamod.feature.combat.spell.SpellDefinition spell : newSpells) {
-            player.sendSystemMessage(Component.literal("  \u2726 " + spell.name() + " (" + spell.school().displayName + ")").withStyle(ChatFormatting.AQUA));
-        }
-        player.sendSystemMessage(Component.literal("Use your wand or staff to cast these new spells!").withStyle(ChatFormatting.GRAY));
+        // Intentionally empty.
     }
 
     public static void syncToClient(ServerPlayer player) {

@@ -415,25 +415,8 @@ public class DungeonLootGenerator {
                                                          net.minecraft.server.level.ServerPlayer player) {
         Item baseItem = DungeonLootGenerator.pickBaseItem(tier, random);
 
-        // Apply class bias: 60% chance to reroll if item doesn't match player's class
-        if (player != null) {
-            try {
-                net.minecraft.server.level.ServerLevel level = (net.minecraft.server.level.ServerLevel) player.level();
-                com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass playerClass =
-                        com.ultra.megamod.feature.combat.PlayerClassManager.get(level).getPlayerClass(player.getUUID());
-                if (playerClass != com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.NONE
-                        && !isItemForClass(baseItem, playerClass)) {
-                    if (random.nextFloat() < 0.6f) {
-                        Item classItem = pickClassItem(playerClass, tier, random);
-                        if (classItem != null) {
-                            baseItem = classItem;
-                        }
-                    }
-                }
-            } catch (Exception ignored) {
-                // Fall back to unbiased loot if class check fails
-            }
-        }
+        // Class-bias loot rerolling retired with the class-selection system —
+        // every player now gets unbiased tier-appropriate drops.
 
         return generateFromBase(baseItem, tier, random);
     }
@@ -635,41 +618,22 @@ public class DungeonLootGenerator {
             com.ultra.megamod.feature.combat.runes.RuneRegistry.LIGHTNING_RUNE.get(),
             com.ultra.megamod.feature.combat.runes.RuneRegistry.SOUL_RUNE.get()
         };
-        if (player == null) return allRunes[random.nextInt(allRunes.length)];
-
-        try {
-            var pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get((net.minecraft.server.level.ServerLevel) player.level());
-            var cls = pcm.getPlayerClass(player.getUUID());
-            // 70% chance to pick class-relevant rune, 30% random
-            if (random.nextFloat() < 0.7f) {
-                return switch (cls) {
-                    case WIZARD -> new Item[]{allRunes[0], allRunes[1], allRunes[2]}[random.nextInt(3)]; // arcane/fire/frost
-                    case PALADIN -> allRunes[3]; // healing
-                    default -> allRunes[random.nextInt(allRunes.length)];
-                };
-            }
-        } catch (Exception ignored) {}
+        // Class-biased rune selection retired — pick any rune uniformly.
         return allRunes[random.nextInt(allRunes.length)];
     }
 
     /**
-     * Picks the spell book matching the player's class, or null.
+     * Picks a random school spell book. Class-specific books + class-matched
+     * picking retired with the class-selection system.
      */
     private static Item pickClassSpellBook(net.minecraft.server.level.ServerPlayer player) {
-        try {
-            var pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get((net.minecraft.server.level.ServerLevel) player.level());
-            var cls = pcm.getPlayerClass(player.getUUID());
-            return switch (cls) {
-                case WIZARD -> com.ultra.megamod.feature.combat.spell.SpellItemRegistry.ARCANE_SPELL_BOOK.get();
-                case PALADIN -> com.ultra.megamod.feature.combat.spell.SpellItemRegistry.PALADIN_LIBRAM.get();
-                case WARRIOR -> com.ultra.megamod.feature.combat.spell.SpellItemRegistry.WARRIOR_CODEX.get();
-                case ROGUE -> com.ultra.megamod.feature.combat.spell.SpellItemRegistry.ROGUE_MANUAL.get();
-                case RANGER -> com.ultra.megamod.feature.combat.spell.SpellItemRegistry.ARCHERY_MANUAL.get();
-                default -> null;
-            };
-        } catch (Exception e) {
-            return null;
-        }
+        Item[] books = new Item[]{
+            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.ARCANE_SPELL_BOOK.get(),
+            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.FIRE_SPELL_BOOK.get(),
+            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.FROST_SPELL_BOOK.get(),
+            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.HEALING_SPELL_BOOK.get()
+        };
+        return books[(int)(Math.random() * books.length)];
     }
 
     private static Item pickBaseItem(DungeonTier tier, RandomSource random) {
@@ -854,57 +818,7 @@ public class DungeonLootGenerator {
         return String.valueOf(sb) + ": " + sign + String.format("%.1f", value);
     }
 
-    // ─── Class-aware loot helpers ───
-
-    /**
-     * Returns true if the given item is associated with the given player class.
-     * Uses item registry name heuristics and explicit registry lookups.
-     */
-    private static boolean isItemForClass(Item item, com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass playerClass) {
-        String itemId = BuiltInRegistries.ITEM.getKey(item).toString();
-
-        return switch (playerClass) {
-            case PALADIN -> itemId.contains("paladin") || itemId.contains("crusader")
-                    || itemId.contains("claymore") || itemId.contains("great_hammer")
-                    || itemId.contains("kite_shield") || itemId.contains("mace")
-                    || itemId.contains("holy_wand") || itemId.contains("holy_staff")
-                    || itemId.contains("healing_spell_book") || itemId.contains("scroll_heal")
-                    || itemId.contains("scroll_flash_heal") || itemId.contains("priest")
-                    || itemId.contains("prior") || itemId.contains("greatshield");
-            case WARRIOR -> itemId.contains("warrior") || itemId.contains("berserker")
-                    || itemId.contains("double_axe") || itemId.contains("glaive")
-                    || itemId.contains("spear") || itemId.contains("scroll_charge");
-            case WIZARD -> itemId.contains("wizard") || itemId.contains("arcane")
-                    || itemId.contains("wand") || itemId.contains("staff")
-                    || itemId.contains("fire_robe") || itemId.contains("frost_robe")
-                    || itemId.contains("spell_book") || itemId.contains("scroll_fireball")
-                    || itemId.contains("scroll_frostbolt") || itemId.contains("scroll_arcane");
-            case ROGUE -> itemId.contains("rogue") || itemId.contains("assassin")
-                    || itemId.contains("dagger") || itemId.contains("sickle")
-                    || itemId.contains("scroll_shadow_step");
-            case RANGER -> itemId.contains("ranger") || itemId.contains("archer")
-                    || itemId.contains("bow") || itemId.contains("crossbow") || itemId.contains("longbow")
-                    || itemId.contains("quiver") || itemId.contains("scroll_power_shot");
-            case NONE -> false;
-        };
-    }
-
-    /**
-     * Picks a random item from the loot pool that matches the given player class.
-     * Returns null if no matching items are found.
-     */
-    private static Item pickClassItem(com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass playerClass,
-                                       DungeonTier tier, RandomSource random) {
-        List<Item> pool = getPoolForTier(tier);
-        List<Item> classItems = new ArrayList<>();
-        for (Item item : pool) {
-            if (isItemForClass(item, playerClass)) {
-                classItems.add(item);
-            }
-        }
-        if (classItems.isEmpty()) return null;
-        return classItems.get(random.nextInt(classItems.size()));
-    }
+    // ─── Class-aware loot helpers retired with the class-selection system. ───
 
     static {
         // ALL_BASE_ITEMS includes vanilla items known at class-load time.

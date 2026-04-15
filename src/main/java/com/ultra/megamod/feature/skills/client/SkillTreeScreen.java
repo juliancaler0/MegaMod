@@ -238,32 +238,15 @@ public class SkillTreeScreen extends Screen {
 
     // ---- tabs ----
     private void drawTabs(GuiGraphics g, int mx, int my) {
-        // Class identity header — show above tabs
-        var playerClass = com.ultra.megamod.feature.combat.client.ClientClassCache.getPlayerClass();
-        if (playerClass != null && playerClass != com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.NONE) {
-            String classIcon = switch (playerClass) {
-                case PALADIN -> "\u2694"; case WARRIOR -> "\u2620"; case WIZARD -> "\u2605";
-                case ROGUE -> "\u2666"; case RANGER -> "\u2191"; default -> "";
-            };
-            String classLabel = classIcon + " " + playerClass.getDisplayName() + " ";
-            int classColor = playerClass.getColor();
-            g.drawString(font, classLabel, 6, tabY() - 12, classColor, true);
-
-            // Class mastery progress (points in class branch / 18 max)
-            int branchPts = com.ultra.megamod.feature.skills.network.SkillSyncPayload.getClassBranchPoints();
-            String masteryStr = "Class Mastery: " + branchPts + "/18";
-            g.drawString(font, masteryStr, 6 + font.width(classLabel) + 8, tabY() - 12, C_DIM, false);
-        }
+        // Class identity header retired with the class-selection system.
 
         SkillTreeType[] ts = SkillTreeType.values();
         int tw = (width - 12 - (ts.length - 1) * TAB_GAP) / ts.length;
         for (int i = 0; i < ts.length; i++) {
             SkillTreeType t = ts[i]; int tx = 6 + i * (tw + TAB_GAP);
             boolean sel = t == selectedTree, hov = mx >= tx && mx < tx + tw && my >= tabY() && my < tabY() + TAB_H;
-            // Highlight the class's primary tree tab
-            boolean isClassTree = playerClass != null && playerClass.toBranch() != null
-                    && playerClass.toBranch().getTreeType() == t;
-            UIHelper.drawTab(g, tx, tabY(), tw, TAB_H, sel, isClassTree && !sel ? playerClass.getColor() : t.getColor());
+            // Class-tree highlight retired with the class-selection system.
+            UIHelper.drawTab(g, tx, tabY(), tw, TAB_H, sel, t.getColor());
             int lv = SkillSyncPayload.clientLevels.getOrDefault(t, 0);
             String lab = t.getDisplayName() + " [" + lv + "]";
             int lw = font.width(lab);
@@ -968,17 +951,12 @@ public class SkillTreeScreen extends Screen {
     }
 
     /**
-     * Returns true if a class branch should be hidden.
-     * Players see ONLY their own class branch. Admins with toggle see all.
+     * Class-branch hiding is retired with the class-selection system. All
+     * branches (including former archetype branches like PALADIN, WARRIOR,
+     * WIZARD, ROGUE, RANGER) are visible to every player now.
      */
     private static boolean shouldHideClassBranch(SkillBranch b) {
-        if (!PlayerClassManager.isClassBranch(b)) return false; // Not a class branch — always show
-        // Admins with toggle on see all class branches
-        if (isLocalPlayerAdmin() && showClassBranches) return false;
-        // Players see their own class branch
-        var playerClass = com.ultra.megamod.feature.combat.client.ClientClassCache.getPlayerClass();
-        if (playerClass != null && b.name().equalsIgnoreCase(playerClass.name())) return false;
-        return true; // Hide class branches that don't match
+        return false;
     }
 
     @Override public boolean isPauseScreen() { return false; }
