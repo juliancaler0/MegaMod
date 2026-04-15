@@ -25,9 +25,17 @@ public record SlotTypeImpl(String name, Optional<String> alternativeTranslation,
     public static final StructEndec<SlotType> ENDEC = StructEndecBuilder.of(
             Endec.STRING.fieldOf("name", SlotType::name),
             Endec.STRING.optionalOf().fieldOf("alternativeTranslation", slotType -> {
+                // NOTE: The endec adapter's optionalOf() encodes Optional.empty() as a literal
+                // null string, which NPEs in NbtOps.createString and breaks the entire
+                // SyncAllLoaderDataPacket on player join (see SyncedDataHelperManager). To keep
+                // the codec well-formed we always hand it a non-null String — falling back to
+                // the default translation key when no alternative translation is set. The
+                // resulting Optional.of(defaultTranslation) is harmless: SlotType#translation()
+                // would have returned that exact same string anyway.
                 var translation = slotType.translation();
+                if (translation == null) translation = "";
 
-                return Optional.ofNullable(slotType.translation().contains(Accessories.translationKey("")) ? null : translation);
+                return Optional.of(translation);
             }),
             MinecraftEndecs.IDENTIFIER.fieldOf("icon", SlotType::icon),
             Endec.INT.fieldOf("order", SlotType::order),
