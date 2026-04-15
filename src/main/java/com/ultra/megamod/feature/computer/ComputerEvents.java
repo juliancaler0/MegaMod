@@ -72,10 +72,6 @@ public class ComputerEvents {
         com.ultra.megamod.feature.economy.EconomyManager.reset();
         com.ultra.megamod.feature.computer.network.handlers.SystemHealthHandler.reset();
 
-        // Player class system — save and reset
-        com.ultra.megamod.feature.combat.PlayerClassManager.get(level).saveToDisk(level);
-        com.ultra.megamod.feature.combat.PlayerClassManager.reset();
-        com.ultra.megamod.feature.combat.ClassEventHandler.clearAll();
 
         // Combat system static state cleanup — prevents stale data across singleplayer world reloads
         SpellBarrierManager.clearAll();
@@ -99,7 +95,6 @@ public class ComputerEvents {
             com.ultra.megamod.feature.computer.network.handlers.MailHandler.saveToDisk(overworld);
             com.ultra.megamod.feature.computer.network.handlers.SettingsHandler.saveToDisk(overworld);
             com.ultra.megamod.feature.quests.QuestProgressManager.get(overworld).saveToDisk(overworld);
-            com.ultra.megamod.feature.combat.PlayerClassManager.get(overworld).saveToDisk(overworld);
         }
     }
 }
