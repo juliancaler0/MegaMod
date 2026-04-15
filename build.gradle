@@ -68,14 +68,6 @@ repositories {
             includeGroup "top.theillusivec4.curios"
         }
     }
-    // GeckoLib Maven (via ModMaven proxy) — animation engine for Mowzies-ported content.
-    maven {
-        name = "ModMaven (GeckoLib)"
-        url = "https://modmaven.dev/"
-        content {
-            includeGroup "software.bernie.geckolib"
-        }
-    }
     // Local libs directory for jars that can't be resolved from Maven
     flatDir {
         dirs 'libs'
@@ -210,10 +202,6 @@ dependencies {
     compileOnly "mezz.jei:jei-1.21.11-common-api:27.4.0.22"
     compileOnly "mezz.jei:jei-1.21.11-neoforge-api:27.4.0.22"
     compileOnly "top.theillusivec4.curios:curios-neoforge:14.0.0+1.21.11:api"
-
-    // GeckoLib 5 — animation engine for Mowzies-ported bosses/mobs/items.
-    // Available at runtime AND compile time (not optional — core dependency).
-    implementation "software.bernie.geckolib:geckolib-neoforge-1.21.11:5.4.5"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
