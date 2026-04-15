@@ -67,15 +67,34 @@ extends Item {
             player.startUsingItem(hand);
             return InteractionResult.CONSUME;
         }
+        // If this weapon carries a SpellContainer, trigger a cast on right-click.
+        // Mirrors SpellEngine's right-click-to-cast UX for magic weapons.
+        ItemStack stack = player.getItemInHand(hand);
+        var container = stack.get(com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents.SPELL_CONTAINER);
+        if (container != null && !container.spell_ids().isEmpty()) {
+            // Hotbar mixin owns the actual dispatch; calling startUsingItem lets that
+            // mixin see we're in a use interaction and dispatch the cast. Duration
+            // uses a long ceiling so it survives charge + channel spells.
+            player.startUsingItem(hand);
+            return InteractionResult.CONSUME;
+        }
         return super.use(level, player, hand);
     }
 
     public ItemUseAnimation getUseAnimation(ItemStack stack) {
-        return this.isShield ? ItemUseAnimation.BLOCK : ItemUseAnimation.NONE;
+        if (this.isShield) return ItemUseAnimation.BLOCK;
+        // Any spell-carrying weapon needs a non-NONE use animation so vanilla treats
+        // the right-click as a held "use" and the SpellHotbar mixin can drive the cast.
+        var container = stack.get(com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents.SPELL_CONTAINER);
+        if (container != null && !container.spell_ids().isEmpty()) return ItemUseAnimation.BOW;
+        return ItemUseAnimation.NONE;
     }
 
     public int getUseDuration(ItemStack stack, net.minecraft.world.entity.LivingEntity entity) {
-        return this.isShield ? 72000 : 0;
+        if (this.isShield) return 72000;
+        var container = stack.get(com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents.SPELL_CONTAINER);
+        if (container != null && !container.spell_ids().isEmpty()) return 72000;
+        return 0;
     }
 
     public String getWeaponName() {
