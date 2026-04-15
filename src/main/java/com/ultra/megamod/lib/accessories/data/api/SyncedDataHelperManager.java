@@ -71,23 +71,31 @@ public class SyncedDataHelperManager {
                 }
             }
 
-            var packets = dataLoaders.stream()
-                    .map(dataLoader -> {
-                        var id = dataLoader.getId();
-                        var data = dataLoader.getServerData();
+            // Pre-validate each packet by dry-encoding it via the dispatched codec.
+            // Netty's async encoder throws on NPE (null String in data), which
+            // doesn't reach a try/catch on .send(). Pre-encoding here is synchronous
+            // so broken packets can be filtered out BEFORE the Netty pipeline runs.
+            var packets = new java.util.ArrayList<SyncLoaderDataPacket>();
+            for (SyncedDataHelper<?> dataLoader : dataLoaders) {
+                var id = dataLoader.getId();
+                var data = dataLoader.getServerData();
+                var packet = new SyncLoaderDataPacket(id, data);
+                try {
+                    // Dry-encode via the dispatched codec; any NPE/Throwable surfaces here
+                    SyncLoaderDataPacket.ENDEC.codec()
+                            .encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, packet)
+                            .getOrThrow();
+                    packets.add(packet);
+                } catch (Throwable t) {
+                    LOGGER.error("SyncedDataHelperManager: skipping loader {} — encoding failed (likely null field in its data)", id, t);
+                }
+            }
 
-                        return new SyncLoaderDataPacket(id, data);
-                    })
-                    .toList();
-
+            if (packets.isEmpty()) return;
             try {
                 channel.serverHandle(player).send(new SyncAllLoaderDataPacket(packets));
             } catch (Throwable t) {
-                // A data loader with a null/invalid value in its server data will NPE
-                // inside the codec and blow up the connection. Log and continue so
-                // world creation/join proceeds — accessory client state may be stale
-                // until the offending loader is fixed, but the session survives.
-                LOGGER.error("SyncedDataHelperManager: failed to send SyncAllLoaderDataPacket to {} — continuing without sync", player.getName().getString(), t);
+                LOGGER.error("SyncedDataHelperManager: send failed for {}", player.getName().getString(), t);
             }
         });
     }
