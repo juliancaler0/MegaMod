@@ -31,7 +31,11 @@ public class AccessoriesNetworking {
         CHANNEL.registerServerbound(NukeAccessories.class, NukeAccessories.ENDEC, serverHandler(NukeAccessories::handlePacket));
         CHANNEL.registerServerbound(SyncCosmeticToggle.class, SyncCosmeticToggle.ENDEC, serverHandler(SyncCosmeticToggle::handlePacket));
 
-        CHANNEL.registerServerbound(SyncOptionChange.class, SyncOptionChange.ENDEC, serverHandler(SyncOptionChange::handlePacket));
+        // SyncOptionChange intentionally not registered — its endec's codec() throws
+        // UnsupportedOperationException (stubbed codec: option<?> + Object aren't trivially
+        // serializable). OwoNetChannel registration dereferences .codec() at mod-load,
+        // which would kill the mod. Accessory option sync over the wire is disabled until
+        // a proper StructEndec for PlayerOption<?> is written.
 
         CHANNEL.registerServerbound(ContainerClose.class, ContainerClose.ENDEC, serverHandler(ContainerClose::handlePacket));
 
@@ -44,7 +48,7 @@ public class AccessoriesNetworking {
         CHANNEL.registerClientboundDeferred(InvalidateEntityCache.class, InvalidateEntityCache.ENDEC);
         CHANNEL.registerClientboundDeferred(ScreenVariantPing.class, ScreenVariantPing.ENDEC);
 
-        CHANNEL.registerClientboundDeferred(SyncOptionChange.class, SyncOptionChange.ENDEC);
+        // SyncOptionChange clientbound deferred registration skipped — see note above.
 
         CHANNEL.registerClientboundDeferred(SyncServerOverrideOption.class, SyncServerOverrideOption.ENDEC);
     }
@@ -58,7 +62,7 @@ public class AccessoriesNetworking {
         CHANNEL.registerClientbound(InvalidateEntityCache.class, InvalidateEntityCache.ENDEC, clientHandler(InvalidateEntityCache::handlePacket));
         CHANNEL.registerClientbound(ScreenVariantPing.class, ScreenVariantPing.ENDEC, clientHandler(ScreenVariantPing::handlePacket));
 
-        CHANNEL.registerClientbound(SyncOptionChange.class, SyncOptionChange.ENDEC, clientHandler(SyncOptionChange::handlePacket));
+        // SyncOptionChange client handler skipped — see note in init().
 
         CHANNEL.registerClientbound(SyncServerOverrideOption.class, SyncServerOverrideOption.ENDEC, clientHandler(SyncServerOverrideOption::handlePacket));
     }
