@@ -1,5 +1,6 @@
 {
-  "parent": "neoforge:item/bucket",
-  "fluid": "reliquary:xp_still",
-  "loader": "neoforge:fluid_container"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "reliquary:item/xp_bucket"
+  }
 }

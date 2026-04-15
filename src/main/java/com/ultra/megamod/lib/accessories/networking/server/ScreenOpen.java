@@ -25,11 +25,15 @@ public record ScreenOpen(int entityId, boolean targetLookEntity, AccessoriesMenu
     );
 
     public static ScreenOpen of(@Nullable LivingEntity livingEntity, AccessoriesMenuVariant variant){
-        return of(livingEntity, variant, null);
+        return of(livingEntity, variant, ItemStack.EMPTY);
     }
 
     public static ScreenOpen of(@Nullable LivingEntity livingEntity, AccessoriesMenuVariant variant, @Nullable ItemStack creativeCarriedStack){
-        return new ScreenOpen(livingEntity != null ? livingEntity.getId() : -1, false, variant, creativeCarriedStack);
+        // Never pass null to the payload — the nullableOf() endec wrapper's encode
+        // path eventually hits vanilla ItemStack.OPTIONAL_CODEC which NPEs on null.
+        // ItemStack.EMPTY serializes safely and is functionally equivalent.
+        ItemStack stack = creativeCarriedStack != null ? creativeCarriedStack : ItemStack.EMPTY;
+        return new ScreenOpen(livingEntity != null ? livingEntity.getId() : -1, false, variant, stack);
     }
 
     public static void handlePacket(ScreenOpen packet, Player player) {
