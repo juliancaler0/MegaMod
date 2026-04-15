@@ -10,6 +10,7 @@
     "block.reliquary.fertile_lily_pad.tooltip": "Speeds up growth of crops",
     "block.reliquary.interdiction_torch": "Interdiction Torch",
     "block.reliquary.interdiction_torch.tooltip": "Repels creatures and projectiles.",
+    "block.reliquary.wall_interdiction_torch": "Interdiction Torch",
     "block.reliquary.pedestal": "Pedestal",
     "block.reliquary.pedestal.tooltip": "Automates stuff and things placed in it",
     "block.reliquary.passive_pedestal": "Pedestal (Display only)",
@@ -257,6 +258,8 @@
     "effect.reliquary.cure.description": "Cures zombie villagers affected by the effect",
     "effect.reliquary.flight": "Flight",
     "effect.reliquary.flight.description": "Provides creative flight while active",
+    "effect.reliquary.pacification": "Pacification",
+    "effect.reliquary.pacification.description": "Mobs under this effect cannot attack the player",
 
     "potion.potency.6": "VII",
     "potion.potency.7": "VIII",
