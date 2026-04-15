@@ -49,23 +49,34 @@ public class AlkahestryTomeItem extends ChargeableItem {
 		super.use(level, player, hand);
 
 		// Admin-only "duplicate anything" path: when an admin right-clicks the
-		// Tome with any non-Tome item in the OTHER hand, produce a full stack of
-		// the other item (64 or the item's max stack size) with no charge cost.
-		// Sneak + right-click = duplicate a single unit instead of a full stack.
+		// Tome with any non-Tome item in the OTHER hand, duplicate the off-hand
+		// item at a flat 256-charge cost regardless of the item (same cap as
+		// the Nether Star duplicate recipe). Shift+right-click = a single unit,
+		// plain right-click = a full stack. Drains 256 charge per action; if
+		// the tome can't cover the cost, the operation is refused.
 		if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer
 				&& com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(serverPlayer)) {
 			InteractionHand otherHand = (hand == InteractionHand.MAIN_HAND) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
 			ItemStack target = player.getItemInHand(otherHand);
 			if (!target.isEmpty() && !(target.getItem() instanceof AlkahestryTomeItem)) {
+				final int adminCost = 256;
+				if (getCharge(stack) < adminCost) {
+					serverPlayer.displayClientMessage(
+							net.minecraft.network.chat.Component.literal("[Admin Tome] Needs " + adminCost + " charge (have " + getCharge(stack) + ")"),
+							true);
+					return InteractionResult.SUCCESS;
+				}
 				int count = player.isShiftKeyDown() ? 1 : target.getMaxStackSize();
 				ItemStack dup = target.copyWithCount(count);
 				if (!player.getInventory().add(dup)) {
 					player.drop(dup, false);
 				}
+				useCharge(stack, adminCost);
 				player.playSound(ModSounds.BOOK.get(), 1.0f, 1.4f);
 				serverPlayer.displayClientMessage(
 						net.minecraft.network.chat.Component.literal("[Admin Tome] Duplicated " + count + "x ")
-								.append(target.getHoverName()),
+								.append(target.getHoverName())
+								.append(net.minecraft.network.chat.Component.literal(" (-" + adminCost + " charge)")),
 						true);
 				return InteractionResult.SUCCESS;
 			}
