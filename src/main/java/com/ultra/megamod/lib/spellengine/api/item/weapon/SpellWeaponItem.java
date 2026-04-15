@@ -64,40 +64,10 @@ public class SpellWeaponItem extends Item {
     }
 
     // ============================================================
-    // Right-click cast wiring (parity with RpgWeaponItem)
+    // Right-click cast wiring (parity with source SpellEngine)
     // ============================================================
-    // When the weapon carries a SpellContainer (single-spell or pool-resolver),
-    // start an item-use interaction so the SpellEngine hotbar mixin can dispatch
-    // the cast. getUseAnimation/getUseDuration must be non-NONE/large so the use
-    // survives charge + channel spells, mirroring vanilla bow behavior.
-    private static boolean hasCastableContainer(ItemStack stack) {
-        var container = stack.get(SpellDataComponents.SPELL_CONTAINER);
-        return container != null && (!container.spell_ids().isEmpty() || container.isResolver());
-    }
-
-    @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (hasCastableContainer(stack)) {
-            player.startUsingItem(hand);
-            return InteractionResult.CONSUME;
-        }
-        return super.use(level, player, hand);
-    }
-
-    @Override
-    public ItemUseAnimation getUseAnimation(ItemStack stack) {
-        if (hasCastableContainer(stack)) {
-            return ItemUseAnimation.BOW;
-        }
-        return super.getUseAnimation(stack);
-    }
-
-    @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        if (hasCastableContainer(stack)) {
-            return 72000;
-        }
-        return super.getUseDuration(stack, entity);
-    }
+    // Source SpellEngine relies on the SpellHotbar mixin to drive casts via
+    // useKey state. Keeping getUseAnimation as vanilla NONE ensures
+    // itemUseExpectation stays null, so the hotbar overrides the spell's
+    // keybinding to the useKey and right-click triggers casts directly.
 }

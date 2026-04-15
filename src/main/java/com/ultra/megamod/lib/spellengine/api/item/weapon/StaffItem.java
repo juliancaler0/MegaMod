@@ -70,40 +70,13 @@ public class StaffItem extends Item {
     }
 
     // ============================================================
-    // Right-click cast wiring (parity with RpgWeaponItem / SpellWeaponItem)
+    // Right-click cast wiring (parity with source SpellEngine)
     // ============================================================
-    // Wands and staves with a SpellContainer must start an item-use interaction
-    // on right-click so the SpellEngine hotbar mixin can dispatch the cast.
-    // getUseAnimation/getUseDuration mirror vanilla bow behavior so the use
-    // survives charge + channel spells.
-    private static boolean hasCastableContainer(ItemStack stack) {
-        var container = stack.get(SpellDataComponents.SPELL_CONTAINER);
-        return container != null && (!container.spell_ids().isEmpty() || container.isResolver());
-    }
-
-    @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
-        if (hasCastableContainer(stack)) {
-            player.startUsingItem(hand);
-            return InteractionResult.CONSUME;
-        }
-        return super.use(level, player, hand);
-    }
-
-    @Override
-    public ItemUseAnimation getUseAnimation(ItemStack stack) {
-        if (hasCastableContainer(stack)) {
-            return ItemUseAnimation.BOW;
-        }
-        return super.getUseAnimation(stack);
-    }
-
-    @Override
-    public int getUseDuration(ItemStack stack, LivingEntity entity) {
-        if (hasCastableContainer(stack)) {
-            return 72000;
-        }
-        return super.getUseDuration(stack, entity);
-    }
+    // Source SpellEngine's StaffItem has NO use()/getUseAnimation overrides.
+    // Casts are dispatched by the SpellHotbar mixin, which reacts to useKey
+    // state. When the weapon has NO use animation, itemUseExpectation is null,
+    // onUseKey stays null, and the hotbar overrides the spell's keybinding to
+    // the useKey — so right-click directly triggers the cast. Adding a BOW
+    // animation here breaks that override because itemUseExpectation becomes
+    // non-null, and spells route to ALT+N instead.
 }
