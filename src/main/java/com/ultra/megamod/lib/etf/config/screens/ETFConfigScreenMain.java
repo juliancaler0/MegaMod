@@ -46,10 +46,10 @@ public class ETFConfigScreenMain extends TConfigScreenMain {
 
     private final Random rand = new Random();
     private final LogoCreeperRenderer LOGO_CREEPER = new LogoCreeperRenderer();
-    private final Identifier BLUE = ETFUtils2.res("entity_features", "textures/gui/entity/e.png");
-    private final Identifier RED = ETFUtils2.res("entity_features", "textures/gui/entity/t.png");
-    private final Identifier YELLOW = ETFUtils2.res("entity_features", "textures/gui/entity/f.png");
-    private final Identifier LOGO_HACK = ETFUtils2.res("entity_texture_features", "textures/gui/logo.png");
+    private final Identifier BLUE = ETFUtils2.res("megamod", "textures/gui/etf/entity/e.png");
+    private final Identifier RED = ETFUtils2.res("megamod", "textures/gui/etf/entity/t.png");
+    private final Identifier YELLOW = ETFUtils2.res("megamod", "textures/gui/etf/entity/f.png");
+    private final Identifier LOGO_HACK = ETFUtils2.res("megamod", "textures/gui/etf/logo.png");
 
     boolean shownWarning = false;
     int warningCount = 0;

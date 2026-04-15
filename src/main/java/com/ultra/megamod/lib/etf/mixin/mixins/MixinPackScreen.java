@@ -32,9 +32,9 @@ public abstract class MixinPackScreen extends Screen {
 
 
     @Unique
-    private static final Identifier etf$FOCUSED = ETFUtils2.res("entity_features", "textures/gui/settings_focused.png");
+    private static final Identifier etf$FOCUSED = ETFUtils2.res("megamod", "textures/gui/etf/settings_focused.png");
     @Unique
-    private static final Identifier etf$UNFOCUSED = ETFUtils2.res("entity_features", "textures/gui/settings_unfocused.png");
+    private static final Identifier etf$UNFOCUSED = ETFUtils2.res("megamod", "textures/gui/etf/settings_unfocused.png");
     @Shadow
     @Final
     private Path packDir;

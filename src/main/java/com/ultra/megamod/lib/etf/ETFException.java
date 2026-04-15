@@ -18,6 +18,6 @@ public class ETFException extends RuntimeException {
                  - EMF installed = %s
                 ----------------------
                 """.formatted(entity == null ? "null" : entity.isBlockEntity() ? ((BlockEntity) entity.entity()).getType() : entity.entityType(),
-                ETF.isThisModLoaded("entity_model_features"));
+                true);  // EMF bundled with MegaMod
     }
 }

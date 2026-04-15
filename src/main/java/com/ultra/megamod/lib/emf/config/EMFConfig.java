@@ -408,7 +408,7 @@ public class EMFConfig extends TConfig {
 
     @Override
     public Identifier getModIcon() {
-        return EMFUtils.res("entity_model_features", "textures/gui/icon.png");
+        return EMFUtils.res("megamod", "textures/gui/emf/icon.png");
     }
 
 

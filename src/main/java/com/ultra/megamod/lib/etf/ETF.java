@@ -106,7 +106,7 @@ public class ETF {
                 // no CEM mod, recommend EMF
                 new ETFConfigWarning.Simple(
                         "emf",
-                        () -> !isThisModLoaded("entity_model_features") && !isThisModLoaded("cem"),
+                        () -> false,  // EMF is bundled with MegaMod, so the no-CEM warning is never relevant
                         "config." + ETF.MOD_ID + ".warn.no_emf.text.1",
                         "config." + ETF.MOD_ID + ".warn.no_emf.text.2",
                         null)
