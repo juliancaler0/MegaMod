@@ -308,7 +308,10 @@ public class AccessoriesHolderImpl implements InstanceEndec {
                         "EquipControl", "equip_control"
                 ));
 
-        carrier.getWithErrors(ctx.withAttributes(new ContainersAttribute(this.slotContainers), new InvalidStacksAttribute(this.invalidStacks)), CONTAINERS_KEY);
+        // Include EntityAttribute — the CONTAINERS_KEY decoder requireAttributeValue's
+        // it; without this the client decode path threw "Required serialization
+        // attribute not found: entity" during SyncEntireContainer.handlePacket.
+        carrier.getWithErrors(ctx.withAttributes(new EntityAttribute(entity), new ContainersAttribute(this.slotContainers), new InvalidStacksAttribute(this.invalidStacks)), CONTAINERS_KEY);
 
         this.setValidTypes(EntitySlotLoader.getEntitySlots(entity).keySet());
 
