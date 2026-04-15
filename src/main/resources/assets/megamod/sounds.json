@@ -2280,11 +2280,6 @@
       "megamod:combat/wizard_robes_equip_3"
     ]
   },
-  "crafting": {
-    "sounds": [
-      "megamod:rune_crafting"
-    ]
-  },
   "demoralize_impact": {
     "sounds": [
       "megamod:demoralize_impact"

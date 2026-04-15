@@ -5,6 +5,7 @@ import com.ultra.megamod.feature.combat.items.ClassArmorRegistry;
 import com.ultra.megamod.feature.combat.items.ClassWeaponRegistry;
 import com.ultra.megamod.feature.combat.items.JewelryRegistry;
 import com.ultra.megamod.feature.combat.runes.RuneRegistry;
+import com.ultra.megamod.feature.combat.runes.RuneWorkbenchRegistry;
 import com.ultra.megamod.feature.combat.spell.SpellItemRegistry;
 import com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry;
 import net.minecraft.core.component.DataComponents;
@@ -64,6 +65,8 @@ public class CombatCreativeTab {
             // Spell books, scrolls, runes
             SpellItemRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
             RuneRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
+            // Rune crafting altar + decorative workbenches (archers, monk, arms, jewelers)
+            RuneWorkbenchRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
         }
     }
 
