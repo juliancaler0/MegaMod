@@ -3222,5 +3222,16 @@
     "spell.megamod.swipe.name": "Swipe",
     "spell.megamod.swipe.description": "Slide forward with your weapon, striking all enemies along your path.",
     "spell.megamod.thrust.name": "Thrust",
-    "spell.megamod.thrust.description": "Lunge forward with your weapon, striking all enemies along your path."
+    "spell.megamod.thrust.description": "Lunge forward with your weapon, striking all enemies along your path.",
+    "tooltip.megamod.attack_range": "Attack Range: %s",
+    "tooltip.megamod.cast_time": "Cast Time: %s",
+    "tooltip.megamod.combo_attacks": "Combo Attacks: %s",
+    "tooltip.megamod.cooldown": "Cooldown: %s",
+    "tooltip.megamod.damage_type": "Damage Type: %s",
+    "tooltip.megamod.one_handed": "One-Handed",
+    "tooltip.megamod.rarity": "Rarity: %s",
+    "tooltip.megamod.spell_power": "Spell Power: %s",
+    "tooltip.megamod.swing": "Swing: %s",
+    "tooltip.megamod.two_handed": "Two-Handed",
+    "tooltip.megamod.upswing": "Upswing: %s"
 }
