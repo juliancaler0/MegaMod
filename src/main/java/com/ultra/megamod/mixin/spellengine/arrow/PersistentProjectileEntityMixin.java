@@ -56,9 +56,14 @@ public abstract class PersistentProjectileEntityMixin implements ArrowExtension 
         if (!spellIds.contains(id)) {
             spellIds.add(id);
         }
-        var stringList = this.spellIds.stream().map(Identifier::toString).toList();
-        var json = gson.toJson(stringList);
-        arrow().getEntityData().set(SPELL_ID_TRACKER, json);
+        // SPELL_ID_TRACKER synced-data-accessor path removed — NeoForge 1.21.11
+        // rejects adding SynchedEntityData to foreign vanilla classes at class load
+        // (the old SpellEngine Fabric pattern). Arrow spell data still persists via
+        // addAdditional/readAdditionalSaveData (NBT), and server-side spell logic
+        // reads from the List<Identifier> directly. Client-side mid-flight sync
+        // is the tradeoff; arrow particles / perks driven purely by client-side
+        // travel will not render on remote arrows until this is ported to a proper
+        // data attachment.
     }
 
     private List<Holder<Spell>> cachedSpellEntry = List.of();
@@ -110,34 +115,24 @@ public abstract class PersistentProjectileEntityMixin implements ArrowExtension 
         }
     }
 
-    // MARK: Sync data to client
-
-    private static final EntityDataAccessor<String> SPELL_ID_TRACKER = SynchedEntityData.defineId(AbstractArrow.class, EntityDataSerializers.STRING);
-    @Inject(method = "defineSynchedData", at = @At("TAIL"))
-    private void initDataTracker_TAIL_SpellEngine(SynchedEntityData.Builder builder, CallbackInfo ci) {
-        builder.define(SPELL_ID_TRACKER, "");
-    }
+    // MARK: Sync data to client — disabled for 1.21.11
+    //
+    // The original SpellEngine mod (Fabric) used:
+    //   SynchedEntityData.defineId(AbstractArrow.class, EntityDataSerializers.STRING)
+    // to sync spell ids from server → client mid-flight. NeoForge 1.21.11 throws
+    // "Identified an attempt to add synced data to a foreign entity" at static init
+    // and kills mod load. Correct migration is a syncable data attachment; until
+    // that's ported, the field + injector are removed and client-side tick code
+    // relies only on what was loaded from NBT.
 
     // MARK: Tick
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void tick_HEAD_SpellEngine(CallbackInfo ci) {
-        var arrow = arrow();
-        var world = arrow.level();
-        if (world.isClientSide() && this.spellIds.isEmpty()) {
-            var json = arrow().getEntityData().get(SPELL_ID_TRACKER);
-            if (json.isEmpty()) {
-                return;
-            }
-            try {
-                List<String> stringList = new Gson().fromJson(json, stringListType);
-                this.spellIds.clear();
-                this.spellIds.addAll(stringList.stream().map(Identifier::parse).toList());
-                this.spellEntries();
-            } catch (Exception e) {
-                System.err.println("Spell Engine: Failed to parse spell id from arrow data tracker: " + json);
-            }
-        }
+        // Client-side spell id pickup from SPELL_ID_TRACKER removed (see sync-data
+        // block above). Arrow spell data still flows via NBT save/load; server-
+        // side performs spell effects directly. Client will just see a plain arrow
+        // for particle-only spell perks until a data-attachment migration happens.
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
