@@ -14,10 +14,11 @@ import java.util.List;
 /**
  * Registry for spell books (offhand items granting spell access).
  *
- * <p>Class-specific spell books (Paladin Libram, Archery Manual, Rogue Manual,
- * Warrior Codex) and spell scrolls (SCROLL_*) were retired alongside the
- * class-selection + spell-unlock systems. Only the four school books remain;
- * the new skill tree port will reintroduce unlock content via its own system.</p>
+ * <p>Four school books (Arcane, Fire, Frost, Healing) plus five class-parity
+ * books (Archer, Rogue, Warrior, Paladin, Priest) matching source mod naming.
+ * The class-specific books returned after the class-selection retirement
+ * because the spell-books tag, recipes, and loot tables still reference them;
+ * the skill tree port will wire them into its unlock flow.</p>
  */
 public class SpellItemRegistry {
 
@@ -57,6 +58,27 @@ public class SpellItemRegistry {
         props -> new SpellBookItem((Item.Properties) props, "HEALING", "Healing", 0xFFCCFF00),
         () -> new Item.Properties().stacksTo(1));
 
+    // Class-parity spell books (match source mod naming for port compatibility)
+    public static final DeferredItem<SpellBookItem> ARCHER_SPELL_BOOK = ITEMS.registerItem("archer_spell_book",
+        props -> new SpellBookItem((Item.Properties) props, "RANGED", "Archer", 0xFF2D8B2D),
+        () -> new Item.Properties().stacksTo(1));
+
+    public static final DeferredItem<SpellBookItem> ROGUE_SPELL_BOOK = ITEMS.registerItem("rogue_spell_book",
+        props -> new SpellBookItem((Item.Properties) props, "SHADOW", "Rogue", 0xFF4D004D),
+        () -> new Item.Properties().stacksTo(1));
+
+    public static final DeferredItem<SpellBookItem> WARRIOR_SPELL_BOOK = ITEMS.registerItem("warrior_spell_book",
+        props -> new SpellBookItem((Item.Properties) props, "MELEE", "Warrior", 0xFF8B0000),
+        () -> new Item.Properties().stacksTo(1));
+
+    public static final DeferredItem<SpellBookItem> PALADIN_SPELL_BOOK = ITEMS.registerItem("paladin_spell_book",
+        props -> new SpellBookItem((Item.Properties) props, "HOLY", "Paladin", 0xFFFFD700),
+        () -> new Item.Properties().stacksTo(1));
+
+    public static final DeferredItem<SpellBookItem> PRIEST_SPELL_BOOK = ITEMS.registerItem("priest_spell_book",
+        props -> new SpellBookItem((Item.Properties) props, "HEALING", "Priest", 0xFFFFFAF0),
+        () -> new Item.Properties().stacksTo(1));
+
     public static void init(IEventBus modBus) {
         BLOCKS.register(modBus);
         ITEMS.register(modBus);
@@ -73,7 +95,10 @@ public class SpellItemRegistry {
     public static List<Item> getHardTierBooks() {
         return List.of(
             ARCANE_SPELL_BOOK.get(), FIRE_SPELL_BOOK.get(),
-            FROST_SPELL_BOOK.get(), HEALING_SPELL_BOOK.get()
+            FROST_SPELL_BOOK.get(), HEALING_SPELL_BOOK.get(),
+            ARCHER_SPELL_BOOK.get(), ROGUE_SPELL_BOOK.get(),
+            WARRIOR_SPELL_BOOK.get(), PALADIN_SPELL_BOOK.get(),
+            PRIEST_SPELL_BOOK.get()
         );
     }
 }
