@@ -173,8 +173,7 @@ public record SkillActionPayload(String action, String nodeId) implements Custom
                     manager.resetTree(player.getUUID(), tree);
                     SkillAttributeApplier.removeAll(player);
                     SkillAttributeApplier.recalculate(player);
-                    // Apply class-specific prestige bonuses
-                    com.ultra.megamod.feature.skills.prestige.PrestigeClassBonusHandler.onPrestige(player, tree);
+                    // Class-specific prestige bonuses retired with the class-selection system.
                     int newPrestige = prestige.getPrestigeLevel(player.getUUID(), tree);
                     double bonus = prestige.getPrestigeBonus(player.getUUID(), tree) * 100;
                     // Award Mastery Marks

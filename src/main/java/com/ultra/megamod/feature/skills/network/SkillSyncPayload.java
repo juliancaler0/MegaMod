@@ -42,21 +42,11 @@ public record SkillSyncPayload(String jsonData) implements CustomPacketPayload
     public static volatile boolean clientAdminLockBypass = false;
 
     /**
-     * Computes points invested in the local player's class branch from synced node data.
+     * Class-branch point count retired with the class-selection system.
+     * Returns 0 — callers should no longer rely on class-branch scaling.
      */
     public static int getClassBranchPoints() {
-        var playerClass = com.ultra.megamod.feature.combat.client.ClientClassCache.getPlayerClass();
-        if (playerClass == null || playerClass == com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.NONE) return 0;
-        var branch = playerClass.toBranch();
-        if (branch == null) return 0;
-        int total = 0;
-        for (String nodeId : clientUnlockedNodes) {
-            var node = com.ultra.megamod.feature.skills.SkillTreeDefinitions.getNodeById(nodeId);
-            if (node != null && node.branch() == branch) {
-                total += node.cost();
-            }
-        }
-        return total;
+        return 0;
     }
 
     public record LeaderboardEntry(String name, int level) {}

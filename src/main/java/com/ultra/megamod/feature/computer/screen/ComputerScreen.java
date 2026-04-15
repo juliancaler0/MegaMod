@@ -683,7 +683,7 @@ public class ComputerScreen extends Screen {
             case 1  -> mc.setScreen(new BankScreen(this, this.wallet, this.bank));       // Bank
             case 2  -> mc.setScreen(new MarketplaceScreen(this));                         // Market
             case 3 -> mc.setScreen(new StatsScreen(this, this.wallet, this.bank)); // Stats
-            case 4  -> mc.setScreen(new SkillsAppScreen(this));                           // Skills
+            case 4  -> { /* Skills app retired with class system — placeholder until the new skill tree port lands. */ }
             case 5  -> mc.setScreen(new RecipeBrowserScreen(this));                       // Recipes
             case 6  -> mc.setScreen(new EncyclopediaScreen(this));                        // Wiki
             case 7  -> mc.setScreen(new MapScreen(this));                                 // Map

@@ -1,6 +1,5 @@
 package com.ultra.megamod.feature.skills.locks;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager;
 import com.ultra.megamod.feature.computer.admin.AdminSystem;
 import com.ultra.megamod.feature.skills.SkillBranch;
 import com.ultra.megamod.feature.skills.SkillManager;
@@ -176,26 +175,15 @@ public final class SkillLockManager {
     }
 
     /**
-     * Check if player has the required branch. For class archetype branches
-     * (Paladin, Warrior, Wizard, Rogue, Ranger), checks the player's chosen class
-     * via PlayerClassManager. For regular skill branches, checks tier 3+ nodes.
+     * Check if player has the required branch. Class-archetype branches
+     * (Paladin, Warrior, Wizard, Rogue, Ranger) used to be gated by the
+     * player's chosen class; now that class selection is retired they follow
+     * the same tier-3+ node rule as every other branch.
      */
     private static boolean hasRequiredBranch(ServerPlayer player, SkillBranch branchA, SkillBranch branchB) {
-        // Admin bypass — admins can use any class weapon/armor
         if (AdminSystem.isAdmin(player)) return true;
 
         ServerLevel level = (ServerLevel) player.level();
-
-        // If either branch is a class archetype, use class-based check
-        boolean aIsClass = PlayerClassManager.isClassBranch(branchA);
-        boolean bIsClass = PlayerClassManager.isClassBranch(branchB);
-
-        if (aIsClass || bIsClass) {
-            PlayerClassManager classManager = PlayerClassManager.get(level);
-            return classManager.classAllowsBranch(player.getUUID(), branchA, branchB);
-        }
-
-        // Regular skill branch check: tier 3+ node required
         SkillManager manager = SkillManager.get(level);
         Set<String> unlocked = manager.getUnlockedNodes(player.getUUID());
 

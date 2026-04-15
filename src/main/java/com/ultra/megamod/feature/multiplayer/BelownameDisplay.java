@@ -20,8 +20,6 @@
  */
 package com.ultra.megamod.feature.multiplayer;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager;
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 import com.ultra.megamod.feature.multiplayer.PlayerStatistics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -103,59 +101,19 @@ public class BelownameDisplay {
     }
 
     /**
-     * Assigns the player to a per-class team that uses a suffix to show
-     * the class name below the player's nameplate in-world.
-     * e.g. "PlayerName" with suffix " [Paladin]" in gold.
+     * Per-class belowname team retired with the class-selection system.
+     * Any lingering class team memberships on the scoreboard are cleaned up
+     * so old suffixes don't stick around.
      */
     private static void updateClassTeam(MinecraftServer server, ServerPlayer player) {
         try {
-            ServerLevel overworld = server.overworld();
-            PlayerClassManager classManager = PlayerClassManager.get(overworld);
-            PlayerClass cls = classManager.getPlayerClass(player.getUUID());
-
             ServerScoreboard scoreboard = server.getScoreboard();
             String playerName = player.getGameProfile().name();
-
-            if (cls == PlayerClass.NONE) {
-                // Remove from any class team if they have none
-                PlayerTeam currentTeam = scoreboard.getPlayersTeam(playerName);
-                if (currentTeam != null && currentTeam.getName().startsWith(TEAM_PREFIX)) {
-                    scoreboard.removePlayerFromTeam(playerName, currentTeam);
-                }
-                return;
-            }
-
-            String teamName = TEAM_PREFIX + cls.name().toLowerCase();
-            PlayerTeam team = scoreboard.getPlayerTeam(teamName);
-            if (team == null) {
-                team = scoreboard.addPlayerTeam(teamName);
-                String icon = getClassIcon(cls);
-                team.setPlayerSuffix(Component.literal(" " + icon + cls.getDisplayName())
-                    .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(cls.getColor()))));
-            }
-
-            // Only add if not already on this team
             PlayerTeam currentTeam = scoreboard.getPlayersTeam(playerName);
-            if (currentTeam != team) {
-                if (currentTeam != null && currentTeam.getName().startsWith(TEAM_PREFIX)) {
-                    scoreboard.removePlayerFromTeam(playerName, currentTeam);
-                }
-                scoreboard.addPlayerToTeam(playerName, team);
+            if (currentTeam != null && currentTeam.getName().startsWith(TEAM_PREFIX)) {
+                scoreboard.removePlayerFromTeam(playerName, currentTeam);
             }
-        } catch (Exception ignored) {
-            // PlayerClassManager may not be initialized yet
-        }
-    }
-
-    private static String getClassIcon(PlayerClass cls) {
-        return switch (cls) {
-            case PALADIN -> "\u2694 ";
-            case WARRIOR -> "\u2694 ";
-            case WIZARD -> "\u2726 ";
-            case ROGUE -> "\u2020 ";
-            case RANGER -> "\u27B3 ";
-            default -> "";
-        };
+        } catch (Exception ignored) {}
     }
 }
 

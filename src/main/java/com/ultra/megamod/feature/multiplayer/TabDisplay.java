@@ -13,8 +13,6 @@
  */
 package com.ultra.megamod.feature.multiplayer;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager;
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 import com.ultra.megamod.feature.multiplayer.PlayerStatistics;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -48,36 +46,12 @@ public class TabDisplay {
 
         MutableComponent displayName = Component.literal(playerName).withStyle(ChatFormatting.WHITE);
 
-        // Append player class in the class's color
-        try {
-            ServerLevel overworld = serverPlayer.level().getServer().overworld();
-            PlayerClassManager classManager = PlayerClassManager.get(overworld);
-            PlayerClass cls = classManager.getPlayerClass(serverPlayer.getUUID());
-            if (cls != PlayerClass.NONE) {
-                String classIcon = getClassIcon(cls);
-                displayName.append(Component.literal(" ")
-                    .append(Component.literal(classIcon + cls.getDisplayName())
-                        .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(cls.getColor())))));
-            }
-        } catch (Exception ignored) {
-            // PlayerClassManager may not be initialized yet
-        }
+        // Class suffix retired with the class-selection system.
 
         displayName.append(Component.literal(" ").withStyle(ChatFormatting.GRAY))
                    .append(Component.literal("[K:" + kills + " D:" + deaths + "]").withStyle(kdColor));
 
         event.setDisplayName(displayName);
-    }
-
-    private static String getClassIcon(PlayerClass cls) {
-        return switch (cls) {
-            case PALADIN -> "\u2694 "; // crossed swords
-            case WARRIOR -> "\u2694 ";
-            case WIZARD -> "\u2726 "; // four-pointed star
-            case ROGUE -> "\u2020 ";  // dagger
-            case RANGER -> "\u27B3 "; // arrow
-            default -> "";
-        };
     }
 }
 

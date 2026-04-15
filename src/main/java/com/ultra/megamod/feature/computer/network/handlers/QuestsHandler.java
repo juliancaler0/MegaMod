@@ -1,7 +1,5 @@
 package com.ultra.megamod.feature.computer.network.handlers;
 
-import com.ultra.megamod.feature.combat.PlayerClassManager;
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 import com.ultra.megamod.feature.computer.admin.AdminSystem;
 import com.ultra.megamod.feature.computer.network.ComputerDataPayload;
 import com.ultra.megamod.feature.economy.EconomyManager;
@@ -62,7 +60,6 @@ public class QuestsHandler {
         int totalQuests = 0;
 
         boolean isAdmin = AdminSystem.isAdmin(player);
-        PlayerClass playerClass = PlayerClassManager.get(level).getPlayerClass(uuid);
 
         for (QuestCategory cat : QuestCategory.values()) {
             List<QuestDef> quests = QuestDefinitions.BY_CATEGORY.getOrDefault(cat, List.of());
@@ -79,12 +76,9 @@ public class QuestsHandler {
 
             boolean firstQuest = true;
             for (QuestDef def : quests) {
-                // Hide quests for other classes — admins and classless (NONE) players see all
-                PlayerClass requiredClass = QuestDefinitions.getClassRequirement(def.id());
-                if (requiredClass != null && !isAdmin && playerClass != PlayerClass.NONE
-                        && playerClass != requiredClass) {
-                    continue;
-                }
+                // Class-gated quest filtering retired along with the class-selection system.
+                // Class requirement strings are still on quest defs but no longer hide quests.
+                String requiredClass = QuestDefinitions.getClassRequirement(def.id());
 
                 if (!firstQuest) sb.append(",");
                 firstQuest = false;
@@ -114,10 +108,10 @@ public class QuestsHandler {
                 sb.append(",\"tracked\":").append(tracked);
                 sb.append(",\"partyShared\":").append(def.partyShared());
 
-                // Class requirement
+                // Class requirement — informational only, no gating
                 if (requiredClass != null) {
-                    sb.append(",\"classRequired\":\"").append(escapeJson(requiredClass.getDisplayName())).append("\"");
-                    sb.append(",\"classMatch\":").append(isAdmin || playerClass == requiredClass);
+                    sb.append(",\"classRequired\":\"").append(escapeJson(requiredClass)).append("\"");
+                    sb.append(",\"classMatch\":true");
                 }
 
                 // Tasks with progress
@@ -216,14 +210,7 @@ public class QuestsHandler {
         boolean success = false;
         String failReason = "";
         if (def != null && !qpm.isCompleted(uuid, questId) && qpm.arePrerequisitesMet(uuid, def)) {
-            // Check class requirement (admins bypass)
-            PlayerClass required = QuestDefinitions.getClassRequirement(questId);
-            if (required != null && !AdminSystem.isAdmin(player)) {
-                PlayerClass playerClass = PlayerClassManager.get(level).getPlayerClass(uuid);
-                if (playerClass != required) {
-                    failReason = "Requires " + required.getDisplayName() + " class";
-                }
-            }
+            // Class-gated claim checks retired with the class-selection system.
 
             if (failReason.isEmpty()) {
                 // Only complete if all tasks are checkmarks (single-action quests)

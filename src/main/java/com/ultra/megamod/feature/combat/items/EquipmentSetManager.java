@@ -136,38 +136,12 @@ public class EquipmentSetManager {
     }
 
     /**
-     * Returns the class mastery multiplier for set bonuses.
-     * Every 5 points invested in the player's class branch → +10% set bonus.
-     * Only applies to sets matching the player's class (wizard robes for wizards, etc.).
+     * Class-mastery multiplier stub — the old class-selection system scaled set
+     * bonuses by the player's chosen class + branch investment. Retired; returns
+     * a flat 1.0 until the new skill tree port reintroduces scaling.
      */
     private static double getClassMasteryMultiplier(ServerPlayer player, String setId) {
-        try {
-            var level = (net.minecraft.server.level.ServerLevel) player.level();
-            var pcm = com.ultra.megamod.feature.combat.PlayerClassManager.get(level);
-            var playerClass = pcm.getPlayerClass(player.getUUID());
-            if (playerClass == com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.NONE) return 1.0;
-
-            // Check if this set matches the player's class (by keyword in set ID)
-            String classKeyword = playerClass.name().toLowerCase();
-            String setLower = setId.toLowerCase();
-            boolean isClassSet = setLower.contains(classKeyword)
-                    || (playerClass.name().equals("WIZARD") && (setLower.contains("wizard") || setLower.contains("arcane") || setLower.contains("fire_robe") || setLower.contains("frost_robe")))
-                    || (playerClass.name().equals("PALADIN") && (setLower.contains("paladin") || setLower.contains("crusader") || setLower.contains("priest") || setLower.contains("prior")))
-                    || (playerClass.name().equals("WARRIOR") && (setLower.contains("warrior") || setLower.contains("berserker")))
-                    || (playerClass.name().equals("ROGUE") && (setLower.contains("rogue") || setLower.contains("assassin")))
-                    || (playerClass.name().equals("RANGER") && (setLower.contains("ranger") || setLower.contains("archer")));
-
-            if (!isClassSet) return 1.0;
-
-            var skills = com.ultra.megamod.feature.skills.SkillManager.get(level);
-            var branch = playerClass.toBranch();
-            if (branch == null) return 1.0;
-            int branchPoints = skills.getPointsInBranch(player.getUUID(), branch);
-            // +10% per 5 points invested, max ~36% at 18 points
-            return 1.0 + (branchPoints / 5) * 0.10;
-        } catch (Exception e) {
-            return 1.0;
-        }
+        return 1.0;
     }
 
     private static void removeSetBonusModifiers(ServerPlayer player, EquipmentSet set, int tierIndex) {

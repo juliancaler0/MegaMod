@@ -97,7 +97,6 @@ public class MegaMod {
         modEventBus.addListener(com.ultra.megamod.feature.furniture.QuestBoardNetwork::registerPayloads);
         // MegaMod alchemy system deleted — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellNetwork::registerPayloads);
-        modEventBus.addListener(com.ultra.megamod.feature.combat.network.ClassNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.BetterCombatNetwork::registerPayloads);
         // Combat overhaul registries
         com.ultra.megamod.lib.combatroll.CombatRollInit.register(modEventBus);

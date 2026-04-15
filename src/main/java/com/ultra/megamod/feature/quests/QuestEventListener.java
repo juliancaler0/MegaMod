@@ -1,8 +1,6 @@
 package com.ultra.megamod.feature.quests;
 
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.feature.combat.PlayerClassManager;
-import com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass;
 import com.ultra.megamod.feature.computer.network.handlers.PartyHandler;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestDef;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTask;
@@ -53,8 +51,8 @@ public class QuestEventListener {
             propagateToParty(playerUuid, level, QuestTaskType.BOUNTY_COMPLETE);
 
             // cr_05: Complete a bounty hunt ("Master Assassin" — Rogue class quest)
-            PlayerClass cls = PlayerClassManager.get(level).getPlayerClass(playerUuid);
-            if (cls == PlayerClass.ROGUE && !qpm.isCompleted(playerUuid, "cr_05")
+            String cls = null;
+            if ("ROGUE".equals(cls) && !qpm.isCompleted(playerUuid, "cr_05")
                     && qpm.arePrerequisitesMet(playerUuid, QuestDefinitions.get("cr_05"))) {
                 qpm.completeQuest(playerUuid, "cr_05");
                 notifyQuestComplete(playerUuid, level, "cr_05");
@@ -92,14 +90,14 @@ public class QuestEventListener {
             ServerLevel level = (ServerLevel) player.level();
             UUID uuid = player.getUUID();
             QuestProgressManager qpm = QuestProgressManager.get(level);
-            PlayerClass playerClass = PlayerClassManager.get(level).getPlayerClass(uuid);
+            String playerClass = null;
 
             // Track spells cast in current combat session for multi-spell quests
             Set<String> sessionSpells = spellCombatSessions.computeIfAbsent(uuid, k -> ConcurrentHashMap.newKeySet());
             sessionSpells.add(spellId);
 
             // --- Wizard quests ---
-            if (playerClass == PlayerClass.WIZARD || playerClass == PlayerClass.NONE) {
+            if ("WIZARD".equals(playerClass) || "NONE".equals(playerClass)) {
                 // cm_01: Cast Arcane Bolt
                 if (spellId.equals("arcane_bolt") && !qpm.isCompleted(uuid, "cm_01") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("cm_01"))) {
                     autoCompleteQuest(player, qpm, "cm_01");
@@ -117,7 +115,7 @@ public class QuestEventListener {
             }
 
             // --- Paladin quests ---
-            if (playerClass == PlayerClass.PALADIN || playerClass == PlayerClass.NONE) {
+            if ("PALADIN".equals(playerClass) || "NONE".equals(playerClass)) {
                 // cp_03: Cast Heal on yourself
                 if (spellId.equals("heal") && !qpm.isCompleted(uuid, "cp_03") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("cp_03"))) {
                     autoCompleteQuest(player, qpm, "cp_03");
@@ -130,7 +128,7 @@ public class QuestEventListener {
             }
 
             // --- Warrior quests ---
-            if (playerClass == PlayerClass.WARRIOR || playerClass == PlayerClass.NONE) {
+            if ("WARRIOR".equals(playerClass) || "NONE".equals(playerClass)) {
                 // cw_02: Use Charge and Shout in combat
                 boolean hasCharge = sessionSpells.contains("charge");
                 boolean hasShout = sessionSpells.contains("shout") || sessionSpells.contains("war_cry");
@@ -147,7 +145,7 @@ public class QuestEventListener {
             }
 
             // --- Rogue quests ---
-            if (playerClass == PlayerClass.ROGUE || playerClass == PlayerClass.NONE) {
+            if ("ROGUE".equals(playerClass) || "NONE".equals(playerClass)) {
                 // cr_02: Use Vanish in combat
                 if (spellId.equals("vanish") && !qpm.isCompleted(uuid, "cr_02") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("cr_02"))) {
                     autoCompleteQuest(player, qpm, "cr_02");
@@ -167,7 +165,7 @@ public class QuestEventListener {
             }
 
             // --- Ranger quests ---
-            if (playerClass == PlayerClass.RANGER || playerClass == PlayerClass.NONE) {
+            if ("RANGER".equals(playerClass) || "NONE".equals(playerClass)) {
                 // ca_02: Use Power Shot on an enemy
                 if (spellId.equals("power_shot") && !qpm.isCompleted(uuid, "ca_02") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("ca_02"))) {
                     autoCompleteQuest(player, qpm, "ca_02");
@@ -290,8 +288,8 @@ public class QuestEventListener {
             // cw_04: Win an Arena bout (Warrior class quest)
             ServerPlayer player = level.getServer().getPlayerList().getPlayer(playerUuid);
             if (player != null) {
-                PlayerClass cls = PlayerClassManager.get(level).getPlayerClass(playerUuid);
-                if (cls == PlayerClass.WARRIOR && !qpm.isCompleted(playerUuid, "cw_04") && qpm.arePrerequisitesMet(playerUuid, QuestDefinitions.get("cw_04"))) {
+                String cls = null;
+                if ("WARRIOR".equals(cls) && !qpm.isCompleted(playerUuid, "cw_04") && qpm.arePrerequisitesMet(playerUuid, QuestDefinitions.get("cw_04"))) {
                     qpm.completeQuest(playerUuid, "cw_04");
                     notifyQuestComplete(playerUuid, level, "cw_04");
                 }
@@ -310,10 +308,10 @@ public class QuestEventListener {
     public static void onDungeonComplete(UUID playerUuid, ServerLevel level) {
         try {
             QuestProgressManager qpm = QuestProgressManager.get(level);
-            PlayerClass cls = PlayerClassManager.get(level).getPlayerClass(playerUuid);
+            String cls = null;
 
             // cp_04: Complete a dungeon as Paladin
-            if (cls == PlayerClass.PALADIN && !qpm.isCompleted(playerUuid, "cp_04") && qpm.arePrerequisitesMet(playerUuid, QuestDefinitions.get("cp_04"))) {
+            if ("PALADIN".equals(cls) && !qpm.isCompleted(playerUuid, "cp_04") && qpm.arePrerequisitesMet(playerUuid, QuestDefinitions.get("cp_04"))) {
                 qpm.completeQuest(playerUuid, "cp_04");
                 notifyQuestComplete(playerUuid, level, "cp_04");
             }
@@ -387,12 +385,7 @@ public class QuestEventListener {
         QuestDef def = QuestDefinitions.get(questId);
         if (def == null) return;
 
-        // Verify class requirement
-        PlayerClass required = QuestDefinitions.getClassRequirement(questId);
-        if (required != null) {
-            PlayerClass playerClass = PlayerClassManager.get((ServerLevel) player.level()).getPlayerClass(player.getUUID());
-            if (playerClass != required && playerClass != PlayerClass.NONE) return;
-        }
+        // Class-gated quest completion retired with the class-selection system.
 
         qpm.completeQuest(player.getUUID(), questId);
         qpm.untrackQuest(player.getUUID(), questId);
@@ -459,8 +452,8 @@ public class QuestEventListener {
             UUID uuid = player.getUUID();
             QuestProgressManager qpm = QuestProgressManager.get(level);
             if (!qpm.isCompleted(uuid, "cm_04") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("cm_04"))) {
-                PlayerClass cls = PlayerClassManager.get(level).getPlayerClass(uuid);
-                if (cls == PlayerClass.WIZARD) {
+                String cls = null;
+                if ("WIZARD".equals(cls)) {
                     autoCompleteQuest(player, qpm, "cm_04");
                 }
             }
@@ -505,8 +498,8 @@ public class QuestEventListener {
             QuestProgressManager qpm = QuestProgressManager.get(level);
 
             if (!qpm.isCompleted(uuid, "cw_03") && qpm.arePrerequisitesMet(uuid, QuestDefinitions.get("cw_03"))) {
-                PlayerClass cls = PlayerClassManager.get(level).getPlayerClass(uuid);
-                if (cls == PlayerClass.WARRIOR) {
+                String cls = null;
+                if ("WARRIOR".equals(cls)) {
                     autoCompleteQuest(player, qpm, "cw_03");
                 }
             }

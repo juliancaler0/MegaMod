@@ -4,7 +4,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -65,14 +64,8 @@ public record SpellBookCastPayload(String spellId) implements CustomPacketPayloa
             SpellDefinition spell = SpellRegistry.get(spellId);
             if (spell == null) return;
 
-            // SpellUnlockManager.canCastSpell already checks for spell book bypass,
-            // but we call it anyway for consistency (admin bypass, skill node checks, etc.)
-            ServerLevel level = (ServerLevel) player.level();
-            if (!SpellUnlockManager.canCastSpell(player.getUUID(), spellId, level)) {
-                return;
-            }
-
-            // Cast the spell via the cast manager (handles instant/charged/channeled)
+            // Class/skill unlock gating removed — if the spell is in the book and the
+            // book is equipped, the player can cast it.
             SpellCastManager.startCast(player, spellId);
         });
     }

@@ -250,7 +250,6 @@ public class MegaModClient {
         // a client-only proxy so the common payload class never links against
         // Minecraft / Screen (would be rejected by NeoForgeDevDistCleaner on
         // the dedicated server).
-        com.ultra.megamod.feature.combat.client.ClassSelectionClientProxy.init();
 
         // Renderer and pipeline registrations
         modEventBus.addListener(MegaModClient::onRegisterRenderers);

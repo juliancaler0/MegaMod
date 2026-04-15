@@ -115,25 +115,15 @@ public class SpellBookHudOverlay {
         int cursorY = startY + titleHeight + 2;
 
         // ===== Spell Entries =====
+        // Class/skill unlock gating retired; every spell in the book is castable.
         for (int i = 0; i < totalEntries; i++) {
             SpellDefinition spell = cachedSpells.get(i);
             boolean isSelected = (i == selected);
             int entryY = cursorY + i * (BAR_HEIGHT + ENTRY_GAP);
-            boolean unlocked = SpellUnlockClientHelper.isSpellUnlocked(spell);
-
-            renderSpellEntry(g, mc, x, entryY, spell, isSelected, unlocked);
+            renderSpellEntry(g, mc, x, entryY, spell, isSelected, true);
         }
 
-        // ===== Next Unlock Indicator =====
         int hintY = cursorY + totalEntries * (BAR_HEIGHT + ENTRY_GAP) + 4;
-
-        SpellDefinition nextUnlock = SpellUnlockClientHelper.getNextUnlock();
-        if (nextUnlock != null) {
-            int reqLevel = SpellUnlockClientHelper.getRequiredLevel(nextUnlock.tier());
-            String nextStr = "Next: " + nextUnlock.name() + " at Lv. " + reqLevel;
-            g.drawString(mc.font, nextStr, x, hintY, NEXT_UNLOCK_COLOR, false);
-            hintY += 11;
-        }
 
         // ===== Keybind Hints =====
         String hint = "[R] Cast  [G] Next Spell";
@@ -196,27 +186,8 @@ public class SpellBookHudOverlay {
             for (int d = 0; d < dotCount; d++) {
                 g.fill(dotStartX + d * 4, y + BAR_HEIGHT - 4, dotStartX + d * 4 + 2, y + BAR_HEIGHT - 2, TIER_DOT_ACTIVE);
             }
-        } else {
-            // LOCKED: show spell name in gray + "Lv. X" in red
-            String name = spell.name();
-            int reqLevel = SpellUnlockClientHelper.getRequiredLevel(spell.tier());
-            String lvlTag = " Lv." + reqLevel;
-
-            // Truncate name if needed (leaving room for level tag)
-            int maxNameW = barW - TEXT_PAD_LEFT - mc.font.width(lvlTag) - 8;
-            if (mc.font.width(name) > maxNameW) {
-                while (mc.font.width(name + "..") > maxNameW && name.length() > 1) {
-                    name = name.substring(0, name.length() - 1);
-                }
-                name = name + "..";
-            }
-
-            g.drawString(mc.font, name, x + TEXT_PAD_LEFT, y + (BAR_HEIGHT - 9) / 2, LOCKED_NAME_COLOR, false);
-
-            // Level requirement in red on the right
-            int lvlX = x + barW - mc.font.width(lvlTag) - 4;
-            g.drawString(mc.font, lvlTag, lvlX, y + (BAR_HEIGHT - 9) / 2, LOCKED_LEVEL_COLOR, false);
         }
+        // Locked-entry rendering retired along with the class unlock system.
 
         // Selected indicator arrow (only for unlocked)
         if (selected && unlocked) {

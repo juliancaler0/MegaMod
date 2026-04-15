@@ -105,33 +105,9 @@ public class SpellItemTooltip {
                 .append(Component.literal(exhaustStr).withStyle(ChatFormatting.GOLD)));
         }
 
-        // Class + level requirement
-        if (spell.classRequirement() != null) {
-            int reqLevel = SpellUnlockManager.getRequiredLevelForSpell(spellId);
-            String classDisplay = capitalize(spell.classRequirement());
-
-            // Determine the skill tree name from the class requirement
-            String treeName = "";
-            try {
-                com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass reqClass =
-                    com.ultra.megamod.feature.combat.PlayerClassManager.PlayerClass.valueOf(
-                        spell.classRequirement().toUpperCase());
-                com.ultra.megamod.feature.skills.SkillBranch branch = reqClass.toBranch();
-                if (branch != null) {
-                    treeName = branch.getTreeType().getDisplayName();
-                }
-            } catch (IllegalArgumentException ignored) {}
-
-            String reqStr;
-            if (!treeName.isEmpty() && reqLevel > 0) {
-                reqStr = classDisplay + " class, " + treeName + " Lv. " + reqLevel;
-            } else {
-                reqStr = classDisplay + " class";
-            }
-
-            tooltip.add(Component.literal("  Requires: ").withStyle(ChatFormatting.DARK_GRAY)
-                .append(Component.literal(reqStr).withStyle(ChatFormatting.GOLD)));
-        }
+        // Class / level requirement line retired with the class-selection system.
+        // Spells' classRequirement is still on the SpellDefinition data but has no
+        // runtime effect until the new skill tree port wires it back in.
     }
 
     /**
