@@ -275,7 +275,81 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
             return;
         }
 
+        // Configure base panel geometry BEFORE super.init so centering math is correct
+        this.imageWidth = 220;
+        this.imageHeight = 220;
+
         super.init();
+
+        // The OWO UI layer is stubbed in this port - after super.init() runs the
+        // OWO build() method all slots have been pushed to -300,-300 (off-screen).
+        // Lay out a simple native grid here so the menu is actually usable.
+        layoutSlotsFallback();
+    }
+
+    private void layoutSlotsFallback() {
+        var slots = this.getMenu().slots;
+        if (slots.isEmpty()) return;
+
+        // Panel-relative layout. Vanilla slot stride is 18 px.
+        final int invLeft = 30;              // hotbar / inventory left
+        final int invTopMain = 134;          // main inventory top
+        final int invTopHotbar = 192;        // hotbar top
+        final int accLeft = 30;              // accessories grid left
+        final int accTop = 12;               // accessories grid top
+        final int armorLeft = 180;           // armor column (equipment) left
+        final int armorTop = 12;
+
+        int accessoriesStart = this.getMenu().startingAccessoriesSlot();
+
+        // Player main inventory: slots 0..26
+        for (int i = 0; i < 27 && i < slots.size(); i++) {
+            var s = slots.get(i);
+            int row = i / 9, col = i % 9;
+            s.x = invLeft + col * 18;
+            s.y = invTopMain + row * 18;
+        }
+        // Hotbar: slots 27..35
+        for (int i = 27; i < 36 && i < slots.size(); i++) {
+            var s = slots.get(i);
+            int col = i - 27;
+            s.x = invLeft + col * 18;
+            s.y = invTopHotbar;
+        }
+        // Offhand: slot 36
+        if (slots.size() > 36) {
+            var s = slots.get(36);
+            s.x = invLeft - 20;
+            s.y = invTopHotbar;
+        }
+
+        // Armor/cosmetic slot pairs: [37 .. accessoriesStart-1] alternating armor/cosmetic
+        int armorRow = 0;
+        for (int i = 37; i < accessoriesStart && i < slots.size(); i += 2) {
+            var armor = slots.get(i);
+            armor.x = armorLeft;
+            armor.y = armorTop + armorRow * 18;
+            if (i + 1 < slots.size()) {
+                var cosmetic = slots.get(i + 1);
+                cosmetic.x = armorLeft + 20;
+                cosmetic.y = armorTop + armorRow * 18;
+            }
+            armorRow++;
+        }
+
+        // Accessory slot pairs: cosmetic / base alternating
+        int accIdx = 0;
+        for (int i = accessoriesStart; i + 1 < slots.size(); i += 2) {
+            var cosmetic = slots.get(i);
+            var base = slots.get(i + 1);
+            int row = accIdx / 6;
+            int col = accIdx % 6;
+            base.x = accLeft + col * 18;
+            base.y = accTop + row * 18;
+            cosmetic.x = accLeft + col * 18;
+            cosmetic.y = accTop + row * 18 + 120; // push cosmetics below, hidden region
+            accIdx++;
+        }
     }
 
     @Override
@@ -307,6 +381,13 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     @Override
     protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeft, int guiTop) {
+        // OWO component rectangles are empty in this port - fall back to the panel
+        // bounding box so normal inventory clicks don't close the screen.
+        if (mouseX >= guiLeft && mouseX <= guiLeft + this.imageWidth
+                && mouseY >= guiTop && mouseY <= guiTop + this.imageHeight) {
+            return false;
+        }
+
         for (var rect : getComponentRectangles()) {
             if (rect.isInBoundingBox(mouseX, mouseY)) {
                 return false;
@@ -739,6 +820,20 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         // BaseOwoHandledScreen provides no-op renderBg, no super call needed
+
+        // Solid panel backdrop so the fallback-laid-out slots have visible chrome
+        // until the OWO UI layer is ported. Without this, nothing renders at all.
+        {
+            int x = this.leftPos;
+            int y = this.topPos;
+            int w = this.imageWidth;
+            int h = this.imageHeight;
+            guiGraphics.fill(x, y, x + w, y + h, 0xFF2B2B2B);
+            guiGraphics.fill(x + 1, y + 1, x + w - 1, y + h - 1, 0xFF3C3C3C);
+            guiGraphics.fill(x + 28, y + 10, x + 28 + 6 * 18 + 4, y + 10 + 3 * 18 + 4, 0xFF1F1F1F);
+            guiGraphics.fill(x + 178, y + 10, x + 178 + 2 * 18 + 4, y + 10 + 4 * 18 + 4, 0xFF1F1F1F);
+            guiGraphics.fill(x + 28, y + 132, x + 28 + 9 * 18 + 4, y + 132 + 4 * 18 + 12, 0xFF1F1F1F);
+        }
 
         //--
 
