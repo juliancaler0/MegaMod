@@ -7,12 +7,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import com.ultra.megamod.lib.spellengine.SpellEngineMod;
 import com.ultra.megamod.lib.spellengine.api.effect.EntityActionsAllowed;
-import com.ultra.megamod.lib.spellengine.client.SpellEngineClient;
 import com.ultra.megamod.lib.spellengine.client.input.MinecraftClientExtension;
 import com.ultra.megamod.lib.spellengine.client.input.SpellHotbar;
-import com.ultra.megamod.lib.spellengine.spellbinding.spellchoice.SpellChoices;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,11 +26,12 @@ public class ClientPlayerInteractionManagerMixin {
     @Inject(method = "useItem", at = @At("HEAD"), cancellable = true)
     public void interactItem_HEAD_LockHotbar(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (player instanceof LocalPlayer clientPlayer) {
-            ItemStack stack = player.getItemInHand(hand);
-            if (SpellChoices.from(stack) != null) {
-                return;
-            }
-            
+            // SpellChoice early-return removed.  Source SpellEngine skipped
+            // the SpellHotbar path for items with a non-empty SpellChoice pool
+            // (to let the server-side picker open instead).  Since we removed
+            // the server-side picker from right-click, we now let the
+            // SpellHotbar handle the use-key so the selected spell casts
+            // directly on right-click.
             if (SpellHotbar.INSTANCE.lastHandled() == null) {
                 var handled = SpellHotbar.INSTANCE.handleUseKey(clientPlayer, minecraft.options);
                 ((MinecraftClientExtension) minecraft).onSpellHotbarInputHandled(handled);
