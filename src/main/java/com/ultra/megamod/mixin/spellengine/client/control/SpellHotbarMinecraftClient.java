@@ -58,24 +58,20 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
 
     @Inject(method = "handleKeybinds", at = @At(value = "HEAD"))
     private void handleKeybinds_HEAD_SpellHotbar(CallbackInfo ci) {
-        // spellHotbarHandle = null;
         if (player == null || options == null) { return; }
 
-        // Update the content of the Spell Hotbar
-        // This needs to run every tick because the player's held caster item may change any time
         var hotbarUpdated = SpellHotbar.INSTANCE.update(player, options);
         if (hotbarUpdated) {
             missTime = 4;
         }
         SpellHotbar.INSTANCE.prepare(missTime);
+
         if (player.isUsingItem()) {
             return;
         }
         var caster = (SpellCasterClient) player;
         if (caster.getCurrentSkillAttack() != null) {
-            missTime = Math.max(missTime, 1); // Blocking item use
-            // Prevent spell cast start until the attack is finished
-            // but allow ongoing process to continue
+            missTime = Math.max(missTime, 1);
             if (caster.getSpellCastProcess() == null) {
                 return;
             }

@@ -62,8 +62,20 @@ public class SpellHotbar {
         if (mergedContainer != null
                 && !mergedContainer.spell_ids().isEmpty()) {
             var itemUseExpectation = expectedUseStack(player);
-            if (itemUseExpectation != null)  {
-                onUseKey = new Slot(null, SpellCast.Mode.ITEM_USE, itemUseExpectation.itemStack, useKeyMapping, null);
+            // Don't create an ITEM_USE placeholder when the weapon is a spell weapon
+            // (has SpellContainer via data component). The first resolved spell will
+            // be bound to the use key directly at line 106-110 below because
+            // onUseKey stays null here, which triggers the useKey override.
+            // Only create the ITEM_USE placeholder for items that have a real vanilla
+            // use animation (bows, shields, food) — those need ITEM_USE to let vanilla handle them.
+            if (itemUseExpectation != null) {
+                var stack = itemUseExpectation.itemStack;
+                var hasSpellComponent = stack.has(com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents.SPELL_CONTAINER);
+                if (!hasSpellComponent) {
+                    // Real vanilla-use item (bow, shield, food) — create ITEM_USE placeholder
+                    onUseKey = new Slot(null, SpellCast.Mode.ITEM_USE, stack, useKeyMapping, null);
+                }
+                // else: spell weapon — leave onUseKey null so spells bind to right-click
             }
 
             var spellIds = mergedContainer.spell_ids();
