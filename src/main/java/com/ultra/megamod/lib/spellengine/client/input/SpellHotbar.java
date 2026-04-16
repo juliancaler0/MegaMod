@@ -328,6 +328,15 @@ public class SpellHotbar {
             if (itemStack.getUseAnimation() != ItemUseAnimation.NONE) {
                 return new ItemUseExpectation(hand, itemStack);
             }
+            // SpellEngine spell weapons don't override getUseAnimation (returns NONE)
+            // because they must NOT enter vanilla "using" state (that would block
+            // the SpellHotbar HEAD from processing further casts). Check for a
+            // SpellContainer data component so the use-key slot populates and
+            // right-click triggers the cast via handleUseKey.
+            var container = itemStack.get(com.ultra.megamod.lib.spellengine.api.spell.SpellDataComponents.SPELL_CONTAINER);
+            if (container != null && !container.spell_ids().isEmpty()) {
+                return new ItemUseExpectation(hand, itemStack);
+            }
         }
         return null;
     }
