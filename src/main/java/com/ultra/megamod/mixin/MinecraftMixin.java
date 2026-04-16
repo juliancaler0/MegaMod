@@ -257,6 +257,11 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
                 player.getInventory().getSelectedSlot(), cursorId, entityIds);
         ClientPacketDistributor.sendToServer(attackPacket);
 
+        // FIX 3: Trigger vanilla arm swing so the server broadcasts the swing
+        // packet to other players and the vanilla attack sounds play
+        // (PLAYER_ATTACK_STRONG, PLAYER_ATTACK_SWEEP, etc.).
+        player.swing(net.minecraft.world.InteractionHand.MAIN_HAND);
+
         // Execute attacks locally for responsive feel
         for (var target : targets) {
             player.attack(target);

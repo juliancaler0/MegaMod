@@ -58,10 +58,12 @@ public class SpellBinding {
             return new OfferResult(Mode.BOOK, offers);
         }
 
-        var choices = SpellChoices.from(itemStack);
-        if (choices != null) {
-            return new OfferResult(Mode.SPELL, List.of());
-        }
+        // FIX 2: The original SpellEngine blocked weapons with a SpellChoice
+        // component from showing any offers, because SpellChoice was handled by a
+        // separate menu. In MegaMod the binding table is the primary way players
+        // manage weapon spells, so we proceed to the pool lookup regardless of
+        // whether a SpellChoice is present. The SpellChoice merely records the
+        // player's initial pick and does not conflict with later re-binding.
         var container = SpellContainerHelper.containerFromItemStack(itemStack);
         if (container == null) {
             return new OfferResult(Mode.SPELL, List.of());

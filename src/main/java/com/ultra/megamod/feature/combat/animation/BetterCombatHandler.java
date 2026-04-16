@@ -79,6 +79,11 @@ public class BetterCombatHandler {
             float tsrm = com.ultra.megamod.feature.combat.animation.config.ScopedCombatConfig.targetSearchRangeMultiplier(player);
             double rangeSquared = attackRange * attackRange * tsrm * tsrm;
 
+            // FIX 3: Trigger vanilla swing so the server plays the generic attack
+            // sounds (PLAYER_ATTACK_STRONG/SWEEP/etc.) and the swing packet
+            // reaches tracking clients even when no targets are hit.
+            player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+
             // Process entity IDs from client
             // Wrap in attribute swap for off-hand attacks (dual-wielding)
             com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper.swapHandAttributes(

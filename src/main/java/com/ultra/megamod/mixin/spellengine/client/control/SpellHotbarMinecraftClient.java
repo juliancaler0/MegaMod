@@ -127,6 +127,21 @@ public abstract class SpellHotbarMinecraftClient implements MinecraftClientExten
             require = 0
     )
     private void selectSlot_Wrap(Inventory instance, int index, Operation<Void> original) {
+        // FIX 1: Block hotbar scroll while R is held for spell cycling.
+        // AbilityKeybind.onMouseScroll cancels InputEvent.MouseScrollingEvent, but by
+        // the time that event fires the scroll delta has already been captured by
+        // MouseHandler.onScroll and stored for handleKeybinds to process. This
+        // WrapOperation is the last chance to prevent the inventory.selected write.
+        if (com.ultra.megamod.feature.relics.client.AbilityKeybind.ABILITY_CAST != null
+                && com.ultra.megamod.feature.relics.client.AbilityKeybind.ABILITY_CAST.isDown()) {
+            var container = com.ultra.megamod.lib.spellengine.internals.container
+                    .SpellContainerSource.activeContainerOf(player);
+            if (container != null && container.spell_ids() != null && container.spell_ids().size() > 1) {
+                // R is held and the weapon has multiple spells — suppress the hotbar slot change.
+                return;
+            }
+        }
+
         var shouldControlSpellHotbar = false;
         if (!Keybindings.bypass_spell_hotbar.isDown()) {
             for (var slot: SpellHotbar.INSTANCE.slots) {
