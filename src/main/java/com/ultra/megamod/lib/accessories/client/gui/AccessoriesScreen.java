@@ -284,7 +284,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         //   - center:      player model preview
         //   - right:       armor column (4 vanilla armor slots)
         //   - bottom:      3x9 inventory + 9-slot hotbar + offhand to the right
-        this.imageWidth = 208;
+        this.imageWidth = 212;
         this.imageHeight = 192;
 
         super.init();
@@ -296,22 +296,24 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         layoutSlotsFallback();
     }
 
-    /** Accessory column geometry (single-wide, left edge of the panel). */
+    /** Accessory column geometry (two columns, left edge of the panel). */
     private static final int ACC_COL_X = 8;
+    private static final int ACC_COL2_X = 26;
     private static final int ACC_COL_Y = 18;
-    private static final int ACC_ROW_STRIDE = 14; // tight packing for up to 12 rows in ~168px
-    private static final int ACC_VISIBLE_ROW_STRIDE = 18; // fall back to 18 when there are few rows
+    private static final int ACC_ROW_STRIDE = 14;
+    private static final int ACC_VISIBLE_ROW_STRIDE = 18;
+    private static final int ACC_COLS = 2;
 
     /** Armor-column geometry (right side of the player preview). */
-    private static final int ARMOR_COL_X = 152;
+    private static final int ARMOR_COL_X = 156;
     private static final int ARMOR_COL_Y = 18;
     private static final int ARMOR_ROW_STRIDE = 18;
 
     /** Entity preview panel geometry (between accessory + armor columns). */
-    private static final int ENTITY_X = 56;
-    private static final int ENTITY_Y = 14;
-    private static final int ENTITY_W = 88;
-    private static final int ENTITY_H = 80;
+    private static final int ENTITY_X = 52;
+    private static final int ENTITY_Y = 8;
+    private static final int ENTITY_W = 96;
+    private static final int ENTITY_H = 88;
 
     /** Player inventory geometry. */
     private static final int INV_X = 8;
@@ -319,7 +321,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     private static final int HOTBAR_Y = 166;
 
     /** Offhand slot (to the right of the hotbar). */
-    private static final int OFFHAND_X = 172;
+    private static final int OFFHAND_X = 176;
     private static final int OFFHAND_Y = HOTBAR_Y;
 
     /** Off-screen coordinate for hidden slots. */
@@ -387,21 +389,22 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         }
 
         // ---- Accessory slot pairs (slots accStart .. end) — menu adds
-        //      them as (cosmetic, base). Target shows a single column of
-        //      base slots on the far left. Cosmetics ride along off-screen. ----
+        //      them as (cosmetic, base). Target shows two columns of base
+        //      slots on the far left. Cosmetics ride along off-screen. ----
         int pairCount = Math.max(0, (slots.size() - accStart) / 2);
-        // Use a tighter stride when we need more than 8 rows so everything
-        // still fits inside the panel above the inventory.
-        this.accRowStride = pairCount > 8 ? ACC_ROW_STRIDE : ACC_VISIBLE_ROW_STRIDE;
-        int accRow = 0;
+        int rowsNeeded = (pairCount + ACC_COLS - 1) / ACC_COLS;
+        this.accRowStride = rowsNeeded > 5 ? ACC_ROW_STRIDE : ACC_VISIBLE_ROW_STRIDE;
+        int accIdx = 0;
         for (int i = accStart; i + 1 < slots.size(); i += 2) {
             var cosmetic = slots.get(i);
             var base = slots.get(i + 1);
-            base.x = ACC_COL_X;
-            base.y = ACC_COL_Y + accRow * this.accRowStride;
+            int col = accIdx % ACC_COLS;
+            int row = accIdx / ACC_COLS;
+            base.x = (col == 0) ? ACC_COL_X : ACC_COL2_X;
+            base.y = ACC_COL_Y + row * this.accRowStride;
             cosmetic.x = HIDDEN;
             cosmetic.y = HIDDEN;
-            accRow++;
+            accIdx++;
         }
     }
 
@@ -890,17 +893,22 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         guiGraphics.fill(x, y, x + w, y + h, FRAME_DARK);
         guiGraphics.fill(x + 1, y + 1, x + w - 1, y + h - 1, PANEL_BG);
 
-        // --- Accessory column sub-panel (left, single-wide) ---
+        // --- Accessory column sub-panel (left, two columns wide) ---
         int accRows = accessoryRowCount();
         if (accRows > 0) {
             int accPanelX = x + ACC_COL_X - 4;
             int accPanelY = y + ACC_COL_Y - 4;
-            int accPanelW = 18 + 8;
+            int accPanelW = ACC_COLS * 18 + 8;
             int accPanelH = accRows * this.accRowStride + 8;
             drawInsetFrame(guiGraphics, accPanelX, accPanelY, accPanelW, accPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
-            for (int r = 0; r < accRows; r++) {
-                int sx = x + ACC_COL_X;
-                int sy = y + ACC_COL_Y + r * this.accRowStride;
+            var menu = this.getMenu();
+            int accStart = menu.startingAccessoriesSlot() + menu.addedArmorSlots();
+            int pairCount = Math.max(0, (menu.slots.size() - accStart) / 2);
+            for (int idx = 0; idx < pairCount; idx++) {
+                int col = idx % ACC_COLS;
+                int row = idx / ACC_COLS;
+                int sx = x + ((col == 0) ? ACC_COL_X : ACC_COL2_X);
+                int sy = y + ACC_COL_Y + row * this.accRowStride;
                 guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
             }
         }
@@ -923,7 +931,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         int ex = x + ENTITY_X;
         int ey = y + ENTITY_Y;
         drawInsetFrame(guiGraphics, ex - 2, ey - 2, ENTITY_W + 4, ENTITY_H + 4, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
-        guiGraphics.fill(ex, ey, ex + ENTITY_W, ey + ENTITY_H, 0xFF5F5F5F);
+        guiGraphics.fill(ex, ey, ex + ENTITY_W, ey + ENTITY_H, 0xFF1A1A1A);
 
         // Render player preview (mouse-follow like the vanilla inventory).
         // Signature in 1.21.11 is:
@@ -993,8 +1001,8 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     private int accessoryRowCount() {
         var menu = this.getMenu();
         int accStart = menu.startingAccessoriesSlot() + menu.addedArmorSlots();
-        int remaining = menu.slots.size() - accStart;
-        return Math.max(1, remaining / 2);
+        int pairCount = Math.max(0, (menu.slots.size() - accStart) / 2);
+        return Math.max(1, (pairCount + ACC_COLS - 1) / ACC_COLS);
     }
 
     /** Paints a 1px vanilla-style inset frame (dark top/left, light bottom/right, mid border). */
