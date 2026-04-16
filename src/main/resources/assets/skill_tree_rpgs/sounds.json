@@ -1,0 +1,194 @@
+{
+  "arcane_fissile_impact": {
+    "sounds": [
+      "skill_tree_rpgs:arcane_fissile_impact"
+    ]
+  },
+  "arcane_phase_shift": {
+    "sounds": [
+      "skill_tree_rpgs:arcane_phase_shift"
+    ]
+  },
+  "arcane_radiance": {
+    "sounds": [
+      "skill_tree_rpgs:arcane_radiance"
+    ]
+  },
+  "arcane_trap_activate": {
+    "sounds": [
+      "skill_tree_rpgs:arcane_trap_activate"
+    ]
+  },
+  "arcane_ward_activate": {
+    "sounds": [
+      "skill_tree_rpgs:arcane_ward_activate"
+    ]
+  },
+  "archer_deflection_activate": {
+    "sounds": [
+      "skill_tree_rpgs:archer_deflection_activate"
+    ]
+  },
+  "archer_deflection_impact": {
+    "sounds": [
+      "skill_tree_rpgs:archer_deflection_impact"
+    ]
+  },
+  "archer_maneuver_activate": {
+    "sounds": [
+      "skill_tree_rpgs:archer_maneuver_activate"
+    ]
+  },
+  "archer_rhythm_activate": {
+    "sounds": [
+      "skill_tree_rpgs:archer_rhythm_activate"
+    ]
+  },
+  "archer_supercharge_activate": {
+    "sounds": [
+      "skill_tree_rpgs:archer_supercharge_activate"
+    ]
+  },
+  "archer_supercharge_release": {
+    "sounds": [
+      "skill_tree_rpgs:archer_supercharge_release"
+    ]
+  },
+  "fire_trap_activate": {
+    "sounds": [
+      "skill_tree_rpgs:fire_trap_activate"
+    ]
+  },
+  "fire_ward_activate": {
+    "sounds": [
+      "skill_tree_rpgs:fire_ward_activate"
+    ]
+  },
+  "frost_cold_snap": {
+    "sounds": [
+      "skill_tree_rpgs:frost_cold_snap"
+    ]
+  },
+  "frost_trap_activate": {
+    "sounds": [
+      "skill_tree_rpgs:frost_trap_activate"
+    ]
+  },
+  "frost_ward_activate": {
+    "sounds": [
+      "skill_tree_rpgs:frost_ward_activate"
+    ]
+  },
+  "frost_winters_chill": {
+    "sounds": [
+      "skill_tree_rpgs:frost_winters_chill"
+    ]
+  },
+  "paladin_ardent_defender": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_ardent_defender"
+    ]
+  },
+  "paladin_crusader_activate": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_crusader_activate"
+    ]
+  },
+  "paladin_crusader_impact": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_crusader_impact"
+    ]
+  },
+  "paladin_divine_hammer_impact": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_divine_hammer_impact"
+    ]
+  },
+  "paladin_redoubt": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_redoubt"
+    ]
+  },
+  "paladin_seal_impact": {
+    "sounds": [
+      "skill_tree_rpgs:paladin_seal_impact"
+    ]
+  },
+  "priest_consecration_impact": {
+    "sounds": [
+      "skill_tree_rpgs:priest_consecration_impact"
+    ]
+  },
+  "priest_fade": {
+    "sounds": [
+      "skill_tree_rpgs:priest_fade"
+    ]
+  },
+  "priest_healing_focus": {
+    "sounds": [
+      "skill_tree_rpgs:priest_healing_focus"
+    ]
+  },
+  "priest_holy_blast": {
+    "sounds": [
+      "skill_tree_rpgs:priest_holy_blast"
+    ]
+  },
+  "priest_incanter_cadence": {
+    "sounds": [
+      "skill_tree_rpgs:priest_incanter_cadence"
+    ]
+  },
+  "priest_orbs_activate": {
+    "sounds": [
+      "skill_tree_rpgs:priest_orbs_activate"
+    ]
+  },
+  "priest_pain_suppression": {
+    "sounds": [
+      "skill_tree_rpgs:priest_pain_suppression"
+    ]
+  },
+  "rogue_cheat_death": {
+    "sounds": [
+      "skill_tree_rpgs:rogue_cheat_death"
+    ]
+  },
+  "rogue_fracture_impact": {
+    "sounds": [
+      "skill_tree_rpgs:rogue_fracture_impact"
+    ]
+  },
+  "rogue_shadows_activate": {
+    "sounds": [
+      "skill_tree_rpgs:rogue_shadows_activate"
+    ]
+  },
+  "rogue_shadows_impact": {
+    "sounds": [
+      "skill_tree_rpgs:rogue_shadows_impact"
+    ]
+  },
+  "rogue_sidestep_activate": {
+    "sounds": [
+      "skill_tree_rpgs:rogue_sidestep_activate"
+    ]
+  },
+  "warrior_enrage": {
+    "sounds": [
+      "skill_tree_rpgs:warrior_enrage"
+    ]
+  },
+  "warrior_shockwave": {
+    "sounds": [
+      "skill_tree_rpgs:warrior_shockwave"
+    ]
+  },
+  "warrior_stomp": {
+    "sounds": [
+      "skill_tree_rpgs:warrior_stomp_1",
+      "skill_tree_rpgs:warrior_stomp_2",
+      "skill_tree_rpgs:warrior_stomp_3"
+    ]
+  }
+}

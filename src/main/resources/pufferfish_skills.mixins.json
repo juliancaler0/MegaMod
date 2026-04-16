@@ -1,0 +1,29 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.ultra.megamod.mixin.pufferfish_skills",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractCriterionMixin",
+    "BlockMixin",
+    "BooleanRuleInvoker",
+    "ConsumeItemCriterionMixin",
+    "CraftingResultSlotMixin",
+    "DamageSourceMixin",
+    "EnchantedItemCriterionMixin",
+    "FishingRodHookedCriterionMixin",
+    "FurnaceOutputSlotMixin",
+    "GameRulesInvoker",
+    "ItemStackMixin",
+    "LivingEntityMixin",
+    "PlayerEntityMixin",
+    "ServerPlayerEntityMixin",
+    "WorldChunkMixin"
+  ],
+  "client": [
+    "MinecraftClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
