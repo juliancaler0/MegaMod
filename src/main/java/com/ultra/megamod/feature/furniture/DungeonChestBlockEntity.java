@@ -80,16 +80,8 @@ public class DungeonChestBlockEntity extends BlockEntity implements Container {
         // Combined bonus: each point shifts quality roll favorably
         double totalBonus = lootFortune + (luck * 3.0);
 
-        // Treasure Alchemist synergy: upgrade dungeon loot tier by one
-        if (player instanceof net.minecraft.server.level.ServerPlayer sp2
-                && com.ultra.megamod.feature.skills.synergy.SynergyEffects.hasTreasureAlchemist(sp2)) {
-            tier = switch (tier) {
-                case NORMAL -> DungeonTier.HARD;
-                case HARD -> DungeonTier.NIGHTMARE;
-                case NIGHTMARE, INFERNAL -> DungeonTier.INFERNAL;
-                default -> tier;
-            };
-        }
+        // Treasure Alchemist synergy: TODO: Reconnect with Pufferfish Skills API
+        // (previously SynergyEffects.hasTreasureAlchemist — defaulting to false / no upgrade)
 
         // Generate loot with the bonus applied
         DungeonChestLoot.activeFortuneBonus = totalBonus;

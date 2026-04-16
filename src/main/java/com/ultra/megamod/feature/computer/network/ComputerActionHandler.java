@@ -29,9 +29,6 @@ import com.ultra.megamod.feature.relics.RelicItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.CompoundTag;
-import com.ultra.megamod.feature.skills.SkillAttributeApplier;
-import com.ultra.megamod.feature.skills.SkillEvents;
-import com.ultra.megamod.feature.skills.SkillManager;
 import com.ultra.megamod.feature.skills.SkillTreeType;
 import java.util.List;
 import java.util.Map;
@@ -488,96 +485,17 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendResponse(player, "shop_config_data", config, eco);
                 break;
             }
-            case "skill_add_xp": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 3) return;
-                UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                int amount = Integer.parseInt(parts[2]);
-                SkillManager skills = SkillManager.get(level);
-                skills.addXp(targetId, tree, amount);
-                skills.saveToDisk(level);
-                ServerPlayer targetPlayer = level.getServer().getPlayerList().getPlayer(targetId);
-                if (targetPlayer != null) {
-                    SkillAttributeApplier.recalculate(targetPlayer);
-                    SkillEvents.syncToClient(targetPlayer);
-                }
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
-            case "skill_add_points": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 3) return;
-                UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                int amount = Integer.parseInt(parts[2]);
-                SkillManager skills = SkillManager.get(level);
-                skills.addPoints(targetId, tree, amount);
-                skills.saveToDisk(level);
-                ServerPlayer targetPlayer = level.getServer().getPlayerList().getPlayer(targetId);
-                if (targetPlayer != null) {
-                    SkillAttributeApplier.recalculate(targetPlayer);
-                    SkillEvents.syncToClient(targetPlayer);
-                }
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
-            case "skill_set_level": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 3) return;
-                UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                int lvl = Integer.parseInt(parts[2]);
-                SkillManager skills = SkillManager.get(level);
-                skills.setLevel(targetId, tree, lvl);
-                skills.saveToDisk(level);
-                ServerPlayer targetPlayer = level.getServer().getPlayerList().getPlayer(targetId);
-                if (targetPlayer != null) {
-                    SkillAttributeApplier.recalculate(targetPlayer);
-                    SkillEvents.syncToClient(targetPlayer);
-                }
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
-            case "skill_reset_tree": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                SkillManager skills = SkillManager.get(level);
-                skills.resetTree(targetId, tree);
-                skills.saveToDisk(level);
-                ServerPlayer targetPlayer = level.getServer().getPlayerList().getPlayer(targetId);
-                if (targetPlayer != null) {
-                    SkillAttributeApplier.recalculate(targetPlayer);
-                    SkillEvents.syncToClient(targetPlayer);
-                }
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
-            case "skill_max_all_trees": {
-                SkillManager skills = SkillManager.get(level);
-                skills.maxOutAllTrees(player.getUUID());
-                skills.saveToDisk(level);
-                SkillAttributeApplier.recalculate(player);
-                SkillEvents.syncToClient(player);
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
-            case "skill_set_admin_xp_mult": {
-                double mult = Double.parseDouble(jsonData);
-                SkillManager skills = SkillManager.get(level);
-                skills.setAdminXpMultiplier(mult);
-                skills.saveToDisk(level);
-                ComputerActionHandler.sendSkillData(player, eco, level);
-                break;
-            }
+            // Old skill admin cases removed — SkillManager/SkillAttributeApplier/SkillEvents deleted.
+            // TODO: Reconnect with Pufferfish Skills API
+            case "skill_add_xp":
+            case "skill_add_points":
+            case "skill_set_level":
+            case "skill_reset_tree":
+            case "skill_max_all_trees":
+            case "skill_set_admin_xp_mult":
             case "skill_set_admin_only_xp_boost": {
-                double boost = Double.parseDouble(jsonData);
-                SkillManager skills2 = SkillManager.get(level);
-                skills2.setAdminOnlyXpBoost(boost);
-                skills2.saveToDisk(level);
-                ComputerActionHandler.sendSkillData(player, eco, level);
+                ComputerActionHandler.sendResponse(player, "admin_result",
+                    "{\"success\":false,\"msg\":\"Old skill system removed — use Pufferfish Skills\"}", eco);
                 break;
             }
             case "request_cosmetics": {
@@ -650,10 +568,7 @@ public class ComputerActionHandler {
                 break;
             }
             case "cosm_reset_respec": {
-                UUID targetId = UUID.fromString(jsonData);
-                SkillManager skills = SkillManager.get(level);
-                skills.resetAllRespecCounts(targetId);
-                skills.saveToDisk(level);
+                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.resetAllRespecCounts)
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
@@ -695,17 +610,12 @@ public class ComputerActionHandler {
                 } else {
                     title = badgeInput.trim();
                 }
-                if (!title.isEmpty()) {
-                    com.ultra.megamod.feature.skills.SkillBadges.setCustomBadge(targetId, title, color);
-                    com.ultra.megamod.feature.skills.SkillBadges.saveToDisk(level);
-                }
+                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.setCustomBadge)
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
             case "cosm_clear_badge": {
-                UUID targetId = UUID.fromString(jsonData);
-                com.ultra.megamod.feature.skills.SkillBadges.clearCustomBadge(targetId);
-                com.ultra.megamod.feature.skills.SkillBadges.saveToDisk(level);
+                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.clearCustomBadge)
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
@@ -729,18 +639,10 @@ public class ComputerActionHandler {
                 }
                 sb.append(",\"wallet\":").append(eco.getWallet(targetId));
                 sb.append(",\"bank\":").append(eco.getBank(targetId));
-                SkillManager skills = SkillManager.get(level);
-                sb.append(",\"skills\":{");
+                // TODO: Reconnect with Pufferfish Skills API (was SkillManager level/xp/points)
+                sb.append(",\"skills\":{}");
                 boolean first = true;
-                for (SkillTreeType tree : SkillTreeType.values()) {
-                    if (!first) sb.append(",");
-                    first = false;
-                    sb.append("\"").append(tree.name()).append("\":[")
-                      .append(skills.getLevel(targetId, tree)).append(",")
-                      .append(skills.getXp(targetId, tree)).append("]");
-                }
-                sb.append("}");
-                sb.append(",\"skillPoints\":").append(skills.getAvailablePoints(targetId));
+                sb.append(",\"skillPoints\":0");
                 try {
                     sb.append(",\"relics\":{");
                     if (target != null) {
@@ -2547,24 +2449,9 @@ public class ComputerActionHandler {
                 break;
             }
             case "admin_reset_challenges": {
-                if (!AdminSystem.isAdmin(player)) break;
-                try {
-                    UUID targetId = UUID.fromString(jsonData);
-                    // Reset challenge progress for this player (clear their progress array)
-                    ServerPlayer targetPlayer = level.getServer().getPlayerList().getPlayer(targetId);
-                    if (targetPlayer != null) {
-                        int[] progress = com.ultra.megamod.feature.skills.challenges.SkillChallenges.getPlayerProgress(targetId, level);
-                        java.util.Arrays.fill(progress, 0);
-                        ComputerActionHandler.sendResponse(player, "admin_result",
-                            "{\"success\":true,\"msg\":\"Challenge progress reset\"}", eco);
-                    } else {
-                        ComputerActionHandler.sendResponse(player, "admin_result",
-                            "{\"success\":false,\"msg\":\"Player not found\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "admin_result",
-                        "{\"success\":false,\"msg\":\"" + e.getMessage() + "\"}", eco);
-                }
+                // TODO: Reconnect with Pufferfish Skills API (was SkillChallenges.getPlayerProgress)
+                ComputerActionHandler.sendResponse(player, "admin_result",
+                    "{\"success\":false,\"msg\":\"Old challenge system removed\"}", eco);
                 break;
             }
             case "admin_force_end_arena": {
@@ -2972,81 +2859,31 @@ public class ComputerActionHandler {
     }
 
     private static void sendSkillData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
-        SkillManager skills = SkillManager.get(level);
-        StringBuilder sb = new StringBuilder("{\"players\":[");
-        Map<UUID, SkillManager.PlayerSkillData> all = skills.getAllPlayerData();
-        boolean first = true;
-        for (Map.Entry<UUID, SkillManager.PlayerSkillData> entry : all.entrySet()) {
-            if (!first) sb.append(",");
-            first = false;
-            UUID uuid = entry.getKey();
-            SkillManager.PlayerSkillData data = entry.getValue();
-            String name = ComputerActionHandler.resolveName(uuid, level);
-            sb.append("{\"uuid\":\"").append(uuid)
-              .append("\",\"name\":\"").append(name.replace("\"", "\\\""))
-              .append("\",\"points\":").append(data.getAvailablePoints());
-            sb.append(",\"treePoints\":{");
-            boolean firstTree = true;
-            for (SkillTreeType tree : SkillTreeType.values()) {
-                if (!firstTree) sb.append(",");
-                firstTree = false;
-                sb.append("\"").append(tree.name()).append("\":").append(data.getAvailablePoints(tree));
-            }
-            sb.append("}");
-            for (SkillTreeType tree : SkillTreeType.values()) {
-                sb.append(",\"").append(tree.name()).append("\":[")
-                  .append(data.getLevel(tree)).append(",").append(data.getXp(tree)).append("]");
-            }
-            sb.append("}");
-        }
-        sb.append("],\"adminXpMult\":").append(String.format("%.1f", skills.getAdminXpMultiplier()))
-          .append(",\"adminOnlyXpBoost\":").append(String.format("%.1f", skills.getAdminOnlyXpBoost())).append("}");
-        ComputerActionHandler.sendResponse(player, "skills_data", sb.toString(), eco);
+        // TODO: Reconnect with Pufferfish Skills API (was SkillManager-based data)
+        ComputerActionHandler.sendResponse(player, "skills_data", "{\"players\":[],\"adminXpMult\":\"1.0\",\"adminOnlyXpBoost\":\"0.0\"}", eco);
     }
 
     private static void sendCosmeticData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
-        SkillManager skills = SkillManager.get(level);
+        // TODO: Reconnect with Pufferfish Skills API (was SkillManager + SkillBadges based cosmetic data)
         com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
-        com.ultra.megamod.feature.computer.network.handlers.SettingsHandler settings = null; // static methods
-        Map<UUID, SkillManager.PlayerSkillData> all = skills.getAllPlayerData();
         StringBuilder sb = new StringBuilder("{\"players\":[");
         boolean first = true;
-        for (Map.Entry<UUID, SkillManager.PlayerSkillData> entry : all.entrySet()) {
+        for (ServerPlayer sp : level.getServer().getPlayerList().getPlayers()) {
             if (!first) sb.append(",");
             first = false;
-            UUID uuid = entry.getKey();
-            String name = ComputerActionHandler.resolveName(uuid, level);
-            // Get badge info
-            com.ultra.megamod.feature.skills.SkillBadges.BadgeInfo badge = com.ultra.megamod.feature.skills.SkillBadges.getBadge(uuid, level);
+            UUID uuid = sp.getUUID();
+            String name = sp.getGameProfile().name();
             boolean badgeEnabled = com.ultra.megamod.feature.computer.network.handlers.SettingsHandler.isEnabled(uuid, "skill_badge");
             boolean particlesEnabled = com.ultra.megamod.feature.computer.network.handlers.SettingsHandler.isEnabled(uuid, "skill_particles");
             int totalPrestige = prestige.getTotalPrestige(uuid);
-            // Count total respecs across all trees
-            int totalRespec = 0;
-            for (SkillTreeType t : SkillTreeType.values()) {
-                totalRespec += skills.getRespecCount(uuid, t);
-            }
             sb.append("{\"uuid\":\"").append(uuid)
               .append("\",\"name\":\"").append(name.replace("\"", "\\\"")).append("\"");
-            if (badge != null) {
-                sb.append(",\"badgeTitle\":\"").append(badge.title().replace("\"", "\\\"")).append("\"");
-                sb.append(",\"badgeTier\":").append(badge.tier());
-                sb.append(",\"badgeTree\":\"").append(badge.tree().name()).append("\"");
-            } else {
-                sb.append(",\"badgeTitle\":\"\",\"badgeTier\":0,\"badgeTree\":\"\"");
-            }
+            sb.append(",\"badgeTitle\":\"\",\"badgeTier\":0,\"badgeTree\":\"\"");
             sb.append(",\"badgeEnabled\":").append(badgeEnabled);
             sb.append(",\"particlesEnabled\":").append(particlesEnabled);
             sb.append(",\"totalPrestige\":").append(totalPrestige);
-            sb.append(",\"respecCount\":").append(totalRespec);
-            boolean hasCustom = com.ultra.megamod.feature.skills.SkillBadges.hasCustomBadge(uuid);
-            sb.append(",\"hasCustomBadge\":").append(hasCustom);
-            if (hasCustom) {
-                String ct = com.ultra.megamod.feature.skills.SkillBadges.getCustomTitle(uuid);
-                String cc = com.ultra.megamod.feature.skills.SkillBadges.getCustomColor(uuid);
-                sb.append(",\"customTitle\":\"").append(ct != null ? ct.replace("\"", "\\\"") : "").append("\"");
-                sb.append(",\"customColor\":\"").append(cc != null ? cc : "white").append("\"");
-            }
+            sb.append(",\"respecCount\":0");
+            sb.append(",\"hasCustomBadge\":false");
             sb.append(",\"treePrestige\":{");
             boolean firstTree = true;
             for (SkillTreeType t : SkillTreeType.values()) {
@@ -3063,7 +2900,6 @@ public class ComputerActionHandler {
     private static void sendPartyViewData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
         Map<UUID, com.ultra.megamod.feature.computer.network.handlers.PartyHandler.Party> allParties =
             com.ultra.megamod.feature.computer.network.handlers.PartyHandler.getAllParties();
-        SkillManager skills = SkillManager.get(level);
         StringBuilder sb = new StringBuilder("{\"parties\":[");
         boolean first = true;
         for (Map.Entry<UUID, com.ultra.megamod.feature.computer.network.handlers.PartyHandler.Party> entry : allParties.entrySet()) {
@@ -3084,35 +2920,12 @@ public class ComputerActionHandler {
                 sb.append("{\"name\":\"").append(memName.replace("\"", "\\\"")).append("\",\"online\":").append(online).append("}");
             }
             sb.append("]");
-            // Check combo buff
-            java.util.Set<com.ultra.megamod.feature.skills.SkillBranch> partySpecs = new java.util.HashSet<>();
-            for (UUID memberId : party.members()) {
-                java.util.Set<String> nodes = skills.getUnlockedNodes(memberId);
-                for (com.ultra.megamod.feature.skills.SkillBranch branch : com.ultra.megamod.feature.skills.SkillBranch.values()) {
-                    if (nodes.contains(branch.name().toLowerCase() + "_3")) {
-                        partySpecs.add(branch);
-                    }
-                }
-            }
-            String combo = getComboName(partySpecs);
-            sb.append(",\"combo\":\"").append(combo).append("\"");
+            // TODO: Reconnect with Pufferfish Skills API (was SkillBranch combo detection)
+            sb.append(",\"combo\":\"\"");
             sb.append("}");
         }
         sb.append("]}");
         ComputerActionHandler.sendResponse(player, "party_view_data", sb.toString(), eco);
-    }
-
-    private static String getComboName(java.util.Set<com.ultra.megamod.feature.skills.SkillBranch> specs) {
-        var B = com.ultra.megamod.feature.skills.SkillBranch.class;
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.BERSERKER) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.SHIELD_WALL)) return "War Party";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.SHIELD_WALL) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.BLADE_MASTERY)) return "Vanguard";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.MANA_WEAVER) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.ENDURANCE)) return "Healer's Guard";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.RANGED_PRECISION) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.TACTICIAN)) return "Sniper Duo";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.SPELL_BLADE) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.RANGED_PRECISION)) return "Arcane Artillery";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.CROP_MASTER) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.ANIMAL_HANDLER)) return "Nature's Alliance";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.DUNGEONEER) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.EXPLORER)) return "Dungeon Delvers";
-        if (specs.contains(com.ultra.megamod.feature.skills.SkillBranch.EFFICIENT_MINING) && specs.contains(com.ultra.megamod.feature.skills.SkillBranch.ORE_FINDER)) return "Mining Expedition";
-        return "";
     }
 
     private static void sendBountyViewData(ServerPlayer player, EconomyManager eco, ServerLevel level) {

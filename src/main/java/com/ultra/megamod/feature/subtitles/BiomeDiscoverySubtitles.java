@@ -79,8 +79,7 @@ public class BiomeDiscoverySubtitles {
             return;
         }
         discoveredBiomes.putBoolean(biomeId, true);
-        // Challenge hook: discover_biome
-        com.ultra.megamod.feature.skills.challenges.SkillChallenges.addProgress(player2, "discover_biome", 1);
+        // Challenge hook: TODO: Reconnect with Pufferfish Skills API (was SkillChallenges.addProgress)
         String biomeName = BiomeDiscoverySubtitles.formatBiomeName(biomeId);
         MutableComponent title = Component.literal(biomeName).withStyle(ChatFormatting.GREEN);
         MutableComponent subtitle = Component.literal("Biome Discovered").withStyle(new ChatFormatting[]{ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC});

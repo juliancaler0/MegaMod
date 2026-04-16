@@ -9,8 +9,6 @@ import com.ultra.megamod.feature.museum.catalog.AquariumCatalog;
 import com.ultra.megamod.feature.museum.catalog.ArtCatalog;
 import com.ultra.megamod.feature.museum.catalog.ItemCatalog;
 import com.ultra.megamod.feature.museum.catalog.WildlifeCatalog;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillTreeType;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -53,9 +51,7 @@ public class LeaderboardHandler {
             allUUIDs.add(sp.getUUID());
         }
 
-        // From skills
-        SkillManager skills = SkillManager.get(level);
-        allUUIDs.addAll(skills.getAllPlayerData().keySet());
+        // Skills UUID source removed — old SkillManager deleted
 
         // Resolve names
         Map<UUID, String> nameCache = new HashMap<>();
@@ -128,16 +124,8 @@ public class LeaderboardHandler {
                 break;
             }
             case "Skills": {
-                for (UUID uuid : allUUIDs) {
-                    String name = nameCache.get(uuid);
-                    if (name == null) continue;
-                    int totalLevel = 0;
-                    for (SkillTreeType tree : SkillTreeType.values()) {
-                        totalLevel += skills.getLevel(uuid, tree);
-                    }
-                    rawEntries.add(new RawEntry(name, uuid.toString(), totalLevel, "Lv " + totalLevel));
-                }
-                rawEntries.sort(Comparator.comparingLong(RawEntry::score).reversed());
+                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.getLevel)
+                // Returning empty leaderboard for now
                 break;
             }
             case "Deaths": {

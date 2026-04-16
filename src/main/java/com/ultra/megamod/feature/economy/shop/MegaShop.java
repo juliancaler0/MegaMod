@@ -18,7 +18,6 @@ package com.ultra.megamod.feature.economy.shop;
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.economy.EconomyManager;
 import com.ultra.megamod.feature.economy.shop.ShopItem;
-import com.ultra.megamod.feature.skills.integration.SkillsEconomyIntegration;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -284,7 +283,7 @@ public class MegaShop {
         }
         ShopItem item = items.get(index);
         EconomyManager eco = EconomyManager.get(level);
-        int finalPrice = SkillsEconomyIntegration.applyShopDiscount(player, item.buyPrice());
+        int finalPrice = item.buyPrice(); // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyShopDiscount)
         if (!eco.spendWallet(player.getUUID(), finalPrice)) {
             return false;
         }
@@ -353,7 +352,7 @@ public class MegaShop {
             Identifier stackId = BuiltInRegistries.ITEM.getKey(invStack.getItem());
             if (invStack.isEmpty() || !stackId.equals((Object)itemKey)) continue;
             invStack.shrink(1);
-            int finalSellPrice = SkillsEconomyIntegration.applySellBonus(player, shopItem.sellPrice());
+            int finalSellPrice = shopItem.sellPrice(); // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applySellBonus)
             EconomyManager eco = EconomyManager.get(level);
             eco.addWallet(player.getUUID(), finalSellPrice);
             this.markDirty();

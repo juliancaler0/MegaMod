@@ -6,9 +6,6 @@ import com.google.gson.JsonParser;
 import com.ultra.megamod.feature.computer.network.ComputerDataPayload;
 import com.ultra.megamod.feature.economy.EconomyManager;
 import com.ultra.megamod.feature.prestige.MasteryMarkManager;
-import com.ultra.megamod.feature.skills.SkillBadges;
-import com.ultra.megamod.feature.skills.SkillBranch;
-import com.ultra.megamod.feature.skills.SkillManager;
 import com.ultra.megamod.feature.skills.prestige.PrestigeManager;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
@@ -20,10 +17,11 @@ import java.util.*;
 /**
  * Server-side handler for the Customize computer app.
  * Manages badge customization, prestige name colors, and mastery mark purchases.
+ * TODO: Reconnect badge/branch features with Pufferfish Skills API
  */
 public class CustomizeHandler {
 
-    // Per-player prestige name color overrides (persisted via SkillBadges)
+    // Per-player prestige name color overrides
     private static final Map<UUID, String> prestigeColorOverrides = new HashMap<>();
 
     public static boolean handle(ServerPlayer player, String action, String jsonData, ServerLevel level, EconomyManager eco) {
@@ -33,17 +31,18 @@ public class CustomizeHandler {
                 return true;
             }
             case "customize_badge_reset" -> {
-                SkillBadges.clearCustomBadge(player.getUUID());
-                SkillBadges.saveToDisk(level);
+                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.clearCustomBadge)
                 sendResult(player, true, "Badge reset to auto", eco);
                 return true;
             }
             case "customize_badge_title" -> {
-                handleBadgeTitle(player, jsonData, level, eco);
+                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges + SkillBranch validation)
+                sendResult(player, false, "Badge system being rebuilt", eco);
                 return true;
             }
             case "customize_badge_color" -> {
-                handleBadgeColor(player, jsonData, level, eco);
+                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.setCustomBadge)
+                sendResult(player, false, "Badge system being rebuilt", eco);
                 return true;
             }
             case "customize_prestige_color" -> {
@@ -63,7 +62,6 @@ public class CustomizeHandler {
         ServerLevel overworld = player.level().getServer().overworld();
         MasteryMarkManager marks = MasteryMarkManager.get(overworld);
         PrestigeManager prestige = PrestigeManager.get(overworld);
-        SkillManager skills = SkillManager.get(overworld);
 
         JsonObject data = new JsonObject();
         data.addProperty("marks", marks.getMarks(uuid));
@@ -72,12 +70,10 @@ public class CustomizeHandler {
         data.addProperty("is_admin", com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(player));
         data.addProperty("has_prestiged", tp > 0);
 
-        // Current badge info
-        data.addProperty("has_custom", SkillBadges.hasCustomBadge(uuid));
-        String customTitle = SkillBadges.getCustomTitle(uuid);
-        data.addProperty("badge_title", customTitle != null ? customTitle : "");
-        String customColor = SkillBadges.getCustomColor(uuid);
-        data.addProperty("badge_color", customColor != null ? customColor : "");
+        // Badge info stubbed — old SkillBadges system removed
+        data.addProperty("has_custom", false);
+        data.addProperty("badge_title", "");
+        data.addProperty("badge_color", "");
 
         // Prestige color
         data.addProperty("prestige_color", prestigeColorOverrides.getOrDefault(uuid, "default"));
@@ -86,85 +82,14 @@ public class CustomizeHandler {
         data.addProperty("coin_boost", getBoostLevel(marks, uuid, "coin_boost"));
         data.addProperty("xp_boost", getBoostLevel(marks, uuid, "xp_boost"));
 
-        // Unlocked branches (tier 3+ for badge selection)
-        Set<String> unlocked = skills.getUnlockedNodes(uuid);
-        JsonArray branches = new JsonArray();
-        for (SkillBranch branch : SkillBranch.values()) {
-            int highestTier = 0;
-            for (int t = 1; t <= 5; t++) {
-                String nodeId = branch.name().toLowerCase() + "_" + t;
-                if (unlocked.contains(nodeId)) highestTier = t;
-            }
-            if (highestTier >= 3) {
-                branches.add(branch.getDisplayName());
-            }
-        }
-        data.add("branches", branches);
+        // Branches stubbed — old SkillBranch enum removed
+        data.add("branches", new JsonArray());
 
         ComputerDataPayload response = new ComputerDataPayload(
             "customize_data", data.toString(),
             eco.getWallet(uuid), eco.getBank(uuid)
         );
         PacketDistributor.sendToPlayer(player, (CustomPacketPayload) response, (CustomPacketPayload[]) new CustomPacketPayload[0]);
-    }
-
-    private static void handleBadgeTitle(ServerPlayer player, String jsonData, ServerLevel level, EconomyManager eco) {
-        try {
-            JsonObject obj = JsonParser.parseString(jsonData).getAsJsonObject();
-            String title = obj.get("title").getAsString();
-
-            // Validate the branch exists and player has it at tier 3+
-            UUID uuid = player.getUUID();
-            ServerLevel overworld = player.level().getServer().overworld();
-            SkillManager skills = SkillManager.get(overworld);
-            Set<String> unlocked = skills.getUnlockedNodes(uuid);
-
-            boolean valid = false;
-            for (SkillBranch branch : SkillBranch.values()) {
-                if (branch.getDisplayName().equals(title)) {
-                    for (int t = 3; t <= 5; t++) {
-                        if (unlocked.contains(branch.name().toLowerCase() + "_" + t)) {
-                            valid = true;
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-
-            if (!valid) {
-                sendResult(player, false, "Branch not unlocked at tier 3+", eco);
-                return;
-            }
-
-            String currentColor = SkillBadges.getCustomColor(uuid);
-            SkillBadges.setCustomBadge(uuid, title, currentColor != null ? currentColor : "white");
-            SkillBadges.saveToDisk(level);
-            sendResult(player, true, "Badge set to [" + title + "]", eco);
-        } catch (Exception e) {
-            sendResult(player, false, "Error setting badge", eco);
-        }
-    }
-
-    private static void handleBadgeColor(ServerPlayer player, String jsonData, ServerLevel level, EconomyManager eco) {
-        try {
-            JsonObject obj = JsonParser.parseString(jsonData).getAsJsonObject();
-            String color = obj.get("color").getAsString();
-
-            UUID uuid = player.getUUID();
-            String currentTitle = SkillBadges.getCustomTitle(uuid);
-            if (currentTitle == null) {
-                // Auto-create custom badge with the auto-generated title
-                ServerLevel overworld = player.level().getServer().overworld();
-                SkillBadges.BadgeInfo auto = SkillBadges.getBadge(uuid, overworld);
-                currentTitle = auto != null ? auto.title() : "Adventurer";
-            }
-            SkillBadges.setCustomBadge(uuid, currentTitle, color);
-            SkillBadges.saveToDisk(level);
-            sendResult(player, true, "Badge color set to " + color, eco);
-        } catch (Exception e) {
-            sendResult(player, false, "Error setting color", eco);
-        }
     }
 
     private static void handlePrestigeColor(ServerPlayer player, String jsonData, ServerLevel level, EconomyManager eco) {

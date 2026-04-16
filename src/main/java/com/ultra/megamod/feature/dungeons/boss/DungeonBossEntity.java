@@ -432,13 +432,7 @@ extends Monster {
                     ngp.saveToDisk(overworld);
                 }
 
-                // Challenge hook: dungeon_clear for all players in this dungeon
-                for (java.util.UUID playerUuid : allPlayers) {
-                    ServerPlayer sp2 = serverLevel.getServer().getPlayerList().getPlayer(playerUuid);
-                    if (sp2 != null) {
-                        com.ultra.megamod.feature.skills.challenges.SkillChallenges.addProgress(sp2, "dungeon_clear", 1);
-                    }
-                }
+                // Challenge hook: TODO: Reconnect with Pufferfish Skills API (was SkillChallenges.addProgress)
 
                 // Record leaderboard time
                 if (instance.startTimeMs > 0) {

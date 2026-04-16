@@ -5,7 +5,6 @@ import com.ultra.megamod.feature.dungeons.DungeonTier;
 import com.ultra.megamod.feature.dungeons.loot.DungeonLootGenerator;
 import com.ultra.megamod.feature.dungeons.loot.LootQuality;
 import com.ultra.megamod.feature.relics.RelicRegistry;
-import com.ultra.megamod.feature.skills.synergy.SynergyEffects;
 import com.ultra.megamod.feature.toggles.FeatureToggleManager;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -84,15 +83,8 @@ public class WorldLootIntegration {
         level.playSound(null, mob.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE,
                 SoundSource.PLAYERS, 0.8f, 1.2f);
 
-        // Fortune's Favor synergy: chance to duplicate the rare drop
-        if (SynergyEffects.shouldDoubleRareDrop(player)) {
-            ItemStack duplicate = rolledItem.copy();
-            ItemEntity bonusDrop = new ItemEntity(level, mob.getX(), mob.getY() + 0.5, mob.getZ(), duplicate);
-            bonusDrop.setDefaultPickUpDelay();
-            event.getDrops().add(bonusDrop);
-            player.sendSystemMessage(Component.literal(
-                    "\u00A76\u00A7l\u2605 \u00A7eFortune's Favor! Double drop!"));
-        }
+        // Fortune's Favor synergy: TODO: Reconnect with Pufferfish Skills API
+        // (previously SynergyEffects.shouldDoubleRareDrop — defaulting to false / no double drop)
     }
 
     private static double getMobDropChance(String mobType) {

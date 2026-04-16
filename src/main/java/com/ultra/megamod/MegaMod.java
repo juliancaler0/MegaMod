@@ -21,8 +21,6 @@ import com.ultra.megamod.feature.museum.MuseumRegistry;
 import com.ultra.megamod.feature.relics.RelicRegistry;
 import com.ultra.megamod.feature.economy.network.AtmNetwork;
 import com.ultra.megamod.feature.relics.network.RelicNetwork;
-import com.ultra.megamod.feature.skills.network.SkillNetwork;
-
 import com.ultra.megamod.feature.villagerrefresh.VillagerTradeRefresh;
 import com.ultra.megamod.feature.furniture.FurnitureRegistry;
 import com.ultra.megamod.feature.dungeons.generation.DNLBlockRegistry;
@@ -85,7 +83,7 @@ public class MegaMod {
         com.ultra.megamod.feature.marketplace.MarketplaceRegistry.init(modEventBus);
         modEventBus.addListener(AtmNetwork::registerPayloads);
         modEventBus.addListener(RelicNetwork::registerPayloads);
-        modEventBus.addListener(SkillNetwork::registerPayloads);
+        // SkillNetwork removed — Pufferfish Skills system is wired via NeoForgeMain
         modEventBus.addListener(CitizenNetwork::registerPayloads);
         modEventBus.addListener(RequestNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.hud.network.HudNetwork::registerPayloads);

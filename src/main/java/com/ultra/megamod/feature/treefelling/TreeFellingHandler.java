@@ -1,9 +1,5 @@
 package com.ultra.megamod.feature.treefelling;
 
-import com.ultra.megamod.feature.skills.SkillBranch;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillNode;
-import com.ultra.megamod.feature.skills.SkillTreeDefinitions;
 import com.ultra.megamod.feature.computer.admin.AdminSystem;
 import com.ultra.megamod.feature.toggles.FeatureToggleManager;
 import net.minecraft.core.BlockPos;
@@ -85,25 +81,12 @@ public class TreeFellingHandler {
     }
 
     /**
-     * Check if player has Crop Master or Herbalist at tier 3+.
-     * Admins bypass the skill check (feature toggle already gates the feature itself).
+     * Check if player has tree felling skill.
+     * TODO: Reconnect with Pufferfish Skills API (was SkillBranch.CROP_MASTER/BOTANIST tier 3+ check)
+     * Currently always returns true — feature toggle gates the feature itself.
      */
     private static boolean hasTreeFellingSkill(ServerPlayer player, ServerLevel level) {
-        if (AdminSystem.isAdmin(player)) return true;
-
-        ServerLevel overworld = level.getServer().overworld();
-        SkillManager skills = SkillManager.get(overworld);
-        Set<String> unlocked = skills.getUnlockedNodes(player.getUUID());
-
-        for (String nodeId : unlocked) {
-            SkillNode node = SkillTreeDefinitions.getNodeById(nodeId);
-            if (node != null && node.tier() >= 3) {
-                if (node.branch() == SkillBranch.CROP_MASTER || node.branch() == SkillBranch.BOTANIST) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return true;
     }
 
     /**

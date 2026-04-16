@@ -25,13 +25,11 @@ public class ItemBatchedRenderer {
 	}
 
 	public void draw(GuiGraphics context) {
-		var client = Minecraft.getInstance();
-
 		for (var entry : batch.entrySet()) {
 			var itemStack = entry.getKey().itemStack;
 
 			for (var pos : entry.getValue()) {
-				context.renderItem(itemStack, pos[0], pos[1]);
+				context.renderItem(itemStack, pos[0] - 8, pos[1] - 8);
 			}
 		}
 		batch.clear();

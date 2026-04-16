@@ -34,8 +34,6 @@ import com.ultra.megamod.feature.museum.dimension.MuseumDimensionManager;
 import com.ultra.megamod.feature.museum.dimension.MuseumPortalHandler;
 import com.ultra.megamod.feature.museum.paintings.MasterpiecePaintingItem;
 import com.ultra.megamod.feature.museum.network.OpenMuseumPayload;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillTreeType;
 import net.minecraft.world.item.Items;
 import java.util.Set;
 import java.util.UUID;
@@ -97,8 +95,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        skills.addXp(serverPlayer.getUUID(), SkillTreeType.COMBAT, 5);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -113,8 +110,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        skills.addXp(serverPlayer.getUUID(), SkillTreeType.COMBAT, 5);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -128,8 +124,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        skills.addXp(serverPlayer.getUUID(), SkillTreeType.COMBAT, 5);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -143,8 +138,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        skills.addXp(serverPlayer.getUUID(), SkillTreeType.ARCANE, 5);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp ARCANE 5)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -156,8 +150,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        skills.addXp(serverPlayer.getUUID(), SkillTreeType.ARCANE, 5);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp ARCANE 5)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -170,10 +163,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        SkillManager skills = SkillManager.get(serverLevel);
-                        SkillTreeType treeType = getSkillTreeForItem(itemId);
-                        int xpAmount = getSkillXpForItem(itemId);
-                        skills.addXp(serverPlayer.getUUID(), treeType, xpAmount);
+                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp with item-based tree)
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -253,26 +243,6 @@ extends Block {
         "ore", "raw_", "deepslate"
     };
 
-    private static SkillTreeType getSkillTreeForItem(String itemId) {
-        String path = itemId.contains(":") ? itemId.substring(itemId.indexOf(':') + 1) : itemId;
-        for (String keyword : MINING_KEYWORDS) {
-            if (path.contains(keyword)) return SkillTreeType.MINING;
-        }
-        for (String keyword : FARMING_KEYWORDS) {
-            if (path.contains(keyword)) return SkillTreeType.FARMING;
-        }
-        return SkillTreeType.SURVIVAL;
-    }
-
-    private static int getSkillXpForItem(String itemId) {
-        String path = itemId.contains(":") ? itemId.substring(itemId.indexOf(':') + 1) : itemId;
-        for (String keyword : MINING_KEYWORDS) {
-            if (path.contains(keyword)) return 3;
-        }
-        for (String keyword : FARMING_KEYWORDS) {
-            if (path.contains(keyword)) return 3;
-        }
-        return 2;
-    }
+    // getSkillTreeForItem and getSkillXpForItem removed — TODO: Reconnect with Pufferfish Skills API
 }
 

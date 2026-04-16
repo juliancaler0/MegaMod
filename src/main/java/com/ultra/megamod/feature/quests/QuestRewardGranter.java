@@ -5,8 +5,6 @@ import com.ultra.megamod.feature.economy.EconomyManager;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestDef;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestReward;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestRewardType;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillTreeType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -36,12 +34,7 @@ public class QuestRewardGranter {
                 eco.addWallet(player.getUUID(), reward.amount());
             }
             case SKILL_XP -> {
-                if (!reward.targetId().isEmpty()) {
-                    try {
-                        SkillTreeType tree = SkillTreeType.valueOf(reward.targetId());
-                        SkillManager.get(level).addXp(player.getUUID(), tree, reward.amount());
-                    } catch (IllegalArgumentException ignored) {}
-                }
+                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp)
             }
             case ITEM -> {
                 if (!reward.targetId().isEmpty()) {

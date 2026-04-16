@@ -25,7 +25,6 @@ import com.ultra.megamod.feature.attributes.network.CombatTextSender;
 import com.ultra.megamod.feature.computer.network.handlers.SettingsHandler;
 import com.ultra.megamod.feature.hud.DamageHistoryTracker;
 import com.ultra.megamod.feature.hud.network.ScreenShakePayload;
-import com.ultra.megamod.feature.skills.synergy.SynergyEffects;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -144,18 +143,8 @@ public class AttributeEvents {
         poisonDmg *= brillianceMultiplier;
         holyDmg *= brillianceMultiplier;
         shadowDmg *= brillianceMultiplier;
-        // Runic Arsenal synergy: enchanted weapons deal bonus elemental damage
-        if (attacker instanceof ServerPlayer sp) {
-            float runicMultiplier = SynergyEffects.getRunicArsenalMultiplier(sp);
-            if (runicMultiplier > 1.0f) {
-                fireDmg *= runicMultiplier;
-                iceDmg *= runicMultiplier;
-                lightningDmg *= runicMultiplier;
-                poisonDmg *= runicMultiplier;
-                holyDmg *= runicMultiplier;
-                shadowDmg *= runicMultiplier;
-            }
-        }
+        // Runic Arsenal synergy: TODO: Reconnect with Pufferfish Skills API
+        // (previously SynergyEffects.getRunicArsenalMultiplier — defaulting to 1.0f / no bonus)
 
         double totalElemental = 0.0;
         double fireActual = fireDmg * Math.max(0.0, 1.0 - fireRes / 100.0);
@@ -224,10 +213,8 @@ public class AttributeEvents {
         }
         double lifesteal = AttributeHelper.getValue(attacker, MegaModAttributes.LIFESTEAL);
         if (lifesteal > 0.0 && (healAmount = (float)((double)damageDealt * lifesteal / 100.0)) > 0.0f) {
-            // Bloodblade synergy: amplify lifesteal healing
-            if (attacker instanceof ServerPlayer sp) {
-                healAmount *= SynergyEffects.getLifestealMultiplier(sp);
-            }
+            // Bloodblade synergy: TODO: Reconnect with Pufferfish Skills API
+            // (previously SynergyEffects.getLifestealMultiplier — defaulting to 1.0f / no bonus)
             attacker.heal(healAmount);
             CombatTextSender.sendLifesteal(attacker, healAmount);
         }

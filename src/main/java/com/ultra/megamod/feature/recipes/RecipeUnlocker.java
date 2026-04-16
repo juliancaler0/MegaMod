@@ -1,10 +1,5 @@
 package com.ultra.megamod.feature.recipes;
 
-import com.ultra.megamod.feature.skills.SkillBranch;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillNode;
-import com.ultra.megamod.feature.skills.SkillTreeDefinitions;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -18,12 +13,13 @@ import java.util.Set;
 
 /**
  * Auto-unlocks all MegaMod crafting recipes in the recipe book on player login.
- * Special backpack variants are only unlocked when the player has Explorer T3+ or Navigator T3+.
+ * Special backpack variants were previously gated behind skill tree nodes.
+ * TODO: Reconnect with Pufferfish Skills API for backpack recipe gating.
  */
 @EventBusSubscriber(modid = "megamod")
 public class RecipeUnlocker {
 
-    /** Backpack variant IDs that require Explorer/Navigator T3+ to see in recipe book */
+    /** Backpack variant IDs that previously required Explorer/Navigator T3+ to see in recipe book */
     private static final Set<String> LOCKED_BACKPACK_IDS = Set.of(
             "netherite_backpack", "diamond_backpack", "gold_backpack", "iron_backpack",
             "emerald_backpack", "lapis_backpack", "redstone_backpack", "coal_backpack",
@@ -50,11 +46,13 @@ public class RecipeUnlocker {
 
     /**
      * Awards all megamod recipes to the player.
-     * Special backpacks are only awarded if the player has Explorer T3+ or Navigator T3+.
+     * Backpack skill gating removed (old skill system deleted).
+     * All backpack recipes are now unlocked for everyone.
      */
     public static void awardRecipes(ServerPlayer sp) {
         var recipeManager = sp.level().getServer().getRecipeManager();
-        boolean hasBackpackSkill = hasBackpackUnlock(sp);
+        // TODO: Reconnect with Pufferfish Skills API (was SkillManager/SkillBranch gating)
+        boolean hasBackpackSkill = true; // stub: always unlocked
 
         List<RecipeHolder<?>> toAward = new ArrayList<>();
 
@@ -78,53 +76,18 @@ public class RecipeUnlocker {
     }
 
     /**
-     * Called when a player unlocks a skill node — awards backpack recipes if they
-     * just gained Explorer T3+ or Navigator T3+.
+     * Called when a player unlocks a skill node — previously awarded backpack recipes
+     * when Explorer/Navigator T3+ was gained.
+     * TODO: Reconnect with Pufferfish Skills API
      */
     public static void onSkillUnlocked(ServerPlayer sp, String nodeId) {
-        SkillNode node = SkillTreeDefinitions.getNodeById(nodeId);
-        if (node == null) return;
-
-        // Only care about Explorer or Navigator branch, tier 3+
-        if ((node.branch() == SkillBranch.EXPLORER || node.branch() == SkillBranch.NAVIGATOR)
-                && node.tier() >= 3) {
-            // Award the backpack recipes they were missing
-            var recipeManager = sp.level().getServer().getRecipeManager();
-            List<RecipeHolder<?>> backpackRecipes = new ArrayList<>();
-
-            for (RecipeHolder<?> holder : recipeManager.getRecipes()) {
-                if (!holder.id().identifier().getNamespace().equals("megamod")) continue;
-                String path = holder.id().identifier().getPath();
-                if (isLockedBackpackRecipe(path)) {
-                    backpackRecipes.add(holder);
-                }
-            }
-
-            if (!backpackRecipes.isEmpty()) {
-                sp.awardRecipes(backpackRecipes);
-            }
-        }
+        // Stub: old skill system removed
     }
 
     private static boolean isLockedBackpackRecipe(String path) {
         if (LOCKED_BACKPACK_IDS.contains(path)) return true;
         // Dye variants: dye_bee_backpack, dye_creeper_backpack, etc.
         if (path.startsWith(DYE_BACKPACK_PREFIX) && path.endsWith("_backpack")) return true;
-        return false;
-    }
-
-    private static boolean hasBackpackUnlock(ServerPlayer sp) {
-        ServerLevel overworld = sp.level().getServer().overworld();
-        SkillManager skills = SkillManager.get(overworld);
-        Set<String> unlocked = skills.getUnlockedNodes(sp.getUUID());
-
-        for (String nodeId : unlocked) {
-            SkillNode node = SkillTreeDefinitions.getNodeById(nodeId);
-            if (node != null && node.tier() >= 3
-                    && (node.branch() == SkillBranch.EXPLORER || node.branch() == SkillBranch.NAVIGATOR)) {
-                return true;
-            }
-        }
         return false;
     }
 }

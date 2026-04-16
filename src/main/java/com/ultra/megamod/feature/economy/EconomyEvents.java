@@ -29,10 +29,6 @@ import com.ultra.megamod.feature.dungeons.boss.DungeonBossEntity;
 import com.ultra.megamod.feature.economy.EconomyManager;
 import com.ultra.megamod.feature.economy.network.PlayerInfoSyncPayload;
 import com.ultra.megamod.feature.economy.shop.MegaShop;
-import com.ultra.megamod.feature.skills.SkillBadges;
-import com.ultra.megamod.feature.skills.SkillManager;
-import com.ultra.megamod.feature.skills.SkillTreeType;
-import com.ultra.megamod.feature.skills.integration.SkillsEconomyIntegration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -108,7 +104,7 @@ public class EconomyEvents {
         reward = applyDiminishingReturns(player, reward);
         if (reward <= 0) return;
 
-        reward = SkillsEconomyIntegration.applyMegacoinBonus(player, reward);
+        // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyMegacoinBonus)
         EconomyManager eco = EconomyManager.get(player.level());
         eco.addWallet(player.getUUID(), reward);
         player.sendSystemMessage((Component)Component.literal((String)("+" + reward + " MegaCoins")).withStyle(ChatFormatting.GOLD));
@@ -198,7 +194,7 @@ public class EconomyEvents {
         Block block = event.getState().getBlock();
         int reward = EconomyEvents.getOreReward(block);
         if (reward > 0) {
-            reward = SkillsEconomyIntegration.applyMegacoinBonus(player2, reward);
+            // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyMegacoinBonus)
             EconomyManager eco = EconomyManager.get(player2.level());
             eco.addWallet(player2.getUUID(), reward);
             // Batch ore rewards — accumulate and display every 3 seconds
@@ -350,16 +346,11 @@ public class EconomyEvents {
         int wallet = eco.getWallet(uuid);
         int bank = eco.getBank(uuid);
 
-        SkillManager skills = SkillManager.get(overworld);
+        // TODO: Reconnect with Pufferfish Skills API (was SkillManager levels + SkillBadges)
         int totalLevel = 0;
-        for (SkillTreeType t : SkillTreeType.values()) {
-            totalLevel += skills.getLevel(uuid, t);
-        }
-
-        SkillBadges.BadgeInfo badge = SkillBadges.getBadge(uuid, overworld);
-        String badgeTitle = badge != null ? badge.title() : "";
-        String badgeColorCode = badge != null ? badge.colorCode() : "";
-        int totalPrestige = badge != null ? badge.totalPrestige() : 0;
+        String badgeTitle = "";
+        String badgeColorCode = "";
+        int totalPrestige = 0;
 
         PacketDistributor.sendToPlayer(player, new PlayerInfoSyncPayload(
                 wallet, bank, totalLevel, totalPrestige, badgeTitle, badgeColorCode));

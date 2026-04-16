@@ -14,7 +14,6 @@ import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTask;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTaskType;
 import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import com.ultra.megamod.feature.skills.SkillManager;
 import com.ultra.megamod.feature.skills.SkillTreeType;
 import com.ultra.megamod.feature.skills.prestige.PrestigeManager;
 import net.minecraft.server.level.ServerLevel;
@@ -44,8 +43,8 @@ public class QuestTaskEvaluator {
                     EconomyManager eco = EconomyManager.get(level);
                     yield eco.getWallet(uuid) + eco.getBank(uuid);
                 }
-                case SKILL_LEVEL -> evaluateSkillLevel(uuid, task.targetId(), level);
-                case UNLOCK_SKILL_NODE -> SkillManager.get(level).isNodeUnlocked(uuid, task.targetId()) ? 1 : 0;
+                case SKILL_LEVEL -> 0; // TODO: Reconnect with Pufferfish Skills API (was evaluateSkillLevel)
+                case UNLOCK_SKILL_NODE -> 0; // TODO: Reconnect with Pufferfish Skills API (was SkillManager.isNodeUnlocked)
                 case DUNGEON_CLEAR -> evaluateDungeonClear(uuid, task.targetId(), level);
                 case MOB_KILLS -> PlayerStatistics.get(level).getStat(uuid, "mobKills");
                 case BLOCKS_BROKEN -> PlayerStatistics.get(level).getStat(uuid, "blocksBroken");
@@ -95,24 +94,7 @@ public class QuestTaskEvaluator {
 
     // ─── Skill level evaluation ───
 
-    private static int evaluateSkillLevel(UUID uuid, String targetId, ServerLevel level) {
-        SkillManager sm = SkillManager.get(level);
-        if ("ANY".equals(targetId)) {
-            return Arrays.stream(SkillTreeType.values())
-                .mapToInt(t -> sm.getLevel(uuid, t))
-                .max().orElse(0);
-        } else if ("ALL".equals(targetId)) {
-            return Arrays.stream(SkillTreeType.values())
-                .mapToInt(t -> sm.getLevel(uuid, t))
-                .min().orElse(0);
-        } else {
-            try {
-                return sm.getLevel(uuid, SkillTreeType.valueOf(targetId));
-            } catch (IllegalArgumentException e) {
-                return 0;
-            }
-        }
-    }
+    // evaluateSkillLevel removed — TODO: Reconnect with Pufferfish Skills API
 
     // ─── Dungeon clear evaluation ───
 

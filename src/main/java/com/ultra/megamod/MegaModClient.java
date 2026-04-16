@@ -29,8 +29,6 @@ import com.ultra.megamod.feature.museum.client.MuseumDoorRenderer;
 import com.ultra.megamod.feature.relics.client.AbilityHudOverlay;
 import com.ultra.megamod.feature.relics.client.AbilityKeybind;
 import com.ultra.megamod.feature.relics.client.AccessoryKeybind;
-import com.ultra.megamod.feature.skills.client.SkillHudOverlay;
-import com.ultra.megamod.feature.skills.client.SkillTreeKeybind;
 import com.ultra.megamod.feature.attributes.network.CombatTextRenderer;
 import com.ultra.megamod.feature.baritone.screen.BotPathRenderHandler;
 import com.ultra.megamod.feature.citizen.client.CitizenHudOverlay;
@@ -78,7 +76,7 @@ public class MegaModClient {
         modEventBus.addListener(com.ultra.megamod.feature.hud.StatusEffectBar::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.QuestTrackerDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.CropMaturityDisplay::onRegisterGuiLayers);
-        modEventBus.addListener(SkillHudOverlay::onRegisterGuiLayers);
+        // SkillHudOverlay removed — Pufferfish Skills registers its own HUD
 
         // Group 4: Combat HUD
         modEventBus.addListener(AbilityHudOverlay::onRegisterGuiLayers);
@@ -112,7 +110,7 @@ public class MegaModClient {
         // Keybind registrations
         modEventBus.addListener(AccessoryKeybind::onRegisterKeyMappings);
         modEventBus.addListener(AbilityKeybind::onRegisterKeyMappings);
-        modEventBus.addListener(SkillTreeKeybind::onRegisterKeyMappings);
+        // SkillTreeKeybind removed — Pufferfish Skills registers its own keybind
         modEventBus.addListener(com.ultra.megamod.feature.casino.CasinoClientEvents::onRegisterKeyMappings);
         // PortableCraft keybind NOT registered here — uses direct key detection to stay hidden from non-admins
         modEventBus.addListener(com.ultra.megamod.feature.sorting.client.SortKeybind::onRegisterKeyMappings);

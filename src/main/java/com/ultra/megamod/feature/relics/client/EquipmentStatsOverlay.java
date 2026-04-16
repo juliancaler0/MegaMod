@@ -3,8 +3,6 @@ package com.ultra.megamod.feature.relics.client;
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.attributes.MegaModAttributes;
 import com.ultra.megamod.feature.relics.network.AccessoryPayload;
-import com.ultra.megamod.feature.skills.SkillTreeType;
-import com.ultra.megamod.feature.skills.network.SkillSyncPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -257,13 +255,7 @@ public class EquipmentStatsOverlay {
         Collection<MobEffectInstance> effects = mc.player.getActiveEffects();
         if (!effects.isEmpty()) h += 4 + 10 + effects.size() * 9;
 
-        // Skills
-        Map<SkillTreeType, Integer> skillLevels = SkillSyncPayload.clientLevels;
-        if (skillLevels != null && !skillLevels.isEmpty()) {
-            int treeCount = 0;
-            for (int lv : skillLevels.values()) { if (lv > 0) treeCount++; }
-            if (treeCount > 0) h += 4 + 10 + treeCount * 9;
-        }
+        // Skills section removed — old skill system deleted (TODO: Reconnect with Pufferfish Skills API)
 
         // Relics
         Map<String, String> equipped = AccessoryPayload.AccessorySyncPayload.clientEquipped;
@@ -295,16 +287,15 @@ public class EquipmentStatsOverlay {
         drawDivider(g, tx, ty, CONTENT_W);
         ty += 3;
 
-        Map<String, Double> defSkillBonus = SkillSyncPayload.clientSkillBonuses;
-        double maxHp = mc.player.getMaxHealth() + defSkillBonus.getOrDefault("max_health", 0.0);
+        // Skill bonuses removed — old SkillSyncPayload deleted
+        double maxHp = mc.player.getMaxHealth();
         double hp = mc.player.getHealth();
-        double armor = mc.player.getArmorValue() + defSkillBonus.getOrDefault("armor", 0.0);
+        double armor = mc.player.getArmorValue();
         double toughness = getAttrValue(mc, Attributes.ARMOR_TOUGHNESS);
 
         int hpCol = hp / maxHp > 0.5 ? GREEN_VAL : (hp / maxHp > 0.25 ? GOLD_VAL : RED_VAL);
-        boolean hpBoosted = defSkillBonus.getOrDefault("max_health", 0.0) > 0;
-        ty = drawStatRow(g, mc, tx, ty, CONTENT_W, "HP", String.format("%.0f/%.0f", hp, maxHp), hpBoosted ? BOOST_COLOR : hpCol);
-        boolean armorBoosted = isBoosted(mc, Attributes.ARMOR) || defSkillBonus.getOrDefault("armor", 0.0) > 0;
+        ty = drawStatRow(g, mc, tx, ty, CONTENT_W, "HP", String.format("%.0f/%.0f", hp, maxHp), hpCol);
+        boolean armorBoosted = isBoosted(mc, Attributes.ARMOR);
         ty = drawStatRow(g, mc, tx, ty, CONTENT_W, "Armor", String.valueOf((int) armor),
             armorBoosted ? BOOST_COLOR : VALUE_COLOR);
         if (toughness > 0)
@@ -322,16 +313,15 @@ public class EquipmentStatsOverlay {
             drawDivider(g, tx, ty + 1, CONTENT_W);
             ty += 4;
 
-            // Include server-side skill bonuses for vanilla attributes that don't sync
-            Map<String, Double> skillBonus = SkillSyncPayload.clientSkillBonuses;
-            double atkDmg = getAttrValue(mc, Attributes.ATTACK_DAMAGE) + skillBonus.getOrDefault("attack_damage", 0.0);
+            // Skill bonuses removed — old SkillSyncPayload deleted
+            double atkDmg = getAttrValue(mc, Attributes.ATTACK_DAMAGE);
             double atkSpd = getAttrValue(mc, Attributes.ATTACK_SPEED);
             double moveSpd = getAttrValue(mc, Attributes.MOVEMENT_SPEED);
             double reach = getAttrValue(mc, Attributes.ENTITY_INTERACTION_RANGE);
             double knockback = getAttrValue(mc, Attributes.ATTACK_KNOCKBACK);
             double luck = getAttrValue(mc, Attributes.LUCK);
 
-            boolean atkBoosted = isBoosted(mc, Attributes.ATTACK_DAMAGE) || skillBonus.getOrDefault("attack_damage", 0.0) > 0;
+            boolean atkBoosted = isBoosted(mc, Attributes.ATTACK_DAMAGE);
             ty = drawStatRow(g, mc, tx, ty, CONTENT_W, "Attack", String.format("%.1f", atkDmg),
                 atkBoosted ? BOOST_COLOR : RED_VAL);
             ty = drawStatRow(g, mc, tx, ty, CONTENT_W, "Speed", String.format("%.2f", atkSpd),
@@ -614,36 +604,7 @@ public class EquipmentStatsOverlay {
             }
         }
 
-        // === Skill Levels ===
-        Map<SkillTreeType, Integer> skillLevels = SkillSyncPayload.clientLevels;
-        Map<SkillTreeType, Integer> skillPoints = SkillSyncPayload.clientTreePoints;
-        if (skillLevels != null && !skillLevels.isEmpty() && ty + 14 < bottomY) {
-            boolean hasAnyLevel = false;
-            for (int lv : skillLevels.values()) { if (lv > 0) { hasAnyLevel = true; break; } }
-            if (hasAnyLevel) {
-                ty = drawSectionHeader(g, mc, tx, ty, CONTENT_W, "SKILLS", ACCENT_SKILLS);
-
-                for (SkillTreeType tree : SkillTreeType.values()) {
-                    if (ty + 9 > bottomY) break;
-                    int level = skillLevels.getOrDefault(tree, 0);
-                    if (level <= 0) continue;
-                    int pts = skillPoints != null ? skillPoints.getOrDefault(tree, 0) : 0;
-                    // Show tree name + primary stat hint
-                    String primaryHint = switch (tree) {
-                        case COMBAT -> "ATK";
-                        case MINING -> "Mine";
-                        case FARMING -> "Farm";
-                        case ARCANE -> "AP";
-                        case SURVIVAL -> "Move";
-                    };
-                    String label = tree.getAbbreviation() + "/" + primaryHint;
-                    String value = "Lv" + level;
-                    if (pts > 0) value += " +" + pts;
-                    int color = tree.getColor();
-                    ty = drawStatRow(g, mc, tx, ty, CONTENT_W, label, value, color);
-                }
-            }
-        }
+        // === Skill Levels === (removed — old skill system deleted, TODO: Reconnect with Pufferfish Skills API)
 
         // === Equipped Accessories ===
         Map<String, String> equipped = AccessoryPayload.AccessorySyncPayload.clientEquipped;

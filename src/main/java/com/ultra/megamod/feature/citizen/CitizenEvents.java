@@ -223,7 +223,7 @@ public class CitizenEvents {
             int totalCost = 0;
             double adminMult = upkeep.getMultiplier(ownerUuid);
             // Arcane tree (mana_weaver branch) reduces upkeep costs
-            double arcaneMult = CitizenSkillBonuses.getUpkeepMultiplier(level, ownerUuid);
+            double arcaneMult = 1.0; // TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getUpkeepMultiplier)
             double combinedMult = adminMult * arcaneMult;
             for (var record : entry.getValue()) {
                 totalCost += (int) (CitizenConfig.getUpkeepCost(record.job()) * combinedMult);
@@ -378,7 +378,7 @@ public class CitizenEvents {
 
                 int totalCost = 0;
                 double adminMult = upkeep.getMultiplier(ownerUuid);
-                double arcaneMult = CitizenSkillBonuses.getUpkeepMultiplier(level, ownerUuid);
+                double arcaneMult = 1.0; // TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getUpkeepMultiplier)
                 for (var record : ownerEntry.getValue()) {
                     totalCost += (int) (CitizenConfig.getUpkeepCost(record.job()) * adminMult * arcaneMult);
                 }

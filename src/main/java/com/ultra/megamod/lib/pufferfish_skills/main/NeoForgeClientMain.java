@@ -58,6 +58,7 @@ public class NeoForgeClientMain {
 
 	private void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
 		for (var keyBinding : keyBindings) {
+			event.registerCategory(keyBinding.keyBinding.getCategory());
 			event.register(keyBinding.keyBinding);
 		}
 	}
