@@ -57,9 +57,9 @@ public class TagReward implements Reward {
 	public void update(RewardUpdateContext context) {
 		var player = context.getPlayer();
 		if (context.getCount() > 0) {
-			player.addCommandTag(tag);
+			player.addTag(tag);
 		} else {
-			player.removeCommandTag(tag);
+			player.removeTag(tag);
 		}
 	}
 

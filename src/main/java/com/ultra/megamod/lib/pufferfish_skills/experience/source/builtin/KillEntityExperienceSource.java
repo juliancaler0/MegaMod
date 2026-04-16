@@ -170,12 +170,12 @@ public record KillEntityExperienceSource(
 		legacy.registerBooleanFunction(
 				"damage_type",
 				DamageTypeCondition::parse,
-				data -> data.damageSource().getType()
+				data -> data.damageSource().type()
 		);
 		legacy.registerBooleanFunction(
 				"damage_type_tag",
 				LegacyDamageTypeTagCondition::parse,
-				data -> data.damageSource().getType()
+				data -> data.damageSource().type()
 		);
 		legacy.registerNumberFunction(
 				"player_effect",

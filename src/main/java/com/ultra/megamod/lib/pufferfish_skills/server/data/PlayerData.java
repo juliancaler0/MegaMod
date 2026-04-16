@@ -23,7 +23,7 @@ public class PlayerData {
 		var categories = new HashMap<Identifier, CategoryData>();
 
 		var categoriesNbt = nbt.getCompoundOrEmpty("categories");
-		for (var id : categoriesNbt.getKeys()) {
+		for (var id : categoriesNbt.keySet()) {
 			var elementNbt = categoriesNbt.get(id);
 			if (elementNbt instanceof CompoundTag categoryNbt) {
 				categories.put(SkillsMod.convertIdentifier(Identifier.parse(id)), CategoryData.read(categoryNbt));

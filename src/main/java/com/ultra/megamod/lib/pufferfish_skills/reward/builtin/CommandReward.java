@@ -92,10 +92,10 @@ public class CommandReward implements Reward {
 
 		var server = SkillsMod.getInstance().getPlayerServer(player);
 
-		server.getCommands().executeWithPrefix(
-				player.getCommandSource()
-						.withSilent()
-						.withLevel(server.getFunctionPermissionLevel()),
+		server.getCommands().performPrefixedCommand(
+				player.createCommandSourceStack()
+						.withSuppressedOutput()
+						.withPermission(net.minecraft.server.permissions.PermissionSet.ALL_PERMISSIONS),
 				command
 		);
 	}

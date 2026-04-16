@@ -20,8 +20,8 @@ public class WizardAbsorbEffect extends MobEffect {
         return true;
     }
 
-    public void onApplied(LivingEntity entity, int amplifier) {
-        super.onApplied(entity, amplifier);
-        entity.setAbsorptionAmount(Math.max(entity.getAbsorptionAmount(), (float)(healthPerStack * (1 + amplifier))));
-    }
+    // TODO: onApplied removed in 1.21.11 - need to use onEffectAdded or similar event
+    // public void onApplied(LivingEntity entity, int amplifier) {
+    //     entity.setAbsorptionAmount(Math.max(entity.getAbsorptionAmount(), (float)(healthPerStack * (1 + amplifier))));
+    // }
 }

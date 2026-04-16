@@ -13,7 +13,7 @@ import com.ultra.megamod.lib.pufferfish_skills.util.CommandUtils;
 public class ExperienceCommand {
 	public static LiteralArgumentBuilder<CommandSourceStack> create() {
 		return Commands.literal("experience")
-				.requires(source -> source.hasPermission(2))
+				.requires(source -> Commands.LEVEL_GAMEMASTERS.check(source.permissions()))
 				.then(Commands.literal("add")
 						.then(Commands.argument("players", EntityArgument.players())
 								.then(Commands.argument("category", CategoryArgumentType.categoryOnlyWithExperience())

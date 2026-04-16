@@ -12,7 +12,7 @@ public class HideCategoryInPacket implements InPacket {
 	}
 
 	public static HideCategoryInPacket read(FriendlyByteBuf buf) {
-		var categoryId = buf.readIdentifier();
+		var categoryId = Identifier.parse(buf.readUtf());
 
 		return new HideCategoryInPacket(
 				categoryId

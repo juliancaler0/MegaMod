@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.ArgumentType;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
 import net.minecraft.core.Registry;
@@ -148,8 +149,8 @@ public class NeoForgeMain {
 		@Override
 		public <T extends InPacket> void registerInPacket(Identifier id, Function<RegistryFriendlyByteBuf, T> reader, ServerPacketHandler<T> handler) {
 			var pId = new CustomPacketPayload.Type<InOutPayload<T>>(id);
-			payloadRegistrations.add(registrar -> registrar.playToServer(pId, CustomPacketPayload.codecOf(
-					(value, buf) -> value.outPacket.write(buf),
+			payloadRegistrations.add(registrar -> registrar.playToServer(pId, StreamCodec.of(
+					(buf, value) -> value.outPacket.write(buf),
 					buf -> new InOutPayload<>(pId, reader.apply(buf), null)
 			), (payload, context) -> handler.handle((ServerPlayer) context.player(), payload.inValue())));
 		}
@@ -157,10 +158,10 @@ public class NeoForgeMain {
 		@Override
 		public void registerOutPacket(Identifier id) {
 			outPackets.put(id, new CustomPacketPayload.Type<>(id));
-			if (FMLEnvironment.dist.isDedicatedServer()) {
+			if (FMLEnvironment.getDist() == Dist.DEDICATED_SERVER) {
 				var pId = new CustomPacketPayload.Type<InOutPayload<?>>(id);
-				payloadRegistrations.add(registrar -> registrar.playToClient(pId, CustomPacketPayload.codecOf(
-						(value, buf) -> value.outPacket.write(buf),
+				payloadRegistrations.add(registrar -> registrar.playToClient(pId, StreamCodec.of(
+						(buf, value) -> value.outPacket.write(buf),
 						buf -> null
 				), (payload, context) -> { }));
 			}

@@ -93,7 +93,7 @@ public class PointsReward implements Reward {
 		SkillsAPI.getCategory(categoryId).ifPresent(category -> {
 			context.getServer()
 					.getPlayerList()
-					.getPlayerList()
+					.getPlayers()
 					.forEach(player -> category.setPoints(player, source, 0));
 		});
 	}

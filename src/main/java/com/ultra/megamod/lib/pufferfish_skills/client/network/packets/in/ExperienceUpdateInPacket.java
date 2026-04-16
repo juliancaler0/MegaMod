@@ -18,7 +18,7 @@ public class ExperienceUpdateInPacket implements InPacket {
 	}
 
 	public static ExperienceUpdateInPacket read(FriendlyByteBuf buf) {
-		var categoryId = buf.readIdentifier();
+		var categoryId = Identifier.parse(buf.readUtf());
 		var currentLevel = buf.readInt();
 		var currentExperience = buf.readInt();
 		var requiredExperience = buf.readInt();

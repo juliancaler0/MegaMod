@@ -31,8 +31,7 @@ public final class DamageSourceClassification {
 	}
 
 	private static boolean isMagic(DamageSource source) {
-		return source.isOf(DamageTypes.MAGIC)
-				|| source.isOf(DamageTypes.INDIRECT_MAGIC)
+		return source.is(DamageTypes.MAGIC)
 				|| source.is(TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath("c", "is_magic")))
 				|| source.is(TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath("neoforge", "is_magic")));
 	}

@@ -56,7 +56,7 @@ public class CategoryArgumentType implements ArgumentType<Identifier> {
 
 	@Override
 	public Identifier parse(StringReader reader) throws CommandSyntaxException {
-		return Identifier.fromCommandInput(reader);
+		return Identifier.read(reader);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class CategoryArgumentType implements ArgumentType<Identifier> {
 			CommandUtils.suggestIdentifiers(SkillsMod.getInstance().getCategories(onlyWithExperience), builder);
 			return builder.buildFuture();
 		} else if (source instanceof SharedSuggestionProvider commandSource) {
-			return commandSource.getCompletions(context);
+			return commandSource.customSuggestion(context);
 		}
 		return Suggestions.empty();
 	}
@@ -74,22 +74,22 @@ public class CategoryArgumentType implements ArgumentType<Identifier> {
 	public static class Serializer implements ArgumentTypeInfo<CategoryArgumentType, Serializer.Properties> {
 
 		@Override
-		public void writePacket(Properties properties, FriendlyByteBuf buf) {
+		public void serializeToNetwork(Properties properties, FriendlyByteBuf buf) {
 			buf.writeBoolean(properties.onlyWithExperience);
 		}
 
 		@Override
-		public Properties fromPacket(FriendlyByteBuf buf) {
+		public Properties deserializeFromNetwork(FriendlyByteBuf buf) {
 			return new Properties(buf.readBoolean());
 		}
 
 		@Override
-		public void writeJson(Properties properties, JsonObject jsonObject) {
+		public void serializeToJson(Properties properties, JsonObject jsonObject) {
 			jsonObject.addProperty("only_with_experience", properties.onlyWithExperience);
 		}
 
 		@Override
-		public Properties getArgumentTypeProperties(CategoryArgumentType categoryArgumentType) {
+		public Properties unpack(CategoryArgumentType categoryArgumentType) {
 			return new Properties(categoryArgumentType.onlyWithExperience);
 		}
 
@@ -101,12 +101,12 @@ public class CategoryArgumentType implements ArgumentType<Identifier> {
 			}
 
 			@Override
-			public CategoryArgumentType createType(CommandBuildContext commandRegistryAccess) {
+			public CategoryArgumentType instantiate(CommandBuildContext commandRegistryAccess) {
 				return new CategoryArgumentType(this.onlyWithExperience);
 			}
 
 			@Override
-			public ArgumentTypeInfo<CategoryArgumentType, ?> getSerializer() {
+			public ArgumentTypeInfo<CategoryArgumentType, ?> type() {
 				return Serializer.this;
 			}
 		}

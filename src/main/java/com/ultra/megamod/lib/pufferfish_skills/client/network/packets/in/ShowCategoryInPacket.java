@@ -24,6 +24,11 @@ import com.ultra.megamod.lib.pufferfish_skills.common.FrameType;
 import com.ultra.megamod.lib.pufferfish_skills.common.IconType;
 import com.ultra.megamod.lib.pufferfish_skills.network.InPacket;
 
+import net.minecraft.resources.Identifier;
+
+import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ShowCategoryInPacket implements InPacket {
@@ -40,32 +45,48 @@ public class ShowCategoryInPacket implements InPacket {
 	}
 
 	public static ClientCategoryData readCategory(RegistryFriendlyByteBuf buf) {
-		var id = buf.readIdentifier();
+		var id = Identifier.parse(buf.readUtf());
 
-		var title = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
-		var description = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
-		var extraDescription = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
+		var title = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
+		var description = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
+		var extraDescription = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
 		var icon = readSkillIcon(buf);
 		var background = readBackground(buf);
 		var colors = readColors(buf);
 		var exclusiveRoot = buf.readBoolean();
 		var spentPointsLimit = buf.readInt();
 
-		var definitions = buf.readList(buf1 -> ShowCategoryInPacket.readDefinition(buf))
-				.stream()
-				.collect(Collectors.toMap(ClientSkillDefinitionConfig::id, definition -> definition));
+		var defCount = buf.readVarInt();
+		var definitions = new HashMap<String, ClientSkillDefinitionConfig>();
+		for (int i = 0; i < defCount; i++) {
+			var def = readDefinition(buf);
+			definitions.put(def.id(), def);
+		}
 
-		var skills = buf.readList(ShowCategoryInPacket::readSkill)
-				.stream()
-				.collect(Collectors.toMap(ClientSkillConfig::id, skill -> skill));
+		var skillCount = buf.readVarInt();
+		var skills = new HashMap<String, ClientSkillConfig>();
+		for (int i = 0; i < skillCount; i++) {
+			var skill = readSkill(buf);
+			skills.put(skill.id(), skill);
+		}
 
-		var normalConnections = buf.readList(ShowCategoryInPacket::readSkillConnection);
-		var exclusiveConnections = buf.readList(ShowCategoryInPacket::readSkillConnection);
+		var normalConnCount = buf.readVarInt();
+		var normalConnections = new ArrayList<ClientSkillConnectionConfig>();
+		for (int i = 0; i < normalConnCount; i++) {
+			normalConnections.add(readSkillConnection(buf));
+		}
 
-		var skillsStates = buf.readMap(
-				FriendlyByteBuf::readString,
-				buf1 -> buf1.readEnumConstant(Skill.State.class)
-		);
+		var exclConnCount = buf.readVarInt();
+		var exclusiveConnections = new ArrayList<ClientSkillConnectionConfig>();
+		for (int i = 0; i < exclConnCount; i++) {
+			exclusiveConnections.add(readSkillConnection(buf));
+		}
+
+		var statesCount = buf.readVarInt();
+		var skillsStates = new HashMap<String, Skill.State>();
+		for (int i = 0; i < statesCount; i++) {
+			skillsStates.put(buf.readUtf(), buf.readEnum(Skill.State.class));
+		}
 
 		var spentPoints = buf.readInt();
 		var earnedPoints = buf.readInt();
@@ -110,10 +131,10 @@ public class ShowCategoryInPacket implements InPacket {
 	}
 
 	public static ClientSkillDefinitionConfig readDefinition(RegistryFriendlyByteBuf buf) {
-		var id = buf.readString();
-		var title = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
-		var description = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
-		var extraDescription = ComponentSerialization.UNLIMITED_REGISTRY_PACKET_CODEC.decode(buf);
+		var id = buf.readUtf();
+		var title = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
+		var description = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
+		var extraDescription = ComponentSerialization.TRUSTED_STREAM_CODEC.decode(buf);
 		var frame = readFrameIcon(buf);
 		var icon = readSkillIcon(buf);
 		var size = buf.readFloat();
@@ -140,36 +161,36 @@ public class ShowCategoryInPacket implements InPacket {
 	}
 
 	public static ClientIconConfig readSkillIcon(RegistryFriendlyByteBuf buf) {
-		var type = buf.readEnumConstant(IconType.class);
+		var type = buf.readEnum(IconType.class);
 		return switch (type) {
 			case EFFECT -> {
-				var effect = buf.readIdentifier();
-				yield new ClientIconConfig.EffectIconConfig(BuiltInRegistries.MOB_EFFECT.get(effect));
+				var effect = Identifier.parse(buf.readUtf());
+				yield new ClientIconConfig.EffectIconConfig(BuiltInRegistries.MOB_EFFECT.getValue(effect));
 			}
 			case ITEM -> {
-				var itemStack = ItemStack.PACKET_CODEC.decode(buf);
+				var itemStack = ItemStack.STREAM_CODEC.decode(buf);
 				yield new ClientIconConfig.ItemIconConfig(itemStack);
 			}
 			case TEXTURE -> {
-				var texture = buf.readIdentifier();
+				var texture = Identifier.parse(buf.readUtf());
 				yield new ClientIconConfig.TextureIconConfig(texture);
 			}
 		};
 	}
 
 	public static ClientFrameConfig readFrameIcon(FriendlyByteBuf buf) {
-		var type = buf.readEnumConstant(FrameType.class);
+		var type = buf.readEnum(FrameType.class);
 		return switch (type) {
 			case ADVANCEMENT -> {
-				var advancementFrame = buf.readEnumConstant(AdvancementType.class);
+				var advancementFrame = buf.readEnum(AdvancementType.class);
 				yield new ClientFrameConfig.AdvancementFrameConfig(advancementFrame);
 			}
 			case TEXTURE -> {
-				var lockedTexture = buf.readOptional(FriendlyByteBuf::readIdentifier);
-				var availableTexture = buf.readIdentifier();
-				var affordableTexture = buf.readOptional(FriendlyByteBuf::readIdentifier);
-				var unlockedTexture = buf.readIdentifier();
-				var excludedTexture = buf.readOptional(FriendlyByteBuf::readIdentifier);
+				var lockedTexture = buf.readBoolean() ? Optional.of(Identifier.parse(buf.readUtf())) : Optional.<net.minecraft.resources.Identifier>empty();
+				var availableTexture = Identifier.parse(buf.readUtf());
+				var affordableTexture = buf.readBoolean() ? Optional.of(Identifier.parse(buf.readUtf())) : Optional.<net.minecraft.resources.Identifier>empty();
+				var unlockedTexture = Identifier.parse(buf.readUtf());
+				var excludedTexture = buf.readBoolean() ? Optional.of(Identifier.parse(buf.readUtf())) : Optional.<net.minecraft.resources.Identifier>empty();
 				yield new ClientFrameConfig.TextureFrameConfig(
 						lockedTexture,
 						availableTexture,
@@ -182,10 +203,10 @@ public class ShowCategoryInPacket implements InPacket {
 	}
 
 	public static ClientBackgroundConfig readBackground(FriendlyByteBuf buf) {
-		var texture = buf.readIdentifier();
+		var texture = Identifier.parse(buf.readUtf());
 		var width = buf.readInt();
 		var height = buf.readInt();
-		var position = buf.readEnumConstant(BackgroundPosition.class);
+		var position = buf.readEnum(BackgroundPosition.class);
 
 		return ClientBackgroundConfig.create(texture, width, height, position);
 	}
@@ -221,18 +242,18 @@ public class ShowCategoryInPacket implements InPacket {
 	}
 
 	public static ClientSkillConfig readSkill(FriendlyByteBuf buf) {
-		var id = buf.readString();
+		var id = buf.readUtf();
 		var x = buf.readInt();
 		var y = buf.readInt();
-		var definition = buf.readString();
+		var definition = buf.readUtf();
 		var isRoot = buf.readBoolean();
 
 		return new ClientSkillConfig(id, x, y, definition, isRoot);
 	}
 
 	public static ClientSkillConnectionConfig readSkillConnection(FriendlyByteBuf buf) {
-		var skillAId = buf.readString();
-		var skillBId = buf.readString();
+		var skillAId = buf.readUtf();
+		var skillBId = buf.readUtf();
 		var bidirectional = buf.readBoolean();
 
 		return new ClientSkillConnectionConfig(skillAId, skillBId, bidirectional);

@@ -54,7 +54,7 @@ public class AttributeOperation implements Operation<LivingEntity, AttributeInst
 				.andThen(BuiltinJson::parseAttribute)
 				.ifFailure(problems::add)
 				.getSuccess()
-				.map(BuiltInRegistries.ATTRIBUTE::getEntry);
+				.map(BuiltInRegistries.ATTRIBUTE::wrapAsHolder);
 
 		if (problems.isEmpty()) {
 			return Result.success(new AttributeOperation(

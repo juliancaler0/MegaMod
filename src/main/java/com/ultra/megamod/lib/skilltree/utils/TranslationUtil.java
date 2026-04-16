@@ -9,6 +9,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import com.ultra.megamod.lib.spellengine.client.gui.SpellTooltip;
 import com.ultra.megamod.mixin.spellengine.client.ItemStackTooltipAccessor;
+import net.minecraft.core.Holder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,32 +39,19 @@ public class TranslationUtil {
     }
 
     public static List<Component> resolveConditionalAttributeTooltip(ConditionalAttributeReward.DataStructure data) {
-        var player = Minecraft.getInstance().player;
-        if (player == null) return List.of();
+        // TODO: Reimplement with 1.21.11 tooltip API
         var conditional = data.mapped();
-        var tooltipUtil = (ItemStackTooltipAccessor) (Object) ItemStack.EMPTY;
         var lines = new ArrayList<Component>();
         lines.add(Component.translatable(conditional.condition().translationKey()));
-        tooltipUtil.spellEngine_appendAttributeModifierTooltip(
-                lines::add, player, conditional.attribute(), conditional.modifier());
+        lines.add(Component.literal("  " + conditional.modifier().amount() + " " + conditional.attribute().unwrapKey().map(k -> k.identifier().toString()).orElse("?")));
         return lines;
     }
 
     public static List<Component> resolveAttributeModifierTooltip(NodeTypes.EntityAttributeReward attributeReward) {
-        var player = Minecraft.getInstance().player;
-        if (player == null) {
-            return List.of();
-        }
-        var tooltipUtil = (ItemStackTooltipAccessor) (Object) ItemStack.EMPTY;
+        // TODO: Reimplement with 1.21.11 tooltip API
         var bonusLines = new ArrayList<Component>();
         var modifier = attributeReward.modifier();
-        tooltipUtil
-                .spellEngine_appendAttributeModifierTooltip(
-                        bonusLines::add,
-                        player,
-                        attributeReward.attribute(),
-                        modifier
-                );
+        bonusLines.add(Component.literal("  " + modifier.amount() + " " + attributeReward.attribute().unwrapKey().map(k -> k.identifier().toString()).orElse("?")));
         return bonusLines;
     }
 }

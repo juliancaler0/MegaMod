@@ -11,7 +11,7 @@ import java.util.Locale;
 public record ModifierCondition(Equipment equipment, String translationKey) {
     public record Equipment(EquipmentSlot slot, TagKey<Item> tag) {
         public boolean test(LivingEntity entity) {
-            var stack = entity.getEquippedStack(slot);
+            var stack = entity.getItemBySlot(slot);
             return !stack.isEmpty() && stack.is(tag);
         }
     }

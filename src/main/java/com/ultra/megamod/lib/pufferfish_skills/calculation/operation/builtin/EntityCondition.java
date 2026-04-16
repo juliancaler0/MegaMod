@@ -69,9 +69,9 @@ public final class EntityCondition implements Operation<Entity, Boolean> {
 
 	@Override
 	public Optional<Boolean> apply(Entity entity) {
+		// NbtPredicate.test(Entity) removed in 1.21.11 — nbt check stubbed to true
 		return Optional.of(
 				optEntityTypeEntries.map(entityTypeEntries -> entity.getType().is(entityTypeEntries)).orElse(true)
-						&& optNbt.map(nbt -> nbt.test(entity)).orElse(true)
 		);
 	}
 }

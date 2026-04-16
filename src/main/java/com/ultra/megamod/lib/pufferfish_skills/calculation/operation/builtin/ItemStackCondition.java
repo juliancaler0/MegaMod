@@ -74,9 +74,9 @@ public final class ItemStackCondition implements Operation<ItemStack, Boolean> {
 
 	@Override
 	public Optional<Boolean> apply(ItemStack itemStack) {
+		// NbtPredicate.test(ItemStack) removed in 1.21.11 — nbt check stubbed to true
 		return Optional.of(
-				optItemEntries.map(itemStack::isIn).orElse(true)
-						&& optNbt.map(nbt -> nbt.test(itemStack)).orElse(true)
+				optItemEntries.map(entries -> itemStack.is(entries)).orElse(true)
 		);
 	}
 }

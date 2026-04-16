@@ -38,12 +38,12 @@ public class ConditionalAttributeReward implements Reward {
 
         public @NotNull ConditionalAttributeModifier mapped() {
             var parsed = this;
-            var effectiveEntry = BuiltInBuiltInRegistries.ATTRIBUTE.wrapAsHolder(Identifier.parse(parsed.attribute()))
+            var effectiveEntry = BuiltInRegistries.ATTRIBUTE.get(Identifier.parse(parsed.attribute()))
                     .orElseGet(() -> {
                         if (parsed.fallbackAttribute() == null) {
                             throw new IllegalArgumentException("Unknown attribute: " + parsed.attribute());
                         }
-                        return BuiltInBuiltInRegistries.ATTRIBUTE.wrapAsHolder(Identifier.parse(parsed.fallbackAttribute()))
+                        return BuiltInRegistries.ATTRIBUTE.get(Identifier.parse(parsed.fallbackAttribute()))
                                 .orElseThrow(() -> new IllegalArgumentException("Unknown fallback attribute: " + parsed.fallbackAttribute()));
                     });
 
@@ -51,7 +51,7 @@ public class ConditionalAttributeReward implements Reward {
 
             var equipment = parsed.condition().equipment();
             var slot = parseEquipmentSlot(equipment.slot());
-            var tag = TagKey.of(net.minecraft.registry.BuiltInBuiltInRegistries.ITEM, Identifier.parse(equipment.tag()));
+            var tag = TagKey.create(net.minecraft.core.registries.Registries.ITEM, Identifier.parse(equipment.tag()));
 
             var modifierId = Identifier.fromNamespaceAndPath(SkillTreeMod.NAMESPACE, UUID.randomUUID().toString().replace("-", ""));
             var modifier = new AttributeModifier(modifierId, parsed.value(), operation);
@@ -101,7 +101,7 @@ public class ConditionalAttributeReward implements Reward {
         var player = context.getPlayer();
         var holder = (ConditionalAttributeHolder) player;
         holder.removeConditionalModifier(conditionalModifier.id());
-        var instance = player.getAttributeInstance(conditionalModifier.attribute());
+        var instance = player.getAttribute(conditionalModifier.attribute());
         if (instance != null) {
             instance.removeModifier(conditionalModifier.modifier().id());
         }
@@ -113,10 +113,10 @@ public class ConditionalAttributeReward implements Reward {
 
     @Override
     public void dispose(RewardDisposeContext context) {
-        for (var player : context.getServer().getPlayerManager().getPlayerList()) {
+        for (var player : context.getServer().getPlayerList().getPlayers()) {
             var holder = (ConditionalAttributeHolder) player;
             holder.removeConditionalModifier(conditionalModifier.id());
-            var instance = player.getAttributeInstance(conditionalModifier.attribute());
+            var instance = player.getAttribute(conditionalModifier.attribute());
             if (instance != null) {
                 instance.removeModifier(conditionalModifier.modifier().id());
             }

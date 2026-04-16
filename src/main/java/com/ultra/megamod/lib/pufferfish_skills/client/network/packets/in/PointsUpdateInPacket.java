@@ -16,7 +16,7 @@ public class PointsUpdateInPacket implements InPacket {
 	}
 
 	public static PointsUpdateInPacket read(FriendlyByteBuf buf) {
-		var categoryId = buf.readIdentifier();
+		var categoryId = Identifier.parse(buf.readUtf());
 		var spentPoints = buf.readInt();
 		var earnedPoints = buf.readInt();
 

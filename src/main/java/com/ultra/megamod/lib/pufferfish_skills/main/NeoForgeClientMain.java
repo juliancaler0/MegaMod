@@ -3,6 +3,7 @@ package com.ultra.megamod.lib.pufferfish_skills.main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
 import net.minecraft.resources.Identifier;
@@ -88,8 +89,8 @@ public class NeoForgeClientMain {
 		@Override
 		public <T extends InPacket> void registerInPacket(Identifier id, Function<RegistryFriendlyByteBuf, T> reader, ClientPacketHandler<T> handler) {
 			var pId = new CustomPacketPayload.Type<NeoForgeMain.InOutPayload<T>>(id);
-			payloadRegistrations.add(registrar -> registrar.playToClient(pId, CustomPacketPayload.codecOf(
-					(value, buf) -> value.outPacket().write(buf),
+			payloadRegistrations.add(registrar -> registrar.playToClient(pId, StreamCodec.of(
+					(buf, value) -> value.outPacket().write(buf),
 					buf -> new NeoForgeMain.InOutPayload<>(pId, reader.apply(buf), null)
 			), (payload, context) -> handler.handle(payload.inValue())));
 		}
@@ -116,7 +117,7 @@ public class NeoForgeClientMain {
 	private class ClientPacketSenderImpl implements ClientPacketSender {
 		@Override
 		public void send(OutPacket packet) {
-			Objects.requireNonNull(Minecraft.getInstance().getNetworkHandler())
+			Objects.requireNonNull(Minecraft.getInstance().getConnection())
 					.send(new ServerboundCustomPayloadPacket(
 							new NeoForgeMain.InOutPayload<>(outPackets.get(packet.getId()), null, packet)
 					));

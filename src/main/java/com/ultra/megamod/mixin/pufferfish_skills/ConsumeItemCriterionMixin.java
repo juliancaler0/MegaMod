@@ -16,7 +16,7 @@ public class ConsumeItemCriterionMixin {
 
 	@Inject(method = "trigger", at = @At("HEAD"))
 	private void injectAtTrigger(ServerPlayer serverPlayer, ItemStack stack, CallbackInfo ci) {
-		var fc = stack.getItem().getComponents().get(DataComponents.FOOD);
+		var fc = stack.getComponents().get(DataComponents.FOOD);
 		if (fc != null) {
 			SkillsAPI.updateExperienceSources(
 					serverPlayer,

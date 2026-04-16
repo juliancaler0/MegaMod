@@ -43,7 +43,7 @@ public class SkillArgumentType implements ArgumentType<String> {
 
 	@Override
 	public String parse(StringReader reader) throws CommandSyntaxException {
-		return reader.readString();
+		return reader.readUnquotedString();
 	}
 
 	@Override
@@ -53,10 +53,10 @@ public class SkillArgumentType implements ArgumentType<String> {
 			var categoryId = SkillsMod.convertIdentifier(context.getArgument(categoryArgumentName, Identifier.class));
 			SkillsMod.getInstance()
 					.getSkills(categoryId)
-					.ifPresent(skills -> SharedSuggestionProvider.suggestMatching(skills, builder));
+					.ifPresent(skills -> SharedSuggestionProvider.suggest(skills, builder));
 			return builder.buildFuture();
 		} else if (source instanceof SharedSuggestionProvider commandSource) {
-			return commandSource.getCompletions(context);
+			return commandSource.customSuggestion(context);
 		}
 		return Suggestions.empty();
 	}
@@ -64,22 +64,22 @@ public class SkillArgumentType implements ArgumentType<String> {
 	public static class Serializer implements ArgumentTypeInfo<SkillArgumentType, Serializer.Properties> {
 
 		@Override
-		public void writePacket(Properties properties, FriendlyByteBuf buf) {
-			buf.writeString(properties.categoryArgumentName);
+		public void serializeToNetwork(Properties properties, FriendlyByteBuf buf) {
+			buf.writeUtf(properties.categoryArgumentName);
 		}
 
 		@Override
-		public Properties fromPacket(FriendlyByteBuf buf) {
-			return new Properties(buf.readString());
+		public Properties deserializeFromNetwork(FriendlyByteBuf buf) {
+			return new Properties(buf.readUtf());
 		}
 
 		@Override
-		public void writeJson(Properties properties, JsonObject jsonObject) {
+		public void serializeToJson(Properties properties, JsonObject jsonObject) {
 			jsonObject.addProperty("category_argument_name", properties.categoryArgumentName);
 		}
 
 		@Override
-		public Properties getArgumentTypeProperties(SkillArgumentType skillArgumentType) {
+		public Properties unpack(SkillArgumentType skillArgumentType) {
 			return new Properties(skillArgumentType.categoryArgumentName);
 		}
 
@@ -91,12 +91,12 @@ public class SkillArgumentType implements ArgumentType<String> {
 			}
 
 			@Override
-			public SkillArgumentType createType(CommandBuildContext commandRegistryAccess) {
+			public SkillArgumentType instantiate(CommandBuildContext commandRegistryAccess) {
 				return new SkillArgumentType(this.categoryArgumentName);
 			}
 
 			@Override
-			public ArgumentTypeInfo<SkillArgumentType, ?> getSerializer() {
+			public ArgumentTypeInfo<SkillArgumentType, ?> type() {
 				return Serializer.this;
 			}
 		}

@@ -64,7 +64,7 @@ public class NodeTypes {
                                                  AttributeModifier.Operation operation,
                                                  ModifierCondition condition) {
             return conditionalAttribute(id, title, description, icon,
-                    attribute.getKey().orElseThrow().getValue().toString(), null, value, operation, condition);
+                    attribute.unwrapKey().orElseThrow().identifier().toString(), null, value, operation, condition);
         }
         public static Entry conditionalAttribute(String id, String title, String description, Icon icon,
                                                  Holder<Attribute> attribute,
@@ -73,8 +73,8 @@ public class NodeTypes {
                                                  AttributeModifier.Operation operation,
                                                  ModifierCondition condition) {
             return conditionalAttribute(id, title, description, icon,
-                    attribute.getKey().orElseThrow().getValue().toString(),
-                    fallbackAttribute.getKey().orElseThrow().getValue().toString(),
+                    attribute.unwrapKey().orElseThrow().identifier().toString(),
+                    fallbackAttribute.unwrapKey().orElseThrow().identifier().toString(),
                     value, operation, condition);
         }
         public static Entry conditionalAttribute(String id, String title, String description, Icon icon,
@@ -98,7 +98,7 @@ public class NodeTypes {
                     new ConditionalAttributeReward.DataStructure.ConditionData(
                             condition.translationKey(),
                             new ConditionalAttributeReward.DataStructure.ConditionData.EquipmentData(
-                                    condition.equipment().slot().getName(), condition.equipment().tag().id().toString())));
+                                    condition.equipment().slot().getName(), condition.equipment().tag().location().toString())));
         }
         public String titleTranslationKey() {
             return "skill." + SkillTreeMod.NAMESPACE + "." + id + ".title";
@@ -166,7 +166,7 @@ public class NodeTypes {
                     "Path of Arcane",
                     null,
                     Icon.itemWithModel("spell_engine:spell_book", "wizards:item/spell_book/arcane"),
-                    SpellSchools.ARCANE.attributeEntry,
+                    SpellSchools.ARCANE.deferredHolder,
                     0.01,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             ).require(WIZARDS)
@@ -199,7 +199,7 @@ public class NodeTypes {
                     "Path of Fire",
                     null,
                     Icon.itemWithModel("spell_engine:spell_book", "wizards:item/spell_book/fire"),
-                    SpellSchools.FIRE.attributeEntry,
+                    SpellSchools.FIRE.deferredHolder,
                     0.01,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             ).require(WIZARDS)
@@ -232,7 +232,7 @@ public class NodeTypes {
                     "Path of Frost",
                     null,
                     Icon.itemWithModel("spell_engine:spell_book", "wizards:item/spell_book/frost"),
-                    SpellSchools.FROST.attributeEntry,
+                    SpellSchools.FROST.deferredHolder,
                     0.01,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             ).require(WIZARDS)
@@ -266,7 +266,7 @@ public class NodeTypes {
                     "Path of the Light",
                     null,
                     Icon.itemWithModel("spell_engine:spell_book", "paladins:item/spell_book/priest"),
-                    SpellSchools.HEALING.attributeEntry,
+                    SpellSchools.HEALING.deferredHolder,
                     0.01,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE
             ).require(PALADINS)
@@ -300,7 +300,7 @@ public class NodeTypes {
                     "Path of the Paladin",
                     null,
                     Icon.itemWithModel("spell_engine:spell_book", "paladins:item/spell_book/paladin"),
-                    SpellSchools.HEALING.attributeEntry,
+                    SpellSchools.HEALING.deferredHolder,
                     0.2,
                     AttributeModifier.Operation.ADD_VALUE
             ).require(PALADINS)
@@ -441,7 +441,7 @@ public class NodeTypes {
 
     public static final String CRIT_CHANCE_ID = "critical_strike:chance";
     public static final String CRIT_DAMAGE_ID = "critical_strike:damage";
-    public static final String ATTACK_DAMAGE_ID = Attributes.ATTACK_DAMAGE.getRegisteredName();
+    public static final String ATTACK_DAMAGE_ID = Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString();
 
 
     // Arcane Staff

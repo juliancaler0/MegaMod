@@ -12,7 +12,7 @@ import com.ultra.megamod.lib.pufferfish_skills.util.CommandUtils;
 public class OpenCommand {
 	public static LiteralArgumentBuilder<CommandSourceStack> create() {
 		return Commands.literal("open")
-				.requires(source -> source.hasPermission(2))
+				.requires(source -> Commands.LEVEL_GAMEMASTERS.check(source.permissions()))
 				.then(Commands.argument("players", EntityArgument.players())
 						.executes(OpenCommand::open)
 				);

@@ -55,6 +55,6 @@ public final class WorldCondition implements Operation<ServerLevel, Boolean> {
 
 	@Override
 	public Optional<Boolean> apply(ServerLevel world) {
-		return Optional.of(world.getRegistryKey().getValue().equals(dimension));
+		return Optional.of(world.dimension().identifier().equals(dimension));
 	}
 }

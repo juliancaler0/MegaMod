@@ -60,11 +60,7 @@ public class AttributeReward implements Reward {
 				.andThen(attributeElement -> BuiltinJson.parseAttribute(attributeElement)
 						.andThen(attribute -> {
 							var attributeEntry = BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute);
-							if (DefaultAttributes.get(EntityType.PLAYER).has(attributeEntry)) {
-								return Result.success(attributeEntry);
-							} else {
-								return Result.failure(attributeElement.getPath().createProblem("Expected a valid player attribute"));
-							}
+							return Result.<Holder<Attribute>, Problem>success(attributeEntry);
 						})
 				)
 				.ifFailure(problems::add)
@@ -105,7 +101,7 @@ public class AttributeReward implements Reward {
 			var id = ids.get(i);
 			if (instance.getModifier(id) == null) {
 				if (i < count) {
-					instance.addTemporaryModifier(new AttributeModifier(
+					instance.addTransientModifier(new AttributeModifier(
 							id,
 							value,
 							operation
@@ -121,7 +117,7 @@ public class AttributeReward implements Reward {
 
 	@Override
 	public void dispose(RewardDisposeContext context) {
-		for (var player : context.getServer().getPlayerList().getPlayerList()) {
+		for (var player : context.getServer().getPlayerList().getPlayers()) {
 			var instance = Objects.requireNonNull(player.getAttribute(attribute));
 			for (var id : ids) {
 				instance.removeModifier(id);

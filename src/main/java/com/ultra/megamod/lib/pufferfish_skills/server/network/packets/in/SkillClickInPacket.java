@@ -15,8 +15,8 @@ public class SkillClickInPacket implements InPacket {
 
 	public static SkillClickInPacket read(FriendlyByteBuf buf) {
 		return new SkillClickInPacket(
-				buf.readIdentifier(),
-				buf.readString()
+				Identifier.parse(buf.readUtf()),
+				buf.readUtf()
 		);
 	}
 

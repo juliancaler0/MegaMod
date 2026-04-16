@@ -61,10 +61,10 @@ public class ScoreboardReward implements Reward {
 	@Override
 	public void update(RewardUpdateContext context) {
 		var player = context.getPlayer();
-		var scoreboard = player.getScoreboard();
-		var objective = scoreboard.getNullableObjective(objectiveName);
+		var scoreboard = player.level().getScoreboard();
+		var objective = scoreboard.getObjective(objectiveName);
 		if (objective != null) {
-			scoreboard.getOrCreateScore(player, objective).setScore(context.getCount());
+			scoreboard.getOrCreatePlayerScore((net.minecraft.world.scores.ScoreHolder) player, objective).set(context.getCount());
 		}
 	}
 

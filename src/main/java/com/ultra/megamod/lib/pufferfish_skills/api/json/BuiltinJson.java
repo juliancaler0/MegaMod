@@ -104,7 +104,7 @@ public final class BuiltinJson {
 	public static Result<DamageType, Problem> parseDamageType(JsonElement element, RegistryAccess manager) {
 		return parseSomething(
 				element,
-				manager.registryOrThrow(Registries.DAMAGE_TYPE),
+				manager.lookupOrThrow(Registries.DAMAGE_TYPE),
 				"damage type"
 		);
 	}
@@ -112,7 +112,7 @@ public final class BuiltinJson {
 	public static Result<HolderSet<DamageType>, Problem> parseDamageTypeTag(JsonElement element, RegistryAccess manager) {
 		return parseSomethingTag(
 				element,
-				manager.registryOrThrow(Registries.DAMAGE_TYPE),
+				manager.lookupOrThrow(Registries.DAMAGE_TYPE),
 				"damage type"
 		);
 	}
@@ -120,7 +120,7 @@ public final class BuiltinJson {
 	public static Result<HolderSet<DamageType>, Problem> parseDamageTypeOrDamageTypeTag(JsonElement element, RegistryAccess manager) {
 		return parseSomethingOrSomethingTag(
 				element,
-				manager.registryOrThrow(Registries.DAMAGE_TYPE),
+				manager.lookupOrThrow(Registries.DAMAGE_TYPE),
 				"damage type"
 		);
 	}
@@ -301,7 +301,7 @@ public final class BuiltinJson {
 
 				if (problems.isEmpty()) {
 					var itemStack = new ItemStack(item.orElseThrow());
-					components.ifPresent(itemStack::applyChanges);
+					components.ifPresent(c -> itemStack.applyComponents(c));
 					return Result.success(itemStack);
 				} else {
 					return Result.failure(Problem.combine(problems));
@@ -322,7 +322,8 @@ public final class BuiltinJson {
 
 	public static Result<Component, Problem> parseText(JsonElement element, RegistryAccess manager) {
 		try {
-			return Result.success(Component.Serializer.fromJson(element.getJson(), manager));
+			var ops = net.minecraft.resources.RegistryOps.create(JsonOps.INSTANCE, manager);
+			return Result.success(net.minecraft.network.chat.ComponentSerialization.CODEC.parse(ops, element.getJson()).result().orElseThrow());
 		} catch (Exception e) {
 			return Result.failure(element.getPath().createProblem("Expected text"));
 		}
@@ -410,7 +411,7 @@ public final class BuiltinJson {
 		).andThen(id -> {
 			try {
 				return Result.success(registry
-						.getOptional(TagKey.create(registry.key(), id))
+						.get(TagKey.create(registry.key(), id))
 						.orElseThrow());
 			} catch (Exception ignored) {
 				return Result.failure(element.getPath().createProblem("Unknown " + what + " tag `" + id + "`"));
@@ -429,7 +430,7 @@ public final class BuiltinJson {
 				try {
 					var id = Identifier.parse(s.substring(1));
 					try {
-						return Result.success(registry.getOptional(TagKey.create(registry.key(), id)).orElseThrow());
+						return Result.success(registry.get(TagKey.create(registry.key(), id)).orElseThrow());
 					} catch (Exception ignored) {
 						return Result.failure(element.getPath().createProblem("Unknown " + what + " tag `" + id + "`"));
 					}
@@ -440,7 +441,7 @@ public final class BuiltinJson {
 				try {
 					var id = Identifier.parse(s);
 					try {
-						return Result.success(HolderSet.direct(registry.getHolder(id).orElseThrow()));
+						return Result.success(HolderSet.direct(registry.get(id).orElseThrow()));
 					} catch (Exception ignored) {
 						return Result.failure(element.getPath().createProblem("Unknown " + what + " `" + id + "`"));
 					}

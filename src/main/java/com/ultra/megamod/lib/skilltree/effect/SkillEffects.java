@@ -40,9 +40,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_DAMAGE.getRegisteredName(),
+                                    Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -54,9 +54,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -68,9 +68,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     -0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -105,7 +105,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.HEALING_TAKEN.id,
                                     0.05F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -119,7 +119,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellPowerMechanics.HASTE.id,
                                     0.05F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -131,9 +131,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ARMOR.getRegisteredName(),
+                                    Attributes.ARMOR.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -145,9 +145,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_DAMAGE.getRegisteredName(),
+                                    Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -159,9 +159,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ARMOR.getRegisteredName(),
+                                    Attributes.ARMOR.unwrapKey().orElseThrow().identifier().toString(),
                                     -0.3F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -175,7 +175,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     EntityAttributes_RangedWeapon.HASTE.id,
                                     0.05F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -187,9 +187,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.3F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -201,9 +201,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_DAMAGE.getRegisteredName(),
+                                    Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.2F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -215,14 +215,14 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     -10,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             ),
                             new AttributeModifier(
-                                    Attributes.JUMP_STRENGTH.getRegisteredName(),
+                                    Attributes.JUMP_STRENGTH.unwrapKey().orElseThrow().identifier().toString(),
                                     -10,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -244,14 +244,14 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             ),
                             new AttributeModifier(
-                                    Attributes.JUMP_STRENGTH.getRegisteredName(),
+                                    Attributes.JUMP_STRENGTH.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -263,9 +263,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.5F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -303,9 +303,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_DAMAGE.getRegisteredName(),
+                                    Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.5F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -329,9 +329,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     -0.2F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -346,7 +346,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id,
                                     -0.3F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -361,7 +361,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id.toString(),
                                     -1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -374,9 +374,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MOVEMENT_SPEED.getRegisteredName(),
+                                    Attributes.MOVEMENT_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.5F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -398,9 +398,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MAX_ABSORPTION.getRegisteredName(),
+                                    Attributes.MAX_ABSORPTION.unwrapKey().orElseThrow().identifier().toString(),
                                     2,
-                                    AttributeModifier.Operation.ADD_VALUE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE
                             )
                     )
             )
@@ -413,9 +413,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MAX_ABSORPTION.getRegisteredName(),
+                                    Attributes.MAX_ABSORPTION.unwrapKey().orElseThrow().identifier().toString(),
                                     2,
-                                    AttributeModifier.Operation.ADD_VALUE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE
                             )
                     )
             )
@@ -428,9 +428,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MAX_ABSORPTION.getRegisteredName(),
+                                    Attributes.MAX_ABSORPTION.unwrapKey().orElseThrow().identifier().toString(),
                                     2,
-                                    AttributeModifier.Operation.ADD_VALUE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE
                             )
                     )
             )
@@ -445,7 +445,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellPowerMechanics.CRITICAL_CHANCE.id,
                                     1,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -460,7 +460,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id,
                                     -0.5F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -495,7 +495,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id,
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -508,9 +508,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.MAX_HEALTH.getRegisteredName(),
+                                    Attributes.MAX_HEALTH.unwrapKey().orElseThrow().identifier().toString(),
                                     1,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -525,7 +525,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.EVASION_CHANCE.id,
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -539,19 +539,19 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_SPEED.getRegisteredName(),
+                                    Attributes.ATTACK_SPEED.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             ),
                             new AttributeModifier(
-                                    Attributes.SCALE.getRegisteredName(),
+                                    Attributes.SCALE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.15F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             ),
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id.toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -575,7 +575,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.EVASION_CHANCE.id,
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -590,7 +590,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     SpellEngineAttributes.DAMAGE_TAKEN.id,
                                     -1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -605,7 +605,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     "combat_roll:recharge",
                                     2F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -621,7 +621,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     EntityAttributes_RangedWeapon.HASTE.id,
                                     -0.25F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL // Total to fully half the ranged attack speed
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL // Total to fully half the ranged attack speed
                             )
                     )
             )
@@ -644,9 +644,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ATTACK_DAMAGE.getRegisteredName(),
+                                    Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString(),
                                     0.1F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -658,9 +658,9 @@ public class SkillEffects {
             new EffectConfig(
                     List.of(
                             new AttributeModifier(
-                                    Attributes.ARMOR.getRegisteredName(),
+                                    Attributes.ARMOR.unwrapKey().orElseThrow().identifier().toString(),
                                     -0.2F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -674,7 +674,7 @@ public class SkillEffects {
                             new AttributeModifier(
                                     "critical_strike:chance",
                                     1.0F,
-                                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+                                    net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE
                             )
                     )
             )
@@ -707,8 +707,8 @@ public class SkillEffects {
             }
         });
         InstantCast.register(PRESENCE_OF_MIND.entry,
-                TagKey.of(SpellRegistry.KEY, Identifier.parse("wizards:arcane")));
+                TagKey.create(SpellRegistry.KEY, Identifier.parse("wizards:arcane")));
         InstantCast.register(ARCTIC_REFLEX.entry,
-                TagKey.of(SpellRegistry.KEY, Identifier.parse("wizards:frost")));
+                TagKey.create(SpellRegistry.KEY, Identifier.parse("wizards:frost")));
     }
 }

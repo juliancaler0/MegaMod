@@ -91,12 +91,12 @@ public record TakeDamageExperienceSource(
 		legacy.registerBooleanFunction(
 				"damage_type",
 				DamageTypeCondition::parse,
-				data -> data.damageSource().getType()
+				data -> data.damageSource().type()
 		);
 		legacy.registerBooleanFunction(
 				"damage_type_tag",
 				LegacyDamageTypeTagCondition::parse,
-				data -> data.damageSource().getType()
+				data -> data.damageSource().type()
 		);
 		legacy.registerOptionalBooleanFunction(
 				"attacker",
@@ -111,12 +111,12 @@ public record TakeDamageExperienceSource(
 		legacy.registerOptionalBooleanFunction(
 				"source",
 				EntityTypeCondition::parse,
-				data -> Optional.ofNullable(data.damageSource().getSource()).map(Entity::getType)
+				data -> Optional.ofNullable(data.damageSource().getDirectEntity()).map(Entity::getType)
 		);
 		legacy.registerOptionalBooleanFunction(
 				"source_tag",
 				LegacyEntityTypeTagCondition::parse,
-				data -> Optional.ofNullable(data.damageSource().getSource()).map(Entity::getType)
+				data -> Optional.ofNullable(data.damageSource().getDirectEntity()).map(Entity::getType)
 		);
 		legacy.registerNumberFunction(
 				"player_effect",

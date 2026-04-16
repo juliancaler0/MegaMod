@@ -12,7 +12,7 @@ public class NewPointInPacket implements InPacket {
 	}
 
 	public static NewPointInPacket read(FriendlyByteBuf buf) {
-		var categoryId = buf.readIdentifier();
+		var categoryId = Identifier.parse(buf.readUtf());
 
 		return new NewPointInPacket(
 				categoryId

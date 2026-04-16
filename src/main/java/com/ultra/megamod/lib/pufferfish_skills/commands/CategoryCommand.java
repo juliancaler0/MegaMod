@@ -12,7 +12,7 @@ import com.ultra.megamod.lib.pufferfish_skills.util.CommandUtils;
 public class CategoryCommand {
 	public static LiteralArgumentBuilder<CommandSourceStack> create() {
 		return Commands.literal("category")
-				.requires(source -> source.hasPermission(2))
+				.requires(source -> Commands.LEVEL_GAMEMASTERS.check(source.permissions()))
 				.then(Commands.literal("lock")
 						.then(Commands.argument("players", EntityArgument.players())
 								.then(Commands.argument("category", CategoryArgumentType.category())

@@ -2,13 +2,7 @@ package com.ultra.megamod.lib.pufferfish_skills.client.rendering;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.Lighting;
-import net.minecraft.client.renderer.OverlayTexture;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import com.ultra.megamod.lib.pufferfish_skills.access.MinecraftClientAccess;
 import org.joml.Matrix4f;
 
 import java.util.ArrayList;
@@ -18,8 +12,7 @@ import java.util.Map;
 
 public class ItemBatchedRenderer {
 
-	private final Map<ComparableItemStack, List<Matrix4f>> batch = new HashMap<>();
-	private final ItemStackRenderState itemRenderState = new ItemStackRenderState();
+	private final Map<ComparableItemStack, List<int[]>> batch = new HashMap<>();
 
 	public static List<Matrix4f> EMITS;
 
@@ -28,55 +21,18 @@ public class ItemBatchedRenderer {
 				new ComparableItemStack(item),
 				key -> new ArrayList<>()
 		);
-
-		emits.add(new Matrix4f(
-				context.pose().last().pose()
-		).translate(x, y, 0));
+		emits.add(new int[]{x, y});
 	}
 
-	public void draw() {
+	public void draw(GuiGraphics context) {
 		var client = Minecraft.getInstance();
-
-		var clientAccess = (MinecraftClientAccess) client;
-		var immediate = clientAccess.getBufferBuilders().getEntityVertexConsumers();
-
-		immediate.draw();
-
-		var matrices = new MatrixStack();
-		matrices.translate(0, 0, 150);
-		matrices.multiplyPositionMatrix(new Matrix4f().scaling(1f, -1f, 1f));
-		matrices.scale(16f, 16f, 16f);
 
 		for (var entry : batch.entrySet()) {
 			var itemStack = entry.getKey().itemStack;
 
-			client.getItemModelResolver().clearAndUpdate(
-					itemRenderState,
-					itemStack,
-					ItemDisplayContext.GUI,
-					client.level,
-					client.player,
-					0
-			);
-
-			if (itemRenderState.isSideLit()) {
-				Lighting.enableGuiDepthLighting();
-			} else {
-				Lighting.disableGuiDepthLighting();
+			for (var pos : entry.getValue()) {
+				context.renderItem(itemStack, pos[0], pos[1]);
 			}
-
-			EMITS = entry.getValue();
-
-			itemRenderState.render(
-					matrices,
-					immediate,
-					0xF000F0,
-					OverlayTexture.DEFAULT_UV
-			);
-
-			immediate.draw();
-
-			EMITS = null;
 		}
 		batch.clear();
 	}

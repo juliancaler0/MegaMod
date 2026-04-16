@@ -28,11 +28,13 @@ import org.lwjgl.glfw.GLFW;
 import java.util.Optional;
 
 public class SkillsClientMod {
+	private static final KeyMapping.Category SKILLS_CATEGORY = new KeyMapping.Category(
+			Identifier.fromNamespaceAndPath("puffish_skills", "skills")
+	);
 	public static final KeyMapping OPEN_KEY_BINDING = new KeyMapping(
 			"key.puffish_skills.open",
-			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_K,
-			"category.puffish_skills.skills"
+			SKILLS_CATEGORY
 	);
 
 	private static SkillsClientMod instance;
@@ -176,7 +178,7 @@ public class SkillsClientMod {
 
 	private void onShowToast(ShowToastInPacket packet) {
 		var client = Minecraft.getInstance();
-		client.getToastManager().add(SimpleToast.create(
+		client.getToastManager().addToast(SimpleToast.create(
 				client,
 				Component.literal("Pufferfish's Skills"),
 				SkillsMod.createTranslatable("toast", switch (packet.getToastType()) {

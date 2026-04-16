@@ -44,8 +44,8 @@ public class CategoryData {
 	}
 
 	public static CategoryData read(CompoundTag nbt) {
-		var unlocked = nbt.getBoolean("unlocked", false);
-		var experience = nbt.getInt("experience", 0);
+		var unlocked = nbt.getBooleanOr("unlocked", false);
+		var experience = nbt.getIntOr("experience", 0);
 
 		var unlockedSkills = new HashSet<String>();
 		var unlockedNbt = nbt.getListOrEmpty("unlocked_skills");
@@ -60,8 +60,8 @@ public class CategoryData {
 		if (pointsNbt instanceof IntTag pointsNbtInt) {
 			points.put(PointSources.LEGACY, pointsNbtInt.intValue());
 		} else if (pointsNbt instanceof CompoundTag pointsCompoundTag) {
-			for (var key : pointsCompoundTag.getKeys()) {
-				points.put(Identifier.parse(key), pointsCompoundTag.getInt(key, 0));
+			for (var key : pointsCompoundTag.keySet()) {
+				points.put(Identifier.parse(key), pointsCompoundTag.getIntOr(key, 0));
 			}
 		}
 
@@ -74,7 +74,7 @@ public class CategoryData {
 
 		var unlockedNbt = new ListTag();
 		for (var skill : unlockedSkills) {
-			unlockedNbt.add(StringTag.of(skill));
+			unlockedNbt.add(StringTag.valueOf(skill));
 		}
 		nbt.put("unlocked_skills", unlockedNbt);
 

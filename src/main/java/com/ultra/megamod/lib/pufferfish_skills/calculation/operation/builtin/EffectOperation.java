@@ -54,7 +54,7 @@ public class EffectOperation implements Operation<LivingEntity, MobEffectInstanc
 				.andThen(BuiltinJson::parseEffect)
 				.ifFailure(problems::add)
 				.getSuccess()
-				.map(BuiltInRegistries.MOB_EFFECT::getEntry);
+				.map(BuiltInRegistries.MOB_EFFECT::wrapAsHolder);
 
 		if (problems.isEmpty()) {
 			return Result.success(new EffectOperation(

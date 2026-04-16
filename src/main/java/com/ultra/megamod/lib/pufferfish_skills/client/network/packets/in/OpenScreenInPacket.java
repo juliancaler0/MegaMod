@@ -14,7 +14,7 @@ public class OpenScreenInPacket implements InPacket {
 	}
 
 	public static OpenScreenInPacket read(FriendlyByteBuf buf) {
-		return new OpenScreenInPacket(buf.readOptional(FriendlyByteBuf::readIdentifier));
+		return new OpenScreenInPacket(buf.readBoolean() ? Optional.of(Identifier.parse(buf.readUtf())) : Optional.empty());
 	}
 
 	public Optional<Identifier> getCategoryId() {

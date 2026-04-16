@@ -114,7 +114,7 @@ public final class BuiltinPrototypes {
 				Identifier.parse("get_saturation_modifier"),
 				NUMBER,
 				OperationFactory.create(item -> {
-					var fc = item.getComponents().get(DataComponents.FOOD);
+					var fc = item.getDefaultInstance().get(DataComponents.FOOD);
 					return fc == null ? 0.0 : fc.saturation();
 				})
 		);
@@ -122,7 +122,7 @@ public final class BuiltinPrototypes {
 				Identifier.parse("get_nutrition"),
 				NUMBER,
 				OperationFactory.create(item -> {
-					var fc = item.getComponents().get(DataComponents.FOOD);
+					var fc = item.getDefaultInstance().get(DataComponents.FOOD);
 					return fc == null ? 0.0 : fc.nutrition();
 				})
 		);
@@ -158,7 +158,7 @@ public final class BuiltinPrototypes {
 		DAMAGE_SOURCE.registerOperation(
 				Identifier.parse("get_type"),
 				DAMAGE_TYPE,
-				OperationFactory.create(DamageSource::getType)
+				OperationFactory.create(DamageSource::type)
 		);
 		DAMAGE_SOURCE.registerOperation(
 				Identifier.parse("get_attacker"),
@@ -168,7 +168,7 @@ public final class BuiltinPrototypes {
 		DAMAGE_SOURCE.registerOperation(
 				Identifier.parse("get_source"),
 				ENTITY,
-				OperationFactory.createOptional(damageSource -> Optional.ofNullable(damageSource.getSource()))
+				OperationFactory.createOptional(damageSource -> Optional.ofNullable(damageSource.getDirectEntity()))
 		);
 
 		STAT.registerOperation(

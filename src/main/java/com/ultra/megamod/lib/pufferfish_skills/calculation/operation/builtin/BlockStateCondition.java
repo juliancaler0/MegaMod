@@ -71,8 +71,8 @@ public final class BlockStateCondition implements Operation<BlockState, Boolean>
 	@Override
 	public Optional<Boolean> apply(BlockState blockState) {
 		return Optional.of(
-				optBlockEntries.map(blockState::isIn).orElse(true)
-						&& optState.map(state -> state.test(blockState)).orElse(true)
+				optBlockEntries.map(entries -> blockState.is(entries)).orElse(true)
+						&& optState.map(state -> state.matches(blockState)).orElse(true)
 		);
 	}
 }

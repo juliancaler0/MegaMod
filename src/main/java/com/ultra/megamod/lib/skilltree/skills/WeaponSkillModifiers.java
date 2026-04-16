@@ -733,7 +733,7 @@ public class WeaponSkillModifiers {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.effectSet(MobEffects.SLOWNESS.getRegisteredName(), 3F, 1);
+        var impact = SpellBuilder.Impacts.effectSet(MobEffects.SLOWNESS.unwrapKey().orElseThrow().identifier().toString(), 3F, 1);
         spell.impacts = List.of(impact);
 
         SpellBuilder.Cost.cooldown(spell, 3F);
@@ -755,7 +755,7 @@ public class WeaponSkillModifiers {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.getRegisteredName(), 4F, 0, 1);
+        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.unwrapKey().orElseThrow().identifier().toString(), 4F, 0, 1);
         impact.particles = SkillsCommon.poisonImpactParticles();
         spell.impacts = List.of(impact);
 
@@ -786,7 +786,7 @@ public class WeaponSkillModifiers {
         trigger.chance = 0.25F;
         spell.passive.triggers = List.of(trigger);
 
-        var impact = SpellBuilder.Impacts.effectSet(MobEffects.WEAKNESS.getRegisteredName(), 4F, 0);
+        var impact = SpellBuilder.Impacts.effectSet(MobEffects.WEAKNESS.unwrapKey().orElseThrow().identifier().toString(), 4F, 0);
         spell.impacts = List.of(impact);
 
         return new Skills.Entry(id, spell, title, description, null, Skills.Category.WEAPON);

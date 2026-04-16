@@ -16,7 +16,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class SkillItems {
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(BuiltInRegistries.ITEM, SkillTreeMod.NAMESPACE);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, SkillTreeMod.NAMESPACE);
 
     public record LoreLine(String text, ChatFormatting formatting) {
         public record Translatable(String translationKey, LoreLine line) { }

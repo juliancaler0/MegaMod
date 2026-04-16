@@ -21,8 +21,8 @@ public class SkillTreeMod {
         SkillSounds.register();
     }
 
-    public static void registerItems() {
-        SkillItems.register();
+    public static void registerItems(net.neoforged.bus.api.IEventBus modEventBus) {
+        SkillItems.register(modEventBus);
     }
 
     public static void registerEffects() {

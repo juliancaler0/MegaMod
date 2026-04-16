@@ -1,5 +1,8 @@
 package com.ultra.megamod.lib.skilltree.utils;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentContents;
 import net.minecraft.network.chat.ComponentUtils;
@@ -8,14 +11,20 @@ import net.minecraft.network.chat.Style;
 
 import java.util.Optional;
 
-/**
- * Custom ComponentContents for resolvable skill descriptions.
- * Simplified for NeoForge 1.21.11 (ComponentContents.Type not available).
- */
 public record ResolvableTextContent(String id) implements ComponentContents {
+
+	private static final MapCodec<ResolvableTextContent> MAP_CODEC =
+			RecordCodecBuilder.mapCodec(instance ->
+					instance.group(Codec.STRING.fieldOf("id").forGetter(ResolvableTextContent::id))
+							.apply(instance, ResolvableTextContent::new));
 
 	public Component getText() {
 		return ComponentUtils.formatList(TranslationUtil.resolve(id), Component.literal("\n"));
+	}
+
+	@Override
+	public MapCodec<ResolvableTextContent> codec() {
+		return MAP_CODEC;
 	}
 
 	@Override

@@ -240,7 +240,7 @@ public class RogueSkills {
         }
         spell.passive.triggers = triggers;
 
-        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.getRegisteredName(), 8, 1, 1);
+        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.unwrapKey().orElseThrow().identifier().toString(), 8, 1, 1);
         impact.action.status_effect.amplifier_cap_power_multiplier = 0.5F;
         impact.particles = SkillsCommon.poisonImpactParticles();
         impact.sound = new Sound(SpellEngineSounds.GENERIC_POISON_IMPACT.id());

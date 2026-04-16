@@ -13,7 +13,7 @@ public class ShowToastInPacket implements InPacket {
 	}
 
 	public static ShowToastInPacket read(FriendlyByteBuf buf) {
-		return new ShowToastInPacket(buf.readEnumConstant(ToastType.class));
+		return new ShowToastInPacket(buf.readEnum(ToastType.class));
 	}
 
 	public ToastType getToastType() {

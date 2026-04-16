@@ -24,7 +24,7 @@ public class DamageSourceMixin implements DamageSourceAccess {
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void injectAtInit(Holder<DamageType> type, Entity source, Entity attacker, Vec3 position, CallbackInfo ci) {
 		if (attacker instanceof LivingEntity livingEntity) {
-			weapon = livingEntity.getMainHandStack(); // not really correct
+			weapon = livingEntity.getMainHandItem(); // not really correct
 		}
 	}
 

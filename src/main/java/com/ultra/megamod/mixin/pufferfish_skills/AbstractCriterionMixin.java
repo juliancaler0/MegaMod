@@ -21,7 +21,7 @@ public class AbstractCriterionMixin {
 				CriterionExperienceSource.class,
 				es -> {
 					if (es.criterion().trigger().equals(this)) {
-						if (predicate.test(es.criterion().conditions())) {
+						if (predicate.test(es.criterion().triggerInstance())) {
 							return (int) Math.round(es.calculation().evaluate(
 									new CriterionExperienceSource.Data(player)
 							));

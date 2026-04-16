@@ -11,8 +11,7 @@ public class TextUtil {
         for (Component text : lines) {
             // line.getString();
 
-            System.out.println("attribute.name.spell_power.fire translation: " + Language.getInstance().hasTranslation("attribute.name.spell_power.fire")
-            + " " + Language.getInstance().get("attribute.name.spell_power.fire"));
+            // Debug line removed - Language API changed in 1.21.11
 
             var string = Component.literal("").append(text).getString();
             if (!string.isEmpty()) {

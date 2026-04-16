@@ -22,7 +22,7 @@ public class PackConfigReader extends ConfigReader {
 	}
 
 	public Result<JsonElement, Problem> readResource(Identifier id, Resource resource) {
-		try (var reader = resource.getReader()) {
+		try (var reader = resource.openAsReader()) {
 			return JsonElement.parseReader(reader, JsonPath.create(id.toString()));
 		} catch (Exception e) {
 			return Result.failure(Problem.message("Failed to read resource `" + id + "`"));

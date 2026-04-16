@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class GlRenderPassMixin {
 
 	@Inject(method = "drawIndexed", at = @At("HEAD"), cancellable = true)
-	private void injectAtDrawIndexed(int i, int j, CallbackInfo ci) {
+	private void injectAtDrawIndexed(int i, int j, int k, int l, CallbackInfo ci) {
 		if (ItemBatchedRenderer.EMITS != null) {
 			var emits = ItemBatchedRenderer.EMITS;
 			var stack = RenderSystem.getModelViewStack();
@@ -23,7 +23,7 @@ public final class GlRenderPassMixin {
 			for (var emit : emits) {
 				stack.pushMatrix();
 				stack.mul(emit);
-				pass.drawIndexed(i, j);
+				pass.drawIndexed(i, j, k, l);
 				stack.popMatrix();
 			}
 

@@ -179,7 +179,7 @@ public class SkillsMod {
 	}
 
 	public static MutableComponent createTranslatable(String type, String path, Object... args) {
-		return Component.translatableWithFallback(Util.makeDescriptionId(type, createIdentifier(path)), args);
+		return Component.translatable(Util.makeDescriptionId(type, createIdentifier(path)), args);
 	}
 
 	public PrefixedLogger getLogger() {
@@ -659,9 +659,9 @@ public class SkillsMod {
 			amount += result;
 
 			experienceSource.teamSharing().ifPresent(teamSharing -> {
-				var teamPlayers = player.serverLevel().getPlayers(
+				var teamPlayers = ((net.minecraft.server.level.ServerLevel) player.level()).getPlayers(
 						otherPlayer -> player != otherPlayer
-								&& player.isTeammate(otherPlayer)
+								&& player.isAlliedTo(otherPlayer)
 								&& player.distanceTo(otherPlayer) <= teamSharing.distanceLimit()
 								&& getPlayerData(otherPlayer).isCategoryUnlocked(category)
 				);
@@ -811,13 +811,11 @@ public class SkillsMod {
 	}
 
 	public MinecraftServer getPlayerServer(ServerPlayer player) {
-		return player.server;
+		return player.level().getServer();
 	}
 
 	private boolean isOperatorOrHost(ServerPlayer player) {
-		var server = getPlayerServer(player);
-		return server.isSingleplayerOwner(player.getGameProfile())
-				|| server.getPlayerList().isOp(player.getGameProfile());
+		return Commands.LEVEL_GAMEMASTERS.check(player.createCommandSourceStack().permissions());
 	}
 
 	private class EventListener implements ServerEventListener {
@@ -829,7 +827,7 @@ public class SkillsMod {
 
 		@Override
 		public void onServerReload(MinecraftServer server) {
-			for (var player : server.getPlayerList().getPlayerList()) {
+			for (var player : server.getPlayerList().getPlayers()) {
 				for (var category : getAllCategories()) {
 					hideCategory(player, category);
 				}
@@ -837,7 +835,7 @@ public class SkillsMod {
 
 			loadModConfig(server);
 
-			for (var player : server.getPlayerList().getPlayerList()) {
+			for (var player : server.getPlayerList().getPlayers()) {
 				updateAllCategories(player);
 			}
 		}

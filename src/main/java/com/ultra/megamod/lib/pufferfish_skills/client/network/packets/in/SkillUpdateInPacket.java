@@ -16,8 +16,8 @@ public class SkillUpdateInPacket implements InPacket {
 	}
 
 	public static SkillUpdateInPacket read(FriendlyByteBuf buf) {
-		var categoryId = buf.readIdentifier();
-		var skillId = buf.readString();
+		var categoryId = Identifier.parse(buf.readUtf());
+		var skillId = buf.readUtf();
 		var unlocked = buf.readBoolean();
 		return new SkillUpdateInPacket(
 				categoryId,

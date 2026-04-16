@@ -100,7 +100,7 @@ public class ArcherSkills {
 //        var modifier = new Spell.Modifier();
 //        modifier.spell_pattern = "archers:entangling_roots";
 //
-//        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.getRegisteredName(), 5, 1, 1);
+//        var impact = SpellBuilder.Impacts.effectAdd(MobEffects.POISON.unwrapKey().orElseThrow().identifier().toString(), 5, 1, 1);
 //        impact.chance = 0.5F;
 //        impact.action.status_effect.amplifier_cap_power_multiplier = 0.2F;
 //        impact.particles = SkillsCommon.poisonImpactParticles();

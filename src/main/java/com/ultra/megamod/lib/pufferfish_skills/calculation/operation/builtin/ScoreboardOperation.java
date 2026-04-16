@@ -61,9 +61,14 @@ public final class ScoreboardOperation implements Operation<Entity, Double> {
 	@Override
 	public Optional<Double> apply(Entity entity) {
 		var scoreboard = entity.level().getScoreboard();
-		return Optional.ofNullable(scoreboard.getNullableObjective(objectiveName))
-				.map(objective -> Optional.ofNullable(scoreboard.getScore(entity, objective))
-						.map(score -> (double) score.getScore())
-						.orElse(0.0));
+		return Optional.ofNullable(scoreboard.getObjective(objectiveName))
+				.map(objective -> {
+					try {
+						var scoreAccess = scoreboard.getOrCreatePlayerScore((net.minecraft.world.scores.ScoreHolder) entity, objective);
+						return (double) scoreAccess.get();
+					} catch (Exception e) {
+						return 0.0;
+					}
+				});
 	}
 }

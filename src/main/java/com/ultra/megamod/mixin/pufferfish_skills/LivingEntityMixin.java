@@ -60,7 +60,7 @@ public abstract class LivingEntityMixin {
 			var player = attackerInfo.player();
 
 			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.level()
-					.getLevelChunk(entity.getBlockPos()))
+					.getChunkAt(entity.blockPosition()))
 					.getAntiFarmingPerChunkState();
 			antiFarmingPerChunkState.removeOutdated();
 
@@ -114,7 +114,7 @@ public abstract class LivingEntityMixin {
 			var player = attackerInfo.player();
 
 			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.level()
-					.getLevelChunk(entity.getBlockPos()))
+					.getChunkAt(entity.blockPosition()))
 					.getAntiFarmingPerChunkState();
 			antiFarmingPerChunkState.removeOutdated();
 
