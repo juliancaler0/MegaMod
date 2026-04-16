@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.pufferfish_skills.access;
 
-import net.minecraft.client.render.BufferBuilderStorage;
+import net.minecraft.client.renderer.RenderBuffers;
 
 public interface MinecraftClientAccess {
-	BufferBuilderStorage getBufferBuilders();
+	RenderBuffers getBufferBuilders();
 }

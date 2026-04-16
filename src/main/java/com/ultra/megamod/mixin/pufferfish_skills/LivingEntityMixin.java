@@ -54,12 +54,12 @@ public abstract class LivingEntityMixin {
 
 	@Inject(method = "applyDamage", at = @At("TAIL"))
 	private void injectAtApplyDamage(ServerLevel world, DamageSource source, float damage, CallbackInfo ci) {
-		AttackerInfo.detect(source.getAttacker(), attackerInfo -> {
+		AttackerInfo.detect(source.getEntity(), attackerInfo -> {
 			var entity = ((LivingEntity) (Object) this);
 			var weapon = ((DamageSourceAccess) source).getWeapon().orElse(ItemStack.EMPTY);
 			var player = attackerInfo.player();
 
-			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.getWorld()
+			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.level()
 					.getLevelChunk(entity.getBlockPos()))
 					.getAntiFarmingPerChunkState();
 			antiFarmingPerChunkState.removeOutdated();
@@ -108,12 +108,12 @@ public abstract class LivingEntityMixin {
 
 	@Inject(method = "drop", at = @At("TAIL"))
 	private void injectAtDrop(ServerLevel world, DamageSource source, CallbackInfo ci) {
-		AttackerInfo.detect(source.getAttacker(), attackerInfo -> {
+		AttackerInfo.detect(source.getEntity(), attackerInfo -> {
 			var entity = ((LivingEntity) (Object) this);
 			var weapon = ((DamageSourceAccess) source).getWeapon().orElse(ItemStack.EMPTY);
 			var player = attackerInfo.player();
 
-			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.getWorld()
+			var antiFarmingPerChunkState = ((WorldChunkAccess) entity.level()
 					.getLevelChunk(entity.getBlockPos()))
 					.getAntiFarmingPerChunkState();
 			antiFarmingPerChunkState.removeOutdated();

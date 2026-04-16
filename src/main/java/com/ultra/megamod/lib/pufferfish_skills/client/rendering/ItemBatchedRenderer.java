@@ -2,10 +2,10 @@ package com.ultra.megamod.lib.pufferfish_skills.client.rendering;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.render.DiffuseLighting;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.item.ItemRenderState;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.renderer.Lighting;
+import net.minecraft.client.renderer.OverlayTexture;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import com.ultra.megamod.lib.pufferfish_skills.access.MinecraftClientAccess;
@@ -19,7 +19,7 @@ import java.util.Map;
 public class ItemBatchedRenderer {
 
 	private final Map<ComparableItemStack, List<Matrix4f>> batch = new HashMap<>();
-	private final ItemRenderState itemRenderState = new ItemRenderState();
+	private final ItemStackRenderState itemRenderState = new ItemStackRenderState();
 
 	public static List<Matrix4f> EMITS;
 
@@ -30,7 +30,7 @@ public class ItemBatchedRenderer {
 		);
 
 		emits.add(new Matrix4f(
-				context.getMatrices().peek().getPositionMatrix()
+				context.pose().last().pose()
 		).translate(x, y, 0));
 	}
 
@@ -50,19 +50,19 @@ public class ItemBatchedRenderer {
 		for (var entry : batch.entrySet()) {
 			var itemStack = entry.getKey().itemStack;
 
-			client.getItemModelManager().clearAndUpdate(
+			client.getItemModelResolver().clearAndUpdate(
 					itemRenderState,
 					itemStack,
 					ItemDisplayContext.GUI,
-					client.world,
+					client.level,
 					client.player,
 					0
 			);
 
 			if (itemRenderState.isSideLit()) {
-				DiffuseLighting.enableGuiDepthLighting();
+				Lighting.enableGuiDepthLighting();
 			} else {
-				DiffuseLighting.disableGuiDepthLighting();
+				Lighting.disableGuiDepthLighting();
 			}
 
 			EMITS = entry.getValue();
@@ -91,7 +91,7 @@ public class ItemBatchedRenderer {
 				return false;
 			}
 
-			return ItemStack.areEqual(this.itemStack, ((ComparableItemStack) o).itemStack);
+			return ItemStack.isSameItemSameComponents(this.itemStack, ((ComparableItemStack) o).itemStack);
 		}
 
 		@Override

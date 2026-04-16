@@ -1,0 +1,108 @@
+package com.ultra.megamod.lib.pufferfish_skills.api;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.resources.Identifier;
+import com.ultra.megamod.lib.pufferfish_skills.SkillsMod;
+import com.ultra.megamod.lib.pufferfish_skills.api.experience.source.ExperienceSource;
+import com.ultra.megamod.lib.pufferfish_skills.api.experience.source.ExperienceSourceFactory;
+import com.ultra.megamod.lib.pufferfish_skills.api.reward.Reward;
+import com.ultra.megamod.lib.pufferfish_skills.api.reward.RewardFactory;
+import com.ultra.megamod.lib.pufferfish_skills.experience.source.ExperienceSourceRegistry;
+import com.ultra.megamod.lib.pufferfish_skills.impl.CategoryImpl;
+import com.ultra.megamod.lib.pufferfish_skills.reward.RewardRegistry;
+
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+public final class SkillsAPI {
+	private SkillsAPI() { }
+	
+	public static final String MOD_ID = "puffish_skills";
+
+	public static void registerSkillUnlockEvent(Events.SkillUnlock event) {
+		SkillsMod.SKILL_UNLOCK.register(event);
+	}
+
+	public static void registerSkillLockEvent(Events.SkillLock event) {
+		SkillsMod.SKILL_LOCK.register(event);
+	}
+
+	public static void registerReward(Identifier key, RewardFactory factory) {
+		RewardRegistry.register(key, factory);
+	}
+
+	public static void registerExperienceSource(Identifier key, ExperienceSourceFactory factory) {
+		ExperienceSourceRegistry.register(key, factory);
+	}
+
+	public static void updateExperienceSources(ServerPlayer player, Function<ExperienceSource, Integer> function) {
+		SkillsMod.getInstance().visitExperienceSources(player, function);
+	}
+
+	public static <T extends ExperienceSource> void updateExperienceSources(ServerPlayer player, Class<T> clazz, Function<T, Integer> function) {
+		SkillsMod.getInstance().visitExperienceSources(player, experienceSource -> {
+			if (clazz.isInstance(experienceSource)) {
+				return function.apply(clazz.cast(experienceSource));
+			}
+			return 0;
+		});
+	}
+
+	public static void updateRewards(ServerPlayer player, Identifier id) {
+		SkillsMod.getInstance().updateRewards(player, reward -> reward.type().equals(id));
+	}
+
+	public static void updateRewards(ServerPlayer player, Predicate<Reward> predicate) {
+		SkillsMod.getInstance().updateRewards(player, reward -> predicate.test(reward.instance()));
+	}
+
+	public static <T extends Reward> void updateRewards(ServerPlayer player, Class<T> clazz) {
+		updateRewards(player, clazz::isInstance);
+	}
+
+	public static <T extends Reward> void updateRewards(ServerPlayer player, Class<T> clazz, Predicate<T> predicate) {
+		updateRewards(player, reward -> {
+			if (clazz.isInstance(reward)) {
+				return predicate.test(clazz.cast(reward));
+			}
+			return false;
+		});
+	}
+
+	public static void openScreen(ServerPlayer player) {
+		SkillsMod.getInstance().openScreen(player, Optional.empty());
+	}
+
+	public static Optional<Category> getCategory(Identifier categoryId) {
+		if (SkillsMod.getInstance().hasCategory(categoryId)) {
+			return Optional.of(new CategoryImpl(categoryId));
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	public static Stream<Category> streamCategories() {
+		return SkillsMod.getInstance()
+				.getCategories(false)
+				.stream()
+				.map(CategoryImpl::new);
+	}
+
+	public static Stream<Category> streamUnlockedCategories(ServerPlayer player) {
+		return SkillsMod.getInstance()
+				.getUnlockedCategories(player)
+				.stream()
+				.map(CategoryImpl::new);
+	}
+
+	public static void exportPlayerData(ServerPlayer player, CompoundTag nbt) {
+		SkillsMod.getInstance().exportPlayerData(player, nbt);
+	}
+
+	public static void importPlayerData(ServerPlayer player, CompoundTag nbt) {
+		SkillsMod.getInstance().importPlayerData(player, nbt);
+	}
+}

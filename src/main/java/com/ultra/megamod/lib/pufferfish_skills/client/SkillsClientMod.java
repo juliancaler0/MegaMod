@@ -2,7 +2,7 @@ package com.ultra.megamod.lib.pufferfish_skills.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.util.InputUtil;
+import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import com.ultra.megamod.lib.pufferfish_skills.SkillsMod;
@@ -113,8 +113,8 @@ public class SkillsClientMod {
 	}
 
 	private void onOpenKeyPress() {
-		if (Minecraft.getInstance().currentScreen instanceof SkillsScreen screen) {
-			screen.close();
+		if (Minecraft.getInstance().screen instanceof SkillsScreen screen) {
+			screen.onClose();
 		} else {
 			openScreen(Optional.empty());
 		}
@@ -159,11 +159,11 @@ public class SkillsClientMod {
 	private void onNewPointPacket(NewPointInPacket packet) {
 		screenData.getCategory(packet.getCategoryId()).ifPresent(category -> {
 			if (category.hasAnySkillLeft()) {
-				Minecraft.getInstance().inGameHud.getChatHud().addMessage(
+				Minecraft.getInstance().gui.getChat().addMessage(
 						SkillsMod.createTranslatable(
 								"chat",
 								"new_point",
-								OPEN_KEY_BINDING.getBoundKeyLocalizedText()
+								OPEN_KEY_BINDING.getTranslatedKeyMessage()
 						)
 				);
 			}

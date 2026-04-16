@@ -1,7 +1,7 @@
 package com.ultra.megamod.mixin.pufferfish_skills;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.render.BufferBuilderStorage;
+import net.minecraft.client.renderer.RenderBuffers;
 import com.ultra.megamod.lib.pufferfish_skills.access.MinecraftClientAccess;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MinecraftClientMixin implements MinecraftClientAccess {
 	@Shadow
 	@Final
-	private BufferBuilderStorage bufferBuilders;
+	private RenderBuffers bufferBuilders;
 
 	@Override
-	public BufferBuilderStorage getBufferBuilders() {
+	public RenderBuffers getBufferBuilders() {
 		return bufferBuilders;
 	}
 }

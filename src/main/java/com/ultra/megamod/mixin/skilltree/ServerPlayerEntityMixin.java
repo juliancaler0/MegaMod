@@ -1,7 +1,7 @@
 package com.ultra.megamod.mixin.skilltree;
 
 import com.mojang.authlib.GameProfile;
-import net.minecraft.network.packet.c2s.common.SyncedClientOptions;
+import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayer.class)
 public class ServerPlayerEntityMixin {
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void init_TAIL_SkillTreeRPGs(MinecraftServer server, ServerLevel world, GameProfile profile, SyncedClientOptions clientOptions, CallbackInfo ci) {
+    private void init_TAIL_SkillTreeRPGs(MinecraftServer server, ServerLevel world, GameProfile profile, ClientInformation clientOptions, CallbackInfo ci) {
         var serverPlayer = (ServerPlayer) (Object) this;
         SkillsAPI.updateRewards(serverPlayer, SpellContainerReward.ID);
         SkillsAPI.updateRewards(serverPlayer, ConditionalAttributeReward.ID);
