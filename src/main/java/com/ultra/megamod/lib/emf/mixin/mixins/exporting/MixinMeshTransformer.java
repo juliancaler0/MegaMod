@@ -13,7 +13,7 @@ import net.minecraft.client.model.geom.builders.MeshTransformer;
 public interface MixinMeshTransformer {
 
     @Inject(method =
-            "method_62140"
+            "lambda$scaling$2"
             , at = @At(value = "HEAD"),cancellable = true)
     private static void emf$cancel(final float f, final float g, final MeshDefinition meshDefinition, final CallbackInfoReturnable<MeshDefinition> cir) {
         if (EMF.tempDisableModelModifications){

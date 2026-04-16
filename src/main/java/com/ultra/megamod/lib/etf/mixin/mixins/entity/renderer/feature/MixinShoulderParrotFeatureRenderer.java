@@ -49,7 +49,7 @@ public abstract class MixinShoulderParrotFeatureRenderer extends RenderLayer<Ava
     public MixinShoulderParrotFeatureRenderer() {super(null);}
 
     @Inject(method = "submitOnShoulder", at = @At(value = "INVOKE", target =
-            "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/RenderType;IIILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"
+            "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IIILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"
     ))
     private void etf$modifySubmit(final PoseStack poseStack, final SubmitNodeCollector submitNodeCollector, final int i, final AvatarRenderState avatarRenderState, final Parrot.Variant variant, final float f, final float g, final boolean bl, final CallbackInfo ci,
                                   @Local ParrotRenderState parrotRenderState) {

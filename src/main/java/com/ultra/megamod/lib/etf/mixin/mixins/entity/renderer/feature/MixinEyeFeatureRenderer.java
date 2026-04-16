@@ -14,7 +14,7 @@ import com.ultra.megamod.lib.etf.utils.ETFUtils2;
 @Mixin(EyesLayer.class)
 public abstract class MixinEyeFeatureRenderer {
 
-    @ModifyExpressionValue(method = "submit", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/EyesLayer;renderType()Lnet/minecraft/client/renderer/RenderType;"))
+    @ModifyExpressionValue(method = "submit", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/layers/EyesLayer;renderType()Lnet/minecraft/client/renderer/rendertype/RenderType;"))
     private RenderType etf$allowModifiableEyes(RenderType layer) {
         //the eye texture render layers are hard coded in vanilla and do not recalculate each time
         if (layer instanceof ETFRenderLayerWithTexture etf && etf.etf$getId().isPresent()) {
