@@ -1,0 +1,31 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+issueTrackerURL = "https://github.com/FabricExtras/StructurePoolAPI/issues"
+license = "MIT"
+
+[[mods]]
+modId = "structure_pool_api"
+version = "${version}"
+displayName = "Structure Pool API"
+authors = "Daedelus"
+description = '''
+Allows injecting structures into structure pools.
+'''
+logoFile = "icon.png"
+
+[[dependencies.structure_pool_api]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.structure_pool_api]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "structure_pool.mixins.json"

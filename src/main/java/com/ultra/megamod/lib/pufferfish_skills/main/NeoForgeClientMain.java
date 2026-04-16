@@ -9,7 +9,7 @@ import net.minecraft.network.protocol.common.ServerboundCustomPayloadPacket;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -53,7 +53,7 @@ public class NeoForgeClientMain {
 
 		var neoForgeEventBus = NeoForge.EVENT_BUS;
 		neoForgeEventBus.addListener(this::onPlayerLoggedIn);
-		neoForgeEventBus.addListener(this::onInputKey);
+		neoForgeEventBus.addListener(this::onClientTick);
 	}
 
 	private void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
@@ -69,9 +69,11 @@ public class NeoForgeClientMain {
 		}
 	}
 
-	private void onInputKey(InputEvent.Key event) {
+	private void onClientTick(ClientTickEvent.Post event) {
+		// Only process keybinds while the player is in the world (not in menus/title screen)
+		if (Minecraft.getInstance().player == null) return;
 		for (var keyBinding : keyBindings) {
-			if (keyBinding.keyBinding.consumeClick()) {
+			while (keyBinding.keyBinding.consumeClick()) {
 				keyBinding.handler.handle();
 			}
 		}
