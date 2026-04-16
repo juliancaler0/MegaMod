@@ -19,6 +19,16 @@
             "type": "directory",
             "source": "gui/group",
             "prefix": "gui/group/"
+        },
+        {
+            "type": "directory",
+            "source": "gui/sprites/container/slot",
+            "prefix": "container/slot/"
+        },
+        {
+            "type": "directory",
+            "source": "gui/sprites/container/slot/group",
+            "prefix": "container/slot/group/"
         }
     ]
 }
