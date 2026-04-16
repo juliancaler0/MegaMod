@@ -1,19 +1,24 @@
 {
-  "sources": [
-    {
-      "type": "single",
-      "resource": "megamod:item/placeholder/spell_book",
-      "sprite": "megamod:item/placeholder/spell_book"
-    },
-    {
-      "type": "single",
-      "resource": "megamod:item/placeholder/lapis",
-      "sprite": "megamod:item/placeholder/lapis"
-    },
-    {
-      "type": "single",
-      "resource": "megamod:item/placeholder/scroll",
-      "sprite": "megamod:item/placeholder/scroll"
-    }
-  ]
+    "sources": [
+        {
+            "type": "single",
+            "resource": "megamod:item/placeholder/spell_book",
+            "sprite": "megamod:item/placeholder/spell_book"
+        },
+        {
+            "type": "single",
+            "resource": "megamod:item/placeholder/lapis",
+            "sprite": "megamod:item/placeholder/lapis"
+        },
+        {
+            "type": "single",
+            "resource": "megamod:item/placeholder/scroll",
+            "sprite": "megamod:item/placeholder/scroll"
+        },
+        {
+            "type": "directory",
+            "source": "gui/group",
+            "prefix": "gui/group/"
+        }
+    ]
 }
