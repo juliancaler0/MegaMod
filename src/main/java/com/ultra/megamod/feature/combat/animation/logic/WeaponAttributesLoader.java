@@ -35,6 +35,11 @@ public class WeaponAttributesLoader {
     @SubscribeEvent
     public static void onServerStarted(ServerStartedEvent event) {
         loadFromResources(event.getServer().getResourceManager());
+        // Run the BetterCombat fallback: assign weapon attributes to items whose
+        // registry names match regex patterns (e.g. "katana" -> katana archetype).
+        // Must run AFTER JSON weapon_attributes are loaded so JSON archetypes are
+        // available for the fallback config's namespace:path references.
+        WeaponAttributesFallback.initialize();
     }
 
     private static final Logger LOGGER = LoggerFactory.getLogger("WeaponAttributesLoader");

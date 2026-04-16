@@ -162,6 +162,23 @@ public final class SpellEngineNeoForge {
         modEventBus.addListener(ServerNetwork::registerPayloadHandlers);
         modEventBus.addListener(ServerNetwork::registerConfigurationTasks);
 
+        // Load spell_assignments JSONs + run WeaponCompatibility fallback before
+        // configuration tasks encode the spell registry for client sync.
+        // Must run on the game event bus (ServerAboutToStartEvent fires before
+        // configuration tasks execute, so the encoded data is ready in time).
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
+                (net.neoforged.neoforge.event.server.ServerAboutToStartEvent event) ->
+                        com.ultra.megamod.lib.spellengine.internals.container.SpellAssignments.onServerStarting(event.getServer()));
+
+        // When a player joins, sync their spell cooldowns and server-side spell
+        // containers so the client-side SpellHotbar has the correct data.
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(
+                (net.neoforged.neoforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent event) -> {
+                    if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer sp) {
+                        ServerNetwork.onPlayerJoin(sp);
+                    }
+                });
+
         // PlayerEntityEvents mixin already bridges Player.attack -> CombatEvents.PLAYER_MELEE_ATTACK
         // so MELEE_IMPACT triggers fire server-side when `SpellTriggers.init()` registers its listener
         // during FMLCommonSetupEvent below.

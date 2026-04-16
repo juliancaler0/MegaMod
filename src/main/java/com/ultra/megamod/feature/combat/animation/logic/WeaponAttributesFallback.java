@@ -48,7 +48,21 @@ public class WeaponAttributesFallback {
             for (var fallbackOption : specifiers) {
                 if (WeaponAttributeRegistry.getAttributes(item) == null
                         && PatternMatching.matches(itemId.toString(), fallbackOption.item_id_regex)) {
+                    // The fallback config's weapon_attributes can be either a bare
+                    // category name ("sword") or a namespace:path reference
+                    // ("megamod:katana") pointing to a JSON weapon_attributes file.
                     var archetype = WeaponAttributeRegistry.getArchetype(fallbackOption.weapon_attributes);
+                    if (archetype == null && fallbackOption.weapon_attributes.contains(":")) {
+                        // Strip namespace and try again as bare category name
+                        var bareName = fallbackOption.weapon_attributes.substring(
+                                fallbackOption.weapon_attributes.indexOf(':') + 1);
+                        archetype = WeaponAttributeRegistry.getArchetype(bareName);
+                    }
+                    if (archetype == null) {
+                        // Fall back to JSON-loaded weapon_attributes (e.g. "megamod:katana"
+                        // resolves to data/megamod/weapon_attributes/katana.json)
+                        archetype = WeaponAttributesLoader.getAttributes(fallbackOption.weapon_attributes);
+                    }
                     if (archetype != null) {
                         WeaponAttributeRegistry.register(item, archetype);
                         break;
