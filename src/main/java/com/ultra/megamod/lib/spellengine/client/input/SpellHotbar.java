@@ -79,7 +79,7 @@ public class SpellHotbar {
             int selected = SpellWeaponSelection.clampedIndex(resolved.size());
             List<Holder<Spell>> spellEntryList;
             if (selected == 0 || resolved.isEmpty()) {
-                spellEntryList = resolved;
+                spellEntryList = List.copyOf(resolved);
             } else {
                 var rotated = new ArrayList<Holder<Spell>>(resolved.size());
                 rotated.addAll(resolved.subList(selected, resolved.size()));
