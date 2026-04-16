@@ -392,8 +392,11 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         //      them as (cosmetic, base). Target shows two columns of base
         //      slots on the far left. Cosmetics ride along off-screen. ----
         int pairCount = Math.max(0, (slots.size() - accStart) / 2);
-        int rowsNeeded = (pairCount + ACC_COLS - 1) / ACC_COLS;
-        this.accRowStride = rowsNeeded > 5 ? ACC_ROW_STRIDE : ACC_VISIBLE_ROW_STRIDE;
+        int rowsNeeded = Math.max(1, (pairCount + ACC_COLS - 1) / ACC_COLS);
+        // Cap stride so the panel always fits above the inventory.
+        int availableH = (INV_Y - 4) - ACC_COL_Y;
+        int maxStrideForFit = availableH / rowsNeeded;
+        this.accRowStride = Math.max(12, Math.min(ACC_VISIBLE_ROW_STRIDE, maxStrideForFit));
         int accIdx = 0;
         for (int i = accStart; i + 1 < slots.size(); i += 2) {
             var cosmetic = slots.get(i);
