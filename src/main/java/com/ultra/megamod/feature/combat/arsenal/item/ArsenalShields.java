@@ -43,6 +43,13 @@ public class ArsenalShields {
             .spellContainer(SpellContainers.forRelic(ArsenalSpells.unyielding_shield.id()))
             .lootTheme(Loot.Theme.ELVEN.toString()));
 
+    // MARK: Nightmare _3 variant
+
+    public static Shield.Entry unique_shield_3 = add(Shields.create(ArsenalMod.NAMESPACE, "unique_shield_3", Equipment.Tier.TIER_5, () -> Ingredient.of(Items.NETHERITE_SCRAP), UNIQUE_ATTRIBUTES, ArsenalSounds.shield_equip.entry())
+            .translatedName("Dreadnought Ward")
+            .spellContainer(SpellContainers.forRelic(ArsenalSpells.spiked_shield.id()))
+            .lootTheme(Loot.Theme.GENERIC.toString()));
+
     static {
         for (var entry: entries) {
             entry.rarity = Rarity.RARE;
