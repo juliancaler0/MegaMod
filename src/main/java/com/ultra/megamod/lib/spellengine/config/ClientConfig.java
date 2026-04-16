@@ -23,7 +23,7 @@ public class ClientConfig  {
     public WrappedKeybinding.VanillaAlternative spell_hotbar_9_defer = WrappedKeybinding.VanillaAlternative.HOTBAR_KEY_9;
 
     public boolean sneakingByPassSpellHotbar = false;
-    public boolean useKeyHighPriority = false;
+    public boolean useKeyHighPriority = true;
     public boolean highlightTarget = true;
     public boolean filterInvalidTargets = true;
     public boolean alwaysShowFullTooltip = false;
