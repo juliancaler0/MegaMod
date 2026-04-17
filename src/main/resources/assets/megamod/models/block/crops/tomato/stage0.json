@@ -1,1 +1,2 @@
-{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/tomato/stage0"}}
+{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/tomato/stage0",
+"particle": "megamod:block/crops/tomato/stage0"}}

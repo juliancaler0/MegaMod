@@ -217,15 +217,9 @@ dependencies {
     compileOnly "mezz.jei:jei-1.21.11-neoforge-api:27.4.0.22"
     compileOnly "top.theillusivec4.curios:curios-neoforge:14.0.0+1.21.11:api"
 
-    // owo-lib + endec — real NeoForge build from Wispforest. Replaces the
-    // hand-ported lib/owo/* shim. Uses the 1.21.10 build since there is
-    // no 1.21.11 release yet; likely binary-compatible.
-    implementation "io.wispforest:owo-lib-neoforge:0.12.28+1.21.10"
-    implementation "io.wispforest:endec:0.1.11"
-    implementation "io.wispforest.endec:netty:0.1.5"
-    implementation "io.wispforest.endec:gson:0.1.6"
-    implementation "io.wispforest.endec:jankson:0.1.6"
-    implementation "blue.endless:jankson:1.2.2"
+    // owo-lib-neoforge temporarily disabled — the 1.21.10 build is not binary-compatible with
+    // 1.21.11 (NbtCompound.remove signature change, GameRules inner classes moved). Wait for
+    // a 1.21.11 release before re-enabling.
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html

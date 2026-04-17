@@ -7,18 +7,10 @@
     " I "
   ],
   "key": {
-    "S": {
-      "item": "reliquary:slime_pearl"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "M": {
-      "item": "reliquary:molten_core"
-    }
+    "S": "reliquary:slime_pearl",
+    "G": "#c:glass_blocks",
+    "I": "#c:ingots/iron",
+    "M": "reliquary:molten_core"
   },
   "result": {
     "id": "reliquary:lantern_of_paranoia",

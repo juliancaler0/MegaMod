@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_frost_crystal" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_frost_crystal",
+ "particle": "megamod:item/reagent_frost_crystal" } }

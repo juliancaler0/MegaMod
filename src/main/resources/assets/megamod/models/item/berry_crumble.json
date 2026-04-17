@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/berry_crumble"
+    "layer0": "megamod:item/berry_crumble",
+    "particle": "megamod:item/berry_crumble"
   }
 }

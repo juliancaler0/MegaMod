@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"1": "megamod:block/lr_livingroom_cupboard"
+		"1": "megamod:block/lr_livingroom_cupboard",
+		"particle": "#1"
 	},
 	"elements": [
 		{

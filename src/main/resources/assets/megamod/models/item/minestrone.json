@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/minestrone"
+    "layer0": "megamod:item/minestrone",
+    "particle": "megamod:item/minestrone"
   }
 }

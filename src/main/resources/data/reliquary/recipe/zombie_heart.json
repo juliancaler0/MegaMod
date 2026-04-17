@@ -7,12 +7,8 @@
     "III"
   ],
   "key": {
-    "F": {
-      "item": "minecraft:rotten_flesh"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "F": "minecraft:rotten_flesh",
+    "I": "#c:ingots/iron"
   },
   "result": {
     "id": "reliquary:zombie_heart",

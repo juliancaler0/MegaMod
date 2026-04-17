@@ -7,9 +7,7 @@
     " G "
   ],
   "key": {
-    "G": {
-      "tag": "c:glass_panes"
-    }
+    "G": "#c:glass_panes"
   },
   "result": {
     "id": "reliquary:empty_potion_vial",

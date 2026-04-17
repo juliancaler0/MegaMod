@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/mona_lisa"
+    "layer0": "megamod:item/mona_lisa",
+    "particle": "megamod:item/mona_lisa"
   }
 }

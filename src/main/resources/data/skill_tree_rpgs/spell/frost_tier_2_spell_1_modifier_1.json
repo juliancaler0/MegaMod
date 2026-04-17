@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:frost",
+  "school": "megamod:frost",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -8,7 +8,7 @@
       {
         "type": "SPELL_IMPACT_SPECIFIC",
         "spell": {
-          "id": "wizards:frost_nova"
+          "id": "megamod:frost_nova"
         },
         "impact": {
           "impact_type": "DAMAGE"
@@ -59,7 +59,7 @@
       }
     ],
     "sound": {
-      "id": "wizards:frost_nova_damage_impact"
+      "id": "megamod:frost_nova_damage_impact"
     }
   },
   "cost": {

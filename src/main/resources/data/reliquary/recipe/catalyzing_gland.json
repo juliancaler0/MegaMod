@@ -7,12 +7,8 @@
     "GGG"
   ],
   "key": {
-    "P": {
-      "tag": "c:gunpowders"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    }
+    "P": "#c:gunpowders",
+    "G": "#c:ingots/gold"
   },
   "result": {
     "id": "reliquary:catalyzing_gland",

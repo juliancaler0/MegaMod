@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sandwalker_treads"
+    "layer0": "megamod:item/sandwalker_treads",
+    "particle": "megamod:item/sandwalker_treads"
   }
 }

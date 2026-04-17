@@ -7,21 +7,11 @@
     "IGI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "item": "reliquary:barrel_assembly"
-    },
-    "M": {
-      "item": "reliquary:hammer_assembly"
-    },
-    "G": {
-      "item": "reliquary:grip_assembly"
-    },
-    "S": {
-      "item": "reliquary:slime_pearl"
-    }
+    "I": "#c:ingots/iron",
+    "B": "reliquary:barrel_assembly",
+    "M": "reliquary:hammer_assembly",
+    "G": "reliquary:grip_assembly",
+    "S": "reliquary:slime_pearl"
   },
   "result": {
     "id": "reliquary:handgun",

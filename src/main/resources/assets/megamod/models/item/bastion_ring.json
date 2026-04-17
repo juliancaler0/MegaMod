@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/bastion_ring"
+    "layer0": "megamod:item/bastion_ring",
+    "particle": "megamod:item/bastion_ring"
   }
 }

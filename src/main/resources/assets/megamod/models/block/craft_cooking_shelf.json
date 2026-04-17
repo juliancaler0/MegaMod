@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"4": "megamod:block/craft_cooking_shelf"
+		"4": "megamod:block/craft_cooking_shelf",
+		"particle": "#4"
 	},
 	"elements": [
 		{

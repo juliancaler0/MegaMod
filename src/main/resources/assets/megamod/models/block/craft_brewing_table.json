@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"7": "megamod:block/craft_brewing_table"
+		"7": "megamod:block/craft_brewing_table",
+		"particle": "#7"
 	},
 	"elements": [
 		{

@@ -10,15 +10,9 @@
   ],
   "category": "misc",
   "ingredients": [
-    {
-      "item": "reliquary:mob_charm_fragment"
-    },
-    {
-      "item": "reliquary:mob_charm_fragment"
-    },
-    {
-      "item": "minecraft:egg"
-    }
+    "reliquary:mob_charm_fragment",
+    "reliquary:mob_charm_fragment",
+    "minecraft:egg"
   ],
   "result": {
     "id": "minecraft:chicken_spawn_egg",

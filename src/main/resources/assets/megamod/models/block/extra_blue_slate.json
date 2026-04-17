@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/extra_blue_slate"
+    "all": "megamod:block/extra_blue_slate",
+    "particle": "megamod:block/extra_blue_slate"
   }
 }

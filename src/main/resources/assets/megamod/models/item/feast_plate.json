@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/feast_plate"
+    "layer0": "megamod:item/feast_plate",
+    "particle": "megamod:item/feast_plate"
   }
 }

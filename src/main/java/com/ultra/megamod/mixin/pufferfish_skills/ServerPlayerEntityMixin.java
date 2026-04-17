@@ -17,7 +17,7 @@ public abstract class ServerPlayerEntityMixin {
 		SkillsAPI.updateRewards((ServerPlayer) (Object) this, AttributeReward.class);
 	}
 
-	@Inject(method = "increaseStat", at = @At("HEAD"))
+	@Inject(method = "awardStat(Lnet/minecraft/stats/Stat;I)V", at = @At("HEAD"))
 	private void injectAtIncreaseStat(Stat<?> stat, int amount, CallbackInfo ci) {
 		var player = (ServerPlayer) (Object) this;
 		SkillsAPI.updateExperienceSources(

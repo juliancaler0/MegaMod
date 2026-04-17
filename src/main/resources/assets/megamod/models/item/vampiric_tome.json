@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/vampiric_tome"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/vampiric_tome",
+"particle": "megamod:item/vampiric_tome"}}

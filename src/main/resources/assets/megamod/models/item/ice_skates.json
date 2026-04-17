@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/ice_skates"
+    "layer0": "megamod:item/ice_skates",
+    "particle": "megamod:item/ice_skates"
   }
 }

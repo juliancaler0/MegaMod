@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_night_watch"
+    "layer0": "megamod:item/the_night_watch",
+    "particle": "megamod:item/the_night_watch"
   }
 }

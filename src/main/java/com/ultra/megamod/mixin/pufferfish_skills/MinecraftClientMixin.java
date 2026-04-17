@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.Shadow;
 public class MinecraftClientMixin implements MinecraftClientAccess {
 	@Shadow
 	@Final
-	private RenderBuffers bufferBuilders;
+	private RenderBuffers renderBuffers;
 
 	@Override
 	public RenderBuffers getBufferBuilders() {
-		return bufferBuilders;
+		return renderBuffers;
 	}
 }

@@ -59,17 +59,6 @@ public class ArsenalBows {
             .spellContainer(SpellContainers.forRangedWeapon().withSpellId(ArsenalSpells.bonus_shot_ranged.id()))
             .lootTheme(Loot.Theme.ELVEN.toString()));
 
-    // MARK: Nightmare _3 variants
-
-    public static RangedWeapon.Entry unique_longbow_3 = addBow(RangedWeapons.longBow(ArsenalMod.NAMESPACE, "unique_longbow_3", Equipment.Tier.TIER_5, () -> Ingredient.of(Items.IRON_BLOCK))
-            .translatedName("Galewind Bow")
-            .spellContainer(SpellContainers.forRangedWeapon().withSpellId(ArsenalSpells.bonus_shot_ranged.id()))
-            .lootTheme(Loot.Theme.GENERIC.toString()));
-    public static RangedWeapon.Entry unique_heavy_crossbow_3 = addCrossbow(RangedWeapons.heavyCrossbow(ArsenalMod.NAMESPACE, "unique_heavy_crossbow_3", Equipment.Tier.TIER_5, () -> Ingredient.of(Items.AMETHYST_BLOCK))
-            .translatedName("Arcane Arbalest")
-            .spellContainer(SpellContainers.forRangedWeapon().withSpellId(ArsenalSpells.radiance_ranged.id()))
-            .lootTheme(Loot.Theme.CRYSTAL.toString()));
-
     static {
         for (var entry: entries) {
             entry.rarity = Rarity.RARE;

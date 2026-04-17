@@ -31,10 +31,9 @@ public class RpgBowItem extends BowItem {
         this.baseDamage = baseDamage;
     }
 
+    // Stat rolling disabled — source-parity attributes only (task: port items first, rolls later).
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-        if (!WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponStatRoller.rollAndApply(stack, baseDamage, level.random);
-        }
+        // no-op
     }
 
     /**
@@ -67,14 +66,9 @@ public class RpgBowItem extends BowItem {
 
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
-        WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
     }
 
     public boolean isFoil(ItemStack stack) {
-        if (WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponRarity rarity = WeaponStatRoller.getRarity(stack);
-            return rarity == WeaponRarity.MYTHIC || rarity == WeaponRarity.LEGENDARY;
-        }
         return false;
     }
 

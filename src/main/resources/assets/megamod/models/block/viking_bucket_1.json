@@ -4,7 +4,8 @@
 	"credit": "MadewithBlockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"1": "megamod:block/viking_bucket_1"
+		"1": "megamod:block/viking_bucket_1",
+		"particle": "#1"
 	},
 	"elements": [
 		{

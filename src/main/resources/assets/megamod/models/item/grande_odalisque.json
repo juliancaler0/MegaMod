@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/grande_odalisque"
+    "layer0": "megamod:item/grande_odalisque",
+    "particle": "megamod:item/grande_odalisque"
   }
 }

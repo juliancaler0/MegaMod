@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/purple_sleeping_bag"
+    "layer0": "megamod:item/purple_sleeping_bag",
+    "particle": "megamod:item/purple_sleeping_bag"
   }
 }

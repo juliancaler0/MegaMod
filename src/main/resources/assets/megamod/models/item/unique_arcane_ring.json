@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_arcane_ring"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_arcane_ring",
+"particle": "megamod:item/unique_arcane_ring"}}

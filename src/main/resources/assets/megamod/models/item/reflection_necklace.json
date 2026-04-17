@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/reflection_necklace"
+    "layer0": "megamod:item/reflection_necklace",
+    "particle": "megamod:item/reflection_necklace"
   }
 }

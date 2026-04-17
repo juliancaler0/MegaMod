@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/classic_table"
+		"2": "megamod:block/classic_table",
+		"particle": "#2"
 	},
 	"elements": [
 		{

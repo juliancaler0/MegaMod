@@ -43,6 +43,15 @@ description='''
 Mine the way I want it
 '''
 
+# Virtual sub-mods removed — the mods list now shows only "MegaMod". The RPG Series content
+# (wizards/paladins/archers/rogues/arsenal/jewelry/runes/relics), SpellEngine/SpellPower/
+# RangedWeapon/CombatRoll libraries, and their shared content are all consolidated into this
+# single jar under the `megamod` namespace.
+#
+# The Pufferfish Skills skill_tree_rpgs data pack's `required_mods` checks are handled by a
+# whitelist in the ModListLoadedMixin (see mixin/pufferfish_skills/), which spoofs
+# ModList.isLoaded() for the consolidated mod IDs so the reference data pack still resolves.
+
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]
 config="${mod_id}.mixins.json"
@@ -70,6 +79,24 @@ config="megamod-etf.mixins.json"
 # Entity Model Features (EMF) — pack-supplied .jem animations (Fresh Animations)
 [[mixins]]
 config="megamod-emf.mixins.json"
+
+# Pufferfish Skills framework mixins — experience tracking, crafting/fishing/damage hooks
+[[mixins]]
+config="pufferfish_skills.mixins.json"
+
+# SkillTree RPG content mixins — conditional attribute modifiers, player init hooks
+[[mixins]]
+config="skilltree.mixins.json"
+
+# pufferfish_unofficial_additions mixins — harvest-crop loot experience hook,
+# effect-reward modification/persistence, powder-snow walk-on-tag, BuiltinJson invoker.
+[[mixins]]
+config="pufferfish_additions.mixins.json"
+
+# Puffish Attributes — extra attribute types (stamina, magic/melee/ranged damage &
+# resistance, mining/consuming speeds, shreds, natural regen, stealth, life steal, etc.)
+[[mixins]]
+config="puffish_attributes.mixins.json"
 
 # The [[accessTransformers]] block allows you to declare where your AT file is.
 # If this block is omitted, a fallback attempt will be made to load an AT from META-INF/accesstransformer.cfg

@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:judgement",
+      "spell_pattern": "megamod:judgement",
       "power_modifier": {
         "power_multiplier": 0.2
       }

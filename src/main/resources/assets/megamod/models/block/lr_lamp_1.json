@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/lr_livingroom_lamp_1"
+		"1": "megamod:block/lr_livingroom_lamp_1",
+		"particle": "#1"
 	},
 	"elements": [
 		{

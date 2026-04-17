@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/auto_fire_hook"
+    "layer0": "megamod:item/auto_fire_hook",
+    "particle": "megamod:item/auto_fire_hook"
   }
 }

@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/diamond_tier_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/diamond_tier_upgrade",
+"particle": "megamod:item/diamond_tier_upgrade"}}

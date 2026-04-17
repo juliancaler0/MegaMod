@@ -1,11 +1,11 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 1,
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:circle_of_healing",
+      "spell_pattern": "megamod:circle_of_healing",
       "mutate_impacts": "APPEND",
       "impacts": [
         {

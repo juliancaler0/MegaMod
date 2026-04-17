@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/chorus_inhibitor"
+    "layer0": "megamod:item/chorus_inhibitor",
+    "particle": "megamod:item/chorus_inhibitor"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/garden_of_earthly_delights"
+    "layer0": "megamod:item/garden_of_earthly_delights",
+    "particle": "megamod:item/garden_of_earthly_delights"
   }
 }

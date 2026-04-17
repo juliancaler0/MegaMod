@@ -7,21 +7,11 @@
     "SG "
   ],
   "key": {
-    "B": {
-      "item": "reliquary:bat_wing"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "E": {
-      "item": "reliquary:eye_of_the_storm"
-    },
-    "V": {
-      "item": "reliquary:void_tear"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    }
+    "B": "reliquary:bat_wing",
+    "S": "minecraft:stick",
+    "E": "reliquary:eye_of_the_storm",
+    "V": "reliquary:void_tear",
+    "G": "#c:ingots/gold"
   },
   "result": {
     "id": "reliquary:rending_gale",

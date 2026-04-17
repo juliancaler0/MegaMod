@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/iron_fist"
+    "layer0": "megamod:item/iron_fist",
+    "particle": "megamod:item/iron_fist"
   }
 }

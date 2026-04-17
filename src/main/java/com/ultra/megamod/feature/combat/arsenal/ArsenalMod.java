@@ -31,7 +31,11 @@ public class ArsenalMod {
         ArsenalSounds.init(modEventBus);
         ArsenalEffects.register(effectConfig);
         Group.init(modEventBus);
-        // ArsenalWeapons, ArsenalBows, ArsenalShields removed —
-        // all unique_* items are registered by RelicRegistry
+        // Register Arsenal weapons/bows/shields. Previously double-registered via
+        // RelicRegistry (now scrapped — task #52), so we wire direct registration here
+        // through the SpellEngine Weapon/RangedWeapon/Shield factory pipeline.
+        ArsenalWeapons.register(itemConfig.weapons);
+        ArsenalBows.register(rangedConfig.ranged_weapons);
+        ArsenalShields.register(shieldConfig.shields);
     }
 }

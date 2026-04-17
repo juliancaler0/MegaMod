@@ -12,12 +12,8 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:nebulous_heart"
-    },
-    "S": {
-      "tag": "c:ender_pearls"
-    }
+    "P": "reliquary:nebulous_heart",
+    "S": "#c:ender_pearls"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

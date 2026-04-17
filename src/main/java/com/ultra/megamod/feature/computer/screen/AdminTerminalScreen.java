@@ -33,7 +33,6 @@ import com.ultra.megamod.feature.dungeons.DungeonRegistry;
 import com.ultra.megamod.feature.dungeons.entity.DungeonEntityRegistry;
 import com.ultra.megamod.feature.dungeons.loot.DungeonExclusiveItems;
 import com.ultra.megamod.feature.museum.MuseumRegistry;
-import com.ultra.megamod.feature.relics.RelicRegistry;
 
 import com.ultra.megamod.feature.computer.screen.panels.MuseumManagerPanel;
 import com.ultra.megamod.feature.computer.screen.panels.InventoryViewerPanel;
@@ -124,11 +123,14 @@ extends Screen {
     private int shopIntervalTicks = 24000;
     private double shopPriceMult = 1.0;
     private double shopSellPct = 0.20;
-    private String selectedSkillTree = "COMBAT";
+    private String selectedSkillTree = "skill_tree_rpgs:class_skills";
     private String skillSubView = "skills";
     private List<String[]> gameScoresCache = new ArrayList<String[]>();
     private int skillScroll = 0;
     private final List<SkillPlayerEntry> skillPlayers = new ArrayList<SkillPlayerEntry>();
+    private final Map<String, Map<String, Integer>> skillSpent = new LinkedHashMap<>();
+    private final Map<String, Map<String, Integer>> skillPrestige = new LinkedHashMap<>();
+    private final java.util.Set<String> skillBypassUuids = new java.util.HashSet<>();
     private double cachedAdminXpMult = 1.0;
     private double cachedAdminOnlyXpBoost = 1.0;
     private final List<CosmeticPlayerEntry> cosmeticPlayers = new ArrayList<CosmeticPlayerEntry>();
@@ -137,8 +139,8 @@ extends Screen {
     private final List<PartyViewEntry> partyViewEntries = new ArrayList<PartyViewEntry>();
     private final List<BountyViewEntry> bountyViewEntries = new ArrayList<BountyViewEntry>();
     private String selectedCosmeticPrestigeUUID = null;
-    private static final String[] SKILL_TREES = new String[]{"COMBAT", "MINING", "FARMING", "ARCANE", "SURVIVAL"};
-    private static final String[] SKILL_TREE_NAMES = new String[]{"Combat", "Mining", "Farming", "Arcane", "Survival"};
+    private static final String[] SKILL_TREES = new String[]{"skill_tree_rpgs:class_skills", "skill_tree_rpgs:weapon_skills"};
+    private static final String[] SKILL_TREE_NAMES = new String[]{"Class Skills", "Weapon Skills"};
     private String selectedPlayerUUID = null;
     private String selectedPlayerName = null;
     private int playerDetailScroll = 0;
@@ -3037,39 +3039,40 @@ extends Screen {
     }
 
     private void renderSkillsView(GuiGraphics g, int mouseX, int mouseY, int x, int y, int lh, int contentW) {
-        int treeBtnW = 60;
+        // Two wide category buttons since Pufferfish categories are: class_skills + weapon_skills.
+        int treeBtnW = 100;
         for (int i = 0; i < SKILL_TREES.length; ++i) {
-            int treeBtnX = x + i * (treeBtnW + 2);
+            int treeBtnX = x + i * (treeBtnW + 4);
             boolean isActive = SKILL_TREES[i].equals(this.selectedSkillTree);
             boolean treeHover = mouseX >= treeBtnX && mouseX < treeBtnX + treeBtnW && mouseY >= y && mouseY < y + 16;
-            darkBtn(g,treeBtnX, y, treeBtnW, 16, treeHover || isActive, isActive);
+            darkBtn(g, treeBtnX, y, treeBtnW, 16, treeHover || isActive, isActive);
             int treeTextW = this.font.width(SKILL_TREE_NAMES[i]);
             g.drawString(this.font, SKILL_TREE_NAMES[i], treeBtnX + (treeBtnW - treeTextW) / 2, y + 4, isActive ? 0xFF58A6FF : 0xFFE6EDF3, false);
             this.actionRects.add(new ActionRect(treeBtnX, y, treeBtnW, 16, "__skill_tree__:" + SKILL_TREES[i]));
         }
-        int refreshBtnX = x + SKILL_TREES.length * (treeBtnW + 2) + 4;
+        int refreshBtnX = x + SKILL_TREES.length * (treeBtnW + 4) + 4;
         this.drawActionButton(g, refreshBtnX, y, 60, 16, "Refresh", mouseX, mouseY, "__skill_refresh__");
 
-        // Global XP Event Multiplier control (applies to ALL players)
+        // Global XP Event Multiplier (scales XP gain from automatic sources for all players).
         int axX = refreshBtnX + 68;
-        String axLabel = "XP Event: " + String.format("%.1f", this.cachedAdminXpMult) + "x";
+        String axLabel = "XP Event: " + String.format("%.1fx", this.cachedAdminXpMult);
         g.drawString(this.font, axLabel, axX, y + 4, 0xFFD29922, false);
         int axBtnX = axX + this.font.width(axLabel) + 4;
         boolean axDnHover = mouseX >= axBtnX && mouseX < axBtnX + 13 && mouseY >= y && mouseY < y + 14;
         this.darkIconBtn(g, axBtnX, y, 13, "-", 0xFFF85149, axDnHover);
-        this.actionRects.add(new ActionRect(axBtnX, y, 13, 14, "skill_set_admin_xp_mult:" + String.format("%.1f", Math.max(1.0, this.cachedAdminXpMult - 0.5))));
+        this.actionRects.add(new ActionRect(axBtnX, y, 13, 14, "skill_set_admin_xp_mult:" + String.format("%.1f", Math.max(0.1, this.cachedAdminXpMult - 0.5))));
         boolean axUpHover = mouseX >= axBtnX + 15 && mouseX < axBtnX + 28 && mouseY >= y && mouseY < y + 14;
         this.darkIconBtn(g, axBtnX + 15, y, 13, "+", 0xFF3FB950, axUpHover);
         this.actionRects.add(new ActionRect(axBtnX + 15, y, 13, 14, "skill_set_admin_xp_mult:" + String.format("%.1f", Math.min(10.0, this.cachedAdminXpMult + 0.5))));
 
-        // Admin-only XP Boost control (only affects NeverNotch & Dev)
+        // Admin-only XP Boost (stacks on top of the global multiplier for NeverNotch/Dev only).
         int abX = axBtnX + 34;
-        String abLabel = "Admin XP: " + String.format("%.1f", this.cachedAdminOnlyXpBoost) + "x";
+        String abLabel = "Admin XP: " + String.format("%.1fx", this.cachedAdminOnlyXpBoost);
         g.drawString(this.font, abLabel, abX, y + 4, 0xFFDA3633, false);
         int abBtnX = abX + this.font.width(abLabel) + 4;
         boolean abDnHover = mouseX >= abBtnX && mouseX < abBtnX + 13 && mouseY >= y && mouseY < y + 14;
         this.darkIconBtn(g, abBtnX, y, 13, "-", 0xFFF85149, abDnHover);
-        this.actionRects.add(new ActionRect(abBtnX, y, 13, 14, "skill_set_admin_only_xp_boost:" + String.format("%.1f", Math.max(1.0, this.cachedAdminOnlyXpBoost - 0.5))));
+        this.actionRects.add(new ActionRect(abBtnX, y, 13, 14, "skill_set_admin_only_xp_boost:" + String.format("%.1f", Math.max(0.1, this.cachedAdminOnlyXpBoost - 0.5))));
         boolean abUpHover = mouseX >= abBtnX + 15 && mouseX < abBtnX + 28 && mouseY >= y && mouseY < y + 14;
         this.darkIconBtn(g, abBtnX + 15, y, 13, "+", 0xFF3FB950, abUpHover);
         this.actionRects.add(new ActionRect(abBtnX + 15, y, 13, 14, "skill_set_admin_only_xp_boost:" + String.format("%.1f", Math.min(10.0, this.cachedAdminOnlyXpBoost + 0.5))));
@@ -3079,13 +3082,14 @@ extends Screen {
         for (int i = 0; i < SKILL_TREES.length; ++i) {
             if (SKILL_TREES[i].equals(this.selectedSkillTree)) { selectedIdx = i; break; }
         }
-        this.drawSectionHeader(g, SKILL_TREE_NAMES[selectedIdx] + " Skills", x, y, contentW);
+        this.drawSectionHeader(g, SKILL_TREE_NAMES[selectedIdx], x, y, contentW);
         y += lh + 2;
         g.drawString(this.font, "Player", x + 4, y, 0xFF58A6FF, false);
-        g.drawString(this.font, "Level", x + 80, y, 0xFF58A6FF, false);
-        g.drawString(this.font, "XP", x + 115, y, 0xFF58A6FF, false);
-        g.drawString(this.font, "Pts", x + 185, y, 0xFF58A6FF, false);
-        g.drawString(this.font, "Actions", x + 210, y, 0xFF58A6FF, false);
+        g.drawString(this.font, "Level / XP", x + 100, y, 0xFF58A6FF, false);
+        g.drawString(this.font, "Spent", x + 180, y, 0xFF58A6FF, false);
+        g.drawString(this.font, "Pts", x + 215, y, 0xFF58A6FF, false);
+        g.drawString(this.font, "Prestige", x + 240, y, 0xFF58A6FF, false);
+        g.drawString(this.font, "Actions", x + 285, y, 0xFF58A6FF, false);
         y += lh;
         int listTop = y;
         int listBottom = this.contentBottom - 6;
@@ -3096,45 +3100,74 @@ extends Screen {
         int maxScroll = Math.max(0, totalH - visibleH);
         this.skillScroll = Math.max(0, Math.min(this.skillScroll, maxScroll));
         g.enableScissor(this.contentLeft, listTop, this.contentRight, listBottom);
-        int btnH2 = 14;
         for (int i = 0; i < this.skillPlayers.size(); ++i) {
             SkillPlayerEntry sp = this.skillPlayers.get(i);
             int rowY = listTop + i * (rowH + rowGap) - this.skillScroll;
             if (rowY + rowH < listTop || rowY > listBottom) continue;
-            darkRowBg(g,x, rowY, contentW, rowH, i % 2 == 0);
-            Objects.requireNonNull(this.font);
+            darkRowBg(g, x, rowY, contentW, rowH, i % 2 == 0);
             int textY2 = rowY + 4;
             int[] treeData = sp.treeData.getOrDefault(this.selectedSkillTree, new int[]{0, 0});
             int level = treeData[0];
             int xp = treeData[1];
-            int xpNeeded = level >= 50 ? 0 : 100 + level * 50;
             int treePts = sp.treePoints.getOrDefault(this.selectedSkillTree, 0);
             g.drawString(this.font, sp.name, x + 4, textY2, 0xFFE6EDF3, false);
-            g.drawString(this.font, "Lv." + level, x + 80, textY2, 0xFF58A6FF, false);
-            // XP progress bar
-            if (level < 50 && xpNeeded > 0) {
-                int barX = x + 115;
-                int barW = 65;
-                float progress = (float) xp / (float) xpNeeded;
-                darkProgressBar(g, barX, textY2 + 1, barW, 7, progress, 0xFF58A6FF);
-                g.drawString(this.font, xp + "/" + xpNeeded, barX, textY2 + 10, 0xFF8B949E, false);
-            } else {
-                g.drawString(this.font, "MAX", x + 115, textY2, 0xFF3FB950, false);
+            g.drawString(this.font, "Lv." + level, x + 100, textY2, 0xFF58A6FF, false);
+            if (xp > 0) {
+                g.drawString(this.font, xp + " xp", x + 100, textY2 + 10, 0xFF8B949E, false);
             }
-            g.drawString(this.font, String.valueOf(treePts), x + 185, textY2, 0xFFE6EDF3, false);
-            // Action buttons — two rows to fit within content area
-            int abx = x + 210;
+            Map<String, Integer> spentMap = this.skillSpent.get(sp.uuid);
+            int spent = spentMap == null ? 0 : spentMap.getOrDefault(this.selectedSkillTree, 0);
+            g.drawString(this.font, String.valueOf(spent), x + 180, textY2, 0xFFE6EDF3, false);
+            int ptsColor = treePts > 0 ? 0xFF3FB950 : 0xFFE6EDF3;
+            g.drawString(this.font, String.valueOf(treePts), x + 215, textY2, ptsColor, false);
+            // Prestige column — stars + step buttons under the number.
+            Map<String, Integer> presMap = this.skillPrestige.get(sp.uuid);
+            int prestigeLv = presMap == null ? 0 : presMap.getOrDefault(this.selectedSkillTree, 0);
+            StringBuilder stars = new StringBuilder();
+            for (int s = 0; s < prestigeLv; s++) stars.append("*");
+            int prestigeColor = prestigeLv > 0 ? 0xFFFFCC33 : 0xFF6A737D;
+            g.drawString(this.font, prestigeLv + "/5", x + 240, textY2, prestigeColor, false);
+            if (stars.length() > 0) {
+                g.drawString(this.font, stars.toString(), x + 240, textY2 + 10, 0xFFFFCC33, false);
+            }
+            // Down (-) / Up (+) prestige steppers — hard-set via admin action, no cost.
+            int presBtnX = x + 262;
+            boolean presDnHover = mouseX >= presBtnX && mouseX < presBtnX + 10 && mouseY >= textY2 && mouseY < textY2 + 10;
+            this.darkIconBtn(g, presBtnX, textY2 - 1, 10, "-", 0xFFF85149, presDnHover);
+            this.actionRects.add(new ActionRect(presBtnX, textY2 - 1, 10, 11, "__skill_pset__:" + sp.uuid + "|" + this.selectedSkillTree + "|" + Math.max(0, prestigeLv - 1)));
+            boolean presUpHover = mouseX >= presBtnX && mouseX < presBtnX + 10 && mouseY >= textY2 + 12 && mouseY < textY2 + 22;
+            this.darkIconBtn(g, presBtnX, textY2 + 11, 10, "+", 0xFF3FB950, presUpHover);
+            this.actionRects.add(new ActionRect(presBtnX, textY2 + 11, 10, 11, "__skill_pset__:" + sp.uuid + "|" + this.selectedSkillTree + "|" + Math.min(5, prestigeLv + 1)));
+            int abx = x + 285;
             int btnH3 = 12;
-            this.drawActionButton(g, abx, rowY + 1, 28, btnH3, "+XP", mouseX, mouseY, "__skill_xp__:" + sp.uuid + ":" + this.selectedSkillTree);
-            this.drawActionButton(g, abx + 30, rowY + 1, 28, btnH3, "+Pts", mouseX, mouseY, "__skill_pts__:" + sp.uuid + ":" + this.selectedSkillTree);
-            this.drawActionButton(g, abx + 60, rowY + 1, 34, btnH3, "SetLv", mouseX, mouseY, "__skill_set__:" + sp.uuid + ":" + this.selectedSkillTree);
-            this.drawActionButton(g, abx, rowY + 15, 34, btnH3, "Reset", mouseX, mouseY, "__skill_reset__:" + sp.uuid + ":" + this.selectedSkillTree);
-            this.drawActionButton(g, abx + 36, rowY + 15, 28, btnH3, "Max", mouseX, mouseY, "__skill_max__:" + sp.uuid + ":" + this.selectedSkillTree);
+            this.drawActionButton(g, abx, rowY + 1, 28, btnH3, "+XP", mouseX, mouseY, "__skill_xp__:" + sp.uuid + "|" + this.selectedSkillTree);
+            this.drawActionButton(g, abx + 30, rowY + 1, 28, btnH3, "+Pts", mouseX, mouseY, "__skill_pts__:" + sp.uuid + "|" + this.selectedSkillTree);
+            this.drawActionButton(g, abx + 60, rowY + 1, 34, btnH3, "SetLv", mouseX, mouseY, "__skill_set__:" + sp.uuid + "|" + this.selectedSkillTree);
+            this.drawActionButton(g, abx, rowY + 15, 28, btnH3, "Reset", mouseX, mouseY, "__skill_reset__:" + sp.uuid + "|" + this.selectedSkillTree);
+            this.drawActionButton(g, abx + 30, rowY + 15, 28, btnH3, "Max", mouseX, mouseY, "__skill_max__:" + sp.uuid + "|" + this.selectedSkillTree);
+            // Bypass toggle — admin-only. Only shown for admin accounts (NeverNotch / Dev); for
+            // everyone else we render the account type instead so the column stays aligned.
+            boolean isAdminRow = com.ultra.megamod.feature.computer.admin.AdminSystem.isAdmin(sp.name);
+            int bypassBtnX = abx + 60;
+            int bypassBtnY = rowY + 15;
+            if (isAdminRow) {
+                boolean bypassOn = this.skillBypassUuids.contains(sp.uuid);
+                int bypassColor = bypassOn ? 0xFFFF7B72 : 0xFFE6EDF3;
+                int bypassBg = bypassOn ? 0xFF4A1A1A : 0xFF242424;
+                boolean bypassHover = mouseX >= bypassBtnX && mouseX < bypassBtnX + 34 && mouseY >= bypassBtnY && mouseY < bypassBtnY + btnH3;
+                g.fill(bypassBtnX, bypassBtnY, bypassBtnX + 34, bypassBtnY + btnH3, bypassHover ? 0xFF5A2020 : bypassBg);
+                int tw = this.font.width("Bypass");
+                g.drawString(this.font, "Bypass", bypassBtnX + (34 - tw) / 2, bypassBtnY + 2, bypassColor, false);
+                this.actionRects.add(new ActionRect(bypassBtnX, bypassBtnY, 34, btnH3, "__skill_bypass__:" + sp.uuid));
+            }
         }
         g.disableScissor();
+        if (this.skillPlayers.isEmpty()) {
+            g.drawString(this.font, "No players online. Online players will appear here.", x + 4, listTop + 4, 0xFF8B949E, false);
+        }
         if (totalH > visibleH) {
             float progress = maxScroll > 0 ? (float)this.skillScroll / (float)maxScroll : 0.0f;
-            darkScrollbar(g,this.contentRight - 6 - 6, listTop, listBottom - listTop, progress);
+            darkScrollbar(g, this.contentRight - 6 - 6, listTop, listBottom - listTop, progress);
         }
     }
 
@@ -3218,30 +3251,50 @@ extends Screen {
         try {
             JsonObject obj = JsonParser.parseString(json).getAsJsonObject();
             this.skillPlayers.clear();
+            this.skillSpent.clear();
             JsonArray players = obj.getAsJsonArray("players");
             for (JsonElement el : players) {
                 JsonObject p = el.getAsJsonObject();
-                Map<String, int[]> treeData = new LinkedHashMap<String, int[]>();
+                // Pufferfish format: "categories": { "<catId>": {level, xp, xpNeeded, spent, points, totalPoints} }
+                Map<String, int[]> treeData = new LinkedHashMap<>();
+                Map<String, Integer> treePoints = new LinkedHashMap<>();
+                Map<String, Integer> spentMap = new LinkedHashMap<>();
+                int totalPointsAcrossCategories = 0;
+                JsonObject cats = p.has("categories") ? p.getAsJsonObject("categories") : null;
                 for (String tree : SKILL_TREES) {
-                    JsonArray arr = p.getAsJsonArray(tree);
-                    if (arr != null && arr.size() >= 2) {
-                        treeData.put(tree, new int[]{arr.get(0).getAsInt(), arr.get(1).getAsInt()});
-                    } else {
-                        treeData.put(tree, new int[]{0, 0});
+                    int level = 0, xp = 0, spent = 0, points = 0;
+                    if (cats != null && cats.has(tree)) {
+                        JsonObject c = cats.getAsJsonObject(tree);
+                        level = c.has("level") ? c.get("level").getAsInt() : 0;
+                        xp = c.has("xp") ? c.get("xp").getAsInt() : 0;
+                        spent = c.has("spent") ? c.get("spent").getAsInt() : 0;
+                        points = c.has("points") ? c.get("points").getAsInt() : 0;
                     }
+                    treeData.put(tree, new int[]{level, xp});
+                    treePoints.put(tree, points);
+                    spentMap.put(tree, spent);
+                    totalPointsAcrossCategories += points;
                 }
-                Map<String, Integer> treePoints = new LinkedHashMap<String, Integer>();
-                if (p.has("treePoints")) {
-                    JsonObject tp = p.getAsJsonObject("treePoints");
+                String uuid = p.get("uuid").getAsString();
+                this.skillSpent.put(uuid, spentMap);
+                if (p.has("bypass") && p.get("bypass").getAsBoolean()) {
+                    this.skillBypassUuids.add(uuid);
+                } else {
+                    this.skillBypassUuids.remove(uuid);
+                }
+                Map<String, Integer> presMap = new LinkedHashMap<>();
+                if (p.has("prestige")) {
+                    JsonObject pr = p.getAsJsonObject("prestige");
                     for (String tree : SKILL_TREES) {
-                        treePoints.put(tree, tp.has(tree) ? tp.get(tree).getAsInt() : 0);
+                        presMap.put(tree, pr.has(tree) ? pr.get(tree).getAsInt() : 0);
                     }
                 }
+                this.skillPrestige.put(uuid, presMap);
                 this.skillPlayers.add(new SkillPlayerEntry(
-                    p.get("uuid").getAsString(),
+                    uuid,
                     p.get("name").getAsString(),
                     treeData,
-                    p.get("points").getAsInt(),
+                    totalPointsAcrossCategories,
                     treePoints
                 ));
             }
@@ -4132,41 +4185,56 @@ extends Screen {
             return;
         }
         if (command.startsWith("__skill_xp__:")) {
-            String[] parts = command.substring(13).split(":");
+            String[] parts = command.substring(13).split("\\|");
             String uuid = parts[0];
             String tree = parts[1];
             int amount = this.getEcoAmount();
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_add_xp", uuid + ":" + tree + ":" + amount), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_add_xp", uuid + "|" + tree + "|" + amount), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
         if (command.startsWith("__skill_pts__:")) {
-            String[] parts = command.substring(14).split(":");
+            String[] parts = command.substring(14).split("\\|");
             String uuid = parts[0];
             String tree = parts[1];
             int amount = this.getEcoAmount();
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_add_points", uuid + ":" + tree + ":" + amount), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_add_points", uuid + "|" + tree + "|" + amount), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
         if (command.startsWith("__skill_set__:")) {
-            String[] parts = command.substring(14).split(":");
+            String[] parts = command.substring(14).split("\\|");
             String uuid = parts[0];
             String tree = parts[1];
             int lvl = this.getEcoAmount();
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_set_level", uuid + ":" + tree + ":" + lvl), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_set_level", uuid + "|" + tree + "|" + lvl), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
         if (command.startsWith("__skill_reset__:")) {
-            String[] parts = command.substring(16).split(":");
+            String[] parts = command.substring(16).split("\\|");
             String uuid = parts[0];
             String tree = parts[1];
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_reset_tree", uuid + ":" + tree), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_reset_tree", uuid + "|" + tree), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
         if (command.startsWith("__skill_max__:")) {
-            String[] parts = command.substring(14).split(":");
+            String[] parts = command.substring(14).split("\\|");
             String uuid = parts[0];
             String tree = parts[1];
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_set_level", uuid + ":" + tree + ":50"), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_set_level", uuid + "|" + tree + "|50"), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            return;
+        }
+        if (command.startsWith("__skill_bypass__:")) {
+            String uuid = command.substring(17);
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_toggle_admin_bypass", uuid), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            return;
+        }
+        if (command.startsWith("__skill_pset__:")) {
+            // payload: "uuid|tree|level" — already pipe-delimited by the render code.
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_prestige_set", command.substring(15)), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            return;
+        }
+        if (command.startsWith("__skill_pup__:")) {
+            // payload: "uuid|tree" — runs the real prestige workflow (reset + charge + bonus).
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_prestige_up", command.substring(14)), (CustomPacketPayload[])new CustomPacketPayload[0]);
             return;
         }
         if (command.startsWith("__skill_view__:")) {
@@ -4941,46 +5009,8 @@ extends Screen {
         MEGAMOD_CATEGORIES = new String[]{"Relics", "Weapons", "D.Weapons", "D.Items", "Masks", "Trophies", "Museum", "Computer", "Furniture", "Dungeon Mgr", "Quests"};
         MEGAMOD_ITEMS = new LinkedHashMap<String, List<MegamodEntry>>();
         ArrayList<MegamodEntry> relics = new ArrayList<MegamodEntry>();
-        relics.add(new MegamodEntry("Arrow Quiver", "megamod:arrow_quiver", (Supplier<? extends Item>)RelicRegistry.ARROW_QUIVER));
-        relics.add(new MegamodEntry("Elytra Booster", "megamod:elytra_booster", (Supplier<? extends Item>)RelicRegistry.ELYTRA_BOOSTER));
-        relics.add(new MegamodEntry("Midnight Robe", "megamod:midnight_robe", (Supplier<? extends Item>)RelicRegistry.MIDNIGHT_ROBE));
-        relics.add(new MegamodEntry("Leather Belt", "megamod:leather_belt", (Supplier<? extends Item>)RelicRegistry.LEATHER_BELT));
-        relics.add(new MegamodEntry("Drowned Belt", "megamod:drowned_belt", (Supplier<? extends Item>)RelicRegistry.DROWNED_BELT));
-        relics.add(new MegamodEntry("Hunter Belt", "megamod:hunter_belt", (Supplier<? extends Item>)RelicRegistry.HUNTER_BELT));
-        relics.add(new MegamodEntry("Ender Hand", "megamod:ender_hand", (Supplier<? extends Item>)RelicRegistry.ENDER_HAND));
-        relics.add(new MegamodEntry("Rage Glove", "megamod:rage_glove", (Supplier<? extends Item>)RelicRegistry.RAGE_GLOVE));
-        relics.add(new MegamodEntry("Wool Mitten", "megamod:wool_mitten", (Supplier<? extends Item>)RelicRegistry.WOOL_MITTEN));
-        relics.add(new MegamodEntry("Magma Walker", "megamod:magma_walker", (Supplier<? extends Item>)RelicRegistry.MAGMA_WALKER));
-        relics.add(new MegamodEntry("Aqua Walker", "megamod:aqua_walker", (Supplier<? extends Item>)RelicRegistry.AQUA_WALKER));
-        relics.add(new MegamodEntry("Ice Skates", "megamod:ice_skates", (Supplier<? extends Item>)RelicRegistry.ICE_SKATES));
-        relics.add(new MegamodEntry("Ice Breaker", "megamod:ice_breaker", (Supplier<? extends Item>)RelicRegistry.ICE_BREAKER));
-        relics.add(new MegamodEntry("Roller Skates", "megamod:roller_skates", (Supplier<? extends Item>)RelicRegistry.ROLLER_SKATES));
-        relics.add(new MegamodEntry("Amphibian Boot", "megamod:amphibian_boot", (Supplier<? extends Item>)RelicRegistry.AMPHIBIAN_BOOT));
-        relics.add(new MegamodEntry("Reflection Necklace", "megamod:reflection_necklace", (Supplier<? extends Item>)RelicRegistry.REFLECTION_NECKLACE));
-        relics.add(new MegamodEntry("Jellyfish Necklace", "megamod:jellyfish_necklace", (Supplier<? extends Item>)RelicRegistry.JELLYFISH_NECKLACE));
-        relics.add(new MegamodEntry("Holy Locket", "megamod:holy_locket", (Supplier<? extends Item>)RelicRegistry.HOLY_LOCKET));
-        relics.add(new MegamodEntry("Bastion Ring", "megamod:bastion_ring", (Supplier<? extends Item>)RelicRegistry.BASTION_RING));
-        relics.add(new MegamodEntry("Chorus Inhibitor", "megamod:chorus_inhibitor", (Supplier<? extends Item>)RelicRegistry.CHORUS_INHIBITOR));
-        relics.add(new MegamodEntry("Shadow Glaive", "megamod:shadow_glaive", (Supplier<? extends Item>)RelicRegistry.SHADOW_GLAIVE));
-        relics.add(new MegamodEntry("Infinity Ham", "megamod:infinity_ham", (Supplier<? extends Item>)RelicRegistry.INFINITY_HAM));
-        relics.add(new MegamodEntry("Space Dissector", "megamod:space_dissector", (Supplier<? extends Item>)RelicRegistry.SPACE_DISSECTOR));
-        relics.add(new MegamodEntry("Magic Mirror", "megamod:magic_mirror", (Supplier<? extends Item>)RelicRegistry.MAGIC_MIRROR));
-        relics.add(new MegamodEntry("Horse Flute", "megamod:horse_flute", (Supplier<? extends Item>)RelicRegistry.HORSE_FLUTE));
-        relics.add(new MegamodEntry("Spore Sack", "megamod:spore_sack", (Supplier<? extends Item>)RelicRegistry.SPORE_SACK));
-        relics.add(new MegamodEntry("Blazing Flask", "megamod:blazing_flask", (Supplier<? extends Item>)RelicRegistry.BLAZING_FLASK));
-        relics.add(new MegamodEntry("Researching Table", "megamod:researching_table", (Supplier<? extends Item>)RelicRegistry.RESEARCHING_TABLE_ITEM));
         MEGAMOD_ITEMS.put("Relics", relics);
         ArrayList<MegamodEntry> weapons = new ArrayList<MegamodEntry>();
-        weapons.add(new MegamodEntry("Lunar Crown", "megamod:lunar_crown", (Supplier<? extends Item>)RelicRegistry.LUNAR_CROWN));
-        weapons.add(new MegamodEntry("Solar Crown", "megamod:solar_crown", (Supplier<? extends Item>)RelicRegistry.SOLAR_CROWN));
-        weapons.add(new MegamodEntry("Vampiric Tome", "megamod:vampiric_tome", (Supplier<? extends Item>)RelicRegistry.VAMPIRIC_TOME));
-        weapons.add(new MegamodEntry("Static Seeker", "megamod:static_seeker", (Supplier<? extends Item>)RelicRegistry.STATIC_SEEKER));
-        weapons.add(new MegamodEntry("Battledancer", "megamod:battledancer", (Supplier<? extends Item>)RelicRegistry.BATTLEDANCER));
-        weapons.add(new MegamodEntry("Ebonchill", "megamod:ebonchill", (Supplier<? extends Item>)RelicRegistry.EBONCHILL));
-        weapons.add(new MegamodEntry("Lightbinder", "megamod:lightbinder", (Supplier<? extends Item>)RelicRegistry.LIGHTBINDER));
-        weapons.add(new MegamodEntry("Crescent Blade", "megamod:crescent_blade", (Supplier<? extends Item>)RelicRegistry.CRESCENT_BLADE));
-        weapons.add(new MegamodEntry("Ghost Fang", "megamod:ghost_fang", (Supplier<? extends Item>)RelicRegistry.GHOST_FANG));
-        weapons.add(new MegamodEntry("Terra Warhammer", "megamod:terra_warhammer", (Supplier<? extends Item>)RelicRegistry.TERRA_WARHAMMER));
         MEGAMOD_ITEMS.put("Weapons", weapons);
         // D.Weapons — all dungeon weapons and armor
         ArrayList<MegamodEntry> dWeapons = new ArrayList<MegamodEntry>();

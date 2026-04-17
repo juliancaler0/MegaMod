@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/horse_flute"
+    "layer0": "megamod:item/horse_flute",
+    "particle": "megamod:item/horse_flute"
   }
 }

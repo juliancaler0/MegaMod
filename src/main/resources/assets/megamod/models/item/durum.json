@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/durum"
+    "layer0": "megamod:item/crops/durum",
+    "particle": "megamod:item/crops/durum"
   }
 }

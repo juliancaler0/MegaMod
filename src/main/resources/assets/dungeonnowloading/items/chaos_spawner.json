@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "dungeonnowloading:block/chaos_spawner"
+    "model": "dungeonnowloading:block/chaos_spawner_edge"
   }
 }

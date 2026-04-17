@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/diamond_holy_wand"
+    "layer0": "megamod:item/diamond_holy_wand",
+    "particle": "megamod:item/diamond_holy_wand"
   }
 }

@@ -5,7 +5,8 @@
 		256
 	],
 	"textures": {
-		"1": "megamod:block/lr_livingroom_table_1"
+		"1": "megamod:block/lr_livingroom_table_1",
+		"particle": "#1"
 	},
 	"elements": [
 		{

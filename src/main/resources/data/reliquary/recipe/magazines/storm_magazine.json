@@ -6,12 +6,8 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "reliquary:bullets/storm_bullet"
-    },
-    "M": {
-      "item": "reliquary:empty_magazine"
-    }
+    "B": "reliquary:bullets/storm_bullet",
+    "M": "reliquary:magazines/empty_magazine"
   },
   "result": {
     "id": "reliquary:magazines/storm_magazine",

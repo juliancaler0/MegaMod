@@ -5,7 +5,8 @@
 		32
 	],
 	"textures": {
-		"2": "megamod:block/craft_paint_vials"
+		"2": "megamod:block/craft_paint_vials",
+		"particle": "#2"
 	},
 	"elements": [
 		{

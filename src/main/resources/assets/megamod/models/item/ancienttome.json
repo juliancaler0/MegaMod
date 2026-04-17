@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/ancienttome"
+    "layer0": "megamod:item/ancienttome",
+    "particle": "megamod:item/ancienttome"
   }
 }

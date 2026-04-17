@@ -1,0 +1,10 @@
+{
+	"attribute.puffish_attributes.stamina": "Estâmina",
+	"attribute.puffish_attributes.melee_damage": "Dano corpo a corpo",
+	"attribute.puffish_attributes.ranged_damage": "Dano à distância",
+	"attribute.puffish_attributes.fortune": "Fortuna",
+	"attribute.puffish_attributes.healing": "Cura",
+	"attribute.puffish_attributes.jump": "Pulo",
+	"attribute.puffish_attributes.resistance": "Resistência",
+	"attribute.puffish_attributes.mining_speed": "Velocídade de mineração"
+}

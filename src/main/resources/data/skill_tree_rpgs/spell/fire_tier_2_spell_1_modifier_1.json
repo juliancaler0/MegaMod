@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 0.0,
   "tier": 1,
   "tooltip": {
@@ -12,7 +12,7 @@
         "type": "SPELL_IMPACT_SPECIFIC",
         "chance": 0.1,
         "spell": {
-          "id": "wizards:fire_breath"
+          "id": "megamod:fire_breath"
         },
         "impact": {
           "impact_type": "DAMAGE"

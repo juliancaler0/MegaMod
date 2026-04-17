@@ -1,15 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:crusader_armor_chest"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:crusader_armor_chest",
   "result": {
     "id": "megamod:netherite_crusader_armor_chest"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

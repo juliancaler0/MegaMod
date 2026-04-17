@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/healing_rune"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/healing_rune",
+"particle": "megamod:item/healing_rune"}}

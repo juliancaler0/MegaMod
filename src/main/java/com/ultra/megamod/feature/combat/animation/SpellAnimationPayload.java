@@ -62,6 +62,13 @@ public record SpellAnimationPayload(
             Entity entity = mc.level.getEntity(payload.playerId);
             if (!(entity instanceof AbstractClientPlayer player)) return;
 
+            // Skip broadcasts echoed back to the caster — AbstractClientPlayerEntityMixin
+            // already plays the spell animation locally on every tick while casting.
+            // Without this skip we double-dispatch and `replaceAnimationWithFade` stacks
+            // fade modifiers every tick, producing a visible shimmy. Matches the
+            // equivalent guard in AttackAnimationPayload.java:114. (Task #43)
+            if (player == mc.player) return;
+
             if (payload.animType == 4) {
                 SpellAnimationManager.stopAll(player);
                 return;

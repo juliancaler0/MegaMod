@@ -7,12 +7,8 @@
     "III"
   ],
   "key": {
-    "S": {
-      "tag": "c:slimeballs"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "S": "#c:slimeballs",
+    "I": "#c:ingots/iron"
   },
   "result": {
     "id": "reliquary:slime_pearl",

@@ -8,7 +8,7 @@
         "when": "empty",
         "model": {
           "type": "minecraft:model",
-          "model": "reliquary:item/infernal_tear_empty"
+          "model": "reliquary:item/empty_infernal_tear"
         }
       }
     ],

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sushi_roll"
+    "layer0": "megamod:item/sushi_roll",
+    "particle": "megamod:item/sushi_roll"
   }
 }

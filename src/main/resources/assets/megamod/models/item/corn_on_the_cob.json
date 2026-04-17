@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/corn_on_the_cob"
+    "layer0": "megamod:item/corn_on_the_cob",
+    "particle": "megamod:item/corn_on_the_cob"
   }
 }

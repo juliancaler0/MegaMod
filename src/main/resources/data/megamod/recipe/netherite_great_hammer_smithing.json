@@ -1,15 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:diamond_great_hammer"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:diamond_great_hammer",
   "result": {
     "id": "megamod:netherite_great_hammer"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

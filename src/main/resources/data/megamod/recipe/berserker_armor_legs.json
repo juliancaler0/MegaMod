@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "I": "minecraft:chain",
+    "I": "minecraft:iron_chain",
     "T": "minecraft:netherite_scrap"
   },
   "pattern": [

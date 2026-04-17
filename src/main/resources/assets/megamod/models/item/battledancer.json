@@ -1,1 +1,2 @@
-{"parent":"megamod:item/base/handheld_32","textures":{"layer0":"megamod:item/battledancer"}}
+{"parent":"megamod:item/base/handheld_32","textures":{"layer0":"megamod:item/battledancer",
+"particle": "megamod:item/battledancer"}}

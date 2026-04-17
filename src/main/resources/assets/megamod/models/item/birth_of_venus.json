@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/birth_of_venus"
+    "layer0": "megamod:item/birth_of_venus",
+    "particle": "megamod:item/birth_of_venus"
   }
 }

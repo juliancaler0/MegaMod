@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/honey_glazed_ham"
+    "layer0": "megamod:item/honey_glazed_ham",
+    "particle": "megamod:item/honey_glazed_ham"
   }
 }

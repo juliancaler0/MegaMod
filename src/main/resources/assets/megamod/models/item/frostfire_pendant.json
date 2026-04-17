@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/frostfire_pendant"
+    "layer0": "megamod:item/frostfire_pendant",
+    "particle": "megamod:item/frostfire_pendant"
   }
 }

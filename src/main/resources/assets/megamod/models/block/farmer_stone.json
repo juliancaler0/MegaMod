@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/farmer_stone"
+		"1": "megamod:block/farmer_stone",
+		"particle": "#1"
 	},
 	"elements": [
 		{

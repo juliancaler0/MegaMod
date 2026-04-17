@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/eggplant_dish"
+    "layer0": "megamod:item/eggplant_dish",
+    "particle": "megamod:item/eggplant_dish"
   }
 }

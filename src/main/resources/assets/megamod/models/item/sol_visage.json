@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sol_visage"
+    "layer0": "megamod:item/sol_visage",
+    "particle": "megamod:item/sol_visage"
   }
 }

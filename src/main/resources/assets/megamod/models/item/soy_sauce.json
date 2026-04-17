@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/soy_sauce"
+    "layer0": "megamod:item/soy_sauce",
+    "particle": "megamod:item/soy_sauce"
   }
 }

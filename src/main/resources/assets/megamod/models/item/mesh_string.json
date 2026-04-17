@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/mesh_string"
+    "layer0": "megamod:item/mesh_string",
+    "particle": "megamod:item/mesh_string"
   }
 }

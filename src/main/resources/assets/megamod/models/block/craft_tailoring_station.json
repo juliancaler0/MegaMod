@@ -5,7 +5,8 @@
 		256
 	],
 	"textures": {
-		"4": "megamod:block/craft_tailoring_station"
+		"4": "megamod:block/craft_tailoring_station",
+		"particle": "#4"
 	},
 	"elements": [
 		{

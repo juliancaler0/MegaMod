@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/pirate_cap"
+    "layer0": "megamod:item/pirate_cap",
+    "particle": "megamod:item/pirate_cap"
   }
 }

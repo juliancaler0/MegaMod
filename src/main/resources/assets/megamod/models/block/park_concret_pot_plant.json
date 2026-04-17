@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/park_concret_pot_plant"
+		"3": "megamod:block/park_concret_pot_plant",
+		"particle": "#3"
 	},
 	"elements": [
 		{

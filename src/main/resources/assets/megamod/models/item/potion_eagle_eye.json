@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_eagle_eye" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_eagle_eye",
+ "particle": "megamod:item/potion_eagle_eye" } }

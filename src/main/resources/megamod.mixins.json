@@ -3,7 +3,6 @@
   "package": "com.ultra.megamod.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "FishingHookMixin",
     "CrossbowItemMixin",
     "spellpower.SpellPowerLivingEntityMixin",
     "spellpower.SpellPowerPlayerMixin",

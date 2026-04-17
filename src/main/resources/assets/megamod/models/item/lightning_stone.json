@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/lightning_stone"
+    "layer0": "megamod:item/lightning_stone",
+    "particle": "megamod:item/lightning_stone"
   }
 }

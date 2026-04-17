@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_map" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_map",
+ "particle": "megamod:item/dungeon_map" } }

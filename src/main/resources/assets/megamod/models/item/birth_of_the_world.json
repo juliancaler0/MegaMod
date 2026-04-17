@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/birth_of_the_world"
+    "layer0": "megamod:item/birth_of_the_world",
+    "particle": "megamod:item/birth_of_the_world"
   }
 }

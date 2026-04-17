@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:shout",
+      "spell_pattern": "megamod:shout",
       "mutate_impacts": "APPEND",
       "impacts": [
         {

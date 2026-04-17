@@ -9,13 +9,27 @@ import com.ultra.megamod.lib.spellengine.api.config.EffectConfig;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
 public class Effects {
-    // Shared DeferredRegister for all SpellEngine-style effects
+    // Per-namespace DeferredRegisters for effect entries. Entries whose Identifier uses
+    // "skill_tree_rpgs:..." must register under that namespace, not "megamod:", otherwise
+    // they collide with unrelated megamod effects that happen to share a path.
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(Registries.MOB_EFFECT, "megamod");
+    private static final Map<String, DeferredRegister<MobEffect>> REGISTERS_BY_NAMESPACE = new HashMap<>();
+    private static IEventBus boundEventBus;
+    static { REGISTERS_BY_NAMESPACE.put("megamod", MOB_EFFECTS); }
+
+    private static DeferredRegister<MobEffect> registerFor(String namespace) {
+        return REGISTERS_BY_NAMESPACE.computeIfAbsent(namespace, ns -> {
+            var register = DeferredRegister.create(Registries.MOB_EFFECT, ns);
+            if (boundEventBus != null) register.register(boundEventBus);
+            return register;
+        });
+    }
 
     public static final class Entry {
         public final Identifier id;
@@ -65,7 +79,8 @@ public class Effects {
         }
 
         for (var entry: entries) {
-            var holder = MOB_EFFECTS.register(entry.id.getPath(), () -> entry.effect);
+            var register = registerFor(entry.id.getNamespace());
+            var holder = register.register(entry.id.getPath(), () -> entry.effect);
             entry.deferredSupplier = holder;
             // The DeferredHolder IS a Holder<MobEffect> - use it directly
             entry.entry = (Holder<MobEffect>) (Holder<?>) holder;
@@ -76,6 +91,9 @@ public class Effects {
      * Call from MegaMod constructor to register the DeferredRegister.
      */
     public static void init(IEventBus modEventBus) {
-        MOB_EFFECTS.register(modEventBus);
+        boundEventBus = modEventBus;
+        for (var register : REGISTERS_BY_NAMESPACE.values()) {
+            register.register(modEventBus);
+        }
     }
 }

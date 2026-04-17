@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pharao_scepter"
+    "layer0": "megamod:item/pharao_scepter",
+    "particle": "megamod:item/pharao_scepter"
   }
 }

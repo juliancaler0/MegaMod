@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/elytra_booster"
+    "layer0": "megamod:item/elytra_booster",
+    "particle": "megamod:item/elytra_booster"
   }
 }

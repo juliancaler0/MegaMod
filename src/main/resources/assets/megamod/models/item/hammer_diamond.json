@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hammer_diamond"
+    "layer0": "megamod:item/hammer_diamond",
+    "particle": "megamod:item/hammer_diamond"
   }
 }

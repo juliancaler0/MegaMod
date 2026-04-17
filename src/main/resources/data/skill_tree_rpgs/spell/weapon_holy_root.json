@@ -1,11 +1,11 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 1,
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:holy_shock",
+      "spell_pattern": "megamod:holy_shock",
       "cooldown_duration_deduct": 3.0
     }
   ]

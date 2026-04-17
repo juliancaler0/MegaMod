@@ -34,7 +34,13 @@ public class QuestRewardGranter {
                 eco.addWallet(player.getUUID(), reward.amount());
             }
             case SKILL_XP -> {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp)
+                // targetId may be a full category identifier (skill_tree_rpgs:class_skills) or a
+                // legacy enum name ("COMBAT" etc.) — categoryFor handles both.
+                var catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge
+                        .categoryFor(reward.targetId().isEmpty() ? "CLASS" : reward.targetId());
+                com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId)
+                        .flatMap(cat -> cat.getExperience())
+                        .ifPresent(exp -> exp.addTotal(player, reward.amount()));
             }
             case ITEM -> {
                 if (!reward.targetId().isEmpty()) {

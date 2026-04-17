@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_heal"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_heal",
+"particle": "megamod:item/scroll_heal"}}

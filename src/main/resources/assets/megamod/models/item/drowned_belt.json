@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/drowned_belt"
+    "layer0": "megamod:item/drowned_belt",
+    "particle": "megamod:item/drowned_belt"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/treachery_of_images"
+    "layer0": "megamod:item/treachery_of_images",
+    "particle": "megamod:item/treachery_of_images"
   }
 }

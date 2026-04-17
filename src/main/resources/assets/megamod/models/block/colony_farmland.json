@@ -2,6 +2,7 @@
   "parent": "minecraft:block/template_farmland",
   "textures": {
     "dirt": "minecraft:block/dirt",
-    "top": "megamod:block/colony_farmland"
+    "top": "megamod:block/colony_farmland",
+    "particle": "minecraft:block/dirt"
   }
 }

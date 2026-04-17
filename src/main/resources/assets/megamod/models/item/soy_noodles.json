@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/soy_noodles"
+    "layer0": "megamod:item/soy_noodles",
+    "particle": "megamod:item/soy_noodles"
   }
 }

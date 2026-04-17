@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/unique_sickle_sw"
+    "layer0": "megamod:item/unique_sickle_sw",
+    "particle": "megamod:item/unique_sickle_sw"
   }
 }

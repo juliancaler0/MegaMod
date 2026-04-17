@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/unique_katana_sw"
+    "layer0": "megamod:item/unique_katana_sw",
+    "particle": "megamod:item/unique_katana_sw"
   }
 }

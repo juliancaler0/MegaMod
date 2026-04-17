@@ -95,7 +95,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
+                        grantMuseumXp(serverPlayer, com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY, 100);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -110,7 +110,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
+                        grantMuseumXp(serverPlayer, com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY, 100);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -124,7 +124,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp COMBAT 5)
+                        grantMuseumXp(serverPlayer, com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY, 100);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -138,7 +138,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp ARCANE 5)
+                        grantMuseumXp(serverPlayer, com.ultra.megamod.feature.skills.prestige.PrestigeManager.CLASS_CATEGORY, 150);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -150,7 +150,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp ARCANE 5)
+                        grantMuseumXp(serverPlayer, com.ultra.megamod.feature.skills.prestige.PrestigeManager.CLASS_CATEGORY, 150);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -163,7 +163,7 @@ extends Block {
                         serverLevel.sendParticles(ParticleTypes.ENCHANT, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5, 25, 0.5, 0.8, 0.5, 0.5);
                         serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 8, 0.4, 0.4, 0.4, 0.0);
                         serverLevel.playSound(null, pos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.5f, 1.8f);
-                        // TODO: Reconnect with Pufferfish Skills API (was SkillManager.addXp with item-based tree)
+                        grantMuseumXp(serverPlayer, itemCategoryFor(itemId), 75);
                     } else {
                         serverPlayer.sendSystemMessage((Component)Component.literal((String)"Already in your museum!").withStyle(ChatFormatting.YELLOW));
                     }
@@ -243,6 +243,29 @@ extends Block {
         "ore", "raw_", "deepslate"
     };
 
-    // getSkillTreeForItem and getSkillXpForItem removed — TODO: Reconnect with Pufferfish Skills API
+    /// Grants Pufferfish XP for a museum donation. No-op if the category has no experience
+    /// curve configured (e.g. if a future category disables XP).
+    private static void grantMuseumXp(ServerPlayer player, net.minecraft.resources.Identifier categoryId, int amount) {
+        com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(categoryId)
+                .flatMap(cat -> cat.getExperience())
+                .ifPresent(exp -> exp.addTotal(player, amount));
+    }
+
+    /// Weapon/mining/farming items historically rolled into weapon_skills XP; scrolls, books,
+    /// enchanted gear into class_skills. Anything unknown falls back to class_skills as a floor.
+    private static net.minecraft.resources.Identifier itemCategoryFor(String itemId) {
+        String lower = itemId.toLowerCase();
+        for (String kw : MINING_KEYWORDS) {
+            if (lower.contains(kw)) return com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY;
+        }
+        for (String kw : FARMING_KEYWORDS) {
+            if (lower.contains(kw)) return com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY;
+        }
+        if (lower.contains("sword") || lower.contains("axe") || lower.contains("bow")
+                || lower.contains("pickaxe") || lower.contains("shovel") || lower.contains("hoe")) {
+            return com.ultra.megamod.feature.skills.prestige.PrestigeManager.WEAPON_CATEGORY;
+        }
+        return com.ultra.megamod.feature.skills.prestige.PrestigeManager.CLASS_CATEGORY;
+    }
 }
 

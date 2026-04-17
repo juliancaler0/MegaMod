@@ -80,9 +80,6 @@ public class DungeonChestBlockEntity extends BlockEntity implements Container {
         // Combined bonus: each point shifts quality roll favorably
         double totalBonus = lootFortune + (luck * 3.0);
 
-        // Treasure Alchemist synergy: TODO: Reconnect with Pufferfish Skills API
-        // (previously SynergyEffects.hasTreasureAlchemist — defaulting to false / no upgrade)
-
         // Generate loot with the bonus applied
         DungeonChestLoot.activeFortuneBonus = totalBonus;
         DungeonChestLoot.activeLootFortune = lootFortune;

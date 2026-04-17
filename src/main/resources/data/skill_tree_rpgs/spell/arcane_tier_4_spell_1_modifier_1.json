@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:arcane",
+  "school": "megamod:arcane",
   "range": 0.0,
   "tier": 1,
   "tooltip": {
@@ -11,7 +11,7 @@
       {
         "type": "SPELL_CAST",
         "spell": {
-          "id": "wizards:arcane_blink"
+          "id": "megamod:arcane_blink"
         }
       }
     ]

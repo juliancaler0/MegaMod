@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/dance_at_moulin"
+    "layer0": "megamod:item/dance_at_moulin",
+    "particle": "megamod:item/dance_at_moulin"
   }
 }

@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/frost_robe_head"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/frost_robe_head",
+"particle": "megamod:item/frost_robe_head"}}

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/wardens_visor"
+    "layer0": "megamod:item/wardens_visor",
+    "particle": "megamod:item/wardens_visor"
   }
 }

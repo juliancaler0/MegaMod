@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/ashen_diadem"
+    "layer0": "megamod:item/ashen_diadem",
+    "particle": "megamod:item/ashen_diadem"
   }
 }

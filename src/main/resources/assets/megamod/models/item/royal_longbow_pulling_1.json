@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/royal_longbow",
   "textures": {
-    "layer0": "megamod:item/royal_longbow_pulling_1"
+    "layer0": "megamod:item/royal_longbow_pulling_1",
+    "particle": "megamod:item/royal_longbow_pulling_1"
   }
 }

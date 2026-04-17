@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/tower_of_babel"
+    "layer0": "megamod:item/tower_of_babel",
+    "particle": "megamod:item/tower_of_babel"
   }
 }

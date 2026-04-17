@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/thunderhorn"
+    "layer0": "megamod:item/thunderhorn",
+    "particle": "megamod:item/thunderhorn"
   }
 }

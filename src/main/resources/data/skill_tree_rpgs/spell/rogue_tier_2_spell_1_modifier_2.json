@@ -12,7 +12,7 @@
         "type": "SPELL_IMPACT_SPECIFIC",
         "chance": 0.5,
         "spell": {
-          "id": "rogues:shock_powder"
+          "id": "megamod:shock_powder"
         },
         "impact": {}
       }

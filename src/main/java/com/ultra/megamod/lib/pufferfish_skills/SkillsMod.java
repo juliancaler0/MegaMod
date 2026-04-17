@@ -187,8 +187,11 @@ public class SkillsMod {
 	}
 
 	private void copyConfigFromJar() {
+		// Renamed in the MegaMod port to avoid collision with other mods' config/config.json
+		// resource paths. Source is config/puffish_skills_config.json in the jar, destination
+		// stays config/puffish_skills/config.json on disk (what loadModConfig reads).
 		PathUtils.copyFileFromJar(
-				Path.of("config", "config.json"),
+				Path.of("config", "puffish_skills_config.json"),
 				modConfigDir.resolve("config.json")
 		);
 	}
@@ -302,7 +305,11 @@ public class SkillsMod {
 		if (player.isSpectator()) {
 			return;
 		}
-		tryUnlockSkill(player, packet.getCategoryId(), packet.getSkillId(), false);
+		// MegaMod: bypass flag ignores prerequisite / point-cost / exclusive-root checks so the
+		// player can unlock any node in any order. Toggling the flag is already admin-gated in
+		// ComputerActionHandler, so we just trust the set here.
+		boolean force = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.isBypassEnabled(player.getUUID());
+		tryUnlockSkill(player, packet.getCategoryId(), packet.getSkillId(), force);
 	}
 
 	public void unlockSkill(ServerPlayer player, Identifier categoryId, String skillId) {
@@ -673,11 +680,17 @@ public class SkillsMod {
 
 		if (amount != 0) {
 			var categoryData = playerData.getOrCreateCategoryData(category);
-			addExperience(player, category, experience, categoryData, amount);
+			// MegaMod: apply admin-configured event multiplier + admin-only boost to automatic XP
+			// sources so testing new trees goes faster without touching manual admin grants.
+			double mult = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.resolveMultiplier(player);
+			int scaled = (int) Math.round(amount * mult);
+			addExperience(player, category, experience, categoryData, scaled);
 		}
 		teamAmounts.forEach((teamPlayer, teamPlayerAmount) -> {
 			var categoryData = getPlayerData(teamPlayer).getOrCreateCategoryData(category);
-			addExperience(teamPlayer, category, experience, categoryData, teamPlayerAmount);
+			double mult = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.resolveMultiplier(teamPlayer);
+			int scaled = (int) Math.round(teamPlayerAmount * mult);
+			addExperience(teamPlayer, category, experience, categoryData, scaled);
 		});
 	}
 

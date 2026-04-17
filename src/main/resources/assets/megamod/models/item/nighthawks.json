@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/nighthawks"
+    "layer0": "megamod:item/nighthawks",
+    "particle": "megamod:item/nighthawks"
   }
 }

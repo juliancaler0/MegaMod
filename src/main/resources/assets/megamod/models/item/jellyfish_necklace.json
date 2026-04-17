@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/jellyfish_necklace"
+    "layer0": "megamod:item/jellyfish_necklace",
+    "particle": "megamod:item/jellyfish_necklace"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/abyssal_cape"
+    "layer0": "megamod:item/abyssal_cape",
+    "particle": "megamod:item/abyssal_cape"
   }
 }

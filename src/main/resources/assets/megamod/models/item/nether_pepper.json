@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/nether_pepper"
+    "layer0": "megamod:item/crops/nether_pepper",
+    "particle": "megamod:item/crops/nether_pepper"
   }
 }

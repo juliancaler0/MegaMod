@@ -1,1 +1,2 @@
-{"parent":"megamod:item/base/staff_28","textures":{"layer0":"megamod:item/lightbinder"}}
+{"parent":"megamod:item/base/staff_28","textures":{"layer0":"megamod:item/lightbinder",
+"particle": "megamod:item/lightbinder"}}

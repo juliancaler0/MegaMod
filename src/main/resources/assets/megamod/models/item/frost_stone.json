@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/frost_stone"
+    "layer0": "megamod:item/frost_stone",
+    "particle": "megamod:item/frost_stone"
   }
 }

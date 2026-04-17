@@ -14,11 +14,9 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.*;
 
-/**
- * Server-side handler for the Customize computer app.
- * Manages badge customization, prestige name colors, and mastery mark purchases.
- * TODO: Reconnect badge/branch features with Pufferfish Skills API
- */
+/// Server-side handler for the Customize computer app. Covers prestige name colors and
+/// mastery mark purchases. Legacy "badge" actions are kept as no-ops — the SkillBadges
+/// system was removed in the Pufferfish migration and is not coming back.
 public class CustomizeHandler {
 
     // Per-player prestige name color overrides
@@ -31,18 +29,11 @@ public class CustomizeHandler {
                 return true;
             }
             case "customize_badge_reset" -> {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.clearCustomBadge)
                 sendResult(player, true, "Badge reset to auto", eco);
                 return true;
             }
-            case "customize_badge_title" -> {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges + SkillBranch validation)
-                sendResult(player, false, "Badge system being rebuilt", eco);
-                return true;
-            }
-            case "customize_badge_color" -> {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.setCustomBadge)
-                sendResult(player, false, "Badge system being rebuilt", eco);
+            case "customize_badge_title", "customize_badge_color" -> {
+                sendResult(player, false, "Badges removed in the new skill system", eco);
                 return true;
             }
             case "customize_prestige_color" -> {

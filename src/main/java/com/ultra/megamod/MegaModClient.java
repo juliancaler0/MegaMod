@@ -50,6 +50,15 @@ public class MegaModClient {
         com.ultra.megamod.feature.shouldersurfing.ShoulderSurfingClientEvents.init(modEventBus, container);
         com.ultra.megamod.lib.accessories.neoforge.client.AccessoriesClientForge.init(modEventBus);
 
+        // Pufferfish Skills client: registers K keybind, client-side packet handlers, and GUI screen.
+        // Must run on MegaModClient's event bus so RegisterKeyMappingsEvent fires here.
+        new com.ultra.megamod.lib.pufferfish_skills.main.NeoForgeClientMain(modEventBus);
+
+        // SkillTree RPG client-side init: wires skill description resolvers into TranslationUtil
+        // so hovered skill nodes show per-skill tooltips (spell details, attribute modifier text,
+        // conditional attribute tooltips), and registers custom status-effect particle renderers.
+        com.ultra.megamod.lib.skilltree.client.SkillTreeClientMod.init();
+
         // Register PlayerAnimationLib spell animation layers (per-player event)
         com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.registerFactories();
 
@@ -79,10 +88,13 @@ public class MegaModClient {
         // SkillHudOverlay removed — Pufferfish Skills registers its own HUD
 
         // Group 4: Combat HUD
-        modEventBus.addListener(AbilityHudOverlay::onRegisterGuiLayers);
+        modEventBus.addListener(AbilityHudOverlay::register);
         modEventBus.addListener(CombatTextRenderer::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellCastOverlay::onRegisterGuiLayers);
-        modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.SpellBookHudOverlay::onRegisterGuiLayers);
+        // SpellBookHudOverlay removed — was duplicating SpellEngine's canonical SpellHotbar HUD
+        // (rendered by SpellEngineClient::onRegisterGuiLayers below). Both layers displayed the
+        // same offhand-spellbook spells, producing the visible duplicate HUD.
+        // modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.SpellBookHudOverlay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.combos.CombatComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.KillComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.AbilityTriggerHud::onRegisterGuiLayers);
@@ -260,8 +272,7 @@ public class MegaModClient {
         event.registerEntityRenderer(com.ultra.megamod.feature.citizen.CitizenRegistry.MC_CITIZEN.get(),
                 com.ultra.megamod.feature.citizen.entity.mc.client.MCCitizenRenderer::new);
 
-        // Relic projectile/effect entities
-        com.ultra.megamod.feature.relics.entity.RelicEntityRenderers.registerAll(event);
+        // Relic projectile/effect entities — custom system scrapped (task #52)
     }
 }
 

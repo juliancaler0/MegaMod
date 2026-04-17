@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/extra_light_paper"
+    "all": "megamod:block/extra_light_paper",
+    "particle": "megamod:block/extra_light_paper"
   }
 }

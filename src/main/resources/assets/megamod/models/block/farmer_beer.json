@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"5": "megamod:block/farmer_beer"
+		"5": "megamod:block/farmer_beer",
+		"particle": "#5"
 	},
 	"elements": [
 		{

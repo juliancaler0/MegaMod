@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/void_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/void_upgrade",
+"particle": "megamod:item/void_upgrade"}}

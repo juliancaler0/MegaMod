@@ -4,7 +4,8 @@
 	"credit": "239143 / 941875YY43IUCGU3WS9L",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "megamod:block/viking_statue_4"
+		"1": "megamod:block/viking_statue_4",
+		"particle": "#1"
 	},
 	"elements": [
 		{

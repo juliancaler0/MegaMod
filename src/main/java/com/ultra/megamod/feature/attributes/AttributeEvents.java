@@ -143,9 +143,6 @@ public class AttributeEvents {
         poisonDmg *= brillianceMultiplier;
         holyDmg *= brillianceMultiplier;
         shadowDmg *= brillianceMultiplier;
-        // Runic Arsenal synergy: TODO: Reconnect with Pufferfish Skills API
-        // (previously SynergyEffects.getRunicArsenalMultiplier — defaulting to 1.0f / no bonus)
-
         double totalElemental = 0.0;
         double fireActual = fireDmg * Math.max(0.0, 1.0 - fireRes / 100.0);
         totalElemental += fireActual;
@@ -213,8 +210,6 @@ public class AttributeEvents {
         }
         double lifesteal = AttributeHelper.getValue(attacker, MegaModAttributes.LIFESTEAL);
         if (lifesteal > 0.0 && (healAmount = (float)((double)damageDealt * lifesteal / 100.0)) > 0.0f) {
-            // Bloodblade synergy: TODO: Reconnect with Pufferfish Skills API
-            // (previously SynergyEffects.getLifestealMultiplier — defaulting to 1.0f / no bonus)
             attacker.heal(healAmount);
             CombatTextSender.sendLifesteal(attacker, healAmount);
         }

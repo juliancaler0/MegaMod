@@ -1,7 +1,8 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "megamod:item/scepterlumberjack"
+    "layer0": "megamod:item/scepterlumberjack",
+    "particle": "megamod:item/scepterlumberjack"
   },
   "display": {
     "thirdperson": {

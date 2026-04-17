@@ -1,6 +1,7 @@
 {
   "parent": "megamod:block/digsite",
   "textures": {
-    "4": "block/spruce_planks"
+    "4": "block/spruce_planks",
+    "particle": "#4"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/luncheon_on_the_grass"
+    "layer0": "megamod:item/luncheon_on_the_grass",
+    "particle": "megamod:item/luncheon_on_the_grass"
   }
 }

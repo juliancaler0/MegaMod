@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_arcane_bolt"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_arcane_bolt",
+"particle": "megamod:item/scroll_arcane_bolt"}}

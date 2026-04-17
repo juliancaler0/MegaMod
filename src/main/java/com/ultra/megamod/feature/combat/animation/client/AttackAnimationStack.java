@@ -124,18 +124,20 @@ public class AttackAnimationStack extends PlayerAnimationController {
         this.speed.set(baseSpeed, gears);
         this.activeFirstPersonConfig = fpConfig;
 
-        com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AbstractFadeModifier fade =
-                com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AbstractFadeModifier.standardFadeIn(
-                        2, com.ultra.megamod.lib.playeranim.core.easing.EasingType.EASE_IN_OUT_SINE);
-        replaceAnimationWithFade(fade, animId);
+        // Match source BetterCombat: use triggerAnimation (one-shot, no fade-stacking).
+        // Previously used replaceAnimationWithFade which stacked fade modifiers on each call,
+        // causing the visible animation jitter.
+        triggerAnimation(animId);
     }
 
     /**
-     * Stop the attack animation with a fade-out over the given length.
+     * Stop the attack animation. Matches source BetterCombat exactly — hard stop, no fade.
+     * Previously tried to fade but that caused hammer body shake / post-swing jitter
+     * because fade modifier fought with pose layer reassertion.
      */
     public void stopAnimation(float length) {
         if (isActive()) {
-            super.stop();
+            stop();
         }
     }
 }

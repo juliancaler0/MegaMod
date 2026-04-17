@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "megamod:block/crop_mint"
+    "crop": "megamod:block/crop_mint",
+    "particle": "megamod:block/crop_mint"
   }
 }

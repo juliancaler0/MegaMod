@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/cabbage_dish"
+    "layer0": "megamod:item/cabbage_dish",
+    "particle": "megamod:item/cabbage_dish"
   }
 }

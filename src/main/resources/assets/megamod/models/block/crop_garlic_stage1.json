@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "megamod:block/crop_garlic"
+    "crop": "megamod:block/crop_garlic",
+    "particle": "megamod:block/crop_garlic"
   }
 }

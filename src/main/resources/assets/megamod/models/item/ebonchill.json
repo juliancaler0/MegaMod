@@ -1,1 +1,2 @@
-{"parent":"megamod:item/base/claymore_32","textures":{"layer0":"megamod:item/ebonchill"}}
+{"parent":"megamod:item/base/claymore_32","textures":{"layer0":"megamod:item/ebonchill",
+"particle": "megamod:item/ebonchill"}}

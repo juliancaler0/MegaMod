@@ -162,10 +162,6 @@ Cross-branch passives — require nodes unlocked in both branches listed.
 
 ---
 
-## 6. Skill Locks
-
-Two lock types, both gated by **branch tier 3+** unless otherwise stated.
-
 ### 6a. Use Locks (`SkillLockDefinitions.USE_LOCKS`)
 
 Player may hold a locked item but can't swing/use it without the required branch. Each lock: `{ category, Set<itemPattern>, branchA, branchB? }`. Either branch satisfies the lock.
@@ -317,19 +313,6 @@ Event handlers award XP by tree. Anti-abuse: per-player per-event-type cooldown;
 
 ---
 
-## 12. Class Selection System
-
-### Five Classes (`PlayerClassManager.PlayerClass` enum)
-
-| Class | Color | Description | Best for | Maps to branch |
-|-------|-------|-------------|----------|----------------|
-| **PALADIN** | `0xFFD700` gold | Holy knight and healer — claymores, hammers, shields, healing magic. | Dungeons, party, colony defense | `SkillBranch.PALADIN` |
-| **WARRIOR** | `0xFF4444` red | Berserker melee — double axes, glaives, war cries. | Dungeons, arena, PvP | `SkillBranch.WARRIOR` |
-| **WIZARD** | `0xAA44FF` purple | Elemental spellcaster — wands, staves. | Dungeons, bosses, exploration | `SkillBranch.WIZARD` |
-| **ROGUE** | `0x22AA22` green | Shadow assassin — daggers, sickles, evasion. | Arena, PvP, bounty hunting | `SkillBranch.ROGUE` |
-| **RANGER** | `0x44BB44` light green | Marksman / wilderness expert — bows, crossbows, nature magic. | Exploration, colony defense, dungeon support | `SkillBranch.RANGER` |
-
-`NONE` is the pre-selection sentinel.
 
 ### Selection Flow
 

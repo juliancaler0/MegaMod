@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/handheld","textures":{"layer0":"megamod:item/ghost_fang"}}
+{"parent":"minecraft:item/handheld","textures":{"layer0":"megamod:item/ghost_fang",
+"particle": "megamod:item/ghost_fang"}}

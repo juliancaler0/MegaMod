@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/netherite_sapphire_necklace"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/netherite_sapphire_necklace",
+"particle": "megamod:item/netherite_sapphire_necklace"}}

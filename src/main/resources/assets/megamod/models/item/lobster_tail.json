@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/lobster_tail"
+    "layer0": "megamod:item/lobster_tail",
+    "particle": "megamod:item/lobster_tail"
   }
 }

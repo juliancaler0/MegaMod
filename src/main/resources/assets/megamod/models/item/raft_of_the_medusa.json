@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/raft_of_the_medusa"
+    "layer0": "megamod:item/raft_of_the_medusa",
+    "particle": "megamod:item/raft_of_the_medusa"
   }
 }

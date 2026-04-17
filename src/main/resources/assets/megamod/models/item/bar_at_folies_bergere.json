@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/bar_at_folies_bergere"
+    "layer0": "megamod:item/bar_at_folies_bergere",
+    "particle": "megamod:item/bar_at_folies_bergere"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/arsenal/unique_longbow_sw",
   "textures": {
-    "layer0": "megamod:item/arsenal/unique_longbow_sw_pulling_0"
+    "layer0": "megamod:item/arsenal/unique_longbow_sw_pulling_0",
+    "particle": "megamod:item/arsenal/unique_longbow_sw_pulling_0"
   }
 }

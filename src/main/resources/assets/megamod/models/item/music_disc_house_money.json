@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/music_disc_house_money"
+    "layer0": "megamod:item/music_disc_house_money",
+    "particle": "megamod:item/music_disc_house_money"
   }
 }

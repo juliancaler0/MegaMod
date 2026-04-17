@@ -12,7 +12,8 @@
 		"7": "block/stone",
 		"8": "block/stone_bricks",
 		"9": "block/clay",
-		"10": "block/terracotta"
+		"10": "block/terracotta",
+		"all": "#particle"
 	},
 	"elements": [
 		{

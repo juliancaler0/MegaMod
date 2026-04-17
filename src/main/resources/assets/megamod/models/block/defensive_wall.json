@@ -1,1 +1,2 @@
-{ "parent": "minecraft:block/cube_all", "textures": { "all": "megamod:block/defensive_wall" } }
+{ "parent": "minecraft:block/cube_all", "textures": { "all": "megamod:block/defensive_wall",
+ "particle": "megamod:block/defensive_wall" } }

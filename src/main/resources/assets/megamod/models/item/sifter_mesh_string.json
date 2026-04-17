@@ -1,6 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "megamod:item/sifter_mesh_string"
+        "layer0": "megamod:item/sifter_mesh_string",
+        "particle": "megamod:item/sifter_mesh_string"
     }
 }

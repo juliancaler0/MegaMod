@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/a_bigger_splash"
+    "layer0": "megamod:item/a_bigger_splash",
+    "particle": "megamod:item/a_bigger_splash"
   }
 }

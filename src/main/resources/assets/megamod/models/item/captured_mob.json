@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/captured_mob"
+    "layer0": "megamod:item/captured_mob",
+    "particle": "megamod:item/captured_mob"
   }
 }

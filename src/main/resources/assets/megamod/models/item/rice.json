@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/rice"
+    "layer0": "megamod:item/crops/rice",
+    "particle": "megamod:item/crops/rice"
   }
 }

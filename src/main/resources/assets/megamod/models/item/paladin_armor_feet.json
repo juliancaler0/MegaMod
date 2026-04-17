@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/paladin_armor_feet"
+    "layer0": "megamod:item/paladin_armor_feet",
+    "particle": "megamod:item/paladin_armor_feet"
   }
 }

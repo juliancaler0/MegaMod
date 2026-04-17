@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "archers:barrage",
+      "spell_pattern": "megamod:barrage",
       "projectile_launch": {
         "velocity": 0.0,
         "extra_launch_count": 1,

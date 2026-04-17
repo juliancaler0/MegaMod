@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/supply_camp"
+    "layer0": "megamod:item/supply_camp",
+    "particle": "megamod:item/supply_camp"
   }
 }

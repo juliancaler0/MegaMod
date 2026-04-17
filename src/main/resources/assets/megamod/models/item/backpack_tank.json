@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/backpack_tank"
+    "layer0": "megamod:item/backpack_tank",
+    "particle": "megamod:item/backpack_tank"
   }
 }

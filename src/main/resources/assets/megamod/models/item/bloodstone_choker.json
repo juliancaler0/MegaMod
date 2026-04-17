@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/bloodstone_choker"
+    "layer0": "megamod:item/bloodstone_choker",
+    "particle": "megamod:item/bloodstone_choker"
   }
 }

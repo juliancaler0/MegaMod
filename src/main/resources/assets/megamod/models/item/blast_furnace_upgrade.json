@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/blast_furnace_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/blast_furnace_upgrade",
+"particle": "megamod:item/blast_furnace_upgrade"}}

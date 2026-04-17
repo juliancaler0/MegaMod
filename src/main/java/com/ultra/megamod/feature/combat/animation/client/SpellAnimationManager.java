@@ -1,5 +1,6 @@
 package com.ultra.megamod.feature.combat.animation.client;
 
+import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AbstractFadeModifier;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AdjustmentModifier;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.MirrorModifier;
@@ -54,6 +55,14 @@ public class SpellAnimationManager {
 
         boolean pitchEnabled = false;
         AbstractClientPlayer playerRef;
+
+        // Dedup tracking: last (animId, speed, mirror) played per channel.
+        // Prevents shimmy when the same animation is re-triggered via multiple code
+        // paths (local mixin + server payload) — each replaceAnimationWithFade call
+        // stacks a fresh fade modifier, producing perpetual fade-in. (Task #44)
+        Identifier lastCastingId;      float lastCastingSpeed;  boolean lastCastingMirror;
+        Identifier lastReleaseId;      float lastReleaseSpeed;  boolean lastReleaseMirror;
+        Identifier lastMiscId;         float lastMiscSpeed;     boolean lastMiscMirror;
 
         PlayerAnimState(AbstractClientPlayer player) {
             this.playerRef = player;
@@ -169,7 +178,29 @@ public class SpellAnimationManager {
                                      Identifier animationId, float speed, boolean mirror) {
         PlayerAnimState state = getState(player);
         if (state == null) return;
-        if (!PlayerAnimResources.hasAnimation(animationId)) return;
+        if (!PlayerAnimResources.hasAnimation(animationId)) {
+            MegaMod.LOGGER.warn("[Spell] Animation not found: {} (caster: {}, type: {})",
+                    animationId, player.getGameProfile().name(), type);
+            return;
+        }
+
+        // Dedup guard: if the same animation is already playing at the same speed/mirror
+        // on this channel, skip. Without this, repeated calls (e.g. server payload echo
+        // back to caster on top of local mixin drive) stack fade modifiers → shimmy. (Task #44)
+        switch (type) {
+            case CASTING -> {
+                if (animationId.equals(state.lastCastingId) && speed == state.lastCastingSpeed && mirror == state.lastCastingMirror) return;
+                state.lastCastingId = animationId; state.lastCastingSpeed = speed; state.lastCastingMirror = mirror;
+            }
+            case RELEASE -> {
+                if (animationId.equals(state.lastReleaseId) && speed == state.lastReleaseSpeed && mirror == state.lastReleaseMirror) return;
+                state.lastReleaseId = animationId; state.lastReleaseSpeed = speed; state.lastReleaseMirror = mirror;
+            }
+            case MISC -> {
+                if (animationId.equals(state.lastMiscId) && speed == state.lastMiscSpeed && mirror == state.lastMiscMirror) return;
+                state.lastMiscId = animationId; state.lastMiscSpeed = speed; state.lastMiscMirror = mirror;
+            }
+        }
 
         PlayerAnimationController controller = switch (type) {
             case CASTING -> state.castingController;
@@ -196,12 +227,10 @@ public class SpellAnimationManager {
         speedMod.speed = speed;
         mirrorMod.enabled = mirror;
 
-        // Play with fade
-        var animation = PlayerAnimResources.getAnimation(animationId);
-        float beginTick = animation != null ? animation.data().<Float>get("beginTick").orElse(0f) : 0f;
-        int fadeLength = beginTick > 0 ? (int) beginTick : 3;
-        AbstractFadeModifier fade = AbstractFadeModifier.standardFadeIn(fadeLength, EasingType.EASE_IN_OUT_SINE);
-        controller.replaceAnimationWithFade(fade, animationId);
+        // Match source SpellEngine: use triggerAnimation (one-shot, no fade-stacking).
+        // replaceAnimationWithFade stacked fade modifiers on each re-trigger, which is
+        // exactly what the animation jitter looks like (fade-in restarting per tick).
+        controller.triggerAnimation(animationId);
     }
 
     /**
@@ -217,7 +246,26 @@ public class SpellAnimationManager {
             case MISC -> state.miscController;
         };
 
+        // Clear dedup memory so the next playAnimation call isn't suppressed. (Task #44)
+        switch (type) {
+            case CASTING -> { state.lastCastingId = null; state.lastCastingSpeed = 0f; state.lastCastingMirror = false; }
+            case RELEASE -> { state.lastReleaseId = null; state.lastReleaseSpeed = 0f; state.lastReleaseMirror = false; }
+            case MISC    -> { state.lastMiscId = null;    state.lastMiscSpeed = 0f;    state.lastMiscMirror = false; }
+        }
+
         controller.stop();
+    }
+
+    /**
+     * Returns {@code true} if any spell animation channel (casting/release/misc)
+     * is currently playing for the given player. Used by pose stack suppression (task #42).
+     */
+    public static boolean isAnyActive(AbstractClientPlayer player) {
+        PlayerAnimState state = PLAYER_STATES.get(player);
+        if (state == null) return false;
+        return state.castingController.isActive()
+                || state.releaseController.isActive()
+                || state.miscController.isActive();
     }
 
     /**

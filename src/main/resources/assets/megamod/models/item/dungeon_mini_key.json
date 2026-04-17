@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/dungeon_mini_key"
+    "layer0": "megamod:item/dungeon_mini_key",
+    "particle": "megamod:item/dungeon_mini_key"
   }
 }

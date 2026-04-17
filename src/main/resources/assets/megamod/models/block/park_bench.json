@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"3": "megamod:block/park_bench"
+		"3": "megamod:block/park_bench",
+		"particle": "#3"
 	},
 	"elements": [
 		{

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/plate_armor_legs"
+    "layer0": "megamod:item/plate_armor_legs",
+    "particle": "megamod:item/plate_armor_legs"
   }
 }

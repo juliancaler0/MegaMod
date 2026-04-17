@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:frost",
+  "school": "megamod:frost",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -81,7 +81,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "wizards:frozen",
+          "effect_id": "megamod:frozen",
           "duration": 6.0,
           "amplifier": 1,
           "amplifier_cap": 4,

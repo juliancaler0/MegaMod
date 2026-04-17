@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/chicken_pot_pie"
+    "layer0": "megamod:item/chicken_pot_pie",
+    "particle": "megamod:item/chicken_pot_pie"
   }
 }

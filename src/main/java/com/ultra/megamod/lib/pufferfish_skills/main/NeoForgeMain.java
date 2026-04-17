@@ -53,9 +53,8 @@ public class NeoForgeMain {
 	private final List<Consumer<PayloadRegistrar>> payloadRegistrations = new ArrayList<>();
 
 	public NeoForgeMain(IEventBus modEventBus, Dist dist) {
-		if (dist.isClient()) {
-			new NeoForgeClientMain(modEventBus);
-		}
+		// Note: NeoForgeClientMain is now constructed from MegaModClient.java so it binds
+		// to the client mod's event bus, which is where RegisterKeyMappingsEvent actually fires.
 
 		SkillsMod.setup(
 				FMLPaths.CONFIGDIR.get(),

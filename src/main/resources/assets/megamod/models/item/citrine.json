@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/citrine"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/citrine",
+"particle": "megamod:item/citrine"}}

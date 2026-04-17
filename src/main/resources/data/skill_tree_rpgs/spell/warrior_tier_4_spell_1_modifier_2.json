@@ -11,7 +11,7 @@
       {
         "type": "SPELL_CAST",
         "spell": {
-          "id": "rogues:charge"
+          "id": "megamod:charge"
         }
       }
     ]

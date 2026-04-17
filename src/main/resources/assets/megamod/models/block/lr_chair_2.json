@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"0": "megamod:block/lr_livingroom_chair_2"
+		"0": "megamod:block/lr_livingroom_chair_2",
+		"particle": "#0"
 	},
 	"elements": [
 		{

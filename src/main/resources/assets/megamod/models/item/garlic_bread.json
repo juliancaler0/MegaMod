@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/garlic_bread"
+    "layer0": "megamod:item/garlic_bread",
+    "particle": "megamod:item/garlic_bread"
   }
 }

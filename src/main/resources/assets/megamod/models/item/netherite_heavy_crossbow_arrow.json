@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/netherite_heavy_crossbow",
   "textures": {
-    "layer0": "megamod:item/netherite_heavy_crossbow_arrow"
+    "layer0": "megamod:item/netherite_heavy_crossbow_arrow",
+    "particle": "megamod:item/netherite_heavy_crossbow_arrow"
   }
 }

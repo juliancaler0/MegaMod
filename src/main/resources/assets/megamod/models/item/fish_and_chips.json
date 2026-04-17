@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/fish_and_chips"
+    "layer0": "megamod:item/fish_and_chips",
+    "particle": "megamod:item/fish_and_chips"
   }
 }

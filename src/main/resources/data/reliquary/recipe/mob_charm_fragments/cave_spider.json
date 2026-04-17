@@ -12,14 +12,11 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:chelicerae"
-    },
-    "S": {
-      "tag": "c:strings"
-    },
+    "P": "reliquary:chelicerae",
+    "S": "#c:strings",
     "T": {
-      "item": "minecraft:potion",
+      "neoforge:ingredient_type": "neoforge:data_components",
+      "base": "minecraft:potion",
       "components": {
         "minecraft:potion_contents": {
           "potion": "minecraft:poison"

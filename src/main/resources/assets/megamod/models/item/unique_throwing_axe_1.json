@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/unique_throwing_axe_1"
+    "layer0": "megamod:item/unique_throwing_axe_1",
+    "particle": "megamod:item/unique_throwing_axe_1"
   }
 }

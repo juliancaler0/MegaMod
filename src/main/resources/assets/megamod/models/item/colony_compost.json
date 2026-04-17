@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/colony_compost"
+    "layer0": "megamod:item/colony_compost",
+    "particle": "megamod:item/colony_compost"
   }
 }

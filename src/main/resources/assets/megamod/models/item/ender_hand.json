@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/ender_hand"
+    "layer0": "megamod:item/ender_hand",
+    "particle": "megamod:item/ender_hand"
   }
 }

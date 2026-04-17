@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_swiftbrew" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_swiftbrew",
+ "particle": "megamod:item/potion_swiftbrew" } }

@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/aether_longbow",
   "textures": {
-    "layer0": "megamod:item/aether_longbow_pulling_1"
+    "layer0": "megamod:item/aether_longbow_pulling_1",
+    "particle": "megamod:item/aether_longbow_pulling_1"
   }
 }

@@ -5,7 +5,8 @@
 		32
 	],
 	"textures": {
-		"3": "megamod:block/craft_spice_jars"
+		"3": "megamod:block/craft_spice_jars",
+		"particle": "#3"
 	},
 	"elements": [
 		{

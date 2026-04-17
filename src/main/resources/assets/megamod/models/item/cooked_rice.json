@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/food/cooked_rice"
+    "layer0": "megamod:item/food/cooked_rice",
+    "particle": "megamod:item/food/cooked_rice"
   }
 }

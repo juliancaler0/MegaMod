@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/saturn_devouring_son"
+    "layer0": "megamod:item/saturn_devouring_son",
+    "particle": "megamod:item/saturn_devouring_son"
   }
 }

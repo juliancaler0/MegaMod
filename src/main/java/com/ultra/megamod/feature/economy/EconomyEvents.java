@@ -104,7 +104,8 @@ public class EconomyEvents {
         reward = applyDiminishingReturns(player, reward);
         if (reward <= 0) return;
 
-        // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyMegacoinBonus)
+        // Prestige coin bonus — +5% per total prestige level across all Pufferfish categories.
+        reward = applyPrestigeCoinBonus(player, reward);
         EconomyManager eco = EconomyManager.get(player.level());
         eco.addWallet(player.getUUID(), reward);
         player.sendSystemMessage((Component)Component.literal((String)("+" + reward + " MegaCoins")).withStyle(ChatFormatting.GOLD));
@@ -194,7 +195,7 @@ public class EconomyEvents {
         Block block = event.getState().getBlock();
         int reward = EconomyEvents.getOreReward(block);
         if (reward > 0) {
-            // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyMegacoinBonus)
+            reward = applyPrestigeCoinBonus(player2, reward);
             EconomyManager eco = EconomyManager.get(player2.level());
             eco.addWallet(player2.getUUID(), reward);
             // Batch ore rewards — accumulate and display every 3 seconds
@@ -346,14 +347,32 @@ public class EconomyEvents {
         int wallet = eco.getWallet(uuid);
         int bank = eco.getBank(uuid);
 
-        // TODO: Reconnect with Pufferfish Skills API (was SkillManager levels + SkillBadges)
+        // Sum levels across every Pufferfish category for HUD display.
         int totalLevel = 0;
+        for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
+            totalLevel += com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId)
+                    .flatMap(cat -> cat.getExperience())
+                    .map(exp -> exp.getLevel(player))
+                    .orElse(0);
+        }
+        int totalPrestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(overworld)
+                .getTotalPrestige(uuid);
+        // Badges were removed; empty strings keep the HUD overlay happy.
         String badgeTitle = "";
         String badgeColorCode = "";
-        int totalPrestige = 0;
 
         PacketDistributor.sendToPlayer(player, new PlayerInfoSyncPayload(
                 wallet, bank, totalLevel, totalPrestige, badgeTitle, badgeColorCode));
+    }
+
+    /// +5% per total prestige level across all categories (stacks additively across categories).
+    private static int applyPrestigeCoinBonus(ServerPlayer player, int reward) {
+        ServerLevel level = (ServerLevel) player.level();
+        int totalPrestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level)
+                .getTotalPrestige(player.getUUID());
+        if (totalPrestige <= 0) return reward;
+        double mult = 1.0 + 0.05 * totalPrestige;
+        return (int) Math.round(reward * mult);
     }
 }
 

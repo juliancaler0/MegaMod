@@ -1,0 +1,8 @@
+{
+	"parent": "paladins:item/base/metal_kite_shield_a_blocking",
+	"textures": {
+		"0": "paladins:item/diamond_kite_shield",
+		"particle": "paladins:item/diamond_kite_shield"
+	}
+}
+

@@ -1,163 +1,36 @@
 package com.ultra.megamod.feature.relics;
 
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import com.ultra.megamod.feature.relics.data.RelicAbility;
-import com.ultra.megamod.feature.relics.data.RelicAttributeBonus;
-import com.ultra.megamod.feature.relics.data.RelicData;
-import com.ultra.megamod.feature.relics.data.RelicStat;
-import com.ultra.megamod.feature.relics.data.WeaponRarity;
-import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
-import java.util.List;
-import java.util.function.Consumer;
-import javax.annotation.Nullable;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
+import com.ultra.megamod.lib.accessories.api.core.AccessoryItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.TooltipDisplay;
-import net.minecraft.world.level.Level;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Base relic class. As of Phase 2 migration, extends {@link com.ultra.megamod.lib.accessories.api.core.AccessoryItem}
- * so each relic auto-registers with the lib/accessories system. Slot membership is driven by the
- * {@code megamod:relics_*} item tags, which are included in the matching {@code accessories:*} validator tags.
- * The {@link #slotType} field is retained so legacy ability-cast code can still reason about slot identity.
- * Items with {@link AccessorySlotType#NONE} (held weapons) are still registered but live outside any accessory slot.
+ * Stub base class for relics. Custom research-table relic system was scrapped
+ * (see task #52). Real source-pattern Relics-1.21.1 port will be re-implemented later.
+ *
+ * <p>Kept as an empty AccessoryItem subclass so legacy code compiles.</p>
  */
-public class RelicItem
-extends com.ultra.megamod.lib.accessories.api.core.AccessoryItem {
-    private final String relicName;
+public class RelicItem extends AccessoryItem {
     private final AccessorySlotType slotType;
-    private final List<RelicAbility> abilities;
-    private final float baseDamage;
+    private final String displayName;
 
-    public RelicItem(String relicName, AccessorySlotType slotType, List<RelicAbility> abilities, float baseDamage, Item.Properties props) {
-        super(props);
-        this.relicName = relicName;
+    public RelicItem(Item.Properties properties) {
+        super(properties);
+        this.slotType = null;
+        this.displayName = "";
+    }
+
+    /** Legacy 4-arg constructor used by JewelryItem + old relic subclasses. */
+    public RelicItem(String displayName, AccessorySlotType slotType, List<?> abilities, Item.Properties properties) {
+        super(properties);
         this.slotType = slotType;
-        this.abilities = abilities;
-        this.baseDamage = baseDamage;
+        this.displayName = displayName != null ? displayName : "";
     }
 
-    public RelicItem(String relicName, AccessorySlotType slotType, List<RelicAbility> abilities, Item.Properties props) {
-        this(relicName, slotType, abilities, 0.0f, props);
-    }
-
-    public RelicItem(String relicName, AccessorySlotType slotType, List<RelicAbility> abilities) {
-        this(relicName, slotType, abilities, 0.0f, new Item.Properties().stacksTo(1));
-    }
-
-    public String getRelicName() {
-        return this.relicName;
-    }
-
-    public AccessorySlotType getSlotType() {
-        return this.slotType;
-    }
-
-    public List<RelicAbility> getAbilities() {
-        return this.abilities;
-    }
-
-    public float getBaseDamage() {
-        return this.baseDamage;
-    }
-
-    public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-        if (!RelicData.isInitialized(stack)) {
-            RelicData.initialize(stack, this.abilities, level.random);
-        }
-        if (this.slotType == AccessorySlotType.NONE && this.baseDamage > 0.0f && !WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponStatRoller.rollAndApply(stack, this.baseDamage, level.random);
-        }
-    }
-
-    /**
-     * Right-click no longer casts abilities -- all ability casting goes through the R keybind.
-     * This prevents conflicts with the unified ability bar system.
-     */
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        return InteractionResult.PASS;
-    }
-
-    public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
-        super.appendHoverText(stack, context, display, tooltip, flag);
-        tooltip.accept((Component)Component.literal((String)("Slot: " + this.slotType.getDisplayName())).withStyle(ChatFormatting.GRAY));
-        if (this.slotType == AccessorySlotType.NONE && this.baseDamage > 0.0f) {
-            WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
-            tooltip.accept((Component)Component.empty());
-        }
-        if (RelicData.isInitialized(stack)) {
-            int level = RelicData.getLevel(stack);
-            int quality = RelicData.getQuality(stack);
-            int xp = RelicData.getXp(stack);
-            int xpNeeded = 100 + level * 50;
-            tooltip.accept((Component)Component.literal((String)("Level: " + level + "/10")).withStyle(ChatFormatting.GREEN));
-            tooltip.accept((Component)Component.literal((String)("XP: " + xp + "/" + xpNeeded)).withStyle(ChatFormatting.AQUA));
-            tooltip.accept((Component)Component.literal((String)("Quality: " + quality + "/10")).withStyle(this.getQualityColor(quality)));
-            int unspent = RelicData.getUnspentPoints(stack, this.abilities);
-            if (unspent > 0) {
-                tooltip.accept((Component)Component.literal((String)(unspent + " unspent points!")).withStyle(ChatFormatting.YELLOW));
-            }
-            // Attribute bonuses
-            List<RelicAttributeBonus> bonuses = RelicData.getAttributeBonuses(stack);
-            if (!bonuses.isEmpty()) {
-                tooltip.accept((Component)Component.empty());
-                for (RelicAttributeBonus bonus : bonuses) {
-                    tooltip.accept((Component)Component.literal((String)("  " + bonus.getDisplayText())).withStyle(ChatFormatting.BLUE));
-                }
-            }
-            tooltip.accept((Component)Component.empty());
-            for (RelicAbility ability : this.abilities) {
-                boolean unlocked = RelicData.isAbilityUnlocked(level, ability, this.abilities);
-                ChatFormatting color = unlocked ? ChatFormatting.WHITE : ChatFormatting.DARK_GRAY;
-                String lockText = unlocked ? "" : " [Lv" + ability.requiredLevel() + "]";
-                tooltip.accept((Component)Component.literal((String)("  " + ability.name() + lockText)).withStyle(color));
-                if (ability.description() != null && !ability.description().isEmpty()) {
-                    tooltip.accept((Component)Component.literal((String)("    " + ability.description())).withStyle(new ChatFormatting[]{ChatFormatting.GRAY, ChatFormatting.ITALIC}));
-                }
-                if (!unlocked) continue;
-                for (RelicStat stat : ability.stats()) {
-                    double value = RelicData.getComputedStatValue(stack, ability.name(), stat);
-                    tooltip.accept((Component)Component.literal((String)("    " + stat.name() + ": " + String.format("%.1f", value))).withStyle(ChatFormatting.GRAY));
-                }
-            }
-        } else {
-            tooltip.accept((Component)Component.literal((String)"Unidentified - use to initialize").withStyle(ChatFormatting.DARK_PURPLE));
-        }
-    }
-
-    private ChatFormatting getQualityColor(int quality) {
-        if (quality >= 9) {
-            return ChatFormatting.GOLD;
-        }
-        if (quality >= 7) {
-            return ChatFormatting.LIGHT_PURPLE;
-        }
-        if (quality >= 5) {
-            return ChatFormatting.AQUA;
-        }
-        if (quality >= 3) {
-            return ChatFormatting.GREEN;
-        }
-        return ChatFormatting.GRAY;
-    }
-
-    public boolean isFoil(ItemStack stack) {
-        if (RelicData.isInitialized(stack) && RelicData.getQuality(stack) >= 8) {
-            return true;
-        }
-        if (WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponRarity rarity = WeaponStatRoller.getRarity(stack);
-            return rarity == WeaponRarity.MYTHIC || rarity == WeaponRarity.LEGENDARY;
-        }
-        return false;
-    }
+    public AccessorySlotType getSlotType() { return slotType; }
+    public String getDisplayName() { return displayName; }
+    public List<?> getAbilities() { return Collections.emptyList(); }
 }

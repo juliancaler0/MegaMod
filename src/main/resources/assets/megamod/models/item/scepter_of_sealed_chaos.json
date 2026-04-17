@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/scepter_of_sealed_chaos"
+    "layer0": "megamod:item/scepter_of_sealed_chaos",
+    "particle": "megamod:item/scepter_of_sealed_chaos"
   }
 }

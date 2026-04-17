@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/dogs_playing_poker"
+    "layer0": "megamod:item/dogs_playing_poker",
+    "particle": "megamod:item/dogs_playing_poker"
   }
 }

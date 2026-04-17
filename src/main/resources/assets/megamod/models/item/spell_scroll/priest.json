@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/priest_scroll"
+    "layer0": "megamod:item/priest_scroll",
+    "particle": "megamod:item/priest_scroll"
   }
 }

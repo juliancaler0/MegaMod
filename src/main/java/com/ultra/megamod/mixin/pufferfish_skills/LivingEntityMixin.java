@@ -52,7 +52,7 @@ public abstract class LivingEntityMixin {
 		}
 	}
 
-	@Inject(method = "applyDamage", at = @At("TAIL"))
+	@Inject(method = "actuallyHurt", at = @At("TAIL"))
 	private void injectAtApplyDamage(ServerLevel world, DamageSource source, float damage, CallbackInfo ci) {
 		AttackerInfo.detect(source.getEntity(), attackerInfo -> {
 			var entity = ((LivingEntity) (Object) this);
@@ -106,7 +106,7 @@ public abstract class LivingEntityMixin {
 		});
 	}
 
-	@Inject(method = "drop", at = @At("TAIL"))
+	@Inject(method = "dropAllDeathLoot", at = @At("TAIL"))
 	private void injectAtDrop(ServerLevel world, DamageSource source, CallbackInfo ci) {
 		AttackerInfo.detect(source.getEntity(), attackerInfo -> {
 			var entity = ((LivingEntity) (Object) this);
@@ -178,7 +178,7 @@ public abstract class LivingEntityMixin {
 			method = "dropExperience",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/entity/ExperienceOrbEntity;spawn(Lnet/minecraft/server/world/ServerLevel;Lnet/minecraft/util/math/Vec3;I)V"
+					target = "Lnet/minecraft/world/entity/ExperienceOrb;award(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/phys/Vec3;I)V"
 			),
 			index = 2
 	)

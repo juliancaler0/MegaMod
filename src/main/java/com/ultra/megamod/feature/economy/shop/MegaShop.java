@@ -283,7 +283,7 @@ public class MegaShop {
         }
         ShopItem item = items.get(index);
         EconomyManager eco = EconomyManager.get(level);
-        int finalPrice = item.buyPrice(); // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applyShopDiscount)
+        int finalPrice = applyPrestigeShopDiscount(player, item.buyPrice());
         if (!eco.spendWallet(player.getUUID(), finalPrice)) {
             return false;
         }
@@ -352,13 +352,30 @@ public class MegaShop {
             Identifier stackId = BuiltInRegistries.ITEM.getKey(invStack.getItem());
             if (invStack.isEmpty() || !stackId.equals((Object)itemKey)) continue;
             invStack.shrink(1);
-            int finalSellPrice = shopItem.sellPrice(); // TODO: Reconnect with Pufferfish Skills API (was SkillsEconomyIntegration.applySellBonus)
+            int finalSellPrice = applyPrestigeSellBonus(player, shopItem.sellPrice());
             EconomyManager eco = EconomyManager.get(level);
             eco.addWallet(player.getUUID(), finalSellPrice);
             this.markDirty();
             return true;
         }
         return false;
+    }
+
+    /// Each total prestige level grants a 3% shop discount (capped at 50%).
+    private static int applyPrestigeShopDiscount(ServerPlayer player, int basePrice) {
+        int totalPrestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager
+                .get(player.level()).getTotalPrestige(player.getUUID());
+        if (totalPrestige <= 0) return basePrice;
+        double discount = Math.min(0.5, 0.03 * totalPrestige);
+        return Math.max(1, (int) Math.round(basePrice * (1.0 - discount)));
+    }
+
+    /// Each total prestige level grants a 5% sell-price bonus (uncapped — matches coin bonus rules).
+    private static int applyPrestigeSellBonus(ServerPlayer player, int baseSellPrice) {
+        int totalPrestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager
+                .get(player.level()).getTotalPrestige(player.getUUID());
+        if (totalPrestige <= 0) return baseSellPrice;
+        return (int) Math.round(baseSellPrice * (1.0 + 0.05 * totalPrestige));
     }
 
     public static boolean isEpicItem(String itemId) {

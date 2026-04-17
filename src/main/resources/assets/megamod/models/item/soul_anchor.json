@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/soul_anchor" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/soul_anchor",
+ "particle": "megamod:item/soul_anchor" } }

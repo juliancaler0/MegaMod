@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/double_axe_18",
   "textures": {
-    "layer0": "megamod:item/golden_double_axe"
+    "layer0": "megamod:item/golden_double_axe",
+    "particle": "megamod:item/golden_double_axe"
   }
 }

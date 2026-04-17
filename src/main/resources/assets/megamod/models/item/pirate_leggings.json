@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pirate_leggins"
+    "layer0": "megamod:item/pirate_leggins",
+    "particle": "megamod:item/pirate_leggins"
   }
 }

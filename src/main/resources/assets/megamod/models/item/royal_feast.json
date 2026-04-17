@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/royal_feast"
+    "layer0": "megamod:item/royal_feast",
+    "particle": "megamod:item/royal_feast"
   }
 }

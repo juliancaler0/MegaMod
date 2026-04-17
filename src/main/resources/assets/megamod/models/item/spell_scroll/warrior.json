@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/warrior_scroll"
+    "layer0": "megamod:item/warrior_scroll",
+    "particle": "megamod:item/warrior_scroll"
   }
 }

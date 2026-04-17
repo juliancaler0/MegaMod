@@ -2,6 +2,7 @@
   "parent": "minecraft:block/cube_column",
   "textures": {
     "end": "megamod:block/deepslate_gem_vein_end",
-    "side": "megamod:block/deepslate_gem_vein_side"
+    "side": "megamod:block/deepslate_gem_vein_side",
+    "particle": "megamod:block/deepslate_gem_vein_end"
   }
 }

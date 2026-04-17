@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/wand_netherite_arcane"
+    "layer0": "megamod:item/wand_netherite_arcane",
+    "particle": "megamod:item/wand_netherite_arcane"
   }
 }

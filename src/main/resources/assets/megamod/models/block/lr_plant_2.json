@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/lr_livingroom_plant_2"
+		"2": "megamod:block/lr_livingroom_plant_2",
+		"particle": "#2"
 	},
 	"elements": [
 		{

@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/craft_loom"
+		"3": "megamod:block/craft_loom",
+		"particle": "#3"
 	},
 	"elements": [
 		{

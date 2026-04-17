@@ -1,15 +1,39 @@
 {
   "values": [
     {
-      "id": "megamod:unique_hammer_1",
+      "id": "paladins:wooden_great_hammer",
       "required": false
     },
     {
-      "id": "megamod:unique_hammer_2",
+      "id": "paladins:stone_great_hammer",
       "required": false
     },
     {
-      "id": "megamod:unique_hammer_sw",
+      "id": "paladins:iron_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:golden_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:diamond_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:netherite_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:ruby_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:aeternium_great_hammer",
+      "required": false
+    },
+    {
+      "id": "paladins:aether_great_hammer",
       "required": false
     }
   ]

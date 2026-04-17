@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/archer_armor_head"
+    "layer0": "megamod:item/archer_armor_head",
+    "particle": "megamod:item/archer_armor_head"
   }
 }

@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"2": "megamod:block/farmer_rice_basket"
+		"2": "megamod:block/farmer_rice_basket",
+		"particle": "#2"
 	},
 	"elements": [
 		{

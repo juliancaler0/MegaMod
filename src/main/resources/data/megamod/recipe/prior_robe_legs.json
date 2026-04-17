@@ -4,9 +4,7 @@
   "key": {
     "G": "minecraft:gold_ingot",
     "T": "minecraft:ghast_tear",
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "GTG",

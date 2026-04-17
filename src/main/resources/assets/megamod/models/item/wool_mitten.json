@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/wool_mitten"
+    "layer0": "megamod:item/wool_mitten",
+    "particle": "megamod:item/wool_mitten"
   }
 }

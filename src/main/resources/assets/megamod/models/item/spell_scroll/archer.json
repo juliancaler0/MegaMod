@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/archer_scroll"
+    "layer0": "megamod:item/archer_scroll",
+    "particle": "megamod:item/archer_scroll"
   }
 }

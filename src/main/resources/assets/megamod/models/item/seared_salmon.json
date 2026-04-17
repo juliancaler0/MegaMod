@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/seared_salmon"
+    "layer0": "megamod:item/seared_salmon",
+    "particle": "megamod:item/seared_salmon"
   }
 }

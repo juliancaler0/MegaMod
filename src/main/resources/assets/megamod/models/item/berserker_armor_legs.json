@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/berserker_armor_legs"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/berserker_armor_legs",
+"particle": "megamod:item/berserker_armor_legs"}}

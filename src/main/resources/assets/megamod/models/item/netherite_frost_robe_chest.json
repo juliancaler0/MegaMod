@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/netherite_frost_robe_chest"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/netherite_frost_robe_chest",
+"particle": "megamod:item/netherite_frost_robe_chest"}}

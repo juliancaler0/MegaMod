@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/plate_armor_helmet"
+    "layer0": "megamod:item/plate_armor_helmet",
+    "particle": "megamod:item/plate_armor_helmet"
   }
 }

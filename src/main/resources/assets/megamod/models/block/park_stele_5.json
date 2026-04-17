@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/park_stele"
+		"1": "megamod:block/park_stele",
+		"particle": "#1"
 	},
 	"elements": [
 		{

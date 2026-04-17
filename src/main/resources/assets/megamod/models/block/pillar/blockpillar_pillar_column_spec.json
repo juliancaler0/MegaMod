@@ -3,7 +3,8 @@
 	"parent": "block/cube_all",
 	"textures": {
 		"column": "block/oak_planks",
-		"particle": "block/oak_planks"
+		"particle": "block/oak_planks",
+		"all": "#particle"
 	},
 	"elements": [
 		{

@@ -1,16 +1,10 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:staff_arcane"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:staff_arcane",
   "result": {
     "count": 1,
     "id": "megamod:staff_netherite_arcane"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/onion"
+    "layer0": "megamod:item/crops/onion",
+    "particle": "megamod:item/crops/onion"
   }
 }

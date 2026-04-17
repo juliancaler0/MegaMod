@@ -1,0 +1,25 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.ultra.megamod.mixin.puffish_attributes",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"AnvilScreenHandlerMixin",
+		"ApplyBonusLootFunctionMixin",
+		"BowItemMixin",
+		"CrossbowItemMixin",
+		"DamageTrackerMixin",
+		"EntityAttributeInstanceInvoker",
+		"EntityAttributeInstanceMixin",
+		"ExperienceOrbEntityMixin",
+		"HungerManagerMixin",
+		"ItemMixin",
+		"LivingEntityMixin",
+		"PlayerEntityMixin",
+		"TargetPredicateMixin"
+	],
+	"client": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

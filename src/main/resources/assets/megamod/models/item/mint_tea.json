@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/mint_tea"
+    "layer0": "megamod:item/mint_tea",
+    "particle": "megamod:item/mint_tea"
   }
 }

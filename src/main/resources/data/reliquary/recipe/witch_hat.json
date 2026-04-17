@@ -7,21 +7,11 @@
     "TLT"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:sugar"
-    },
-    "L": {
-      "tag": "c:dusts/glowstone"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "T": {
-      "item": "minecraft:stick"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    }
+    "S": "minecraft:sugar",
+    "L": "#c:dusts/glowstone",
+    "R": "#c:dusts/redstone",
+    "T": "minecraft:stick",
+    "G": "#c:ingots/gold"
   },
   "result": {
     "id": "reliquary:witch_hat",

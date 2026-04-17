@@ -8,7 +8,8 @@
 		32
 	],
 	"textures": {
-		"2": "megamod:block/casino_card_and_token"
+		"2": "megamod:block/casino_card_and_token",
+		"particle": "#2"
 	},
 	"elements": [
 		{

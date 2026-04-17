@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/wand_netherite_fire"
+    "layer0": "megamod:item/wand_netherite_fire",
+    "particle": "megamod:item/wand_netherite_fire"
   }
 }

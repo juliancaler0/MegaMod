@@ -12,12 +12,8 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:molten_core"
-    },
-    "S": {
-      "item": "minecraft:magma_cream"
-    }
+    "P": "reliquary:molten_core",
+    "S": "minecraft:magma_cream"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

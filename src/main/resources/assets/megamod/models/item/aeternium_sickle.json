@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/aeternium_sickle"
+    "layer0": "megamod:item/aeternium_sickle",
+    "particle": "megamod:item/aeternium_sickle"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/apple_pie"
+    "layer0": "megamod:item/apple_pie",
+    "particle": "megamod:item/apple_pie"
   }
 }

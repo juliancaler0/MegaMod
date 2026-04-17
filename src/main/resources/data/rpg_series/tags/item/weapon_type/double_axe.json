@@ -1,15 +1,35 @@
 {
   "values": [
     {
-      "id": "megamod:unique_double_axe_1",
+      "id": "rogues:stone_double_axe",
       "required": false
     },
     {
-      "id": "megamod:unique_double_axe_2",
+      "id": "rogues:iron_double_axe",
       "required": false
     },
     {
-      "id": "megamod:unique_double_axe_sw",
+      "id": "rogues:golden_double_axe",
+      "required": false
+    },
+    {
+      "id": "rogues:diamond_double_axe",
+      "required": false
+    },
+    {
+      "id": "rogues:netherite_double_axe",
+      "required": false
+    },
+    {
+      "id": "rogues:ruby_double_axe",
+      "required": false
+    },
+    {
+      "id": "rogues:aeternium_double_axe",
+      "required": false
+    },
+    {
+      "id": "rogues:aether_double_axe",
       "required": false
     }
   ]

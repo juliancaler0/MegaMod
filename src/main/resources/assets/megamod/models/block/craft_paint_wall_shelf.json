@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/craft_paint_wall_shelf"
+		"3": "megamod:block/craft_paint_wall_shelf",
+		"particle": "#3"
 	},
 	"elements": [
 		{

@@ -7,18 +7,10 @@
     "SSS"
   ],
   "key": {
-    "C": {
-      "item": "minecraft:yellow_carpet"
-    },
-    "G": {
-      "tag": "c:nuggets/gold"
-    },
-    "Q": {
-      "item": "minecraft:quartz_block"
-    },
-    "S": {
-      "item": "minecraft:quartz_slab"
-    }
+    "C": "minecraft:yellow_carpet",
+    "G": "#c:nuggets/gold",
+    "Q": "minecraft:quartz_block",
+    "S": "minecraft:quartz_slab"
   },
   "result": {
     "id": "reliquary:pedestals/passive/yellow_passive_pedestal",

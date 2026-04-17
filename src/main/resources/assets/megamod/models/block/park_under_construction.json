@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"4": "megamod:block/park_box_construction"
+		"4": "megamod:block/park_box_construction",
+		"particle": "#4"
 	},
 	"elements": [
 		{

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/cabbage"
+    "layer0": "megamod:item/crops/cabbage",
+    "particle": "megamod:item/crops/cabbage"
   }
 }

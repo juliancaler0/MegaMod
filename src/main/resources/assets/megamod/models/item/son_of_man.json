@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/son_of_man"
+    "layer0": "megamod:item/son_of_man",
+    "particle": "megamod:item/son_of_man"
   }
 }

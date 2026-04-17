@@ -7,15 +7,9 @@
     "GSG"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:pumpkin"
-    },
-    "S": {
-      "item": "minecraft:snow"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    }
+    "P": "minecraft:pumpkin",
+    "S": "minecraft:snow",
+    "G": "#c:ingots/gold"
   },
   "result": {
     "id": "reliquary:frozen_core",

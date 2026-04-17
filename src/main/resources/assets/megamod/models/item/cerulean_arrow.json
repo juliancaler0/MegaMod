@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/cerulean_arrow" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/cerulean_arrow",
+ "particle": "megamod:item/cerulean_arrow" } }

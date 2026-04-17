@@ -124,8 +124,26 @@ public class LeaderboardHandler {
                 break;
             }
             case "Skills": {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.getLevel)
-                // Returning empty leaderboard for now
+                // Sum Pufferfish category levels across all categories per player; only online
+                // players contribute because Experience needs a live ServerPlayer handle.
+                var cats = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds();
+                for (UUID uuid : allUUIDs) {
+                    String name = nameCache.get(uuid);
+                    if (name == null) continue;
+                    var sp = level.getServer().getPlayerList().getPlayer(uuid);
+                    if (sp == null) continue;
+                    int total = 0;
+                    for (var catId : cats) {
+                        total += com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId)
+                                .flatMap(cat -> cat.getExperience())
+                                .map(exp -> exp.getLevel(sp))
+                                .orElse(0);
+                    }
+                    if (total > 0) {
+                        rawEntries.add(new RawEntry(name, uuid.toString(), total, "Lv." + total));
+                    }
+                }
+                rawEntries.sort(Comparator.comparingLong(RawEntry::score).reversed());
                 break;
             }
             case "Deaths": {

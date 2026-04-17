@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/captured_grottol"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/captured_grottol",
+"particle": "megamod:item/captured_grottol"}}

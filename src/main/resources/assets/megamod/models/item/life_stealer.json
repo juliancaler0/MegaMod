@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/life_stealer"
+    "layer0": "megamod:item/life_stealer",
+    "particle": "megamod:item/life_stealer"
   }
 }

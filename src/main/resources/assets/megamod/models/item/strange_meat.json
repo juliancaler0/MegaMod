@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/strange_meat" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/strange_meat",
+ "particle": "megamod:item/strange_meat" } }

@@ -7,18 +7,10 @@
     "III"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "item": "minecraft:stone_button"
-    },
-    "R": {
-      "tag": "c:rods/blaze"
-    },
-    "M": {
-      "item": "reliquary:molten_core"
-    }
+    "I": "#c:ingots/iron",
+    "B": "minecraft:stone_button",
+    "R": "#c:rods/blaze",
+    "M": "reliquary:molten_core"
   },
   "result": {
     "id": "reliquary:hammer_assembly",

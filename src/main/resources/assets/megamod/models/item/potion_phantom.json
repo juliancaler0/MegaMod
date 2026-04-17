@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_phantom" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_phantom",
+ "particle": "megamod:item/potion_phantom" } }

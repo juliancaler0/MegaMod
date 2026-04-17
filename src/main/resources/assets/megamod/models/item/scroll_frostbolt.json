@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_frostbolt"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_frostbolt",
+"particle": "megamod:item/scroll_frostbolt"}}

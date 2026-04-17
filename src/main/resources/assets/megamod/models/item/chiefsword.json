@@ -1,6 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "megamod:item/chiefsword"
+    "layer0": "megamod:item/chiefsword",
+    "particle": "megamod:item/chiefsword"
   }
 }

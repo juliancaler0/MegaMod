@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/cake_batter"
+    "layer0": "megamod:item/cake_batter",
+    "particle": "megamod:item/cake_batter"
   }
 }

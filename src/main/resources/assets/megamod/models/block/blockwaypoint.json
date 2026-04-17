@@ -2,6 +2,7 @@
   "credit": "Made by d3miurge.vallek@gmail.com",
   "textures": {
     "0": "megamod:block/waypoints/waypoints",
+    "missing": "megamod:block/waypoints/waypoints",
     "particle": "megamod:block/waypoints/waypoints"
   },
   "elements": [

@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "reliquary:ice_magus_rod"
-    },
-    {
-      "item": "reliquary:void_tear"
-    },
-    {
-      "item": "reliquary:frozen_core"
-    },
-    {
-      "item": "reliquary:shears_of_winter"
-    }
+    "reliquary:ice_magus_rod",
+    "reliquary:void_tear",
+    "reliquary:frozen_core",
+    "reliquary:shears_of_winter"
   ],
   "result": {
     "id": "reliquary:glacial_staff",

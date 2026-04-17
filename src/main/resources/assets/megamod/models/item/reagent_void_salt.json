@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_void_salt" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_void_salt",
+ "particle": "megamod:item/reagent_void_salt" } }

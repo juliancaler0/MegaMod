@@ -5,7 +5,7 @@
 	"textures": {
 		"particle": "block/oak_planks",
 		"9": "block/gray_wool",
-		"11": "models/armor/leather_layer_1",
+		"11": "megamod:block/hut_fletcher",
 		"12": "block/oak_planks",
 		"13": "block/cyan_wool",
 		"14": "block/stripped_oak_log",

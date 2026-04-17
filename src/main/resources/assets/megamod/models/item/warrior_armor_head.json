@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/warrior_armor_head"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/warrior_armor_head",
+"particle": "megamod:item/warrior_armor_head"}}

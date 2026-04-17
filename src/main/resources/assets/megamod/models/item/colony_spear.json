@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/colony_spear"
+    "layer0": "megamod:item/colony_spear",
+    "particle": "megamod:item/colony_spear"
   }
 }

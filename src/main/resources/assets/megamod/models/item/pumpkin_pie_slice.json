@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pumpkin_pie_slice"
+    "layer0": "megamod:item/pumpkin_pie_slice",
+    "particle": "megamod:item/pumpkin_pie_slice"
   }
 }

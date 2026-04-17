@@ -7,21 +7,11 @@
     "SV "
   ],
   "key": {
-    "R": {
-      "item": "minecraft:rose_bush"
-    },
-    "F": {
-      "item": "reliquary:fertile_essence"
-    },
-    "V": {
-      "item": "minecraft:vine"
-    },
-    "T": {
-      "item": "reliquary:void_tear"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "R": "minecraft:rose_bush",
+    "F": "reliquary:fertile_essence",
+    "V": "minecraft:vine",
+    "T": "reliquary:void_tear",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "reliquary:harvest_rod",

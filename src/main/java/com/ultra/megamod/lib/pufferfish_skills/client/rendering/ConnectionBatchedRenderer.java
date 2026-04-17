@@ -96,24 +96,22 @@ public class ConnectionBatchedRenderer {
 	}
 
 	private void drawLine(float startX, float startY, float endX, float endY, float thickness, int color) {
-		var side = new Vector2f(endX - startX, endY - startY);
-		float len = side.length();
+		float dx = endX - startX;
+		float dy = endY - startY;
+		float len = (float) Math.sqrt(dx * dx + dy * dy);
 		if (len < 0.001f) return;
-		side.normalize().perpendicular().mul(thickness / 2f);
 
-		// Approximate the rotated quad as a bounding box fill
-		// Compute the 4 corners of the thick line
-		float x1 = startX + side.x;
-		float y1 = startY + side.y;
-		float x2 = startX - side.x;
-		float y2 = startY - side.y;
-		float x3 = endX - side.x;
-		float y3 = endY - side.y;
-		float x4 = endX + side.x;
-		float y4 = endY + side.y;
-
-		// Draw the thick line using multiple thin horizontal/vertical segments
-		drawThickLineSegments(x1, y1, x2, y2, x3, y3, x4, y4, color);
+		// Draw as a single rotated rectangle using the Matrix3x2f transform stack. This replaces
+		// the old scanline fill (which did O(rows * connections) per-pixel fill() calls — ~30k
+		// draw calls per frame with ~150 connections — and caused heavy panning lag).
+		float halfThickness = thickness / 2f;
+		float angle = (float) Math.atan2(dy, dx);
+		var pose = context.pose();
+		pose.pushMatrix();
+		pose.translate(startX, startY);
+		pose.rotate(angle);
+		context.fill(0, -Mth.ceil(halfThickness), Mth.ceil(len), Mth.ceil(halfThickness), color);
+		pose.popMatrix();
 	}
 
 	private void drawArrow(float startX, float startY, float endX, float endY, float size, int color) {
@@ -163,8 +161,8 @@ public class ConnectionBatchedRenderer {
 
 		for (int row = startRow; row < endRow; row++) {
 			float scanY = row + 0.5f;
-			float minX = Float.MAX_VALUE;
-			float maxX = Float.MIN_VALUE;
+			float minX = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
 
 			for (int[] edge : edges) {
 				float ey1 = ys[edge[0]];
@@ -205,8 +203,8 @@ public class ConnectionBatchedRenderer {
 
 		for (int row = startRow; row < endRow; row++) {
 			float scanY = row + 0.5f;
-			float minX = Float.MAX_VALUE;
-			float maxX = Float.MIN_VALUE;
+			float minX = Float.POSITIVE_INFINITY;
+			float maxX = Float.NEGATIVE_INFINITY;
 
 			for (int[] edge : edges) {
 				float ey1 = ys[edge[0]];

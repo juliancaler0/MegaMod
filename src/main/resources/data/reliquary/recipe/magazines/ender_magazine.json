@@ -6,12 +6,8 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "reliquary:bullets/ender_bullet"
-    },
-    "M": {
-      "item": "reliquary:empty_magazine"
-    }
+    "B": "reliquary:bullets/ender_bullet",
+    "M": "reliquary:magazines/empty_magazine"
   },
   "result": {
     "id": "reliquary:magazines/ender_magazine",

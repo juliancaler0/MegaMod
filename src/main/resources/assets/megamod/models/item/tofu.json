@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/tofu"
+    "layer0": "megamod:item/tofu",
+    "particle": "megamod:item/tofu"
   }
 }

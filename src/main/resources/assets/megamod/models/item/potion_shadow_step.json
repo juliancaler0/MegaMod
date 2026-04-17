@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_shadow_step" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_shadow_step",
+ "particle": "megamod:item/potion_shadow_step" } }

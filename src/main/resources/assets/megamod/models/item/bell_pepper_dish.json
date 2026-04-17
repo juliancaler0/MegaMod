@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/bell_pepper_dish"
+    "layer0": "megamod:item/bell_pepper_dish",
+    "particle": "megamod:item/bell_pepper_dish"
   }
 }

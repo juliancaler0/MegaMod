@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/medium_staff",
   "textures": {
-    "layer0": "megamod:item/staff_ruby_fire"
+    "layer0": "megamod:item/staff_ruby_fire",
+    "particle": "megamod:item/staff_ruby_fire"
   }
 }

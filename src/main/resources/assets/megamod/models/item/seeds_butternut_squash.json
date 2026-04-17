@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/seeds_butternut_squash"
+    "layer0": "megamod:item/seeds_butternut_squash",
+    "particle": "megamod:item/seeds_butternut_squash"
   }
 }

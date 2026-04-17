@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/arrow_quiver"
+    "layer0": "megamod:item/arrow_quiver",
+    "particle": "megamod:item/arrow_quiver"
   }
 }

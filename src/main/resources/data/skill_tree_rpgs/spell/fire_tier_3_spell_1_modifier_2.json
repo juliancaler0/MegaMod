@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 0.0,
   "tier": 1,
   "tooltip": {
@@ -11,7 +11,7 @@
       {
         "type": "SPELL_AREA_IMPACT",
         "spell": {
-          "id": "wizards:fire_meteor"
+          "id": "megamod:fire_meteor"
         }
       }
     ]

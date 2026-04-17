@@ -6,22 +6,22 @@
   "mixins": [
     "AbstractCriterionMixin",
     "BlockMixin",
-    "BooleanRuleInvoker",
     "ConsumeItemCriterionMixin",
     "CraftingResultSlotMixin",
     "DamageSourceMixin",
     "EnchantedItemCriterionMixin",
     "FishingRodHookedCriterionMixin",
     "FurnaceOutputSlotMixin",
-    "GameRulesInvoker",
     "ItemStackMixin",
     "LivingEntityMixin",
     "PlayerEntityMixin",
     "ServerPlayerEntityMixin",
-    "WorldChunkMixin"
+    "WorldChunkMixin",
+    "ModListMixin"
   ],
   "client": [
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "GlRenderPassMixin"
   ],
   "injectors": {
     "defaultRequire": 1

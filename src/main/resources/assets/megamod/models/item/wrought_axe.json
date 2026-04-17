@@ -1,1 +1,2 @@
-{"parent":"megamod:item/base/handheld_64","textures":{"layer0":"megamod:item/wrought_axe"}}
+{"parent":"megamod:item/base/handheld_64","textures":{"layer0":"megamod:item/wrought_axe",
+"particle": "megamod:item/wrought_axe"}}

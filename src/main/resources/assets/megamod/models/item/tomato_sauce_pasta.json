@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/tomato_sauce_pasta"
+    "layer0": "megamod:item/tomato_sauce_pasta",
+    "particle": "megamod:item/tomato_sauce_pasta"
   }
 }

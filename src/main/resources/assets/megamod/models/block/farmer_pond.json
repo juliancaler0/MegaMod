@@ -8,7 +8,8 @@
 		256
 	],
 	"textures": {
-		"4": "megamod:block/farmer_pond"
+		"4": "megamod:block/farmer_pond",
+		"particle": "#4"
 	},
 	"elements": [
 		{

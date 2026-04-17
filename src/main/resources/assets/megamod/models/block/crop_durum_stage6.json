@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "megamod:block/crop_durum"
+    "crop": "megamod:block/crop_durum",
+    "particle": "megamod:block/crop_durum"
   }
 }

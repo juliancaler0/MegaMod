@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"2": "megamod:block/craft_enchanting_shelf"
+		"2": "megamod:block/craft_enchanting_shelf",
+		"particle": "#2"
 	},
 	"elements": [
 		{

@@ -7,12 +7,8 @@
     "GGG"
   ],
   "key": {
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    }
+    "E": "#c:ender_pearls",
+    "G": "#c:ingots/gold"
   },
   "result": {
     "id": "reliquary:nebulous_heart",

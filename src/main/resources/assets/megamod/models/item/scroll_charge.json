@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_charge"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/scroll_charge",
+"particle": "megamod:item/scroll_charge"}}

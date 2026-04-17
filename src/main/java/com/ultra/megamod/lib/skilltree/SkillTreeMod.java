@@ -17,8 +17,8 @@ public class SkillTreeMod {
         ConditionalAttributeReward.register();
     }
 
-    public static void registerSounds() {
-        SkillSounds.register();
+    public static void registerSounds(net.neoforged.bus.api.IEventBus modEventBus) {
+        SkillSounds.register(modEventBus);
     }
 
     public static void registerItems(net.neoforged.bus.api.IEventBus modEventBus) {

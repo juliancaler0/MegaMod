@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hose_spill"
+    "layer0": "megamod:item/hose_spill",
+    "particle": "megamod:item/hose_spill"
   }
 }

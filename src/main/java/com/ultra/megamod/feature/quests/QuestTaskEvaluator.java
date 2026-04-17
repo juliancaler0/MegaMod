@@ -43,8 +43,8 @@ public class QuestTaskEvaluator {
                     EconomyManager eco = EconomyManager.get(level);
                     yield eco.getWallet(uuid) + eco.getBank(uuid);
                 }
-                case SKILL_LEVEL -> 0; // TODO: Reconnect with Pufferfish Skills API (was evaluateSkillLevel)
-                case UNLOCK_SKILL_NODE -> 0; // TODO: Reconnect with Pufferfish Skills API (was SkillManager.isNodeUnlocked)
+                case SKILL_LEVEL -> evaluateSkillLevel(player, task.targetId());
+                case UNLOCK_SKILL_NODE -> evaluateUnlockSkillNode(player, task.targetId());
                 case DUNGEON_CLEAR -> evaluateDungeonClear(uuid, task.targetId(), level);
                 case MOB_KILLS -> PlayerStatistics.get(level).getStat(uuid, "mobKills");
                 case BLOCKS_BROKEN -> PlayerStatistics.get(level).getStat(uuid, "blocksBroken");
@@ -94,7 +94,53 @@ public class QuestTaskEvaluator {
 
     // ─── Skill level evaluation ───
 
-    // evaluateSkillLevel removed — TODO: Reconnect with Pufferfish Skills API
+    /// targetId conventions (same rules as the other skill payloads):
+    ///   "ANY" → max level across every Pufferfish category
+    ///   "ALL" → min level across every Pufferfish category
+    ///   "<category-id>" or legacy "COMBAT"/"ARCANE"/etc. → that specific category
+    private static int evaluateSkillLevel(ServerPlayer player, String targetId) {
+        var cats = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds();
+        if ("ANY".equals(targetId) || "ALL".equals(targetId)) {
+            int best = "ANY".equals(targetId) ? 0 : Integer.MAX_VALUE;
+            for (var catId : cats) {
+                int lvl = com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId)
+                        .flatMap(c -> c.getExperience())
+                        .map(exp -> exp.getLevel(player))
+                        .orElse(0);
+                best = "ANY".equals(targetId) ? Math.max(best, lvl) : Math.min(best, lvl);
+            }
+            return best == Integer.MAX_VALUE ? 0 : best;
+        }
+        var catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(targetId);
+        return com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId)
+                .flatMap(c -> c.getExperience())
+                .map(exp -> exp.getLevel(player))
+                .orElse(0);
+    }
+
+    /// targetId is "<category>/<skill-id>" — returns 1 if that node is unlocked, 0 otherwise.
+    /// Plain skill id is accepted and searched across all categories.
+    private static int evaluateUnlockSkillNode(ServerPlayer player, String targetId) {
+        String skillId = targetId;
+        net.minecraft.resources.Identifier catHint = null;
+        int slash = targetId.indexOf('/');
+        if (slash > 0) {
+            catHint = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(targetId.substring(0, slash));
+            skillId = targetId.substring(slash + 1);
+        }
+        var cats = catHint != null
+                ? new net.minecraft.resources.Identifier[] { catHint }
+                : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds();
+        for (var catId : cats) {
+            var cat = com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId);
+            if (cat.isEmpty()) continue;
+            final String needle = skillId;
+            if (cat.get().streamUnlockedSkills(player).anyMatch(sk -> sk.getId().equals(needle))) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 
     // ─── Dungeon clear evaluation ───
 

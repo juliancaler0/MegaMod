@@ -6,6 +6,6 @@
   "group": "disassemble",
   "ingredient": "megamod:berserker_armor_head",
   "result": {
-    "id": "minecraft:chain"
+    "id": "minecraft:iron_chain"
   }
 }

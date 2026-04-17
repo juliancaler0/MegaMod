@@ -1,11 +1,11 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 0.0,
   "tier": 1,
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "wizards:fire_wall",
+      "spell_pattern": "megamod:fire_wall",
       "additional_placements": [
         {
           "delay_ticks": 4,

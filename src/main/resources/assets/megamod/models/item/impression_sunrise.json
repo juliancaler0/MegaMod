@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/impression_sunrise"
+    "layer0": "megamod:item/impression_sunrise",
+    "particle": "megamod:item/impression_sunrise"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/broadway_boogie_woogie"
+    "layer0": "megamod:item/broadway_boogie_woogie",
+    "particle": "megamod:item/broadway_boogie_woogie"
   }
 }

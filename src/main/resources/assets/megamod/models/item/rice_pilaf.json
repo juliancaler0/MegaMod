@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/rice_pilaf"
+    "layer0": "megamod:item/rice_pilaf",
+    "particle": "megamod:item/rice_pilaf"
   }
 }

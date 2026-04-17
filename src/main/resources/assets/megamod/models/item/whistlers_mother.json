@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/whistlers_mother"
+    "layer0": "megamod:item/whistlers_mother",
+    "particle": "megamod:item/whistlers_mother"
   }
 }

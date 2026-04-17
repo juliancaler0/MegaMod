@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/emberstone_band"
+    "layer0": "megamod:item/emberstone_band",
+    "particle": "megamod:item/emberstone_band"
   }
 }

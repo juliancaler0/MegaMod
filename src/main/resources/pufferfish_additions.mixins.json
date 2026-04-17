@@ -1,0 +1,18 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_21",
+  "package": "com.ultra.megamod.mixin.pufferfish_additions",
+  "plugin": "com.ultra.megamod.mixin.pufferfish_additions.ApplyMixinPlugin",
+  "refmap": "pufferfish_additions.refmap.json",
+  "mixins": [
+    "LivingEntityMixin",
+    "LootTableMixin",
+    "MobEffectInstanceMixin",
+    "PowderSnowBlockMixin",
+    "puffish_skills.BuiltinJsonAccess"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/crop",
   "textures": {
-    "crop": "megamod:block/crop_chickpea"
+    "crop": "megamod:block/crop_chickpea",
+    "particle": "megamod:block/crop_chickpea"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/girl_pearl_earring"
+    "layer0": "megamod:item/girl_pearl_earring",
+    "particle": "megamod:item/girl_pearl_earring"
   }
 }

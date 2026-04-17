@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/park_picnictable_nappe"
+		"3": "megamod:block/park_picnictable_nappe",
+		"particle": "#3"
 	},
 	"elements": [
 		{

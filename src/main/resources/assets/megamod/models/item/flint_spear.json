@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/spear_28",
   "textures": {
-    "layer0": "megamod:item/flint_spear"
+    "layer0": "megamod:item/flint_spear",
+    "particle": "megamod:item/flint_spear"
   }
 }

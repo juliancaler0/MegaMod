@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/composition_viii"
+    "layer0": "megamod:item/composition_viii",
+    "particle": "megamod:item/composition_viii"
   }
 }

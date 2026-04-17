@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/ossukage_sword"
+    "layer0": "megamod:item/ossukage_sword",
+    "particle": "megamod:item/ossukage_sword"
   }
 }

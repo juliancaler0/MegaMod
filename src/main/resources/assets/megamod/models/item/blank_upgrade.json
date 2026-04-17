@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/blank_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/blank_upgrade",
+"particle": "megamod:item/blank_upgrade"}}

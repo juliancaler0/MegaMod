@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/muffin"
+    "layer0": "megamod:item/muffin",
+    "particle": "megamod:item/muffin"
   }
 }

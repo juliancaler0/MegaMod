@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/craft_paint_buckets"
+		"2": "megamod:block/craft_paint_buckets",
+		"particle": "#2"
 	},
 	"elements": [
 		{

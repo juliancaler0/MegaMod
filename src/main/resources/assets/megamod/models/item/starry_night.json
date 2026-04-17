@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/starry_night"
+    "layer0": "megamod:item/starry_night",
+    "particle": "megamod:item/starry_night"
   }
 }

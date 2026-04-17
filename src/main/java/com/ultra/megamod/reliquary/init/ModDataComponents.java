@@ -23,7 +23,10 @@ import java.util.function.Supplier;
 public class ModDataComponents {
 	private static final DeferredRegister<DataComponentType<?>> DATA_COMPONENT_TYPES = DeferredRegister.create(BuiltInRegistries.DATA_COMPONENT_TYPE, Reliquary.MOD_ID);
 
-	public static final Supplier<DataComponentType<Identifier>> ENTITY_NAME = DATA_COMPONENT_TYPES.register("entity_name",
+	// Ported recipe JSONs reference this as `reliquary:entity_registry_name`; keep that id so
+	// the mob_charm_fragments/* recipes (gated behind reliquary:charm_enabled) can resolve
+	// their result components without touching every JSON.
+	public static final Supplier<DataComponentType<Identifier>> ENTITY_NAME = DATA_COMPONENT_TYPES.register("entity_registry_name",
 			() -> new DataComponentType.Builder<Identifier>().persistent(Identifier.CODEC).networkSynchronized(Identifier.STREAM_CODEC).build()
 	);
 

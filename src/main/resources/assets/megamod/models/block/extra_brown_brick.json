@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/extra_brown_brick"
+    "all": "megamod:block/extra_brown_brick",
+    "particle": "megamod:block/extra_brown_brick"
   }
 }

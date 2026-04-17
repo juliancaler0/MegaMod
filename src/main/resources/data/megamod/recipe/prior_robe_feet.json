@@ -3,9 +3,7 @@
   "category": "equipment",
   "key": {
     "G": "minecraft:gold_ingot",
-    "W": {
-      "tag": "minecraft:wool"
-    }
+    "W": "#minecraft:wool"
   },
   "pattern": [
     "G G",

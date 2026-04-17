@@ -1,0 +1,84 @@
+{
+  "values": [
+    {
+      "id": "relics_rpgs:jewel_figurine_sapphire",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:jewel_figurine_tanzanite",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:jewel_figurine_citrine",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_evasion",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:jewel_figurine_topaz",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_proc_spell_crit",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_proc_arcane_fire",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:jewel_figurine_ruby",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_melee_crit_chance",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_melee_crit_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_dex",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_spell_haste",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_spell_power",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_proc_crit_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_proc_frost_healing",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_roll",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:jewel_figurine_jade",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_ranged",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:lesser_use_health",
+      "required": false
+    }
+  ]
+}

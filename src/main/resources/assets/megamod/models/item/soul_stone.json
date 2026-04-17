@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/soul_stone"
+    "layer0": "megamod:item/soul_stone",
+    "particle": "megamod:item/soul_stone"
   }
 }

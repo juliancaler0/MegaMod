@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"3": "megamod:block/farmer_corn"
+		"3": "megamod:block/farmer_corn",
+		"particle": "#3"
 	},
 	"elements": [
 		{

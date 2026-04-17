@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/unique_staff_damage_8"
+    "layer0": "megamod:item/unique_staff_damage_8",
+    "particle": "megamod:item/unique_staff_damage_8"
   }
 }

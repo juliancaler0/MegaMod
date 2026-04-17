@@ -12,15 +12,9 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:withered_rib"
-    },
-    "S": {
-      "item": "minecraft:bone"
-    },
-    "T": {
-      "item": "minecraft:wither_skeleton_skull"
-    }
+    "P": "reliquary:withered_rib",
+    "S": "minecraft:bone",
+    "T": "minecraft:wither_skeleton_skull"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

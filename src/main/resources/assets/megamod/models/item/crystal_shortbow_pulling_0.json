@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/crystal_shortbow",
   "textures": {
-    "layer0": "megamod:item/crystal_shortbow_pulling_0"
+    "layer0": "megamod:item/crystal_shortbow_pulling_0",
+    "particle": "megamod:item/crystal_shortbow_pulling_0"
   }
 }

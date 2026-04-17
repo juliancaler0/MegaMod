@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/dart_ammo"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/dart_ammo",
+"particle": "megamod:item/dart_ammo"}}

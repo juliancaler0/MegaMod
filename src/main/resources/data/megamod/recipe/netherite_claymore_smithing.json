@@ -1,15 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:diamond_claymore"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:diamond_claymore",
   "result": {
     "id": "megamod:netherite_claymore"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

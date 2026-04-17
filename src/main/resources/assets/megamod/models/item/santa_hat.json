@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/santa_hat"
+    "layer0": "megamod:item/santa_hat",
+    "particle": "megamod:item/santa_hat"
   }
 }

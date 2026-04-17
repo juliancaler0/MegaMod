@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/unique_dagger_1"
+    "layer0": "megamod:item/unique_dagger_1",
+    "particle": "megamod:item/unique_dagger_1"
   }
 }

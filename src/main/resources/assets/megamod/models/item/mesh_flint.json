@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/mesh_flint"
+    "layer0": "megamod:item/mesh_flint",
+    "particle": "megamod:item/mesh_flint"
   }
 }

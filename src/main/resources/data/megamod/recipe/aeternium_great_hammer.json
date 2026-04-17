@@ -18,12 +18,8 @@
   "key": {
     "B": "betterend:aeternium_ingot",
     "H": [
-      {
-        "tag": "c:wood_sticks"
-      },
-      {
-        "item": "minecraft:stick"
-      }
+      "#c:wood_sticks",
+      "minecraft:stick"
     ]
   },
   "pattern": [

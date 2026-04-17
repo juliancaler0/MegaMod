@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/corn"
+    "layer0": "megamod:item/crops/corn",
+    "particle": "megamod:item/crops/corn"
   }
 }

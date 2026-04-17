@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "relics_rpgs:superior_use_zone_healing_taken",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:superior_use_area_attack_damage",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:superior_use_area_defense_health",
+      "required": false
+    },
+    {
+      "id": "relics_rpgs:superior_use_zone_spell_power",
+      "required": false
+    }
+  ]
+}

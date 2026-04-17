@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sunflowers"
+    "layer0": "megamod:item/sunflowers",
+    "particle": "megamod:item/sunflowers"
   }
 }

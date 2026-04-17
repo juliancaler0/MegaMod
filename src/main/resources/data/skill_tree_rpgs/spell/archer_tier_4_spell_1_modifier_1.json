@@ -12,7 +12,7 @@
         "type": "SPELL_CAST",
         "chance": 0.4,
         "spell": {
-          "id": "archers:magic_arrow"
+          "id": "megamod:magic_arrow"
         }
       }
     ]
@@ -24,7 +24,7 @@
         "apply_to_caster": true,
         "cooldown": {
           "actives": {
-            "id": "archers:magic_arrow",
+            "id": "megamod:magic_arrow",
             "duration_multiplier": 0.0
           }
         }

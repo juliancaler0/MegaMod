@@ -20,7 +20,6 @@ import com.ultra.megamod.feature.dungeons.items.DungeonKeyRegistry;
 import com.ultra.megamod.feature.museum.MuseumRegistry;
 import com.ultra.megamod.feature.relics.RelicRegistry;
 import com.ultra.megamod.feature.economy.network.AtmNetwork;
-import com.ultra.megamod.feature.relics.network.RelicNetwork;
 import com.ultra.megamod.feature.villagerrefresh.VillagerTradeRefresh;
 import com.ultra.megamod.feature.furniture.FurnitureRegistry;
 import com.ultra.megamod.feature.dungeons.generation.DNLBlockRegistry;
@@ -58,7 +57,7 @@ public class MegaMod {
         MuseumRegistry.init(modEventBus);
         RelicRegistry.init(modEventBus);
         com.ultra.megamod.feature.relics.effect.RelicEffectRegistry.init(modEventBus);
-        com.ultra.megamod.feature.relics.entity.RelicEntityRegistry.init(modEventBus);
+        // Custom relic entity registry scrapped (task #52) — re-port later
         MegaModAttributes.init(modEventBus);
         DimensionRegistry.init(modEventBus);
         DungeonRegistry.init(modEventBus);
@@ -82,7 +81,7 @@ public class MegaMod {
         com.ultra.megamod.feature.loot.LootModifierRegistry.init(modEventBus);
         com.ultra.megamod.feature.marketplace.MarketplaceRegistry.init(modEventBus);
         modEventBus.addListener(AtmNetwork::registerPayloads);
-        modEventBus.addListener(RelicNetwork::registerPayloads);
+        // RelicNetwork scrapped (task #52)
         // SkillNetwork removed — Pufferfish Skills system is wired via NeoForgeMain
         modEventBus.addListener(CitizenNetwork::registerPayloads);
         modEventBus.addListener(RequestNetwork::registerPayloads);
@@ -105,11 +104,14 @@ public class MegaMod {
         // Initialize ported RPG combat libraries
         com.ultra.megamod.lib.accessories.neoforge.AccessoriesForge.init(modEventBus);
         com.ultra.megamod.lib.spellpower.SpellPowerMod.init(modEventBus);
+        com.ultra.megamod.lib.puffish_attributes.neoforge.AttributesForge.init(modEventBus);
         com.ultra.megamod.lib.rangedweapon.RangedWeaponMod.init();
         com.ultra.megamod.lib.rangedweapon.RangedWeaponEvents.register();
         com.ultra.megamod.lib.azurelib.NeoForgeAzureLibMod.register(modEventBus);
         com.ultra.megamod.feature.combat.paladins.PaladinsMod.init(modEventBus);
         com.ultra.megamod.feature.combat.wizards.WizardsMod.init(modEventBus);
+        // NamespaceAliases removed — definitions.json is now remapped to use megamod: namespace
+        // directly, so alias items are no longer needed.
 
         com.ultra.megamod.feature.combat.spell.CombatEntityRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.init(modEventBus);
@@ -168,6 +170,28 @@ public class MegaMod {
         // Uses "reliquary" namespace for IDs so the copied asset/data tree resolves
         // without rewriting 400+ JSON references.
         com.ultra.megamod.reliquary.Reliquary.initCommon(modEventBus, modContainer);
+
+        // Pufferfish Skills framework server-side init. Must run BEFORE SkillTreeMod so
+        // that SpellContainerReward / ConditionalAttributeReward can register with SkillsAPI.
+        // Registers the SkillsMod singleton, server event listeners (config loading on server
+        // start), packet handlers, commands, and argument types.
+        new com.ultra.megamod.lib.pufferfish_skills.main.NeoForgeMain(
+                modEventBus, net.neoforged.fml.loading.FMLEnvironment.getDist());
+
+        // pufferfish_unofficial_additions port — registers custom experience sources
+        // (harvest_crops, fishing, spell_casting [Iron's Spellbooks only]), the "effect"
+        // reward type, and the StringCondition operation. Must run after the Pufferfish
+        // Skills framework init so SkillsAPI registries exist.
+        com.ultra.megamod.lib.pufferfish_additions.PufferfishAdditionsMod.init(modEventBus);
+
+        // Pufferfish Skills / skill_tree_rpgs port — registers the Orb of Oblivion
+        // respec item, skill reward node types, skill status effects, and sounds
+        // used by the skill tree. Items land under the "skill_tree_rpgs" namespace
+        // so the ported recipe/advancement JSONs resolve without rewriting.
+        com.ultra.megamod.lib.skilltree.SkillTreeMod.init();
+        com.ultra.megamod.lib.skilltree.SkillTreeMod.registerItems(modEventBus);
+        com.ultra.megamod.lib.skilltree.SkillTreeMod.registerSounds(modEventBus);
+        com.ultra.megamod.lib.skilltree.SkillTreeMod.registerEffects();
 
         LOGGER.info("MegaMod loading - all systems enabled");
     }

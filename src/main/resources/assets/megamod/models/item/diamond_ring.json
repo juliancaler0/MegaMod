@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/diamond_ring"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/diamond_ring",
+"particle": "megamod:item/diamond_ring"}}

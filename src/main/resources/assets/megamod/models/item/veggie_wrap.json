@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/veggie_wrap"
+    "layer0": "megamod:item/veggie_wrap",
+    "particle": "megamod:item/veggie_wrap"
   }
 }

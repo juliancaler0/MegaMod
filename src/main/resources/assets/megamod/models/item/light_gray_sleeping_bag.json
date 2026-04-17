@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/light_gray_sleeping_bag"
+    "layer0": "megamod:item/light_gray_sleeping_bag",
+    "particle": "megamod:item/light_gray_sleeping_bag"
   }
 }

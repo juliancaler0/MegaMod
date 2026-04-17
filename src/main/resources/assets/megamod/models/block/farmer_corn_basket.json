@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/farmer_corn_basket"
+		"3": "megamod:block/farmer_corn_basket",
+		"particle": "#3"
 	},
 	"elements": [
 		{

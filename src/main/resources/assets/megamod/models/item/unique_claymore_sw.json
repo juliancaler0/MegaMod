@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/claymore_32",
   "textures": {
-    "layer0": "megamod:item/unique_claymore_sw"
+    "layer0": "megamod:item/unique_claymore_sw",
+    "particle": "megamod:item/unique_claymore_sw"
   }
 }

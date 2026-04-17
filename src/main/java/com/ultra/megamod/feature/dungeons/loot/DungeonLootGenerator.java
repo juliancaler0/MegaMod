@@ -32,7 +32,6 @@ import com.ultra.megamod.feature.dungeons.loot.DungeonChestLoot;
 import com.ultra.megamod.feature.dungeons.loot.DungeonExclusiveItems;
 import com.ultra.megamod.feature.dungeons.loot.LootModifier;
 import com.ultra.megamod.feature.dungeons.loot.LootQuality;
-import com.ultra.megamod.feature.relics.RelicRegistry;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -114,39 +113,12 @@ public class DungeonLootGenerator {
             list.addAll(List.of(Items.IRON_SWORD, Items.IRON_AXE, Items.IRON_SHOVEL,
                 Items.IRON_HELMET, Items.IRON_CHESTPLATE, Items.IRON_LEGGINGS, Items.IRON_BOOTS,
                 Items.BOW, Items.CROSSBOW, Items.SHIELD));
-            // Core RPG weapons (lower power)
-            list.addAll(List.of(
-                RelicRegistry.BRIARTHORN.get(), RelicRegistry.VAMPIRIC_TOME.get(),
-                RelicRegistry.WHISPERWIND.get(), RelicRegistry.BATTLEDANCER.get()));
-            // Accessory relics (common tier)
-            list.addAll(List.of(
-                RelicRegistry.LEATHER_BELT.get(), RelicRegistry.WOOL_MITTEN.get(),
-                RelicRegistry.ARROW_QUIVER.get(), RelicRegistry.ICE_SKATES.get(),
-                RelicRegistry.ROLLER_SKATES.get(), RelicRegistry.IRON_FIST.get(),
-                RelicRegistry.CHORUS_INHIBITOR.get(), RelicRegistry.BASTION_RING.get(),
-                RelicRegistry.LODESTONE_MAGNET.get()));
-            // Usable relics (common tier)
-            list.addAll(List.of(
-                RelicRegistry.HORSE_FLUTE.get(), RelicRegistry.INFINITY_HAM.get(),
-                RelicRegistry.SPORE_SACK.get()));
             // Dungeon Chainmail armor (Normal tier)
             list.addAll(List.of(
                 DungeonExclusiveItems.DUNGEON_CHAINMAIL_HELMET.get(),
                 DungeonExclusiveItems.DUNGEON_CHAINMAIL_CHESTPLATE.get(),
                 DungeonExclusiveItems.DUNGEON_CHAINMAIL_LEGGINGS.get(),
                 DungeonExclusiveItems.DUNGEON_CHAINMAIL_BOOTS.get()));
-            // Tier 1 arsenal weapons
-            list.addAll(List.of(
-                RelicRegistry.UNIQUE_DAGGER_1.get(), RelicRegistry.UNIQUE_MACE_1.get(),
-                RelicRegistry.UNIQUE_SPEAR_1.get(), RelicRegistry.UNIQUE_SICKLE_1.get(),
-                RelicRegistry.UNIQUE_LONGSWORD_1.get(), RelicRegistry.UNIQUE_LONGBOW_1.get(),
-                RelicRegistry.UNIQUE_HEAVY_CROSSBOW_1.get(), RelicRegistry.UNIQUE_SHIELD_1.get(),
-                RelicRegistry.UNIQUE_WHIP_1.get(), RelicRegistry.UNIQUE_WAND_1.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_1.get(), RelicRegistry.UNIQUE_STAFF_HEAL_1.get(),
-                RelicRegistry.UNIQUE_THROWING_AXE_1.get(), RelicRegistry.UNIQUE_GLAIVE_1.get(),
-                RelicRegistry.UNIQUE_DOUBLE_AXE_1.get(), RelicRegistry.UNIQUE_CLAYMORE_1.get(),
-                RelicRegistry.UNIQUE_HAMMER_1.get(), RelicRegistry.UNIQUE_KATANA_1.get(),
-                RelicRegistry.UNIQUE_RAPIER_1.get(), RelicRegistry.UNIQUE_GREATSHIELD_1.get()));
             // Class tier weapons (T0-T1)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.getNormalTierItems());
             // T1 class armor
@@ -170,43 +142,12 @@ public class DungeonLootGenerator {
             // Vanilla: add diamond
             list.addAll(List.of(Items.DIAMOND_SWORD, Items.DIAMOND_AXE,
                 Items.DIAMOND_HELMET, Items.DIAMOND_CHESTPLATE, Items.DIAMOND_LEGGINGS, Items.DIAMOND_BOOTS));
-            // Core RPG weapons (mid power)
-            list.addAll(List.of(
-                RelicRegistry.STATIC_SEEKER.get(), RelicRegistry.EBONCHILL.get(),
-                RelicRegistry.LIGHTBINDER.get(), RelicRegistry.STORMFURY.get(),
-                RelicRegistry.GHOST_FANG.get(), RelicRegistry.SOULCHAIN.get()));
-            // Accessory relics (uncommon tier)
-            list.addAll(List.of(
-                RelicRegistry.ELYTRA_BOOSTER.get(), RelicRegistry.DROWNED_BELT.get(),
-                RelicRegistry.HUNTER_BELT.get(), RelicRegistry.ENDER_HAND.get(),
-                RelicRegistry.RAGE_GLOVE.get(), RelicRegistry.AQUA_WALKER.get(),
-                RelicRegistry.AMPHIBIAN_BOOT.get(), RelicRegistry.JELLYFISH_NECKLACE.get(),
-                RelicRegistry.REFLECTION_NECKLACE.get(), RelicRegistry.STORMBAND.get(),
-                RelicRegistry.VERDANT_SIGNET.get(), RelicRegistry.VERDANT_MASK.get(),
-                RelicRegistry.SANDWALKER_TREADS.get(), RelicRegistry.EMBERSTONE_BAND.get()));
-            // Usable relics (uncommon tier)
-            list.addAll(List.of(
-                RelicRegistry.SHADOW_GLAIVE.get(), RelicRegistry.MAGIC_MIRROR.get(),
-                RelicRegistry.BLAZING_FLASK.get(), RelicRegistry.SPACE_DISSECTOR.get()));
             // Dungeon Iron armor (Hard tier)
             list.addAll(List.of(
                 DungeonExclusiveItems.DUNGEON_IRON_HELMET.get(),
                 DungeonExclusiveItems.DUNGEON_IRON_CHESTPLATE.get(),
                 DungeonExclusiveItems.DUNGEON_IRON_LEGGINGS.get(),
                 DungeonExclusiveItems.DUNGEON_IRON_BOOTS.get()));
-            // Tier 2 arsenal weapons
-            list.addAll(List.of(
-                RelicRegistry.UNIQUE_DAGGER_2.get(), RelicRegistry.UNIQUE_MACE_2.get(),
-                RelicRegistry.UNIQUE_SPEAR_2.get(), RelicRegistry.UNIQUE_SICKLE_2.get(),
-                RelicRegistry.UNIQUE_LONGSWORD_2.get(), RelicRegistry.UNIQUE_LONGBOW_2.get(),
-                RelicRegistry.UNIQUE_HEAVY_CROSSBOW_2.get(), RelicRegistry.UNIQUE_SHIELD_2.get(),
-                RelicRegistry.UNIQUE_WHIP_2.get(), RelicRegistry.UNIQUE_WAND_2.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_2.get(), RelicRegistry.UNIQUE_STAFF_HEAL_2.get(),
-                RelicRegistry.UNIQUE_THROWING_AXE_2.get(), RelicRegistry.UNIQUE_GLAIVE_2.get(),
-                RelicRegistry.UNIQUE_DOUBLE_AXE_2.get(), RelicRegistry.UNIQUE_CLAYMORE_2.get(),
-                RelicRegistry.UNIQUE_HAMMER_2.get(), RelicRegistry.UNIQUE_KATANA_2.get(),
-                RelicRegistry.UNIQUE_RAPIER_2.get(), RelicRegistry.UNIQUE_GREATSHIELD_2.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_3.get(), RelicRegistry.UNIQUE_STAFF_DAMAGE_4.get()));
             // Class tier weapons (T2 diamond)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.getHardTierItems());
             // T2 class armor
@@ -227,44 +168,12 @@ public class DungeonLootGenerator {
             List<Item> list = new ArrayList<>(getHardItems());
             // Vanilla: add trident
             list.add(Items.TRIDENT);
-            // Core RPG weapons (high power)
-            list.addAll(List.of(
-                RelicRegistry.CRESCENT_BLADE.get(), RelicRegistry.TERRA_WARHAMMER.get(),
-                RelicRegistry.SOLARIS.get(), RelicRegistry.ABYSSAL_TRIDENT.get()));
-            // Accessory relics (rare tier)
-            list.addAll(List.of(
-                RelicRegistry.MIDNIGHT_ROBE.get(), RelicRegistry.PHOENIX_MANTLE.get(),
-                RelicRegistry.WINDRUNNER_CLOAK.get(), RelicRegistry.MAGMA_WALKER.get(),
-                RelicRegistry.ICE_BREAKER.get(), RelicRegistry.STORMSTRIDER_BOOTS.get(),
-                RelicRegistry.HOLY_LOCKET.get(), RelicRegistry.FROSTFIRE_PENDANT.get(),
-                RelicRegistry.THORNWEAVE_GLOVE.get(), RelicRegistry.CHRONO_GLOVE.get(),
-                RelicRegistry.ARCANE_GAUNTLET.get(), RelicRegistry.SUNFORGED_BRACER.get(),
-                RelicRegistry.LUNAR_CROWN.get(), RelicRegistry.SOLAR_CROWN.get(),
-                RelicRegistry.GRAVESTONE_RING.get(), RelicRegistry.WARDENS_VISOR.get()));
-            // Usable relics (rare tier)
-            list.addAll(List.of(
-                RelicRegistry.VOID_LANTERN.get(), RelicRegistry.THUNDERHORN.get(),
-                RelicRegistry.MENDING_CHALICE.get()));
             // Dungeon Diamond armor (Nightmare tier)
             list.addAll(List.of(
                 DungeonExclusiveItems.DUNGEON_DIAMOND_HELMET.get(),
                 DungeonExclusiveItems.DUNGEON_DIAMOND_CHESTPLATE.get(),
                 DungeonExclusiveItems.DUNGEON_DIAMOND_LEGGINGS.get(),
                 DungeonExclusiveItems.DUNGEON_DIAMOND_BOOTS.get()));
-            // Tier 3 arsenal weapons
-            list.addAll(List.of(
-                RelicRegistry.UNIQUE_DAGGER_3.get(), RelicRegistry.UNIQUE_MACE_3.get(),
-                RelicRegistry.UNIQUE_SPEAR_3.get(), RelicRegistry.UNIQUE_SICKLE_3.get(),
-                RelicRegistry.UNIQUE_LONGBOW_3.get(), RelicRegistry.UNIQUE_HEAVY_CROSSBOW_3.get(),
-                RelicRegistry.UNIQUE_SHIELD_3.get(), RelicRegistry.UNIQUE_GLAIVE_3.get(),
-                RelicRegistry.UNIQUE_DOUBLE_AXE_3.get(), RelicRegistry.UNIQUE_CLAYMORE_3.get(),
-                RelicRegistry.UNIQUE_HAMMER_3.get(), RelicRegistry.UNIQUE_STAFF_HEAL_3.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_5.get(), RelicRegistry.UNIQUE_STAFF_DAMAGE_6.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_8.get(),
-                RelicRegistry.UNIQUE_LONGSWORD_3.get(), RelicRegistry.UNIQUE_WHIP_3.get(),
-                RelicRegistry.UNIQUE_WAND_3.get(), RelicRegistry.UNIQUE_KATANA_3.get(),
-                RelicRegistry.UNIQUE_GREATSHIELD_3.get(), RelicRegistry.UNIQUE_THROWING_AXE_3.get(),
-                RelicRegistry.UNIQUE_RAPIER_3.get()));
             // Class tier weapons (T3 netherite)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.getNightmareTierItems());
             // T3 class armor
@@ -284,35 +193,12 @@ public class DungeonLootGenerator {
             // Vanilla: add netherite
             list.addAll(List.of(Items.NETHERITE_SWORD, Items.NETHERITE_AXE,
                 Items.NETHERITE_HELMET, Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS));
-            // Core RPG weapons (top power)
-            list.addAll(List.of(
-                RelicRegistry.VOIDREAVER.get(), RelicRegistry.PYROCLAST.get()));
-            // Accessory relics (legendary tier — most powerful)
-            list.addAll(List.of(
-                RelicRegistry.ABYSSAL_CAPE.get(), RelicRegistry.ALCHEMISTS_SASH.get(),
-                RelicRegistry.GUARDIANS_GIRDLE.get(), RelicRegistry.SERPENT_BELT.get(),
-                RelicRegistry.PLAGUE_GRASP.get(), RelicRegistry.TIDEKEEPER_AMULET.get(),
-                RelicRegistry.BLOODSTONE_CHOKER.get(), RelicRegistry.STORMCALLER_CIRCLET.get(),
-                RelicRegistry.ASHEN_DIADEM.get(), RelicRegistry.WRAITH_CROWN.get(),
-                RelicRegistry.FROSTWEAVE_VEIL.get()));
             // Dungeon Netherite armor (Infernal tier)
             list.addAll(List.of(
                 DungeonExclusiveItems.DUNGEON_NETHERITE_HELMET.get(),
                 DungeonExclusiveItems.DUNGEON_NETHERITE_CHESTPLATE.get(),
                 DungeonExclusiveItems.DUNGEON_NETHERITE_LEGGINGS.get(),
                 DungeonExclusiveItems.DUNGEON_NETHERITE_BOOTS.get()));
-            // SW (special/legendary) arsenal weapons — only at Infernal
-            list.addAll(List.of(
-                RelicRegistry.UNIQUE_DAGGER_SW.get(), RelicRegistry.UNIQUE_MACE_SW.get(),
-                RelicRegistry.UNIQUE_SPEAR_SW.get(), RelicRegistry.UNIQUE_SICKLE_SW.get(),
-                RelicRegistry.UNIQUE_LONGSWORD_SW.get(), RelicRegistry.UNIQUE_LONGBOW_SW.get(),
-                RelicRegistry.UNIQUE_HEAVY_CROSSBOW_SW.get(), RelicRegistry.UNIQUE_SHIELD_SW.get(),
-                RelicRegistry.UNIQUE_WHIP_SW.get(), RelicRegistry.UNIQUE_WAND_SW.get(),
-                RelicRegistry.UNIQUE_STAFF_DAMAGE_SW.get(), RelicRegistry.UNIQUE_STAFF_HEAL_SW.get(),
-                RelicRegistry.UNIQUE_THROWING_AXE_SW.get(), RelicRegistry.UNIQUE_GLAIVE_SW.get(),
-                RelicRegistry.UNIQUE_DOUBLE_AXE_SW.get(), RelicRegistry.UNIQUE_CLAYMORE_SW.get(),
-                RelicRegistry.UNIQUE_HAMMER_SW.get(), RelicRegistry.UNIQUE_KATANA_SW.get(),
-                RelicRegistry.UNIQUE_RAPIER_SW.get(), RelicRegistry.UNIQUE_GREATSHIELD_SW.get()));
             // Unique jewelry (T4)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.JewelryRegistry.getUniqueItems());
             INFERNAL_ITEMS = Collections.unmodifiableList(list);
@@ -434,9 +320,6 @@ public class DungeonLootGenerator {
         com.ultra.megamod.feature.computer.network.handlers.DungeonAnalyticsHandler.recordLootDrop(quality.ordinal());
         int modCount = quality.getModifierCount();
         // Soka Singing Blade gets +2 bonus attribute slots
-        if (baseItem == RelicRegistry.SOKA_SINGING_BLADE.get()) {
-            modCount += 2;
-        }
         ArrayList<LootModifier> available = new ArrayList<LootModifier>(LootModifier.ALL_MODIFIERS);
         Collections.shuffle(available, new Random(random.nextLong()));
         EquipmentSlotGroup slotGroup = DungeonLootGenerator.getSlotGroupForItem(baseItem);
@@ -641,7 +524,6 @@ public class DungeonLootGenerator {
         if (tier == DungeonTier.ETERNAL) {
             float sokaChance = adminLootBoost ? 0.50f : 0.0021f;
             if (random.nextFloat() < sokaChance) {
-                return RelicRegistry.SOKA_SINGING_BLADE.get();
             }
         }
         // Weighted selection: favor current tier's exclusive items

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_blue_boy"
+    "layer0": "megamod:item/the_blue_boy",
+    "particle": "megamod:item/the_blue_boy"
   }
 }

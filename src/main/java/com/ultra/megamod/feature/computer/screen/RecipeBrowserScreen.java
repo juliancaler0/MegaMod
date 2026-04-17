@@ -5,7 +5,6 @@ import com.ultra.megamod.feature.dungeons.DungeonRegistry;
 import com.ultra.megamod.feature.dungeons.entity.DungeonEntityRegistry;
 import com.ultra.megamod.feature.dungeons.loot.DungeonExclusiveItems;
 import com.ultra.megamod.feature.museum.MuseumRegistry;
-import com.ultra.megamod.feature.relics.RelicRegistry;
 import com.ultra.megamod.feature.ui.UIHelper;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -96,11 +95,6 @@ public class RecipeBrowserScreen extends Screen {
                 Items.CRYING_OBSIDIAN, Items.GOLD_INGOT, Items.CRYING_OBSIDIAN,
                 Items.GOLD_INGOT, Items.NETHER_STAR, Items.GOLD_INGOT,
                 Items.CRYING_OBSIDIAN, Items.GOLD_INGOT, Items.CRYING_OBSIDIAN);
-
-        addShaped(RelicRegistry.RESEARCHING_TABLE_ITEM.get(), 1,
-                Items.LAPIS_LAZULI, Items.LAPIS_LAZULI, Items.LAPIS_LAZULI,
-                Items.OAK_PLANKS, Items.GOLD_INGOT, Items.OAK_PLANKS,
-                Items.OAK_PLANKS, Items.OAK_PLANKS, Items.OAK_PLANKS);
 
         // Shapeless arrows
         addShapeless(DungeonEntityRegistry.CERULEAN_ARROW_ITEM.get(), 4,

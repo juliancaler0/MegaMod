@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "paladins:battle_banner",
+      "spell_pattern": "megamod:battle_banner",
       "mutate_impacts": "APPEND",
       "impacts": [
         {

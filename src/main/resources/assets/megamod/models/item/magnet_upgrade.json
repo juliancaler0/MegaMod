@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/magnet_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/magnet_upgrade",
+"particle": "megamod:item/magnet_upgrade"}}

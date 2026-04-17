@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/soul_rune"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/soul_rune",
+"particle": "megamod:item/soul_rune"}}

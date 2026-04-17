@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_midas_touch" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/potion_midas_touch",
+ "particle": "megamod:item/potion_midas_touch" } }

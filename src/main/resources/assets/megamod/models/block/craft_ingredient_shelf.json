@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"4": "megamod:block/craft_ingredient_shelf"
+		"4": "megamod:block/craft_ingredient_shelf",
+		"particle": "#4"
 	},
 	"elements": [
 		{

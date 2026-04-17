@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "combat",
   "ingredients": [
-    {
-      "item": "minecraft:flint"
-    },
-    {
-      "tag": "c:nuggets/gold"
-    },
-    {
-      "tag": "c:nuggets/gold"
-    },
-    {
-      "tag": "c:gunpowders"
-    }
+    "minecraft:flint",
+    "#c:nuggets/gold",
+    "#c:nuggets/gold",
+    "#c:gunpowders"
   ],
   "result": {
     "id": "reliquary:bullets/neutral_bullet",

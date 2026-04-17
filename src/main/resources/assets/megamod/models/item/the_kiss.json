@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_kiss"
+    "layer0": "megamod:item/the_kiss",
+    "particle": "megamod:item/the_kiss"
   }
 }

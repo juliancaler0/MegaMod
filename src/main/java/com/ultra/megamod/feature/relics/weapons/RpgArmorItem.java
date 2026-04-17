@@ -35,17 +35,15 @@ public class RpgArmorItem extends Item {
         this.armorSlot = armorSlot;
     }
 
+    // Stat rolling disabled — source-parity attributes only (rolls come later).
     @Override
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-        if (!ArmorStatRoller.isArmorInitialized(stack)) {
-            ArmorStatRoller.rollAndApply(stack, baseArmor, baseToughness, armorSlot, level.random);
-        }
+        // no-op
     }
 
     @Override
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
-        ArmorStatRoller.appendArmorTooltip(stack, tooltip);
         appendSetBonusTooltip(stack, tooltip);
     }
 
@@ -97,10 +95,6 @@ public class RpgArmorItem extends Item {
 
     @Override
     public boolean isFoil(ItemStack stack) {
-        if (ArmorStatRoller.isArmorInitialized(stack)) {
-            WeaponRarity rarity = ArmorStatRoller.getRarity(stack);
-            return rarity == WeaponRarity.MYTHIC || rarity == WeaponRarity.LEGENDARY;
-        }
         return false;
     }
 

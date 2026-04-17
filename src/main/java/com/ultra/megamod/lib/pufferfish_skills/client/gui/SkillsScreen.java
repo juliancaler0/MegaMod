@@ -172,12 +172,21 @@ public class SkillsScreen extends Screen {
 		this.maxScale = 1f;
 
 		this.optActiveCategoryData.ifPresent(
-				activeCategoryData -> applyChangesWithLimits(
-						activeCategoryData.getX(),
-						activeCategoryData.getY(),
-						activeCategoryData.getScale(),
-						activeCategoryData
-				)
+				activeCategoryData -> {
+					float initialScale = activeCategoryData.getScale();
+					// Sentinel -1 (or any value outside [minScale, maxScale]) → fit whole tree to viewport.
+					// This prevents first-open from showing at scale=1 which is "too zoomed in" on large
+					// displays, since the background then renders at 2-3x its natural size.
+					if (initialScale < 0f) {
+						initialScale = minScale;
+					}
+					applyChangesWithLimits(
+							activeCategoryData.getX(),
+							activeCategoryData.getY(),
+							initialScale,
+							activeCategoryData
+					);
+				}
 		);
 
 		this.nextButton = Button.builder(Component.empty(), btn -> data.incrementOffset())
@@ -356,7 +365,7 @@ public class SkillsScreen extends Screen {
 		this.syncCategory();
 		this.pendingTooltip = null;
 
-		this.renderBackground(context, mouseX, mouseY, delta);
+		this.renderTransparentBackground(context);
 		this.drawContent(context, mouseX, mouseY);
 		this.drawWindow(context, mouseX, mouseY);
 		this.drawTabs(context, mouseX, mouseY, delta);
@@ -474,9 +483,11 @@ public class SkillsScreen extends Screen {
 			var halfSize = Math.round(9f * sizeScale);
 			var size = halfSize * 2;
 			if (effectId != null) {
-				var texId = Identifier.fromNamespaceAndPath(effectId.getNamespace(), "mob_effect/" + effectId.getPath());
-				textureRenderer.emitTexture(
-						context, texId,
+				// Mob effect icons live on the GUI sprite atlas under mob_effect/<path>. Vanilla
+				// Gui#getMobEffectSprite uses the same prefix and renders via blitSprite.
+				var spriteId = Identifier.fromNamespaceAndPath(effectId.getNamespace(), "mob_effect/" + effectId.getPath());
+				textureRenderer.emitSpriteByIdentifier(
+						context, spriteId,
 						x - halfSize, y - halfSize, size, size,
 						COLOR_WHITE
 				);
@@ -484,6 +495,10 @@ public class SkillsScreen extends Screen {
 		} else if (icon instanceof ClientIconConfig.TextureIconConfig textureIcon) {
 			var halfSize = Math.round(8f * sizeScale);
 			var size = halfSize * 2;
+			// Datapack-provided icon: the identifier comes from JSON like
+			// "skill_tree_rpgs:textures/spell/arcane_tier_1_passive_1.png" which resolves to a
+			// standalone PNG at that path. TextureManager#getTexture will synchronously load it
+			// on the first blit call.
 			textureRenderer.emitTexture(
 					context, textureIcon.texture(),
 					x - halfSize, y - halfSize, size, size,
@@ -519,7 +534,9 @@ public class SkillsScreen extends Screen {
 				case LOCKED, EXCLUDED -> COLOR_GRAY;
 				case AVAILABLE, AFFORDABLE, UNLOCKED -> COLOR_WHITE;
 			};
-			textureRenderer.emitTexture(
+			// Advancement frame identifiers (advancements/task_frame_obtained, etc.) live on the
+			// GUI sprite atlas — vanilla AdvancementWidgetType uses them with blitSprite.
+			textureRenderer.emitSpriteByIdentifier(
 					context, texture,
 					x - halfSize, y - halfSize, size, size,
 					color
@@ -631,16 +648,16 @@ public class SkillsScreen extends Screen {
 			default -> throw new IllegalStateException();
 		}
 
+		// Stretch-blit overload: uv-region spans the entire texture (uw=texW, vh=texH), target
+		// region is (bWidth, bHeight). Without this the default blit tiles the texture when
+		// bWidth > texW, which caused the 3x3 "filled" backdrop artifact.
 		context.blit(RenderPipelines.GUI_TEXTURED,
 				background.texture(),
-				x,
-				y,
-				0,
-				0,
-				bWidth,
-				bHeight,
-				bWidth,
-				bHeight
+				x, y,
+				0f, 0f,
+				bWidth, bHeight,
+				background.width(), background.height(),
+				background.width(), background.height()
 		);
 	}
 

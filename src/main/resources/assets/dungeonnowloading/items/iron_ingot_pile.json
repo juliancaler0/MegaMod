@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "dungeonnowloading:block/iron_ingot_pile"
+    "model": "dungeonnowloading:block/iron_ingot_pile_1"
   }
 }

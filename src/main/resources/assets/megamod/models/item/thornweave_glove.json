@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/thornweave_glove"
+    "layer0": "megamod:item/thornweave_glove",
+    "particle": "megamod:item/thornweave_glove"
   }
 }

@@ -21,17 +21,18 @@ public abstract class FurnaceOutputSlotMixin {
 	private Player player;
 
 	@Shadow
-	private int amount;
+	private int removeCount;
 
 	@Inject(
-			method = "onCrafted(Lnet/minecraft/item/ItemStack;)V",
+			method = "checkTakeAchievements(Lnet/minecraft/world/item/ItemStack;)V",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/item/ItemStack;onCraftByPlayer(Lnet/minecraft/entity/player/Player;I)V"
+					target = "Lnet/minecraft/world/item/ItemStack;onCraftedBy(Lnet/minecraft/world/entity/player/Player;I)V"
 			)
 	)
 	private void injectAtOnCraftByPlayer(ItemStack stack, CallbackInfo ci) {
 		if (player instanceof ServerPlayer serverPlayer) {
+			final int amount = removeCount;
 			SkillsAPI.updateExperienceSources(
 					serverPlayer,
 					SmeltItemExperienceSource.class,

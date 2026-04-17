@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/onion_soup"
+    "layer0": "megamod:item/onion_soup",
+    "particle": "megamod:item/onion_soup"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_arnolfini"
+    "layer0": "megamod:item/the_arnolfini",
+    "particle": "megamod:item/the_arnolfini"
   }
 }

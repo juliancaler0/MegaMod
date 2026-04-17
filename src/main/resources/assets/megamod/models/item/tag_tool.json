@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/tag_tool"
+    "layer0": "megamod:item/tag_tool",
+    "particle": "megamod:item/tag_tool"
   }
 }

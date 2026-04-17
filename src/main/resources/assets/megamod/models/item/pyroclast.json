@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pyroclast"
+    "layer0": "megamod:item/pyroclast",
+    "particle": "megamod:item/pyroclast"
   }
 }

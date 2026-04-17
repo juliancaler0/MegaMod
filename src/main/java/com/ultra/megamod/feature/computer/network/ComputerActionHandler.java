@@ -11,6 +11,10 @@
  */
 package com.ultra.megamod.feature.computer.network;
 
+import com.ultra.megamod.feature.relics.data.WeaponRarity;
+import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
+import com.ultra.megamod.feature.relics.data.AccessorySlotType;
+
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.computer.admin.AdminSystem;
 import com.ultra.megamod.feature.computer.admin.AdminWarpManager;
@@ -21,11 +25,6 @@ import com.ultra.megamod.feature.economy.shop.MegaShop;
 import com.ultra.megamod.feature.multiplayer.PlayerStatistics;
 import com.ultra.megamod.feature.museum.MuseumData;
 import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
-import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import com.ultra.megamod.feature.relics.data.WeaponStatRoller;
-import com.ultra.megamod.feature.relics.data.WeaponRarity;
-import com.ultra.megamod.feature.relics.data.RelicData;
-import com.ultra.megamod.feature.relics.RelicItem;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.CompoundTag;
@@ -79,6 +78,7 @@ public class ComputerActionHandler {
                     || action.equals("skill_add_xp") || action.equals("skill_add_points")
                     || action.equals("skill_set_level") || action.equals("skill_reset_tree")
                     || action.equals("skill_max_all_trees") || action.equals("skill_set_admin_xp_mult") || action.equals("skill_set_admin_only_xp_boost")
+                    || action.equals("skill_toggle_admin_bypass") || action.equals("skill_prestige_up") || action.equals("skill_prestige_set")
                     || action.equals("dungeon_force_extract")
                     || action.equals("request_player_detail")
                     || action.equals("request_economy") || action.equals("request_skills")
@@ -485,17 +485,136 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendResponse(player, "shop_config_data", config, eco);
                 break;
             }
-            // Old skill admin cases removed — SkillManager/SkillAttributeApplier/SkillEvents deleted.
-            // TODO: Reconnect with Pufferfish Skills API
             case "skill_add_xp":
-            case "skill_add_points":
-            case "skill_set_level":
-            case "skill_reset_tree":
-            case "skill_max_all_trees":
-            case "skill_set_admin_xp_mult":
+            case "skill_add_points": {
+                // payload: "uuid|treeName|amount" — pipe separator because category IDs contain colons
+                String[] parts = jsonData.split("\\|");
+                if (parts.length < 3) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                UUID targetId; int amount;
+                try { targetId = UUID.fromString(parts[0]); amount = Integer.parseInt(parts[2]); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args: " + e.getMessage() + "\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var catOpt = com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId);
+                if (catOpt.isEmpty()) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"unknown category " + catId + "\"}", eco); break; }
+                if (action.equals("skill_add_xp")) {
+                    catOpt.get().getExperience().ifPresent(exp -> exp.addTotal(target, amount));
+                } else {
+                    catOpt.get().addPoints(target, net.minecraft.resources.Identifier.fromNamespaceAndPath("megamod", "admin"), amount);
+                }
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
+            case "skill_set_level": {
+                // payload: "uuid|treeName|level" — sets experience to the start of the level
+                String[] parts = jsonData.split("\\|");
+                if (parts.length < 3) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                UUID targetId; int lvl;
+                try { targetId = UUID.fromString(parts[0]); lvl = Integer.parseInt(parts[2]); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args: " + e.getMessage() + "\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var catOpt = com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId);
+                if (catOpt.isEmpty()) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"unknown category " + catId + "\"}", eco); break; }
+                catOpt.get().getExperience().ifPresent(exp -> exp.setTotal(target, exp.getRequiredTotal(lvl)));
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
+            case "skill_reset_tree": {
+                // payload: "uuid|treeName" — reset all skills in the mapped category
+                String[] parts = jsonData.split("\\|");
+                if (parts.length < 2) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                UUID targetId;
+                try { targetId = UUID.fromString(parts[0]); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args: " + e.getMessage() + "\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId).ifPresent(cat -> cat.resetSkills(target));
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
+            case "skill_max_all_trees": {
+                // payload: "uuid" — grant max points on every Pufferfish category
+                UUID targetId;
+                try { targetId = UUID.fromString(jsonData); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.maxAll(target);
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
+            case "skill_set_admin_xp_mult": {
+                // payload: "<multiplier>" — global XP multiplier applied to every player
+                try { com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.setGlobalXpMultiplier(Double.parseDouble(jsonData)); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args: " + e.getMessage() + "\"}", eco); break; }
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
             case "skill_set_admin_only_xp_boost": {
+                // payload: "<multiplier>" — additional multiplier only for admin accounts
+                try { com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.setAdminOnlyXpBoost(Double.parseDouble(jsonData)); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args: " + e.getMessage() + "\"}", eco); break; }
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                break;
+            }
+            case "skill_toggle_admin_bypass": {
+                // payload: "uuid" — toggles prereq bypass. Restricted to admin accounts; the
+                // client only shows the button for admin rows, but we re-check here so a crafted
+                // packet can't enable it for a non-admin player.
+                UUID targetId;
+                try { targetId = UUID.fromString(jsonData); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                String targetName = target != null ? target.getGameProfile().name() : null;
+                if (targetName == null || !AdminSystem.isAdmin(targetName)) {
+                    ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bypass only available for admin accounts\"}", eco);
+                    break;
+                }
+                boolean enabled = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.toggleBypass(targetId);
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true,\"bypass\":" + enabled + "}", eco);
+                // Immediately refresh the Skills data so the pink toggle state flips without the
+                // admin having to hit Refresh.
+                ComputerActionHandler.sendSkillData(player, eco, level);
+                break;
+            }
+            case "skill_prestige_up": {
+                // payload: "uuid|treeName" — runs the real prestige workflow (charge + reset).
+                String[] parts = jsonData.split("\\|");
+                if (parts.length < 2) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                UUID targetId;
+                try { targetId = UUID.fromString(parts[0]); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var pres = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                var result = pres.prestige(target, catId);
+                pres.saveToDisk(level);
                 ComputerActionHandler.sendResponse(player, "admin_result",
-                    "{\"success\":false,\"msg\":\"Old skill system removed — use Pufferfish Skills\"}", eco);
+                    "{\"success\":" + (result == com.ultra.megamod.feature.skills.prestige.PrestigeManager.Result.SUCCESS)
+                    + ",\"msg\":\"" + result.name() + "\"}", eco);
+                ComputerActionHandler.sendSkillData(player, eco, level);
+                break;
+            }
+            case "skill_prestige_set": {
+                // payload: "uuid|treeName|level" — admin hard-set (no cost, no validation)
+                String[] parts = jsonData.split("\\|");
+                if (parts.length < 3) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                UUID targetId; int lvl;
+                try { targetId = UUID.fromString(parts[0]); lvl = Integer.parseInt(parts[2]); }
+                catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var pres = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                pres.setPrestige(target, catId, lvl);
+                pres.saveToDisk(level);
+                ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                ComputerActionHandler.sendSkillData(player, eco, level);
                 break;
             }
             case "request_cosmetics": {
@@ -568,7 +687,8 @@ public class ComputerActionHandler {
                 break;
             }
             case "cosm_reset_respec": {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillManager.resetAllRespecCounts)
+                // Respec-count counters were removed — nothing to reset. Keep the action as a
+                // no-op so the cosmetics UI button doesn't error.
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
@@ -596,26 +716,9 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendBountyViewData(player, eco, level);
                 break;
             }
-            case "cosm_set_badge": {
-                // Format: uuid|title:color
-                String[] mainParts = jsonData.split("\\|", 2);
-                UUID targetId = UUID.fromString(mainParts[0]);
-                String badgeInput = mainParts.length > 1 ? mainParts[1] : "";
-                String title;
-                String color = "white";
-                if (badgeInput.contains(":")) {
-                    String[] badgeParts = badgeInput.split(":", 2);
-                    title = badgeParts[0].trim();
-                    color = badgeParts[1].trim().toLowerCase();
-                } else {
-                    title = badgeInput.trim();
-                }
-                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.setCustomBadge)
-                ComputerActionHandler.sendCosmeticData(player, eco, level);
-                break;
-            }
-            case "cosm_clear_badge": {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillBadges.clearCustomBadge)
+            case "cosm_set_badge", "cosm_clear_badge": {
+                // SkillBadges system was removed in the Pufferfish migration — payload is parsed
+                // but ignored. Refresh cosmetics so UI reflects current (badge-less) state.
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
@@ -639,10 +742,29 @@ public class ComputerActionHandler {
                 }
                 sb.append(",\"wallet\":").append(eco.getWallet(targetId));
                 sb.append(",\"bank\":").append(eco.getBank(targetId));
-                // TODO: Reconnect with Pufferfish Skills API (was SkillManager level/xp/points)
-                sb.append(",\"skills\":{}");
+                // Pufferfish per-category level + available points.
+                sb.append(",\"skills\":{");
+                int totalPoints = 0;
+                boolean firstCat = true;
+                if (target != null) {
+                    for (net.minecraft.resources.Identifier catId :
+                            com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
+                        var cat = com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId);
+                        if (cat.isEmpty()) continue;
+                        if (!firstCat) sb.append(",");
+                        firstCat = false;
+                        int lvl = cat.get().getExperience().map(exp -> exp.getLevel(target)).orElse(0);
+                        int spent = cat.get().getSpentPoints(target);
+                        int left = cat.get().getPointsLeft(target);
+                        totalPoints += left;
+                        sb.append("\"").append(catId).append("\":{\"level\":").append(lvl)
+                          .append(",\"spent\":").append(spent)
+                          .append(",\"points\":").append(left).append("}");
+                    }
+                }
+                sb.append("}");
                 boolean first = true;
-                sb.append(",\"skillPoints\":0");
+                sb.append(",\"skillPoints\":").append(totalPoints);
                 try {
                     sb.append(",\"relics\":{");
                     if (target != null) {
@@ -992,26 +1114,13 @@ public class ComputerActionHandler {
                     ItemStack stack = player.getInventory().getItem(i);
                     if (stack.isEmpty()) continue;
                     boolean hasWeapon = WeaponStatRoller.isWeaponInitialized(stack);
-                    boolean hasArmor = com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack);
-                    boolean hasRelic = RelicData.isInitialized(stack);
                     if (!first) sb.append(",");
                     first = false;
                     sb.append("{");
                     sb.append("\"slot\":").append(i);
                     sb.append(",\"itemId\":\"").append(BuiltInRegistries.ITEM.getKey(stack.getItem()).toString()).append("\"");
                     sb.append(",\"displayName\":\"").append(stack.getHoverName().getString().replace("\"", "\\\"")).append("\"");
-                    sb.append(",\"hasWeaponStats\":").append(hasWeapon || hasArmor);
-                    if (hasArmor && !hasWeapon) {
-                        // For armor, populate weapon-like fields from armor data
-                        WeaponRarity rar = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getRarity(stack);
-                        sb.append(",\"rarityName\":\"").append(rar.getDisplayName()).append("\"");
-                        sb.append(",\"rarityColor\":").append(rar.getNameColor().getColor());
-                        sb.append(",\"baseDamage\":").append(com.ultra.megamod.feature.relics.data.ArmorStatRoller.getStoredBaseArmor(stack));
-                        CompoundTag armorTag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                        CompoundTag armorBonuses = armorTag.getCompoundOrEmpty("armor_rolled_bonuses");
-                        sb.append(",\"bonusCount\":").append(armorBonuses.getIntOr("count", 0));
-                        sb.append(",\"isArmor\":true");
-                    }
+                    sb.append(",\"hasWeaponStats\":").append(hasWeapon);
                     if (hasWeapon) {
                         WeaponRarity rar = WeaponStatRoller.getRarity(stack);
                         sb.append(",\"rarityName\":\"").append(rar.getDisplayName()).append("\"");
@@ -1034,49 +1143,6 @@ public class ComputerActionHandler {
                         sb.append("]");
                         // Phase H: manual RPG weapon skills removed — tomes cast via SpellEngine.
                         sb.append(",\"weaponSkills\":[]");
-                    }
-                    sb.append(",\"isRelicItem\":").append(stack.getItem() instanceof RelicItem);
-                    sb.append(",\"hasRelicData\":").append(hasRelic);
-                    if (hasRelic) {
-                        sb.append(",\"relicLevel\":").append(RelicData.getLevel(stack));
-                        sb.append(",\"relicQuality\":").append(RelicData.getQuality(stack));
-                        sb.append(",\"relicXp\":").append(RelicData.getXp(stack));
-                        // Include ability details for relic items
-                        if (stack.getItem() instanceof RelicItem relicItem) {
-                            sb.append(",\"abilities\":[");
-                            boolean firstAbility = true;
-                            for (com.ultra.megamod.feature.relics.data.RelicAbility ability : relicItem.getAbilities()) {
-                                if (!firstAbility) sb.append(",");
-                                firstAbility = false;
-                                sb.append("{\"name\":\"").append(ability.name().replace("\"", "\\\"")).append("\"");
-                                sb.append(",\"desc\":\"").append(ability.description().replace("\"", "\\\"")).append("\"");
-                                sb.append(",\"reqLevel\":").append(ability.requiredLevel());
-                                sb.append(",\"castType\":\"").append(ability.castType().name()).append("\"");
-                                int pts = RelicData.getAbilityPoints(stack, ability.name());
-                                sb.append(",\"points\":").append(pts);
-                                int defaultCd = ability.castType() == com.ultra.megamod.feature.relics.data.RelicAbility.CastType.INSTANTANEOUS ? 60 :
-                                                ability.castType() == com.ultra.megamod.feature.relics.data.RelicAbility.CastType.TOGGLE ? 20 : 0;
-                                int effectiveCd = RelicData.getEffectiveCooldown(stack, ability.name(), defaultCd);
-                                sb.append(",\"cooldownTicks\":").append(effectiveCd);
-                                sb.append(",\"defaultCooldown\":").append(defaultCd);
-                                sb.append(",\"stats\":[");
-                                boolean firstStat = true;
-                                for (com.ultra.megamod.feature.relics.data.RelicStat stat : ability.stats()) {
-                                    if (!firstStat) sb.append(",");
-                                    firstStat = false;
-                                    double baseVal = RelicData.getStatBaseValue(stack, ability.name(), stat.name());
-                                    double computed = RelicData.getComputedStatValue(stack, ability.name(), stat);
-                                    sb.append("{\"name\":\"").append(stat.name().replace("\"", "\\\"")).append("\"");
-                                    sb.append(",\"base\":").append(baseVal);
-                                    sb.append(",\"computed\":").append(String.format("%.2f", computed));
-                                    sb.append(",\"min\":").append(stat.minValue());
-                                    sb.append(",\"max\":").append(stat.maxValue());
-                                    sb.append("}");
-                                }
-                                sb.append("]}");
-                            }
-                            sb.append("]");
-                        }
                     }
                     // Enchantments
                     sb.append(",\"enchantments\":[");
@@ -1125,623 +1191,10 @@ public class ComputerActionHandler {
                 ComputerActionHandler.sendResponse(player, "inventory_data", sb.toString(), eco);
                 break;
             }
-            case "research_reroll": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty()) {
-                    if (WeaponStatRoller.isWeaponInitialized(stack)) {
-                        WeaponStatRoller.rerollBonuses(stack, level.random);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Rerolled weapon bonuses for slot " + slot + "\"}", eco);
-                    } else if (com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack)) {
-                        com.ultra.megamod.feature.relics.data.ArmorStatRoller.rerollBonuses(stack, level.random);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Rerolled armor bonuses for slot " + slot + "\"}", eco);
-                    }
-                }
-                break;
-            }
-            case "research_max_rarity": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty()) {
-                    if (WeaponStatRoller.isWeaponInitialized(stack)) {
-                        float baseDmg = WeaponStatRoller.getStoredBaseDamage(stack) / WeaponStatRoller.getRarity(stack).getDamageMultiplier();
-                        WeaponStatRoller.rollAndApply(stack, baseDmg, WeaponRarity.LEGENDARY, level.random, WeaponStatRoller.isStoredShield(stack));
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Set to Legendary rarity\"}", eco);
-                    } else if (com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack)) {
-                        double baseArmor = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getStoredBaseArmor(stack) / (1.0 + com.ultra.megamod.feature.relics.data.ArmorStatRoller.getRarity(stack).ordinal() * 0.15);
-                        net.minecraft.world.entity.EquipmentSlot eqSlot = net.minecraft.world.entity.EquipmentSlot.CHEST;
-                        net.minecraft.world.item.equipment.Equippable equippable = stack.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
-                        if (equippable != null) eqSlot = equippable.slot();
-                        com.ultra.megamod.feature.relics.data.ArmorStatRoller.rollAndApply(stack, baseArmor, baseArmor * 0.2, eqSlot, WeaponRarity.LEGENDARY, level.random);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Set armor to Legendary rarity\"}", eco);
-                    }
-                }
-                break;
-            }
-            case "research_rarity_up": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty()) {
-                    if (WeaponStatRoller.isWeaponInitialized(stack)) {
-                        WeaponRarity current = WeaponStatRoller.getRarity(stack);
-                        int nextOrd = Math.min(current.ordinal() + 1, WeaponRarity.values().length - 1);
-                        WeaponRarity next = WeaponRarity.fromOrdinal(nextOrd);
-                        float baseDmg = WeaponStatRoller.getStoredBaseDamage(stack) / current.getDamageMultiplier();
-                        WeaponStatRoller.rollAndApply(stack, baseDmg, next, level.random, WeaponStatRoller.isStoredShield(stack));
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Rarity -> " + next.getDisplayName() + "\"}", eco);
-                    } else if (com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack)) {
-                        WeaponRarity current = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getRarity(stack);
-                        int nextOrd = Math.min(current.ordinal() + 1, WeaponRarity.values().length - 1);
-                        WeaponRarity next = WeaponRarity.fromOrdinal(nextOrd);
-                        double baseArmor = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getStoredBaseArmor(stack) / (1.0 + current.ordinal() * 0.15);
-                        net.minecraft.world.entity.EquipmentSlot eqSlot = net.minecraft.world.entity.EquipmentSlot.CHEST;
-                        net.minecraft.world.item.equipment.Equippable equippable = stack.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
-                        if (equippable != null) eqSlot = equippable.slot();
-                        com.ultra.megamod.feature.relics.data.ArmorStatRoller.rollAndApply(stack, baseArmor, baseArmor * 0.2, eqSlot, next, level.random);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Armor rarity -> " + next.getDisplayName() + "\"}", eco);
-                    }
-                }
-                break;
-            }
-            case "research_rarity_down": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty()) {
-                    if (WeaponStatRoller.isWeaponInitialized(stack)) {
-                        WeaponRarity current = WeaponStatRoller.getRarity(stack);
-                        int prevOrd = Math.max(current.ordinal() - 1, 0);
-                        WeaponRarity prev = WeaponRarity.fromOrdinal(prevOrd);
-                        float baseDmg = WeaponStatRoller.getStoredBaseDamage(stack) / current.getDamageMultiplier();
-                        WeaponStatRoller.rollAndApply(stack, baseDmg, prev, level.random, WeaponStatRoller.isStoredShield(stack));
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Rarity -> " + prev.getDisplayName() + "\"}", eco);
-                    } else if (com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack)) {
-                        WeaponRarity current = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getRarity(stack);
-                        int prevOrd = Math.max(current.ordinal() - 1, 0);
-                        WeaponRarity prev = WeaponRarity.fromOrdinal(prevOrd);
-                        double baseArmor = com.ultra.megamod.feature.relics.data.ArmorStatRoller.getStoredBaseArmor(stack) / (1.0 + current.ordinal() * 0.15);
-                        net.minecraft.world.entity.EquipmentSlot eqSlot = net.minecraft.world.entity.EquipmentSlot.CHEST;
-                        net.minecraft.world.item.equipment.Equippable equippable = stack.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
-                        if (equippable != null) eqSlot = equippable.slot();
-                        com.ultra.megamod.feature.relics.data.ArmorStatRoller.rollAndApply(stack, baseArmor, baseArmor * 0.2, eqSlot, prev, level.random);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Armor rarity -> " + prev.getDisplayName() + "\"}", eco);
-                    }
-                }
-                break;
-            }
-            case "research_max_relic": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setLevel(stack, 10);
-                    RelicData.setQuality(stack, 10);
-                    RelicData.setXp(stack, 0);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic maxed: Lv10, Q10\"}", eco);
-                }
-                break;
-            }
-            case "research_set_bonus": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 3) return;
-                int slot = Integer.parseInt(parts[0]);
-                int bonusIdx = Integer.parseInt(parts[1]);
-                double newValue = Double.parseDouble(parts[2]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && WeaponStatRoller.isWeaponInitialized(stack)) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    CompoundTag bonuses = tag.getCompoundOrEmpty("weapon_rolled_bonuses");
-                    CompoundTag entry = bonuses.getCompoundOrEmpty("bonus_" + bonusIdx);
-                    if (!entry.isEmpty()) {
-                        entry.putDouble("value", newValue);
-                        bonuses.put("bonus_" + bonusIdx, entry);
-                        tag.put("weapon_rolled_bonuses", bonuses);
-                        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                        WeaponStatRoller.rebuildModifiersFromTag(stack);
-                    }
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Bonus " + bonusIdx + " set to " + String.format("%.2f", newValue) + "\"}", eco);
-                }
-                break;
-            }
-            case "research_add_bonus": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && WeaponStatRoller.isWeaponInitialized(stack)) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    CompoundTag bonuses = tag.getCompoundOrEmpty("weapon_rolled_bonuses");
-                    int count = bonuses.getIntOr("count", 0);
-                    WeaponRarity rar = WeaponStatRoller.getRarity(stack);
-                    java.util.List<WeaponStatRoller.BonusStat> pool = WeaponStatRoller.BONUS_POOL;
-                    WeaponStatRoller.BonusStat chosen = pool.get(level.random.nextInt(pool.size()));
-                    double value = chosen.roll(level.random, rar);
-                    CompoundTag newEntry = new CompoundTag();
-                    newEntry.putString("name", chosen.displayName());
-                    newEntry.putString("attr", chosen.attributeId());
-                    newEntry.putDouble("value", value);
-                    newEntry.putBoolean("percent", chosen.isPercent());
-                    newEntry.putInt("op", chosen.operation().ordinal());
-                    bonuses.put("bonus_" + count, newEntry);
-                    bonuses.putInt("count", count + 1);
-                    tag.put("weapon_rolled_bonuses", bonuses);
-                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                    WeaponStatRoller.rebuildModifiersFromTag(stack);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Added bonus: " + chosen.displayName() + "\"}", eco);
-                }
-                break;
-            }
-            case "research_remove_bonus": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                int slot = Integer.parseInt(parts[0]);
-                int bonusIdx = Integer.parseInt(parts[1]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && WeaponStatRoller.isWeaponInitialized(stack)) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    CompoundTag bonuses = tag.getCompoundOrEmpty("weapon_rolled_bonuses");
-                    int count = bonuses.getIntOr("count", 0);
-                    if (bonusIdx < count) {
-                        for (int i = bonusIdx; i < count - 1; i++) {
-                            bonuses.put("bonus_" + i, bonuses.getCompoundOrEmpty("bonus_" + (i + 1)));
-                        }
-                        bonuses.remove("bonus_" + (count - 1));
-                        bonuses.putInt("count", count - 1);
-                        tag.put("weapon_rolled_bonuses", bonuses);
-                        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                        WeaponStatRoller.rebuildModifiersFromTag(stack);
-                    }
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Removed bonus " + bonusIdx + "\"}", eco);
-                }
-                break;
-            }
-            case "research_set_relic_level": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                int slot = Integer.parseInt(parts[0]);
-                int newLevel = Integer.parseInt(parts[1]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setLevel(stack, newLevel);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic level set to " + newLevel + "\"}", eco);
-                }
-                break;
-            }
-            case "research_set_relic_quality": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                int slot = Integer.parseInt(parts[0]);
-                int newQuality = Integer.parseInt(parts[1]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setQuality(stack, newQuality);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic quality set to " + newQuality + "\"}", eco);
-                }
-                break;
-            }
-            case "research_init_relic": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && stack.getItem() instanceof RelicItem relicItem && !RelicData.isInitialized(stack)) {
-                    RelicData.initialize(stack, relicItem.getAbilities(), level.random);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic initialized\"}", eco);
-                }
-                break;
-            }
-            case "research_set_relic_xp": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                int slot = Integer.parseInt(parts[0]);
-                int newXp = Integer.parseInt(parts[1]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setXp(stack, Math.max(0, newXp));
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic XP set to " + Math.max(0, newXp) + "\"}", eco);
-                }
-                break;
-            }
-            case "research_reroll_relic_stats": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack) && stack.getItem() instanceof RelicItem relicItem) {
-                    for (com.ultra.megamod.feature.relics.data.RelicAbility ability : relicItem.getAbilities()) {
-                        for (com.ultra.megamod.feature.relics.data.RelicStat stat : ability.stats()) {
-                            RelicData.rerollStat(stack, ability.name(), stat, level.random);
-                        }
-                    }
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"All relic stats rerolled\"}", eco);
-                }
-                break;
-            }
-            case "research_max_relic_stats": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack) && stack.getItem() instanceof RelicItem relicItem) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    CompoundTag statsTag = tag.getCompoundOrEmpty("relic_stats");
-                    for (com.ultra.megamod.feature.relics.data.RelicAbility ability : relicItem.getAbilities()) {
-                        CompoundTag abilityTag = statsTag.getCompoundOrEmpty(ability.name());
-                        for (com.ultra.megamod.feature.relics.data.RelicStat stat : ability.stats()) {
-                            abilityTag.putDouble(stat.name(), stat.maxValue());
-                        }
-                        statsTag.put(ability.name(), abilityTag);
-                    }
-                    tag.put("relic_stats", statsTag);
-                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"All relic stats maxed\"}", eco);
-                }
-                break;
-            }
-            case "research_reset_relic": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    tag.remove("relic_level");
-                    tag.remove("relic_xp");
-                    tag.remove("relic_quality");
-                    tag.remove("relic_initialized");
-                    tag.remove("relic_stats");
-                    tag.remove("relic_ability_points");
-                    tag.remove("relic_exchanges");
-                    tag.remove("ability_cooldown_overrides");
-                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Relic data reset\"}", eco);
-                }
-                break;
-            }
-            case "research_init_weapon": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && !WeaponStatRoller.isWeaponInitialized(stack)) {
-                    boolean isShield = stack.getItem() instanceof com.ultra.megamod.feature.relics.weapons.RpgWeaponItem rpg && rpg.isShield();
-                    WeaponStatRoller.rollAndApply(stack, 5.0f, level.random, isShield);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Initialized weapon stats\"}", eco);
-                }
-                break;
-            }
-            case "research_init_armor": {
-                int slot = Integer.parseInt(jsonData);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && !com.ultra.megamod.feature.relics.data.ArmorStatRoller.isArmorInitialized(stack)) {
-                    // Determine equipment slot from inventory position or item type
-                    net.minecraft.world.entity.EquipmentSlot eqSlot = net.minecraft.world.entity.EquipmentSlot.CHEST;
-                    net.minecraft.world.item.equipment.Equippable equippable = stack.get(net.minecraft.core.component.DataComponents.EQUIPPABLE);
-                    if (equippable != null) {
-                        eqSlot = equippable.slot();
-                    }
-                    com.ultra.megamod.feature.relics.data.ArmorStatRoller.rollAndApply(stack, 5.0, 1.0, eqSlot, level.random);
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Initialized armor stats\"}", eco);
-                }
-                break;
-            }
-            case "research_add_specific_bonus": {
-                String[] parts = jsonData.split(":");
-                if (parts.length < 2) return;
-                int slot = Integer.parseInt(parts[0]);
-                int poolIndex = Integer.parseInt(parts[1]);
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && WeaponStatRoller.isWeaponInitialized(stack)) {
-                    // Extended bonus pool covering all custom attributes
-                    java.util.List<WeaponStatRoller.BonusStat> extPool = java.util.List.of(
-                        // Original 16 from BONUS_POOL
-                        new WeaponStatRoller.BonusStat("minecraft:attack_damage", 0.5, 3.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Attack Damage", false),
-                        new WeaponStatRoller.BonusStat("minecraft:attack_speed", 0.05, 0.3, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Attack Speed", false),
-                        new WeaponStatRoller.BonusStat("minecraft:max_health", 1.0, 6.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Max Health", false),
-                        new WeaponStatRoller.BonusStat("minecraft:movement_speed", 0.01, 0.04, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL, "Movement Speed", true),
-                        new WeaponStatRoller.BonusStat("minecraft:armor", 1.0, 4.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Armor", false),
-                        new WeaponStatRoller.BonusStat("minecraft:armor_toughness", 0.5, 2.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Armor Toughness", false),
-                        new WeaponStatRoller.BonusStat("minecraft:luck", 0.5, 2.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Luck", false),
-                        new WeaponStatRoller.BonusStat("megamod:critical_chance", 2.0, 15.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Critical Chance", true),
-                        new WeaponStatRoller.BonusStat("megamod:critical_damage", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Critical Damage", true),
-                        new WeaponStatRoller.BonusStat("megamod:lifesteal", 1.0, 8.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Lifesteal", true),
-                        new WeaponStatRoller.BonusStat("megamod:fire_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Fire Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:ice_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Ice Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:lightning_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Lightning Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:cooldown_reduction", 2.0, 15.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Cooldown Reduction", true),
-                        new WeaponStatRoller.BonusStat("megamod:dodge_chance", 1.0, 5.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Dodge Chance", true),
-                        new WeaponStatRoller.BonusStat("megamod:health_regen_bonus", 0.5, 2.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Health Regen", false),
-                        // Additional custom attributes
-                        new WeaponStatRoller.BonusStat("megamod:poison_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Poison Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:holy_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Holy Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:shadow_damage_bonus", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Shadow Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:thorns_damage", 1.0, 5.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Thorns Damage", false),
-                        new WeaponStatRoller.BonusStat("megamod:armor_shred", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Armor Shred", false),
-                        new WeaponStatRoller.BonusStat("megamod:stun_chance", 1.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Stun Chance", true),
-                        new WeaponStatRoller.BonusStat("megamod:ability_power", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Ability Power", false),
-                        new WeaponStatRoller.BonusStat("megamod:mana_efficiency", 2.0, 15.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Mana Efficiency", true),
-                        new WeaponStatRoller.BonusStat("megamod:spell_range", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Spell Range", false),
-                        new WeaponStatRoller.BonusStat("megamod:combo_speed", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Combo Speed", false),
-                        new WeaponStatRoller.BonusStat("megamod:fire_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Fire Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:ice_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Ice Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:lightning_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Lightning Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:poison_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Poison Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:holy_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Holy Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:shadow_resistance_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Shadow Resist", true),
-                        new WeaponStatRoller.BonusStat("megamod:mining_speed_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Mining Speed", false),
-                        new WeaponStatRoller.BonusStat("megamod:swim_speed_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Swim Speed", false),
-                        new WeaponStatRoller.BonusStat("megamod:jump_height_bonus", 0.5, 2.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Jump Height", false),
-                        new WeaponStatRoller.BonusStat("megamod:fall_damage_reduction", 5.0, 25.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Fall Reduction", true),
-                        new WeaponStatRoller.BonusStat("megamod:hunger_efficiency", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Hunger Eff.", true),
-                        new WeaponStatRoller.BonusStat("megamod:megacoin_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Coin Bonus", true),
-                        new WeaponStatRoller.BonusStat("megamod:shop_discount", 2.0, 10.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Shop Discount", true),
-                        new WeaponStatRoller.BonusStat("megamod:sell_bonus", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Sell Bonus", true),
-                        new WeaponStatRoller.BonusStat("megamod:loot_fortune", 5.0, 20.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Loot Fortune", true),
-                        new WeaponStatRoller.BonusStat("megamod:xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "XP Bonus", true),
-                        new WeaponStatRoller.BonusStat("megamod:combat_xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Combat XP", true),
-                        new WeaponStatRoller.BonusStat("megamod:mining_xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Mining XP", true),
-                        new WeaponStatRoller.BonusStat("megamod:farming_xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Farming XP", true),
-                        new WeaponStatRoller.BonusStat("megamod:arcane_xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Arcane XP", true),
-                        new WeaponStatRoller.BonusStat("megamod:survival_xp_bonus", 5.0, 30.0, net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_VALUE, "Survival XP", true)
-                    );
-                    if (poolIndex >= 0 && poolIndex < extPool.size()) {
-                        WeaponStatRoller.BonusStat chosen = extPool.get(poolIndex);
-                        WeaponRarity rar = WeaponStatRoller.getRarity(stack);
-                        double value = chosen.roll(level.random, rar);
-                        CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                        CompoundTag bonuses = tag.getCompoundOrEmpty("weapon_rolled_bonuses");
-                        int count = bonuses.getIntOr("count", 0);
-                        CompoundTag newEntry = new CompoundTag();
-                        newEntry.putString("name", chosen.displayName());
-                        newEntry.putString("attr", chosen.attributeId());
-                        newEntry.putDouble("value", value);
-                        newEntry.putBoolean("percent", chosen.isPercent());
-                        newEntry.putInt("op", chosen.operation().ordinal());
-                        bonuses.put("bonus_" + count, newEntry);
-                        bonuses.putInt("count", count + 1);
-                        tag.put("weapon_rolled_bonuses", bonuses);
-                        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                        WeaponStatRoller.rebuildModifiersFromTag(stack);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Added: " + chosen.displayName() + "\"}", eco);
-                    }
-                }
-                break;
-            }
-            case "research_set_relic_stat": {
-                // format: slot:abilityName:statName:newValue
-                int firstColon = jsonData.indexOf(':');
-                int secondColon = jsonData.indexOf(':', firstColon + 1);
-                int thirdColon = jsonData.indexOf(':', secondColon + 1);
-                int slot = Integer.parseInt(jsonData.substring(0, firstColon));
-                String abilityName = jsonData.substring(firstColon + 1, secondColon);
-                String statName = jsonData.substring(secondColon + 1, thirdColon);
-                double newValue = Double.parseDouble(jsonData.substring(thirdColon + 1));
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                    CompoundTag statsTag = tag.getCompoundOrEmpty("relic_stats");
-                    CompoundTag abilityTag = statsTag.getCompoundOrEmpty(abilityName);
-                    abilityTag.putDouble(statName, newValue);
-                    statsTag.put(abilityName, abilityTag);
-                    tag.put("relic_stats", statsTag);
-                    stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"" + statName + " = " + String.format("%.2f", newValue) + "\"}", eco);
-                }
-                break;
-            }
-            case "research_set_ability_points": {
-                // format: slot:abilityName:points
-                int firstColon = jsonData.indexOf(':');
-                int secondColon = jsonData.indexOf(':', firstColon + 1);
-                int slot = Integer.parseInt(jsonData.substring(0, firstColon));
-                String abilityName = jsonData.substring(firstColon + 1, secondColon);
-                int points = Integer.parseInt(jsonData.substring(secondColon + 1));
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setAbilityPoints(stack, abilityName, Math.max(0, points));
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"" + abilityName + " points = " + points + "\"}", eco);
-                }
-                break;
-            }
-            case "research_set_ability_cooldown": {
-                // format: slot:abilityName:ticks
-                int firstColon = jsonData.indexOf(':');
-                int secondColon = jsonData.indexOf(':', firstColon + 1);
-                int slot = Integer.parseInt(jsonData.substring(0, firstColon));
-                String abilityName = jsonData.substring(firstColon + 1, secondColon);
-                int ticks = Integer.parseInt(jsonData.substring(secondColon + 1));
-                ItemStack stack = player.getInventory().getItem(slot);
-                if (!stack.isEmpty() && RelicData.isInitialized(stack)) {
-                    RelicData.setCooldownOverride(stack, abilityName, Math.max(0, ticks));
-                    float seconds = ticks / 20.0f;
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"" + abilityName + " cooldown = " + String.format("%.1f", seconds) + "s (" + ticks + "t)\"}", eco);
-                }
-                break;
-            }
             // NOTE: research_set_weapon_cooldown / research_set_weapon_skill /
             //       research_remove_weapon_skill / research_clear_weapon_skills
             // were deprecated during Phase F (SpellEngine port). Manual weapon-skill
             // overrides are gone — use the Spells tab -> Container Editor instead.
-            case "research_add_enchant": {
-                // Format: slot:namespace:enchantmentPath:level
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 4) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    String enchId = parts[1] + ":" + parts[2];
-                    int enchLevel = Math.min(255, Math.max(1, Integer.parseInt(parts[3])));
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        var regAccess = level.registryAccess();
-                        var enchRegistry = regAccess.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
-                        var enchHolder = enchRegistry.get(net.minecraft.resources.Identifier.parse(enchId));
-                        if (enchHolder.isPresent()) {
-                            stack.enchant(enchHolder.get(), enchLevel);
-                            ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Added " + enchId + " " + enchLevel + "\"}", eco);
-                        } else {
-                            ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Unknown enchantment: " + enchId + "\"}", eco);
-                        }
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Enchant error: " + e.getMessage() + "\"}", eco);
-                }
-                break;
-            }
-            case "research_remove_enchant": {
-                // Format: slot:namespace:enchantmentPath
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 3) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    String enchId = parts[1] + ":" + parts[2];
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        var regAccess = level.registryAccess();
-                        var enchRegistry = regAccess.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
-                        var enchHolder = enchRegistry.get(net.minecraft.resources.Identifier.parse(enchId));
-                        if (enchHolder.isPresent()) {
-                            net.minecraft.world.item.enchantment.ItemEnchantments.Mutable mutable = new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(stack.getEnchantments());
-                            mutable.removeIf(h -> h.equals(enchHolder.get()));
-                            stack.set(DataComponents.ENCHANTMENTS, mutable.toImmutable());
-                            ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Removed " + enchId + "\"}", eco);
-                        }
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Remove enchant error: " + e.getMessage() + "\"}", eco);
-                }
-                break;
-            }
-            case "research_set_enchant_level": {
-                // Format: slot:namespace:enchantmentPath:newLevel
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 4) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    String enchId = parts[1] + ":" + parts[2];
-                    int newLevel2 = Math.min(255, Math.max(0, Integer.parseInt(parts[3])));
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        var regAccess = level.registryAccess();
-                        var enchRegistry = regAccess.lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT);
-                        var enchHolder = enchRegistry.get(net.minecraft.resources.Identifier.parse(enchId));
-                        if (enchHolder.isPresent()) {
-                            net.minecraft.world.item.enchantment.ItemEnchantments.Mutable mutable = new net.minecraft.world.item.enchantment.ItemEnchantments.Mutable(stack.getEnchantments());
-                            mutable.removeIf(h -> h.equals(enchHolder.get()));
-                            if (newLevel2 > 0) {
-                                mutable.set(enchHolder.get(), newLevel2);
-                            }
-                            stack.set(DataComponents.ENCHANTMENTS, mutable.toImmutable());
-                            ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"" + enchId + " -> Lv" + newLevel2 + "\"}", eco);
-                        }
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Set enchant error: " + e.getMessage() + "\"}", eco);
-                }
-                break;
-            }
-            case "research_clear_enchants": {
-                try {
-                    int slot = Integer.parseInt(jsonData);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        stack.set(DataComponents.ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"All enchantments cleared\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Clear error\"}", eco);
-                }
-                break;
-            }
-            case "research_set_name": {
-                try {
-                    int sep = jsonData.indexOf(':');
-                    int slot = Integer.parseInt(jsonData.substring(0, sep));
-                    String name = jsonData.substring(sep + 1);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        stack.set(DataComponents.CUSTOM_NAME, Component.literal(name));
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Name set to: " + name.replace("\"", "\\\"") + "\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Name error\"}", eco);
-                }
-                break;
-            }
-            case "research_clear_name": {
-                try {
-                    int slot = Integer.parseInt(jsonData);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        stack.remove(DataComponents.CUSTOM_NAME);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Custom name cleared\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Clear name error\"}", eco);
-                }
-                break;
-            }
-            case "research_add_lore": {
-                try {
-                    int sep = jsonData.indexOf(':');
-                    int slot = Integer.parseInt(jsonData.substring(0, sep));
-                    String loreLine = jsonData.substring(sep + 1);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        net.minecraft.world.item.component.ItemLore existing = stack.get(DataComponents.LORE);
-                        java.util.List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>();
-                        if (existing != null) {
-                            lines.addAll(existing.lines());
-                        }
-                        lines.add(Component.literal(loreLine));
-                        stack.set(DataComponents.LORE, new net.minecraft.world.item.component.ItemLore(lines));
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Lore line added\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Lore error\"}", eco);
-                }
-                break;
-            }
-            case "research_remove_lore": {
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 2) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    int lineIdx = Integer.parseInt(parts[1]);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        net.minecraft.world.item.component.ItemLore existing = stack.get(DataComponents.LORE);
-                        if (existing != null) {
-                            java.util.List<net.minecraft.network.chat.Component> lines = new java.util.ArrayList<>(existing.lines());
-                            if (lineIdx >= 0 && lineIdx < lines.size()) {
-                                lines.remove(lineIdx);
-                                stack.set(DataComponents.LORE, new net.minecraft.world.item.component.ItemLore(lines));
-                                ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Lore line removed\"}", eco);
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Remove lore error\"}", eco);
-                }
-                break;
-            }
-            case "research_clear_lore": {
-                try {
-                    int slot = Integer.parseInt(jsonData);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty()) {
-                        stack.remove(DataComponents.LORE);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"All lore cleared\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Clear lore error\"}", eco);
-                }
-                break;
-            }
-            case "research_set_base_damage": {
-                try {
-                    String[] parts = jsonData.split(":");
-                    if (parts.length < 2) return;
-                    int slot = Integer.parseInt(parts[0]);
-                    float newDmg = Float.parseFloat(parts[1]);
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (!stack.isEmpty() && WeaponStatRoller.isWeaponInitialized(stack)) {
-                        CompoundTag tag = ((CustomData) stack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)).copyTag();
-                        tag.putFloat("weapon_base_damage", Math.max(0, newDmg));
-                        stack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
-                        WeaponStatRoller.rebuildModifiersFromTag(stack);
-                        ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Base damage -> " + String.format("%.1f", newDmg) + "\"}", eco);
-                    }
-                } catch (Exception e) {
-                    ComputerActionHandler.sendResponse(player, "research_result", "{\"msg\":\"Error: " + e.getMessage() + "\"}", eco);
-                }
-                break;
-            }
             case "admin_fill_museum": {
                 MuseumData museumData = MuseumData.get(level);
                 UUID pid = player.getUUID();
@@ -2449,9 +1902,9 @@ public class ComputerActionHandler {
                 break;
             }
             case "admin_reset_challenges": {
-                // TODO: Reconnect with Pufferfish Skills API (was SkillChallenges.getPlayerProgress)
+                // SkillChallenges system was removed; keep the button responsive but inert.
                 ComputerActionHandler.sendResponse(player, "admin_result",
-                    "{\"success\":false,\"msg\":\"Old challenge system removed\"}", eco);
+                    "{\"success\":false,\"msg\":\"Challenges removed in the new skill system\"}", eco);
                 break;
             }
             case "admin_force_end_arena": {
@@ -2859,13 +2312,66 @@ public class ComputerActionHandler {
     }
 
     private static void sendSkillData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
-        // TODO: Reconnect with Pufferfish Skills API (was SkillManager-based data)
-        ComputerActionHandler.sendResponse(player, "skills_data", "{\"players\":[],\"adminXpMult\":\"1.0\",\"adminOnlyXpBoost\":\"0.0\"}", eco);
+        // Serialize Pufferfish category state for every online player. Format the client parses:
+        // { players: [ { uuid, name, points, categories: { "skill_tree_rpgs:class_skills": {level, xp, xpNeeded, spent, points, totalPoints}, ... } } ] }
+        net.minecraft.resources.Identifier[] categoryIds = new net.minecraft.resources.Identifier[] {
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("skill_tree_rpgs", "class_skills"),
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("skill_tree_rpgs", "weapon_skills")
+        };
+        StringBuilder sb = new StringBuilder("{\"players\":[");
+        boolean first = true;
+        for (ServerPlayer sp : level.getServer().getPlayerList().getPlayers()) {
+            if (!first) sb.append(",");
+            first = false;
+            sb.append("{\"uuid\":\"").append(sp.getUUID()).append("\"");
+            sb.append(",\"name\":\"").append(sp.getGameProfile().name().replace("\"", "\\\"")).append("\"");
+            sb.append(",\"categories\":{");
+            for (int ci = 0; ci < categoryIds.length; ci++) {
+                if (ci > 0) sb.append(",");
+                final net.minecraft.resources.Identifier catId = categoryIds[ci];
+                sb.append("\"").append(catId).append("\":");
+                com.ultra.megamod.lib.pufferfish_skills.api.Category cat =
+                    com.ultra.megamod.lib.pufferfish_skills.api.SkillsAPI.getCategory(catId).orElse(null);
+                if (cat == null) {
+                    sb.append("{\"level\":0,\"xp\":0,\"xpNeeded\":0,\"spent\":0,\"points\":0,\"totalPoints\":0}");
+                    continue;
+                }
+                int level_ = cat.getExperience().map(exp -> exp.getLevel(sp)).orElse(0);
+                int xp = cat.getExperience().map(exp -> exp.getCurrent(sp)).orElse(0);
+                int xpNeeded = cat.getExperience().map(exp -> exp.getRequired(exp.getLevel(sp))).orElse(0);
+                int spent = cat.getSpentPoints(sp);
+                int pointsLeft = cat.getPointsLeft(sp);
+                int totalPoints = cat.getPointsTotal(sp);
+                sb.append("{\"level\":").append(level_)
+                  .append(",\"xp\":").append(xp)
+                  .append(",\"xpNeeded\":").append(xpNeeded)
+                  .append(",\"spent\":").append(spent)
+                  .append(",\"points\":").append(pointsLeft)
+                  .append(",\"totalPoints\":").append(totalPoints).append("}");
+            }
+            sb.append("},\"bypass\":")
+              .append(com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.isBypassEnabled(sp.getUUID()));
+            var pres = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+            sb.append(",\"prestige\":{");
+            boolean firstP = true;
+            for (int ci = 0; ci < categoryIds.length; ci++) {
+                if (!firstP) sb.append(",");
+                firstP = false;
+                sb.append("\"").append(categoryIds[ci]).append("\":").append(pres.getPrestigeLevel(sp.getUUID(), categoryIds[ci]));
+            }
+            sb.append("}}");
+        }
+        sb.append("]");
+        sb.append(",\"adminXpMult\":").append(com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.getGlobalXpMultiplier());
+        sb.append(",\"adminOnlyXpBoost\":").append(com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.getAdminOnlyXpBoost());
+        sb.append("}");
+        ComputerActionHandler.sendResponse(player, "skills_data", sb.toString(), eco);
     }
 
     private static void sendCosmeticData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
-        // TODO: Reconnect with Pufferfish Skills API (was SkillManager + SkillBadges based cosmetic data)
-        com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+        // Badge fields are legacy and always empty/false in the new system. `treePrestige` keys
+        // on SkillTreeType names for UI compat, but values come from the Pufferfish-backed store.
+        var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
         StringBuilder sb = new StringBuilder("{\"players\":[");
         boolean first = true;
         for (ServerPlayer sp : level.getServer().getPlayerList().getPlayers()) {
@@ -2920,7 +2426,7 @@ public class ComputerActionHandler {
                 sb.append("{\"name\":\"").append(memName.replace("\"", "\\\"")).append("\",\"online\":").append(online).append("}");
             }
             sb.append("]");
-            // TODO: Reconnect with Pufferfish Skills API (was SkillBranch combo detection)
+            // SkillBranch combo detection removed — keep field as empty string for UI compat.
             sb.append(",\"combo\":\"\"");
             sb.append("}");
         }

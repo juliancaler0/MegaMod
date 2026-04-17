@@ -1,7 +1,8 @@
 {
   "parent": "megamod:item/base/bow_24",
   "textures": {
-    "layer0": "megamod:item/unique_longbow_1"
+    "layer0": "megamod:item/unique_longbow_1",
+    "particle": "megamod:item/unique_longbow_1"
   },
   "overrides": [
     {

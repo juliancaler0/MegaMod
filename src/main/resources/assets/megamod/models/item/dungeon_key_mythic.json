@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_key_mythic" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_key_mythic",
+ "particle": "megamod:item/dungeon_key_mythic" } }

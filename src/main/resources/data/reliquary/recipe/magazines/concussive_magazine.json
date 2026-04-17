@@ -6,12 +6,8 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "reliquary:bullets/concussive_bullet"
-    },
-    "M": {
-      "item": "reliquary:empty_magazine"
-    }
+    "B": "reliquary:bullets/concussive_bullet",
+    "M": "reliquary:magazines/empty_magazine"
   },
   "result": {
     "id": "reliquary:magazines/concussive_magazine",

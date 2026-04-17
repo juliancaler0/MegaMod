@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"1": "megamod:block/office_02_texture"
+		"1": "megamod:block/office_02_texture",
+		"particle": "#1"
 	},
 	"elements": [
 		{

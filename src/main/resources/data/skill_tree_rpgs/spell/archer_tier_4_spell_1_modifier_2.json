@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "archers:magic_arrow",
+      "spell_pattern": "megamod:magic_arrow",
       "knockback_multiply_base": 1.5
     }
   ]

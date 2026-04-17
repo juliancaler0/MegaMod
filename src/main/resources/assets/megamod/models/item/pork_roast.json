@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pork_roast"
+    "layer0": "megamod:item/pork_roast",
+    "particle": "megamod:item/pork_roast"
   }
 }

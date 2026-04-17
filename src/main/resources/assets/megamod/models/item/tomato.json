@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/crops/tomato"
+    "layer0": "megamod:item/crops/tomato",
+    "particle": "megamod:item/crops/tomato"
   }
 }

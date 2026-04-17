@@ -1,15 +1,23 @@
 {
   "values": [
     {
-      "id": "megamod:unique_staff_heal_1",
+      "id": "paladins:holy_staff",
       "required": false
     },
     {
-      "id": "megamod:unique_staff_heal_2",
+      "id": "paladins:diamond_holy_staff",
       "required": false
     },
     {
-      "id": "megamod:unique_staff_heal_sw",
+      "id": "paladins:netherite_holy_staff",
+      "required": false
+    },
+    {
+      "id": "paladins:ruby_holy_staff",
+      "required": false
+    },
+    {
+      "id": "paladins:aether_holy_staff",
       "required": false
     }
   ]

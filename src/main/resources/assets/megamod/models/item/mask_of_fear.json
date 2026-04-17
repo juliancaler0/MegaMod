@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/mask_of_fear"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/mask_of_fear",
+"particle": "megamod:item/mask_of_fear"}}

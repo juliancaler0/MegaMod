@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sunforged_bracer"
+    "layer0": "megamod:item/sunforged_bracer",
+    "particle": "megamod:item/sunforged_bracer"
   }
 }

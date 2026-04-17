@@ -1,0 +1,12 @@
+{
+	"attribute.puffish_attributes.stamina": "体力",
+	"attribute.puffish_attributes.melee_damage": "近接攻撃ダメージ",
+	"attribute.puffish_attributes.ranged_damage": "範囲ダメージ",
+	"attribute.puffish_attributes.fortune": "幸運",
+	"attribute.puffish_attributes.healing": "治癒",
+	"attribute.puffish_attributes.jump": "ジャンプ",
+	"attribute.puffish_attributes.resistance": "耐性",
+	"attribute.puffish_attributes.mining_speed": "採掘速度",
+	"attribute.puffish_attributes.sprinting_speed": "ダッシュ速度",
+	"attribute.puffish_attributes.knockback": "ノックバック"
+}

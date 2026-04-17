@@ -3,6 +3,7 @@
   "textures": {
     "top": "megamod:block/spell_binding_table_top",
     "bottom": "megamod:block/spell_binding_table_bottom",
-    "side": "megamod:block/spell_binding_table_side"
+    "side": "megamod:block/spell_binding_table_side",
+    "particle": "megamod:block/spell_binding_table_top"
   }
 }

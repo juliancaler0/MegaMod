@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/self_portrait_vangogh"
+    "layer0": "megamod:item/self_portrait_vangogh",
+    "particle": "megamod:item/self_portrait_vangogh"
   }
 }

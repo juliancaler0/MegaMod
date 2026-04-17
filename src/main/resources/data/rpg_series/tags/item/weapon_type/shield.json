@@ -1,15 +1,31 @@
 {
   "values": [
     {
-      "id": "megamod:unique_shield_1",
+      "id": "paladins:iron_kite_shield",
       "required": false
     },
     {
-      "id": "megamod:unique_shield_2",
+      "id": "paladins:golden_kite_shield",
       "required": false
     },
     {
-      "id": "megamod:unique_shield_sw",
+      "id": "paladins:diamond_kite_shield",
+      "required": false
+    },
+    {
+      "id": "paladins:netherite_kite_shield",
+      "required": false
+    },
+    {
+      "id": "paladins:ruby_kite_shield",
+      "required": false
+    },
+    {
+      "id": "paladins:aeternium_kite_shield",
+      "required": false
+    },
+    {
+      "id": "paladins:aether_kite_shield",
       "required": false
     }
   ]

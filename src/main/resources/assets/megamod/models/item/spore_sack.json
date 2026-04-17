@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/spore_sack"
+    "layer0": "megamod:item/spore_sack",
+    "particle": "megamod:item/spore_sack"
   }
 }

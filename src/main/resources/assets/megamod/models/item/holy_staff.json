@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/staff_24",
   "textures": {
-    "layer0": "megamod:item/holy_staff"
+    "layer0": "megamod:item/holy_staff",
+    "particle": "megamod:item/holy_staff"
   }
 }

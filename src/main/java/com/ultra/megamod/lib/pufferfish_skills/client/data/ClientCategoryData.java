@@ -24,7 +24,7 @@ public class ClientCategoryData {
 	private int currentExperience;
 	private int requiredExperience;
 
-	private float scale = 1;
+	private float scale = -1f;
 
 	private int x = 0;
 	private int y = 0;

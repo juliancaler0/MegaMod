@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "megamod:block/lr_livingroom_plant_3"
+		"0": "megamod:block/lr_livingroom_plant_3",
+		"particle": "#0"
 	},
 	"elements": [
 		{

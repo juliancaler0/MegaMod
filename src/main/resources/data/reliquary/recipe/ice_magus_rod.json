@@ -7,18 +7,10 @@
     "I  "
   ],
   "key": {
-    "D": {
-      "tag": "c:gems/diamond"
-    },
-    "F": {
-      "item": "reliquary:frozen_core"
-    },
-    "V": {
-      "item": "reliquary:void_tear"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    }
+    "D": "#c:gems/diamond",
+    "F": "reliquary:frozen_core",
+    "V": "reliquary:void_tear",
+    "I": "#c:ingots/iron"
   },
   "result": {
     "id": "reliquary:ice_magus_rod",

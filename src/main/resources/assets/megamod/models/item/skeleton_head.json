@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/skeleton_head" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/skeleton_head",
+ "particle": "megamod:item/skeleton_head" } }

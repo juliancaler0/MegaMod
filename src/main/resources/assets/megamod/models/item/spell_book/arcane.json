@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/spell_book/arcane"
+    "layer0": "megamod:item/spell_book/arcane",
+    "particle": "megamod:item/spell_book/arcane"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/magical_arrow"
+    "layer0": "megamod:item/magical_arrow",
+    "particle": "megamod:item/magical_arrow"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/school_of_athens"
+    "layer0": "megamod:item/school_of_athens",
+    "particle": "megamod:item/school_of_athens"
   }
 }

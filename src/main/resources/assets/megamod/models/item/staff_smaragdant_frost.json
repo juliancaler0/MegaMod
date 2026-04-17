@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/medium_staff",
   "textures": {
-    "layer0": "megamod:item/staff_smaragdant_frost"
+    "layer0": "megamod:item/staff_smaragdant_frost",
+    "particle": "megamod:item/staff_smaragdant_frost"
   }
 }

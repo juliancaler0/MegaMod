@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/resource_scroll"
+    "layer0": "megamod:item/resource_scroll",
+    "particle": "megamod:item/resource_scroll"
   }
 }

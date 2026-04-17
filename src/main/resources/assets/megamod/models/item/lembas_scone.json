@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/lembas_scone"
+    "layer0": "megamod:item/lembas_scone",
+    "particle": "megamod:item/lembas_scone"
   }
 }

@@ -6,12 +6,8 @@
     "BBB"
   ],
   "key": {
-    "B": {
-      "item": "reliquary:bullets/neutral_bullet"
-    },
-    "M": {
-      "item": "reliquary:empty_magazine"
-    }
+    "B": "reliquary:bullets/neutral_bullet",
+    "M": "reliquary:magazines/empty_magazine"
   },
   "result": {
     "id": "reliquary:magazines/neutral_magazine",

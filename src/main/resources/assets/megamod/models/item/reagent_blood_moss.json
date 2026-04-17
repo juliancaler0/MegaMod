@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_blood_moss" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_blood_moss",
+ "particle": "megamod:item/reagent_blood_moss" } }

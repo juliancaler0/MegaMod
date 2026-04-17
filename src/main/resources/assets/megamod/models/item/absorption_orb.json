@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/absorption_orb" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/absorption_orb",
+ "particle": "megamod:item/absorption_orb" } }

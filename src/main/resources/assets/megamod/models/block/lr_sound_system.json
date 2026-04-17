@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/lr_livingroom_sound_system"
+		"1": "megamod:block/lr_livingroom_sound_system",
+		"particle": "#1"
 	},
 	"elements": [
 		{

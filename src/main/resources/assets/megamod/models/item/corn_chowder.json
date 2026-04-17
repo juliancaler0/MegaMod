@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/corn_chowder"
+    "layer0": "megamod:item/corn_chowder",
+    "particle": "megamod:item/corn_chowder"
   }
 }

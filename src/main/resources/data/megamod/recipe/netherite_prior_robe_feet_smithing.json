@@ -1,15 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:prior_robe_feet"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:prior_robe_feet",
   "result": {
     "id": "megamod:netherite_prior_robe_feet"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

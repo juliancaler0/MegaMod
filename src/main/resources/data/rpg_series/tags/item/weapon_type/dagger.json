@@ -1,15 +1,35 @@
 {
   "values": [
     {
-      "id": "megamod:unique_dagger_1",
+      "id": "rogues:flint_dagger",
       "required": false
     },
     {
-      "id": "megamod:unique_dagger_2",
+      "id": "rogues:iron_dagger",
       "required": false
     },
     {
-      "id": "megamod:unique_dagger_sw",
+      "id": "rogues:golden_dagger",
+      "required": false
+    },
+    {
+      "id": "rogues:diamond_dagger",
+      "required": false
+    },
+    {
+      "id": "rogues:netherite_dagger",
+      "required": false
+    },
+    {
+      "id": "rogues:ruby_dagger",
+      "required": false
+    },
+    {
+      "id": "rogues:aeternium_dagger",
+      "required": false
+    },
+    {
+      "id": "rogues:aether_dagger",
       "required": false
     }
   ]

@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"2": "megamod:block/dungeon_chair_bone"
+		"2": "megamod:block/dungeon_chair_bone",
+		"particle": "#2"
 	},
 	"elements": [
 		{

@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/resource_dimension_key" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/resource_dimension_key",
+ "particle": "megamod:item/resource_dimension_key" } }

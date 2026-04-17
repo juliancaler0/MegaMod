@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/glaive_30",
   "textures": {
-    "layer0": "megamod:item/netherite_glaive"
+    "layer0": "megamod:item/netherite_glaive",
+    "particle": "megamod:item/netherite_glaive"
   }
 }

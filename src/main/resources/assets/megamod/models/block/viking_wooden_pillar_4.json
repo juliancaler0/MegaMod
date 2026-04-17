@@ -4,7 +4,8 @@
 	"credit": "MadewithBlockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "megamod:block/viking_wooden_pillar"
+		"1": "megamod:block/viking_wooden_pillar",
+		"particle": "#1"
 	},
 	"elements": [
 		{

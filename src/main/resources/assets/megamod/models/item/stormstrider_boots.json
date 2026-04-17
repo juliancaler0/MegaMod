@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/stormstrider_boots"
+    "layer0": "megamod:item/stormstrider_boots",
+    "particle": "megamod:item/stormstrider_boots"
   }
 }

@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/great_experience_bottle"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/great_experience_bottle",
+"particle": "megamod:item/great_experience_bottle"}}

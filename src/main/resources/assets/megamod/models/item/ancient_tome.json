@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/ancient_tome"
+    "layer0": "megamod:item/ancient_tome",
+    "particle": "megamod:item/ancient_tome"
   }
 }

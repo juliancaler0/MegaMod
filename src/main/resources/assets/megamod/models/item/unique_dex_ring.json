@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_dex_ring"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_dex_ring",
+"particle": "megamod:item/unique_dex_ring"}}

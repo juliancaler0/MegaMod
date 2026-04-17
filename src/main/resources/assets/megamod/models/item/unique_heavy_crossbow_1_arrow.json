@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/unique_heavy_crossbow_1",
   "textures": {
-    "layer0": "megamod:item/unique_heavy_crossbow_1_arrow"
+    "layer0": "megamod:item/unique_heavy_crossbow_1_arrow",
+    "particle": "megamod:item/unique_heavy_crossbow_1_arrow"
   }
 }

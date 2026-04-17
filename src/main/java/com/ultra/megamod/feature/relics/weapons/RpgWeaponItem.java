@@ -97,24 +97,18 @@ extends Item {
         return this.skills;
     }
 
+    // Stat rolling disabled — user wants source-parity attributes first, rolls come later.
+    // Items now keep whatever ATTRIBUTE_MODIFIERS the SpellEngine factory baked in.
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-        if (!WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponStatRoller.rollAndApply(stack, this.baseDamage, level.random, this.isShield);
-        }
+        // no-op
     }
 
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
-        WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
-        // Phase H: manual "Skills (Right-Click)" and SpellAbilityBridge tooltip blocks removed —
-        // tomes/Arsenal/wands now show spell info via SpellEngine's own tooltip renderer.
+        // Rolled-stat tooltip removed — SpellEngine renders its own tooltip for spell-carrying weapons.
     }
 
     public boolean isFoil(ItemStack stack) {
-        if (WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponRarity rarity = WeaponStatRoller.getRarity(stack);
-            return rarity == WeaponRarity.MYTHIC || rarity == WeaponRarity.LEGENDARY;
-        }
         return false;
     }
 

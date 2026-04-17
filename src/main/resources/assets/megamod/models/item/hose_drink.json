@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hose_drink"
+    "layer0": "megamod:item/hose_drink",
+    "particle": "megamod:item/hose_drink"
   }
 }

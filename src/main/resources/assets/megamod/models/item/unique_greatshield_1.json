@@ -1,7 +1,8 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/unique_greatshield_1"
+    "layer0": "megamod:item/unique_greatshield_1",
+    "particle": "megamod:item/unique_greatshield_1"
   },
   "display": {
     "thirdperson_righthand": {

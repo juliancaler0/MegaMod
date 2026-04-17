@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:slice_and_dice",
+      "spell_pattern": "megamod:slice_and_dice",
       "effect_amplifier_cap_add": 2
     }
   ]

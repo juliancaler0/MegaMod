@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/mushroom_risotto"
+    "layer0": "megamod:item/mushroom_risotto",
+    "particle": "megamod:item/mushroom_risotto"
   }
 }

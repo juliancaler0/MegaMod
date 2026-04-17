@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/leather_belt"
+    "layer0": "megamod:item/leather_belt",
+    "particle": "megamod:item/leather_belt"
   }
 }

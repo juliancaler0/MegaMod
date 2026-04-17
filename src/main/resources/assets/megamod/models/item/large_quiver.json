@@ -1,7 +1,8 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/large_quiver"
+    "layer0": "megamod:item/large_quiver",
+    "particle": "megamod:item/large_quiver"
   },
   "overrides": [
     { "predicate": { "filled": 0.0000001 }, "model": "megamod:item/large_quiver_filled" }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/steak_dinner"
+    "layer0": "megamod:item/steak_dinner",
+    "particle": "megamod:item/steak_dinner"
   }
 }

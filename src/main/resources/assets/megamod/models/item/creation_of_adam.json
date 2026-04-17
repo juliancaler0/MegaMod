@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/creation_of_adam"
+    "layer0": "megamod:item/creation_of_adam",
+    "particle": "megamod:item/creation_of_adam"
   }
 }

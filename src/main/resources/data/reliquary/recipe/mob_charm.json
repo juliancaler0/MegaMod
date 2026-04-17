@@ -12,15 +12,9 @@
     "F F"
   ],
   "key": {
-    "F": {
-      "item": "reliquary:mob_charm_fragment"
-    },
-    "L": {
-      "tag": "c:leathers"
-    },
-    "S": {
-      "tag": "c:strings"
-    }
+    "F": "reliquary:mob_charm_fragment",
+    "L": "#c:leathers",
+    "S": "#c:strings"
   },
   "result": {
     "id": "reliquary:mob_charm",

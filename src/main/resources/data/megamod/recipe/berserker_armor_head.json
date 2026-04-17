@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "G": "minecraft:goat_horn",
-    "I": "minecraft:chain",
+    "I": "minecraft:iron_chain",
     "T": "minecraft:netherite_scrap"
   },
   "pattern": [

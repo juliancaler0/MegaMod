@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/naga_fang_dagger"
+    "layer0": "megamod:item/naga_fang_dagger",
+    "particle": "megamod:item/naga_fang_dagger"
   }
 }

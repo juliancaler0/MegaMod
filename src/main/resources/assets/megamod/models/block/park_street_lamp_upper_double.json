@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/park_lantern_plus"
+		"2": "megamod:block/park_lantern_plus",
+		"particle": "#2"
 	},
 	"elements": [
 		{

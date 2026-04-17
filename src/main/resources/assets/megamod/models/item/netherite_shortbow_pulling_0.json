@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/netherite_shortbow",
   "textures": {
-    "layer0": "megamod:item/netherite_shortbow_pulling_0"
+    "layer0": "megamod:item/netherite_shortbow_pulling_0",
+    "particle": "megamod:item/netherite_shortbow_pulling_0"
   }
 }

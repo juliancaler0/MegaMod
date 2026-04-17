@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_shadow_essence" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_shadow_essence",
+ "particle": "megamod:item/reagent_shadow_essence" } }

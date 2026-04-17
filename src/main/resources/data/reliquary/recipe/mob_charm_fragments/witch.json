@@ -12,15 +12,9 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:witch_hat"
-    },
-    "S": {
-      "item": "minecraft:glass_bottle"
-    },
-    "T": {
-      "item": "minecraft:spider_eye"
-    }
+    "P": "reliquary:witch_hat",
+    "S": "minecraft:glass_bottle",
+    "T": "minecraft:spider_eye"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

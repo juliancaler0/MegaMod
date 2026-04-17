@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_milkmaid"
+    "layer0": "megamod:item/the_milkmaid",
+    "particle": "megamod:item/the_milkmaid"
   }
 }

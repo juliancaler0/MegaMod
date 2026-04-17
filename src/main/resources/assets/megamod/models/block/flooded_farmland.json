@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/flooded_farmland"
+    "all": "megamod:block/flooded_farmland",
+    "particle": "megamod:block/flooded_farmland"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/glaive_38",
   "textures": {
-    "layer0": "megamod:item/unique_glaive_2"
+    "layer0": "megamod:item/unique_glaive_2",
+    "particle": "megamod:item/unique_glaive_2"
   }
 }

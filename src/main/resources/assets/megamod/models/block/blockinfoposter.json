@@ -2,7 +2,8 @@
   "credit": "Made by d3miurge.vallek@gmail.com",
   "textures": {
     "0": "megamod:block/info/info_poster",
-    "1": "megamod:block/info/info_poster_wax"
+    "1": "megamod:block/info/info_poster_wax",
+    "particle": "#0"
   },
   "elements": [
     {

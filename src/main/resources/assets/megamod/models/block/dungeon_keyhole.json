@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/dungeon_keyhole"
+    "all": "megamod:block/dungeon_keyhole",
+    "particle": "megamod:block/dungeon_keyhole"
   }
 }

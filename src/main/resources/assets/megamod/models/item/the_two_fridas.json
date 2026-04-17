@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_two_fridas"
+    "layer0": "megamod:item/the_two_fridas",
+    "particle": "megamod:item/the_two_fridas"
   }
 }

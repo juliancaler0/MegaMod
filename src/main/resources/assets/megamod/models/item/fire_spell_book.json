@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/fire_spell_book"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/fire_spell_book",
+"particle": "megamod:item/fire_spell_book"}}

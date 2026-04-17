@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/seeds_chickpea"
+    "layer0": "megamod:item/seeds_chickpea",
+    "particle": "megamod:item/seeds_chickpea"
   }
 }

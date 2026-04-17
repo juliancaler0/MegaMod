@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/glowing_jelly"
+    "layer0": "megamod:item/glowing_jelly",
+    "particle": "megamod:item/glowing_jelly"
   }
 }

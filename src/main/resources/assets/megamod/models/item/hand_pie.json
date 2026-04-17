@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hand_pie"
+    "layer0": "megamod:item/hand_pie",
+    "particle": "megamod:item/hand_pie"
   }
 }

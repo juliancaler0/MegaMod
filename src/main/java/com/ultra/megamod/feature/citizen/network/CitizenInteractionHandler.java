@@ -76,10 +76,8 @@ public class CitizenInteractionHandler {
         String citizenName = json.has("name") ? json.get("name").getAsString() : "Citizen";
         CitizenJob job = CitizenJob.fromString(jobName);
 
-        // Check max citizens (arcane tree summoner branch adds bonus capacity)
         CitizenManager cm = CitizenManager.get(level);
-        int maxCitizens = CitizenConfig.MAX_CITIZENS_PER_PLAYER
-                + 0 /* TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getMaxCitizenBonus) */;
+        int maxCitizens = CitizenConfig.MAX_CITIZENS_PER_PLAYER;
         if (cm.getCitizenCount(player.getUUID()) >= maxCitizens) {
             sendResult(player, false, "Maximum citizens reached!");
             return;
@@ -96,10 +94,7 @@ public class CitizenInteractionHandler {
             }
         }
 
-        // Check cost (arcane tree summoner branch reduces hire cost)
-        int baseCost = CitizenConfig.getHireCost(job);
-        double hireMult = 1.0 /* TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getHireCostMultiplier) */;
-        int cost = Math.max(1, (int) (baseCost * hireMult));
+        int cost = Math.max(1, CitizenConfig.getHireCost(job));
         if (!eco.spendWallet(player.getUUID(), cost)) {
             sendResult(player, false, "Not enough MegaCoins! Need " + cost + " MC.");
             return;
@@ -323,19 +318,15 @@ public class CitizenInteractionHandler {
         boolean needsJobChange = requestedJob != null && requestedJob != currentJob;
         CitizenJob finalJob = needsJobChange ? requestedJob : currentJob;
 
-        // Check max citizens (arcane tree summoner branch adds bonus capacity)
         CitizenManager cm = CitizenManager.get(level);
-        int maxCitizens = CitizenConfig.MAX_CITIZENS_PER_PLAYER
-                + 0 /* TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getMaxCitizenBonus) */;
+        int maxCitizens = CitizenConfig.MAX_CITIZENS_PER_PLAYER;
         if (cm.getCitizenCount(player.getUUID()) >= maxCitizens) {
             sendResult(player, false, "Maximum citizens reached!");
             return;
         }
 
-        // Check cost (half price for hiring existing unowned, arcane tree reduces further)
-        int baseCost = CitizenConfig.getHireCost(finalJob) / 2;
-        double hireMult = 1.0 /* TODO: Reconnect with Pufferfish Skills API (was CitizenSkillBonuses.getHireCostMultiplier) */;
-        int cost = Math.max(1, (int) (baseCost * hireMult));
+        // Half price when hiring existing unowned citizen.
+        int cost = Math.max(1, CitizenConfig.getHireCost(finalJob) / 2);
         if (cost > 0 && !eco.spendWallet(player.getUUID(), cost)) {
             sendResult(player, false, "Not enough MegaCoins! Need " + cost + " MC.");
             return;

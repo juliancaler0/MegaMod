@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"3": "megamod:block/farmer_door"
+		"3": "megamod:block/farmer_door",
+		"particle": "#3"
 	},
 	"elements": [
 		{

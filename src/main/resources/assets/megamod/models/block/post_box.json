@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/post_box"
+    "all": "megamod:block/post_box",
+    "particle": "megamod:block/post_box"
   }
 }

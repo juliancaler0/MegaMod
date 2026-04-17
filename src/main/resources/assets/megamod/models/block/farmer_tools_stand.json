@@ -8,7 +8,8 @@
 		1024
 	],
 	"textures": {
-		"10": "megamod:block/farmer_tools_stand"
+		"10": "megamod:block/farmer_tools_stand",
+		"particle": "#10"
 	},
 	"elements": [
 		{

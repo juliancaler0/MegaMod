@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -10,7 +10,7 @@
         "type": "SPELL_CAST",
         "chance": 0.25,
         "spell": {
-          "school": "spell_power:fire",
+          "school": "megamod:fire",
           "type": "ACTIVE"
         }
       }
@@ -58,7 +58,7 @@
         }
       ],
       "sound": {
-        "id": "wizards:fire_scorch_impact"
+        "id": "megamod:fire_scorch_impact"
       }
     }
   ],

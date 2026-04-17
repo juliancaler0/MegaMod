@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:arcane",
+  "school": "megamod:arcane",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -98,7 +98,7 @@
         }
       ],
       "sound": {
-        "id": "wizards:arcane_blast_impact"
+        "id": "megamod:arcane_blast_impact"
       }
     }
   ],

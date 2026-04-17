@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/cafe_terrace"
+    "layer0": "megamod:item/cafe_terrace",
+    "particle": "megamod:item/cafe_terrace"
   }
 }

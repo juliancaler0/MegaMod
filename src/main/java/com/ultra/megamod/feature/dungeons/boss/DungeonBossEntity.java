@@ -432,8 +432,6 @@ extends Monster {
                     ngp.saveToDisk(overworld);
                 }
 
-                // Challenge hook: TODO: Reconnect with Pufferfish Skills API (was SkillChallenges.addProgress)
-
                 // Record leaderboard time
                 if (instance.startTimeMs > 0) {
                     long clearTime = System.currentTimeMillis() - instance.startTimeMs;

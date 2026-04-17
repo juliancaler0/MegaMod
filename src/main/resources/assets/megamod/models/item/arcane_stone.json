@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/arcane_stone"
+    "layer0": "megamod:item/arcane_stone",
+    "particle": "megamod:item/arcane_stone"
   }
 }

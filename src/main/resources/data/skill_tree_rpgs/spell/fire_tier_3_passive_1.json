@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 5.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -48,7 +48,7 @@
       }
     ],
     "sound": {
-      "id": "wizards:fire_meteor_impact"
+      "id": "megamod:fire_meteor_impact"
     }
   },
   "target": {

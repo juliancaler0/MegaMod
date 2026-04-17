@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/supply_chest"
+    "layer0": "megamod:item/supply_chest",
+    "particle": "megamod:item/supply_chest"
   }
 }

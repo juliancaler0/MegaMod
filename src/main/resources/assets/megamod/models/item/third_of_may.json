@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/third_of_may"
+    "layer0": "megamod:item/third_of_may",
+    "particle": "megamod:item/third_of_may"
   }
 }

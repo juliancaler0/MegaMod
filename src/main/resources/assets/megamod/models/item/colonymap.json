@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/colonymap"
+    "layer0": "megamod:item/colonymap",
+    "particle": "megamod:item/colonymap"
   }
 }

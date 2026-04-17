@@ -1,7 +1,8 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "megamod:item/scepterguard"
+    "layer0": "megamod:item/scepterguard",
+    "particle": "megamod:item/scepterguard"
   },
   "display": {
     "thirdperson": {

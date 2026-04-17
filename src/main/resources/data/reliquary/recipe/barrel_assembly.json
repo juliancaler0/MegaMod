@@ -7,15 +7,9 @@
     "III"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "E": {
-      "item": "reliquary:nebulous_heart"
-    },
-    "M": {
-      "item": "minecraft:magma_cream"
-    }
+    "I": "#c:ingots/iron",
+    "E": "reliquary:nebulous_heart",
+    "M": "minecraft:magma_cream"
   },
   "result": {
     "id": "reliquary:barrel_assembly",

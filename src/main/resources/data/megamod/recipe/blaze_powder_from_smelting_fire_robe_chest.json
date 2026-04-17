@@ -4,9 +4,7 @@
   "cookingtime": 300,
   "experience": 0.1,
   "group": "disassemble",
-  "ingredient": {
-    "item": "megamod:fire_robe_chest"
-  },
+  "ingredient": "megamod:fire_robe_chest",
   "result": {
     "id": "minecraft:blaze_powder"
   }

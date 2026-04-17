@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/carpet",
   "textures": {
-    "wool": "megamod:block/floating_carpet_brown"
+    "wool": "megamod:block/floating_carpet_brown",
+    "particle": "megamod:block/floating_carpet_brown"
   }
 }

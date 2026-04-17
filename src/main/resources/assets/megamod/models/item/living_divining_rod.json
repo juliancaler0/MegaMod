@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/living_divining_rod" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/living_divining_rod",
+ "particle": "megamod:item/living_divining_rod" } }

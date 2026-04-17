@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/sleeping_gypsy"
+    "layer0": "megamod:item/sleeping_gypsy",
+    "particle": "megamod:item/sleeping_gypsy"
   }
 }

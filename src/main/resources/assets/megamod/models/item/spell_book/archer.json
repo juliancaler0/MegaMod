@@ -1,6 +1,7 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/archer_spell_book"
+    "layer0": "megamod:item/spell_book/archer",
+    "particle": "megamod:item/spell_book/archer"
   }
 }

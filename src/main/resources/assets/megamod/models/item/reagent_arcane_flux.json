@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_arcane_flux" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_arcane_flux",
+ "particle": "megamod:item/reagent_arcane_flux" } }

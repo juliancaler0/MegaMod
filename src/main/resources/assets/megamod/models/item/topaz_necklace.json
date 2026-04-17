@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/topaz_necklace"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/topaz_necklace",
+"particle": "megamod:item/topaz_necklace"}}

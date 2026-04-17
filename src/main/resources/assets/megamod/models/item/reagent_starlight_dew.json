@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_starlight_dew" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/reagent_starlight_dew",
+ "particle": "megamod:item/reagent_starlight_dew" } }

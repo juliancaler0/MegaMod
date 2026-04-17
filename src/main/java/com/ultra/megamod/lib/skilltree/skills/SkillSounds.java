@@ -1,6 +1,10 @@
 package com.ultra.megamod.lib.skilltree.skills;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.sounds.SoundEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import com.ultra.megamod.lib.skilltree.SkillTreeMod;
 import com.ultra.megamod.lib.spellengine.fx.SpellEngineSounds;
 
@@ -8,9 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SkillSounds {
+    // DeferredRegister must run on the mod event bus — direct Registry writes from the
+    // mod constructor hit a frozen SOUND_EVENT registry in NeoForge 21.11.
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
+            DeferredRegister.create(Registries.SOUND_EVENT, SkillTreeMod.NAMESPACE);
+
     public static final List<SpellEngineSounds.Entry> entries = new ArrayList<>();
     private static SpellEngineSounds.Entry add(SpellEngineSounds.Entry entry) {
         entries.add(entry);
+        SOUND_EVENTS.register(entry.id().getPath(), entry::soundEvent);
         return entry;
     }
     private static SpellEngineSounds.Entry entry(String name) {
@@ -56,9 +66,7 @@ public class SkillSounds {
     public static final SpellEngineSounds.Entry warrior_enrage = add(entry("warrior_enrage"));
     public static final SpellEngineSounds.Entry warrior_shockwave = add(entry("warrior_shockwave"));
 
-    public static void register() {
-        for (var entry: entries) {
-            entry.register();
-        }
+    public static void register(IEventBus modEventBus) {
+        SOUND_EVENTS.register(modEventBus);
     }
 }

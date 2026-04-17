@@ -1,7 +1,8 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "megamod:item/scrollmagic"
+    "layer0": "megamod:item/scrollmagic",
+    "particle": "megamod:item/scrollmagic"
   },
   "display": {
     "thirdperson_lefthand": {

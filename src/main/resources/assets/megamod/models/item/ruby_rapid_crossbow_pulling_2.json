@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/ruby_rapid_crossbow",
   "textures": {
-    "layer0": "megamod:item/ruby_rapid_crossbow_pulling_2"
+    "layer0": "megamod:item/ruby_rapid_crossbow_pulling_2",
+    "particle": "megamod:item/ruby_rapid_crossbow_pulling_2"
   }
 }

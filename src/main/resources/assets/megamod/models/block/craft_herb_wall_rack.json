@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"4": "megamod:block/craft_herb_wall_rack"
+		"4": "megamod:block/craft_herb_wall_rack",
+		"particle": "#4"
 	},
 	"elements": [
 		{

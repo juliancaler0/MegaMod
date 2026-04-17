@@ -123,11 +123,14 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
         }
 
         // Calculate speed using endTick (actual hit point), NOT animation.length() (includes recovery)
-        // This matches BetterCombat's original: speed = endTick / weaponCooldown
+        // This matches BetterCombat's original: speed = endTick / weaponCooldown.
+        // Clamp length to >= 1 tick to avoid NaN/Infinity when called with length=0
+        // (e.g. weapon-swap frame or broken attack data). (Task #46)
+        float safeLength = Math.max(length, 1.0f);
         var endTick = animation.data().<Float>get(
                 com.ultra.megamod.lib.playeranim.core.animation.ExtraAnimationData.END_TICK_KEY
         ).orElse(animation.length());
-        float speed = endTick / length;
+        float speed = endTick / safeLength;
 
         // Upswing speed: original uses upswingMultiplier config (default 0.5)
         float upswingMultiplier = Math.clamp(
@@ -145,8 +148,8 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
 
         // Gear shifts: upswingSpeed initially, then downswingSpeed, then baseSpeed
         List<TransmissionSpeedModifier.Gear> gears = List.of(
-                new TransmissionSpeedModifier.Gear(length * upswing, downswingSpeed),
-                new TransmissionSpeedModifier.Gear(length, speed)
+                new TransmissionSpeedModifier.Gear(safeLength * upswing, downswingSpeed),
+                new TransmissionSpeedModifier.Gear(safeLength, speed)
         );
 
         // Mirror for off-hand / left-handed
@@ -186,11 +189,20 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
         // Determine pose from equipped weapons
         Pose pose = PlayerAttackHelper.poseForPlayer(player);
 
-        // Check if player is doing something that should clear poses
-        boolean clearPoses = player.isSwimming()
-                || player.onClimbable()
-                || player.isUsingItem()
-                || !player.isAlive();
+        // Match source BetterCombat AbstractClientPlayerEntityMixin.updateAnimationsOnTick:
+        // clear all poses during any "busy" activity that owns the arm/body rig.
+        boolean attackActive = megamod$attackAnimation != null && megamod$attackAnimation.isActive();
+        boolean spellActive = com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.isAnyActive(player);
+        boolean crossbowCharged = net.minecraft.world.item.CrossbowItem.isCharged(player.getMainHandItem());
+        boolean clearPoses = player.swinging           // vanilla hand-swing mid-flight
+                || player.isSwimming()
+                || player.onClimbable()                // was checking onClimbable() already
+                || player.isUsingItem()                // bows, food, shields
+                || player.isFallFlying()               // elytra
+                || crossbowCharged                     // loaded crossbow
+                || !player.isAlive()
+                || attackActive
+                || spellActive;
 
         if (clearPoses) {
             megamod$mainHandBodyPose.clearPose();

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/extra_base_thatched"
+    "all": "megamod:block/extra_base_thatched",
+    "particle": "megamod:block/extra_base_thatched"
   }
 }

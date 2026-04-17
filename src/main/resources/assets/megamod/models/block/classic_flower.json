@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/classic_flower"
+		"1": "megamod:block/classic_flower",
+		"particle": "#1"
 	},
 	"elements": [
 		{

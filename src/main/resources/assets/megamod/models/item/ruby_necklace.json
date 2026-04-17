@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/ruby_necklace"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/ruby_necklace",
+"particle": "megamod:item/ruby_necklace"}}

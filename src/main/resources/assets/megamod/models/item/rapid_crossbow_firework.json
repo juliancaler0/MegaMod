@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/rapid_crossbow",
   "textures": {
-    "layer0": "megamod:item/rapid_crossbow_firework"
+    "layer0": "megamod:item/rapid_crossbow_firework",
+    "particle": "megamod:item/rapid_crossbow_firework"
   }
 }

@@ -8,7 +8,9 @@
 		256
 	],
 	"textures": {
-		"4": "megamod:block/farmer_scare_crow"
+		"0": "megamod:block/farmer_scare_crow",
+		"4": "megamod:block/farmer_scare_crow",
+		"particle": "#4"
 	},
 	"elements": [
 		{

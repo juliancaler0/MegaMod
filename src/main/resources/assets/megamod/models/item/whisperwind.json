@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/whisperwind"
+    "layer0": "megamod:item/whisperwind",
+    "particle": "megamod:item/whisperwind"
   }
 }

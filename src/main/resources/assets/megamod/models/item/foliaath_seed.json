@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/foliaath_seed"
+    "layer0": "megamod:item/foliaath_seed",
+    "particle": "megamod:item/foliaath_seed"
   }
 }

@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/mask_of_fury"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/mask_of_fury",
+"particle": "megamod:item/mask_of_fury"}}

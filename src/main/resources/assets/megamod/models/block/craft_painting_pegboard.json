@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/craft_painting_pegboard"
+		"2": "megamod:block/craft_painting_pegboard",
+		"particle": "#2"
 	},
 	"elements": [
 		{

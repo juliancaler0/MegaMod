@@ -5,7 +5,8 @@
 		128
 	],
 	"textures": {
-		"1": "megamod:block/lr_livingroom_sofa_3"
+		"1": "megamod:block/lr_livingroom_sofa_3",
+		"particle": "#1"
 	},
 	"elements": [
 		{

@@ -4,7 +4,8 @@
 	"credit": "MadewithBlockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"1": "megamod:block/viking_statue_5"
+		"1": "megamod:block/viking_statue_5",
+		"particle": "#1"
 	},
 	"elements": [
 		{

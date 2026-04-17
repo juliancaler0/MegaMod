@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/ratatouille"
+    "layer0": "megamod:item/ratatouille",
+    "particle": "megamod:item/ratatouille"
   }
 }

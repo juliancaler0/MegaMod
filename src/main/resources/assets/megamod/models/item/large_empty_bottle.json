@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/food/large_empty_bottle"
+    "layer0": "megamod:item/food/large_empty_bottle",
+    "particle": "megamod:item/food/large_empty_bottle"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/guardians_girdle"
+    "layer0": "megamod:item/guardians_girdle",
+    "particle": "megamod:item/guardians_girdle"
   }
 }

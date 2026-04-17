@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/calipers"
+    "layer0": "megamod:item/calipers",
+    "particle": "megamod:item/calipers"
   }
 }

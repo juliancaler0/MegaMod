@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:frost",
+  "school": "megamod:frost",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -10,7 +10,7 @@
         "type": "SPELL_CAST",
         "chance": 0.25,
         "spell": {
-          "school": "spell_power:frost",
+          "school": "megamod:frost",
           "type": "ACTIVE"
         }
       }
@@ -43,7 +43,7 @@
       "action": {
         "type": "STATUS_EFFECT",
         "status_effect": {
-          "effect_id": "wizards:frost_slowness",
+          "effect_id": "megamod:frost_slowness",
           "duration": 5.0,
           "amplifier": 2,
           "amplifier_cap": 9,
@@ -70,7 +70,7 @@
         }
       ],
       "sound": {
-        "id": "wizards:frost_nova_effect_impact"
+        "id": "megamod:frost_nova_effect_impact"
       }
     }
   ],

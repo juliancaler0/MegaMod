@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/void_lantern"
+    "layer0": "megamod:item/void_lantern",
+    "particle": "megamod:item/void_lantern"
   }
 }

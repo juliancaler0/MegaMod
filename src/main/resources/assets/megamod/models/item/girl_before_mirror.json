@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/girl_before_mirror"
+    "layer0": "megamod:item/girl_before_mirror",
+    "particle": "megamod:item/girl_before_mirror"
   }
 }

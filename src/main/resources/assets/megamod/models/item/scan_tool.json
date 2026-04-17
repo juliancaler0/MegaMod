@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/scan_tool"
+    "layer0": "megamod:item/scan_tool",
+    "particle": "megamod:item/scan_tool"
   }
 }

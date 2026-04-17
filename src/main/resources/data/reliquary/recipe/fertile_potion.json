@@ -7,21 +7,11 @@
     "CGY"
   ],
   "key": {
-    "G": {
-      "tag": "c:glass_panes"
-    },
-    "B": {
-      "item": "minecraft:water_bucket"
-    },
-    "F": {
-      "item": "reliquary:fertile_essence"
-    },
-    "C": {
-      "tag": "c:dyes/green"
-    },
-    "Y": {
-      "tag": "c:dyes/yellow"
-    }
+    "G": "#c:glass_panes",
+    "B": "minecraft:water_bucket",
+    "F": "reliquary:fertile_essence",
+    "C": "#c:dyes/green",
+    "Y": "#c:dyes/yellow"
   },
   "result": {
     "id": "reliquary:fertile_potion",

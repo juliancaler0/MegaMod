@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/stormband"
+    "layer0": "megamod:item/stormband",
+    "particle": "megamod:item/stormband"
   }
 }

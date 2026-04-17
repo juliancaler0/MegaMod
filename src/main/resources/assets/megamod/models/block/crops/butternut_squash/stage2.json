@@ -1,1 +1,2 @@
-{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/butternut_squash/stage2"}}
+{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/butternut_squash/stage2",
+"particle": "megamod:block/crops/butternut_squash/stage2"}}

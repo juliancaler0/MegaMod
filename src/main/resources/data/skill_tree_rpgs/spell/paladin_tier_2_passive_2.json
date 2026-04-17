@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 1,
   "type": "PASSIVE",
@@ -20,7 +20,7 @@
         "type": "COOLDOWN",
         "cooldown": {
           "actives": {
-            "id": "paladins:divine_protection",
+            "id": "megamod:divine_protection",
             "duration_multiplier": 0.0
           }
         }

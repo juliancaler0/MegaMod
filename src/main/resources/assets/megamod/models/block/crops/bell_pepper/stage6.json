@@ -1,1 +1,2 @@
-{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/bell_pepper/stage6"}}
+{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/bell_pepper/stage6",
+"particle": "megamod:block/crops/bell_pepper/stage6"}}

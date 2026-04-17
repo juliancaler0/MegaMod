@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/frost_scroll"
+    "layer0": "megamod:item/frost_scroll",
+    "particle": "megamod:item/frost_scroll"
   }
 }

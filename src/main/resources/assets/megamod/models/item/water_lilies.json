@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/water_lilies"
+    "layer0": "megamod:item/water_lilies",
+    "particle": "megamod:item/water_lilies"
   }
 }

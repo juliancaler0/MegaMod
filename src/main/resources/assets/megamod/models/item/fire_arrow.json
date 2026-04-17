@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/fire_arrow"
+    "layer0": "megamod:item/fire_arrow",
+    "particle": "megamod:item/fire_arrow"
   }
 }

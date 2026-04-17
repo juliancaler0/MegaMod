@@ -1,6 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "megamod:item/moneygold"
+        "layer0": "megamod:item/moneygold",
+        "particle": "megamod:item/moneygold"
     }
 }

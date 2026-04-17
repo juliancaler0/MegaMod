@@ -25,7 +25,7 @@ public abstract class LivingEntityConditionalAttributes implements ConditionalAt
         return conditionalModifiers;
     }
 
-    @Inject(method = "getEquipmentChanges", at = @At("RETURN"))
+    @Inject(method = "collectEquipmentChanges", at = @At("RETURN"))
     private void onEquipmentChanges(CallbackInfoReturnable<Map<EquipmentSlot, ItemStack>> cir) {
         if (cir.getReturnValue() != null) {
             var entity = (LivingEntity) (Object) this;

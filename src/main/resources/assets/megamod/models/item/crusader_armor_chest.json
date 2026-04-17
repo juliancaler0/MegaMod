@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/crusader_armor_chest"
+    "layer0": "megamod:item/crusader_armor_chest",
+    "particle": "megamod:item/crusader_armor_chest"
   }
 }

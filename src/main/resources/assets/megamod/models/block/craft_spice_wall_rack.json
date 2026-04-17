@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"3": "megamod:block/craft_spice_wall_rack"
+		"3": "megamod:block/craft_spice_wall_rack",
+		"particle": "#3"
 	},
 	"elements": [
 		{

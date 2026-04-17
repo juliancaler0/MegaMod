@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_crit_necklace"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/unique_crit_necklace",
+"particle": "megamod:item/unique_crit_necklace"}}

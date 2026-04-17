@@ -29,22 +29,16 @@ public class RpgCrossbowItem extends CrossbowItem {
         this.baseDamage = baseDamage;
     }
 
+    // Stat rolling disabled — source-parity attributes only (rolls come later).
     public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-        if (!WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponStatRoller.rollAndApply(stack, baseDamage, level.random);
-        }
+        // no-op
     }
 
     public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, context, display, tooltip, flag);
-        WeaponStatRoller.appendWeaponTooltip(stack, tooltip);
     }
 
     public boolean isFoil(ItemStack stack) {
-        if (WeaponStatRoller.isWeaponInitialized(stack)) {
-            WeaponRarity rarity = WeaponStatRoller.getRarity(stack);
-            return rarity == WeaponRarity.MYTHIC || rarity == WeaponRarity.LEGENDARY;
-        }
         return false;
     }
 

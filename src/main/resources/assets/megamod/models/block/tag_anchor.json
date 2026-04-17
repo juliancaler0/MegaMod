@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/tag_anchor"
+    "all": "megamod:block/tag_anchor",
+    "particle": "megamod:block/tag_anchor"
   }
 }

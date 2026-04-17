@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_key_hard" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/dungeon_key_hard",
+ "particle": "megamod:item/dungeon_key_hard" } }

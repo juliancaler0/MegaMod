@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hose_nozzle"
+    "layer0": "megamod:item/hose_nozzle",
+    "particle": "megamod:item/hose_nozzle"
   }
 }

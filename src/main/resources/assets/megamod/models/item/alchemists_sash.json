@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/alchemists_sash"
+    "layer0": "megamod:item/alchemists_sash",
+    "particle": "megamod:item/alchemists_sash"
   }
 }

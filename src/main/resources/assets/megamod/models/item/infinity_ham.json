@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/infinity_ham"
+    "layer0": "megamod:item/infinity_ham",
+    "particle": "megamod:item/infinity_ham"
   }
 }

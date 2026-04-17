@@ -6,9 +6,7 @@
     " W "
   ],
   "key": {
-    "W": {
-      "item": "reliquary:witch_hat"
-    }
+    "W": "reliquary:witch_hat"
   },
   "result": {
     "id": "minecraft:glass_bottle",

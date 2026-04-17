@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/pottage"
+    "layer0": "megamod:item/pottage",
+    "particle": "megamod:item/pottage"
   }
 }

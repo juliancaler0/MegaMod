@@ -12,15 +12,9 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "reliquary:catalyzing_gland"
-    },
-    "S": {
-      "tag": "c:gunpowders"
-    },
-    "T": {
-      "item": "minecraft:bone"
-    }
+    "P": "reliquary:catalyzing_gland",
+    "S": "#c:gunpowders",
+    "T": "minecraft:bone"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

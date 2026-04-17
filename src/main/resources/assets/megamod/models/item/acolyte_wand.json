@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "megamod:item/acolyte_wand"
+    "layer0": "megamod:item/acolyte_wand",
+    "particle": "megamod:item/acolyte_wand"
   }
 }

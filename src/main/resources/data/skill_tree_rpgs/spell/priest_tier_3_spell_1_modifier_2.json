@@ -1,5 +1,5 @@
 {
-  "school": "spell_power:healing",
+  "school": "megamod:healing",
   "range": 0.0,
   "tier": 1,
   "tooltip": {
@@ -13,7 +13,7 @@
         "aoe_source_override": "CASTER",
         "type": "SPELL_CAST",
         "spell": {
-          "id": "paladins:circle_of_healing"
+          "id": "megamod:circle_of_healing"
         }
       }
     ]

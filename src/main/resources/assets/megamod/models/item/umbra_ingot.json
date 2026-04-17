@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/umbra_ingot" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/umbra_ingot",
+ "particle": "megamod:item/umbra_ingot" } }

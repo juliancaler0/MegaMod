@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/prior_robe_legs"
+    "layer0": "megamod:item/prior_robe_legs",
+    "particle": "megamod:item/prior_robe_legs"
   }
 }

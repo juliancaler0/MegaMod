@@ -7,12 +7,8 @@
     "FFF"
   ],
   "key": {
-    "L": {
-      "tag": "c:leathers"
-    },
-    "F": {
-      "item": "reliquary:mob_charm_fragment"
-    }
+    "L": "#c:leathers",
+    "F": "reliquary:mob_charm_fragment"
   },
   "result": {
     "id": "reliquary:mob_charm_belt",

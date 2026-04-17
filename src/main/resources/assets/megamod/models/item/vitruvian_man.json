@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/vitruvian_man"
+    "layer0": "megamod:item/vitruvian_man",
+    "particle": "megamod:item/vitruvian_man"
   }
 }

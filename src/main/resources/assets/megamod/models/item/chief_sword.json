@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/chief_sword"
+    "layer0": "megamod:item/chief_sword",
+    "particle": "megamod:item/chief_sword"
   }
 }

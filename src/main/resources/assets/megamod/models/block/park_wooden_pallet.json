@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/park_fence"
+		"2": "megamod:block/park_fence",
+		"particle": "#2"
 	},
 	"elements": [
 		{

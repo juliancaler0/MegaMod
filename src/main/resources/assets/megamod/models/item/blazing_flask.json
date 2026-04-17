@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/blazing_flask"
+    "layer0": "megamod:item/blazing_flask",
+    "particle": "megamod:item/blazing_flask"
   }
 }

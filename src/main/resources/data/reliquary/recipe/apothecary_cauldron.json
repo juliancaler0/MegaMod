@@ -7,21 +7,11 @@
     "NMN"
   ],
   "key": {
-    "G": {
-      "item": "reliquary:catalyzing_gland"
-    },
-    "N": {
-      "item": "reliquary:nebulous_heart"
-    },
-    "I": {
-      "item": "reliquary:infernal_claw"
-    },
-    "C": {
-      "item": "minecraft:cauldron"
-    },
-    "M": {
-      "item": "reliquary:molten_core"
-    }
+    "G": "reliquary:catalyzing_gland",
+    "N": "reliquary:nebulous_heart",
+    "I": "reliquary:infernal_claw",
+    "C": "minecraft:cauldron",
+    "M": "reliquary:molten_core"
   },
   "result": {
     "id": "reliquary:apothecary_cauldron",

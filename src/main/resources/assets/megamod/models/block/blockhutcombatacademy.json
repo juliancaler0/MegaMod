@@ -10,7 +10,8 @@
 		"3": "megamod:block/books/map1",
 		"3_3": "block/polished_andesite",
 		"transp": "block/white_wool",
-		"3_1": "block/spruce_planks"
+		"3_1": "block/spruce_planks",
+		"all": "#0"
 	},
 	"elements": [
 		{

@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/pirate_legs"
+    "layer0": "megamod:item/pirate_legs",
+    "particle": "megamod:item/pirate_legs"
   }
 }

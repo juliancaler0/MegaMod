@@ -1,16 +1,10 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "megamod:staff_frost"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "megamod:staff_frost",
   "result": {
     "count": 1,
     "id": "megamod:staff_netherite_frost"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

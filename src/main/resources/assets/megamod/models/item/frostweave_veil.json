@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/frostweave_veil"
+    "layer0": "megamod:item/frostweave_veil",
+    "particle": "megamod:item/frostweave_veil"
   }
 }

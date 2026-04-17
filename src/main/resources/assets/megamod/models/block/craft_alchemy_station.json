@@ -5,7 +5,8 @@
 		256
 	],
 	"textures": {
-		"3": "megamod:block/craft_alchemy_station"
+		"3": "megamod:block/craft_alchemy_station",
+		"particle": "#3"
 	},
 	"elements": [
 		{

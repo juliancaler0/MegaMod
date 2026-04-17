@@ -1,11 +1,11 @@
 {
-  "school": "spell_power:fire",
+  "school": "megamod:fire",
   "range": 0.0,
   "tier": 1,
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "wizards:fire_blast",
+      "spell_pattern": "megamod:fire_blast",
       "replacing_area_impact": {
         "radius": 3.75,
         "area": {
@@ -22,7 +22,7 @@
           }
         ],
         "sound": {
-          "id": "wizards:fireball_impact"
+          "id": "megamod:fireball_impact"
         }
       }
     }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "megamod:block/extra_green_cactus"
+    "all": "megamod:block/extra_green_cactus",
+    "particle": "megamod:block/extra_green_cactus"
   }
 }

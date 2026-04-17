@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/refill_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/refill_upgrade",
+"particle": "megamod:item/refill_upgrade"}}

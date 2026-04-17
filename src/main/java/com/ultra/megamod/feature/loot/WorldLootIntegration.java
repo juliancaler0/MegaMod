@@ -4,7 +4,6 @@ import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.dungeons.DungeonTier;
 import com.ultra.megamod.feature.dungeons.loot.DungeonLootGenerator;
 import com.ultra.megamod.feature.dungeons.loot.LootQuality;
-import com.ultra.megamod.feature.relics.RelicRegistry;
 import com.ultra.megamod.feature.toggles.FeatureToggleManager;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -82,9 +81,6 @@ public class WorldLootIntegration {
                 "\u00A76\u00A7l\u2605 \u00A7eA rare item dropped from " + mob.getName().getString() + "!"));
         level.playSound(null, mob.blockPosition(), SoundEvents.UI_TOAST_CHALLENGE_COMPLETE,
                 SoundSource.PLAYERS, 0.8f, 1.2f);
-
-        // Fortune's Favor synergy: TODO: Reconnect with Pufferfish Skills API
-        // (previously SynergyEffects.shouldDoubleRareDrop — defaulting to false / no double drop)
     }
 
     private static double getMobDropChance(String mobType) {
@@ -122,17 +118,6 @@ public class WorldLootIntegration {
 
     private static List<Item> getAquaticRelics() {
         if (AQUATIC_RELICS == null) {
-            AQUATIC_RELICS = List.of(
-                    RelicRegistry.AQUA_WALKER.get(),
-                    RelicRegistry.JELLYFISH_NECKLACE.get(),
-                    RelicRegistry.AMPHIBIAN_BOOT.get(),
-                    RelicRegistry.DROWNED_BELT.get(),
-                    RelicRegistry.TIDEKEEPER_AMULET.get(),
-                    RelicRegistry.STORMBAND.get(),
-                    RelicRegistry.STORMSTRIDER_BOOTS.get(),
-                    RelicRegistry.ICE_SKATES.get(),
-                    RelicRegistry.ICE_BREAKER.get()
-            );
         }
         return AQUATIC_RELICS;
     }
@@ -174,58 +159,12 @@ public class WorldLootIntegration {
 
     private static List<Item> getStructureCommonRelics() {
         if (STRUCTURE_COMMON_RELICS == null) {
-            STRUCTURE_COMMON_RELICS = List.of(
-                    RelicRegistry.LEATHER_BELT.get(),
-                    RelicRegistry.WOOL_MITTEN.get(),
-                    RelicRegistry.ARROW_QUIVER.get(),
-                    RelicRegistry.ICE_SKATES.get(),
-                    RelicRegistry.ROLLER_SKATES.get(),
-                    RelicRegistry.IRON_FIST.get(),
-                    RelicRegistry.CHORUS_INHIBITOR.get(),
-                    RelicRegistry.BASTION_RING.get(),
-                    RelicRegistry.LODESTONE_MAGNET.get(),
-                    // Usable relics (common tier)
-                    RelicRegistry.HORSE_FLUTE.get(),
-                    RelicRegistry.INFINITY_HAM.get(),
-                    RelicRegistry.SPORE_SACK.get(),
-                    // Common-tier weapons
-                    RelicRegistry.BRIARTHORN.get(),
-                    RelicRegistry.WHISPERWIND.get(),
-                    RelicRegistry.BATTLEDANCER.get(),
-                    RelicRegistry.VAMPIRIC_TOME.get()
-            );
         }
         return STRUCTURE_COMMON_RELICS;
     }
 
     private static List<Item> getStructureUncommonRelics() {
         if (STRUCTURE_UNCOMMON_RELICS == null) {
-            STRUCTURE_UNCOMMON_RELICS = List.of(
-                    RelicRegistry.ELYTRA_BOOSTER.get(),
-                    RelicRegistry.DROWNED_BELT.get(),
-                    RelicRegistry.HUNTER_BELT.get(),
-                    RelicRegistry.ENDER_HAND.get(),
-                    RelicRegistry.RAGE_GLOVE.get(),
-                    RelicRegistry.AQUA_WALKER.get(),
-                    RelicRegistry.AMPHIBIAN_BOOT.get(),
-                    RelicRegistry.JELLYFISH_NECKLACE.get(),
-                    RelicRegistry.REFLECTION_NECKLACE.get(),
-                    RelicRegistry.STORMBAND.get(),
-                    RelicRegistry.VERDANT_SIGNET.get(),
-                    RelicRegistry.VERDANT_MASK.get(),
-                    RelicRegistry.SANDWALKER_TREADS.get(),
-                    RelicRegistry.EMBERSTONE_BAND.get(),
-                    // Usable relics (uncommon tier)
-                    RelicRegistry.SHADOW_GLAIVE.get(),
-                    RelicRegistry.MAGIC_MIRROR.get(),
-                    RelicRegistry.BLAZING_FLASK.get(),
-                    RelicRegistry.SPACE_DISSECTOR.get(),
-                    // Uncommon-tier weapons
-                    RelicRegistry.STATIC_SEEKER.get(),
-                    RelicRegistry.EBONCHILL.get(),
-                    RelicRegistry.LIGHTBINDER.get(),
-                    RelicRegistry.STORMFURY.get()
-            );
         }
         return STRUCTURE_UNCOMMON_RELICS;
     }

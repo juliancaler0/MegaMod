@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/wraith_crown"
+    "layer0": "megamod:item/wraith_crown",
+    "particle": "megamod:item/wraith_crown"
   }
 }

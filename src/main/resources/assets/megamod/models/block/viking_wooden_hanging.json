@@ -4,7 +4,8 @@
 	"credit": "MadewithBlockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "megamod:block/viking_wooden_hanging"
+		"1": "megamod:block/viking_wooden_hanging",
+		"particle": "#1"
 	},
 	"elements": [
 		{

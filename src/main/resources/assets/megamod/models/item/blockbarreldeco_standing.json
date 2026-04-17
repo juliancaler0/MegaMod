@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/barreldeco_standing"
+    "layer0": "megamod:item/barreldeco_standing",
+    "particle": "megamod:item/barreldeco_standing"
   }
 }

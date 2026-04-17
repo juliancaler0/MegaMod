@@ -1,1 +1,2 @@
-{"parent": "megamod:block/crops/rice/stage6","textures": {"bottom": "megamod:block/crops/peas/stage1", "bottom": "megamod:block/crops/peas/stage1"}}
+{"parent": "megamod:block/crops/rice/stage6","textures": {"bottom": "megamod:block/crops/peas/stage1", "bottom": "megamod:block/crops/peas/stage1",
+"particle": "megamod:block/crops/peas/stage1"}}

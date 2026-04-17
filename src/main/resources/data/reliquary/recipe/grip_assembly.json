@@ -7,15 +7,9 @@
     "ICI"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "C": {
-      "item": "reliquary:empty_magazine"
-    },
-    "M": {
-      "item": "minecraft:magma_cream"
-    }
+    "I": "#c:ingots/iron",
+    "C": "reliquary:magazines/empty_magazine",
+    "M": "minecraft:magma_cream"
   },
   "result": {
     "id": "reliquary:grip_assembly",

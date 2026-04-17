@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/cheddar_cheese"
+    "layer0": "megamod:item/cheddar_cheese",
+    "particle": "megamod:item/cheddar_cheese"
   }
 }

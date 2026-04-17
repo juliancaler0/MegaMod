@@ -6,7 +6,7 @@
       "conditions": {
         "items": [
           {
-            "items": "reliquary:empty_bullet"
+            "items": "reliquary:bullets/empty_bullet"
           }
         ]
       }

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/space_dissector"
+    "layer0": "megamod:item/space_dissector",
+    "particle": "megamod:item/space_dissector"
   }
 }

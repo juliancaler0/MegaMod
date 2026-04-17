@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/lodestone_magnet"
+    "layer0": "megamod:item/lodestone_magnet",
+    "particle": "megamod:item/lodestone_magnet"
   }
 }

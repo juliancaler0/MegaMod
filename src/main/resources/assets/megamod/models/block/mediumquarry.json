@@ -1,6 +1,7 @@
 {
 	"parent": "megamod:block/digsite",
 	"textures": {
-		"4": "block/iron_block"
+		"4": "block/iron_block",
+		"particle": "#4"
 	}
 }

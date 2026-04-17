@@ -7,15 +7,9 @@
     "BCB"
   ],
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "B": {
-      "item": "minecraft:black_wool"
-    },
-    "C": {
-      "item": "reliquary:crimson_cloth"
-    }
+    "I": "#c:ingots/iron",
+    "B": "minecraft:black_wool",
+    "C": "reliquary:crimson_cloth"
   },
   "result": {
     "id": "reliquary:twilight_cloak",

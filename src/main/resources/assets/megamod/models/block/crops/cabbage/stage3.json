@@ -1,1 +1,2 @@
-{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/cabbage/stage3"}}
+{"parent": "minecraft:block/crop","textures": {"crop": "megamod:block/crops/cabbage/stage3",
+"particle": "megamod:block/crops/cabbage/stage3"}}

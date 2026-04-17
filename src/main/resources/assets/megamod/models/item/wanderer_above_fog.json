@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/wanderer_above_fog"
+    "layer0": "megamod:item/wanderer_above_fog",
+    "particle": "megamod:item/wanderer_above_fog"
   }
 }

@@ -1,1 +1,2 @@
-{"parent":"block/cube_all","textures":{"all":"megamod:block/deepslate_citrine_ore"}}
+{"parent":"block/cube_all","textures":{"all":"megamod:block/deepslate_citrine_ore",
+"particle": "megamod:block/deepslate_citrine_ore"}}

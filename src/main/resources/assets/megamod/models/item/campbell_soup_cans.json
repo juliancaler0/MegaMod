@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/campbell_soup_cans"
+    "layer0": "megamod:item/campbell_soup_cans",
+    "particle": "megamod:item/campbell_soup_cans"
   }
 }

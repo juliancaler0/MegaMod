@@ -1,1 +1,2 @@
-{"parent":"megamod:item/medium_rune_pouch","textures":{"layer0":"megamod:item/medium_rune_pouch_filled"}}
+{"parent":"megamod:item/medium_rune_pouch","textures":{"layer0":"megamod:item/medium_rune_pouch_filled",
+"particle": "megamod:item/medium_rune_pouch_filled"}}

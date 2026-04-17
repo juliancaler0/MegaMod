@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/royal_herald_spawn_egg"
+    "layer0": "megamod:item/royal_herald_spawn_egg",
+    "particle": "megamod:item/royal_herald_spawn_egg"
   }
 }

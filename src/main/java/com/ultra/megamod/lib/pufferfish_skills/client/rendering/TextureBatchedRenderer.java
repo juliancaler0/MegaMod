@@ -16,14 +16,29 @@ import java.util.Map;
 public class TextureBatchedRenderer {
 	private final List<DrawCall> drawCalls = new ArrayList<>();
 
+	private enum DrawMode {
+		/** Standalone PNG textured blit — reads the whole PNG at the given identifier and stretches it into (x,y)/(width,height). */
+		FULL_TEXTURE,
+		/** Sprite-atlas blit — the identifier is a sprite path on the GUI sprite atlas (e.g. {@code advancements/task_frame_obtained}, {@code mob_effect/speed}). */
+		SPRITE,
+		/** UV-subregion blit on a standalone PNG. */
+		SUBREGION
+	}
+
 	private record DrawCall(
 			Identifier texture,
 			int x, int y, int width, int height,
 			float minU, float minV, float maxU, float maxV,
 			Vector4fc color,
-			boolean isFullTexture
+			DrawMode mode
 	) { }
 
+	/**
+	 * Emits a standalone-PNG full-texture blit. The {@code texture} identifier resolves to
+	 * {@code assets/<ns>/<path>} and is loaded synchronously by {@link net.minecraft.client.renderer.texture.TextureManager#getTexture}.
+	 * For sprite-atlas paths (like {@code mob_effect/speed} or {@code advancements/task_frame_obtained}) use
+	 * {@link #emitSpriteByIdentifier} instead.
+	 */
 	public void emitTexture(
 			GuiGraphics context, Identifier texture,
 			int x, int y, int width, int height,
@@ -34,7 +49,26 @@ public class TextureBatchedRenderer {
 				x, y, width, height,
 				0f, 0f, 1f, 1f,
 				color,
-				true
+				DrawMode.FULL_TEXTURE
+		));
+	}
+
+	/**
+	 * Emits a GUI-sprite-atlas blit. Use for identifiers that are sprite paths on the GUI sprite
+	 * atlas, i.e. identifiers without {@code textures/gui/} prefix or {@code .png} suffix, such as
+	 * {@code minecraft:advancements/task_frame_obtained} or {@code minecraft:mob_effect/speed}.
+	 */
+	public void emitSpriteByIdentifier(
+			GuiGraphics context, Identifier sprite,
+			int x, int y, int width, int height,
+			Vector4fc color
+	) {
+		drawCalls.add(new DrawCall(
+				sprite,
+				x, y, width, height,
+				0f, 0f, 1f, 1f,
+				color,
+				DrawMode.SPRITE
 		));
 	}
 
@@ -199,7 +233,7 @@ public class TextureBatchedRenderer {
 			float minU, float minV, float maxU, float maxV,
 			Vector4fc color
 	) {
-		drawCalls.add(new DrawCall(texture, x, y, width, height, minU, minV, maxU, maxV, color, false));
+		drawCalls.add(new DrawCall(texture, x, y, width, height, minU, minV, maxU, maxV, color, DrawMode.SUBREGION));
 	}
 
 	private static float getFrameU(TextureAtlasSprite sprite, float frame) {
@@ -214,27 +248,40 @@ public class TextureBatchedRenderer {
 		for (var call : drawCalls) {
 			int argbColor = ARGB.colorFromFloat(call.color().w(), call.color().x(), call.color().y(), call.color().z());
 
-			if (call.isFullTexture()) {
-				context.blit(RenderPipelines.GUI_TEXTURED, call.texture(),
-						call.x(), call.y(),
-						0f, 0f,
-						call.width(), call.height(),
-						call.width(), call.height(),
-						call.width(), call.height(),
-						argbColor);
-			} else {
-				// For UV-mapped textures, use blit with explicit UV coordinates
-				// blit(pipeline, texture, x, y, uOffset, vOffset, width, height, textureWidth, textureHeight)
-				// We need to convert UV (0-1) to pixel coordinates in the texture
-				// Use the general blit that accepts float UV offset
-				context.blit(RenderPipelines.GUI_TEXTURED, call.texture(),
-						call.x(), call.y(),
-						call.minU(), call.minV(),
-						call.width(), call.height(),
-						(int) ((call.maxU() - call.minU()) * call.width() / (call.maxU() - call.minU())),
-						(int) ((call.maxV() - call.minV()) * call.height() / (call.maxV() - call.minV())),
-						call.width(), call.height(),
-						argbColor);
+			switch (call.mode()) {
+				case FULL_TEXTURE -> {
+					// Standalone PNG: blit the entire texture into the target rect.
+					// Passing width==textureWidth makes u0=0, u1=1 so the full image maps to the target.
+					context.blit(RenderPipelines.GUI_TEXTURED, call.texture(),
+							call.x(), call.y(),
+							0f, 0f,
+							call.width(), call.height(),
+							call.width(), call.height(),
+							argbColor);
+				}
+				case SPRITE -> {
+					// GUI-sprite-atlas sprite: use blitSprite so the identifier resolves through
+					// the sprite atlas (mob_effect/*, advancements/*, hud/*, etc.).
+					context.blitSprite(RenderPipelines.GUI_TEXTURED, call.texture(),
+							call.x(), call.y(),
+							call.width(), call.height(),
+							argbColor);
+				}
+				case SUBREGION -> {
+					// UV-subregion of a standalone PNG. Convert normalized UV (0-1) to pixel offsets
+					// based on (call.width, call.height) being treated as the underlying image size.
+					int u = (int) (call.minU() * call.width());
+					int v = (int) (call.minV() * call.height());
+					int uSpan = (int) ((call.maxU() - call.minU()) * call.width());
+					int vSpan = (int) ((call.maxV() - call.minV()) * call.height());
+					context.blit(RenderPipelines.GUI_TEXTURED, call.texture(),
+							call.x(), call.y(),
+							(float) u, (float) v,
+							call.width(), call.height(),
+							uSpan, vSpan,
+							call.width(), call.height(),
+							argbColor);
+				}
 			}
 		}
 		drawCalls.clear();

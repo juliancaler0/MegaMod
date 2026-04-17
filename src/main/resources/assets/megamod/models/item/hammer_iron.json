@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/hammer_iron"
+    "layer0": "megamod:item/hammer_iron",
+    "particle": "megamod:item/hammer_iron"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/arcane_robe_feet"
+    "layer0": "megamod:item/arcane_robe_feet",
+    "particle": "megamod:item/arcane_robe_feet"
   }
 }

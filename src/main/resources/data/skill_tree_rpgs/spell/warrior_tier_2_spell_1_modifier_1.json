@@ -5,7 +5,7 @@
   "type": "MODIFIER",
   "modifiers": [
     {
-      "spell_pattern": "rogues:throw",
+      "spell_pattern": "megamod:throw",
       "projectile_perks": {
         "ricochet": 1,
         "ricochet_range": 0.0,

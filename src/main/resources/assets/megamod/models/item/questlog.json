@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/questlog"
+    "layer0": "megamod:item/questlog",
+    "particle": "megamod:item/questlog"
   }
 }

@@ -12,15 +12,9 @@
     "PPP"
   ],
   "key": {
-    "P": {
-      "item": "minecraft:ghast_tear"
-    },
-    "S": {
-      "tag": "c:gunpowders"
-    },
-    "T": {
-      "item": "reliquary:catalyzing_gland"
-    }
+    "P": "minecraft:ghast_tear",
+    "S": "#c:gunpowders",
+    "T": "reliquary:catalyzing_gland"
   },
   "result": {
     "id": "reliquary:mob_charm_fragment",

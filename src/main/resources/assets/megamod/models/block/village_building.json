@@ -1,1 +1,2 @@
-{ "parent": "minecraft:block/cube_all", "textures": { "all": "megamod:block/village_building" } }
+{ "parent": "minecraft:block/cube_all", "textures": { "all": "megamod:block/village_building",
+ "particle": "megamod:block/village_building" } }

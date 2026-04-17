@@ -48,13 +48,14 @@ public class PoseAnimationStack extends PlayerAnimationController {
         if (lastPose != null && newPoseData.equals(lastPose)) return;
 
         if (animationId == null || animationId.isEmpty()) {
-            stop();
+            // Match source BetterCombat PoseAnimationStack.setPose — uses stopTriggeredAnimation.
+            stopTriggeredAnimation();
         } else {
             Identifier animId = animationId.contains(":") ? Identifier.parse(animationId) : Identifier.fromNamespaceAndPath("megamod", animationId);
             if (PlayerAnimResources.hasAnimation(animId)) {
                 mirror.enabled = shouldMirror;
-                AbstractFadeModifier fade = AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE);
-                replaceAnimationWithFade(fade, animId);
+                // Match source: triggerAnimation (one-shot) not replaceAnimationWithFade (stacks fades).
+                triggerAnimation(animId);
             }
         }
 

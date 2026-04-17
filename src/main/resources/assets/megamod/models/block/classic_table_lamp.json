@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"1": "megamod:block/classic_table_lamp"
+		"1": "megamod:block/classic_table_lamp",
+		"particle": "#1"
 	},
 	"elements": [
 		{

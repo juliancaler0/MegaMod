@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/rain_steam_speed"
+    "layer0": "megamod:item/rain_steam_speed",
+    "particle": "megamod:item/rain_steam_speed"
   }
 }

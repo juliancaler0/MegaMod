@@ -80,11 +80,7 @@ public class TreeFellingHandler {
         }
     }
 
-    /**
-     * Check if player has tree felling skill.
-     * TODO: Reconnect with Pufferfish Skills API (was SkillBranch.CROP_MASTER/BOTANIST tier 3+ check)
-     * Currently always returns true — feature toggle gates the feature itself.
-     */
+    /** Feature toggle governs this now; no per-player unlock requirement. */
     private static boolean hasTreeFellingSkill(ServerPlayer player, ServerLevel level) {
         return true;
     }

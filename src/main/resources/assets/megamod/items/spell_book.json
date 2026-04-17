@@ -1,6 +1,69 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "megamod:item/spell_book"
+    "type": "minecraft:select",
+    "property": "minecraft:component",
+    "component": "megamod:item_model",
+    "cases": [
+      {
+        "when": "megamod:item/spell_book/arcane",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/arcane"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/fire",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/fire"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/frost",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/frost"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/archer",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/archer"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/paladin",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/paladin"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/priest",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/priest"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/rogue",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/rogue"
+        }
+      },
+      {
+        "when": "megamod:item/spell_book/warrior",
+        "model": {
+          "type": "minecraft:model",
+          "model": "megamod:item/spell_book/warrior"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "megamod:item/spell_book"
+    }
   }
 }

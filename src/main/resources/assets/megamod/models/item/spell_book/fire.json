@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/spell_book/fire"
+    "layer0": "megamod:item/spell_book/fire",
+    "particle": "megamod:item/spell_book/fire"
   }
 }

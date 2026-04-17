@@ -1,6 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "megamod:item/chorus_bread"
+        "layer0": "megamod:item/chorus_bread",
+        "particle": "megamod:item/chorus_bread"
     }
 }

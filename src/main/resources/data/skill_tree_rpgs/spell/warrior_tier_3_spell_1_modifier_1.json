@@ -12,7 +12,7 @@
       {
         "type": "SPELL_CAST",
         "spell": {
-          "id": "rogues:shout"
+          "id": "megamod:shout"
         }
       }
     ]

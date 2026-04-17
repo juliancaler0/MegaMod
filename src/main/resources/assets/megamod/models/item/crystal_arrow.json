@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/crystal_arrow" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/crystal_arrow",
+ "particle": "megamod:item/crystal_arrow" } }

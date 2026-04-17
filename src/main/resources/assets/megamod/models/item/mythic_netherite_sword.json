@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/mythic_netherite_sword" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/mythic_netherite_sword",
+ "particle": "megamod:item/mythic_netherite_sword" } }

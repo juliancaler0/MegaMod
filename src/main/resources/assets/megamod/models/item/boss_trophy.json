@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/boss_trophy" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/boss_trophy",
+ "particle": "megamod:item/boss_trophy" } }

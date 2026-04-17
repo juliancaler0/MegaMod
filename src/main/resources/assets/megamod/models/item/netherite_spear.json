@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/spear_28",
   "textures": {
-    "layer0": "megamod:item/netherite_spear"
+    "layer0": "megamod:item/netherite_spear",
+    "particle": "megamod:item/netherite_spear"
   }
 }

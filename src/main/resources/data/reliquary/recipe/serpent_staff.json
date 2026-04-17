@@ -7,18 +7,10 @@
     "S  "
   ],
   "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "C": {
-      "item": "reliquary:chelicerae"
-    },
-    "E": {
-      "item": "minecraft:ender_eye"
-    },
-    "K": {
-      "item": "reliquary:kraken_shell_fragment"
-    }
+    "S": "minecraft:stick",
+    "C": "reliquary:chelicerae",
+    "E": "minecraft:ender_eye",
+    "K": "reliquary:kraken_shell_fragment"
   },
   "result": {
     "id": "reliquary:serpent_staff",

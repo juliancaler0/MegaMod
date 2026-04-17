@@ -1,1 +1,2 @@
-{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/tanks_upgrade"}}
+{"parent": "minecraft:item/generated", "textures": {"layer0": "megamod:item/tanks_upgrade",
+"particle": "megamod:item/tanks_upgrade"}}

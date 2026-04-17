@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/staff_28",
   "textures": {
-    "layer0": "megamod:item/unique_staff_heal_2"
+    "layer0": "megamod:item/unique_staff_heal_2",
+    "particle": "megamod:item/unique_staff_heal_2"
   }
 }

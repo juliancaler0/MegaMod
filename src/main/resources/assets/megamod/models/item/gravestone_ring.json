@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/gravestone_ring"
+    "layer0": "megamod:item/gravestone_ring",
+    "particle": "megamod:item/gravestone_ring"
   }
 }

@@ -1,6 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "megamod:item/crusader_armor_feet"
+    "layer0": "megamod:item/crusader_armor_feet",
+    "particle": "megamod:item/crusader_armor_feet"
   }
 }

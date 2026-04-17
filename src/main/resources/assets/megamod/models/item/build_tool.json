@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/build_tool"
+    "layer0": "megamod:item/build_tool",
+    "particle": "megamod:item/build_tool"
   }
 }

@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/ruby_ring"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/ruby_ring",
+"particle": "megamod:item/ruby_ring"}}

@@ -8,7 +8,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/farmer_flower"
+		"2": "megamod:block/farmer_flower",
+		"particle": "#2"
 	},
 	"elements": [
 		{

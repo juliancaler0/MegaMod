@@ -1,15 +1,15 @@
 {
   "values": [
     {
-      "id": "megamod:unique_heavy_crossbow_1",
+      "id": "arsenal:unique_heavy_crossbow_1",
       "required": false
     },
     {
-      "id": "megamod:unique_heavy_crossbow_2",
+      "id": "arsenal:unique_heavy_crossbow_2",
       "required": false
     },
     {
-      "id": "megamod:unique_heavy_crossbow_sw",
+      "id": "arsenal:unique_heavy_crossbow_sw",
       "required": false
     }
   ]

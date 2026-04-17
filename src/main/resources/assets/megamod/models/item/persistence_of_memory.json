@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/persistence_of_memory"
+    "layer0": "megamod:item/persistence_of_memory",
+    "particle": "megamod:item/persistence_of_memory"
   }
 }

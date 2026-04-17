@@ -8,7 +8,8 @@
 		128
 	],
 	"textures": {
-		"1": "megamod:block/classic_showcase_corner"
+		"1": "megamod:block/classic_showcase_corner",
+		"particle": "#1"
 	},
 	"elements": [
 		{

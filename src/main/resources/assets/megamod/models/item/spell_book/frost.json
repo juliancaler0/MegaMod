@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/spell_book/frost"
+    "layer0": "megamod:item/spell_book/frost",
+    "particle": "megamod:item/spell_book/frost"
   }
 }

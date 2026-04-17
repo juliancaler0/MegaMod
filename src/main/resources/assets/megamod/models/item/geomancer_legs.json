@@ -1,1 +1,2 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/geomancer_legs"}}
+{"parent":"minecraft:item/generated","textures":{"layer0":"megamod:item/geomancer_legs",
+"particle": "megamod:item/geomancer_legs"}}

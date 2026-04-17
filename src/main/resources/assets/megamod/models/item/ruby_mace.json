@@ -1,6 +1,7 @@
 {
   "parent": "megamod:item/base/mace",
   "textures": {
-    "1": "megamod:item/ruby_mace"
+    "1": "megamod:item/ruby_mace",
+    "particle": "#1"
   }
 }

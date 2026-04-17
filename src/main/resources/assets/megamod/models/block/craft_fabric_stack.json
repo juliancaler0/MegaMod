@@ -5,7 +5,8 @@
 		64
 	],
 	"textures": {
-		"2": "megamod:block/craft_fabric_stack"
+		"2": "megamod:block/craft_fabric_stack",
+		"particle": "#2"
 	},
 	"elements": [
 		{

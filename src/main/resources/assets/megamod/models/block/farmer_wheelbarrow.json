@@ -8,7 +8,8 @@
 		512
 	],
 	"textures": {
-		"5": "megamod:block/farmer_wheelbarrow"
+		"5": "megamod:block/farmer_wheelbarrow",
+		"particle": "#5"
 	},
 	"elements": [
 		{

@@ -7,21 +7,11 @@
     "RGC"
   ],
   "key": {
-    "G": {
-      "tag": "c:glass_panes"
-    },
-    "B": {
-      "item": "minecraft:water_bucket"
-    },
-    "F": {
-      "item": "reliquary:fertile_essence"
-    },
-    "R": {
-      "tag": "c:dyes/red"
-    },
-    "C": {
-      "item": "minecraft:cocoa_beans"
-    }
+    "G": "#c:glass_panes",
+    "B": "minecraft:water_bucket",
+    "F": "reliquary:fertile_essence",
+    "R": "#c:dyes/red",
+    "C": "minecraft:cocoa_beans"
   },
   "result": {
     "id": "reliquary:aphrodite_potion",

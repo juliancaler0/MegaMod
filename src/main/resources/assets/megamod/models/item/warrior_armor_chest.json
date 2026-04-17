@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/warrior_armor_chest"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/warrior_armor_chest",
+"particle": "megamod:item/warrior_armor_chest"}}

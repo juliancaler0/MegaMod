@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/the_dream_rousseau"
+    "layer0": "megamod:item/the_dream_rousseau",
+    "particle": "megamod:item/the_dream_rousseau"
   }
 }

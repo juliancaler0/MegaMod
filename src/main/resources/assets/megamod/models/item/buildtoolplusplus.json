@@ -1,7 +1,8 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "megamod:item/buildtoolplusplus"
+    "layer0": "megamod:item/buildtoolplusplus",
+    "particle": "megamod:item/buildtoolplusplus"
   },
   "display": {
     "thirdperson": {

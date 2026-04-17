@@ -26,24 +26,28 @@ import java.util.Optional;
 public final class BuiltinPrototypes {
 	private BuiltinPrototypes() { }
 
-	public static final Prototype<Double> NUMBER = Prototype.create(SkillsMod.createIdentifier("number"));
-	public static final Prototype<Boolean> BOOLEAN = Prototype.create(SkillsMod.createIdentifier("boolean"));
-	public static final Prototype<MinecraftServer> SERVER = Prototype.create(SkillsMod.createIdentifier("server"));
-	public static final Prototype<ServerLevel> WORLD = Prototype.create(SkillsMod.createIdentifier("world"));
-	public static final Prototype<EntityType<?>> ENTITY_TYPE = Prototype.create(SkillsMod.createIdentifier("entity_type"));
-	public static final Prototype<Entity> ENTITY = Prototype.create(SkillsMod.createIdentifier("entity"));
-	public static final Prototype<LivingEntity> LIVING_ENTITY = Prototype.create(SkillsMod.createIdentifier("living_entity"));
-	public static final Prototype<ServerPlayer> PLAYER = Prototype.create(SkillsMod.createIdentifier("player"));
-	public static final Prototype<Item> ITEM = Prototype.create(SkillsMod.createIdentifier("item"));
-	public static final Prototype<ItemStack> ITEM_STACK = Prototype.create(SkillsMod.createIdentifier("item_stack"));
-	public static final Prototype<Block> BLOCK = Prototype.create(SkillsMod.createIdentifier("block"));
-	public static final Prototype<BlockState> BLOCK_STATE = Prototype.create(SkillsMod.createIdentifier("block_state"));
-	public static final Prototype<DamageType> DAMAGE_TYPE = Prototype.create(SkillsMod.createIdentifier("damage_type"));
-	public static final Prototype<DamageSource> DAMAGE_SOURCE = Prototype.create(SkillsMod.createIdentifier("damage_source"));
-	public static final Prototype<StatType<?>> STAT_TYPE = Prototype.create(SkillsMod.createIdentifier("stat_type"));
-	public static final Prototype<Stat<?>> STAT = Prototype.create(SkillsMod.createIdentifier("stat"));
-	public static final Prototype<MobEffectInstance> STATUS_EFFECT_INSTANCE = Prototype.create(SkillsMod.createIdentifier("status_effect_instance"));
-	public static final Prototype<AttributeInstance> ENTITY_ATTRIBUTE_INSTANCE = Prototype.create(SkillsMod.createIdentifier("entity_attribute_instance"));
+	// Prototypes use the default (minecraft:) namespace to match operation registration
+	// (Identifier.parse("X") below also defaults to minecraft:X). Keeping namespaces consistent
+	// is required because VariablesImpl re-namespaces operation lookups using the return
+	// prototype's namespace; mismatched namespaces cause "Expected a valid operation type" errors.
+	public static final Prototype<Double> NUMBER = Prototype.create(Identifier.parse("number"));
+	public static final Prototype<Boolean> BOOLEAN = Prototype.create(Identifier.parse("boolean"));
+	public static final Prototype<MinecraftServer> SERVER = Prototype.create(Identifier.parse("server"));
+	public static final Prototype<ServerLevel> WORLD = Prototype.create(Identifier.parse("world"));
+	public static final Prototype<EntityType<?>> ENTITY_TYPE = Prototype.create(Identifier.parse("entity_type"));
+	public static final Prototype<Entity> ENTITY = Prototype.create(Identifier.parse("entity"));
+	public static final Prototype<LivingEntity> LIVING_ENTITY = Prototype.create(Identifier.parse("living_entity"));
+	public static final Prototype<ServerPlayer> PLAYER = Prototype.create(Identifier.parse("player"));
+	public static final Prototype<Item> ITEM = Prototype.create(Identifier.parse("item"));
+	public static final Prototype<ItemStack> ITEM_STACK = Prototype.create(Identifier.parse("item_stack"));
+	public static final Prototype<Block> BLOCK = Prototype.create(Identifier.parse("block"));
+	public static final Prototype<BlockState> BLOCK_STATE = Prototype.create(Identifier.parse("block_state"));
+	public static final Prototype<DamageType> DAMAGE_TYPE = Prototype.create(Identifier.parse("damage_type"));
+	public static final Prototype<DamageSource> DAMAGE_SOURCE = Prototype.create(Identifier.parse("damage_source"));
+	public static final Prototype<StatType<?>> STAT_TYPE = Prototype.create(Identifier.parse("stat_type"));
+	public static final Prototype<Stat<?>> STAT = Prototype.create(Identifier.parse("stat"));
+	public static final Prototype<MobEffectInstance> STATUS_EFFECT_INSTANCE = Prototype.create(Identifier.parse("status_effect_instance"));
+	public static final Prototype<AttributeInstance> ENTITY_ATTRIBUTE_INSTANCE = Prototype.create(Identifier.parse("entity_attribute_instance"));
 
 	static {
 		WORLD.registerOperation(

@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "megamod:item/napoleon_crossing_alps"
+    "layer0": "megamod:item/napoleon_crossing_alps",
+    "particle": "megamod:item/napoleon_crossing_alps"
   }
 }

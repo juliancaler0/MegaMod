@@ -1,1 +1,2 @@
-{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/fang_on_a_stick" } }
+{ "parent": "minecraft:item/generated", "textures": { "layer0": "megamod:item/fang_on_a_stick",
+ "particle": "megamod:item/fang_on_a_stick" } }

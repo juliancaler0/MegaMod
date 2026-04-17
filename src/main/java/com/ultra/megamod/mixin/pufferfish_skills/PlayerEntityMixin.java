@@ -17,10 +17,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerEntityMixin {
 
 	@Inject(
-			method = "applyDamage",
+			method = "actuallyHurt",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/entity/player/Player;setHealth(F)V"
+					target = "Lnet/minecraft/world/entity/player/Player;setHealth(F)V"
 			)
 	)
 	private void injectAtSetHealth(ServerLevel world, DamageSource source, float damage, CallbackInfo ci) {

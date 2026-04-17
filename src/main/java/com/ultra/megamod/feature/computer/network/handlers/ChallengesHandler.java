@@ -6,23 +6,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-/**
- * Handles computer app requests for the Challenges screen.
- * TODO: Reconnect with Pufferfish Skills API (was SkillChallenges-based)
- */
+/// Stubbed: SkillChallenges system was removed in the Pufferfish migration. The Challenges
+/// computer app still exists in the UI but this handler now returns a permanently-empty list.
 public class ChallengesHandler {
 
     public static boolean handle(ServerPlayer player, String action, String jsonData,
                                   ServerLevel level, EconomyManager eco) {
         if (!"challenges_request".equals(action)) return false;
-
-        // Old SkillChallenges system removed — return empty data
-        StringBuilder sb = new StringBuilder();
-        sb.append("{\"challenges\":[],\"nextWeekMs\":0}");
-
         int wallet = eco.getWallet(player.getUUID());
         int bank = eco.getBank(player.getUUID());
-        PacketDistributor.sendToPlayer(player, new ComputerDataPayload("challenges_data", sb.toString(), wallet, bank));
+        PacketDistributor.sendToPlayer(player, new ComputerDataPayload(
+                "challenges_data", "{\"challenges\":[],\"nextWeekMs\":0}", wallet, bank));
         return true;
     }
 }

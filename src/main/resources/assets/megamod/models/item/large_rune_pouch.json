@@ -1,1 +1,2 @@
-{"parent":"item/generated","textures":{"layer0":"megamod:item/large_rune_pouch"}}
+{"parent":"item/generated","textures":{"layer0":"megamod:item/large_rune_pouch",
+"particle": "megamod:item/large_rune_pouch"}}

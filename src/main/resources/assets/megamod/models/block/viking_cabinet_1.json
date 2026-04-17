@@ -4,7 +4,8 @@
 	"credit": "MadewithBlockbench",
 	"texture_size": [128, 128],
 	"textures": {
-		"3": "megamod:block/viking_cabinet_1"
+		"3": "megamod:block/viking_cabinet_1",
+		"particle": "#3"
 	},
 	"elements": [
 		{
