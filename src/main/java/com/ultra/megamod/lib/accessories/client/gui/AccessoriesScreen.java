@@ -876,25 +876,27 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     private final List<Vector3d> hoveredAccessoryPositons = new ArrayList<>();
     private final List<Line3d> linesToAccessoryPositions = new ArrayList<>();
 
+    private static final net.minecraft.resources.Identifier ACC_PANEL_TEX =
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("accessories", "textures/gui/accessories_panel.png");
+    private static final net.minecraft.resources.Identifier SLOT_FRAME_TEX =
+            net.minecraft.resources.Identifier.fromNamespaceAndPath("accessories", "textures/gui/slot_frame.png");
+
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         // BaseOwoHandledScreen provides no-op renderBg, no super call needed.
-        // Draw the panel chrome to match the stock Accessories layout.
+        // Draw the panel chrome to match the stock Accessories layout using
+        // the real accessories_panel.png nine-patch + slot_frame.png overlay.
         int x = this.leftPos;
         int y = this.topPos;
         int w = this.imageWidth;
         int h = this.imageHeight;
 
-        // Outer panel frame (dark border, light inner).
+        // Tone constants kept for fallback slot backdrops where the
+        // nine-patch doesn't apply (inside slot rects).
         final int FRAME_DARK = 0xFF373737;
         final int FRAME_MID = 0xFF8B8B8B;
         final int FRAME_LIGHT = 0xFFC6C6C6;
-        final int PANEL_BG = 0xFFC6C6C6;
         final int SLOT_DARK = 0xFF8B8B8B;
-
-        // Background panel
-        guiGraphics.fill(x, y, x + w, y + h, FRAME_DARK);
-        guiGraphics.fill(x + 1, y + 1, x + w - 1, y + h - 1, PANEL_BG);
 
         // --- Accessory column sub-panel (left, two columns wide) ---
         int accRows = accessoryRowCount();
@@ -903,7 +905,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
             int accPanelY = y + ACC_COL_Y - 4;
             int accPanelW = ACC_COLS * 18 + 8;
             int accPanelH = accRows * this.accRowStride + 8;
-            drawInsetFrame(guiGraphics, accPanelX, accPanelY, accPanelW, accPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+            NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, accPanelX, accPanelY, accPanelW, accPanelH);
             var menu = this.getMenu();
             int accStart = menu.startingAccessoriesSlot() + menu.addedArmorSlots();
             int pairCount = Math.max(0, (menu.slots.size() - accStart) / 2);
@@ -913,6 +915,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                 int sx = x + ((col == 0) ? ACC_COL_X : ACC_COL2_X);
                 int sy = y + ACC_COL_Y + row * this.accRowStride;
                 guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+                NinePatchHelper.drawSlotFrame(guiGraphics, SLOT_FRAME_TEX, sx, sy);
             }
         }
 
@@ -922,18 +925,19 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
             int armorPanelX = x + ARMOR_COL_X - 4;
             int armorPanelY = y + ARMOR_COL_Y - 4;
             int armorPanelH = armorRows * ARMOR_ROW_STRIDE + 8;
-            drawInsetFrame(guiGraphics, armorPanelX, armorPanelY, 18 + 8, armorPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+            NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, armorPanelX, armorPanelY, 18 + 8, armorPanelH);
             for (int r = 0; r < armorRows; r++) {
                 int sx = x + ARMOR_COL_X;
                 int sy = y + ARMOR_COL_Y + r * ARMOR_ROW_STRIDE;
                 guiGraphics.fill(sx, sy, sx + 16, sy + 16, SLOT_DARK);
+                NinePatchHelper.drawSlotFrame(guiGraphics, SLOT_FRAME_TEX, sx, sy);
             }
         }
 
         // --- Entity preview frame ---
         int ex = x + ENTITY_X;
         int ey = y + ENTITY_Y;
-        drawInsetFrame(guiGraphics, ex - 2, ey - 2, ENTITY_W + 4, ENTITY_H + 4, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, ex - 4, ey - 4, ENTITY_W + 8, ENTITY_H + 8);
         guiGraphics.fill(ex, ey, ex + ENTITY_W, ey + ENTITY_H, 0xFF1A1A1A);
 
         // Render player preview (mouse-follow like the vanilla inventory).
@@ -961,7 +965,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         int invPanelY = y + INV_Y - 4;
         int invPanelW = 9 * 18 + 8;
         int invPanelH = 4 * 18 + 8 + 4; // 3 rows main + 1 hotbar + spacer
-        drawInsetFrame(guiGraphics, invPanelX, invPanelY, invPanelW, invPanelH, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, invPanelX, invPanelY, invPanelW, invPanelH);
         for (int r = 0; r < 3; r++) {
             for (int c = 0; c < 9; c++) {
                 int sx = x + INV_X + c * 18;
@@ -976,8 +980,26 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         }
 
         // --- Offhand slot backdrop (right of hotbar) ---
-        drawInsetFrame(guiGraphics, x + OFFHAND_X - 4, y + OFFHAND_Y - 4, 18 + 8, 18 + 8, FRAME_DARK, FRAME_LIGHT, FRAME_MID);
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, x + OFFHAND_X - 4, y + OFFHAND_Y - 4, 18 + 8, 18 + 8);
         guiGraphics.fill(x + OFFHAND_X, y + OFFHAND_Y, x + OFFHAND_X + 16, y + OFFHAND_Y + 16, SLOT_DARK);
+        NinePatchHelper.drawSlotFrame(guiGraphics, SLOT_FRAME_TEX, x + OFFHAND_X, y + OFFHAND_Y);
+
+        // --- Top-right "customize target entity" detached tile (above top-right of main panel) ---
+        int customizeX = x + w - 24;
+        int customizeY = y - 20;
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, customizeX, customizeY, 24, 24);
+
+        // --- Side toggle column (crafting + cosmetic icons) to the right of the inventory ---
+        int toggleX = x + INV_X + 9 * 18 + 4;
+        int toggleTopY = y + INV_Y - 4;
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, toggleX, toggleTopY, 22, 22);
+        NinePatchHelper.drawPanel(guiGraphics, ACC_PANEL_TEX, toggleX, toggleTopY + 24, 22, 22);
+
+        // --- Back button in top-right of entity preview frame ---
+        int backBtnX = x + ENTITY_X + ENTITY_W - 14;
+        int backBtnY = y + ENTITY_Y + 2;
+        guiGraphics.fill(backBtnX, backBtnY, backBtnX + 12, backBtnY + 12, 0xFFC6C6C6);
+        guiGraphics.fill(backBtnX + 1, backBtnY + 1, backBtnX + 11, backBtnY + 11, 0xFF8B8B8B);
 
         //--
 
