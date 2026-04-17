@@ -27,6 +27,14 @@ sourceSets.main.resources {
 }
 
 repositories {
+    mavenCentral()
+
+    // Wispforest Maven — owo-lib + endec artifacts for Accessories
+    maven {
+        name = "Wispforest Maven"
+        url = "https://maven.wispforest.io/releases/"
+    }
+
     // PlayerAnimationLib by ZigyTheBird (required for BetterCombat animations)
     maven {
         name = "ZigyTheBird's Maven"
@@ -202,6 +210,16 @@ dependencies {
     compileOnly "mezz.jei:jei-1.21.11-common-api:27.4.0.22"
     compileOnly "mezz.jei:jei-1.21.11-neoforge-api:27.4.0.22"
     compileOnly "top.theillusivec4.curios:curios-neoforge:14.0.0+1.21.11:api"
+
+    // owo-lib + endec — real NeoForge build from Wispforest. Replaces the
+    // hand-ported lib/owo/* shim. Uses the 1.21.10 build since there is
+    // no 1.21.11 release yet; likely binary-compatible.
+    implementation "io.wispforest:owo-lib-neoforge:0.12.28+1.21.10"
+    implementation "io.wispforest:endec:0.1.11"
+    implementation "io.wispforest.endec:netty:0.1.5"
+    implementation "io.wispforest.endec:gson:0.1.6"
+    implementation "io.wispforest.endec:jankson:0.1.6"
+    implementation "blue.endless:jankson:1.2.2"
 
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
