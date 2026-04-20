@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" M ", "M M", " M "],
+  "key": {"M":"minecraft:copper_ingot"},
+  "result": { "id": "megamod:copper_ring" }
+}

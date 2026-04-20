@@ -1303,7 +1303,15 @@ public class SpellHelper {
                     }
                     ///
 
-                    caster.doHurtTarget((ServerLevel) caster.level(), target);
+                    // Source calls caster.onAttacking(target) here — a non-damaging "enter combat"
+                    // notification. The previous port wrote caster.doHurtTarget(...) which applies
+                    // a FULL VANILLA MELEE HIT on top of the spell damage, masking the spell's
+                    // damage type / color and effectively dealing damage twice per impact. Use
+                    // setLastHurtMob (the 1.21.11 equivalent of onAttacking — sets the attacker
+                    // target reference for aggro/combat timers without inflicting damage).
+                    if (target instanceof LivingEntity livingTargetRef) {
+                        caster.setLastHurtMob(livingTargetRef);
+                    }
                     var damageSource = SpellDamageSource.create(school, caster);
                     if (critical) {
                         CriticalStrikeCompat.setCriticalStrike(damageSource, (float) power.criticalDamage());

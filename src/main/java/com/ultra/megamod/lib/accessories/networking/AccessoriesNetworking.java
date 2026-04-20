@@ -78,7 +78,27 @@ public class AccessoriesNetworking {
 
     //@Environment(EnvType.CLIENT)
     public static <R extends Record> void sendToServer(R packet) {
-        CHANNEL.clientHandle().send(packet);
+        try {
+            CHANNEL.clientHandle().send(packet);
+        } catch (IllegalStateException notRegistered) {
+            // SyncOptionChange and a few other packets have stubbed ENDECs that can't
+            // be serialized yet (see registration-site comment in init()). Drop the send
+            // and simulate the server echo locally so client-side UI rebuilds (crafting
+            // grid toggle, cosmetic slot toggle, etc.) still fire via onHolderChange.
+            com.ultra.megamod.lib.accessories.Accessories.LOGGER.debug(
+                "Dropping unregistered network packet: {}", packet.getClass().getSimpleName());
+            if (packet instanceof com.ultra.megamod.lib.accessories.networking.holder.SyncOptionChange soc) {
+                // Only simulate the UI rebuild (handleClient), NOT the data flip (handlePacket).
+                // Source's button handlers already manage the local data flip themselves via
+                // setData/setDataFrom *after* the sendToServer call, assuming the network round-trip
+                // is async. Calling handlePacket here would pre-apply the same flip and double it,
+                // causing options like SHOW_CRAFTING_GRID to land back on their original value.
+                var player = net.minecraft.client.Minecraft.getInstance().player;
+                if (player != null) {
+                    com.ultra.megamod.lib.accessories.networking.holder.SyncOptionChange.handleClient(soc, player);
+                }
+            }
+        }
     }
 
     public static <R extends Record> void sendToPlayer(ServerPlayer player, R packet) {

@@ -57,7 +57,10 @@ public class AnimatableTexture extends SimpleTexture {
     }
 
     public void setAnimationFrame(int tick) {
-        // In 1.21.11, texture frame animation is managed differently.
-        // Animated texture support is stubbed out for compatibility.
+        // No-op placeholder: vanilla's native .mcmeta animation system handles frame cycling
+        // for any texture that ships with a paired .png.mcmeta file. Custom per-tick frame
+        // switching via this method would require a dedicated {@link AbstractTexture} subclass
+        // that rebuilds the upload on each tick. No caller needs that today; the hook exists so
+        // {@link #setAndUpdate} can reflectively invoke it if a subclass overrides.
     }
 }

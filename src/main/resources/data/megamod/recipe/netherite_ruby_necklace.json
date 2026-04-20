@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "pattern": [" S ", "TMT", " G "],
+  "key": {"S":"minecraft:string","T":"minecraft:gold_nugget","M":"minecraft:netherite_ingot","G":"megamod:ruby"},
+  "result": { "id": "megamod:netherite_ruby_necklace" }
+}

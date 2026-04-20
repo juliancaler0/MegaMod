@@ -43,7 +43,8 @@
     "neoforge.CommandHelperMixin",
     "neoforge.ContextAwareReloadListenerAccessor",
     "neoforge.NeoForgeLoadingOverlayMixin",
-    "neoforge.neoforge.BaseRenderStateAccessor"
+    "neoforge.neoforge.BaseRenderStateAccessor",
+    "owo.ui.SlotAccessor"
   ],
   "client": [
     "client.AbstractButtonMixin",
@@ -74,9 +75,27 @@
     "client.RenderTargetMixin",
     "client.WingsLayerMixin",
     "neoforge.client.AbstractContainerScreenMixin",
-    "neoforge.client.AccessoriesPipelinesMixin"
+    "neoforge.client.AccessoriesPipelinesMixin",
+    "client.cosmetic.LivingEntityMixin",
+    "client.cosmetic.MobMixin",
+    "owo.ui.ScreenAccessor",
+    "owo.ui.AbstractWidgetMixin",
+    "owo.ui.SlotMixin",
+    "owo.ui.AbstractSliderButtonMixin",
+    "owo.ui.AbstractContainerScreenMixin",
+    "owo.ui.access.AbstractWidgetAccessor",
+    "owo.ui.access.GuiGraphicsAccessor",
+    "owo.ui.access.EditBoxAccessor",
+    "owo.ui.access.ButtonAccessor",
+    "owo.ui.access.RenderPipelinesAccessor",
+    "owo.ui.access.EntityRendererAccessor",
+    "owo.ui.access.BlockEntityAccessor",
+    "owo.ui.access.BaseOwoHandledScreenAccessor",
+    "owo.ui.access.MultiLineEditBoxAccessor",
+    "client.GuiGraphicsMixin$ScissorStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.ultra.megamod.mixin.accessories.AccessoriesMixinPlugin"
 }

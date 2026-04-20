@@ -1,10 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "megamod:ashen_diadem",
-    "megamod:lunar_crown",
-    "megamod:solar_crown",
-    "megamod:stormcaller_circlet",
-    "megamod:wraith_crown"
-  ]
+  "values": []
 }

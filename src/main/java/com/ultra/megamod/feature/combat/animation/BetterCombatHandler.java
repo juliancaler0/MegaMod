@@ -61,9 +61,18 @@ public class BetterCombatHandler {
 
             // Get weapon attributes
             var mainHand = player.getMainHandItem();
-            if (mainHand.isEmpty()) return;
+            if (mainHand.isEmpty()) {
+                com.ultra.megamod.MegaMod.LOGGER.warn("[BC-Damage] Attack request dropped: empty main hand");
+                return;
+            }
             var attrs = WeaponAttributeRegistry.getAttributes(mainHand);
-            if (attrs == null || attrs.attacks() == null || attrs.attacks().length == 0) return;
+            if (attrs == null || attrs.attacks() == null || attrs.attacks().length == 0) {
+                com.ultra.megamod.MegaMod.LOGGER.warn("[BC-Damage] Attack request dropped: no weapon_attributes for {}",
+                        mainHand.getItem());
+                return;
+            }
+            com.ultra.megamod.MegaMod.LOGGER.info("[BC-Damage] Attack received: item={} combo={} entityIds={} cursorId={}",
+                    mainHand.getItem(), payload.comboCount(), payload.entityIds().length, payload.cursorTargetId());
 
             // Use the combo count from the packet
             int comboCount = payload.comboCount();
@@ -367,12 +376,11 @@ public class BetterCombatHandler {
 
     // ── Main event handler ──────────────────────────────────────────────
 
-    // TODO: Swing-through-grass — client-side feature that prevents non-collidable blocks
-    //  (tall grass, flowers, ferns, etc.) from blocking weapon swings. When the player's
-    //  crosshair hits a non-solid block but a valid entity target exists behind it within
-    //  reach, the attack should pass through to the entity. This requires a client-side mixin
-    //  (likely on MultiPlayerGameMode or the attack raycast) to re-cast the ray ignoring
-    //  non-collidable blocks before sending the attack packet to the server.
+    // Swing-through-grass: already implemented at the OBB filter level in
+    // {@link com.ultra.megamod.feature.combat.animation.collision.TargetFinder#rayContainsNoObstacle}
+    // via {@code ClipContext.Block.COLLIDER} — non-collidable blocks (tall grass, flowers,
+    // ferns) are treated as empty so the raycast ignores them and entities behind are valid
+    // targets. Matches source BetterCombat's behavior 1:1.
 
     /**
      * Intercepts every player melee attack. If the held weapon has

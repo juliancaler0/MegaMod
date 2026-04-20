@@ -78,10 +78,13 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
                 (controller, data, setter) -> PlayState.CONTINUE;
 
         megamod$attackAnimation = new AttackAnimationStack(player, handler);
-        megamod$mainHandBodyPose = new PoseAnimationStack(player, true);
-        megamod$mainHandItemPose = new PoseAnimationStack(player, true);
-        megamod$offHandBodyPose = new PoseAnimationStack(player, false);
-        megamod$offHandItemPose = new PoseAnimationStack(player, false);
+        // 4-stack pose system matches source BetterCombat: (isMainHand, isBodyChannel).
+        // Body channel can be suppressed during walking/sneaking while item channel keeps
+        // showing the weapon-arm pose — fixes body-shake-after-swing on two-handed weapons.
+        megamod$mainHandBodyPose = new PoseAnimationStack(player, true,  true);
+        megamod$mainHandItemPose = new PoseAnimationStack(player, true,  false);
+        megamod$offHandBodyPose  = new PoseAnimationStack(player, false, true);
+        megamod$offHandItemPose  = new PoseAnimationStack(player, false, false);
 
         // Register all layers on the animation stack
         // Controllers ARE IAnimation instances — register them directly (no .base needed)
@@ -183,26 +186,39 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
         if (!megamod$animInitialized) return;
         var player = (AbstractClientPlayer) (Object) this;
 
+        // Fire scheduled slash-trail particles at their target tick (matches source BetterCombat).
+        if (megamod$scheduledParticles != null && megamod$scheduledParticles.time() == player.tickCount) {
+            com.ultra.megamod.feature.combat.animation.client.particle.SlashParticleUtil.spawnParticles(
+                    megamod$scheduledParticles.player(),
+                    megamod$scheduledParticles.isOffHand(),
+                    megamod$scheduledParticles.weaponRange(),
+                    megamod$scheduledParticles.particles(),
+                    megamod$scheduledParticles.appearance());
+            megamod$scheduledParticles = null;
+        }
+
         // Update idle weapon poses
         boolean isLeftHanded = player.getMainArm() == HumanoidArm.LEFT;
 
         // Determine pose from equipped weapons
         Pose pose = PlayerAttackHelper.poseForPlayer(player);
 
-        // Match source BetterCombat AbstractClientPlayerEntityMixin.updateAnimationsOnTick:
-        // clear all poses during any "busy" activity that owns the arm/body rig.
-        boolean attackActive = megamod$attackAnimation != null && megamod$attackAnimation.isActive();
-        boolean spellActive = com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager.isAnyActive(player);
+        // Match source BetterCombat AbstractClientPlayerEntityMixin.updateAnimationsOnTick exactly.
+        // Important: do NOT clear poses during attack or spell cast — attack runs on a higher
+        // priority layer (the triggered slot) and naturally overrides the base pose layer.
+        // Clearing pose during attack caused a 1-frame gap at swing end where body snapped to
+        // default before pose re-triggered — visible as the "body shake after hammer swing".
         boolean crossbowCharged = net.minecraft.world.item.CrossbowItem.isCharged(player.getMainHandItem());
+        boolean isCastingSpell = player instanceof com.ultra.megamod.lib.spellengine.internals.casting.SpellCasterEntity caster
+                && caster.isCastingSpell();
         boolean clearPoses = player.swinging           // vanilla hand-swing mid-flight
                 || player.isSwimming()
-                || player.onClimbable()                // was checking onClimbable() already
+                || player.onClimbable()
                 || player.isUsingItem()                // bows, food, shields
                 || player.isFallFlying()               // elytra
+                || isCastingSpell                      // spell cast drives its own animation
                 || crossbowCharged                     // loaded crossbow
-                || !player.isAlive()
-                || attackActive
-                || spellActive;
+                || !player.isAlive();
 
         if (clearPoses) {
             megamod$mainHandBodyPose.clearPose();
@@ -213,26 +229,50 @@ public class AbstractClientPlayerMixin implements PlayerAttackAnimatable,
             return;
         }
 
-        // Set main hand pose
-        String mainPose = pose.base();
-        if (mainPose != null && !mainPose.isEmpty()) {
-            megamod$mainHandBodyPose.setPose(mainPose, isLeftHanded);
-            megamod$mainHandItemPose.setPose(mainPose, isLeftHanded);
-        } else {
-            megamod$mainHandBodyPose.clearPose();
-            megamod$mainHandItemPose.clearPose();
-        }
+        // Source BetterCombat semantics:
+        //   - ITEM channel always shows the pose when set (weapon-arm must hold the pose)
+        //   - BODY channel is suppressed during walking/sneaking for ONE-HANDED weapons
+        //     (two-handed weapons keep full body pose since both arms are on the weapon)
+        String mainPoseId = (pose.base() != null && !pose.base().isEmpty()) ? pose.base() : null;
+        String offPoseId  = (pose.offHand() != null && !pose.offHand().isEmpty()) ? pose.offHand() : null;
 
-        // Set off hand pose
-        String offPose = pose.offHand();
-        if (offPose != null && !offPose.isEmpty()) {
-            megamod$offHandBodyPose.setPose(offPose, isLeftHanded);
-            megamod$offHandItemPose.setPose(offPose, isLeftHanded);
-        } else {
-            megamod$offHandBodyPose.clearPose();
-            megamod$offHandItemPose.clearPose();
-        }
+        // Item poses: always apply
+        megamod$mainHandItemPose.setPose(mainPoseId, isLeftHanded);
+        megamod$offHandItemPose.setPose(offPoseId, isLeftHanded);
+
+        // Body poses: suppress during walking/sneaking for one-handed wielding
+        boolean twoHanded = PlayerAttackHelper.isTwoHandedWielding(player);
+        boolean bodyClear = !twoHanded && (megamod$isWalking(player) || player.isCrouching());
+        megamod$mainHandBodyPose.setPose(bodyClear ? null : mainPoseId, isLeftHanded);
+        megamod$offHandBodyPose.setPose(bodyClear ? null : offPoseId, isLeftHanded);
 
         megamod$lastPose = pose;
+    }
+
+    @Unique
+    private static boolean megamod$isWalking(AbstractClientPlayer player) {
+        return !player.isDeadOrDying()
+                && (player.isSwimming() || player.getDeltaMovement().horizontalDistance() > 0.03);
+    }
+
+    /**
+     * Implementation of {@link PlayerAttackAnimatable#playAttackParticles}. Matches source
+     * BetterCombat: stores a {@link com.ultra.megamod.feature.combat.animation.client.ScheduledSlashParticles}
+     * record and defers spawning to {@link #updateAnimationsOnTick}, which fires the particles
+     * via {@link com.ultra.megamod.feature.combat.animation.client.particle.SlashParticleUtil#spawnParticles}
+     * at the target tick (upswing end). {@code TrailParticles.ENTRIES} and {@code SlashParticleEffect}
+     * are both fully ported — this is the live spawn path, not a stub.
+     */
+    @Unique
+    private com.ultra.megamod.feature.combat.animation.client.ScheduledSlashParticles megamod$scheduledParticles;
+
+    @Override
+    public void playAttackParticles(boolean isOffHand, float weaponRange, int delay,
+                                    java.util.List<com.ultra.megamod.feature.combat.animation.api.fx.ParticlePlacement> particles,
+                                    com.ultra.megamod.feature.combat.animation.api.fx.TrailAppearance appearance) {
+        var player = (AbstractClientPlayer) (Object) this;
+        megamod$scheduledParticles =
+                new com.ultra.megamod.feature.combat.animation.client.ScheduledSlashParticles(
+                        player, isOffHand, weaponRange, particles, appearance, player.tickCount + delay);
     }
 }

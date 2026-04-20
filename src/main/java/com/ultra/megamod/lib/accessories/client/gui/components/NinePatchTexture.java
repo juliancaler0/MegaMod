@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.accessories.client.gui.components;
 
-import com.ultra.megamod.lib.accessories.owo.ui.core.Component;
-import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIDrawContext;
+import com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIGraphics;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.Identifier;
 
@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier;
 public class NinePatchTexture {
 
     public static void draw(Identifier texture, GuiGraphics context, int x, int y, int width, int height) {}
-    public static void draw(Identifier texture, GuiGraphics context, Component component) {}
-    public static void draw(Identifier texture, OwoUIDrawContext context, int x, int y, int width, int height) {}
-    public static void draw(Identifier texture, OwoUIDrawContext context, Component component) {}
+    public static void draw(Identifier texture, GuiGraphics context, UIComponent component) {}
+    public static void draw(Identifier texture, OwoUIGraphics context, int x, int y, int width, int height) {}
+    public static void draw(Identifier texture, OwoUIGraphics context, UIComponent component) {}
 }

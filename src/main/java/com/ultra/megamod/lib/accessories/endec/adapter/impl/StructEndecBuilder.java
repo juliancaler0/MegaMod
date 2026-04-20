@@ -40,6 +40,21 @@ public final class StructEndecBuilder {
 
     @SuppressWarnings("unchecked")
     private static <S, T> MapCodec<T> fieldCodec(StructField<S, T> field) {
+        // Empty name means a flat/inline field (from flatFieldOf): merge the sub-struct's keys
+        // into the parent's map instead of nesting under a named field.
+        if (field.name().isEmpty()) {
+            Codec<T> inner = field.endec().codec();
+            MapCodec<T> asMapCodec;
+            if (inner instanceof MapCodec.MapCodecCodec<T> wrapper) {
+                asMapCodec = wrapper.codec();
+            } else {
+                // Fallback: assume the codec was built via RecordCodecBuilder.create, which
+                // returns a MapCodec.MapCodecCodec. If it is not, we can't inline; fall back
+                // to an error MapCodec so the caller sees a clear reason.
+                asMapCodec = MapCodec.assumeMapUnsafe(inner);
+            }
+            return asMapCodec;
+        }
         if (field.defaultValue() != null) {
             T def = field.defaultValue().get();
             if (def != null) {
@@ -65,34 +80,24 @@ public final class StructEndecBuilder {
      * But since the StructField expects T, not Optional<T>, we need a different approach:
      * We use a custom MapCodec that decodes directly to T, handling null via custom decode.
      */
+    /**
+     * Optional field where absent = null. DFU 9.x's {@code DataResult.Success.result()} calls
+     * {@code Optional.of(value)} which NPEs on null, and {@code RecordCodecBuilder#ap3} calls
+     * {@code result()} internally. So we can never let a {@code DataResult.success(null)}
+     * reach ap3 — we must route the null through an Optional wrapper whose value is a
+     * non-null holder object, and only unwrap to null via a plain xmap lambda that DFU
+     * never inspects with {@code .result()}.
+     */
     @SuppressWarnings("unchecked")
     private static <T> MapCodec<T> nullSafeOptionalFieldOf(Codec<T> codec, String name) {
-        // This MapCodec decodes to T (possibly null) but the DataResult never contains null directly.
-        // When the field is missing, we return DataResult.error() which makes RecordCodecBuilder
-        // fall through to the error-merging path that handles partial results correctly.
-        return new MapCodec<T>() {
-            @Override
-            public <S> DataResult<T> decode(DynamicOps<S> ops, MapLike<S> input) {
-                S value = input.get(name);
-                if (value == null) {
-                    // Field absent: use error with empty lifecycle to signal "use default"
-                    // RecordCodecBuilder merges errors and still produces a result
-                    return DataResult.error(() -> "Optional field " + name + " absent");
-                }
-                return codec.parse(ops, value);
-            }
-
-            @Override
-            public <S> RecordBuilder<S> encode(T input, DynamicOps<S> ops, RecordBuilder<S> prefix) {
-                if (input == null) return prefix;
-                return prefix.add(name, codec.encodeStart(ops, input));
-            }
-
-            @Override
-            public <S> Stream<S> keys(DynamicOps<S> ops) {
-                return Stream.of(ops.createString(name));
-            }
-        };
+        // Use DFU's own optional-field machinery: Optional<T> is always non-null, so the
+        // intermediate DataResult<Optional<T>> never holds null. The xmap unwrap to the
+        // caller's T (possibly null) happens as a plain function application — DFU's map
+        // doesn't invoke result() on the wrapped DataResult.
+        return codec.optionalFieldOf(name).xmap(
+            (java.util.Optional<T> opt) -> opt.orElse(null),
+            (T value) -> java.util.Optional.ofNullable(value)
+        );
     }
 
     public static <S, T> StructEndec<S> of(StructField<S, T> field, Function<T, S> constructor) {

@@ -25,7 +25,7 @@ public class InsuranceScreen extends Screen {
     private static final int PANEL_WIDTH = 370;
     private static final int PANEL_HEIGHT = 440;
     private static final int SLOT_SIZE = 20;
-    private static final int SLOT_GAP = 2;
+    private static final int SLOT_GAP = 8;
     private static final int MAX_SLOTS_PER_ROW = 9; // wrap after 9 items
 
     private final String tierName;
@@ -336,8 +336,8 @@ public class InsuranceScreen extends Screen {
                 g.fill(x + SLOT_SIZE - 6, y + 1, x + SLOT_SIZE - 1, y + 6, 0xFF44BF44);
             }
 
-            // Cost label below slot (compact)
-            String costStr = cost + "c";
+            // Cost label below slot (compact, k-suffix for 1000+)
+            String costStr = formatCost(cost);
             int costColor = selected ? UIHelper.XP_GREEN : UIHelper.GOLD_MID;
             int costW = this.font.width(costStr);
             g.drawString(this.font, costStr, x + (SLOT_SIZE - costW) / 2, y + SLOT_SIZE + 1, costColor, false);
@@ -355,6 +355,18 @@ public class InsuranceScreen extends Screen {
             slotsInRow++;
         }
         return y + SLOT_SIZE + 12;
+    }
+
+    /** Compact cost label: "800", "1.2k", "12k", "120k". Keeps label within slot pitch. */
+    private static String formatCost(int cost) {
+        if (cost < 1000) return Integer.toString(cost);
+        if (cost < 10000) {
+            int tenths = (cost + 50) / 100; // round to nearest 0.1k
+            int whole = tenths / 10;
+            int frac = tenths % 10;
+            return frac == 0 ? whole + "k" : whole + "." + frac + "k";
+        }
+        return ((cost + 500) / 1000) + "k";
     }
 
     private ItemStack getClientItemForSlot(String slotName) {

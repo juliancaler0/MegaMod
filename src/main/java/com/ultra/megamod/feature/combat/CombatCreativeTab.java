@@ -61,6 +61,8 @@ public class CombatCreativeTab {
         } else if (tab.equals(RELICS)) {
             // Jewelry (gems, rings, necklaces)
             JewelryRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
+            // Relics ported from Relics-1.21.1 (figurines, talismans, charms, dragon scales)
+            com.ultra.megamod.feature.combat.relics.item.RelicItems.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
         } else if (tab.equals(MEGAMOD)) {
             // Spell books, scrolls, runes
             SpellItemRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));

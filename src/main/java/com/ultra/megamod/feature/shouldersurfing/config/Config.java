@@ -569,7 +569,7 @@ public class Config
 			this.rememberLastPerspective = builder
 				.comment("Whether or not to remember the last perspective used.")
 				.translation(MOD_ID + ".configuration.perspective.remember_last_perspective")
-				.define("remember_last_perspective", true);
+				.define("remember_last_perspective", false);
 
 			this.replaceDefaultPerspective = builder
 				.comment("Whether or not to replace the default third person perspective.")
@@ -698,7 +698,7 @@ public class Config
 			this.crosshairType = builder
 				.comment("Crosshair type to use for shoulder surfing.")
 				.translation(MOD_ID + ".configuration.crosshair.crosshair_type")
-				.defineEnum("crosshair_type", CrosshairType.STATIC, CrosshairType.values());
+				.defineEnum("crosshair_type", CrosshairType.DYNAMIC, CrosshairType.values());
 
 			this.adaptiveCrosshairHoldItems = builder
 				.comment("Items that when held, trigger the dynamic crosshair in adaptive mode. This config option supports regular expressions. Example: 'minecraft:.*sword' matches 'minecraft:wooden_sword' and 'minecraft:netherite_sword'.")

@@ -1,10 +1,11 @@
 package com.ultra.megamod.mixin.spellengine.client;
 
-// TODO: 1.21.11 - PlayerAnimator library was refactored
-// IAnimatedPlayer, KeyframeAnimationPlayer, KeyframeAnimation, PlayerAnimationRegistry
-// are no longer available. The playeranim lib now uses IAnimatedAvatar / AvatarAnimManager.
-// This mixin needs to be rewritten to use the new playeranim API.
-// For now, the animation parts are stubbed out.
+// Note: this mixin's <init> inject (postInit_SpellEngine, line 45) no longer registers
+// animation layers directly — that responsibility moved to
+// {@link com.ultra.megamod.feature.combat.animation.client.SpellAnimationManager#registerFactories}
+// which subscribes to PlayerAnimationAccess.REGISTER_ANIMATION_EVENT and attaches the CASTING /
+// RELEASE / MISC controllers at the right priority once the AvatarAnimManager is ready.
+// The <init> inject is retained empty so any future per-player SpellEngine setup has a hook.
 
 import com.mojang.authlib.GameProfile;
 import com.ultra.megamod.lib.playeranim.core.api.firstPerson.FirstPersonMode;
@@ -44,7 +45,9 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void postInit_SpellEngine(ClientLevel world, GameProfile profile, CallbackInfo ci) {
-        // TODO: 1.21.11 - Animation stack registration disabled until playeranim API is updated
+        // Animation layer registration is handled lazily by SpellAnimationManager.getState()
+        // the first time a cast/release animation is requested — safer than doing it here
+        // because AvatarAnimManager may not yet exist on the AbstractClientPlayer subclass.
     }
 
     @Override

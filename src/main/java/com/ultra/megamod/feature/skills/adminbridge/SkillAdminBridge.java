@@ -42,18 +42,26 @@ public final class SkillAdminBridge {
 	}
 
 	public static void maxAll(ServerPlayer player) {
-		grantLargePool(player, CLASS_SKILLS);
-		grantLargePool(player, WEAPON_SKILLS);
+		maxCategory(player, CLASS_SKILLS);
+		maxCategory(player, WEAPON_SKILLS);
 	}
 
-	private static void grantLargePool(ServerPlayer player, Identifier categoryId) {
+	/// Force-unlocks every skill in the category and then normalizes the admin-source point
+	/// bucket so the total earned exactly equals the total spent. This keeps the skill menu's
+	/// "points left" display coherent with its Earned/Spent tooltip — previously we blindly
+	/// granted 500 points which overflowed spent_points_limit (class=10, weapon=6) and made
+	/// the header show "10 left" while the tooltip reported "Earned: 500 / Spent: 0".
+	///
+	/// tryUnlockSkill(force=true) runs updateSkillRewards → applies the attribute modifiers,
+	/// spell containers, and other rewards, so unlocking every node actually takes effect on
+	/// the player instead of just inflating a counter.
+	private static void maxCategory(ServerPlayer player, Identifier categoryId) {
 		SkillsAPI.getCategory(categoryId).ifPresent(cat -> {
 			Category c = cat;
-			int current = c.getPointsTotal(player);
-			int target = 500;
-			if (current < target) {
-				c.addPoints(player, ADMIN_SOURCE, target - current);
-			}
+			c.streamSkills().forEach(skill -> skill.unlock(player));
+			int spent = c.getSpentPoints(player);
+			int nonAdmin = c.getPointsTotal(player) - c.getPoints(player, ADMIN_SOURCE);
+			c.setPoints(player, ADMIN_SOURCE, Math.max(0, spent - nonAdmin));
 		});
 	}
 

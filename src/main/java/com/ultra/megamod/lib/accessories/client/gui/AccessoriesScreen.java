@@ -35,10 +35,10 @@ import com.ultra.megamod.lib.accessories.pond.ContainerScreenExtension;
 import com.ultra.megamod.lib.accessories.pond.DeferredTooltipGetter;
 import com.ultra.megamod.lib.accessories.pond.TooltipFlagExtended;
 import com.ultra.megamod.lib.accessories.utils.ComponentOps;
-import com.ultra.megamod.lib.accessories.owo.ui.base.BaseOwoHandledScreen;
+import com.ultra.megamod.lib.accessories.owo.ui.base.BaseOwoContainerScreen;
 import com.ultra.megamod.lib.accessories.owo.ui.component.ButtonComponent;
-import com.ultra.megamod.lib.accessories.owo.ui.component.Components;
-import com.ultra.megamod.lib.accessories.owo.ui.container.Containers;
+import com.ultra.megamod.lib.accessories.owo.ui.component.UIComponents;
+import com.ultra.megamod.lib.accessories.owo.ui.container.UIContainers;
 import com.ultra.megamod.lib.accessories.owo.ui.container.FlowLayout;
 import com.ultra.megamod.lib.accessories.owo.ui.container.ScrollContainer;
 import com.ultra.megamod.lib.accessories.owo.ui.container.StackLayout;
@@ -48,8 +48,8 @@ import com.ultra.megamod.lib.accessories.owo.ui.core.Easing;
 import com.ultra.megamod.lib.accessories.owo.ui.core.HorizontalAlignment;
 import com.ultra.megamod.lib.accessories.owo.ui.core.Insets;
 import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIAdapter;
-import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIDrawContext;
-import com.ultra.megamod.lib.accessories.owo.ui.core.ParentComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIGraphics;
+import com.ultra.megamod.lib.accessories.owo.ui.core.ParentUIComponent;
 import com.ultra.megamod.lib.accessories.owo.ui.core.Positioning;
 import com.ultra.megamod.lib.accessories.owo.ui.core.PositionedRectangle;
 import com.ultra.megamod.lib.accessories.owo.ui.core.Sizing;
@@ -86,7 +86,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, AccessoriesMenu> implements AccessoriesScreenBase<AccessoriesMenu>, ContainerScreenExtension, PlayerOptionsAccess {
+public class AccessoriesScreen extends BaseOwoContainerScreen<FlowLayout, AccessoriesMenu> implements AccessoriesScreenBase<AccessoriesMenu>, ContainerScreenExtension, PlayerOptionsAccess {
 
     private final @Nullable AbstractContainerScreen<AbstractContainerMenu> prevScreen;
 
@@ -104,7 +104,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     @Override
     protected @NotNull OwoUIAdapter<FlowLayout> createAdapter() {
-        return OwoUIAdapter.create(this, Containers::verticalFlow);
+        return OwoUIAdapter.create(this, UIContainers::verticalFlow);
     }
 
     protected FlowLayout rootComponent() {
@@ -129,7 +129,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                 var ids = unpackRules.pollLast();
 
                 stream = stream.flatMap(component -> {
-                    if (component instanceof ParentComponent parent) {
+                    if (component instanceof ParentUIComponent parent) {
                         if (ids.isEmpty()) return parent.children().stream();
 
                         if (parent.id() != null) {
@@ -162,7 +162,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     }
 
     @Override
-    public <C extends com.ultra.megamod.lib.accessories.owo.ui.core.Component> C component(Class<C> expectedClass, String id) {
+    public <C extends com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent> C component(Class<C> expectedClass, String id) {
         return super.component(expectedClass, id);
     }
 
@@ -288,12 +288,10 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         this.imageHeight = 192;
 
         super.init();
-
-        // OWO's build() pushes all slots to (-300, -300). Lay the slots out
-        // natively to match the stock Accessories target layout. Cosmetic +
-        // crafting slots are kept off-screen (but still interactive through
-        // the menu) so they don't visually clutter the panel.
-        layoutSlotsFallback();
+        // Slot positioning is now owned by owo's build() → inflate → mount flow.
+        // The vanilla Slot#x/y fields are synced by BaseOwoContainerScreen$SlotComponent
+        // via SlotAccessor once owo lays out the ExtendedSlotComponent tree, matching
+        // source accessories behavior.
     }
 
     /** Accessory column geometry (two columns, left edge of the panel). */
@@ -623,8 +621,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     }
 
 
-    @Override
-    protected void renderSlotHighlightBack(GuiGraphics guiGraphics) {
+        protected void renderSlotHighlightBack(GuiGraphics guiGraphics) {
         var slotToEquipCheck = getSlotToEquipCheckMap(this.getMenu().getCarried());
 
         if (this.hoveredSlot == null || !this.hoveredSlot.isHighlightable() || !slotToEquipCheck.getOrDefault(hoveredSlot).isValid()) {
@@ -637,8 +634,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         renderWithClippingCheck(guiGraphics, x, y, (graphics) -> graphics.blitSprite(RenderPipelines.GUI_TEXTURED, texture, x, y, 24, 24));
     }
 
-    @Override
-    protected void renderSlotHighlightFront(GuiGraphics guiGraphics) {
+        protected void renderSlotHighlightFront(GuiGraphics guiGraphics) {
         var access = getSlotToEquipCheckMap(this.getMenu().getCarried());
 
         var isSideBySideSlots = this.getDefaultedData(PlayerOptions.SIDE_BY_SIDE_SLOTS);
@@ -883,7 +879,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        // BaseOwoHandledScreen provides no-op renderBg, no super call needed.
+        // BaseOwoContainerScreen provides no-op renderBg, no super call needed.
         // Draw the panel chrome to match the stock Accessories layout using
         // the real accessories_panel.png nine-patch + slot_frame.png overlay.
         int x = this.leftPos;
@@ -1116,7 +1112,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     public static final ComponentKey<FlowLayout> GROUP_FILTER = ComponentKey.of(FlowLayout.class, "group_filter_holder");
     public static final ComponentKey<FlowLayout> BOTTOM_HOLDER = ComponentKey.of(FlowLayout.class, "bottom_component_holder");
     public static final ComponentKey<FlowLayout> CRAFTING_GRID = ComponentKey.of(FlowLayout.class, "crafting_grid_layout");
-    public static final ComponentKey<com.ultra.megamod.lib.accessories.owo.ui.core.Component> CRAFTING_GRID_BTN = ComponentKey.of(com.ultra.megamod.lib.accessories.owo.ui.core.Component.class, "crafting_grid_btn");
+    public static final ComponentKey<com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent> CRAFTING_GRID_BTN = ComponentKey.of(com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent.class, "crafting_grid_btn");
     public static final ComponentKey<StackLayout> ENTITY_PANEL = ComponentKey.of(StackLayout.class, "entity_button_panel");
 
     @Override
@@ -1132,7 +1128,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                 .verticalAlignment(VerticalAlignment.CENTER)
                 .surface(Surface.VANILLA_TRANSLUCENT);
 
-        var baseChildren = new ArrayList<com.ultra.megamod.lib.accessories.owo.ui.core.Component>();
+        var baseChildren = new ArrayList<com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent>();
 
         var accessoriesComponent = createAccessoriesComponent();
 
@@ -1154,13 +1150,13 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
         this.enableSlot(offHandIndex);
 
-        var offhandComponent = Containers.verticalFlow(Sizing.content(), Sizing.content())
+        var offhandComponent = UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .child(this.slotAsComponent(offHandIndex).margins(Insets.of(1)))
                 .padding(Insets.of(7, 7, 7, 4))
                 .allowOverflow(true);
 
         var craftingGridArea = CRAFTING_GRID.withId(
-            Containers.verticalFlow(Sizing.content(), Sizing.content())
+            UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .positioning(Positioning.absolute(162, -7))
                 .configure((FlowLayout component) -> {
                     if (this.getDefaultedData(PlayerOptions.SHOW_CRAFTING_GRID)) {
@@ -1186,14 +1182,14 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                 AccessoriesScreen.this.isOutsideInvArea = !isInBoundingBox(mouseX, mouseY);
             }
         }.child(
-                Containers.verticalFlow(Sizing.content(), Sizing.content())
+                UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                     .child(offhandComponent)
                     .allowOverflow(true)
                     .positioning(Positioning.absolute(-(18 + 4 + 7), 51))
             )
             .child(
                 BOTTOM_HOLDER.withId(
-                    Containers.verticalFlow(Sizing.fixed(162), Sizing.fixed(76))
+                    UIContainers.verticalFlow(Sizing.fixed(162), Sizing.fixed(76))
                         .child(playerInv)
                 )
             )
@@ -1221,22 +1217,25 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         //--
 
         var primaryLayout = ARMOR_ENTITY.withId(
-            (FlowLayout) Containers.horizontalFlow(Sizing.content(), Sizing.fixed(140))
+            (FlowLayout) UIContainers.horizontalFlow(Sizing.content(), Sizing.fixed(140))
                 .gap(2)
                 .horizontalAlignment(HorizontalAlignment.CENTER)
         );
 
         {
-            var armorSlotsLayout = Containers.verticalFlow(Sizing.content(), Sizing.content())
+            var armorSlotsLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                     .configure((FlowLayout layout) -> layout.allowOverflow(true));
 
-            var outerLeftArmorLayout = Containers.horizontalFlow(Sizing.content(), Sizing.content())
+            var outerLeftArmorLayout = UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                     .child(armorSlotsLayout);
 
-            var cosmeticArmorSlotsLayout = Containers.verticalFlow(Sizing.content(), Sizing.content())
+            // MegaMod customization: cosmetic armor column stays in the tree (layout math
+            // downstream expects it) but is rendered empty and its paired slot is disabled
+            // so no items route to it.
+            var cosmeticArmorSlotsLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                             .configure((FlowLayout layout) -> layout.allowOverflow(true));
 
-            var outerRightArmorLayout = Containers.horizontalFlow(Sizing.content(), Sizing.content())
+            var outerRightArmorLayout = UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                     .child(cosmeticArmorSlotsLayout);
 
             for (int i = 0; i < menu.addedArmorSlots() / 2; i++) {
@@ -1244,17 +1243,18 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                 var cosmeticArmor = armor + 1;
 
                 this.enableSlot(armor);
-                this.enableSlot(cosmeticArmor);
+                this.disableSlot(cosmeticArmor);
 
                 armorSlotsLayout.child(this.slotAsComponent(armor).margins(Insets.of(1)));
-                cosmeticArmorSlotsLayout.child(ComponentUtils.createSlotWithToggle((AccessoriesBasedSlot) this.menu.slots.get(cosmeticArmor), this::slotAsComponent).left());
+                // Cosmetic armor slot intentionally not added to any layout — MegaMod only uses
+                // the main accessory/armor slot to avoid duplicate rendering + lost-item UX.
             }
 
             //--
 
-            var entityContainer = Containers.stack(Sizing.content(), Sizing.fixed(126 + 14))
+            var entityContainer = UIContainers.stack(Sizing.content(), Sizing.fixed(126 + 14))
                     .child(
-                            Containers.verticalFlow(Sizing.content(), Sizing.content())
+                            UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                                     .child(
                                             createEntityComponent()
                                     ).surface((ctx, component) -> {
@@ -1269,7 +1269,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
                                     .id("entity_renderer_holder")
                     )
                     .child(
-                            Containers.verticalFlow(Sizing.fixed(0), Sizing.fixed(0))
+                            UIContainers.verticalFlow(Sizing.fixed(0), Sizing.fixed(0))
                                     .surface((ctx, component) -> {
                                         // TODO: MAKE NO EQUIPMENT SLOT VARIANT...
                                         var surfaceType = Math.max(1, Math.min((this.getMenu().addedArmorSlots() / 2), 4)) + "_slots";
@@ -1387,7 +1387,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
         //--
 
-        var baseLayout = Containers.verticalFlow(Sizing.content(), Sizing.content())
+        var baseLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .gap(2)
                 .children(baseChildren.reversed())
                 .allowOverflow(true);
@@ -1410,7 +1410,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         setupPadding(this.topComponent, hasSideBar, primaryLayout);
     }
 
-    public void setupPadding(AccessoriesContainingLayout<?> accessoriesComponent, boolean hasSideBar, ParentComponent primaryLayout) {
+    public void setupPadding(AccessoriesContainingLayout<?> accessoriesComponent, boolean hasSideBar, ParentUIComponent primaryLayout) {
         if (this.getDefaultedData(PlayerOptions.ENTITY_CENTERED)) {
             // (((Accessories Component Width) + 3) | 0) + (120) + ((3 + (30)) | 0
             var padding = 0;
@@ -1456,7 +1456,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         rebuildComponentRectangles = true;
     }
 
-    public com.ultra.megamod.lib.accessories.owo.ui.core.Component createEntityComponent() {
+    public com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent createEntityComponent() {
         var sideBySideView = this.getDefaultedData(PlayerOptions.SIDE_BY_SIDE_ENTITY);
 
         return InventoryEntityComponent.of(Sizing.fixed(sideBySideView ? 162 : 108), Sizing.fixed(126), this.getMenu().targetEntityDefaulted())
@@ -1574,15 +1574,15 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     //--
     @Nullable
-    private com.ultra.megamod.lib.accessories.owo.ui.core.Component createSideBarOptions() {
+    private com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent createSideBarOptions() {
         var groupFilterComponent = createGroupFilters();
 
         if (groupFilterComponent == null) return null;
 
-        var accessoriesTogglePanel = TOGGLE_PANEL.withId(Containers.verticalFlow(Sizing.content(), Sizing.content()));
+        var accessoriesTogglePanel = TOGGLE_PANEL.withId(UIContainers.verticalFlow(Sizing.content(), Sizing.content()));
 
         return SIDE_BAR.withId(
-            Containers.verticalFlow(Sizing.content(), Sizing.content())
+            UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .child(
                     accessoriesTogglePanel.child(groupFilterComponent)
                         .padding(Insets.of(7))
@@ -1618,7 +1618,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     private ExtendedScrollContainer groupFilterScrollable = null;
 
     @Nullable
-    private com.ultra.megamod.lib.accessories.owo.ui.core.Component createGroupFilters() {
+    private com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent createGroupFilters() {
         if (!this.getDefaultedData(PlayerOptions.SHOW_GROUP_FILTER)) return null;
 
         var capability = ((com.ultra.megamod.lib.accessories.pond.AccessoriesAPIAccess) this.getMenu().targetEntityDefaulted()).accessoriesCapability();
@@ -1628,7 +1628,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         if (groups.isEmpty()) return null;
 
         var usedSlots = this.getMenu().getUsedSlots();
-        var groupButtons = new ArrayList<com.ultra.megamod.lib.accessories.owo.ui.core.Component>();
+        var groupButtons = new ArrayList<com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent>();
 
         // Filter Groups that have valid slots for the given target entity and are not from the unique slot API
         for (var group : groups) {
@@ -1650,7 +1650,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
         if (groupButtons.isEmpty()) return null;
 
-        var baseButtonLayout = (ParentComponent) Containers.verticalFlow(Sizing.content(), Sizing.content())
+        var baseButtonLayout = (ParentUIComponent) UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .children(groupButtons)
                 .gap(1);
 
@@ -1677,7 +1677,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         }
 
         return GROUP_FILTER.withId(
-            Containers.verticalFlow(Sizing.content(), Sizing.content())
+            UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .child(
                     ComponentUtils.createIconButton(
                             (btn) -> {
@@ -1756,17 +1756,18 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         gridHolder.child(createCraftingGrid());
     }
 
-    private com.ultra.megamod.lib.accessories.owo.ui.core.Component createCraftingGrid() {
+    private com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent createCraftingGrid() {
         return ComponentUtils.createCraftingComponent(0, this::slotAsComponent, this::enableSlot, true);
     }
 
-    private com.ultra.megamod.lib.accessories.owo.ui.core.Component createCraftingToggleButton() {
+    private com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent createCraftingToggleButton() {
         return ComponentUtils.createIconButton(
             btn -> {
                 AccessoriesNetworking
                     .sendToServer(SyncOptionChange.of(PlayerOptions.SHOW_CRAFTING_GRID, this.menu.owner(), bl -> !bl));
 
-                btn.tooltip(createToggleText("crafting_grid", true, this.setDataFrom(PlayerOptions.SHOW_CRAFTING_GRID, BooleanUnaryOperator.negation())));
+                btn.tooltip(createToggleText("crafting_grid", true,
+                    this.setDataFrom(PlayerOptions.SHOW_CRAFTING_GRID, BooleanUnaryOperator.negation())));
 
                 this.toggleCraftingGrid();
             },
@@ -1843,7 +1844,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         }
 
         @Override
-        public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+        public void draw(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
             // DO NOT CALL SUPER AS SCISSOR ISSUES OCCUR
 
             this.didDraw = true;
@@ -1852,7 +1853,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
         }
 
         @Override
-        public void drawTooltip(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+        public void drawTooltip(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
             var slot = this.slot();
 
             if(slot != null) {
@@ -1877,14 +1878,16 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
 
     //--
 
+    // MegaMod customization: cosmetic accessories are permanently disabled — every call
+    // to the getter returns false and the setter is a no-op so neither the client toggle
+    // button nor any server reply can flip it on. This complements the UI-level slot
+    // hiding in AccessoriesContainingLayout + build()'s armor section.
     public void showCosmeticState(boolean value) {
-        this.setData(PlayerOptions.SHOW_COSMETIC_SLOTS, value);
-
-        AccessoriesNetworking.sendToServer(PlayerOptions.SHOW_COSMETIC_SLOTS.toPacket(value));
+        // no-op
     }
 
     public boolean showCosmeticState() {
-        return this.getDefaultedData(PlayerOptions.SHOW_COSMETIC_SLOTS);
+        return false;
     }
 
 
@@ -1904,7 +1907,7 @@ public class AccessoriesScreen extends BaseOwoHandledScreen<FlowLayout, Accessor
     }
 
     public <T> T setDataFrom(PlayerOption<T> option, UnaryOperator<T> operator) {
-        var value = operator.apply(getData(option).orElseThrow());
+        var value = operator.apply(getData(option).orElseGet(option::defaultValue));
         setData(option, value);
         return value;
     }

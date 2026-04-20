@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.*;
 
@@ -35,6 +36,19 @@ public class SortingManager {
     }
 
     private static void sortSlotRange(ServerPlayer player, AbstractContainerMenu menu, int startSlot, int endSlot, SortAlgorithm algorithm) {
+        // Skip ranges containing output-only / non-accepting slots (crafting result,
+        // armor slots with validators, etc). Use a probe stack so we detect empty
+        // output slots too — checking only the existing item missed crafting result
+        // slots when they were empty, and sorting would then write items into them
+        // which the crafting system clears on the next tick, effectively deleting items.
+        ItemStack probe = new ItemStack(Items.STONE);
+        for (int i = startSlot; i < endSlot && i < menu.slots.size(); i++) {
+            Slot slot = menu.slots.get(i);
+            ItemStack existing = slot.getItem();
+            if (!existing.isEmpty() && !slot.mayPlace(existing)) return;
+            if (!slot.mayPlace(probe)) return;
+        }
+
         // Collect all items from the range
         List<ItemStack> items = new ArrayList<>();
         for (int i = startSlot; i < endSlot && i < menu.slots.size(); i++) {

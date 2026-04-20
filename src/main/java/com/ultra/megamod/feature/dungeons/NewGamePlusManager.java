@@ -91,24 +91,19 @@ public class NewGamePlusManager {
         return bosses != null ? Set.copyOf(bosses) : Set.of();
     }
 
-    /**
-     * Check if a player can access MYTHIC tier.
-     * Requires: all 8 Infernal bosses defeated + total prestige >= 5.
-     */
+    /// Mythic tier access: all Infernal bosses + 2 total prestige (was 5/25 in legacy 5-tree
+    /// system, now 2/10 to stay proportional to the 2-category cap).
     public boolean canAccessMythic(UUID playerId, ServerLevel level) {
         if (!hasCompletedAllBossesInTier(playerId, "INFERNAL")) return false;
         int totalPrestige = PrestigeManager.get(level).getTotalPrestige(playerId);
-        return totalPrestige >= 5;
+        return totalPrestige >= 2;
     }
 
-    /**
-     * Check if a player can access ETERNAL tier.
-     * Requires: all 8 Mythic bosses defeated + total prestige >= 15.
-     */
+    /// Eternal tier access: all Mythic bosses + 6 total prestige (was 15/25, now 6/10).
     public boolean canAccessEternal(UUID playerId, ServerLevel level) {
         if (!hasCompletedAllBossesInTier(playerId, "MYTHIC")) return false;
         int totalPrestige = PrestigeManager.get(level).getTotalPrestige(playerId);
-        return totalPrestige >= 15;
+        return totalPrestige >= 6;
     }
 
     public void saveToDisk(ServerLevel level) {

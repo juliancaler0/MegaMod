@@ -665,10 +665,8 @@ public class RecipeBrowserScreen extends Screen {
                 || itemId.contains("flute") || itemId.contains("sack") || itemId.contains("flask")
                 || itemId.contains("crown") || itemId.contains("boot"))
             return "Relic - found via exploration or Researching Table";
-        if (itemId.contains("vampiric") || itemId.contains("static_seeker") || itemId.contains("battledancer")
-                || itemId.contains("ebonchill") || itemId.contains("lightbinder") || itemId.contains("crescent")
-                || itemId.contains("ghost_fang") || itemId.contains("terra_warhammer"))
-            return "RPG Weapon - rare loot or quest reward";
+        // Legendary "tome" weapons (vampiric_tome, ebonchill, etc.) were removed; the
+        // previous branch here returned a description for items that no longer exist.
         if (itemId.contains("museum") || itemId.contains("pedestal") || itemId.contains("captured_mob"))
             return "Museum system item";
         if (itemId.contains("phone")) return "Computer system item";

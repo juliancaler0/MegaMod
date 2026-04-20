@@ -1,6 +1,7 @@
 package com.ultra.megamod.feature.combat.animation;
 
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.Attack;
+import com.ultra.megamod.feature.combat.animation.WeaponAttributes.Condition;
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.HitboxShape;
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.SwingDirection;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -55,13 +56,13 @@ public final class WeaponAttributeRegistry {
 
     /**
      * Claymores: 3-hit two-handed combo (wide slash right, stab, overhead slam).
-     * High damage, wide arcs, two-handed.
+     * Source-parity: uses {@code two_handed_stab_left} (not right) for attack 2.
      */
     private static final WeaponAttributes CLAYMORE = new WeaponAttributes(
-            0.25, true, "claymore",
+            0.25, true, "claymore", "pose_two_handed_sword",
             new Attack[]{
                     new Attack(HitboxShape.HORIZONTAL_PLANE, 0.75, 150, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_horizontal_right", null),
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 60, 0.5, SwingDirection.STAB, "two_handed_stab_right", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, "two_handed_stab_left", null),
                     new Attack(HitboxShape.VERTICAL_PLANE, 1.25, 150, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam", null)
             }
     );
@@ -91,59 +92,58 @@ public final class WeaponAttributeRegistry {
     );
 
     /**
-     * Daggers: Fast 3-hit combo (slash, slash, heavy stab finisher).
-     * Short range (-0.5), increasing damage on finisher (0.9/0.9/1.4).
+     * Daggers: Source-parity 3-hit combo — 2 horizontal slashes + conditional dual-stab finisher.
+     * The 3rd attack only unlocks when dual-wielding daggers (main hand).
      */
     private static final WeaponAttributes DAGGER = new WeaponAttributes(
             -0.5, false, "dagger",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_switch_blade_right", null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 80, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_switch_blade_left", null),
-                    new Attack(HitboxShape.FORWARD_BOX, 1.4, 80, 0.5, SwingDirection.STAB, "one_handed_stab", null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 150, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 150, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.4, 150, 0.5, SwingDirection.STAB, "dual_handed_stab",
+                            new Condition[]{ Condition.DUAL_WIELDING_SAME_CATEGORY, Condition.MAIN_HAND_ONLY })
             }
     );
 
     /**
-     * Maces: 3-hit combo (swing, swing, overhead slam).
-     * Light openers (0.8) into heavy finisher (1.4).
+     * Maces: Source-parity 3-hit combo (slash right, slash left, overhead slam).
      */
     private static final WeaponAttributes MACE = new WeaponAttributes(
-            0.0, false, "mace",
+            -0.25, false, "mace",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_swipe_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_horizontal_right", null),
                     new Attack(HitboxShape.HORIZONTAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null),
                     new Attack(HitboxShape.VERTICAL_PLANE, 1.4, 90, 0.5, SwingDirection.SLASH_DOWN, "one_handed_slam", null)
             }
     );
 
     /**
-     * Great Hammers: Single forward slam, two-handed.
-     * Slowest weapon type, full damage in one hit.
+     * Great Hammers (source "hammer"): Source-parity single forward slam, two-handed.
+     * Uses {@code two_handed_slam} animation (not {@code two_handed_slam_heavy}).
      */
     private static final WeaponAttributes GREAT_HAMMER = new WeaponAttributes(
-            0.0, true, "great_hammer",
+            0.0, true, "hammer", "pose_two_handed_heavy",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam_heavy", null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.SLASH_DOWN, "two_handed_slam", null)
             }
     );
 
     /**
-     * Spears: Single stab, long range, two-handed.
-     * Narrow hitbox but extended reach.
+     * Spears: Source-parity single stab, long range, two-handed.
+     * Uses {@code two_handed_stab_right} animation.
      */
     private static final WeaponAttributes SPEAR = new WeaponAttributes(
-            1.0, true, "spear",
+            1.0, true, "spear", "pose_two_handed_polearm",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "weapon_thrust_full", null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, "two_handed_stab_right", null)
             }
     );
 
     /**
-     * Glaives: 3-hit polearm combo (chop, chop, wide sweep).
-     * Extended range (+0.5), light openers (0.8) into heavy finisher (1.4), two-handed.
+     * Glaives: Source-parity 3-hit polearm combo (chop, chop, wide sweep).
      */
     private static final WeaponAttributes GLAIVE = new WeaponAttributes(
-            0.5, true, "glaive",
+            0.5, true, "glaive", "pose_two_handed_polearm",
             new Attack[]{
                     new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_RIGHT, "two_handed_slash_vertical_right", null),
                     new Attack(HitboxShape.VERTICAL_PLANE, 0.8, 150, 0.5, SwingDirection.SLASH_LEFT, "two_handed_slash_vertical_left", null),
@@ -152,25 +152,28 @@ public final class WeaponAttributeRegistry {
     );
 
     /**
-     * Sickles: Fast 2-hit slash combo.
-     * Short range (-0.25), consistent damage (0.9/0.9).
+     * Sickles: Source-parity 4-hit combo — 2 horizontal slashes + 2 conditional
+     * dual-wielding cross/uncross attacks.
      */
     private static final WeaponAttributes SICKLE = new WeaponAttributes(
             -0.25, false, "sickle",
             new Attack[]{
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_switch_blade_right", null),
-                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 90, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_switch_blade_left", null)
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 120, 0.5, SwingDirection.SLASH_RIGHT, "one_handed_slash_horizontal_right", null),
+                    new Attack(HitboxShape.HORIZONTAL_PLANE, 0.9, 120, 0.5, SwingDirection.SLASH_LEFT, "one_handed_slash_horizontal_left", null),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.2, 0, 0.5, SwingDirection.SLASH_RIGHT, "dual_handed_slash_cross",
+                            new Condition[]{ Condition.DUAL_WIELDING_SAME_CATEGORY, Condition.MAIN_HAND_ONLY }),
+                    new Attack(HitboxShape.FORWARD_BOX, 1.3, 0, 0.5, SwingDirection.SLASH_LEFT, "dual_handed_slash_uncross",
+                            new Condition[]{ Condition.DUAL_WIELDING_SAME_CATEGORY, Condition.OFF_HAND_ONLY })
             }
     );
 
     /**
-     * Wands: Single direct hit cast.
-     * Short range (-0.5), narrow cone, one-handed spell catalyst.
+     * Wands: Source-parity single stab cast (uses {@code one_handed_stab} animation).
      */
     private static final WeaponAttributes WAND = new WeaponAttributes(
             -0.5, false, "wand",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "one_handed_staff_forward", null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, "one_handed_stab", null)
             }
     );
 
@@ -188,12 +191,12 @@ public final class WeaponAttributeRegistry {
     );
 
     /**
-     * Trident: One-handed spear variant with shorter range (+0.25).
+     * Trident: Source-parity one-handed spear variant (extends SPEAR, but category "trident").
      */
     private static final WeaponAttributes TRIDENT = new WeaponAttributes(
-            0.25, false, "spear",
+            0.25, false, "trident",
             new Attack[]{
-                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 30, 0.5, SwingDirection.STAB, "one_handed_stab", null)
+                    new Attack(HitboxShape.FORWARD_BOX, 1.0, 0, 0.5, SwingDirection.STAB, "one_handed_stab", null)
             }
     );
 

@@ -2580,11 +2580,7 @@ extends Screen {
             String treeName = SKILL_TREE_NAMES[t];
             int pLvl = target.treePrestige.getOrDefault(tree, 0);
             int ry = y + t * 22;
-            int treeColor = switch (tree) {
-                case "COMBAT" -> 0xFFFF5555; case "MINING" -> 0xFFFFAA00;
-                case "FARMING" -> 0xFF55FF55; case "ARCANE" -> 0xFFFF55FF;
-                case "SURVIVAL" -> 0xFFFFFF55; default -> 0xFFE6EDF3;
-            };
+            int treeColor = tree.endsWith("weapon_skills") ? 0xFFFF5555 : 0xFFFF55FF;
             g.drawString(this.font, treeName, x, ry + 3, treeColor, false);
             // Stars
             StringBuilder stars = new StringBuilder();
@@ -3328,13 +3324,15 @@ extends Screen {
             this.playerDetailLines.add("  Bank: " + obj.get("bank").getAsInt() + " MC");
             this.playerDetailLines.add("---Skills (Points: " + obj.get("skillPoints").getAsInt() + ")");
             JsonObject skills = obj.getAsJsonObject("skills");
-            for (String tree : new String[]{"COMBAT", "MINING", "FARMING", "ARCANE", "SURVIVAL"}) {
-                if (!skills.has(tree)) continue;
-                JsonArray arr = skills.getAsJsonArray(tree);
-                int lvl = arr.get(0).getAsInt();
-                int xp = arr.get(1).getAsInt();
-                int needed = lvl >= 50 ? 0 : 100 + lvl * 50;
-                this.playerDetailLines.add("  " + tree + ": Lv." + lvl + " (" + (lvl >= 50 ? "MAX" : xp + "/" + needed) + ")");
+            // Server sends Pufferfish categories as "skill_tree_rpgs:class_skills" etc. with
+            // {level, spent, points} sub-objects. Display trailing path for compactness.
+            for (String catId : skills.keySet()) {
+                JsonObject cat = skills.getAsJsonObject(catId);
+                int lvl = cat.has("level") ? cat.get("level").getAsInt() : 0;
+                int spent = cat.has("spent") ? cat.get("spent").getAsInt() : 0;
+                int pts = cat.has("points") ? cat.get("points").getAsInt() : 0;
+                String label = catId.contains(":") ? catId.substring(catId.indexOf(':') + 1) : catId;
+                this.playerDetailLines.add("  " + label + ": Lv." + lvl + " | Spent " + spent + " | Pts " + pts);
             }
             this.playerDetailLines.add("---Equipped Relics");
             JsonObject relics = obj.getAsJsonObject("relics");
@@ -3358,17 +3356,17 @@ extends Screen {
                 this.playerDetailLines.add("---Dungeon");
                 this.playerDetailLines.add("  In dungeon: " + obj.get("dungeonTier").getAsString() + " " + obj.get("dungeonTheme").getAsString());
             }
-            // Prestige & Mastery
+            // Prestige & Mastery — category-keyed, "total" is a reserved aggregate field.
             if (obj.has("prestige")) {
                 JsonObject prest = obj.getAsJsonObject("prestige");
                 int total = prest.has("total") ? prest.get("total").getAsInt() : 0;
                 this.playerDetailLines.add("---Prestige (Total: " + total + ")");
-                for (String tree : new String[]{"COMBAT", "MINING", "FARMING", "ARCANE", "SURVIVAL"}) {
-                    if (prest.has(tree)) {
-                        int p = prest.get(tree).getAsInt();
-                        String stars = p > 0 ? " " + "\u2605".repeat(p) : "";
-                        this.playerDetailLines.add("  " + tree + ": P" + p + stars);
-                    }
+                for (String catId : prest.keySet()) {
+                    if ("total".equals(catId)) continue;
+                    int p = prest.get(catId).getAsInt();
+                    String stars = p > 0 ? " " + "\u2605".repeat(p) : "";
+                    String label = catId.contains(":") ? catId.substring(catId.indexOf(':') + 1) : catId;
+                    this.playerDetailLines.add("  " + label + ": P" + p + stars);
                 }
             }
             if (obj.has("masteryMarks")) {
@@ -4733,7 +4731,9 @@ extends Screen {
             return;
         }
         if ("__max_skill_tree__".equals(command)) {
-            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_max_all_trees", ""), (CustomPacketPayload[])new CustomPacketPayload[0]);
+            // Server expects a target UUID; the dashboard button maxes the caller's own trees.
+            String uuid = this.mc.player != null ? this.mc.player.getUUID().toString() : "";
+            ClientPacketDistributor.sendToServer((CustomPacketPayload)new ComputerActionPayload("skill_max_all_trees", uuid), (CustomPacketPayload[])new CustomPacketPayload[0]);
             this.adminMessages.add("Maxing all skill trees...");
             return;
         }

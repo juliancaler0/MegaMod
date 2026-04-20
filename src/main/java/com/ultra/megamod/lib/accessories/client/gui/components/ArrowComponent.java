@@ -3,11 +3,11 @@ import com.ultra.megamod.lib.accessories.owo.ui.core.*;
 
 import com.ultra.megamod.lib.accessories.Accessories;
 import com.ultra.megamod.lib.accessories.client.DrawUtils;
-import com.ultra.megamod.lib.accessories.owo.ui.base.BaseComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.base.BaseUIComponent;
 import com.ultra.megamod.lib.accessories.owo.ui.core.PositionedRectangle;
 import net.minecraft.resources.Identifier;
 
-public class ArrowComponent extends BaseComponent {
+public class ArrowComponent extends BaseUIComponent {
     protected final Identifier texture = Accessories.of("textures/gui/theme/all_arrow_directions.png");
 
     protected final int textureWidth = 32;
@@ -52,13 +52,13 @@ public class ArrowComponent extends BaseComponent {
         this.visibleArea.update(delta);
     }
 
-    public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
-        context.push();
-        context.translate((float) this.x, (float) this.y);
+    public void draw(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
+        context.pose().pushMatrix();
+        context.pose().translate((float) this.x, (float) this.y);
 
-        if(this.centered) context.translate(this.direction.getXOffset(), this.direction.getYOffset());
+        if(this.centered) context.pose().translate(this.direction.getXOffset(), this.direction.getYOffset());
 
-        context.scale((float) this.width / (float) this.regionWidth(), (float) this.height / (float) this.regionHeight());
+        context.pose().scale((float) this.width / (float) this.regionWidth(), (float) this.height / (float) this.regionHeight());
         PositionedRectangle visibleArea = this.visibleArea.get();
         int bottomEdge = Math.min(visibleArea.y() + visibleArea.height(), this.regionHeight());
         int rightEdge = Math.min(visibleArea.x() + visibleArea.width(), this.regionWidth());
@@ -69,7 +69,7 @@ public class ArrowComponent extends BaseComponent {
             rightEdge - visibleArea.x(), bottomEdge - visibleArea.y(),
             this.textureWidth, this.textureHeight);
 
-        context.pop();
+        context.pose().popMatrix();
     }
 
     public ArrowComponent changeDirection(Direction direction) {

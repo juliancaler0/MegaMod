@@ -1,10 +1,10 @@
 package com.ultra.megamod.lib.accessories.client.gui.components;
 import com.ultra.megamod.lib.accessories.owo.ui.core.AnimatableProperty;
 import com.ultra.megamod.lib.accessories.owo.ui.core.Color;
-import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIDrawContext;
+import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIGraphics;
 import com.ultra.megamod.lib.accessories.owo.ui.core.Sizing;
-import com.ultra.megamod.lib.accessories.owo.ui.core.ParentComponent;
-import com.ultra.megamod.lib.accessories.owo.ui.core.Component;
+import com.ultra.megamod.lib.accessories.owo.ui.core.ParentUIComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent;
 import com.ultra.megamod.lib.accessories.owo.ui.core.PositionedRectangle;
 
 import com.mojang.math.Axis;
@@ -88,21 +88,21 @@ public class InventoryEntityComponent<E extends Entity> extends EntityComponent<
     public float xOffset = 0.0f;
     public float yOffset = 0.0f;
 
-    private TriConsumer<OwoUIDrawContext, Component, List<Runnable>> renderWrapping = (ctx, component, runnables) -> runnables.forEach(Runnable::run);
+    private TriConsumer<OwoUIGraphics, UIComponent, List<Runnable>> renderWrapping = (ctx, component, runnables) -> runnables.forEach(Runnable::run);
 
-    public InventoryEntityComponent<E> renderWrapping(TriConsumer<OwoUIDrawContext, Component, List<Runnable>> renderWrapping) {
+    public InventoryEntityComponent<E> renderWrapping(TriConsumer<OwoUIGraphics, UIComponent, List<Runnable>> renderWrapping) {
         this.renderWrapping = renderWrapping;
 
         return this;
     }
 
     public float getSingleInstanceWidth() {
-        return (this.horizontalSizing().value / (sideBySideMode ? 2f : 1f)) - (sideBySideMode ? 25 : 40);
+        return (this.horizontalSizing().get().value / (sideBySideMode ? 2f : 1f)) - (sideBySideMode ? 25 : 40);
     }
 
     public InventoryEntityComponent<E> scaleToFit(boolean scaleToFit) {
         if(scaleToFit) {
-            var componentHeight = (float) this.verticalSizing().value;
+            var componentHeight = (float) this.verticalSizing().get().value;
             var componentWidth = getSingleInstanceWidth();
 
             var entityHeight = entity.getBbHeight() * (Math.min(componentWidth, componentHeight) / Math.max(componentWidth, componentHeight));
@@ -147,7 +147,7 @@ public class InventoryEntityComponent<E extends Entity> extends EntityComponent<
     }
 
     @Override
-    public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+    public void draw(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
         if(!(entity instanceof LivingEntity living)) {
             super.draw(context, mouseX, mouseY, partialTicks, delta);
 
@@ -170,18 +170,18 @@ public class InventoryEntityComponent<E extends Entity> extends EntityComponent<
 
         renderQueue.add(
                 () -> {
-                    context.push();
+                    context.pose().pushMatrix();
                     renderLiving(context, living, mouseX, mouseY, partialTicks, true);
-                    context.pop();
+                    context.pose().popMatrix();
                 }
         );
 
         if (sideBySideMode) {
             renderQueue.add(
                     () -> {
-                        context.push();
+                        context.pose().pushMatrix();
                         renderLiving(context, living, mouseX, mouseY, partialTicks, false);
-                        context.pop();
+                        context.pose().popMatrix();
                     }
             );
         }
@@ -194,9 +194,68 @@ public class InventoryEntityComponent<E extends Entity> extends EntityComponent<
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
-    private void renderLiving(OwoUIDrawContext context, LivingEntity living, int mouseX, int mouseY, float partialTicks, boolean isLeftSide) {
-        // Stubbed - OWO entity rendering in inventory not available in NeoForge adapter.
-        // The full implementation requires OWO's picture-in-picture render state submission.
+    private void renderLiving(OwoUIGraphics context, LivingEntity living, int mouseX, int mouseY, float partialTicks, boolean isLeftSide) {
+        var matrix = new Matrix4f();
+
+        transformMatrixStack(matrix, isLeftSide);
+
+        this.transform.accept(matrix);
+
+        float prevYBodyRot0 = living.yBodyRotO;
+        float prevYBodyRot = living.yBodyRot;
+        float prevYRot = living.getYRot();
+        float prevYRot0 = living.yRotO;
+        float prevXRot = living.getXRot();
+        float prevXRot0 = living.xRotO;
+        float prevYHeadRot0 = living.yHeadRotO;
+        float prevYHeadRot = living.yHeadRot;
+
+        rotateMatrixStack(matrix, living, mouseX, mouseY, isLeftSide);
+
+        {
+            living.yBodyRotO = 0;
+            living.yBodyRot = 0;
+            living.setYRot(0);
+            living.yHeadRot = living.yBodyRot;
+            living.yHeadRotO = living.yBodyRotO;
+
+            var renderer = (EntityRenderer) this.manager.getRenderer(this.entity);
+
+            var entityState = renderer.createRenderState(this.entity, partialTicks);
+
+            entityState.x = 0;
+            entityState.y = 0;
+            entityState.z = 0;
+
+            if (showNametag) {
+                entityState.nameTag = entity.getDisplayName();
+                entityState.nameTagAttachment = entity.getAttachments().getNullable(EntityAttachment.NAME_TAG, 0, entity.getYRot(partialTicks));
+            } else {
+                entityState.nameTag = null;
+                entityState.nameTagAttachment = null;
+            }
+
+            entityState.lightCoords = 15728880;
+            entityState.shadowPieces.clear();
+            entityState.outlineColor = 0;
+
+            ((com.ultra.megamod.mixin.accessories.owo.ui.access.GuiGraphicsAccessor) (Object) context).owo$getGuiRenderState()
+                .submitPicturesInPictureState(new com.ultra.megamod.lib.accessories.owo.ui.renderstate.EntityElementRenderState(
+                    entityState,
+                    matrix,
+                    new ScreenRectangle(this.x, this.y, this.width, this.height),
+                    ((com.ultra.megamod.mixin.accessories.owo.ui.access.GuiGraphicsAccessor) (Object) context).owo$getScissorStack().peek()
+                ));
+        }
+
+        living.yBodyRotO = prevYBodyRot0;
+        living.yBodyRot = prevYBodyRot;
+        living.setYRot(prevYRot);
+        living.yRotO = prevYRot0;
+        living.setXRot(prevXRot);
+        living.xRotO = prevXRot0;
+        living.yHeadRotO = prevYHeadRot0;
+        living.yHeadRot = prevYHeadRot;
     }
 
     private void transformMatrixStack(Matrix4f matrix, boolean isLeftSide) {

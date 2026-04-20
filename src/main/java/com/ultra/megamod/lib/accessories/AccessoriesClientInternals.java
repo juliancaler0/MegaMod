@@ -20,8 +20,12 @@ public abstract class AccessoriesClientInternals {
     }
 
     public static void setInstance(AccessoriesClientInternals instance) {
+        // NeoForge dev mode may fire FMLClientSetupEvent more than once on resource
+        // reload; make the setter idempotent instead of throwing, which otherwise
+        // poisons the mod into a broken state and blanks the screen.
         if (hasInstanceBeenSet) {
-            throw new IllegalStateException("Unable to set AccessoriesClientInternals as it already has been setup before!");
+            INSTANCE = instance;
+            return;
         }
 
         INSTANCE = instance;

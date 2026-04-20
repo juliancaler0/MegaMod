@@ -1,61 +1,67 @@
 package com.ultra.megamod.lib.accessories.owo.ui.core;
 
-import java.util.function.BiConsumer;
+import com.ultra.megamod.lib.accessories.owo.util.Observable;
+import org.jetbrains.annotations.Nullable;
 
 /**
- * Adapter stub for io.wispforest.owo.ui.core.AnimatableProperty.
+ * A container which holds an animatable object,
+ * used to manage to properties of UI components. Extends
+ * the {@link Observable} container so that changes in its value
+ * can be propagated to the holder of the property
+ *
+ * @param <A> The type of animatable object this property describes
  */
-public class AnimatableProperty<T> {
-    private T value;
+public class AnimatableProperty<A extends Animatable<A>> extends Observable<A> {
 
-    private AnimatableProperty(T value) {
-        this.value = value;
+    protected @Nullable Animation<A> animation;
+
+    protected AnimatableProperty(A initial) {
+        super(initial);
     }
 
-    public static <T> AnimatableProperty<T> of(T value) {
-        return new AnimatableProperty<>(value);
+    /**
+     * Creates a new animatable property with
+     * the given initial value
+     */
+    public static <A extends Animatable<A>> AnimatableProperty<A> of(A initial) {
+        return new AnimatableProperty<>(initial);
     }
 
-    public T get() {
-        return value;
+    /**
+     * Create an animation object which interpolates the state of this
+     * property from the current one to {@code to} in {@code duration}
+     * milliseconds, applying the given easing
+     * <p>
+     * This method replaces the current animation object of
+     * this property - it will not be updated anymore
+     *
+     * @param duration The duration of the animation to create, in milliseconds
+     * @param easing   The easing method to use
+     * @param to       The target state of this property
+     * @return The new animation of this property.
+     */
+    public Animation<A> animate(int duration, Easing easing, A to) {
+        this.animation = new Animation<>(duration, this::set, easing, this.value, to);
+        return this.animation;
     }
 
-    public void set(T value) {
-        this.value = value;
+    /**
+     * @return The current animation object of this property,
+     * potentially {@code null} if {@link #animate(int, Easing, Animatable)}
+     * was never called
+     */
+    public @Nullable Animation<A> animation() {
+        return this.animation;
     }
 
+    /**
+     * Update the currently stored animation
+     * object of this property
+     *
+     * @param delta The duration of the last frame, in partial ticks
+     */
     public void update(float delta) {
-        // No-op in stub - animations are not processed
-    }
-
-    public AnimationBuilder<T> animate(int durationMs, Easing easing, T target) {
-        this.value = target;
-        return new AnimationBuilder<>(this);
-    }
-
-    public static class AnimationBuilder<T> {
-        private final AnimatableProperty<T> property;
-
-        AnimationBuilder(AnimatableProperty<T> property) {
-            this.property = property;
-        }
-
-        public AnimationBuilder<T> forwards() { return this; }
-        public AnimationBuilder<T> backwards() { return this; }
-
-        public FinishedBuilder<T> finished() { return new FinishedBuilder<>(this); }
-    }
-
-    public static class FinishedBuilder<T> {
-        private final AnimationBuilder<T> builder;
-
-        FinishedBuilder(AnimationBuilder<T> builder) {
-            this.builder = builder;
-        }
-
-        public void subscribe(BiConsumer<Object, Boolean> callback) {
-            // Immediately invoke as completed in stub
-            callback.accept(null, false);
-        }
+        if (this.animation == null) return;
+        this.animation.update(delta);
     }
 }

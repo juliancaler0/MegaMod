@@ -1,6 +1,6 @@
 {
-  "parent":"neoneoforge:item/default",
-  "loader":"neoneoforge:separate_transforms",
+  "parent":"neoforge:item/default",
+  "loader":"neoforge:separate_transforms",
   "base": {
     "parent": "megamod:item/spear_in_hand",
     "textures": {

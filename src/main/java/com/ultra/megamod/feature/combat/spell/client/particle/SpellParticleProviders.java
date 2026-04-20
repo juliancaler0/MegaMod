@@ -84,18 +84,9 @@ public class SpellParticleProviders {
         event.registerSpriteSet(SpellParticleRegistry.SIGN_SHIELD.get(), SpellFlameParticle.SignFactory::new);
         event.registerSpriteSet(SpellParticleRegistry.SIGN_WAND.get(), SpellFlameParticle.SignFactory::new);
 
-        // ── BetterCombat slash particles (12 types) ──
-        event.registerSpriteSet(SpellParticleRegistry.BOTSLASH45.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.BOTSLASH90.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.BOTSLASH180.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.BOTSLASH270.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.BOTSLASH360.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.BOTSTAB.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSLASH45.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSLASH90.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSLASH180.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSLASH270.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSLASH360.get(), SlashParticle.Provider::new);
-        event.registerSpriteSet(SpellParticleRegistry.TOPSTAB.get(), SlashParticle.Provider::new);
+        // BetterCombat slash particles (12 types) are now registered by
+        // BetterCombatParticleProviders.register() on the mod event bus (see MegaModClient).
+        // They use the proper source-ported SlashParticleEffect + rotation pipeline under
+        // feature/combat/animation/particle/ instead of the SimpleParticleType shims.
     }
 }

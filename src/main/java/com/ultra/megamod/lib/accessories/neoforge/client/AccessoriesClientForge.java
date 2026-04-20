@@ -55,6 +55,19 @@ public class AccessoriesClientForge {
         eventBus.addListener(this::addRenderLayer);
         eventBus.addListener(this::registerReloadListeners);
         NeoForge.EVENT_BUS.addListener(this::onJoin);
+        NeoForge.EVENT_BUS.addListener(AccessoriesInventoryButton::onInitPost);
+
+        eventBus.<net.neoforged.neoforge.client.event.RegisterPictureInPictureRenderersEvent>addListener(event -> {
+            event.register(com.ultra.megamod.lib.accessories.owo.ui.renderstate.EntityElementRenderState.class,
+                com.ultra.megamod.lib.accessories.owo.ui.renderstate.EntityElementRenderState.Renderer::new);
+            event.register(com.ultra.megamod.lib.accessories.owo.ui.renderstate.CubeMapElementRenderState.class,
+                com.ultra.megamod.lib.accessories.owo.ui.renderstate.CubeMapElementRenderState.Renderer::new);
+            event.register(com.ultra.megamod.lib.accessories.owo.ui.renderstate.BlockElementRenderState.class,
+                com.ultra.megamod.lib.accessories.owo.ui.renderstate.BlockElementRenderState.Renderer::new);
+            event.register(com.ultra.megamod.lib.accessories.owo.ui.renderstate.OwoItemElementRenderState.class,
+                com.ultra.megamod.lib.accessories.owo.ui.renderstate.OwoItemElementRenderState.Renderer::new);
+        });
+
         eventBus.<RegisterRenderPipelinesEvent>addListener(event -> AccessoriesPipelines.registerPipelines(event::registerPipeline));
 
         AccessoriesClient.initConfigStuff();
@@ -70,6 +83,12 @@ public class AccessoriesClientForge {
                 event.addDependency(dependencyId, endecDataLoader.getId());
             }
         });
+
+        // Register the nine-patch metadata loader so UI panels/buttons/scrollbars have
+        // their nine-patch descriptors available. Source wired this via Fabric's
+        // IdentifiableResourceReloadListener which was stripped during the NeoForge port.
+        var ninePatchLoader = new com.ultra.megamod.lib.accessories.owo.ui.util.NinePatchTexture.MetadataLoader();
+        event.addListener(ninePatchLoader.getFabricId(), ninePatchLoader);
     }
 
     public void registerMenuType(RegisterMenuScreensEvent event) {

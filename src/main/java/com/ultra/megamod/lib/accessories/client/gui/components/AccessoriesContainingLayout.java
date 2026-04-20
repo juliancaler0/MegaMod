@@ -3,7 +3,7 @@ package com.ultra.megamod.lib.accessories.client.gui.components;
 import com.ultra.megamod.lib.accessories.api.menu.AccessoriesBasedSlot;
 import com.ultra.megamod.lib.accessories.client.gui.AccessoriesScreen;
 import com.ultra.megamod.lib.accessories.impl.option.PlayerOptions;
-import com.ultra.megamod.lib.accessories.owo.ui.container.Containers;
+import com.ultra.megamod.lib.accessories.owo.ui.container.UIContainers;
 import com.ultra.megamod.lib.accessories.owo.ui.container.FlowLayout;
 import com.ultra.megamod.lib.accessories.owo.ui.core.*;
 import net.minecraft.world.inventory.Slot;
@@ -86,8 +86,8 @@ public abstract class AccessoriesContainingLayout<D extends AccessoriesContainin
     //--
 
     protected static BaseLayoutGroup createBaseLayoutGroup(AccessoriesScreen screen, List<Slot> slots, int totalRowCount, int maxColumnCount, int colStartingIndexOffset, boolean sideBySide) {
-        var accessoriesLayout = Containers.verticalFlow(Sizing.content(), Sizing.content());
-        var cosmeticsLayout = Containers.verticalFlow(Sizing.content(), Sizing.content());
+        var accessoriesLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content());
+        var cosmeticsLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content());
 
         var accessoriesChecks = new ArrayList<PositionedRectangle>();
         var cosmeticChecks = new ArrayList<PositionedRectangle>();
@@ -97,10 +97,10 @@ public abstract class AccessoriesContainingLayout<D extends AccessoriesContainin
         for (int row = 0; row < totalRowCount; row++) {
             var colStartingIndex = colStartingIndexOffset + (row * (maxColumnCount * 2));
 
-            var accessoriesRowLayout = (FlowLayout) Containers.horizontalFlow(Sizing.content(), Sizing.content())
+            var accessoriesRowLayout = (FlowLayout) UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                     .id("row_" + row);
 
-            var cosmeticRowLayout = (FlowLayout) Containers.horizontalFlow(Sizing.content(), Sizing.content())
+            var cosmeticRowLayout = (FlowLayout) UIContainers.horizontalFlow(Sizing.content(), Sizing.content())
                     .id("row_" + row);
 
             var accessoriesRowButtons = new ArrayList<PositionedRectangle>();
@@ -125,32 +125,21 @@ public abstract class AccessoriesContainingLayout<D extends AccessoriesContainin
                 var cosmeticSlot = (AccessoriesBasedSlot) slots.get(cosmetic);
                 var accessorySlot = (AccessoriesBasedSlot) slots.get(accessory);
 
+                // MegaMod customization: we only want accessory slots visible — cosmetic slots
+                // are always hidden and disabled. The paired cosmetic container still exists in
+                // the menu (can't remove without restructuring AccessoriesMenu), but it never gets
+                // rendered or targeted by clicks. This prevents the duplicate-slot UX where items
+                // appear in both accessory and cosmetic positions.
                 screen.hideSlot(cosmeticSlot);
                 screen.hideSlot(accessorySlot);
+                screen.enableSlot(accessorySlot);
+                screen.disableSlot(cosmeticSlot);
 
-                if (sideBySide && screen.showCosmeticState()) {
-                    screen.enableSlot(cosmeticSlot);
-                    screen.enableSlot(accessorySlot);
-                } else {
-                    screen.enableSlot(screen.showCosmeticState() ? cosmeticSlot : accessorySlot);
-                    screen.disableSlot(screen.showCosmeticState() ? accessorySlot : cosmeticSlot);
-                }
-
-                //--
-
-                var accessoryComponentData = ComponentUtils.createSlotWithToggle(accessorySlot, screen::slotAsComponent);
+                var accessoryComponentData = ComponentUtils.createSlotWithToggle(accessorySlot, screen::slotAsComponent, false);
 
                 accessoriesRowLayout.child(accessoryComponentData.first());
 
-                accessoriesRowButtons.add(accessoryComponentData.second());
-
-                //--
-
-                var cosmeticComponentData = ComponentUtils.createSlotWithToggle(cosmeticSlot, screen::slotAsComponent, !sideBySide);
-
-                cosmeticRowLayout.child(cosmeticComponentData.first());
-
-                if(cosmeticComponentData.second() != null) cosmeticRowButtons.add(cosmeticComponentData.second());
+                if (accessoryComponentData.second() != null) accessoriesRowButtons.add(accessoryComponentData.second());
             }
 
             accessoriesLayout.child(accessoriesRowLayout);
@@ -185,8 +174,8 @@ public abstract class AccessoriesContainingLayout<D extends AccessoriesContainin
 
     protected record BaseLayoutGroup(FlowLayout accessoriesLayout, FlowLayout cosmeticLayout, List<PositionedRectangle> accessoriesBtnChecks, List<PositionedRectangle> cosmeticBtnChecks, int totalColumnCount) {
         public static final BaseLayoutGroup DEFAULT = new BaseLayoutGroup(
-                Containers.verticalFlow(Sizing.content(), Sizing.content()),
-                Containers.verticalFlow(Sizing.content(), Sizing.content()),
+                UIContainers.verticalFlow(Sizing.content(), Sizing.content()),
+                UIContainers.verticalFlow(Sizing.content(), Sizing.content()),
                 List.of(),
                 List.of(),
                 0);

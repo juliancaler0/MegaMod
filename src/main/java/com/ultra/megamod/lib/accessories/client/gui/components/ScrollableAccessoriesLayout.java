@@ -1,6 +1,6 @@
 package com.ultra.megamod.lib.accessories.client.gui.components;
-import com.ultra.megamod.lib.accessories.owo.ui.component.Components;
-import com.ultra.megamod.lib.accessories.owo.ui.container.Containers;
+import com.ultra.megamod.lib.accessories.owo.ui.component.UIComponents;
+import com.ultra.megamod.lib.accessories.owo.ui.container.UIContainers;
 import com.ultra.megamod.lib.accessories.owo.ui.core.*;
 
 import com.ultra.megamod.lib.accessories.Accessories;
@@ -99,7 +99,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
         FlowLayout fullLayout;
 
         if (layoutData.sideBySide()) {
-            fullLayout = Containers.horizontalFlow(Sizing.content(), Sizing.content()).gap(3);
+            fullLayout = UIContainers.horizontalFlow(Sizing.content(), Sizing.content()).gap(3);
 
             fullLayout.id("side_by_side_holder");
 
@@ -116,7 +116,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
 
         fullLayout.padding(this.screen.getDefaultedData(PlayerOptions.MAIN_WIDGET_POSITION) ? Insets.left(paddingValue) : Insets.right(paddingValue));
 
-        Component innerAccessoriesLayout;
+        UIComponent innerAccessoriesLayout;
 
         var width = layoutData.width();
 
@@ -148,13 +148,13 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
                     .scrollbar(ComponentUtils.getScrollbarRenderer())
                     .id("accessories_scroll_container");
         } else {
-            innerAccessoriesLayout = Containers.verticalFlow(Sizing.content(), Sizing.content()).child(fullLayout);
+            innerAccessoriesLayout = UIContainers.verticalFlow(Sizing.content(), Sizing.content()).child(fullLayout);
         }
 
         innerAccessoriesLayout
                 .id("inner_accessories_container");
 
-        var accessoriesMainLayout = (FlowLayout) Containers.verticalFlow(Sizing.content(), Sizing.content())
+        var accessoriesMainLayout = (FlowLayout) UIContainers.verticalFlow(Sizing.content(), Sizing.content())
                 .gap(3)
                 .child(innerAccessoriesLayout)
                 .horizontalAlignment(HorizontalAlignment.RIGHT)
@@ -171,7 +171,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
         this.sizing(Sizing.content(), Sizing.fixed(minimumLayoutHeight));
 
         this.child(accessoriesMainLayout);
-        this.child(Containers.verticalFlow(Sizing.content(), Sizing.expand()));
+        this.child(UIContainers.verticalFlow(Sizing.content(), Sizing.expand()));
     }
 
     @Override
@@ -180,10 +180,10 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
 
         if (this.layoutData.sideBySide) {
             if (showCosmeticState) {
-                ParentComponent newLayout = baseGroupData.cosmeticLayout();
+                ParentUIComponent newLayout = baseGroupData.cosmeticLayout();
 
                 for (int i = 0; i < layoutData.totalRowCount(); i++) {
-                    var newRow = newLayout.childById(ParentComponent.class, "row_" + i);
+                    var newRow = newLayout.childById(ParentUIComponent.class, "row_" + i);
 
                     ComponentUtils.recursiveSearchSlots(newRow, (slotComponent) -> {
                         this.screen.enableSlot(slotComponent.slot());
@@ -192,10 +192,10 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
 
                 screen.component(FlowLayout.class, "side_by_side_holder").child(0, newLayout);
             } else {
-                ParentComponent prevLayout = baseGroupData.cosmeticLayout();
+                ParentUIComponent prevLayout = baseGroupData.cosmeticLayout();
 
                 for (int i = 0; i < layoutData.totalRowCount(); i++) {
-                    var oldRow = prevLayout.childById(ParentComponent.class, "row_" + i);
+                    var oldRow = prevLayout.childById(ParentUIComponent.class, "row_" + i);
 
                     ComponentUtils.recursiveSearchSlots(oldRow, (slotComponent) -> {
                         this.screen.disableSlot(slotComponent.slot());
@@ -206,7 +206,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
                 prevLayout.parent().removeChild(prevLayout);
             }
 
-            var scrollContainer = this.childById(ParentComponent.class, "inner_accessories_container");
+            var scrollContainer = this.childById(ParentUIComponent.class, "inner_accessories_container");
 
             if (scrollContainer instanceof ExtendedScrollContainer) {
                 var width = layoutData.width();
@@ -218,7 +218,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
 
             screen.setupPadding();
         } else {
-            var container = this.childById(com.ultra.megamod.lib.accessories.owo.ui.core.Component.class, "inner_accessories_container");
+            var container = this.childById(com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent.class, "inner_accessories_container");
 
             Consumer<FlowLayout> childSetter;
 
@@ -234,10 +234,10 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
                 return;
             }
 
-            ParentComponent prevLayout = showCosmeticState ? baseGroupData.accessoriesLayout() : baseGroupData.cosmeticLayout();
+            ParentUIComponent prevLayout = showCosmeticState ? baseGroupData.accessoriesLayout() : baseGroupData.cosmeticLayout();
 
             for (int i = 0; i < layoutData.totalRowCount(); i++) {
-                var oldRow = prevLayout.childById(ParentComponent.class, "row_" + i);
+                var oldRow = prevLayout.childById(ParentUIComponent.class, "row_" + i);
 
                 ComponentUtils.recursiveSearchSlots(oldRow, (slotComponent) -> {
                     this.screen.disableSlot(slotComponent.slot());
@@ -253,7 +253,7 @@ public class ScrollableAccessoriesLayout extends AccessoriesContainingLayout<Scr
             childSetter.accept(newLayout);
 
             for (int i = 0; i < layoutData.totalRowCount(); i++) {
-                var newRow = newLayout.childById(ParentComponent.class, "row_" + i);
+                var newRow = newLayout.childById(ParentUIComponent.class, "row_" + i);
 
                 ComponentUtils.recursiveSearchSlots(newRow, (slotComponent) -> {
                     this.screen.enableSlot(slotComponent.slot());

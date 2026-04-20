@@ -3095,5 +3095,29 @@
     "sounds": [
       "megamod:wand_swing-01"
     ]
-  }
+  },
+  "bloodlust_activate": { "sounds": ["megamod:bloodlust_activate"] },
+  "bow_string_activate": { "sounds": ["megamod:bow_string_activate"] },
+  "defense_activate_1": { "sounds": ["megamod:defense_activate_1"] },
+  "defense_activate_2": { "sounds": ["megamod:defense_activate_2"] },
+  "eagle_boost": { "sounds": ["megamod:eagle_boost"] },
+  "healing_zone_activate": { "sounds": ["megamod:healing_zone_activate"] },
+  "heart_of_beast_activate": { "sounds": ["megamod:heart_of_beast_activate"] },
+  "holy_water_impact": { "sounds": ["megamod:holy_water_impact"] },
+  "hook_activate": { "sounds": ["megamod:hook_activate"] },
+  "horn_activate": { "sounds": ["megamod:horn_activate"] },
+  "intellect_buff": { "sounds": ["megamod:intellect_buff"] },
+  "levitate_generic": { "sounds": ["megamod:levitate_generic"] },
+  "lightning_impact_small": { "sounds": ["megamod:lightning_impact_small"] },
+  "magic_zone_presence": { "sounds": ["megamod:magic_zone_presence"] },
+  "medal_use": { "sounds": ["megamod:medal_use"] },
+  "melee_activate_1": { "sounds": ["megamod:melee_activate_1"] },
+  "monkey_activate": { "sounds": ["megamod:monkey_activate"] },
+  "potion_generic": { "sounds": ["megamod:potion_generic"] },
+  "sharpen": { "sounds": ["megamod:sharpen"] },
+  "spell_haste_activate_1": { "sounds": ["megamod:spell_haste_activate_1"] },
+  "spell_haste_activate_2": { "sounds": ["megamod:spell_haste_activate_2"] },
+  "spell_power_activate_2": { "sounds": ["megamod:spell_power_activate_2"] },
+  "spell_power_activate_3": { "sounds": ["megamod:spell_power_activate_3"] },
+  "spell_zone_activate": { "sounds": ["megamod:spell_zone_activate"] }
 }

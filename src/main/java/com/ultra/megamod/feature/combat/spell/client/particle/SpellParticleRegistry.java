@@ -118,33 +118,9 @@ public class SpellParticleRegistry {
     public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> SIGN_WAND =
             PARTICLES.register("sign_wand", () -> new SimpleParticleType(false));
 
-    // ═══════════════════════════════════════════
-    // BetterCombat slash particles (12 types: 6 top + 6 bottom)
-    // ═══════════════════════════════════════════
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSLASH45 =
-            PARTICLES.register("botslash45", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSLASH90 =
-            PARTICLES.register("botslash90", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSLASH180 =
-            PARTICLES.register("botslash180", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSLASH270 =
-            PARTICLES.register("botslash270", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSLASH360 =
-            PARTICLES.register("botslash360", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> BOTSTAB =
-            PARTICLES.register("botstab", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSLASH45 =
-            PARTICLES.register("topslash45", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSLASH90 =
-            PARTICLES.register("topslash90", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSLASH180 =
-            PARTICLES.register("topslash180", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSLASH270 =
-            PARTICLES.register("topslash270", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSLASH360 =
-            PARTICLES.register("topslash360", () -> new SimpleParticleType(false));
-    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> TOPSTAB =
-            PARTICLES.register("topstab", () -> new SimpleParticleType(false));
+    // BetterCombat slash particles (12 types) are now owned by BetterCombatParticles.
+    // Previously double-registered here as plain SimpleParticleTypes — removed to avoid
+    // "Adding duplicate key ... megamod:botslash45" registry conflict.
 
     public static void init(IEventBus modBus) {
         PARTICLES.register(modBus);

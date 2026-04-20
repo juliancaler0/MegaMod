@@ -1,0 +1,74 @@
+{
+  "school": "spell_power:arcane",
+  "range": 0.0,
+  "tier": 7,
+  "tooltip": {
+    "show_header": false,
+    "name": {
+      "show_in_compact": false,
+      "show_in_details": false
+    },
+    "description": {
+      "color": "dark_green"
+    }
+  },
+  "type": "PASSIVE",
+  "passive": {
+    "triggers": [
+      {
+        "type": "SPELL_IMPACT_SPECIFIC",
+        "chance": 0.06,
+        "spell": {
+          "archetype": "MAGIC"
+        },
+        "impact": {
+          "impact_type": "DAMAGE"
+        }
+      }
+    ]
+  },
+  "release": {
+    "animation": {
+      "id": "spell_engine:dual_handed_weapon_charge"
+    },
+    "particles": [
+      {
+        "particle_id": "spell_engine:magic_spark_decelerate",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 50.0,
+        "min_speed": 0.14,
+        "max_speed": 0.15,
+        "color_rgba": 4294967295
+      },
+      {
+        "particle_id": "spell_engine:magic_spark_decelerate",
+        "origin": "CENTER",
+        "shape": "SPHERE",
+        "count": 50.0,
+        "min_speed": 0.24,
+        "max_speed": 0.25,
+        "color_rgba": 4294967295
+      }
+    ],
+    "sound": {
+      "id": "megamod:spell_power_activate_2"
+    }
+  },
+  "impacts": [
+    {
+      "action": {
+        "type": "STATUS_EFFECT",
+        "status_effect": {
+          "effect_id": "megamod:medium_spell_power",
+          "duration": 8.0
+        }
+      }
+    }
+  ],
+  "cost": {
+    "cooldown": {
+      "duration": 45.0
+    }
+  }
+}

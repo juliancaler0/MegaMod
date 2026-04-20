@@ -106,21 +106,17 @@ public class SlashParticleUtil {
     }
 
     public static List<ParticlePlacement> trailParticlesFromAttack(AttackHand attackHand) {
-        if (attackHand.attack() != null && attackHand.attack().animation() != null) {
-            // Check if the attack has explicit trail particles defined
-            // For MegaMod we rely on animation-based config
-            var config = TrailParticles.getTrailConfig();
-            if (config != null) {
-                var animations = config.animation_based;
-                if (animations != null) {
-                    var animationSpecific = animations.get("megamod:" + attackHand.attack().animation());
-                    if (animationSpecific != null) {
-                        return animationSpecific;
-                    }
-                }
-            }
-        }
-        return List.of();
+        if (attackHand.attack() == null || attackHand.attack().animation() == null) return List.of();
+        var config = TrailParticles.getTrailConfig();
+        if (config == null || config.animation_based == null) return List.of();
+        // weapon_attributes animations are stored either as "megamod:foo" (namespaced) or "foo".
+        // TrailParticles.defaults() keys every entry under "megamod:<anim>", so normalize to that
+        // form before lookup — previously this blindly prepended "megamod:" which produced
+        // "megamod:megamod:foo" when the animation was already namespaced, missing every key.
+        String anim = attackHand.attack().animation();
+        String key = anim.contains(":") ? anim : ("megamod:" + anim);
+        var hit = config.animation_based.get(key);
+        return hit != null ? hit : List.of();
     }
 
     public static TrailAppearance appearanceFromItemStack(ItemStack stack) {

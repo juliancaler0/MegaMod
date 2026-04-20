@@ -1,11 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "megamod:bastion_ring",
-    "megamod:chorus_inhibitor",
-    "megamod:emberstone_band",
-    "megamod:gravestone_ring",
-    "megamod:stormband",
-    "megamod:verdant_signet"
-  ]
+  "values": []
 }

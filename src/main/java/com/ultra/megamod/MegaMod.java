@@ -95,6 +95,12 @@ public class MegaMod {
         // MegaMod alchemy system deleted — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.BetterCombatNetwork::registerPayloads);
+        modEventBus.addListener(com.ultra.megamod.feature.attributes.network.CombatTextNetwork::registerPayloads);
+        // BetterCombat slash-trail particle types (12 particles — top/bot × slash45/90/180/270/360/stab)
+        com.ultra.megamod.feature.combat.animation.particle.BetterCombatParticles.init(modEventBus);
+        // Dummy items backing spell projectile Blockbench models — the renderer resolves
+        // them via BuiltInRegistries.ITEM so ItemStackRenderState.submit() can draw the model.
+        com.ultra.megamod.feature.combat.spell.SpellProjectileModelItems.init(modEventBus);
         // Combat overhaul registries
         com.ultra.megamod.lib.combatroll.CombatRollInit.register(modEventBus);
         com.ultra.megamod.lib.combatroll.CombatRollInit.init();
@@ -118,6 +124,10 @@ public class MegaMod {
         com.ultra.megamod.feature.combat.items.ClassArmorRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.JewelryRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.jewelry.JewelrySounds.SOUND_EVENTS.register(modEventBus);
+        // Relics port (Relics-1.21.1). initEarly must run before DeferredRegister binds
+        // so the accessories factory swap is already installed by the time items construct.
+        com.ultra.megamod.feature.combat.relics.RelicsFeature.initEarly();
+        com.ultra.megamod.feature.combat.relics.RelicsFeature.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ArcherItemRegistry.init(modEventBus);
         com.ultra.megamod.lib.spellengine.api.effect.Effects.init(modEventBus);
         // SpellEngine bootstrap: registers data-pack registry for Spell, entity types,

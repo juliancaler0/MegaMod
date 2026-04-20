@@ -60,7 +60,10 @@ public class AccessoriesConfig {
         private PlayerEquipControl equipControl = PlayerEquipControl.MUST_NOT_CROUCH;
         private boolean forceNullRenderReplacement = false;
         private boolean disableEmptySlotScreenError = false;
-        private boolean showCosmeticAccessories = true;
+        // MegaMod customization: cosmetic accessories are disabled — they were causing
+        // duplicate-slot UX issues (items appeared in both accessory and cosmetic positions
+        // and rendered twice on the player model).
+        private boolean showCosmeticAccessories = false;
         private List<DisabledDefaultRender> disabledDefaultRenders = new ArrayList<>();
 
         public PlayerEquipControl equipControl() { return equipControl; }

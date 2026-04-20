@@ -31,9 +31,11 @@ public class CustomModels {
 
     public static void renderItemStack(PoseStack matrices, MultiBufferSource bufferSource,
                                         int light, ItemStack stack) {
-        // 1.21.11 ItemRenderer API for standalone model rendering requires the new
-        // item model resolution system. For now, spell projectile rendering falls back
-        // to the glow quad approach in SpellProjectileRenderer when no model is found.
-        // TODO: Adapt to 1.21.11's ItemModelResolver when model-based projectiles are needed
+        // Unreachable since SpellProjectileRenderer was rewritten against 1.21.11's
+        // {@code submit(SubmitNodeCollector)} API — it now resolves the model through
+        // {@code ItemModelResolver.updateForTopItem} and submits via
+        // {@code ItemStackRenderState.submit} directly, bypassing this MultiBufferSource path.
+        // Kept as an empty shim so any legacy call sites still compile; delete once
+        // confirmed nothing else references {@link CustomModels#render}.
     }
 }

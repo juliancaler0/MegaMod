@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CIG", "###"],
+  "key": {
+    "C": "minecraft:copper_ingot",
+    "I": "minecraft:iron_ingot",
+    "G": "minecraft:gold_ingot",
+    "#": "#minecraft:planks"
+  },
+  "result": { "id": "megamod:jewelers_kit" },
+  "show_notification": false
+}

@@ -34,13 +34,7 @@ public final class RelicRegistry {
                             .displayItems((params, output) -> {})
                             .build());
 
-    public static final Supplier<CreativeModeTab> ARMOR_TAB =
-            CREATIVE_MODE_TABS.register("megamod_armor_tab",
-                    () -> CreativeModeTab.builder()
-                            .title(Component.literal("MegaMod - Armor"))
-                            .icon(() -> new ItemStack(Items.NETHERITE_CHESTPLATE))
-                            .displayItems((params, output) -> {})
-                            .build());
+    // megamod_armor_tab is owned by DungeonExclusiveItems — don't re-register here.
 
     public static final Supplier<CreativeModeTab> RELICS_TAB =
             CREATIVE_MODE_TABS.register("megamod_relics_tab",

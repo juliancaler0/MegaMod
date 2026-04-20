@@ -1,14 +1,27 @@
 package com.ultra.megamod.lib.accessories.owo.util;
 
-/**
- * Adapter for io.wispforest.owo.util.EventSource.
- * Read-only view of an EventStream for subscribing listeners.
- */
-public interface EventSource<T> {
+public class EventSource<T> {
 
-    EventStream.EventSubscription subscribe(int priority, T listener);
+    private final EventStream<T> stream;
 
-    default EventStream.EventSubscription subscribe(T listener) {
-        return subscribe(0, listener);
+    protected EventSource(EventStream<T> stream) {
+        this.stream = stream;
+    }
+
+    public Subscription subscribe(T subscriber) {
+        this.stream.addSubscriber(subscriber);
+        return new Subscription(subscriber);
+    }
+
+    public class Subscription implements EventStream.EventSubscription {
+        protected final T subscriber;
+
+        public Subscription(T subscriber) {
+            this.subscriber = subscriber;
+        }
+
+        public void cancel() {
+            EventSource.this.stream.removeSubscriber(this.subscriber);
+        }
     }
 }

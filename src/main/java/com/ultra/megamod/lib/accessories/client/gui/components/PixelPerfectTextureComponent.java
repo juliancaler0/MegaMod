@@ -1,11 +1,11 @@
 package com.ultra.megamod.lib.accessories.client.gui.components;
 import com.ultra.megamod.lib.accessories.owo.ui.core.*;
 
-import com.ultra.megamod.lib.accessories.owo.ui.base.BaseComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.base.BaseUIComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 
-public class PixelPerfectTextureComponent extends BaseComponent {
+public class PixelPerfectTextureComponent extends BaseUIComponent {
 
     private final Identifier texture;
 
@@ -26,11 +26,11 @@ public class PixelPerfectTextureComponent extends BaseComponent {
     }
 
     @Override
-    public void draw(OwoUIDrawContext context, int mouseX, int mouseY, float partialTicks, float delta) {
+    public void draw(OwoUIGraphics context, int mouseX, int mouseY, float partialTicks, float delta) {
         drawPixelPerfectTextureQuad(context, texture, this.x(), this.y(), this.width(), this.height());
     }
 
-    public static void drawPixelPerfectTextureQuad(OwoUIDrawContext context, Identifier texture, int x1, int y1, int width, int height) {
+    public static void drawPixelPerfectTextureQuad(OwoUIGraphics context, Identifier texture, int x1, int y1, int width, int height) {
         // Simplified rendering - delegate to DrawUtils
         com.ultra.megamod.lib.accessories.client.DrawUtils.blit(context, texture, x1, y1, width, height);
     }

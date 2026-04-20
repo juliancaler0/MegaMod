@@ -28,7 +28,6 @@ import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.nbt.CompoundTag;
-import com.ultra.megamod.feature.skills.SkillTreeType;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -537,14 +536,21 @@ public class ComputerActionHandler {
                 break;
             }
             case "skill_max_all_trees": {
-                // payload: "uuid" — grant max points on every Pufferfish category
+                // payload: "uuid" — force-unlocks every node on every Pufferfish category for the
+                // target. Empty payload falls back to the calling admin so the Dashboard quick
+                // action can max the caller's own trees.
                 UUID targetId;
-                try { targetId = UUID.fromString(jsonData); }
+                try {
+                    targetId = (jsonData == null || jsonData.isEmpty())
+                        ? player.getUUID()
+                        : UUID.fromString(jsonData);
+                }
                 catch (Exception e) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"bad args\"}", eco); break; }
                 ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
                 if (target == null) { ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":false,\"msg\":\"target offline\"}", eco); break; }
                 com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.maxAll(target);
                 ComputerActionHandler.sendResponse(player, "admin_result", "{\"success\":true}", eco);
+                ComputerActionHandler.sendSkillData(player, eco, level);
                 break;
             }
             case "skill_set_admin_xp_mult": {
@@ -635,11 +641,15 @@ public class ComputerActionHandler {
             }
             case "cosm_prestige_up": {
                 UUID targetId = UUID.fromString(jsonData);
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
                 boolean applied = false;
-                for (SkillTreeType t : SkillTreeType.values()) {
-                    if (prestige.getPrestigeLevel(targetId, t) < 5) {
-                        prestige.prestige(targetId, t);
+                // Walk real Pufferfish categories (class_skills, weapon_skills) — not the legacy
+                // 5-tree enum. Previously this iterated SkillTreeType.values() which all collapsed
+                // onto class_skills, multi-bumping it once per legacy enum value.
+                for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
+                    if (prestige.getPrestigeLevel(targetId, catId) < com.ultra.megamod.feature.skills.prestige.PrestigeManager.MAX_PRESTIGE) {
+                        if (target != null) prestige.setPrestige(target, catId, prestige.getPrestigeLevel(targetId, catId) + 1);
                         applied = true;
                         break;
                     }
@@ -650,12 +660,14 @@ public class ComputerActionHandler {
             }
             case "cosm_prestige_down": {
                 UUID targetId = UUID.fromString(jsonData);
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
                 boolean applied = false;
-                SkillTreeType[] trees = SkillTreeType.values();
-                for (int i = trees.length - 1; i >= 0; i--) {
-                    if (prestige.getPrestigeLevel(targetId, trees[i]) > 0) {
-                        prestige.decrementPrestige(targetId, trees[i]);
+                var cats = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds();
+                for (int i = cats.length - 1; i >= 0; i--) {
+                    int lvl = prestige.getPrestigeLevel(targetId, cats[i]);
+                    if (lvl > 0) {
+                        if (target != null) prestige.setPrestige(target, cats[i], lvl - 1);
                         applied = true;
                         break;
                     }
@@ -665,23 +677,27 @@ public class ComputerActionHandler {
                 break;
             }
             case "cosm_tree_prestige_up": {
-                String[] parts = jsonData.split(":");
+                // payload: "uuid:<categoryId-or-legacy-tree-name>" — colon ok because category
+                // names never contain colons here (we pass the full id without the namespace).
+                String[] parts = jsonData.split(":", 2);
                 if (parts.length < 2) return;
                 UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
-                prestige.prestige(targetId, tree);
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                if (target != null) prestige.setPrestige(target, catId, prestige.getPrestigeLevel(targetId, catId) + 1);
                 prestige.saveToDisk(level);
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
             }
             case "cosm_tree_prestige_down": {
-                String[] parts = jsonData.split(":");
+                String[] parts = jsonData.split(":", 2);
                 if (parts.length < 2) return;
                 UUID targetId = UUID.fromString(parts[0]);
-                SkillTreeType tree = SkillTreeType.valueOf(parts[1]);
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
-                prestige.decrementPrestige(targetId, tree);
+                ServerPlayer target = level.getServer().getPlayerList().getPlayer(targetId);
+                net.minecraft.resources.Identifier catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                if (target != null) prestige.setPrestige(target, catId, Math.max(0, prestige.getPrestigeLevel(targetId, catId) - 1));
                 prestige.saveToDisk(level);
                 ComputerActionHandler.sendCosmeticData(player, eco, level);
                 break;
@@ -811,15 +827,15 @@ public class ComputerActionHandler {
                 } catch (Exception e) {
                     sb.append(",\"inDungeon\":false");
                 }
-                // Prestige
+                // Prestige — keyed on Pufferfish category IDs to match admin app format.
                 try {
-                    com.ultra.megamod.feature.skills.prestige.PrestigeManager prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                    var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
                     sb.append(",\"prestige\":{");
                     first = true;
-                    for (SkillTreeType tree : SkillTreeType.values()) {
+                    for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
                         if (!first) sb.append(",");
                         first = false;
-                        sb.append("\"").append(tree.name()).append("\":").append(prestige.getPrestigeLevel(targetId, tree));
+                        sb.append("\"").append(catId).append("\":").append(prestige.getPrestigeLevel(targetId, catId));
                     }
                     sb.append(",\"total\":").append(prestige.getTotalPrestige(targetId));
                     sb.append("}");
@@ -1465,39 +1481,34 @@ public class ComputerActionHandler {
             // PRESTIGE ADMIN
             // ═══════════════════════════════════════════════════════════════
             case "admin_grant_prestige": {
+                // "PlayerName [category]" — category accepts either a Pufferfish id
+                // (skill_tree_rpgs:class_skills), a bare tree slug (CLASS/WEAPON), or legacy
+                // SkillTreeType name for backward compat. Missing arg grants every category once.
                 String[] parts = jsonData.split(" ", 2);
                 ServerPlayer target = level.getServer().getPlayerList().getPlayerByName(parts[0]);
                 if (target == null) { sendResponse(player, "admin_result", "{\"msg\":\"Player not found\"}", eco); break; }
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager pm =
-                    com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                var pm = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
                 if (parts.length > 1) {
-                    try {
-                        com.ultra.megamod.feature.skills.SkillTreeType tree =
-                            com.ultra.megamod.feature.skills.SkillTreeType.valueOf(parts[1].toUpperCase());
-                        pm.prestige(target.getUUID(), tree);
-                        pm.saveToDisk(level);
-                        sendResponse(player, "admin_result", "{\"msg\":\"Granted prestige in " + tree.name() + " for " + parts[0] + "\"}", eco);
-                    } catch (IllegalArgumentException e) {
-                        sendResponse(player, "admin_result", "{\"msg\":\"Invalid tree. Use: COMBAT, MINING, FARMING, ARCANE, SURVIVAL\"}", eco);
-                    }
+                    net.minecraft.resources.Identifier catId =
+                        com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(parts[1]);
+                    pm.setPrestige(target, catId, pm.getPrestigeLevel(target.getUUID(), catId) + 1);
+                    pm.saveToDisk(level);
+                    sendResponse(player, "admin_result", "{\"msg\":\"Granted prestige in " + catId + " for " + parts[0] + "\"}", eco);
                 } else {
-                    for (com.ultra.megamod.feature.skills.SkillTreeType tree : com.ultra.megamod.feature.skills.SkillTreeType.values()) {
-                        pm.prestige(target.getUUID(), tree);
+                    for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
+                        pm.setPrestige(target, catId, pm.getPrestigeLevel(target.getUUID(), catId) + 1);
                     }
                     pm.saveToDisk(level);
-                    sendResponse(player, "admin_result", "{\"msg\":\"Granted prestige in ALL trees for " + parts[0] + "\"}", eco);
+                    sendResponse(player, "admin_result", "{\"msg\":\"Granted prestige in ALL categories for " + parts[0] + "\"}", eco);
                 }
                 break;
             }
             case "admin_reset_prestige": {
                 ServerPlayer target = level.getServer().getPlayerList().getPlayerByName(jsonData);
                 if (target == null) { sendResponse(player, "admin_result", "{\"msg\":\"Player not found\"}", eco); break; }
-                com.ultra.megamod.feature.skills.prestige.PrestigeManager pm =
-                    com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
-                for (com.ultra.megamod.feature.skills.SkillTreeType tree : com.ultra.megamod.feature.skills.SkillTreeType.values()) {
-                    while (pm.getPrestigeLevel(target.getUUID(), tree) > 0) {
-                        pm.decrementPrestige(target.getUUID(), tree);
-                    }
+                var pm = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
+                for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
+                    pm.setPrestige(target, catId, 0);
                 }
                 pm.saveToDisk(level);
                 sendResponse(player, "admin_result", "{\"msg\":\"Reset all prestige for " + jsonData + "\"}", eco);
@@ -2369,8 +2380,9 @@ public class ComputerActionHandler {
     }
 
     private static void sendCosmeticData(ServerPlayer player, EconomyManager eco, ServerLevel level) {
-        // Badge fields are legacy and always empty/false in the new system. `treePrestige` keys
-        // on SkillTreeType names for UI compat, but values come from the Pufferfish-backed store.
+        // Badge fields are legacy — empty/false always in the new system. `treePrestige` is keyed
+        // on Pufferfish category IDs (skill_tree_rpgs:class_skills / skill_tree_rpgs:weapon_skills)
+        // to match what the Admin Skills tab and Cosmetic tab render.
         var prestige = com.ultra.megamod.feature.skills.prestige.PrestigeManager.get(level);
         StringBuilder sb = new StringBuilder("{\"players\":[");
         boolean first = true;
@@ -2392,10 +2404,10 @@ public class ComputerActionHandler {
             sb.append(",\"hasCustomBadge\":false");
             sb.append(",\"treePrestige\":{");
             boolean firstTree = true;
-            for (SkillTreeType t : SkillTreeType.values()) {
+            for (var catId : com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds()) {
                 if (!firstTree) sb.append(",");
                 firstTree = false;
-                sb.append("\"").append(t.name()).append("\":").append(prestige.getPrestigeLevel(uuid, t));
+                sb.append("\"").append(catId).append("\":").append(prestige.getPrestigeLevel(uuid, catId));
             }
             sb.append("}}");
         }

@@ -1,11 +1,6 @@
 {
   "replace": false,
   "values": [
-    "megamod:stone_double_axe",
-    "megamod:iron_double_axe",
-    "megamod:golden_double_axe",
-    "megamod:diamond_double_axe",
-    "megamod:netherite_double_axe",
     {
       "id": "megamod:aeternium_double_axe",
       "required": false

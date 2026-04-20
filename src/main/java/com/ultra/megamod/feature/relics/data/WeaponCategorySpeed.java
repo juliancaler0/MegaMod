@@ -35,24 +35,9 @@ public final class WeaponCategorySpeed {
      */
     private static final Map<String, String> SPECIFIC = new LinkedHashMap<>();
     static {
-        // Relic legendary weapons — category determined by lore/mechanics, not name
-        SPECIFIC.put("vampiric_tome",       "staff");    // spell-casting tome, 2H
-        SPECIFIC.put("static_seeker",       "sword");    // lightning 1H blade
-        SPECIFIC.put("battledancer",        "sword");    // dual-wield-capable, fast 1H
-        SPECIFIC.put("ebonchill",           "staff");    // frost 2H stave
-        SPECIFIC.put("lightbinder",         "staff");    // holy 2H stave
-        SPECIFIC.put("crescent_blade",      "dagger");   // scimitar/curved 1H fast
-        SPECIFIC.put("ghost_fang",          "dagger");   // spectral 1H fast
-        SPECIFIC.put("terra_warhammer",     "hammer");   // earth 2H heavy
-        SPECIFIC.put("soka_singing_blade",  "claymore"); // dimensional rift 2H
-        SPECIFIC.put("voidreaver",          "claymore"); // void 2H greatsword
-        SPECIFIC.put("solaris",             "hammer");   // holy fire 2H blunt
-        SPECIFIC.put("stormfury",           "double_axe"); // lightning 2H axe
-        SPECIFIC.put("briarthorn",          "spear");    // nature polearm
-        SPECIFIC.put("abyssal_trident",     "spear");    // trident/polearm
-        SPECIFIC.put("pyroclast",           "hammer");   // fire 2H blunt
-        SPECIFIC.put("whisperwind",         "longbow");  // wind ranged
-        SPECIFIC.put("soulchain",           "dagger");   // chain/whip (fast reach)
+        // Legendary "tome" weapons removed — they were asset-only leftovers with no Java
+        // item registration and no obtainable form. Only the accessory relic 'shadow_glaive'
+        // remains as a specific category override.
         SPECIFIC.put("shadow_glaive",       "glaive");   // 2H polearm slash
     }
 

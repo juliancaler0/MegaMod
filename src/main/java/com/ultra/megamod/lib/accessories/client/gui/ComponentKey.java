@@ -1,11 +1,11 @@
 package com.ultra.megamod.lib.accessories.client.gui;
 
-import com.ultra.megamod.lib.accessories.owo.ui.core.ParentComponent;
+import com.ultra.megamod.lib.accessories.owo.ui.core.ParentUIComponent;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class ComponentKey<T extends com.ultra.megamod.lib.accessories.owo.ui.core.Component> {
+public abstract class ComponentKey<T extends com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent> {
 
-    static <T extends com.ultra.megamod.lib.accessories.owo.ui.core.Component> ComponentKey<T> of(Class<T> clazz, String id) {
+    static <T extends com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent> ComponentKey<T> of(Class<T> clazz, String id) {
         return new ComponentKey<T>() {
             @Override
             public Class<T> clazz() {
@@ -23,19 +23,19 @@ public abstract class ComponentKey<T extends com.ultra.megamod.lib.accessories.o
 
     public abstract String id();
 
-    public final boolean removeFromRoot(ParentComponent parent) {
+    public final boolean removeFromRoot(ParentUIComponent parent) {
         var component = getFrom(parent);
         return component != null && component.parent() != null && removeFrom(component.parent());
     }
 
-    public final boolean removeFrom(ParentComponent parent) {
+    public final boolean removeFrom(ParentUIComponent parent) {
         var component = getFrom(parent);
         if (component != null) parent.removeChild(component);
         return component != null;
     }
 
     @SafeVarargs
-    public final <P extends ParentComponent> boolean removeFrom(ParentComponent parent, ComponentKey<P>... keys) {
+    public final <P extends ParentUIComponent> boolean removeFrom(ParentUIComponent parent, ComponentKey<P>... keys) {
         for (var key : keys) {
             if (parent == null) return false;
             parent = key.getFrom(parent);
@@ -44,15 +44,15 @@ public abstract class ComponentKey<T extends com.ultra.megamod.lib.accessories.o
         return removeFrom(parent);
     }
 
-    public final @Nullable T getFrom(ParentComponent parent) {
+    public final @Nullable T getFrom(ParentUIComponent parent) {
         return parent.childById(clazz(), id());
     }
 
-    public final boolean has(ParentComponent parent) {
+    public final boolean has(ParentUIComponent parent) {
         return getFrom(parent) != null;
     }
 
-    public final <C extends com.ultra.megamod.lib.accessories.owo.ui.core.Component> C withId(C c) {
+    public final <C extends com.ultra.megamod.lib.accessories.owo.ui.core.UIComponent> C withId(C c) {
         return (C) c.id(id());
     }
 }

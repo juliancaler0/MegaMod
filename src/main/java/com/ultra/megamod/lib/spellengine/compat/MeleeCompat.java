@@ -29,7 +29,8 @@ public class MeleeCompat {
                 return Attack.EMPTY;
             }
         };
-        // WeaponRegistry/WeaponAttributesHelper not yet ported
-        // PlayerAnimation.twoHandedChecker will use default behavior
+        // PlayerAnimation.twoHandedChecker is now wired directly in PlayerAnimation.java
+        // to query WeaponAttributeRegistry.getAttributes(stack).twoHanded(), so spell
+        // animation overrides that branch on `two_handed_weapon` work correctly.
     }
 }

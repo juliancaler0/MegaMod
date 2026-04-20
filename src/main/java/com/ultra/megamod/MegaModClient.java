@@ -91,10 +91,6 @@ public class MegaModClient {
         modEventBus.addListener(AbilityHudOverlay::register);
         modEventBus.addListener(CombatTextRenderer::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellCastOverlay::onRegisterGuiLayers);
-        // SpellBookHudOverlay removed — was duplicating SpellEngine's canonical SpellHotbar HUD
-        // (rendered by SpellEngineClient::onRegisterGuiLayers below). Both layers displayed the
-        // same offhand-spellbook spells, producing the visible duplicate HUD.
-        // modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.SpellBookHudOverlay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.combos.CombatComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.KillComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.AbilityTriggerHud::onRegisterGuiLayers);
@@ -158,6 +154,7 @@ public class MegaModClient {
 
         // Particle provider registration
         modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleProviders::registerParticleProviders);
+        modEventBus.addListener(com.ultra.megamod.feature.combat.animation.client.particle.BetterCombatParticleProviders::register);
 
         // === SpellEngine library client wiring (Phase A.3) ===
         // Register SE-port SpellProjectile / SpellCloud entity renderers, SpellBinding menu screens,
@@ -219,6 +216,11 @@ public class MegaModClient {
         // Deferred until registry values are bound
         modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event3) -> {
             event3.enqueueWork(() -> com.ultra.megamod.feature.combat.arsenal.client.ArsenalClientMod.init());
+        });
+
+        // Initialize Relics client (spell tooltips, custom particle status effects)
+        modEventBus.addListener((net.neoforged.fml.event.lifecycle.FMLClientSetupEvent eventR) -> {
+            eventR.enqueueWork(() -> com.ultra.megamod.feature.combat.relics.client.RelicsClientMod.init());
         });
 
         // Reliquary port — client wiring (particles, renderers, HUD, key handlers)

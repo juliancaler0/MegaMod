@@ -610,20 +610,18 @@ public class MegaShop {
             {"megamod:holy_staff", "\u00A76Featured: Holy Staff", 60},
             {"megamod:staff_wizard", "\u00A76Featured: Wizard Staff", 60},
         };
-        // Admin-only legendary weapons: always one available via admin shop section
+        // Admin-only legendary weapons: always one available via admin shop section.
+        // Asset-only "tome" entries (battledancer, whisperwind, vampiric_tome, briarthorn,
+        // soka_singing_blade) removed — they had no Java item registration and would show
+        // as air in the shop.
         CATALOG_ADMIN_LEGENDARY = new Object[][]{
             {"megamod:unique_claymore_1", "\u00A7cLegendary: Cataclysm's Edge", 5000},
             {"megamod:unique_dagger_1", "\u00A7cLegendary: Frost Fang", 4000},
-            {"megamod:battledancer", "\u00A7cLegendary: Battledancer", 5000},
-            {"megamod:whisperwind", "\u00A7cLegendary: Whisperwind", 5000},
-            {"megamod:vampiric_tome", "\u00A7cLegendary: Vampiric Tome", 5000},
-            {"megamod:briarthorn", "\u00A7cLegendary: Briarthorn", 5000},
             {"megamod:unique_katana_1", "\u00A7cLegendary: Windcutter", 4000},
             {"megamod:unique_hammer_1", "\u00A7cLegendary: Shockwave Hammer", 4000},
             {"megamod:unique_rapier_1", "\u00A7cLegendary: Duelist's Sting", 4000},
             {"megamod:unique_spear_1", "\u00A7cLegendary: Frostbite Spear", 4000},
             {"megamod:unique_whip_1", "\u00A7cLegendary: Serpent's Lash", 4000},
-            {"megamod:soka_singing_blade", "\u00A7cLegendary: Soka Singing Blade", 10000},
         };
         // ─── Class Items Catalog: basic weapons, armor, jewelry, gems, scrolls, quivers ───
         CATALOG_CLASS_ITEMS = new Object[][]{

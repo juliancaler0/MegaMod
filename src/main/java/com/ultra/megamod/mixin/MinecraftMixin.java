@@ -210,6 +210,16 @@ public abstract class MinecraftMixin implements MinecraftClient_BetterCombat {
         var animatedHand = AnimatedHand.from(isOffHand, attributes.twoHanded());
         if (player instanceof PlayerAttackAnimatable animatable) {
             animatable.playAttackAnimation(animationName, animatedHand, attackCooldownTicks, upswingRate);
+            // Schedule weapon-trail slash particles to spawn at the attack's "hit" tick.
+            // Matches source BetterCombat — trail config is looked up per animation id and
+            // appearance is derived from the held stack (enchanted items glow, etc.).
+            int particleDelay = Math.max(0, Math.round(attackCooldownTicks * upswingRate));
+            var trailParticles = com.ultra.megamod.feature.combat.animation.client.particle.SlashParticleUtil
+                    .trailParticlesFromAttack(attackHand);
+            var trailAppearance = com.ultra.megamod.feature.combat.animation.client.particle.SlashParticleUtil
+                    .appearanceFromItemStack(player.getMainHandItem());
+            float weaponRange = (float)(attributes.rangeBonus() + 2.5);
+            animatable.playAttackParticles(isOffHand, weaponRange, particleDelay, trailParticles, trailAppearance);
         }
 
         // Animation is played locally above. Server broadcasts to other clients

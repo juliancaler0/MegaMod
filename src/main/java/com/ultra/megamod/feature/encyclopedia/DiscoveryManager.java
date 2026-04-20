@@ -96,17 +96,9 @@ public class DiscoveryManager {
         set.add("relic_horse_flute");
         set.add("relic_spore_sack");
         set.add("relic_blazing_flask");
-        // Weapons
+        // Weapons (legendary "tomes" removed — asset-only items with no Java registration)
         set.add("weapon_lunar_crown");
         set.add("weapon_solar_crown");
-        set.add("weapon_vampiric_tome");
-        set.add("weapon_static_seeker");
-        set.add("weapon_battledancer");
-        set.add("weapon_ebonchill");
-        set.add("weapon_lightbinder");
-        set.add("weapon_crescent_blade");
-        set.add("weapon_ghost_fang");
-        set.add("weapon_terra_warhammer");
         // Mobs (wildlife + aquarium)
         set.add("mob_minecraft:cow"); set.add("mob_minecraft:pig"); set.add("mob_minecraft:sheep");
         set.add("mob_minecraft:chicken"); set.add("mob_minecraft:horse"); set.add("mob_minecraft:donkey");
@@ -172,10 +164,7 @@ public class DiscoveryManager {
         set.add("relic_bloodstone_choker"); set.add("relic_thornweave_glove"); set.add("relic_chrono_glove");
         set.add("relic_stormstrider_boots"); set.add("relic_sandwalker_treads"); set.add("relic_emberstone_band");
         set.add("relic_void_lantern"); set.add("relic_thunderhorn"); set.add("relic_mending_chalice");
-        // New RPG weapons (wave 2)
-        set.add("weapon_voidreaver"); set.add("weapon_solaris"); set.add("weapon_stormfury");
-        set.add("weapon_briarthorn"); set.add("weapon_abyssal_trident"); set.add("weapon_pyroclast");
-        set.add("weapon_whisperwind"); set.add("weapon_soulchain");
+        // New RPG weapons wave 2 (legendary tomes removed — see note above).
         // New unique weapons (wave 2)
         set.add("weapon_unique_whip_1"); set.add("weapon_unique_whip_2"); set.add("weapon_unique_whip_sw");
         set.add("weapon_unique_wand_1"); set.add("weapon_unique_wand_2"); set.add("weapon_unique_wand_sw");

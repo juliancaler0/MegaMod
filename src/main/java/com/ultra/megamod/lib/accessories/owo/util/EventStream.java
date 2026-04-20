@@ -1,81 +1,44 @@
 package com.ultra.megamod.lib.accessories.owo.util;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Function;
 
-/**
- * Adapter for io.wispforest.owo.util.EventStream.
- * A simple event bus that collects listeners and invokes them through an invoker factory.
- */
-public class EventStream<T> implements EventSource<T> {
+public class EventStream<T> {
 
-    protected final List<T> subscribers = new CopyOnWriteArrayList<>();
-    private final Function<List<T>, T> invokerFactory;
-    private T invoker;
+    protected final Function<List<T>, T> sinkFactory;
+    protected final List<T> subscribers = new ArrayList<>();
+    protected final EventSource<T> source = new EventSource<>(this);
+    protected T sink;
 
-    public EventStream(Function<List<T>, T> invokerFactory) {
-        this.invokerFactory = invokerFactory;
-        this.invoker = invokerFactory.apply(List.of());
+    public EventStream(Function<List<T>, T> sinkFactory) {
+        this.sinkFactory = sinkFactory;
+        this.regenerateSink();
     }
 
-    public EventSubscription subscribe(T listener) {
-        subscribers.add(listener);
-        invoker = invokerFactory.apply(List.copyOf(subscribers));
-        return () -> {
-            subscribers.remove(listener);
-            invoker = invokerFactory.apply(List.copyOf(subscribers));
-        };
+    public T sink() {
+        return this.sink;
     }
 
-    public T invoker() {
-        return invoker;
+    public EventSource<T> source() {
+        return this.source;
     }
 
     protected void addSubscriber(T subscriber) {
-        subscribers.add(subscriber);
-        invoker = invokerFactory.apply(List.copyOf(subscribers));
+        this.subscribers.add(subscriber);
+        this.regenerateSink();
     }
 
     protected void removeSubscriber(T subscriber) {
-        subscribers.remove(subscriber);
-        invoker = invokerFactory.apply(List.copyOf(subscribers));
+        this.subscribers.remove(subscriber);
+        this.regenerateSink();
     }
 
-    /**
-     * Returns this EventStream as an EventSource for subscribing.
-     * Mirrors the owo-lib source() API.
-     */
-    public EventSource<T> source() {
-        return this;
-    }
-
-    /**
-     * Returns the current invoker for dispatching events.
-     * Mirrors the owo-lib sink() API.
-     */
-    public T sink() {
-        return invoker;
-    }
-
-    @Override
-    public EventSubscription subscribe(int priority, T listener) {
-        subscribers.add(listener);
-        invoker = invokerFactory.apply(List.copyOf(subscribers));
-        return () -> {
-            subscribers.remove(listener);
-            invoker = invokerFactory.apply(List.copyOf(subscribers));
-        };
+    protected void regenerateSink() {
+        this.sink = this.sinkFactory.apply(this.subscribers);
     }
 
     public interface EventSubscription {
-        void unsubscribe();
-
-        /**
-         * Alias for unsubscribe(), for compatibility with code using cancel().
-         */
-        default void cancel() {
-            unsubscribe();
-        }
+        void cancel();
     }
 }

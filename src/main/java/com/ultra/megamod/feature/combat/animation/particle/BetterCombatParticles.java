@@ -1,23 +1,54 @@
 package com.ultra.megamod.feature.combat.animation.particle;
 
 import com.mojang.serialization.MapCodec;
+import com.ultra.megamod.MegaMod;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * Registry of all BetterCombat slash/stab particle types.
- * Ported 1:1 from BetterCombat (net.bettercombat.particle.BetterCombatParticles).
+ * 1:1 port of {@code net.bettercombat.particle.BetterCombatParticles}.
+ *
+ * <p>Registers 12 particle types via NeoForge {@link DeferredRegister} —
+ * {@code botslash45/90/180/270/360/stab} and {@code topslash45/90/180/270/360/stab}.
+ * Each spawns a {@link SlashParticleEffect} instance with its own rotation params.</p>
  */
 public class BetterCombatParticles {
     public record StaticParams(boolean animated, int lifetime, float scale) {}
-    public record DynamicParams(float red, float green, float blue, float alpha) {}
 
-    private static final String MOD_ID = "megamod";
+    private static final DeferredRegister<ParticleType<?>> REGISTER =
+            DeferredRegister.create(Registries.PARTICLE_TYPE, MegaMod.MODID);
+
+    public static final class Entry {
+        public final Identifier id;
+        public final int textureFrames;
+        public final StaticParams params;
+        private final DeferredHolder<ParticleType<?>, ParticleType<SlashParticleEffect>> holder;
+
+        Entry(String name, int textureFrames, StaticParams params) {
+            this.id = Identifier.fromNamespaceAndPath(MegaMod.MODID, name);
+            this.textureFrames = textureFrames;
+            this.params = params;
+            @SuppressWarnings({"unchecked", "rawtypes"})
+            DeferredHolder<ParticleType<?>, ParticleType<SlashParticleEffect>> h =
+                    (DeferredHolder) REGISTER.register(name, BetterCombatParticles::createParticle);
+            this.holder = h;
+        }
+
+        public ParticleType<SlashParticleEffect> particleType() {
+            return holder.get();
+        }
+    }
 
     private static ParticleType<SlashParticleEffect> createParticle() {
         return new ParticleType<SlashParticleEffect>(false) {
@@ -25,7 +56,6 @@ public class BetterCombatParticles {
             public MapCodec<SlashParticleEffect> codec() {
                 return SlashParticleEffect.createCodec(this);
             }
-
             @Override
             public StreamCodec<? super RegistryFriendlyByteBuf, SlashParticleEffect> streamCodec() {
                 return SlashParticleEffect.createStreamCodec(this);
@@ -33,68 +63,32 @@ public class BetterCombatParticles {
         };
     }
 
-    public record Texture(Identifier id, int frames) {
-        public static Texture vanilla(String name) {
-            return new Texture(Identifier.withDefaultNamespace(name), 1);
-        }
-        public static Texture vanilla(String name, int frames) {
-            return new Texture(Identifier.withDefaultNamespace(name), frames);
-        }
-        public static Texture of(String name) {
-            return new Texture(Identifier.fromNamespaceAndPath(MOD_ID, name), 1);
-        }
-        public static Texture of(String name, int frames) {
-            return new Texture(Identifier.fromNamespaceAndPath(MOD_ID, name), frames);
-        }
-    }
-
-    private static final int default_age = 20;
-    private static final int default_frames = 8;
-
-    public record Entry(Identifier id, Texture texture, StaticParams params, ParticleType<SlashParticleEffect> particleType) {
-        public Entry(String name, Texture texture, StaticParams params) {
-            this(Identifier.fromNamespaceAndPath(MOD_ID, name), texture, params);
-        }
-        public Entry(String name, int textureFrames, StaticParams params) {
-            this(Identifier.fromNamespaceAndPath(MOD_ID, name), Texture.of(name, textureFrames), params);
-        }
-        public Entry(Identifier id, Texture texture, StaticParams params) {
-            this(id, texture, params, createParticle());
-        }
-        public Entry(String name) {
-            this(Identifier.fromNamespaceAndPath(MOD_ID, name), Texture.of(name, default_frames),
-                    new StaticParams(true, default_age, 1F));
-        }
-    }
-
-    public static final ArrayList<Entry> ENTRIES = new ArrayList<>();
+    public static final List<Entry> ENTRIES = new ArrayList<>();
 
     private static Entry add(Entry entry) {
         ENTRIES.add(entry);
         return entry;
     }
 
-    public static final Entry botslash45 = add(new Entry("botslash45"));
-    public static final Entry botslash90 = add(new Entry("botslash90"));
-    public static final Entry botslash180 = add(new Entry("botslash180"));
-    public static final Entry botslash270 = add(new Entry("botslash270"));
-    public static final Entry botslash360 = add(new Entry("botslash360"));
-    public static final Entry botstab = add(new Entry("botstab"));
+    private static final int default_age = 20;
+    private static final int default_frames = 8;
+    private static final StaticParams default_params = new StaticParams(true, default_age, 1F);
 
-    public static final Entry topslash45 = add(new Entry("topslash45"));
-    public static final Entry topslash90 = add(new Entry("topslash90"));
-    public static final Entry topslash180 = add(new Entry("topslash180"));
-    public static final Entry topslash270 = add(new Entry("topslash270"));
-    public static final Entry topslash360 = add(new Entry("topslash360"));
-    public static final Entry topstab = add(new Entry("topstab"));
+    public static final Entry botslash45  = add(new Entry("botslash45",  default_frames, default_params));
+    public static final Entry botslash90  = add(new Entry("botslash90",  default_frames, default_params));
+    public static final Entry botslash180 = add(new Entry("botslash180", default_frames, default_params));
+    public static final Entry botslash270 = add(new Entry("botslash270", default_frames, default_params));
+    public static final Entry botslash360 = add(new Entry("botslash360", default_frames, default_params));
+    public static final Entry botstab     = add(new Entry("botstab",     default_frames, default_params));
+    public static final Entry topslash45  = add(new Entry("topslash45",  default_frames, default_params));
+    public static final Entry topslash90  = add(new Entry("topslash90",  default_frames, default_params));
+    public static final Entry topslash180 = add(new Entry("topslash180", default_frames, default_params));
+    public static final Entry topslash270 = add(new Entry("topslash270", default_frames, default_params));
+    public static final Entry topslash360 = add(new Entry("topslash360", default_frames, default_params));
+    public static final Entry topstab     = add(new Entry("topstab",     default_frames, default_params));
 
-    /**
-     * Registers all particle types into the Minecraft particle registry.
-     * Should be called during RegisterEvent for PARTICLE_TYPE.
-     */
-    public static void register() {
-        for (var entry : ENTRIES) {
-            net.minecraft.core.Registry.register(BuiltInRegistries.PARTICLE_TYPE, entry.id, entry.particleType);
-        }
+    /** Call from MegaMod constructor with the mod event bus. */
+    public static void init(IEventBus modEventBus) {
+        REGISTER.register(modEventBus);
     }
 }

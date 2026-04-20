@@ -14,7 +14,6 @@ import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTask;
 import com.ultra.megamod.feature.quests.QuestDefinitions.QuestTaskType;
 import com.ultra.megamod.feature.relics.accessory.LibAccessoryLookup;
 import com.ultra.megamod.feature.relics.data.AccessorySlotType;
-import com.ultra.megamod.feature.skills.SkillTreeType;
 import com.ultra.megamod.feature.skills.prestige.PrestigeManager;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -285,23 +284,17 @@ public class QuestTaskEvaluator {
 
     private static int evaluatePrestige(UUID uuid, String targetId, ServerLevel level) {
         PrestigeManager pm = PrestigeManager.get(level);
+        var cats = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.allCategoryIds();
         if ("ANY".equals(targetId)) {
-            int count = 0;
-            for (SkillTreeType tree : SkillTreeType.values()) {
-                if (pm.getPrestigeLevel(uuid, tree) > 0) count++;
-            }
-            return count > 0 ? 1 : 0;
+            for (var catId : cats) if (pm.getPrestigeLevel(uuid, catId) > 0) return 1;
+            return 0;
         } else if ("ALL".equals(targetId)) {
-            for (SkillTreeType tree : SkillTreeType.values()) {
-                if (pm.getPrestigeLevel(uuid, tree) == 0) return 0;
-            }
+            for (var catId : cats) if (pm.getPrestigeLevel(uuid, catId) == 0) return 0;
             return 1;
         } else {
-            try {
-                return pm.getPrestigeLevel(uuid, SkillTreeType.valueOf(targetId));
-            } catch (IllegalArgumentException e) {
-                return 0;
-            }
+            // targetId may be a category id, bare slug, or legacy enum name — normalize.
+            var catId = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.categoryFor(targetId);
+            return pm.getPrestigeLevel(uuid, catId);
         }
     }
 }

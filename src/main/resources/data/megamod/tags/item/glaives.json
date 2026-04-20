@@ -1,10 +1,6 @@
 {
   "replace": false,
   "values": [
-    "megamod:iron_glaive",
-    "megamod:golden_glaive",
-    "megamod:diamond_glaive",
-    "megamod:netherite_glaive",
     {
       "id": "megamod:aeternium_glaive",
       "required": false

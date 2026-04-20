@@ -1,8 +1,4 @@
 {
-  "values": [
-    "megamod:arcane_rune",
-    "megamod:fire_rune",
-    "megamod:frost_rune"
-  ],
+  "values": [],
   "replace": false
 }

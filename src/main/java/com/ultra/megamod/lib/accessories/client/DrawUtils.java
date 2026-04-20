@@ -1,7 +1,7 @@
 package com.ultra.megamod.lib.accessories.client;
 
 import com.ultra.megamod.lib.accessories.owo.ui.core.Color;
-import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIDrawContext;
+import com.ultra.megamod.lib.accessories.owo.ui.core.OwoUIGraphics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.navigation.ScreenRectangle;
@@ -83,49 +83,48 @@ public class DrawUtils {
         context.blit(RenderPipelines.GUI_TEXTURED, atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight, width, height, textureWidth, textureHeight, -1);
     }
 
-    // OwoUIDrawContext overloads
-    public static void blit(OwoUIDrawContext context, Identifier atlasLocation, int x, int y, int width, int height) {
-        if (context.getGraphics() != null) blit(context.getGraphics(), atlasLocation, x, y, width, height);
+    // OwoUIGraphics overloads — OwoUIGraphics extends GuiGraphics; cast up to call the GuiGraphics overload
+    public static void blit(OwoUIGraphics context, Identifier atlasLocation, int x, int y, int width, int height) {
+        blit((GuiGraphics) context, atlasLocation, x, y, width, height);
     }
 
-    public static void blit(OwoUIDrawContext context, Identifier atlasLocation, int x, int y, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
-        if (context.getGraphics() != null) blit(context.getGraphics(), atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight, textureWidth, textureHeight);
+    public static void blit(OwoUIGraphics context, Identifier atlasLocation, int x, int y, float uOffset, float vOffset, int uWidth, int vHeight, int textureWidth, int textureHeight) {
+        blit((GuiGraphics) context, atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight, textureWidth, textureHeight);
     }
 
-    public static void blit(OwoUIDrawContext context, Identifier atlasLocation, int x, int y, float uOffset, float vOffset, int uWidth, int vHeight, int width, int height, int textureWidth, int textureHeight) {
-        if (context.getGraphics() != null) blit(context.getGraphics(), atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight, width, height, textureWidth, textureHeight);
+    public static void blit(OwoUIGraphics context, Identifier atlasLocation, int x, int y, float uOffset, float vOffset, int uWidth, int vHeight, int width, int height, int textureWidth, int textureHeight) {
+        blit((GuiGraphics) context, atlasLocation, x, y, uOffset, vOffset, uWidth, vHeight, width, height, textureWidth, textureHeight);
     }
 
-    public static void blitSprite(OwoUIDrawContext context, Identifier atlasLocation, int x, int y, int width, int height) {
-        if (context.getGraphics() != null) blitSprite(context.getGraphics(), atlasLocation, x, y, width, height);
+    public static void blitSprite(OwoUIGraphics context, Identifier atlasLocation, int x, int y, int width, int height) {
+        blitSprite((GuiGraphics) context, atlasLocation, x, y, width, height);
     }
 
-    public static void blitSprite(OwoUIDrawContext context, Identifier atlasLocation, int x, int y, int width, int height, int blitOffset) {
-        if (context.getGraphics() != null) blitSprite(context.getGraphics(), atlasLocation, x, y, width, height, blitOffset);
+    public static void blitSprite(OwoUIGraphics context, Identifier atlasLocation, int x, int y, int width, int height, int blitOffset) {
+        blitSprite((GuiGraphics) context, atlasLocation, x, y, width, height, blitOffset);
     }
 
-    public static void drawRectOutlineWithSpectrum(OwoUIDrawContext ctx, int x, int y, int width, int height, float alpha, boolean vertical) {
-        if (ctx.getGraphics() != null) drawRectOutlineWithSpectrum(ctx.getGraphics(), x, y, width, height, alpha, vertical);
+    public static void drawRectOutlineWithSpectrum(OwoUIGraphics ctx, int x, int y, int width, int height, float alpha, boolean vertical) {
+        drawRectOutlineWithSpectrum((GuiGraphics) ctx, x, y, width, height, alpha, vertical);
     }
 
-    public static void drawWithSpectrum(OwoUIDrawContext ctx, int x, int y, int blitOffset, int width, int height, Identifier texture, float alpha) {
-        if (ctx.getGraphics() != null) drawWithSpectrum(ctx.getGraphics(), x, y, blitOffset, width, height, texture, alpha);
+    public static void drawWithSpectrum(OwoUIGraphics ctx, int x, int y, int blitOffset, int width, int height, Identifier texture, float alpha) {
+        drawWithSpectrum((GuiGraphics) ctx, x, y, blitOffset, width, height, texture, alpha);
     }
 
-    public static void drawWithSpectrum(OwoUIDrawContext ctx, int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite, float alpha) {
-        if (ctx.getGraphics() != null) drawWithSpectrum(ctx.getGraphics(), x, y, blitOffset, width, height, sprite, alpha);
+    public static void drawWithSpectrum(OwoUIGraphics ctx, int x, int y, int blitOffset, int width, int height, TextureAtlasSprite sprite, float alpha) {
+        drawWithSpectrum((GuiGraphics) ctx, x, y, blitOffset, width, height, sprite, alpha);
     }
 
-    // TODO: THIS CURRENTLY DOSE NOT MAKE THE ICONS WHITE AT ALL AND REQUIRES HEAVY MODIFICATION SIMILAR TO OWO BLUR TO SETUP THE UNIFORMS CORRECTLY
     public static void blitSpriteWithColor(GuiGraphics context, TextureAtlasSprite sprite, int x, int y, int width, int height, int color) {
         context.blitSprite(RenderPipelines.GUI_TEXTURED, sprite, x, y, width, height, color);
     }
 
-    public static void blitSpriteWithColor(OwoUIDrawContext context, TextureAtlasSprite sprite, int x, int y, int width, int height, int color) {
-        if (context.getGraphics() != null) blitSpriteWithColor(context.getGraphics(), sprite, x, y, width, height, color);
+    public static void blitSpriteWithColor(OwoUIGraphics context, TextureAtlasSprite sprite, int x, int y, int width, int height, int color) {
+        blitSpriteWithColor((GuiGraphics) context, sprite, x, y, width, height, color);
     }
 
-    public static void blitSpriteWithColor(OwoUIDrawContext context, TextureAtlasSprite sprite, int x, int y, int width, int height, com.ultra.megamod.lib.accessories.owo.ui.core.Color color) {
-        if (context.getGraphics() != null) blitSpriteWithColor(context.getGraphics(), sprite, x, y, width, height, color.argb());
+    public static void blitSpriteWithColor(OwoUIGraphics context, TextureAtlasSprite sprite, int x, int y, int width, int height, com.ultra.megamod.lib.accessories.owo.ui.core.Color color) {
+        blitSpriteWithColor((GuiGraphics) context, sprite, x, y, width, height, color.argb());
     }
 }

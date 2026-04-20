@@ -142,7 +142,12 @@ public class SpellHotbar {
                 slots.add(slot);
             }
 
-            if (itemUseExpectation != null) {
+            if (itemUseExpectation != null && onUseKey != null && !slots.contains(onUseKey)) {
+                // Source always adds onUseKey here, but source always initializes it as a
+                // separate ITEM_USE placeholder. Our port skips that placeholder for spell
+                // weapons (the first spell takes the use key directly), so onUseKey is the
+                // same Slot object already appended by the per-spell loop — adding it again
+                // duplicates the icon. Guard against the dupe.
                 if (itemUseExpectation.isMainHand()) {
                     slots.addFirst(onUseKey);
                 } else {

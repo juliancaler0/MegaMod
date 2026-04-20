@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "amount": 1,
-  "order": 200,
-  "icon": "megamod:gui/slot/belt",
-  "validators": [],
-  "dropRule": "DEFAULT"
-}

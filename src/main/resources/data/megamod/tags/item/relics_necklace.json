@@ -1,11 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "megamod:bloodstone_choker",
-    "megamod:frostfire_pendant",
-    "megamod:holy_locket",
-    "megamod:jellyfish_necklace",
-    "megamod:reflection_necklace",
-    "megamod:tidekeeper_amulet"
-  ]
+  "values": []
 }

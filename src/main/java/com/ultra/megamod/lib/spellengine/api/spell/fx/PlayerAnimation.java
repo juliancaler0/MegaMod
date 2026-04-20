@@ -79,6 +79,8 @@ public class PlayerAnimation {
     }
 
     public static Function<ItemStack, Boolean> twoHandedChecker = itemStack -> {
-        return false;
+        if (itemStack == null || itemStack.isEmpty()) return false;
+        var attrs = com.ultra.megamod.feature.combat.animation.WeaponAttributeRegistry.getAttributes(itemStack);
+        return attrs != null && attrs.twoHanded();
     };
 }

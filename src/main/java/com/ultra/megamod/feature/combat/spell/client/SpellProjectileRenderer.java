@@ -6,35 +6,43 @@ import com.mojang.math.Axis;
 import com.ultra.megamod.feature.combat.spell.SpellDefinition;
 import com.ultra.megamod.feature.combat.spell.SpellProjectileEntity;
 import com.ultra.megamod.feature.combat.spell.SpellSchool;
-import com.ultra.megamod.feature.combat.spell.client.render.CustomLayers;
-import com.ultra.megamod.feature.combat.spell.client.render.CustomModels;
 import com.ultra.megamod.feature.combat.spell.client.render.LightEmission;
-import com.ultra.megamod.feature.combat.spell.client.render.SpellModelHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 /**
- * Renders spell projectiles with orientation modes, model rendering, spin, and trail particles.
- * Ported 1:1 from SpellEngine's SpellProjectileRenderer approach.
+ * Renders spell projectiles in NeoForge 1.21.11.
  *
- * Supports 3 orientation modes from SpellVisuals:
- * - TOWARDS_CAMERA: Billboard facing camera (default)
- * - TOWARDS_MOTION: Rotates to face velocity direction
- * - ALONG_MOTION: Like TOWARDS_MOTION but with 90-degree Y offset
+ * <p>The 1.21.11 entity rendering pipeline replaced {@code render(state, PoseStack, MultiBufferSource,
+ * packedLight)} with {@link #submit(EntityRenderState, PoseStack, SubmitNodeCollector, CameraRenderState)}.
+ * An earlier version of this class still overrode the old method — which meant the renderer emitted
+ * <em>nothing</em> every frame (the method was dead code with no {@code @Override} pulling it into the
+ * pipeline). That is why spell projectiles were invisible despite entity spawn + visuals wiring being
+ * correct.</p>
  *
- * Uses SpellVisuals for model ID, scale, spin rotation, and light emission.
+ * <p>Model rendering path: if the projectile has a {@code projectile_model_id} whose identifier also
+ * happens to match a registered {@code Item} (e.g. a spell_projectile dummy item), we populate an
+ * {@link ItemStackRenderState} via {@code ItemModelResolver.updateForTopItem} and submit it. Until the
+ * per-projectile items are registered this path yields an empty render state and the glow-quad drawn
+ * via {@link SubmitNodeCollector#submitCustomGeometry} is what shows — that's the minimum source-parity
+ * visual (BetterCombat / SpellEngine also composite a glow behind the model).</p>
  */
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntity, SpellProjectileRenderer.SpellProjectileRenderState> {
 
@@ -58,11 +66,9 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         state.age = entity.tickCount;
         state.partialTick = partialTick;
 
-        // Velocity for orientation and trails
         Vec3 vel = entity.getDeltaMovement();
         Vec3 prevVel = entity.previousVelocity;
         if (prevVel != null) {
-            // Smooth interpolation between previous and current velocity
             state.velX = Mth.lerp(partialTick, prevVel.x, vel.x);
             state.velY = Mth.lerp(partialTick, prevVel.y, vel.y);
             state.velZ = Mth.lerp(partialTick, prevVel.z, vel.z);
@@ -72,26 +78,40 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
             state.velZ = vel.z;
         }
 
-        // World position for particles
         state.posX = Mth.lerp(partialTick, entity.xOld, entity.getX());
         state.posY = Mth.lerp(partialTick, entity.yOld, entity.getY());
         state.posZ = Mth.lerp(partialTick, entity.zOld, entity.getZ());
 
-        // Visual configuration
         state.visuals = entity.renderVisuals;
+
+        // Resolve item-backed projectile model on the server→client extract pass so the render state
+        // is fully prepared before submit(). If the model identifier matches a registered Item
+        // (modders can register dummy items with path "spell_projectile/<name>") we populate the
+        // ItemStackRenderState here; otherwise it stays empty and submit() falls through to the glow.
+        state.modelStack = ItemStack.EMPTY;
+        if (state.visuals != null) {
+            String modelId = state.visuals.projectileModelId();
+            if (modelId != null && !modelId.isEmpty()) {
+                Identifier id = Identifier.fromNamespaceAndPath("megamod", modelId);
+                var itemOpt = BuiltInRegistries.ITEM.getOptional(id);
+                if (itemOpt.isPresent()) {
+                    state.modelStack = itemOpt.get().getDefaultInstance();
+                }
+            }
+        }
     }
 
-    public void render(SpellProjectileRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    @Override
+    public void submit(SpellProjectileRenderState state, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
         if (state.age < 2) return; // Skip first frames (too close to caster)
 
         SpellSchool school = schoolFromOrdinal(state.schoolOrdinal);
         int color = school.color;
         float time = state.age + state.partialTick;
 
-        // Get visual config
         String orientation = "TOWARDS_CAMERA";
         float modelScale = state.renderScale;
-        float rotateDeg = 3.0f; // Default slow spin
+        float rotateDeg = 3.0f;
         LightEmission emission = LightEmission.GLOW;
 
         if (state.visuals != null) {
@@ -102,16 +122,12 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         }
 
         poseStack.pushPose();
-
-        // Apply scale
         float pulse = 1.0f + 0.15f * Mth.sin(time * 0.3f);
         float finalScale = modelScale * pulse;
         poseStack.scale(finalScale, finalScale, finalScale);
 
-        // Apply orientation
         switch (orientation) {
             case "TOWARDS_MOTION", "ALONG_MOTION" -> {
-                // Compute yaw/pitch from interpolated velocity
                 double vx = state.velX, vy = state.velY, vz = state.velZ;
                 double len = Math.sqrt(vx * vx + vy * vy + vz * vz);
                 if (len > 0.001) {
@@ -123,53 +139,56 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
                     poseStack.mulPose(Axis.XP.rotationDegrees(dirPitch));
                 }
             }
-            default -> { // TOWARDS_CAMERA — billboard
+            default -> {
                 Quaternionf cameraRot = Minecraft.getInstance().gameRenderer.getMainCamera().rotation();
                 poseStack.mulPose(new Quaternionf(cameraRot));
                 poseStack.mulPose(Axis.YP.rotationDegrees(180.0f));
             }
         }
 
-        // Apply spin rotation
         if (rotateDeg != 0) {
             poseStack.mulPose(Axis.ZP.rotationDegrees(time * rotateDeg));
         }
 
-        // === Render the projectile ===
-        // Try model-based rendering if a model ID is specified
-        String modelId = state.visuals != null ? state.visuals.projectileModelId() : null;
-        if (modelId != null && !modelId.isEmpty()) {
-            // Model-based rendering via CustomModels
-            Identifier id = Identifier.fromNamespaceAndPath("megamod", modelId);
-            RenderType layer = SpellModelHelper.LAYERS.getOrDefault(emission, SpellModelHelper.LAYERS.get(LightEmission.GLOW));
-            CustomModels.render(layer, id, poseStack, bufferSource, 0xF000F0, state.age);
-        } else {
-            // Fallback: glow quad rendering (original simplified approach)
-            int r = (color >> 16) & 0xFF, g = (color >> 8) & 0xFF, b = color & 0xFF;
-            VertexConsumer consumer = bufferSource.getBuffer(RenderTypes.eyes(GLOW_TEXTURE));
-
-            // Outer glow
-            renderQuad(consumer, poseStack.last(), 0.8f, r, g, b, 88);
-            // Inner core
-            renderQuad(consumer, poseStack.last(), 0.5f, 255, 255, 255, 200);
-            // Color layer
-            renderQuad(consumer, poseStack.last(), 0.6f, r, g, b, 220);
+        // 1. If a registered item backs the projectile model, submit it through the new
+        //    ItemStackRenderState pipeline so the baked model (with textures + rotations
+        //    authored in Blockbench) renders properly.
+        if (!state.modelStack.isEmpty()) {
+            var mc = Minecraft.getInstance();
+            var renderState = new ItemStackRenderState();
+            mc.getItemModelResolver().updateForTopItem(renderState, state.modelStack, ItemDisplayContext.FIXED, mc.level, null, state.age);
+            poseStack.pushPose();
+            poseStack.translate(-0.5, -0.5, -0.5);
+            renderState.submit(poseStack, nodeCollector, 0xF000F0, OverlayTexture.NO_OVERLAY, 0);
+            poseStack.popPose();
         }
+
+        // 2. Glow composite — matches source SpellEngine where a school-colored additive glow
+        //    sits behind the projectile model. Always emitted: with no model this IS the
+        //    projectile visual, and with a model it supplies the magical halo. Submitted
+        //    via submitCustomGeometry since 1.21.11 no longer exposes MultiBufferSource
+        //    directly in entity renderers.
+        int r = (color >> 16) & 0xFF, g = (color >> 8) & 0xFF, b = color & 0xFF;
+        RenderType glowLayer = RenderTypes.eyes(GLOW_TEXTURE);
+        nodeCollector.submitCustomGeometry(poseStack, glowLayer, (pose, consumer) -> {
+            emitGlowQuad(consumer, pose, 0.8f, r, g, b, 88);
+            emitGlowQuad(consumer, pose, 0.5f, 255, 255, 255, 200);
+            emitGlowQuad(consumer, pose, 0.6f, r, g, b, 220);
+        });
 
         poseStack.popPose();
 
-        // Trail particles
         spawnTrailParticles(state, school);
     }
 
-    private void renderQuad(VertexConsumer consumer, PoseStack.Pose pose, float halfSize,
-                            int r, int g, int b, int a) {
+    private static void emitGlowQuad(VertexConsumer consumer, PoseStack.Pose pose, float halfSize,
+                                     int r, int g, int b, int a) {
         Matrix4f matrix = pose.pose();
         int light = 0xF000F0;
         consumer.addVertex(matrix, -halfSize, -halfSize, 0).setColor(r, g, b, a).setUv(0, 1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-        consumer.addVertex(matrix, halfSize, -halfSize, 0).setColor(r, g, b, a).setUv(1, 1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-        consumer.addVertex(matrix, halfSize, halfSize, 0).setColor(r, g, b, a).setUv(1, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
-        consumer.addVertex(matrix, -halfSize, halfSize, 0).setColor(r, g, b, a).setUv(0, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+        consumer.addVertex(matrix,  halfSize, -halfSize, 0).setColor(r, g, b, a).setUv(1, 1).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+        consumer.addVertex(matrix,  halfSize,  halfSize, 0).setColor(r, g, b, a).setUv(1, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
+        consumer.addVertex(matrix, -halfSize,  halfSize, 0).setColor(r, g, b, a).setUv(0, 0).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(pose, 0, 1, 0);
     }
 
     private void spawnTrailParticles(SpellProjectileRenderState state, SpellSchool school) {
@@ -217,5 +236,6 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectileEntit
         public double velX, velY, velZ;
         public double posX, posY, posZ;
         public SpellDefinition.SpellVisuals visuals;
+        public ItemStack modelStack = ItemStack.EMPTY;
     }
 }
