@@ -123,6 +123,9 @@ public class PlayerEntityMixin implements SpellCasterEntity {
             if (synchronizedSpellCastProcess != null) {
                 var castTicks = synchronizedSpellCastProcess.spellCastTicksSoFar(player.level().getGameTime());
                 if (castTicks >= (synchronizedSpellCastProcess.length() * 1.5)) {
+                    com.ultra.megamod.MegaMod.LOGGER.info(
+                            "[SpellCastDIAG/SERVER] tick timeout (1.5x) clearCasting castTicks={} length={}",
+                            castTicks, synchronizedSpellCastProcess.length());
                     SpellCastSyncHelper.clearCasting(player);
                 }
             }

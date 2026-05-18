@@ -166,8 +166,24 @@ public abstract class ClientPlayerEntityMixin implements SpellCasterClient {
     public void cancelSpellCast(boolean syncProcess) {
         var process = spellCastProcess;
         if (process != null) {
+            // DIAG: capture stack so we can attribute which call site cancelled the cast
+            // (updateSpellCast guards, tick_HEAD_SpellHotbar screen/roll guard, releaseSpellCast,
+            // performSpellRequest, etc.). One-line stack summary keeps log readable.
+            var stack = Thread.currentThread().getStackTrace();
+            StringBuilder caller = new StringBuilder();
+            for (int i = 2; i < Math.min(stack.length, 8); i++) {
+                if (i > 2) caller.append(" <- ");
+                String cls = stack[i].getClassName();
+                int dot = cls.lastIndexOf('.');
+                caller.append(dot >= 0 ? cls.substring(dot + 1) : cls);
+                caller.append('.').append(stack[i].getMethodName()).append(':').append(stack[i].getLineNumber());
+            }
+            var player = player();
+            long castTicks = player.level().getGameTime() - process.startedAt();
+            com.ultra.megamod.MegaMod.LOGGER.info(
+                    "[SpellCastDIAG/CLIENT] cancelSpellCast(sync={}) at castTicks={} spell={} channeled={} from: {}",
+                    syncProcess, castTicks, process.id(), SpellHelper.isChanneled(process.spell().value()), caller);
             if (SpellHelper.isChanneled(process.spell().value())) {
-                var player = player();
                 var progress = process.progress(player.level().getGameTime());
                 net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(new Packets.SpellRequest(SpellCast.Action.RELEASE, process.id(), progress.ratio(), new int[]{}, null));
             }
@@ -181,11 +197,17 @@ public abstract class ClientPlayerEntityMixin implements SpellCasterClient {
         var process = spellCastProcess;
         if (process != null) {
             var player = player();
-            if (!player().isAlive()
-                    || player.getMainHandItem().getItem() != process.item()
-                    || getCooldownManager().isCoolingDown(process.spell())
-                    || EntityActionsAllowed.isImpaired(player, EntityActionsAllowed.Player.CAST_SPELL, true)
-            ) {
+            boolean dead = !player().isAlive();
+            boolean itemChanged = player.getMainHandItem().getItem() != process.item();
+            boolean coolingDown = getCooldownManager().isCoolingDown(process.spell());
+            boolean impaired = EntityActionsAllowed.isImpaired(player, EntityActionsAllowed.Player.CAST_SPELL, true);
+            if (dead || itemChanged || coolingDown || impaired) {
+                long castTicks = player.level().getGameTime() - process.startedAt();
+                String mainItem = player.getMainHandItem().getItem().toString();
+                String procItem = process.item().toString();
+                com.ultra.megamod.MegaMod.LOGGER.info(
+                        "[SpellCastDIAG/CLIENT] cancelSpellCast() at castTicks={} reason: dead={} itemChanged={} (main={} proc={}) coolingDown={} impaired={}",
+                        castTicks, dead, itemChanged, mainItem, procItem, coolingDown, impaired);
                 cancelSpellCast();
                 return;
             }

@@ -227,17 +227,27 @@ public class SpellAnimationManager {
         speedMod.speed = speed;
         mirrorMod.enabled = mirror;
 
-        // CASTING animations must hold their final pose for the entire cast/channel
-        // duration (e.g. whirlwind's 8s spin pose). Without HOLD_ON_LAST_FRAME the
-        // animation reaches its declared length, the controller resets bones to the
-        // initial pose, and the player visibly snaps out of the cast pose mid-channel
-        // — looks like the animation "pauses" or "cuts off". RELEASE/MISC animations
-        // are one-shot and use the animation's own loop type.
+        // CASTING animations must keep showing the cast pose for the entire cast/
+        // channel duration. Two patterns appear in the data:
+        //   1. Non-looping cast poses (e.g. one_handed_projectile_charge) — the
+        //      animation plays to its endTick, then needs to HOLD the final frame
+        //      so the player doesn't visibly snap back to the default stance.
+        //   2. Looping cast animations (e.g. two_handed_spin_static, isLoop=true)
+        //      — these need to actually LOOP for the full channel; forcing HOLD
+        //      freezes them mid-backswing on the first iteration, which was the
+        //      whirlwind-stops-spinning bug.
+        // Respect the animation's own loopType for CASTING: LoopType.DEFAULT
+        // delegates to the file's declared loop behavior. If the file is
+        // non-looping (PLAY_ONCE), wrap with HOLD_ON_LAST_FRAME so the final
+        // frame sticks. RELEASE/MISC stay one-shot via DEFAULT.
         var anim = PlayerAnimResources.getAnimation(animationId);
         if (anim == null) return;
         RawAnimation rawAnim;
         if (type == AnimationType.CASTING) {
-            rawAnim = RawAnimation.begin().then(anim, Animation.LoopType.HOLD_ON_LAST_FRAME);
+            Animation.LoopType castLoop = isLooping(anim)
+                    ? Animation.LoopType.DEFAULT
+                    : Animation.LoopType.HOLD_ON_LAST_FRAME;
+            rawAnim = RawAnimation.begin().then(anim, castLoop);
         } else {
             rawAnim = RawAnimation.begin().then(anim, Animation.LoopType.DEFAULT);
         }
@@ -307,6 +317,24 @@ public class SpellAnimationManager {
     public static void playDodge(AbstractClientPlayer player) {
         playAnimation(player, AnimationType.MISC,
                 Identifier.fromNamespaceAndPath("megamod", "dodge"), 1.0f, false);
+    }
+
+    /**
+     * Returns whether the animation declares itself as looping (e.g. its source
+     * JSON has {@code "isLoop": "true"} — parsed to either {@code LoopType.LOOP}
+     * or {@code returnToTickLoop} depending on whether a {@code returnTick} was
+     * set). Animations without a loop flag get {@code LoopType.PLAY_ONCE}.
+     * Used to decide whether a CASTING animation should loop for the channel
+     * duration (whirlwind) or hold its last frame (projectile charge).
+     */
+    private static boolean isLooping(Animation anim) {
+        Animation.LoopType lt = anim.loopType();
+        if (lt == null) return false;
+        if (lt == Animation.LoopType.PLAY_ONCE) return false;
+        if (lt == Animation.LoopType.HOLD_ON_LAST_FRAME) return false;
+        if (lt == Animation.LoopType.DEFAULT) return false; // self-delegating, treat as no loop
+        // LoopType.LOOP and returnToTickLoop both have shouldPlayAgain == true.
+        return lt.shouldPlayAgain(null, anim);
     }
 
     public enum AnimationType {

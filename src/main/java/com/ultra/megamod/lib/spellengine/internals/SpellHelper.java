@@ -289,6 +289,9 @@ public class SpellHelper {
                 } else {
                     channelMultiplier = (progress >= 1) ? 1 : 0;
                 }
+                com.ultra.megamod.MegaMod.LOGGER.info(
+                        "[SpellCastDIAG/SERVER] performSpell RELEASE → clearCasting spell={} progress={} channeled={}",
+                        spellId, progress, isChanneled(spell));
                 SpellCastSyncHelper.clearCasting(player);
             }
             case TRIGGER -> {
