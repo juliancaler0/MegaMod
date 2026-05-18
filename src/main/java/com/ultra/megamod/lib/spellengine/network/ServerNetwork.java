@@ -64,6 +64,9 @@ public class ServerNetwork {
             ServerLevel world = (ServerLevel) player.level();
 
             server.execute(() -> {
+                // DIAG — confirm C2S cast packet arrives + which spell
+                com.ultra.megamod.MegaMod.LOGGER.info("[SpellCastDIAG/SERVER] C2S SpellCastSync received spellId={} speed={} length={}",
+                        packet.spellId(), packet.speed(), packet.length());
                 if (packet.spellId() == null) {
                     SpellCastSyncHelper.clearCasting(player);
                 } else {

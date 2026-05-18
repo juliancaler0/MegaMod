@@ -1,14 +1,6 @@
 {
   "values": [
-    "megamod:arcane_spell_book",
-    "megamod:fire_spell_book",
-    "megamod:frost_spell_book",
-    "megamod:healing_spell_book",
-    "megamod:archer_spell_book",
-    "megamod:rogue_spell_book",
-    "megamod:warrior_spell_book",
-    "megamod:paladin_spell_book",
-    "megamod:priest_spell_book"
+    "megamod:spell_book"
   ],
   "replace": false
 }

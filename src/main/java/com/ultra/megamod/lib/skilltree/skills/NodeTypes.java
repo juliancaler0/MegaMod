@@ -439,8 +439,8 @@ public class NodeTypes {
     public static final float WEAPON_ROOT_CRIT_DAMAGE = 0.08f;
     public static final float WEAPON_ROOT_HASTE = 0.05f;
 
-    public static final String CRIT_CHANCE_ID = "critical_strike:chance";
-    public static final String CRIT_DAMAGE_ID = "critical_strike:damage";
+    public static final String CRIT_CHANCE_ID = "megamod:sp_critical_chance";
+    public static final String CRIT_DAMAGE_ID = "megamod:sp_critical_damage";
     public static final String ATTACK_DAMAGE_ID = Attributes.ATTACK_DAMAGE.unwrapKey().orElseThrow().identifier().toString();
 
 
@@ -642,7 +642,7 @@ public class NodeTypes {
                     null,
                     Icon.item("minecraft:bow"),
                     "ranged_weapon:damage",
-                    "minecraft:generic.attack_damage",
+                    ATTACK_DAMAGE_ID,
                     WEAPON_ROOT_DAMAGE,
                     AttributeModifier.Operation.ADD_MULTIPLIED_BASE,
                     ModifierConditions.BOW

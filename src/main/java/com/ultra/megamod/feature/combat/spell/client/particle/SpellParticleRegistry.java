@@ -117,6 +117,40 @@ public class SpellParticleRegistry {
             PARTICLES.register("sign_shield", () -> new SimpleParticleType(false));
     public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> SIGN_WAND =
             PARTICLES.register("sign_wand", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> SIGN_HOURGLASS =
+            PARTICLES.register("sign_hourglass", () -> new SimpleParticleType(false));
+
+    // ═══════════════════════════════════════════
+    // Area effect particles (numeric-suffix variants from source SpellEngine)
+    // ═══════════════════════════════════════════
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> AREA_EFFECT_293 =
+            PARTICLES.register("area_effect_293", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> AREA_EFFECT_480 =
+            PARTICLES.register("area_effect_480", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> AREA_EFFECT_609 =
+            PARTICLES.register("area_effect_609", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> AREA_EFFECT_658 =
+            PARTICLES.register("area_effect_658", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> AREA_EFFECT_714 =
+            PARTICLES.register("area_effect_714", () -> new SimpleParticleType(false));
+
+    // ═══════════════════════════════════════════
+    // Flame variants (ground + medium_b)
+    // ═══════════════════════════════════════════
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> FLAME_GROUND =
+            PARTICLES.register("flame_ground", () -> new SimpleParticleType(false));
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> FLAME_MEDIUM_B =
+            PARTICLES.register("flame_medium_b", () -> new SimpleParticleType(false));
+
+    // ═══════════════════════════════════════════
+    // Additional magic impact variants (skull).
+    // Note: source {@code spell_engine:magic_nature_impact_decelerate} is referenced by Relics'
+    // {@code lesser_use_health} but is NEVER registered in source either — it's a dangling ref.
+    // We remapped port's {@code lesser_use_health.json} to use {@code magic_heal_decelerate}
+    // instead so the particle actually renders. Do not re-add a nature variant without textures.
+    // ═══════════════════════════════════════════
+    public static final DeferredHolder<net.minecraft.core.particles.ParticleType<?>, SimpleParticleType> MAGIC_SKULL_DECELERATE =
+            PARTICLES.register("magic_skull_decelerate", () -> new SimpleParticleType(false));
 
     // BetterCombat slash particles (12 types) are now owned by BetterCombatParticles.
     // Previously double-registered here as plain SimpleParticleTypes — removed to avoid

@@ -83,6 +83,27 @@ public class SpellParticleProviders {
         event.registerSpriteSet(SpellParticleRegistry.SIGN_SPEED.get(), SpellFlameParticle.SignFactory::new);
         event.registerSpriteSet(SpellParticleRegistry.SIGN_SHIELD.get(), SpellFlameParticle.SignFactory::new);
         event.registerSpriteSet(SpellParticleRegistry.SIGN_WAND.get(), SpellFlameParticle.SignFactory::new);
+        event.registerSpriteSet(SpellParticleRegistry.SIGN_HOURGLASS.get(), SpellFlameParticle.SignFactory::new);
+
+        // ── Area effect numeric variants (Relics spells) ──
+        event.registerSpriteSet(SpellParticleRegistry.AREA_EFFECT_293.get(),
+                s -> new SpellAreaParticle.Factory(s, SpellParticleEnums.Fading.IN_OUT, SpellParticleEnums.Orientation.HORIZONTAL, false));
+        event.registerSpriteSet(SpellParticleRegistry.AREA_EFFECT_480.get(),
+                s -> new SpellAreaParticle.Factory(s, SpellParticleEnums.Fading.IN_OUT, SpellParticleEnums.Orientation.HORIZONTAL, false));
+        event.registerSpriteSet(SpellParticleRegistry.AREA_EFFECT_609.get(),
+                s -> new SpellAreaParticle.Factory(s, SpellParticleEnums.Fading.IN_OUT, SpellParticleEnums.Orientation.HORIZONTAL, false));
+        event.registerSpriteSet(SpellParticleRegistry.AREA_EFFECT_658.get(),
+                s -> new SpellAreaParticle.Factory(s, SpellParticleEnums.Fading.IN_OUT, SpellParticleEnums.Orientation.HORIZONTAL, false));
+        event.registerSpriteSet(SpellParticleRegistry.AREA_EFFECT_714.get(),
+                s -> new SpellAreaParticle.Factory(s, SpellParticleEnums.Fading.IN_OUT, SpellParticleEnums.Orientation.HORIZONTAL, false));
+
+        // ── Flame variants (ground / medium_b) ──
+        event.registerSpriteSet(SpellParticleRegistry.FLAME_GROUND.get(), SpellFlameParticle.AnimatedFlameFactory::new);
+        event.registerSpriteSet(SpellParticleRegistry.FLAME_MEDIUM_B.get(), SpellFlameParticle.MediumFlameFactory::new);
+
+        // ── Magic skull decelerate (Relics) ──
+        event.registerSpriteSet(SpellParticleRegistry.MAGIC_SKULL_DECELERATE.get(),
+                s -> new SpellUniversalParticle.MagicVariant(s, new SpellParticleEnums.MagicVariant(SpellParticleEnums.Shape.SPELL, SpellParticleEnums.Motion.DECELERATE)));
 
         // BetterCombat slash particles (12 types) are now registered by
         // BetterCombatParticleProviders.register() on the mod event bus (see MegaModClient).

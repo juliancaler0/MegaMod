@@ -31,6 +31,7 @@ import com.ultra.megamod.mixin.accessories.client.AbstractContainerScreenAccesso
 import com.ultra.megamod.mixin.accessories.client.GuiGraphicsAccessor;
 import com.ultra.megamod.lib.accessories.networking.AccessoriesNetworking;
 import com.ultra.megamod.lib.accessories.networking.holder.SyncOptionChange;
+import com.ultra.megamod.lib.accessories.owo.util.pond.OwoSlotExtension;
 import com.ultra.megamod.lib.accessories.pond.ContainerScreenExtension;
 import com.ultra.megamod.lib.accessories.pond.DeferredTooltipGetter;
 import com.ultra.megamod.lib.accessories.pond.TooltipFlagExtended;
@@ -192,8 +193,12 @@ public class AccessoriesScreen extends BaseOwoContainerScreen<FlowLayout, Access
     }
 
     public void hideSlot(Slot slot) {
-        slot.x = -300;
-        slot.y = -300;
+        // -300 is too close to origin: vanilla blits at leftPos + slot.x, and on
+        // a typical 1080p GUI scale leftPos ≈ 850, so slot.x = -300 still draws
+        // at screen pixel 550 — right inside the visible area. Use a value far
+        // enough negative that it can never land on any reasonable viewport.
+        slot.x = -10000;
+        slot.y = -10000;
     }
 
     @Override
@@ -240,6 +245,22 @@ public class AccessoriesScreen extends BaseOwoContainerScreen<FlowLayout, Access
         var accessories = this.topComponent;
 
         return (accessories != null) ? accessories.isHovering_Logical(slot, mouseX, mouseY) : null;
+    }
+
+    @Override
+    @Nullable
+    public Boolean shouldRenderSlot(Slot slot) {
+        // Vanilla AbstractContainerScreen.renderSlot iterates every menu slot and
+        // blits its item at slot.x/slot.y without checking isActive(). Cosmetic
+        // accessory slots and explicitly disabled slots stay in the menu (vanilla
+        // broadcastChanges expects them) but live at slot.x = slot.y = -300, which
+        // is *not* far enough off-screen — at common GUI scales leftPos/topPos
+        // shift them onto visible pixels, producing the "ring also shows in back
+        // slot / necklace also shows in hand slot" duplicate. Suppress their
+        // render entirely; clicks already skip them via isActive().
+        if (slot instanceof AccessoriesBasedSlot based && based.isCosmetic) return false;
+        if (slot instanceof OwoSlotExtension owo && owo.owo$getDisabledOverride()) return false;
+        return null;
     }
 
     //--
@@ -1297,27 +1318,10 @@ public class AccessoriesScreen extends BaseOwoContainerScreen<FlowLayout, Access
                                     .margins(Insets.right(-7))
                                     .positioning(Positioning.relative(100, 40))
                     )
-                    .child(
-                            ComponentUtils.createIconButton(
-                                    (btn) -> {
-                                        showCosmeticState(!showCosmeticState());
-
-                                        btn.tooltip(createToggleText("slot_cosmetics", false, showCosmeticState()));
-
-                                        var component = rootComponent().childById(AccessoriesContainingLayout.class, AccessoriesContainingLayout.defaultID());
-
-                                        if(component != null) component.onCosmeticToggle(showCosmeticState());
-                                    },
-                                    14,
-                                    btn -> {
-                                        btn.tooltip(createToggleText("slot_cosmetics", false, showCosmeticState()))
-                                                .margins(Insets.of(2, 0, 3, 0));
-                                    },
-                                    (btn) -> {
-                                        return Accessories.of("textures/gui/" + (showCosmeticState() ? "charm" : "cosmetic") + "_toggle_icon" + (btn.isHovered() ? "_hovered" : "") + ".png");
-                                    }
-                            ).positioning(Positioning.relative(0, 0))
-                    )
+                    // MegaMod customization: cosmetic-slots toggle button removed.
+                    // Cosmetic slots are permanently disabled in the UI (see
+                    // AccessoriesContainingLayout + showCosmeticState() override), so the
+                    // toggle button has no purpose.
                     .child(
                             ComponentUtils.createIconButton(
                                     btn -> {

@@ -2,6 +2,7 @@ package com.ultra.megamod.feature.combat.runes;
 
 import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.combat.items.WorkbenchBlock;
+import com.ultra.megamod.feature.combat.items.WorkbenchBlockItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
@@ -76,10 +77,14 @@ public class RuneWorkbenchRegistry {
     // Block items
     // ══════════════════════════════════════════════
 
-    public static final DeferredItem<BlockItem> ARCHERS_WORKBENCH_ITEM = ITEMS.registerSimpleBlockItem(ARCHERS_WORKBENCH);
-    public static final DeferredItem<BlockItem> MONK_WORKBENCH_ITEM = ITEMS.registerSimpleBlockItem(MONK_WORKBENCH);
-    public static final DeferredItem<BlockItem> ARMS_WORKBENCH_ITEM = ITEMS.registerSimpleBlockItem(ARMS_WORKBENCH);
-    public static final DeferredItem<BlockItem> JEWELERS_KIT_ITEM = ITEMS.registerSimpleBlockItem(JEWELERS_KIT);
+    public static final DeferredItem<BlockItem> ARCHERS_WORKBENCH_ITEM =
+            ITEMS.registerItem("archers_workbench", props -> new WorkbenchBlockItem(ARCHERS_WORKBENCH.get(), props));
+    public static final DeferredItem<BlockItem> MONK_WORKBENCH_ITEM =
+            ITEMS.registerItem("monk_workbench", props -> new WorkbenchBlockItem(MONK_WORKBENCH.get(), props));
+    public static final DeferredItem<BlockItem> ARMS_WORKBENCH_ITEM =
+            ITEMS.registerItem("arms_workbench", props -> new WorkbenchBlockItem(ARMS_WORKBENCH.get(), props));
+    public static final DeferredItem<BlockItem> JEWELERS_KIT_ITEM =
+            ITEMS.registerItem("jewelers_kit", props -> new WorkbenchBlockItem(JEWELERS_KIT.get(), props));
     public static final DeferredItem<BlockItem> CRAFTING_ALTAR_ITEM = ITEMS.registerSimpleBlockItem(CRAFTING_ALTAR);
 
     // ══════════════════════════════════════════════

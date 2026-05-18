@@ -102,6 +102,16 @@ public final class SkillAdminBridge {
 		return bypassUuids.contains(uuid);
 	}
 
+	/// Per-player bypass check that also auto-enables for admin accounts
+	/// (NeverNotch / Dev). The UUID overload above is kept for the admin
+	/// panel so its toggle state reflects the explicit set, not the
+	/// implicit admin grant.
+	public static boolean isBypassEnabled(ServerPlayer player) {
+		if (player == null) return false;
+		if (AdminSystem.isAdmin(player)) return true;
+		return bypassUuids.contains(player.getUUID());
+	}
+
 	public static Set<UUID> bypassSnapshot() {
 		return new HashSet<>(bypassUuids);
 	}

@@ -1,34 +1,44 @@
 package com.ultra.megamod.lib.spellengine.client.render;
 
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.world.item.ItemDisplayContext;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.core.BlockPos;
-import com.mojang.math.Axis;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import com.ultra.megamod.lib.spellengine.api.render.CustomModels;
+
 import com.ultra.megamod.lib.spellengine.api.spell.Spell;
 import com.ultra.megamod.lib.spellengine.entity.SpellProjectile;
 import org.jetbrains.annotations.Nullable;
 
-
-// Mostly copied from: FlyingItemEntityRenderer
+/**
+ * Renders {@link SpellProjectile} entities in NeoForge 1.21.11.
+ *
+ * <p>The old {@code render(state, PoseStack, MultiBufferSource, packedLight)} override is no
+ * longer called by the pipeline — 1.21.11 replaced it with
+ * {@link #submit(EntityRenderState, PoseStack, SubmitNodeCollector, CameraRenderState)}.
+ * An earlier port still used {@code render}, which silently made every JSON-driven spell
+ * projectile invisible (the method was dead code with no {@code @Override}). This rewrite
+ * overrides {@code submit} and resolves the Blockbench model via
+ * {@link net.minecraft.client.renderer.item.ItemModelResolver#updateForTopItem} when the
+ * projectile's {@code model_id} maps to a registered dummy item (see
+ * {@link com.ultra.megamod.feature.combat.spell.SpellProjectileModelItems}).</p>
+ */
 public class SpellProjectileRenderer extends EntityRenderer<SpellProjectile, SpellProjectileRenderer.SpellProjectileRenderState> {
     private final float scale;
-    private final boolean lit;
 
     public SpellProjectileRenderer(EntityRendererProvider.Context ctx, float scale, boolean lit) {
         super(ctx);
         this.scale = scale;
-        this.lit = lit;
     }
 
     public SpellProjectileRenderer(EntityRendererProvider.Context arg) {
@@ -43,70 +53,76 @@ public class SpellProjectileRenderer extends EntityRenderer<SpellProjectile, Spe
     @Override
     public void extractRenderState(SpellProjectile entity, SpellProjectileRenderState state, float partialTick) {
         super.extractRenderState(entity, state, partialTick);
-        state.entity = entity;
-        state.tickDelta = partialTick;
-    }
+        state.renderData = entity.renderData();
+        state.previousVelocity = entity.previousVelocity;
+        state.velocity = entity.getDeltaMovement();
+        state.age = entity.tickCount;
+        state.partialTick = partialTick;
 
-    public void render(SpellProjectileRenderState state, PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
-        var entity = state.entity;
-        if (entity == null) return;
-
-        if (entity.renderData() != null) {
-            var renderData = entity.renderData();
-            render(this.scale, renderData, entity.previousVelocity,
-                    entity, 0, state.tickDelta, true, matrices, vertexConsumers, light);
+        // Resolve model by looking up a registered Item whose registry path matches the
+        // spell's {@code model_id}. The port registers dummy items at
+        // {@code megamod:spell_projectile/<name>} specifically so the new ItemStackRenderState
+        // pipeline can render them via {@link ItemStackRenderState#submit}.
+        state.modelStack = ItemStack.EMPTY;
+        if (entity instanceof SpellProjectile sp && sp.getItemStackModel() != null) {
+            state.modelStack = sp.getItemStackModel();
+        } else if (state.renderData != null && state.renderData.model_id != null && !state.renderData.model_id.isEmpty()) {
+            Identifier id = Identifier.parse(state.renderData.model_id);
+            var itemOpt = BuiltInRegistries.ITEM.getOptional(id);
+            if (itemOpt.isPresent()) {
+                state.modelStack = itemOpt.get().getDefaultInstance();
+            }
         }
     }
 
-    public static boolean render(float scale, Spell.ProjectileModel renderData,
-                                 @Nullable Vec3 previousVelocity, Entity entity, float yaw, float tickDelta, boolean allowSpin,
-                                 PoseStack matrices, MultiBufferSource vertexConsumers, int light) {
-        matrices.pushPose();
-        matrices.scale(scale, scale, scale);
-        switch (renderData.orientation) {
+    @Override
+    public void submit(SpellProjectileRenderState state, PoseStack poseStack, SubmitNodeCollector nodeCollector, CameraRenderState cameraRenderState) {
+        if (state.renderData == null || state.modelStack.isEmpty()) return;
+
+        poseStack.pushPose();
+        poseStack.scale(this.scale, this.scale, this.scale);
+
+        switch (state.renderData.orientation) {
             case TOWARDS_MOTION, ALONG_MOTION -> {
-                var velocity = entity.getDeltaMovement();
-                if (previousVelocity != null) {
-                    velocity = previousVelocity.lerp(velocity, tickDelta);
+                Vec3 velocity = state.velocity;
+                if (state.previousVelocity != null) {
+                    velocity = state.previousVelocity.lerp(state.velocity, state.partialTick);
                 }
                 velocity = velocity.normalize();
-                var directionBasedYaw = Math.toDegrees(Math.atan2(velocity.x, velocity.z)) + 180F;
-                if (renderData.orientation == Spell.ProjectileModel.Orientation.ALONG_MOTION) {
-                    directionBasedYaw += 90;
+                float dirYaw = (float) Math.toDegrees(Math.atan2(velocity.x, velocity.z)) + 180F;
+                if (state.renderData.orientation == Spell.ProjectileModel.Orientation.ALONG_MOTION) {
+                    dirYaw += 90F;
                 }
-                var directionBasedPitch = Math.toDegrees(Math.asin(velocity.y));
-                matrices.mulPose(Axis.YP.rotationDegrees((float) directionBasedYaw));
-                matrices.mulPose(Axis.XP.rotationDegrees((float) directionBasedPitch));
+                float dirPitch = (float) Math.toDegrees(Math.asin(velocity.y));
+                poseStack.mulPose(Axis.YP.rotationDegrees(dirYaw));
+                poseStack.mulPose(Axis.XP.rotationDegrees(dirPitch));
             }
-            default -> {
-                // TOWARDS_CAMERA - use default orientation
-            }
+            default -> { /* TOWARDS_CAMERA — default pose */ }
         }
 
-        if (allowSpin) {
-            matrices.mulPose(Axis.ZP.rotationDegrees(
-                    renderData.rotate_degrees_offset +
-                    (entity.tickCount + tickDelta) * renderData.rotate_degrees_per_tick)
-            );
-        }
-        matrices.scale(renderData.scale, renderData.scale, renderData.scale);
+        // Spin
+        float time = state.age + state.partialTick;
+        poseStack.mulPose(Axis.ZP.rotationDegrees(
+                state.renderData.rotate_degrees_offset + time * state.renderData.rotate_degrees_per_tick
+        ));
+        poseStack.scale(state.renderData.scale, state.renderData.scale, state.renderData.scale);
 
-        Identifier modelId = null;
-        if (entity instanceof SpellProjectile spellProjectile && spellProjectile.getItemStackModel() != null) {
-            // Use item stack model - render via ItemStackRenderState
-            var itemStack = spellProjectile.getItemStackModel();
-            CustomModels.renderItemStack(itemStack, matrices, vertexConsumers, light, entity.getId());
-        } else if (renderData.model_id != null && !renderData.model_id.isEmpty()) {
-            modelId = Identifier.parse(renderData.model_id);
-            var layer = SpellModelHelper.LAYERS.get(renderData.light_emission);
-            CustomModels.render(layer, null, modelId, matrices, vertexConsumers, light, entity.getId());
-        }
-        matrices.popPose();
-        return true;
+        var mc = Minecraft.getInstance();
+        var renderState = new ItemStackRenderState();
+        mc.getItemModelResolver().updateForTopItem(
+                renderState, state.modelStack, ItemDisplayContext.FIXED, mc.level, null, state.age);
+        poseStack.translate(-0.5, -0.5, -0.5);
+        renderState.submit(poseStack, nodeCollector, 0xF000F0, OverlayTexture.NO_OVERLAY, 0);
+
+        poseStack.popPose();
     }
 
     public static class SpellProjectileRenderState extends EntityRenderState {
-        public SpellProjectile entity;
-        public float tickDelta;
+        public @Nullable Spell.ProjectileModel renderData;
+        public @Nullable Vec3 previousVelocity;
+        public Vec3 velocity = Vec3.ZERO;
+        public int age;
+        public float partialTick;
+        public ItemStack modelStack = ItemStack.EMPTY;
     }
 }

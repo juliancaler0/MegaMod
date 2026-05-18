@@ -2,6 +2,7 @@ package com.ultra.megamod.lib.spellengine.client.render;
 
 
 
+import com.ultra.megamod.MegaMod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.*;
@@ -13,6 +14,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import com.mojang.math.Axis;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import com.ultra.megamod.lib.spellengine.api.render.CustomLayers;
 import com.ultra.megamod.lib.spellengine.api.render.LightEmission;
 import com.ultra.megamod.lib.spellengine.api.spell.Spell;
@@ -28,6 +33,7 @@ import com.ultra.megamod.lib.spellengine.utils.TargetHelper;
 import java.util.HashMap;
 import java.util.Map;
 
+@EventBusSubscriber(modid = MegaMod.MODID, value = Dist.CLIENT)
 public class BeamRenderer {
     public record LayerSet(RenderType inner, RenderType outer) { }
     private static final Map<String, LayerSet> layerCache = new HashMap<>();
@@ -79,9 +85,77 @@ public class BeamRenderer {
     }
 
     public static void setup() {
-        // In NeoForge 1.21.11, world render events are registered via NeoForge event bus
-        // Registration should be done externally via RenderLevelStageEvent
+        // No-op — auto-wired via @SubscribeEvent onRenderLevel below.
+        // Kept for legacy callers that invoke {@code BeamRenderer.setup()} at client init.
     }
+
+    /**
+     * Draws every active spell beam each frame. The lib {@code renderAllInWorld} iterates
+     * all players within render distance whose {@link SpellCasterEntity#getBeam()} is non-null
+     * and emits the tube geometry. Registering this on {@link RenderLevelStageEvent.Stage#AFTER_TRANSLUCENT_BLOCKS}
+     * is the NeoForge 1.21.11 replacement for the old WorldRenderEvents.LAST hook used by the
+     * Fabric source mod.
+     */
+    @SubscribeEvent
+    public static void onRenderLevel(RenderLevelStageEvent.AfterTranslucentBlocks event) {
+        // FIRST CHECKPOINT — confirms @EventBusSubscriber actually fired and the class loaded.
+        if (!loggedHandlerActivated) {
+            loggedHandlerActivated = true;
+            com.ultra.megamod.MegaMod.LOGGER.info("[BeamRenderer] DIAG handler activated (first frame after world load).");
+        }
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.gameRenderer.getMainCamera() == null) return;
+        if (event.getPoseStack() == null) return;
+
+        // SECOND CHECKPOINT — log every time the casting/beaming state changes
+        // (edge-triggered). Catches short-duration casts that would finish between samples.
+        int casting = 0, beaming = 0;
+        for (var p : mc.level.players()) {
+            if (p instanceof SpellCasterEntity sce) {
+                if (sce.getSpellCastProcess() != null) casting++;
+                if (sce.getBeam() != null) beaming++;
+            }
+        }
+        if (casting != lastCasting || beaming != lastBeaming) {
+            com.ultra.megamod.MegaMod.LOGGER.info("[BeamRenderer] DIAG transition: casting {}→{}, beaming {}→{}",
+                    lastCasting, casting, lastBeaming, beaming);
+            // Also dump the spell ID + target type when starting a new cast
+            if (casting > lastCasting) {
+                for (var p : mc.level.players()) {
+                    if (p instanceof SpellCasterEntity sce) {
+                        var proc = sce.getSpellCastProcess();
+                        if (proc != null) {
+                            try {
+                                var spellId = proc.id();
+                                var spellVal = proc.spell().value();
+                                String targetType = (spellVal != null && spellVal.target != null) ? String.valueOf(spellVal.target.type) : "?";
+                                com.ultra.megamod.MegaMod.LOGGER.info("[BeamRenderer]   → spell={} target.type={}", spellId, targetType);
+                            } catch (Exception ex) {
+                                com.ultra.megamod.MegaMod.LOGGER.info("[BeamRenderer]   → cast process introspection failed: {}", ex.getMessage());
+                            }
+                        }
+                    }
+                }
+            }
+            lastCasting = casting;
+            lastBeaming = beaming;
+        }
+
+        boolean anyBeam = mc.level.players().stream()
+                .anyMatch(p -> p instanceof SpellCasterEntity sce && sce.getBeam() != null);
+        if (!anyBeam) return;
+        if (!loggedFirstBeam) {
+            loggedFirstBeam = true;
+            com.ultra.megamod.MegaMod.LOGGER.info("[BeamRenderer] First beam render — handler is firing.");
+        }
+        var bufferSource = mc.renderBuffers().bufferSource();
+        float partialTick = mc.getDeltaTracker().getRealtimeDeltaTicks();
+        renderAllInWorld(event.getPoseStack(), bufferSource, mc.gameRenderer.getMainCamera(), 0xF000F0, partialTick);
+    }
+    private static boolean loggedHandlerActivated = false;
+    private static boolean loggedFirstBeam = false;
+    private static int lastCasting = 0;
+    private static int lastBeaming = 0;
 
     public static void renderAllInWorld(PoseStack matrices, MultiBufferSource.BufferSource vertexConsumers, Camera camera, int light, float delta) {
         var focusedEntity = camera.entity();

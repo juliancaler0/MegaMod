@@ -31,7 +31,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_holy_decelerate",
+          "particle_id": "megamod:magic_holy_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 25.0,
@@ -41,7 +41,7 @@
         }
       ],
       "sound": {
-        "id": "spell_engine:generic_healing_impact_1"
+        "id": "megamod:generic_healing_impact_1"
       }
     }
   ],

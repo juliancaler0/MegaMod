@@ -20,7 +20,7 @@
         "chance": 0.5,
         "target_conditions": [
           {
-            "entity_predicate_id": "spell_engine:has_bad_effect"
+            "entity_predicate_id": "megamod:has_bad_effect"
           }
         ],
         "impact": {
@@ -45,7 +45,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_spark_decelerate",
+          "particle_id": "megamod:magic_spark_decelerate",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 15.0,
@@ -62,7 +62,7 @@
           "max_speed": 0.25
         },
         {
-          "particle_id": "spell_engine:magic_holy_decelerate",
+          "particle_id": "megamod:magic_holy_decelerate",
           "origin": "FEET",
           "shape": "WIDE_PIPE",
           "count": 15.0,

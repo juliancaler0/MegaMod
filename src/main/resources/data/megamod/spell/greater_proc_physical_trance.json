@@ -27,11 +27,11 @@
   },
   "release": {
     "animation": {
-      "id": "spell_engine:dual_handed_weapon_charge"
+      "id": "megamod:dual_handed_weapon_charge"
     },
     "particles": [
       {
-        "particle_id": "spell_engine:magic_holy_decelerate",
+        "particle_id": "megamod:magic_holy_decelerate",
         "origin": "FEET",
         "shape": "WIDE_PIPE",
         "count": 25.0,
@@ -40,7 +40,7 @@
         "color_rgba": 3208659199
       },
       {
-        "particle_id": "spell_engine:magic_skull_decelerate",
+        "particle_id": "megamod:magic_skull_decelerate",
         "origin": "FEET",
         "shape": "WIDE_PIPE",
         "count": 50.0,

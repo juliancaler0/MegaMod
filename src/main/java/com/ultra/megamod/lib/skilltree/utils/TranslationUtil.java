@@ -1,15 +1,13 @@
 package com.ultra.megamod.lib.skilltree.utils;
 
-import com.ultra.megamod.lib.skilltree.attributes.ConditionalAttributeModifier;
 import com.ultra.megamod.lib.skilltree.node.ConditionalAttributeReward;
 import com.ultra.megamod.lib.skilltree.skills.NodeTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import com.ultra.megamod.lib.spellengine.client.gui.SpellTooltip;
-import com.ultra.megamod.mixin.spellengine.client.ItemStackTooltipAccessor;
-import net.minecraft.core.Holder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,19 +37,20 @@ public class TranslationUtil {
     }
 
     public static List<Component> resolveConditionalAttributeTooltip(ConditionalAttributeReward.DataStructure data) {
-        // TODO: Reimplement with 1.21.11 tooltip API
+        var player = Minecraft.getInstance().player;
         var conditional = data.mapped();
         var lines = new ArrayList<Component>();
         lines.add(Component.translatable(conditional.condition().translationKey()));
-        lines.add(Component.literal("  " + conditional.modifier().amount() + " " + conditional.attribute().unwrapKey().map(k -> k.identifier().toString()).orElse("?")));
+        ItemAttributeModifiers.Display.attributeModifiers().apply(
+                lines::add, player, conditional.attribute(), conditional.modifier());
         return lines;
     }
 
     public static List<Component> resolveAttributeModifierTooltip(NodeTypes.EntityAttributeReward attributeReward) {
-        // TODO: Reimplement with 1.21.11 tooltip API
+        var player = Minecraft.getInstance().player;
         var bonusLines = new ArrayList<Component>();
-        var modifier = attributeReward.modifier();
-        bonusLines.add(Component.literal("  " + modifier.amount() + " " + attributeReward.attribute().unwrapKey().map(k -> k.identifier().toString()).orElse("?")));
+        ItemAttributeModifiers.Display.attributeModifiers().apply(
+                bonusLines::add, player, attributeReward.attribute(), attributeReward.modifier());
         return bonusLines;
     }
 }

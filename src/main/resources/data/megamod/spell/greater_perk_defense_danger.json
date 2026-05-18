@@ -41,7 +41,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_spell_burst",
+          "particle_id": "megamod:magic_spell_burst",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 25.0,
@@ -50,7 +50,7 @@
           "color_rgba": 4294967295
         },
         {
-          "particle_id": "spell_engine:shield_small",
+          "particle_id": "megamod:shield_small",
           "origin": "FEET",
           "shape": "WIDE_PIPE",
           "count": 15.0,

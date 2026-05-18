@@ -121,6 +121,24 @@ public class AccessoriesMenu extends AccessoriesMenuBase {
                 .flatMap(Collection::stream)
                 .toList();
 
+        // MegaMod customization: server-side, wipe any leftover items in cosmetic
+        // containers (from older save data or earlier mod versions) before wiring
+        // up slots. The cosmetic accessory column is permanently disabled in the
+        // UI, so any stale cosmetic stack is unreachable to the player but still
+        // gets broadcast to the client via the menu/holder sync path — which
+        // surfaces as a phantom item appearing in an unrelated visible slot.
+        // Drop them before the menu is built so no leak path remains.
+        if (!inventory.player.level().isClientSide()) {
+            for (var slot : slotTypes) {
+                var container = containers.get(slot.name());
+                if (container == null) continue;
+                var cosmetic = container.getCosmeticAccessories();
+                for (int i = 0; i < cosmetic.getContainerSize(); i++) {
+                    if (!cosmetic.getItem(i).isEmpty()) cosmetic.setItem(i, ItemStack.EMPTY);
+                }
+            }
+        }
+
         for (var slot : slotTypes) {
             var container = containers.get(slot.name());
 

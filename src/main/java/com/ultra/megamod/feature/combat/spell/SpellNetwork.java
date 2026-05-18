@@ -14,8 +14,6 @@ public class SpellNetwork {
             SpellCastSyncPayload::handleOnClient);
         registrar.playToClient(NearbyPlayerCastPayload.TYPE, NearbyPlayerCastPayload.STREAM_CODEC,
             NearbyPlayerCastPayload::handleOnClient);
-        registrar.playToServer(SpellBookCastPayload.TYPE, SpellBookCastPayload.STREAM_CODEC,
-            SpellBookCastPayload::handleOnServer);
         registrar.playToClient(BeamSyncPayload.TYPE, BeamSyncPayload.STREAM_CODEC,
             BeamSyncPayload::handleOnClient);
     }

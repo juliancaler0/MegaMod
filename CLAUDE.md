@@ -85,7 +85,7 @@ Craftable computer block + phone item with desktop GUI. 40+ network handlers, 17
 **Computer Network Pattern**: `ComputerActionPayload` (client->server), `ComputerDataPayload` (server->client). Handlers in `network/handlers/`. Screens poll `ComputerDataPayload.lastResponse` in `tick()`.
 
 ### Relic & Accessory System (~104 files)
-Accessories across 8 slot types (Head, Face, Hands, Feet, Back, Neck, Belt, Rings) with 78+ abilities. RPG weapon system with weapon effects. Research/reroll system, infusion manager. Keybinds: V=Accessories, R=Primary Ability, G=Secondary Ability.
+Accessories across 8 slot types (Head, Face, Hands, Feet, Back, Neck, Belt, Rings) with 78+ abilities. RPG weapon system with weapon effects. Research/reroll system, infusion manager. Keybinds: H=Accessories, R=Primary Ability, G=Secondary Ability.
 
 ### Casino System (~72 files)
 5 casino games (Slots, Blackjack, Roulette, Craps, Baccarat, Wheel) in dedicated pocket dimension. Chip system with denominations, dealer/cashier NPCs, full game mechanics. Currency integration with economy.

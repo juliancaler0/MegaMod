@@ -23,11 +23,11 @@
   },
   "release": {
     "animation": {
-      "id": "spell_engine:dual_handed_weapon_charge"
+      "id": "megamod:dual_handed_weapon_charge"
     },
     "particles": [
       {
-        "particle_id": "spell_engine:magic_spell_decelerate",
+        "particle_id": "megamod:magic_spell_decelerate",
         "origin": "CENTER",
         "shape": "SPHERE",
         "count": 10.0,
@@ -36,7 +36,7 @@
         "color_rgba": 3208659199
       },
       {
-        "particle_id": "spell_engine:shield_small",
+        "particle_id": "megamod:shield_small",
         "origin": "CENTER",
         "shape": "SPHERE",
         "count": 10.0,

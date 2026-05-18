@@ -1,11 +1,11 @@
 package com.ultra.megamod.feature.combat.animation.client;
 
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AbstractFadeModifier;
+import com.ultra.megamod.lib.playeranim.core.animation.Animation;
+import com.ultra.megamod.lib.playeranim.core.animation.RawAnimation;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AdjustmentModifier;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.MirrorModifier;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.SpeedModifier;
-import com.ultra.megamod.lib.playeranim.core.easing.EasingType;
 import com.ultra.megamod.lib.playeranim.core.enums.PlayState;
 import com.ultra.megamod.lib.playeranim.core.math.Vec3f;
 import com.ultra.megamod.lib.playeranim.minecraft.animation.PlayerAnimResources;
@@ -227,14 +227,29 @@ public class SpellAnimationManager {
         speedMod.speed = speed;
         mirrorMod.enabled = mirror;
 
-        // Match source SpellEngine: use triggerAnimation (one-shot, no fade-stacking).
-        // replaceAnimationWithFade stacked fade modifiers on each re-trigger, which is
-        // exactly what the animation jitter looks like (fade-in restarting per tick).
-        controller.triggerAnimation(animationId);
+        // CASTING animations must hold their final pose for the entire cast/channel
+        // duration (e.g. whirlwind's 8s spin pose). Without HOLD_ON_LAST_FRAME the
+        // animation reaches its declared length, the controller resets bones to the
+        // initial pose, and the player visibly snaps out of the cast pose mid-channel
+        // — looks like the animation "pauses" or "cuts off". RELEASE/MISC animations
+        // are one-shot and use the animation's own loop type.
+        var anim = PlayerAnimResources.getAnimation(animationId);
+        if (anim == null) return;
+        RawAnimation rawAnim;
+        if (type == AnimationType.CASTING) {
+            rawAnim = RawAnimation.begin().then(anim, Animation.LoopType.HOLD_ON_LAST_FRAME);
+        } else {
+            rawAnim = RawAnimation.begin().then(anim, Animation.LoopType.DEFAULT);
+        }
+        controller.triggerAnimation(rawAnim);
     }
 
     /**
-     * Stop a specific animation type for a player.
+     * Stop a specific animation type for a player by fading the controller's
+     * pose contribution from its current state to the default pose. A naive
+     * {@code controller.stop()} leaves the last frame's bone transforms applied
+     * (player frozen mid-pose — e.g. whirlwind locking the caster in the spin
+     * stance after the 8s channel ends).
      */
     public static void stopAnimation(AbstractClientPlayer player, AnimationType type) {
         PlayerAnimState state = PLAYER_STATES.get(player);
@@ -246,14 +261,13 @@ public class SpellAnimationManager {
             case MISC -> state.miscController;
         };
 
-        // Clear dedup memory so the next playAnimation call isn't suppressed. (Task #44)
         switch (type) {
             case CASTING -> { state.lastCastingId = null; state.lastCastingSpeed = 0f; state.lastCastingMirror = false; }
             case RELEASE -> { state.lastReleaseId = null; state.lastReleaseSpeed = 0f; state.lastReleaseMirror = false; }
             case MISC    -> { state.lastMiscId = null;    state.lastMiscSpeed = 0f;    state.lastMiscMirror = false; }
         }
 
-        controller.stop();
+        controller.fadeOut(5);
     }
 
     /**

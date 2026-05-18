@@ -7,6 +7,7 @@ import com.ultra.megamod.feature.combat.items.JewelryRegistry;
 import com.ultra.megamod.feature.combat.runes.RuneRegistry;
 import com.ultra.megamod.feature.combat.runes.RuneWorkbenchRegistry;
 import com.ultra.megamod.feature.combat.spell.SpellItemRegistry;
+import com.ultra.megamod.lib.spellengine.item.SpellEngineItems;
 import com.ultra.megamod.lib.spellengine.rpg_series.item.RPGItemRegistry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +49,7 @@ public class CombatCreativeTab {
             // SpellEngine-registered weapons & shields (Paladin, Wizard, Rogue, Arsenal)
             RPGItemRegistry.ITEMS.getEntries().forEach(e -> {
                 Item item = e.get();
+                if (item == SpellEngineItems.SPELL_BOOK || item == SpellEngineItems.SCROLL) return;
                 if (!isArmorPiece(item)) event.accept(item);
             });
         } else if (tab.equals(ARMOR)) {
@@ -64,13 +66,27 @@ public class CombatCreativeTab {
             // Relics ported from Relics-1.21.1 (figurines, talismans, charms, dragon scales)
             com.ultra.megamod.feature.combat.relics.item.RelicItems.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
         } else if (tab.equals(MEGAMOD)) {
-            // Spell books, scrolls, runes
+            // Spell binding table block item
             SpellItemRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
+            // Spell book variants — one configured stack per school. Each call to
+            // bookStackForSchool builds an ItemStack via UniversalSpellBookItem#applyFromTag
+            // pointing at megamod:spell_book/<school>, mirroring source's per-tag book
+            // construction. Hardcoded over dynamic tag streaming because the data-pack
+            // SpellRegistry isn't always populated when BuildCreativeModeTabContentsEvent
+            // fires (creative tab can build before any world is loaded), and an empty
+            // stream produced an empty book section.
+            for (String school : SCHOOLS) {
+                event.accept(SpellItemRegistry.bookStackForSchool(school));
+            }
             RuneRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
             // Rune crafting altar + decorative workbenches (archers, monk, arms, jewelers)
             RuneWorkbenchRegistry.ITEMS.getEntries().forEach(e -> event.accept(e.get()));
         }
     }
+
+    private static final java.util.List<String> SCHOOLS = java.util.List.of(
+            "arcane", "fire", "frost",
+            "paladin", "priest", "archer", "rogue", "warrior");
 
     /** True when the item's EQUIPPABLE component targets an armor slot. */
     private static boolean isArmorPiece(Item item) {

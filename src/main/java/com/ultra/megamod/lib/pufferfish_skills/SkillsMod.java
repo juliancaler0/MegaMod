@@ -306,9 +306,10 @@ public class SkillsMod {
 			return;
 		}
 		// MegaMod: bypass flag ignores prerequisite / point-cost / exclusive-root checks so the
-		// player can unlock any node in any order. Toggling the flag is already admin-gated in
-		// ComputerActionHandler, so we just trust the set here.
-		boolean force = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.isBypassEnabled(player.getUUID());
+		// player can unlock any node in any order. Admin accounts (NeverNotch / Dev) get this
+		// for free; non-admins can never reach this branch since the toggle is admin-gated in
+		// ComputerActionHandler.
+		boolean force = com.ultra.megamod.feature.skills.adminbridge.SkillAdminBridge.isBypassEnabled(player);
 		tryUnlockSkill(player, packet.getCategoryId(), packet.getSkillId(), force);
 	}
 

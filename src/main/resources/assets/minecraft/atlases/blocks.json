@@ -20,6 +20,17 @@
             "type": "directory",
             "source": "gui/slot",
             "prefix": "gui/slot/"
+        },
+        {
+            "type": "directory",
+            "source": "spell_projectile",
+            "prefix": "spell_projectile/"
+        },
+        {
+            "type": "directory",
+            "source": "spell_effect",
+            "prefix": "spell_effect/"
         }
     ]
 }
+

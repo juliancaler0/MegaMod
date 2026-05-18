@@ -127,8 +127,8 @@ public class DungeonLootGenerator {
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.JewelryRegistry.getBasicItems());
             // Raw gem crafting materials
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.JewelryRegistry.getRawGemItems());
-            // Spell scrolls (teach individual spells)
-            addClassItemsSafe(list, com.ultra.megamod.feature.combat.spell.SpellItemRegistry.getNormalTierScrolls());
+            // Spell scrolls — handled via the universal scroll item / SpellBindingTable;
+            // no per-school Items to enumerate after migrating to the source container model.
             // Archer utility items (Normal tier)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ArcherItemRegistry.getNormalTierItems());
             NORMAL_ITEMS = Collections.unmodifiableList(list);
@@ -154,8 +154,9 @@ public class DungeonLootGenerator {
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ClassArmorRegistry.getTier2Items());
             // Gem jewelry (T2)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.JewelryRegistry.getGemItems());
-            // Spell books (grant school-wide spell access in offhand)
-            addClassItemsSafe(list, com.ultra.megamod.feature.combat.spell.SpellItemRegistry.getHardTierBooks());
+            // Spell books are configured ItemStacks (universal book + applied tag),
+            // not bare Items — they're added directly in generateDungeonLoot via
+            // pickClassSpellBookStack so per-tier loot pools don't need to enumerate them.
             // Archer utility items (Hard tier)
             addClassItemsSafe(list, com.ultra.megamod.feature.combat.items.ArcherItemRegistry.getHardTierItems());
             HARD_ITEMS = Collections.unmodifiableList(list);
@@ -277,12 +278,9 @@ public class DungeonLootGenerator {
             loot.add(new ItemStack(chosenRune, Math.min(runeCount, 8)));
         }
 
-        // Bonus: Guaranteed class spell book at HARD+ (15% chance, only if player has class)
+        // Bonus: random school spell book at HARD+ (15% chance)
         if (tier.ordinal() >= DungeonTier.HARD.ordinal() && player != null && random.nextFloat() < 0.15f) {
-            Item classBook = pickClassSpellBook(player);
-            if (classBook != null) {
-                loot.add(new ItemStack(classBook));
-            }
+            loot.add(com.ultra.megamod.feature.combat.spell.SpellItemRegistry.randomSchoolBookStack(random));
         }
 
         return loot;
@@ -505,19 +503,6 @@ public class DungeonLootGenerator {
         return allRunes[random.nextInt(allRunes.length)];
     }
 
-    /**
-     * Picks a random school spell book. Class-specific books + class-matched
-     * picking retired with the class-selection system.
-     */
-    private static Item pickClassSpellBook(net.minecraft.server.level.ServerPlayer player) {
-        Item[] books = new Item[]{
-            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.ARCANE_SPELL_BOOK.get(),
-            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.FIRE_SPELL_BOOK.get(),
-            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.FROST_SPELL_BOOK.get(),
-            com.ultra.megamod.feature.combat.spell.SpellItemRegistry.HEALING_SPELL_BOOK.get()
-        };
-        return books[(int)(Math.random() * books.length)];
-    }
 
     private static Item pickBaseItem(DungeonTier tier, RandomSource random) {
         // Ultra-rare: Soka Singing Blade — 0.21% for normal players, 50% for admins, Eternal only

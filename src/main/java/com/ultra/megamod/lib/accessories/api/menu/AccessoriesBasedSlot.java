@@ -135,18 +135,42 @@ public class AccessoriesBasedSlot extends Slot implements SlotTypeAccessible, To
 
     @Override
     public void set(ItemStack stack) {
+        // MegaMod customization: cosmetic slots reject any incoming write. Server-side
+        // moveItemStackTo / setByPlayer / direct container fills can no longer leak items
+        // into the disabled cosmetic container.
+        if (this.isCosmetic) return;
         super.set(stack);
     }
 
     @Override
     public void setByPlayer(ItemStack newStack, ItemStack oldStack) {
+        if (this.isCosmetic) return;
         ((AccessoriesLivingEntityExtension) this.entity).onEquipItem(accessoriesContainer.createReference(this.getContainerSlot()), oldStack, newStack);
 
         super.setByPlayer(newStack, oldStack);
     }
 
     @Override
+    public boolean isActive() {
+        // MegaMod customization: cosmetic slots are permanently inactive on both client
+        // and server. This is the strongest gate — vanilla AbstractContainerMenu.moveItemStackTo,
+        // findSlot click hit-test, and quickMoveStack all check isActive() and skip when false.
+        // Combined with mayPlace/mayPickup/set rejecting writes, the cosmetic container becomes
+        // truly dead in every code path.
+        if (this.isCosmetic) return false;
+        return super.isActive();
+    }
+
+    @Override
     public boolean mayPlace(ItemStack stack) {
+        // MegaMod customization: cosmetic slots are permanently rejecting items.
+        // The client UI hides them (see AccessoriesContainingLayout + AccessoriesScreen.build
+        // armor section), but the server menu still sees them as active. Without this gate,
+        // shift-click/auto-equip on the server routes items into the cosmetic slot, which
+        // then reads as empty on the client (cosmetic is hidden at -300,-300) and looks like
+        // the item "disappeared". Rejecting mayPlace on both client and server ensures items
+        // only ever land in the real accessory slot.
+        if (this.isCosmetic) return false;
         return canEquipSlotResponse(this.isCosmeticSlot(), ownerPlayer.get(), stack, this.slotReference(), new ActionResponseBuffer(true))
             .canPerformAction()
             .isValid();
@@ -154,6 +178,9 @@ public class AccessoriesBasedSlot extends Slot implements SlotTypeAccessible, To
 
     @Override
     public boolean mayPickup(Player player) {
+        // MegaMod: cosmetic slots also reject pickup (nothing should ever be in them anyway,
+        // but this defends against server-side desync leaving a stale cosmetic item).
+        if (this.isCosmetic) return false;
         return canUnequipSlotResponse(this.isCosmeticSlot(), player, this.getItem(), this.slotReference(), new ActionResponseBuffer(true))
             .canPerformAction()
             .isValid(true);

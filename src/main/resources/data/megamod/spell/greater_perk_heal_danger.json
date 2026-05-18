@@ -39,7 +39,7 @@
       },
       "particles": [
         {
-          "particle_id": "spell_engine:magic_spell_burst",
+          "particle_id": "megamod:magic_spell_burst",
           "origin": "CENTER",
           "shape": "SPHERE",
           "count": 25.0,
@@ -49,7 +49,7 @@
         }
       ],
       "sound": {
-        "id": "spell_engine:generic_healing_impact_3"
+        "id": "megamod:generic_healing_impact_3"
       }
     }
   ],

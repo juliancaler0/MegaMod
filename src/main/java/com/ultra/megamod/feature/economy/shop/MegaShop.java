@@ -693,11 +693,9 @@ public class MegaShop {
             {"megamod:scroll_shadow_step", "Scroll: Shadow Step", 750},
             {"megamod:scroll_power_shot", "Scroll: Power Shot", 700},
             {"megamod:scroll_charge", "Scroll: Charge", 650},
-            // Spell books: 2000-5000 coins
-            {"megamod:arcane_spell_book", "Arcane Spell Book", 3000},
-            {"megamod:fire_spell_book", "Fire Spell Book", 3500},
-            {"megamod:frost_spell_book", "Frost Spell Book", 3000},
-            {"megamod:healing_spell_book", "Healing Spell Book", 5000},
+            // Spell books retired from the shop after migrating to source's container model:
+            // a single megamod:spell_book item with applied_tag variants. Books are now
+            // acquired via the SpellBindingTable (bind a school's pool) or dungeon loot.
             // Quivers: 200-500 coins
             {"megamod:small_quiver", "Small Quiver", 200},
         };

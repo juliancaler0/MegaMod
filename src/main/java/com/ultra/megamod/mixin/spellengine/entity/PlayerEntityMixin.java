@@ -40,6 +40,15 @@ public class PlayerEntityMixin implements SpellCasterEntity {
         synchronizedSpellCastProcess = process;
         var json = process != null ? process.fastSyncJSON() : "";
         player().setData(SpellEngineSyncAttachments.SPELL_PROGRESS.get(), json);
+        // DIAG: confirm cast set on server (or client-mirror call)
+        try {
+            String side = player().level().isClientSide() ? "CLIENT" : "SERVER";
+            String spellId = process != null ? process.id().toString() : "<null>";
+            String targetType = (process != null && process.spell().value().target != null)
+                    ? String.valueOf(process.spell().value().target.type) : "?";
+            com.ultra.megamod.MegaMod.LOGGER.info("[SpellCastDIAG/{}] setSpellCastProcess spell={} target.type={} jsonLen={}",
+                    side, spellId, targetType, json.length());
+        } catch (Exception ignored) {}
     }
 
     private int channelTickIndex = 0;

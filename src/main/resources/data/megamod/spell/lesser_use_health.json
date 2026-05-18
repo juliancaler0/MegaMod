@@ -17,7 +17,7 @@
   "release": {
     "particles": [
       {
-        "particle_id": "spell_engine:magic_nature_impact_decelerate",
+        "particle_id": "megamod:magic_heal_ascend",
         "origin": "CENTER",
         "shape": "SPHERE",
         "count": 10.0,
