@@ -1,8 +1,10 @@
 package com.ultra.megamod.mixin;
 
 import com.ultra.megamod.feature.backpacks.client.BackpackRenderContext;
+import com.ultra.megamod.feature.combat.animation.client.SpellSpinContext;
 import com.ultra.megamod.feature.combat.animation.client.ThirdPersonSwingAnimator;
 import com.ultra.megamod.lib.playeranim.minecraft.api.PlayerAnimationAccess;
+import com.ultra.megamod.lib.spellengine.internals.casting.SpellCasterEntity;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
@@ -43,5 +45,28 @@ public class AvatarRendererMixin {
         // NOTE: PlayerAnimator tick moved to SwingParticleRenderer.onClientTick
         // to run once per game tick (20/s), NOT per render frame (60fps).
         // Ticking per render frame made animations run 3x too fast.
+
+        // Whirlwind-style body spin: when the player is mid-cast on a spell whose
+        // active.cast.animation_spin is non-zero, rotate the entire model around
+        // its vertical axis. Replaces the empty {@code LivingEntityRendererMixin}
+        // stub that was left as a 1.21.11 port TODO. The actual rotation is
+        // applied by {@code LivingEntityRendererSpinMixin.render} HEAD by
+        // consuming the angle from {@link SpellSpinContext}.
+        if (player instanceof SpellCasterEntity caster) {
+            var process = caster.getSpellCastProcess();
+            if (process != null) {
+                var spell = process.spell().value();
+                if (spell != null && spell.active != null && spell.active.cast != null) {
+                    float spin = spell.active.cast.animation_spin;
+                    if (spin != 0f) {
+                        long castTicks = player.level().getGameTime() - process.startedAt();
+                        // Smooth between game ticks using partialTick so the spin
+                        // doesn't appear to step at 20 Hz.
+                        float angle = ((float) castTicks + partialTick) * spin;
+                        SpellSpinContext.set(angle);
+                    }
+                }
+            }
+        }
     }
 }
