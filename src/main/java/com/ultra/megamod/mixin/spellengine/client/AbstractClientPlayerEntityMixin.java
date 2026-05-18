@@ -8,6 +8,8 @@ package com.ultra.megamod.mixin.spellengine.client;
 // The <init> inject is retained empty so any future per-player SpellEngine setup has a hook.
 
 import com.mojang.authlib.GameProfile;
+import com.ultra.megamod.feature.combat.animation.client.particle.SlashParticleUtil;
+import com.ultra.megamod.feature.combat.animation.client.particle.TrailParticles;
 import com.ultra.megamod.lib.playeranim.core.api.firstPerson.FirstPersonMode;
 import com.ultra.megamod.lib.playeranim.core.animation.layered.modifier.AdjustmentModifier;
 import com.ultra.megamod.lib.playeranim.core.math.Vec3f;
@@ -64,8 +66,52 @@ public abstract class AbstractClientPlayerEntityMixin extends Player implements 
             castAnimationName = AnimationHelper.getAnimationId(player, cast.animation);
             castSound = cast.sound;
             // turnHead was removed in 1.21.11 - body rotation is now handled differently
-            for (var batch: cast.particles) {
-                ParticleHelper.play(player.level(), player, player.getYRot(), getXRot(), batch);
+            int particleCount = cast.particles != null ? cast.particles.length : -1;
+            // DIAG once per ~second per player to confirm the per-tick particle
+            // emission path is alive. Logged only when castTicks % 20 == 0 so the
+            // chat / log isn't flooded.
+            if (player.tickCount % 20 == 0) {
+                com.ultra.megamod.MegaMod.LOGGER.info(
+                        "[SpellCastDIAG/CLIENT] updateSpellCastAnimationsOnTick spell={} cast.particles.length={} animation={}",
+                        ((SpellCasterEntity)player).getSpellCastProcess() != null
+                                ? ((SpellCasterEntity)player).getSpellCastProcess().id()
+                                : "<no-process>",
+                        particleCount, castAnimationName);
+            }
+            if (cast.particles != null) {
+                for (var batch : cast.particles) {
+                    ParticleHelper.play(player.level(), player, player.getYRot(), getXRot(), batch);
+                }
+            }
+            // Whirlwind-style weapon edge trail: when the spell spins the player
+            // (animation_spin != 0) the keyframe pose alone doesn't carry an axe
+            // edge swoosh, so emit a slash trail repeatedly during the channel.
+            // The trail config is keyed by the animation id (TrailParticles.defaults
+            // maps {@code megamod:two_handed_spin_static} → slash360). Emitting every
+            // 5 game ticks gives ~4 swooshes/second — visually continuous without
+            // stacking too many simultaneous 360° fans. Mirror appearance off the
+            // held stack so e.g. an enchanted axe glows.
+            if (cast.animation_spin != 0f
+                    && player.tickCount % 5 == 0
+                    && player instanceof AbstractClientPlayer clientPlayer
+                    && cast.animation != null) {
+                String animKey = cast.animation.id;
+                if (animKey != null && !animKey.isEmpty()) {
+                    String key = animKey.contains(":") ? animKey : ("megamod:" + animKey);
+                    var trailConfig = TrailParticles.getTrailConfig();
+                    if (trailConfig != null && trailConfig.animation_based != null) {
+                        var placements = trailConfig.animation_based.get(key);
+                        if (placements != null && !placements.isEmpty()) {
+                            var stack = player.getMainHandItem();
+                            var appearance = SlashParticleUtil.appearanceFromItemStack(stack);
+                            // Range approximates a two-handed weapon reach; tuned to
+                            // the same value the regular two_handed_spin attack uses.
+                            float weaponRange = 3.0f;
+                            SlashParticleUtil.spawnParticles(
+                                    clientPlayer, false, weaponRange, placements, appearance);
+                        }
+                    }
+                }
             }
             speed = ((SpellCasterEntity)player).getCurrentCastingSpeed() * cast.animation.speed;
             castingAnimationPitching = cast.animation_pitch;

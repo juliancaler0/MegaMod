@@ -31,5 +31,19 @@ public enum AccessorySlotType {
             case NONE -> "None";
         };
     }
+
+    public String libSlotName() {
+        return switch (this) {
+            case BACK -> "back";
+            case BELT -> "belt";
+            case HANDS_LEFT, HANDS_RIGHT -> "hand";
+            case FEET -> "shoes";
+            case NECKLACE -> "necklace";
+            case RING_LEFT, RING_RIGHT -> "ring";
+            case HEAD -> "hat";
+            case FACE -> "face";
+            case NONE -> null;
+        };
+    }
 }
 

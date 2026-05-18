@@ -41,6 +41,10 @@ public class RelicAccessoriesItem extends AccessoryItem {
     @Override
     public void getDynamicModifiers(ItemStack stack, SlotReference reference, AccessoryAttributeBuilder builder) {
         super.getDynamicModifiers(stack, reference, builder);
+        // All relic accessories live in the "charm" slot (see AccessoriesHelper.registerFactory).
+        // Gating the vanilla ATTRIBUTE_MODIFIERS bridge prevents the lib's attribute validator from
+        // reporting VALID for other slots, which would let a relic be placed in ring/back/etc.
+        if (!"charm".equals(reference.slotName())) return;
         var mods = stack.get(DataComponents.ATTRIBUTE_MODIFIERS);
         if (mods == null) return;
         for (var entry : mods.modifiers()) {

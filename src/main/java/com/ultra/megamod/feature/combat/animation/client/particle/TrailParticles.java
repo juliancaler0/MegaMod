@@ -180,6 +180,16 @@ public class TrailParticles {
                 new ParticlePlacement("slash360", 0.0F, -0.1F, 0.0F, 0.0F, 0.0F, 180.0F)
         ));
 
+        // Whirlwind & other channeled spinning casts. Spell JSONs reference this
+        // animation with the {@code _static} suffix because the keyframe data is
+        // a held pose and the actual body rotation comes from the spell's
+        // {@code animation_spin} field. The slash trail is the same 360° arc
+        // as the regular two_handed_spin attack — emitted repeatedly during
+        // the channel by {@code AbstractClientPlayerEntityMixin}.
+        map.put(NAMESPACE + ":two_handed_spin_static", List.of(
+                new ParticlePlacement("slash360", 0.0F, -0.1F, 0.0F, 0.0F, 0.0F, 180.0F)
+        ));
+
         map.put(NAMESPACE + ":two_handed_slash_vertical_right", List.of(
                 new ParticlePlacement("slash90", 0.0F, -0.1F, 0.0F, 45.0F, 0.0F, -80.0F)
         ));
