@@ -1,8 +1,6 @@
 package com.ultra.megamod.feature.combat.animation.client;
 
 import com.ultra.megamod.feature.combat.animation.WeaponAttributes.SwingDirection;
-import com.ultra.megamod.feature.combat.spell.NearbyPlayerCastTracker;
-import com.ultra.megamod.feature.combat.spell.SpellCastOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -10,23 +8,30 @@ import net.minecraft.client.model.geom.ModelPart;
 import java.util.UUID;
 
 /**
- * Applies third-person weapon swing animations to player models.
+ * Applies third-person weapon swing animations to player models as a FALLBACK
+ * for cases where no PlayerAnimationLib keyframe animation is currently active.
  * <p>
  * The entity ID of the player being rendered is captured by {@code AvatarRendererMixin}
  * during {@code extractRenderState} and stored in a ThreadLocal. After vanilla's
  * {@code setupAnim} sets default poses, {@code HumanoidModelSwingMixin} calls
  * {@link #applySwingIfActive} which modifies the model's arm and body rotations
- * to match the active swing direction.
+ * to match the active swing direction. Then PAL's {@code PlayerModelMixin} runs
+ * at {@code setupAnim} RETURN (priority 2001) and overwrites those rotations
+ * with the active keyframe animation if any. Net effect: PAL animations win
+ * when present, this fallback shows when nothing else is playing (e.g. for
+ * weapons without a BetterCombat attack animation registered).
  * <p>
- * This creates visible weapon swing animations for other players (3rd-person observers)
- * and for the local player when in F5 third-person camera.
+ * Spell-cast poses are NOT handled here — spell animations are driven entirely
+ * by PAL controllers via {@link SpellAnimationManager}, which is layered onto
+ * the PAL animation manager for every player.
  */
 public class ThirdPersonSwingAnimator {
 
     /**
      * ThreadLocal storing the entity ID of the player currently being rendered.
      * Set by AvatarRendererMixin.extractRenderState, consumed by applySwingIfActive.
-     * Value of -1 means no player is being rendered (prevents stale reads for non-player humanoids).
+     * Value of -1 means no player is being rendered (prevents stale reads for
+     * non-player humanoid models like zombies/villagers that share HumanoidModel).
      */
     private static final ThreadLocal<Integer> RENDERING_ENTITY_ID = ThreadLocal.withInitial(() -> -1);
     private static final ThreadLocal<UUID> RENDERING_ENTITY_UUID = new ThreadLocal<>();
@@ -50,9 +55,11 @@ public class ThirdPersonSwingAnimator {
      */
     public static void applySwingIfActive(Object modelObj) {
         int entityId = RENDERING_ENTITY_ID.get();
-        UUID entityUUID = RENDERING_ENTITY_UUID.get();
         if (entityId < 0) return;
-        RENDERING_ENTITY_ID.set(-1); // Consume to prevent non-player entities from reading stale value
+        // Consume both thread-locals so the next setupAnim on a non-player humanoid
+        // (zombie/villager/illager/…) reads -1 and harmlessly bails out instead of
+        // inheriting this player's swing pose.
+        RENDERING_ENTITY_ID.set(-1);
         RENDERING_ENTITY_UUID.set(null);
 
         if (!(modelObj instanceof HumanoidModel<?> model)) return;
@@ -61,27 +68,13 @@ public class ThirdPersonSwingAnimator {
         boolean isLocalFirstPerson = mc.player != null && entityId == mc.player.getId()
                 && mc.options.getCameraType().isFirstPerson();
 
-        // --- Weapon swing animation (3rd person only) ---
-        if (!isLocalFirstPerson) {
-            SwingAnimationState.ActiveSwing swing = SwingAnimationState.getActiveSwing(entityId);
-            if (swing != null && !swing.isExpired()) {
-                applyArmAnimation(model, swing.direction(), swing.progress(), swing.isOffHand(), swing.twoHanded());
-                return; // Swing takes priority over cast pose
-            }
-        }
+        // First-person camera: PAL's first-person config controls visibility; no
+        // need (and undesirable) to overlay a third-person swing on the FP model.
+        if (isLocalFirstPerson) return;
 
-        // --- Spell cast animation (both 1st-person F5 and 3rd person) ---
-        // For local player: check SpellCastOverlay state
-        // For other players: check NearbyPlayerCastTracker
-        if (mc.player != null && entityId == mc.player.getId()) {
-            if (SpellCastOverlay.castingSpellId != null && !isLocalFirstPerson) {
-                applySpellCastPose(model, SpellCastOverlay.castProgress, SpellCastOverlay.castingSchoolColor);
-            }
-        } else if (entityUUID != null) {
-            NearbyPlayerCastTracker.CastState castState = NearbyPlayerCastTracker.getActiveCasters().get(entityUUID);
-            if (castState != null) {
-                applySpellCastPose(model, castState.progress(), castState.schoolColor());
-            }
+        SwingAnimationState.ActiveSwing swing = SwingAnimationState.getActiveSwing(entityId);
+        if (swing != null && !swing.isExpired()) {
+            applyArmAnimation(model, swing.direction(), swing.progress(), swing.isOffHand(), swing.twoHanded());
         }
     }
 
@@ -296,45 +289,6 @@ public class ThirdPersonSwingAnimator {
             otherArm.xRot = lerp(0f, -1.2f, remaining);
             otherArm.zRot = lerp(0f, 0.6f * mirror, remaining);
         }
-    }
-
-    // ── Spell cast pose ───────────────────────────────────────────────────
-
-    /**
-     * Applies a spell-casting arm pose to the player model.
-     * Both arms extend forward and slightly upward, with intensity
-     * increasing as the cast progresses. Gives the visual impression
-     * of channeling magical energy.
-     *
-     * @param model the player model to modify
-     * @param progress cast progress from 0.0 (just started) to 1.0 (about to release)
-     * @param schoolColor ARGB color of the spell school (unused for now, reserved for glow)
-     */
-    private static void applySpellCastPose(HumanoidModel<?> model, float progress, int schoolColor) {
-        // Ease into the pose quickly (first 20%), hold steady, then release at the end
-        float poseStrength;
-        if (progress < 0.2f) {
-            poseStrength = easeOutQuad(progress / 0.2f); // Ramp up
-        } else if (progress > 0.9f) {
-            poseStrength = easeOutQuad((1.0f - progress) / 0.1f); // Ramp down at end
-        } else {
-            poseStrength = 1.0f; // Full pose
-        }
-
-        // Both arms extend forward and slightly upward (casting gesture)
-        float armPitch = lerp(model.rightArm.xRot, -1.3f, poseStrength);   // ~75° forward
-        float armOutward = 0.25f * poseStrength;  // Slightly apart
-
-        model.rightArm.xRot = armPitch;
-        model.rightArm.zRot = lerp(model.rightArm.zRot, -armOutward, poseStrength);
-        model.leftArm.xRot = armPitch;
-        model.leftArm.zRot = lerp(model.leftArm.zRot, armOutward, poseStrength);
-
-        // Subtle body lean forward during intense casting
-        model.body.xRot += 0.05f * poseStrength;
-
-        // Head tilts slightly down (concentrating)
-        model.head.xRot += 0.08f * poseStrength;
     }
 
     // ── Utility ──────────────────────────────────────────────────────────

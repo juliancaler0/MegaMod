@@ -1,23 +1,28 @@
 package com.ultra.megamod.mixin;
 
-import com.ultra.megamod.feature.backpacks.client.BackpackRenderContext;
 import com.ultra.megamod.feature.combat.animation.client.ThirdPersonSwingAnimator;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * Applies weapon swing animations to player models.
+ * Applies the manual third-person weapon-swing fallback animation to a player model.
  * <p>
- * PlayerAnimationLib's own AvatarRendererMixin handles keyframe animation application
- * (spell cast, dodge, attack, etc.), so this mixin only needs to handle the
- * fallback weapon swing animation when no keyframe animation is active.
+ * Runs at the TAIL of {@code HumanoidModel.setupAnim} so it executes BEFORE
+ * {@code PlayerModelMixin}'s {@code setupAnim} RETURN injector (priority 2001),
+ * which means any active PlayerAnimationLib keyframe animation (attack stack,
+ * spell-cast stack, etc.) will overwrite our fallback rotations a moment later.
+ * Net effect: PAL animations win when present, our fallback fills the gap when
+ * no PAL animation is running (or hasn't replicated yet from the network).
+ * <p>
+ * Entity identity is taken from {@link ThirdPersonSwingAnimator}'s own thread-local
+ * (set by {@code AvatarRendererMixin.extractRenderState}). That thread-local is
+ * cleared inside {@code applySwingIfActive}, so a subsequent {@code setupAnim}
+ * call on a non-player humanoid model (zombie, villager, …) sees -1 and
+ * harmlessly no-ops — i.e. zombies never inherit a nearby player's swing pose.
  */
 @Mixin(HumanoidModel.class)
 public class HumanoidModelSwingMixin {
@@ -25,17 +30,6 @@ public class HumanoidModelSwingMixin {
     @Inject(method = "setupAnim(Lnet/minecraft/client/renderer/entity/state/HumanoidRenderState;)V",
             at = @At("TAIL"))
     private void megamod$applyAnimations(HumanoidRenderState state, CallbackInfo ci) {
-        int entityId = BackpackRenderContext.getEntityId();
-        if (entityId < 0) return;
-
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.level == null) return;
-
-        Entity entity = mc.level.getEntity(entityId);
-        if (!(entity instanceof AbstractClientPlayer player)) return;
-
-        // PAL's AvatarRendererMixin handles keyframe animations automatically.
-        // We only apply the weapon swing animation as a fallback for non-keyframe swings.
         ThirdPersonSwingAnimator.applySwingIfActive(this);
     }
 }

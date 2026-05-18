@@ -53,6 +53,15 @@ public record SpellAnimationPayload(
 
     /**
      * Handle on client side — play/stop the animation on the target player.
+     * <p>
+     * Unlike {@link AttackAnimationPayload} (which skips the caster because the
+     * attack animation is already triggered by {@code MinecraftMixin.megamod$startUpswing}
+     * on the local click), spell animations are NOT pre-triggered locally —
+     * the caster needs the broadcast too, otherwise they see no cast pose
+     * while everyone else does. {@link SpellAnimationManager#playAnimation} has
+     * a (animId, speed, mirror) dedup guard, so an echo from a parallel local
+     * driver wouldn't cause the fade-stack shimmy that used to plague the
+     * attack path.
      */
     public static void handleClient(SpellAnimationPayload payload, net.neoforged.neoforge.network.handling.IPayloadContext ctx) {
         ctx.enqueueWork(() -> {
@@ -61,13 +70,6 @@ public record SpellAnimationPayload(
 
             Entity entity = mc.level.getEntity(payload.playerId);
             if (!(entity instanceof AbstractClientPlayer player)) return;
-
-            // Skip broadcasts echoed back to the caster — AbstractClientPlayerEntityMixin
-            // already plays the spell animation locally on every tick while casting.
-            // Without this skip we double-dispatch and `replaceAnimationWithFade` stacks
-            // fade modifiers every tick, producing a visible shimmy. Matches the
-            // equivalent guard in AttackAnimationPayload.java:114. (Task #43)
-            if (player == mc.player) return;
 
             if (payload.animType == 4) {
                 SpellAnimationManager.stopAll(player);
@@ -84,7 +86,13 @@ public record SpellAnimationPayload(
                 default -> SpellAnimationManager.AnimationType.CASTING;
             };
 
-            Identifier animId = Identifier.fromNamespaceAndPath("megamod", payload.animationId);
+            // Resolve animation id. Accept either bare path ("one_handed_projectile_charge")
+            // or fully-namespaced ("megamod:one_handed_projectile_charge") so callers can
+            // pass either format without a transform step.
+            String name = payload.animationId;
+            Identifier animId = name.contains(":")
+                    ? Identifier.parse(name)
+                    : Identifier.fromNamespaceAndPath("megamod", name);
             SpellAnimationManager.playAnimation(player, type, animId, payload.speed, payload.mirror);
         });
     }
