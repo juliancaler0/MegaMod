@@ -1,0 +1,27 @@
+{
+  "values": [
+    "wizards:staff_wizard",
+    "wizards:staff_arcane",
+    "wizards:staff_fire",
+    "wizards:staff_frost",
+    "wizards:staff_netherite_arcane",
+    "wizards:staff_netherite_fire",
+    "wizards:staff_netherite_frost",
+    {
+      "id": "wizards:staff_crystal_arcane",
+      "required": false
+    },
+    {
+      "id": "wizards:staff_ruby_fire",
+      "required": false
+    },
+    {
+      "id": "wizards:staff_smaragdant_frost",
+      "required": false
+    },
+    {
+      "id": "wizards:aether_wizard_staff",
+      "required": false
+    }
+  ]
+}

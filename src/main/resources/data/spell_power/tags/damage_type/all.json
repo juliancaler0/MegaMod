@@ -1,0 +1,12 @@
+{
+  "values": [
+    "spell_power:generic",
+
+    "spell_power:arcane",
+    "spell_power:fire",
+    "spell_power:frost",
+    "spell_power:healing",
+    "spell_power:lightning",
+    "spell_power:soul"
+  ]
+}

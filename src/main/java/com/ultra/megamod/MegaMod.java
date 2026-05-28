@@ -43,6 +43,10 @@ public class MegaMod {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public MegaMod(IEventBus modEventBus, ModContainer modContainer) {
+        // Fail fast if any of the RPG Series mods MegaMod consolidates are loaded
+        // standalone. Avoids cryptic registry collisions deep into mod load.
+        com.ultra.megamod.feature.combat.ModCollisionCheck.verifyOrThrow();
+
         // Register BetterCombat config
         modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON,
                 com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.SPEC, "megamod-combat.toml");

@@ -1,0 +1,11 @@
+{
+  "gui.runes.rune_crafting" : "Fabrication de runes",
+  "block.runes.crafting_altar": "Altar de fabrication de runes",
+  "block.runes.crafting_altar.hint": "Fabriquer des runes de manière plus rentable.",
+  "item.runes.arcane_stone": "Rune d'arcane",
+  "item.runes.fire_stone": "Rune de feu",
+  "item.runes.frost_stone": "Rune de glace",
+  "item.runes.healing_stone": "Rune de soin",
+  "item.runes.lightning_stone": "Rune de foudre",
+  "item.runes.soul_stone": "Rune des âmes"
+}

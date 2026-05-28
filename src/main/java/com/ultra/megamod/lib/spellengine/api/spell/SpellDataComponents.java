@@ -12,22 +12,22 @@ import java.util.function.UnaryOperator;
 public class SpellDataComponents {
     @SuppressWarnings("unchecked")
     public static final DataComponentType<SpellContainer> SPELL_CONTAINER = register(
-            Identifier.fromNamespaceAndPath("megamod", "spell_container"),
+            Identifier.fromNamespaceAndPath("spell_engine", "spell_container"),
             builder -> builder.persistent(SpellContainer.CODEC)
     );
     @SuppressWarnings("unchecked")
     public static final DataComponentType<SpellChoice> SPELL_CHOICE = register(
-            Identifier.fromNamespaceAndPath("megamod", "spell_choice"),
+            Identifier.fromNamespaceAndPath("spell_engine", "spell_choice"),
             builder -> builder.persistent(SpellChoice.CODEC)
     );
     @SuppressWarnings("unchecked")
     public static final DataComponentType<Identifier> EQUIPMENT_SET = register(
-            Identifier.fromNamespaceAndPath("megamod", "equipment_set"),
+            Identifier.fromNamespaceAndPath("spell_engine", "equipment_set"),
             builder -> builder.persistent(Identifier.CODEC)
     );
     @SuppressWarnings("unchecked")
     public static final DataComponentType<Identifier> ITEM_MODEL = register(
-            Identifier.fromNamespaceAndPath("megamod", "item_model"),
+            Identifier.fromNamespaceAndPath("spell_engine", "item_model"),
             builder -> builder.persistent(Identifier.CODEC)
     );
 
