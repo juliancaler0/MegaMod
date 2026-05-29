@@ -17,9 +17,6 @@
   "release": {
     "sound": {
       "id": "megamod:weapon_cleave"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

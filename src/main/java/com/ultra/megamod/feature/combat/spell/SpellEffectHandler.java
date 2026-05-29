@@ -1,7 +1,6 @@
 package com.ultra.megamod.feature.combat.spell;
 
 import com.ultra.megamod.MegaMod;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,14 +9,12 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.network.PacketDistributor;
 
 /**
  * Server-side event handler for spell effects that require damage interception.
  *
  * Issue 1: Frost Shield — absorbs the next incoming hit then pops.
  * Issue 2: Hunter's Mark Stash — transfers mark on next arrow hit.
- * Issue 6: Cast interruption — cancels charged/channeled casts when taking damage.
  */
 @EventBusSubscriber(modid = MegaMod.MODID)
 public class SpellEffectHandler {
@@ -62,20 +59,4 @@ public class SpellEffectHandler {
         }
     }
 
-    /**
-     * Issue 6: Cast interruption on damage.
-     * When a player takes damage while casting a charged or channeled spell,
-     * the cast is interrupted and the client cast bar is cleared.
-     */
-    @SubscribeEvent
-    public static void onDamageCancelsCast(LivingDamageEvent.Post event) {
-        if (event.getEntity() instanceof ServerPlayer player) {
-            if (SpellCastManager.isCasting(player.getUUID())) {
-                SpellCastManager.cancelCast(player.getUUID());
-                // Notify client to clear cast bar
-                PacketDistributor.sendToPlayer(player,
-                    new SpellCastSyncPayload(false, "", 0, 0xFFFFFFFF));
-            }
-        }
-    }
 }

@@ -170,16 +170,16 @@ public class Weapons {
     static {
         // Initialize damage maps for all weapon types
         DAMAGE_MAPS.put(Equipment.WeaponType.SWORD, DamageMap.builder()
-                .wooden(5.3F).t0(6.8F).t1(8.3F).t2(9.9F).t3(11.5F).t4(13F).t5(13F).golden(5.2F).build());
+                .wooden(3F).t0(4F).t1(5F).t2(6F).t3(7F).t4(8F).t5(8F).golden(3F).build());
 
         DAMAGE_MAPS.put(Equipment.WeaponType.CLAYMORE, DamageMap.builder()
-                .wooden(6.6F).t0(8.5F).t1(10.3F).t2(12.2F).t3(14.1F).t4(16F).t5(16F).golden(6.6F).build());
+                .wooden(5.3F).t0(6.8F).t1(8.3F).t2(9.9F).t3(11.5F).t4(13F).t5(13F).golden(5.2F).build());
 
         DAMAGE_MAPS.put(Equipment.WeaponType.SPEAR, DamageMap.builder()
-                .wooden(4.4F).t0(5.7F).t1(7F).t2(8.3F).t3(9.6F).t4(11F).t5(11F).golden(4.3F).build());
+                .wooden(3F).t0(4F).t1(5F).t2(6F).t3(7F).t4(8F).t5(8F).golden(3F).build());
 
         DAMAGE_MAPS.put(Equipment.WeaponType.MACE, DamageMap.builder()
-                .wooden(3F).t0(4F).t1(5F).t2(6F).t3(7F).t4(8F).t5(8F).golden(3F).build());
+                .wooden(4.4F).t0(5.7F).t1(7F).t2(8.3F).t3(9.6F).t4(11F).t5(11F).golden(4.3F).build());
 
         DAMAGE_MAPS.put(Equipment.WeaponType.DAGGER, DamageMap.builder()
                 .wooden(2F).t0(2.6F).t1(3.3F).t2(4F).t3(4.7F).t4(5.5F).t5(5.5F).golden(1.8F).build());
@@ -194,7 +194,7 @@ public class Weapons {
                 .wooden(3.5F).t0(4.6F).t1(5.8F).t2(7F).t3(8.1F).t4(9.3F).t5(9.3F).golden(3.5F).build());
 
         DAMAGE_MAPS.put(Equipment.WeaponType.HAMMER, DamageMap.builder()
-                .wooden(3F).t0(4F).t1(5F).t2(6F).t3(7F).t4(8F).t5(8F).golden(3F).build());
+                .wooden(6.6F).t0(8.5F).t1(10.3F).t2(12.2F).t3(14.1F).t4(16F).t5(16F).golden(6.6F).build());
 
         // Wands and staves have constant damage regardless of tier
         DAMAGE_MAPS.put(Equipment.WeaponType.DAMAGE_WAND, DamageMap.builder()
@@ -241,12 +241,12 @@ public class Weapons {
 
         // Initialize spell power maps for wands and staves
         var wandPower = SpellPowerMap.builder()
-                .wooden(1F).t0(2F).t1(3F).t2(4F).t3(5F).t4(6F).t5(6F).golden(1F).build();
+                .wooden(2.5F).t0(3F).t1(4F).t2(5F).t3(5.5F).t4(8F).t5(8F).golden(3F).build();
         SPELL_POWER_MAPS.put(Equipment.WeaponType.DAMAGE_WAND, wandPower);
         SPELL_POWER_MAPS.put(Equipment.WeaponType.HEALING_WAND, wandPower);
 
         var staffPower = SpellPowerMap.builder()
-                .wooden(2F).t0(3F).t1(4F).t2(5F).t3(6F).t4(7F).t5(7F).golden(2F).build();
+                .wooden(4F).t0(4.5F).t1(5F).t2(6F).t3(7F).t4(8F).t5(8F).golden(5F).build();
         SPELL_POWER_MAPS.put(Equipment.WeaponType.DAMAGE_STAFF, staffPower);
         SPELL_POWER_MAPS.put(Equipment.WeaponType.HEALING_STAFF, staffPower);
     }

@@ -68,43 +68,27 @@ public abstract class CombatRollMinecraftMixin {
         var rollingPlayer = ((RollingEntity)player);
         var rollManager = rollingPlayer.getRollManager();
         if (Keybindings.roll.isDown()) {
-            com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] Roll key pressed. available={} airborn={} food={} swimming={} vehicle={} using={} cooldown={}",
-                    rollManager.isRollAvailable(player),
-                    !player.onGround(),
-                    player.getFoodData().getFoodLevel(),
-                    player.isSwimming(),
-                    player.getVehicle() != null,
-                    player.isUsingItem(),
-                    player.getAttackStrengthScale(0));
             if(!rollManager.isRollAvailable(player)) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: roll not available");
                 return;
             }
             if(!CombatRollMod.config.allow_rolling_while_airborn && !player.onGround()) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: airborne");
                 return;
             }
             if(player.getFoodData().getFoodLevel() <= CombatRollMod.config.food_level_required) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: low food");
                 return;
             }
             if(player.isSwimming() || player.isVisuallyCrawling()) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: swimming/crawling");
                 return;
             }
             if(player.getVehicle() != null) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: in vehicle");
                 return;
             }
             if(player.isUsingItem() || player.isBlocking()) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: using item");
                 return;
             }
             if (!CombatRollMod.config.allow_rolling_while_weapon_cooldown && player.getAttackStrengthScale(0) < 0.95) {
-                com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] BLOCK: weapon cooldown");
                 return;
             }
-            com.ultra.megamod.MegaMod.LOGGER.info("[CombatRoll] ROLLING!");
             if (BetterCombatHelper.isDoingUpswing()) {
                 BetterCombatHelper.cancelUpswing();
             } else {

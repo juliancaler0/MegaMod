@@ -289,9 +289,6 @@ public class SpellHelper {
                 } else {
                     channelMultiplier = (progress >= 1) ? 1 : 0;
                 }
-                com.ultra.megamod.MegaMod.LOGGER.info(
-                        "[SpellCastDIAG/SERVER] performSpell RELEASE → clearCasting spell={} progress={} channeled={}",
-                        spellId, progress, isChanneled(spell));
                 SpellCastSyncHelper.clearCasting(player);
             }
             case TRIGGER -> {
@@ -302,12 +299,8 @@ public class SpellHelper {
 
         if (channelMultiplier > 0 && ammoResult.satisfied()) {
             var targeting = spell.target;
-            // FIX 4: TRIGGER action was only considered "finished" for PASSIVE spells,
-            // so non-passive triggered casts (e.g. weapon-skill instant casts) never
-            // ran the completion callback that sends release FX, consumes costs, and
-            // fires SpellEvents.SPELL_CAST.  TRIGGER always means "fire and finish".
             boolean finished = action == SpellCast.Action.RELEASE
-                    || action == SpellCast.Action.TRIGGER;
+                    || (action == SpellCast.Action.TRIGGER && spell.type == Spell.Type.PASSIVE);
             boolean success = true;
             if (targeting.cap > 0) {
                 targets = targets.stream()

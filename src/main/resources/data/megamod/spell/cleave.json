@@ -6,10 +6,7 @@
   "learn": {},
   "active": {
     "cast": {
-      "animation_pitch": false,
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
+      "animation_pitch": false
     }
   },
   "release": {

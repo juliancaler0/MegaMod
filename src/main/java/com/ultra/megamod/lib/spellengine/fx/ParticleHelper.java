@@ -157,12 +157,6 @@ public class ParticleHelper {
                 if (batch.invert) {
                     direction = direction.scale(-1);
                 }
-                // Source SpellEngine encodes appearance (color_rgba, scale, follow entity)
-                // into a TemplateParticleType instance. Our registry uses SimpleParticleType
-                // so that codec path is a no-op — we propagate appearance via a ThreadLocal
-                // the particle factories read during construction. Set it *per spawn* because
-                // the factory's consumeAppearance() clears it on read.
-                publishAppearance(batch, sourceEntity);
                 world.addParticle(particle,
                         particleSpecificOrigin.x, particleSpecificOrigin.y, particleSpecificOrigin.z,
                         direction.x, direction.y, direction.z);
@@ -171,29 +165,6 @@ public class ParticleHelper {
             System.err.println("Failed to play particle batch - " + e.getMessage());
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Sets the {@code feature.combat.spell.client.particle.TemplateParticleType} ThreadLocal
-     * so magic particle factories (SpellUniversalParticle, SpellFlameParticle, etc.) can apply
-     * per-spawn color / scale / follow-entity from the spell JSON's {@code ParticleBatch}.
-     * Called immediately before each {@code level.addParticle} so the appearance is fresh.
-     */
-    private static void publishAppearance(ParticleBatch batch, @Nullable Entity sourceEntity) {
-        var appearance = new com.ultra.megamod.feature.combat.spell.client.particle.TemplateParticleType.Appearance();
-        if (batch.color_rgba != 0) {
-            appearance.color = com.ultra.megamod.feature.combat.spell.client.util.Color.fromRGBA(batch.color_rgba);
-        }
-        if (batch.scale != 1) {
-            appearance.scale = batch.scale;
-        }
-        if (batch.follow_entity) {
-            appearance.entityFollowed = sourceEntity;
-        }
-        if (batch.max_age > 0) {
-            appearance.max_age = batch.max_age;
-        }
-        com.ultra.megamod.feature.combat.spell.client.particle.TemplateParticleType.setAppearance(appearance);
     }
 
     public static List<SpawnInstruction> convertToInstructions(Level world, Packets.ParticleBatches packet) {
@@ -257,9 +228,6 @@ public class ParticleHelper {
 
         public void perform(Level world) {
             try {
-                if (batch != null) {
-                    publishAppearance(batch, sourceEntity);
-                }
                 world.addParticle(particle,
                         positionX, positionY, positionZ,
                         velocityX, velocityY, velocityZ);

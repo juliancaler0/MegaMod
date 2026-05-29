@@ -78,7 +78,7 @@ public class SpellEffects {
                             0.5, AttributeModifier.Operation.ADD_VALUE));
 
     /** Judgement Stun: -100% movement speed, -100% attack speed (stun). */
-    public static final DeferredHolder<MobEffect, MobEffect> JUDGEMENT_STUN = EFFECTS.register("judgement_stun",
+    public static final DeferredHolder<MobEffect, MobEffect> JUDGEMENT_STUN = EFFECTS.register("judgement",
             () -> new SimpleSpellEffect(MobEffectCategory.HARMFUL, 0xFFCC00) {}
                     .addAttributeModifier(Attributes.MOVEMENT_SPEED,
                             Identifier.fromNamespaceAndPath("megamod", "effect.judgement_stun.speed"),

@@ -27,7 +27,8 @@ public record AttackHand(
      * The upswing determines when during the swing animation the damage is applied.
      */
     public double upswingRate() {
-        return Mth.clamp(attack.upswing(), 0.0, 1.0);
+        return Mth.clamp(attack.upswing(), 0.0, 1.0)
+                * com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.getUpswingMultiplier();
     }
 
     /**

@@ -3,13 +3,7 @@
   "range": 15.0,
   "tier": 1,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_projectile_charge"
-      }
-    }
-  },
+  "active": {},
   "release": {
     "animation": {
       "id": "megamod:weapon_dual_throw"

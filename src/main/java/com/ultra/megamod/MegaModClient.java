@@ -18,9 +18,6 @@ import com.ultra.megamod.feature.clocks.ReadableClocks;
 import com.ultra.megamod.feature.casino.CasinoRegistry;
 import com.ultra.megamod.feature.casino.blackjack.client.BlackjackTableRenderer;
 import com.ultra.megamod.feature.casino.wheel.client.WheelRenderer;
-import com.ultra.megamod.feature.combat.spell.CombatEntityRegistry;
-import com.ultra.megamod.feature.combat.spell.client.SpellCloudRenderer;
-import com.ultra.megamod.feature.combat.spell.client.SpellProjectileRenderer;
 import com.ultra.megamod.feature.dimensions.DimensionRegistry;
 import com.ultra.megamod.feature.dimensions.client.PortalBlockRenderer;
 import com.ultra.megamod.feature.mobhealth.MobHealthDisplay;
@@ -90,7 +87,6 @@ public class MegaModClient {
         // Group 4: Combat HUD
         modEventBus.addListener(AbilityHudOverlay::register);
         modEventBus.addListener(CombatTextRenderer::onRegisterGuiLayers);
-        modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellCastOverlay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.combos.CombatComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.KillComboDisplay::onRegisterGuiLayers);
         modEventBus.addListener(com.ultra.megamod.feature.hud.AbilityTriggerHud::onRegisterGuiLayers);
@@ -153,7 +149,6 @@ public class MegaModClient {
         });
 
         // Particle provider registration
-        modEventBus.addListener(com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleProviders::registerParticleProviders);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.client.particle.BetterCombatParticleProviders::register);
 
         // === SpellEngine library client wiring (Phase A.3) ===
@@ -246,8 +241,6 @@ public class MegaModClient {
         modEventBus.addListener(MegaModClient::onRegisterLayerDefinitions);
         modEventBus.addListener(com.ultra.megamod.feature.adminmodules.modules.render.ESPRenderHelper::registerPipelines);
         modEventBus.addListener(com.ultra.megamod.feature.backpacks.client.BackpackClientEvents::onAddLayers);
-        modEventBus.addListener((net.neoforged.neoforge.client.event.EntityRenderersEvent.AddLayers e) ->
-                com.ultra.megamod.feature.combat.spell.client.SpellEffectLayerRenderer.onAddLayers(e));
     }
 
     private static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
@@ -262,10 +255,6 @@ public class MegaModClient {
         event.registerBlockEntityRenderer(MuseumRegistry.MUSEUM_DOOR_BE.get(), MuseumDoorRenderer::new);
         event.registerBlockEntityRenderer(CasinoRegistry.WHEEL_BE.get(), WheelRenderer::new);
         event.registerBlockEntityRenderer(CasinoRegistry.BLACKJACK_TABLE_BE.get(), BlackjackTableRenderer::new);
-
-        // Spell combat entity renderers
-        event.registerEntityRenderer(CombatEntityRegistry.SPELL_PROJECTILE.get(), SpellProjectileRenderer::new);
-        event.registerEntityRenderer(CombatEntityRegistry.SPELL_CLOUD.get(), SpellCloudRenderer::new);
 
         // Paladin entity renderers (Barrier + Battle Banner)
         com.ultra.megamod.feature.combat.paladins.client.PaladinsClientMod.registerEntityRenderers(event);

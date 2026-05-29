@@ -19,9 +19,6 @@
   "release": {
     "animation": {
       "id": "megamod:weapon_slam_end"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   },
   "target": {

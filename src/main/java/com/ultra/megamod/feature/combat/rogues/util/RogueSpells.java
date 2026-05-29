@@ -1,9 +1,6 @@
 package com.ultra.megamod.feature.combat.rogues.util;
 
 import com.ultra.megamod.MegaMod;
-import com.ultra.megamod.feature.combat.rogues.effect.RogueEffects;
-import com.ultra.megamod.feature.combat.spell.SpellDefinition;
-import com.ultra.megamod.feature.combat.spell.SpellRegistry;
 import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
@@ -13,8 +10,8 @@ import java.util.List;
  * Convenience references to Rogues & Warriors spell definitions.
  * Ported from net.rogues.util.RogueSpells.
  *
- * All spells are registered through {@link SpellRegistry}. This class provides
- * typed references and metadata for rogues-specific code.
+ * All spells are registered through the SpellEngine datapack registry. This class
+ * provides typed references and metadata for rogues-specific code.
  */
 public class RogueSpells {
 

@@ -52,9 +52,6 @@
     ],
     "sound": {
       "id": "megamod:weapon_throw"
-    },
-    "animation": {
-      "id": "megamod:one_handed_area_release"
     }
   },
   "target": {

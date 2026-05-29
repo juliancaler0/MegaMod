@@ -53,13 +53,5 @@
       "group": "weapon",
       "duration": 12.0
     }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
-    }
   }
 }

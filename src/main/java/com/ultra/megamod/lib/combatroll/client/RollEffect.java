@@ -33,7 +33,7 @@ public record RollEffect(Visuals visuals, String soundId) {
                     double f = random.nextGaussian() * 0.02;
                     player.level().addParticle(ParticleTypes.POOF,
                             player.getRandomX(1.5),
-                            player.getRandomY(),
+                            player.getY(random.nextGaussian() * 0.3),
                             player.getRandomZ(1.5), d, e, f);
                 }
             }

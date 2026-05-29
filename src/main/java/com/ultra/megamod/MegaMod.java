@@ -97,7 +97,6 @@ public class MegaMod {
         modEventBus.addListener(com.ultra.megamod.feature.arena.network.ArenaNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.furniture.QuestBoardNetwork::registerPayloads);
         // MegaMod alchemy system deleted — Reliquary apothecary replaces it.
-        modEventBus.addListener(com.ultra.megamod.feature.combat.spell.SpellNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.combat.animation.BetterCombatNetwork::registerPayloads);
         modEventBus.addListener(com.ultra.megamod.feature.attributes.network.CombatTextNetwork::registerPayloads);
         // BetterCombat slash-trail particle types (12 particles — top/bot × slash45/90/180/270/360/stab)
@@ -123,7 +122,6 @@ public class MegaMod {
         // NamespaceAliases removed — definitions.json is now remapped to use megamod: namespace
         // directly, so alias items are no longer needed.
 
-        com.ultra.megamod.feature.combat.spell.CombatEntityRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ClassWeaponRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.ClassArmorRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.items.JewelryRegistry.init(modEventBus);
@@ -161,7 +159,6 @@ public class MegaMod {
         com.ultra.megamod.feature.combat.runes.RuneCrafting.init(modEventBus);
         com.ultra.megamod.feature.combat.items.GemOreRegistry.init(modEventBus);
         com.ultra.megamod.feature.combat.village.CombatVillagerRegistry.init(modEventBus);
-        com.ultra.megamod.feature.combat.spell.client.particle.SpellParticleRegistry.init(modEventBus);
         modEventBus.addListener(com.ultra.megamod.feature.combat.CombatCreativeTab::onBuildContents);
         // AlchemyNetwork deleted with feature/alchemy/ — Reliquary apothecary replaces it.
         modEventBus.addListener(com.ultra.megamod.feature.map.network.MapTileSyncNetwork::registerPayloads);

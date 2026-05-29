@@ -4,9 +4,6 @@ import com.ultra.megamod.MegaMod;
 import com.ultra.megamod.feature.combat.CombatEventHandler;
 import com.ultra.megamod.feature.combat.animation.BetterCombatHandler;
 import com.ultra.megamod.feature.combat.animation.PlayerComboTracker;
-import com.ultra.megamod.feature.combat.spell.SpellBarrierManager;
-import com.ultra.megamod.feature.combat.spell.SpellCastManager;
-import com.ultra.megamod.feature.combat.spell.SpellExecutor;
 import com.ultra.megamod.feature.computer.network.handlers.BountyBoardHandler;
 import com.ultra.megamod.feature.computer.network.handlers.FriendsHandler;
 import com.ultra.megamod.feature.computer.network.handlers.PartyHandler;
@@ -74,9 +71,6 @@ public class ComputerEvents {
 
 
         // Combat system static state cleanup — prevents stale data across singleplayer world reloads
-        SpellBarrierManager.clearAll();
-        SpellCastManager.clearAll();
-        SpellExecutor.clearAllCooldowns();
         PlayerComboTracker.clearAll();
         CombatEventHandler.clearAll();
         BetterCombatHandler.clearAll();

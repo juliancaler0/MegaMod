@@ -4,13 +4,7 @@
   "range_mechanic": "MELEE",
   "tier": 1,
   "learn": {},
-  "active": {
-    "cast": {
-      "animation": {
-        "id": "megamod:one_handed_area_charge"
-      }
-    }
-  },
+  "active": {},
   "target": {
     "type": "NONE"
   },
@@ -48,14 +42,6 @@
     "cooldown": {
       "group": "weapon",
       "duration": 8.0
-    }
-  },
-  "release": {
-    "animation": {
-      "id": "megamod:one_handed_area_release"
-    },
-    "sound": {
-      "id": "minecraft:entity.player.attack.sweep"
     }
   }
 }

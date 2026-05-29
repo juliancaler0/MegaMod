@@ -62,17 +62,12 @@ public class BetterCombatHandler {
             // Get weapon attributes
             var mainHand = player.getMainHandItem();
             if (mainHand.isEmpty()) {
-                com.ultra.megamod.MegaMod.LOGGER.warn("[BC-Damage] Attack request dropped: empty main hand");
                 return;
             }
             var attrs = WeaponAttributeRegistry.getAttributes(mainHand);
             if (attrs == null || attrs.attacks() == null || attrs.attacks().length == 0) {
-                com.ultra.megamod.MegaMod.LOGGER.warn("[BC-Damage] Attack request dropped: no weapon_attributes for {}",
-                        mainHand.getItem());
                 return;
             }
-            com.ultra.megamod.MegaMod.LOGGER.info("[BC-Damage] Attack received: item={} combo={} entityIds={} cursorId={}",
-                    mainHand.getItem(), payload.comboCount(), payload.entityIds().length, payload.cursorTargetId());
 
             // Use the combo count from the packet
             int comboCount = payload.comboCount();
@@ -97,39 +92,51 @@ public class BetterCombatHandler {
             // Wrap in attribute swap for off-hand attacks (dual-wielding)
             com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper.swapHandAttributes(
                     player, isOffHand, () -> {
-                // Apply damage multiplier from attack definition
-                float damageMultiplier = (float) selectedAttack.damageMultiplier();
+                // Combo + dual-wield damage multiplier applied via a temporary ATTACK_DAMAGE
+                // modifier (ADD_MULTIPLIED_BASE), like source BetterCombat — so the combo
+                // multiplier actually scales the dealt damage instead of being discarded.
+                float comboMultiplier = (float) selectedAttack.damageMultiplier();
                 float dualWieldMultiplier = com.ultra.megamod.feature.combat.animation.logic.PlayerAttackHelper
                         .getDualWieldingAttackDamageMultiplier(player, attackHand);
-                damageMultiplier *= dualWieldMultiplier;
+                double modifierValue = (comboMultiplier - 1.0) + (dualWieldMultiplier - 1.0);
 
-                int targetIndex = 0;
-                for (int entityId : payload.entityIds()) {
-                    var target = player.level().getEntity(entityId);
-                    if (target == null || !target.isAlive()) continue;
-                    if (!(target instanceof net.minecraft.world.entity.LivingEntity living)) continue;
+                boolean appliedDamageModifier = false;
+                if (Math.abs(modifierValue) > 1.0e-4) {
+                    com.ultra.megamod.feature.attributes.AttributeHelper.addModifier(
+                            player, net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,
+                            TEMP_ATTACK_DAMAGE_ID, modifierValue,
+                            net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_BASE);
+                    appliedDamageModifier = true;
+                }
 
-                    // Validate range
-                    if (player.distanceToSqr(target) > rangeSquared) continue;
+                // Mark the attack context so the legacy AttackEntityEvent path skips re-processing
+                // (prevents a double combo-advance / double sweep / double animation broadcast).
+                CombatAttackContext.setActiveAttack(player.getUUID(), selectedAttack,
+                        comboMultiplier * dualWieldMultiplier, isOffHand);
+                try {
+                    for (int entityId : payload.entityIds()) {
+                        var target = player.level().getEntity(entityId);
+                        if (target == null || !target.isAlive()) continue;
+                        if (!(target instanceof net.minecraft.world.entity.LivingEntity living)) continue;
 
-                    // Allow fast attacks (bypass damage throttle)
-                    if (com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_fast_attacks) {
-                        living.invulnerableTime = 0;
+                        // Validate range
+                        if (player.distanceToSqr(target) > rangeSquared) continue;
+
+                        // Allow fast attacks (bypass damage throttle)
+                        if (com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_fast_attacks) {
+                            living.invulnerableTime = 0;
+                        }
+
+                        // Attack the target
+                        player.attack(target);
                     }
-
-                    // Sweeping damage falloff: each extra target takes less damage
-                    if (com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.allow_reworked_sweeping
-                            && targetIndex > 0) {
-                        int extraTargetCount = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.reworked_sweeping_extra_target_count;
-                        float maxPenalty = com.ultra.megamod.feature.combat.animation.config.BetterCombatConfig.reworked_sweeping_maximum_damage_penalty;
-                        float penalty = Math.min((float) targetIndex / extraTargetCount, 1.0f) * maxPenalty;
-                        // Temporarily reduce damage for this hit by adding a negative modifier
-                        // (BC uses a temporary attribute modifier approach)
+                } finally {
+                    if (appliedDamageModifier) {
+                        com.ultra.megamod.feature.attributes.AttributeHelper.removeModifier(
+                                player, net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE,
+                                TEMP_ATTACK_DAMAGE_ID);
                     }
-
-                    // Attack the target
-                    player.attack(target);
-                    targetIndex++;
+                    CombatAttackContext.clear(player.getUUID());
                 }
             });
 
@@ -176,6 +183,9 @@ public class BetterCombatHandler {
 
     /** Unique identifier for the melee swing movement speed penalty. */
     private static final Identifier MELEE_SWING_SLOW_ID = Identifier.fromNamespaceAndPath("megamod", "melee_swing_slow");
+
+    /** Temporary ATTACK_DAMAGE modifier carrying the combo + dual-wield damage multiplier during a swing. */
+    private static final Identifier TEMP_ATTACK_DAMAGE_ID = Identifier.fromNamespaceAndPath("megamod", "bc_combo_attack_damage");
 
     /** 50% movement speed reduction while a melee swing is active. */
     private static final double MELEE_SWING_SPEED_PENALTY = -0.5;
